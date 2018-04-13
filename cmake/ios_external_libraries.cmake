@@ -1,6 +1,24 @@
 
 message(STATUS "Platform is ios for project")
 
+macro(DOWNLOAD_LIBRARY_INCLUDE_FILES LIBRARY_INCLUDE_URL LIBRARY_DIRECTORY)
+
+  set(${CMAKE_PROJECT_NAME}_URL_INCLUDE 
+    "${LIBRARY_INCLUDE_URL}" 
+    CACHE STRING "The URL for the include files for ${LIBRARY_DIRECTORY}")
+
+  RETRIEVE_TAR(
+    "${${CMAKE_PROJECT_NAME}_URL_INCLUDE}"
+    "${LIBRARY_DIRECTORY}"
+    "SKIP"
+    )
+
+  include_directories("${CMAKE_BINARY_DIR}/${LIBRARY_DIRECTORY}")
+
+endmacro(DOWNLOAD_LIBRARY_INCLUDE_FILES LIBRARY_INCLUDE_URL LIBRARY_DIRECTORY)
+
+DOWNLOAD_LIBRARY_INCLUDE_FILES("https://www.dropbox.com/s/bvtxtpqa925godz/BULLET-1.85_include.tar.gz?dl=0" "thirdparty/bullet-1.85/include")
+
 # set(${CMAKE_PROJECT_NAME}_URL_SDL2_INCLUDE 
 #   "https://www.dropbox.com/s/g0qrc1xkz2qcb9y/SDL2-2.0.7_include.tar.gz?dl=0" 
 #   CACHE STRING "The URL for the include files for SDL2")
@@ -20,7 +38,14 @@ message(STATUS "Platform is ios for project")
 #   )
 # 
 # include_directories("${CMAKE_BINARY_DIR}/${SDL2_INCLUDE_DIR}")
-# 
+
+
+
+
+
+
+
+
 # set(LIBSDL_LIBRARY_URL "${${CMAKE_PROJECT_NAME}_URL_SDL2_LIB_IOS_RELEASE}")
 # set(LIBSDL_LIBRARY_TARGET_DIRECTORY "thirdparty/SDL2-2.0.7/lib/ios")
 # 
