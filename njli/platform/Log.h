@@ -5,8 +5,8 @@
 #include "SDL_config.h"
 #include "SDL_log.h"
 
-#include "SDL_test.h"
-#include "SDL_test_log.h"
+//#include "SDL_test.h"
+//#include "SDL_test_log.h"
 
 #if !(defined(NDEBUG))
 #define LOGGING_ON 1
