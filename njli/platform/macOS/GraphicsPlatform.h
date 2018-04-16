@@ -1,13 +1,13 @@
 
-#if defined(NJLI_GL_ES2)
+#if defined(__GL_ES2__)
 #error Unsupported choice setting
-#elif defined(NJLI_GL_ES3)
+#elif defined(__GL_ES3__)
 #error Unsupported choice setting
-#elif defined(NJLI_GL_2)
+#elif defined(__GL_2__)
 #include <OpenGL/gl.h>
 #include <OpenGL/glext.h>
 #define NANOVG_GL2_IMPLEMENTATION
-#elif defined(NJLI_GL_3)
+#elif defined(__GL_3__)
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>
 #define NANOVG_GL3_IMPLEMENTATION
