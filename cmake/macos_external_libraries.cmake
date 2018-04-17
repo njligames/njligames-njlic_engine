@@ -17,7 +17,7 @@ macro(DOWNLOAD_LIBRARY_INCLUDE_FILES LIBRARY_INCLUDE_URL LIBRARY_DIRECTORY)
 
   include_directories("${CMAKE_BINARY_DIR}/${LIBRARY_DIRECTORY}" ${INCLUDE_DIRECTORY_LIST})
 
-endmacro(DOWNLOAD_LIBRARY_INCLUDE_FILES LIBRARY_INCLUDE_URL LIBRARY_DIRECTORY)
+endmacro()
 
 DOWNLOAD_LIBRARY_INCLUDE_FILES("https://www.dropbox.com/s/bvtxtpqa925godz/BULLET-1.85_include.tar.gz?dl=0" "thirdparty/bullet-1.85/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("https://www.dropbox.com/s/4djlrt4x4ej2k8t/LUA-5.3.2_include.tar.gz?dl=0" "thirdparty/lua-5.3.2/include")
