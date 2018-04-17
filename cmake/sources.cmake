@@ -93,35 +93,30 @@ if(NOT WINDOWS)
   PLATFORM_FILES("windows" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
 endif()
 
-# if(APPLE)
-  if(NOT IOS)
-    # remove ios platform files
-    PLATFORM_FILES("ios" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
-  endif()
+if(NOT IOS)
+  # remove ios platform files
+  PLATFORM_FILES("ios" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
+endif()
 
-  if(NOT TVOS)
-    # remove tvos platform files
-    PLATFORM_FILES("appletv" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
-  endif()
+if(NOT TVOS)
+  # remove tvos platform files
+  PLATFORM_FILES("appletv" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
+endif()
 
-  if(APPLE AND (TVOS OR IOS))
-    # remove macos platform files
-    PLATFORM_FILES("macOS" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
-  endif()
-  # endif()
+if(APPLE AND (TVOS OR IOS))
+  # remove macos platform files
+  PLATFORM_FILES("macOS" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
+endif()
 
-# if(UNIX AND NOT APPLE AND NOT ANDROID)
-  if(NOT LINUX)
-    # remove linux platform files
-    PLATFORM_FILES("linux" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
-  endif()
+if(NOT LINUX)
+  # remove linux platform files
+  PLATFORM_FILES("linux" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
+endif()
 
-  if(NOT UNIX)
-    # remove unix platform files
-    PLATFORM_FILES("unix" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
-  endif()
-
-  # endif()
+if(NOT UNIX)
+  # remove unix platform files
+  PLATFORM_FILES("unix" PLATFORM_SOURCE_FILES PLATFORM_INCLUDE_FILES)
+endif()
 
 if(NOT ANDROID)
   # remove android platform files
