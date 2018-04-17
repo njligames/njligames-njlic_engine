@@ -107,3 +107,7 @@ ENDIF()
 IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_3" )
   list(REMOVE_ITEM SOURCE_FILES ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_3/lgl_3.cpp)
 ENDIF()
+
+include_directories(
+  ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua
+  )
