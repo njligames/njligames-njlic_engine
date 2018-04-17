@@ -1,4 +1,5 @@
 
+
 set(${CMAKE_PROJECT_NAME}_SOUND_PLATFORM "openal" CACHE STRING "The rendering platform to use")
 set(${CMAKE_PROJECT_NAME}_SOUND_PLATFORM_Values "openal;fmod;sdl")
 
@@ -111,3 +112,8 @@ ENDIF()
 include_directories(
   ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua
   )
+
+OPTION(${CMAKE_PROJECT_NAME}_USE_NANOVG_LIBRARY "Use nanovg library" ON)
+IF(${CMAKE_PROJECT_NAME}_USE_NANOVG_LIBRARY)
+  ADD_DEFINITIONS(-DUSE_NANOVG_LIBRARY=1)
+endif()
