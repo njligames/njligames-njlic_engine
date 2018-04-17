@@ -283,14 +283,14 @@ int njli::WorldLuaVirtualMachine::docall(lua_State *L, int narg, int nres)
  */
 void njli::WorldLuaVirtualMachine::l_message(const char *pname, const char *msg)
 {
-  if (pname)
-    lua_writestringerror("%s: ", pname);
-  if (strcmp(msg, m_previousMessage.c_str()) != 0)
-    {
-      lua_writestringerror("%s\n", "<ERROR>");
-      lua_writestringerror("%s\n", msg);
-      lua_writestringerror("%s\n", "</ERROR>");
-    }
+  // if (pname)
+  //   lua_writestringerror("%s: ", pname);
+  // if (strcmp(msg, m_previousMessage.c_str()) != 0)
+  //   {
+  //     lua_writestringerror("%s\n", "<ERROR>");
+  //     lua_writestringerror("%s\n", msg);
+  //     lua_writestringerror("%s\n", "</ERROR>");
+  //   }
   m_previousMessage = msg;
 }
 
