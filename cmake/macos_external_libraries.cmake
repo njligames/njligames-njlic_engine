@@ -1,5 +1,5 @@
 
-message(STATUS "Platform is ios for project")
+message(STATUS "Platform is macOS for project")
 
 macro(DOWNLOAD_LIBRARY_INCLUDE_FILES LIBNAME LIBRARY_INCLUDE_URL LIBRARY_DIRECTORY)
 
@@ -22,6 +22,7 @@ endmacro()
 
 DOWNLOAD_LIBRARY_INCLUDE_FILES("bullet" "https://www.dropbox.com/s/bvtxtpqa925godz/BULLET-1.85_include.tar.gz?dl=0" "thirdparty/bullet-1.85/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("lua" "https://www.dropbox.com/s/4djlrt4x4ej2k8t/LUA-5.3.2_include.tar.gz?dl=0" "thirdparty/lua-5.3.2/include")
+DOWNLOAD_LIBRARY_INCLUDE_FILES("vorbis" "https://www.dropbox.com/s/r2t6hkjkcwpp6p8/VORBIS_include.tar.gz?dl=0" "thirdparty/vorbis/include")
 
 # set(${CMAKE_PROJECT_NAME}_URL_SDL2_INCLUDE 
 #   "https://www.dropbox.com/s/g0qrc1xkz2qcb9y/SDL2-2.0.7_include.tar.gz?dl=0" 

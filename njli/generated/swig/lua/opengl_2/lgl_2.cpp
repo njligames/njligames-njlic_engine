@@ -2948,7 +2948,7 @@ if (lua_gettop(L)<a || lua_gettop(L)>b) \
 {SWIG_Lua_pushferrstring(L,"Error in %s expected %d..%d args, got %d",func_name,a,b,lua_gettop(L));\
 goto fail;}
     
-
+#include "Log.h"
     #include "GraphicsPlatform.h"
 
 
