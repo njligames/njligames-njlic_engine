@@ -72,6 +72,7 @@ DOWNLOAD_LIBRARY_BINARY_FILES("imguizmo" "https://www.dropbox.com/s/hppgmykw25k0
 DOWNLOAD_LIBRARY_BINARY_FILES("jsoncpp" "https://www.dropbox.com/s/skh3zs3ps4lq797/LIBJSONCPP_1.8.0_macOS.tar.gz?dl=0" "thirdparty/jsoncpp/lib/macOS")
 DOWNLOAD_LIBRARY_BINARY_FILES("nanovg" "https://www.dropbox.com/s/e04zo6h8buc3ydo/LIBNANOVG_macOS.tar.gz?dl=0" "thirdparty/nanovg/lib/macOS")
 DOWNLOAD_LIBRARY_BINARY_FILES("ogg" "https://www.dropbox.com/s/59t9nblaagk1aid/LIBOGG_1.3.2_macOS.tar.gz?dl=0" "thirdparty/ogg/lib/macOS")
+DOWNLOAD_LIBRARY_BINARY_FILES("vorbis" "https://www.dropbox.com/s/l4hy6vb8a3apwxh/LIBVORBIS_1.3.5_macOS.tar.gz?dl=0" "thirdparty/vorbis/lib/macOS")
 
 
 IF( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "fmod" )
