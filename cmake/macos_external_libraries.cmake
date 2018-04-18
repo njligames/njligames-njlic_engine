@@ -24,6 +24,7 @@ DOWNLOAD_LIBRARY_INCLUDE_FILES("bullet" "https://www.dropbox.com/s/bvtxtpqa925go
 DOWNLOAD_LIBRARY_INCLUDE_FILES("lua" "https://www.dropbox.com/s/4djlrt4x4ej2k8t/LUA-5.3.2_include.tar.gz?dl=0" "thirdparty/lua/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("vorbis" "https://www.dropbox.com/s/f6l6iyq6o7fo72e/LIBVORBIS_1.3.5_include.tar.gz?dl=0" "thirdparty/vorbis/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("ogg" "https://www.dropbox.com/s/l47bteey7rz2ss4/LIBVOGG_1.3.2_include.tar.gz?dl=0" "thirdparty/ogg/include")
+DOWNLOAD_LIBRARY_INCLUDE_FILES("nanovg" "https://www.dropbox.com/s/e04zo6h8buc3ydo/LIBNANOVG_macOS.tar.gz?dl=0" "thirdparty/nanovg/include")
 
 
 
