@@ -23,7 +23,7 @@ endmacro()
 DOWNLOAD_LIBRARY_INCLUDE_FILES("bullet" "https://www.dropbox.com/s/bvtxtpqa925godz/BULLET-1.85_include.tar.gz?dl=0" "thirdparty/bullet/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("lua" "https://www.dropbox.com/s/ff3rvbdtfr1k56i/LIBLUA-5.3.2_include.tar.gz?dl=0" "thirdparty/lua/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("vorbis" "https://www.dropbox.com/s/f6l6iyq6o7fo72e/LIBVORBIS_1.3.5_include.tar.gz?dl=0" "thirdparty/vorbis/include")
-DOWNLOAD_LIBRARY_INCLUDE_FILES("ogg" "https://www.dropbox.com/s/l47bteey7rz2ss4/LIBVOGG_1.3.2_include.tar.gz?dl=0" "thirdparty/ogg/include")
+DOWNLOAD_LIBRARY_INCLUDE_FILES("ogg" "https://www.dropbox.com/s/wm29ek4iifpkta2/LIBOGG_1.3.2_include.tar.gz?dl=0" "thirdparty/ogg/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("nanovg" "https://www.dropbox.com/s/e04zo6h8buc3ydo/LIBNANOVG_macOS.tar.gz?dl=0" "thirdparty/nanovg/include")
 
 
@@ -71,6 +71,8 @@ DOWNLOAD_LIBRARY_BINARY_FILES("imgui" "https://www.dropbox.com/s/s6ombjjnb6or9xn
 DOWNLOAD_LIBRARY_BINARY_FILES("imguizmo" "https://www.dropbox.com/s/hppgmykw25k0xys/LIBIMGUIZMO_1.04_macOS.tar.gz?dl=0" "thirdparty/imguizmo/lib/macOS")
 DOWNLOAD_LIBRARY_BINARY_FILES("jsoncpp" "https://www.dropbox.com/s/skh3zs3ps4lq797/LIBJSONCPP_1.8.0_macOS.tar.gz?dl=0" "thirdparty/jsoncpp/lib/macOS")
 DOWNLOAD_LIBRARY_BINARY_FILES("nanovg" "https://www.dropbox.com/s/e04zo6h8buc3ydo/LIBNANOVG_macOS.tar.gz?dl=0" "thirdparty/nanovg/lib/macOS")
+DOWNLOAD_LIBRARY_BINARY_FILES("ogg" "https://www.dropbox.com/s/59t9nblaagk1aid/LIBOGG_1.3.2_macOS.tar.gz?dl=0" "thirdparty/ogg/lib/macOS")
+
 
 IF( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "fmod" )
   message(STATUS "need to add fmod lib")
