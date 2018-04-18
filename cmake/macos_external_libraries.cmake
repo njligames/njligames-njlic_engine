@@ -64,7 +64,7 @@ DOWNLOAD_LIBRARY_INCLUDE_FILES("glm" "https://www.dropbox.com/s/2sr0kts3054ojvw/
 DOWNLOAD_LIBRARY_INCLUDE_FILES("imgui" "https://www.dropbox.com/s/govijzlvvvyp7gy/LIBIMGUI_1.5.0_include.tar.gz?dl=0" "thirdparty/imgui/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("imguizmo" "https://www.dropbox.com/s/1z8lar75aidhcjx/LIBIMGUIZMO_1.04_include.tar.gz?dl=0" "thirdparty/imguizmo/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("jsoncpp" "https://www.dropbox.com/s/v8dt6qpgp389ham/LIBJSONCPP_1.8.0_include.tar.gz?dl=0" "thirdparty/jsoncpp/include")
-DOWNLOAD_LIBRARY_INCLUDE_FILES("lua" "https://www.dropbox.com/s/ff3rvbdtfr1k56i/LIBLUA-5.3.2_include.tar.gz?dl=0" "thirdparty/lua/include")
+DOWNLOAD_LIBRARY_INCLUDE_FILES("lua" "https://www.dropbox.com/s/ylhnt372egotpht/LIBLUA-5.3.2_include.tar.gz?dl=0" "thirdparty/lua/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("nanovg" "https://www.dropbox.com/s/7lik0sx0u1441ma/LIBNANOVG_include.tar.gz?dl=0" "thirdparty/nanovg/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("ogg" "https://www.dropbox.com/s/wm29ek4iifpkta2/LIBOGG_1.3.2_include.tar.gz?dl=0" "thirdparty/ogg/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("vorbis" "https://www.dropbox.com/s/f6l6iyq6o7fo72e/LIBVORBIS_1.3.5_include.tar.gz?dl=0" "thirdparty/vorbis/include")
