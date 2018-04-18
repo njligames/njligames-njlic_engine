@@ -23,7 +23,7 @@
 //#include "stb_vorbis.c"
 //#endif
 
-#if defined(NJLI_SOUND_OPENAL)
+#if defined(__OPENAL__)
 
 #define PRELOAD_BUFFERS_COUNT 3
 
@@ -162,7 +162,7 @@ namespace njli
     Node *getParent();
     const Node *getParent() const;
 
-#if defined(NJLI_SOUND_OPENAL)
+#if defined(__OPENAL__)
   public:
     void update();
 
@@ -248,7 +248,7 @@ namespace njli
 //
 //    AudioStream *mAudioStream;
 
-#elif defined(NJLI_SOUND_FMOD)
+#elif defined(__FMOD__)
   public:
   protected:
     FMOD::Channel *getChannel();
@@ -257,7 +257,7 @@ namespace njli
     FMOD::Sound *m_Sound;
     s32 m_ChannelIndex;
     btTransform *m_Transform;
-#elif defined(NJLI_SOUND_SDL)
+#elif defined(__SDL__)
 #endif
   };
 }

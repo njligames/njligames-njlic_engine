@@ -206,11 +206,11 @@ ENDIF()
 set_property(CACHE ${CMAKE_PROJECT_NAME}_SOUND_PLATFORM PROPERTY STRINGS ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM_Values})
 
 IF( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "fmod" )
-  ADD_DEFINITIONS(-DNJLI_SOUND_FMOD)
+  ADD_DEFINITIONS(-D__FMOD__)
 ELSEIF( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "openal" )
-  ADD_DEFINITIONS(-DNJLI_SOUND_OPENAL)
+  ADD_DEFINITIONS(-D__OPENAL__)
 ELSEIF( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "sdl" )
-  ADD_DEFINITIONS(-DNJLI_SOUND_SDL)
+  ADD_DEFINITIONS(-D__SDL__)
 ENDIF()
 
 IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_es_2" )
@@ -218,10 +218,13 @@ IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_es_2" )
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_es_2/*.c
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_es_2/*.cpp
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_es_2/*.cxx
+
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_2/*.c
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_2/*.cpp
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_2/*.cxx
     )
 
   list(REMOVE_ITEM SOURCE_FILES ${GL_ES_2_SOURCE_FILES})
-  list(REMOVE_ITEM SOURCE_FILES ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_2/lgl_es_2.cpp)
 ENDIF()
 
 IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_es_3" )
@@ -229,10 +232,13 @@ IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_es_3" )
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_es_3/*.c
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_es_3/*.cpp
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_es_3/*.cxx
+
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_3/*.c
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_3/*.cpp
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_3/*.cxx
     )
 
   list(REMOVE_ITEM SOURCE_FILES ${GL_ES_3_SOURCE_FILES})
-  list(REMOVE_ITEM SOURCE_FILES ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_3/lgl_es_3.cpp)
 ENDIF()
 
 IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_2" )
@@ -240,24 +246,13 @@ IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_2" )
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_2/*.c
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_2/*.cpp
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_2/*.cxx
-    )
-    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_es_3/*.cpp
-    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_es_3/*.cxx
-    )
 
-  list(REMOVE_ITEM SOURCE_FILES ${GL_ES_3_SOURCE_FILES})
-  list(REMOVE_ITEM SOURCE_FILES ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_es_3/lgl_es_3.cpp)
-ENDIF()
-
-IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_2" )
-  file(GLOB_RECURSE GL_2_SOURCE_FILES
-    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_2/*.c
-    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_2/*.cpp
-    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_2/*.cxx
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_2/*.c
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_2/*.cpp
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_2/*.cxx
     )
 
   list(REMOVE_ITEM SOURCE_FILES ${GL_2_SOURCE_FILES})
-  list(REMOVE_ITEM SOURCE_FILES ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_2/lgl_2.cpp)
 ENDIF()
 
 IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_3" )
@@ -265,10 +260,13 @@ IF( NOT ${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM} STREQUAL "opengl_3" )
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_3/*.c
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_3/*.cpp
     ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/graphics/opengl_3/*.cxx
+
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_3/*.c
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_3/*.cpp
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_3/*.cxx
     )
 
   list(REMOVE_ITEM SOURCE_FILES ${GL_3_SOURCE_FILES})
-  list(REMOVE_ITEM SOURCE_FILES ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/generated/swig/lua/opengl_3/lgl_3.cpp)
 ENDIF()
 
 

@@ -25,7 +25,7 @@ class ISoundFileWrapper;
 
 // http://www.ogre3d.org/tikiwiki/tiki-index.php?page=FMOD+SoundManager
 
-#if defined(NJLI_SOUND_OPENAL)
+#if defined(__OPENAL__)
 typedef struct SoundBuffer
 {
   bool free;
@@ -75,7 +75,7 @@ namespace njli
 
     void playSound(Sound &sound, bool isPaused = false);
 
-#if defined(NJLI_SOUND_OPENAL)
+#if defined(__OPENAL__)
   protected:
     ALCdevice *mDeviceAL;
     ALCcontext *mContextAL;
@@ -133,7 +133,7 @@ namespace njli
 //    std::vector<Sound*> mSounds;
 //    std::vector<Sound*> mPlayingSounds;
 
-#elif defined(NJLI_SOUND_FMOD)
+#elif defined(__FMOD__)
   protected:
     FMOD::Channel *getChannel(s32 channelindex);
 
@@ -141,7 +141,7 @@ namespace njli
     FMOD::System *m_System;
     FMOD::ChannelGroup *m_MasterChannel;
     int *m_ChannelsPlaying;
-#elif defined(NJLI_SOUND_SDL)
+#elif defined(__SDL__)
 #endif
   };
 }
