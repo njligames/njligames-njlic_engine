@@ -25,6 +25,32 @@ DOWNLOAD_LIBRARY_INCLUDE_FILES("lua" "https://www.dropbox.com/s/4djlrt4x4ej2k8t/
 DOWNLOAD_LIBRARY_INCLUDE_FILES("vorbis" "https://www.dropbox.com/s/f6l6iyq6o7fo72e/LIBVORBIS_1.3.5_include.tar.gz?dl=0" "thirdparty/vorbis/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("ogg" "https://www.dropbox.com/s/l47bteey7rz2ss4/LIBVOGG_1.3.2_include.tar.gz?dl=0" "thirdparty/ogg/include")
 
+
+
+macro(DOWNLOAD_LIBRARY_BINARY_FILES LIBNAME LIBRARY_BINARY_URL LIBRARY_DIRECTORY)
+
+  set(${LIBNAME}_URL_INCLUDE 
+    "${LIBRARY_INCLUDE_URL}" 
+    CACHE STRING "The URL for the include files for ${LIBRARY_DIRECTORY}")
+
+  RETRIEVE_TAR(
+    "${${LIBNAME}_URL_INCLUDE}"
+    "${LIBRARY_DIRECTORY}"
+    "SKIP"
+    )
+
+  file(GLOB_RECURSE ${LIBNAME}_RELEASE_BINARY_FILES
+    ${CMAKE_BINARY_DIR}/${LIBRARY_DIRECTORY}/Release/*.a
+    )
+
+  foreach(BINARY_FILE ${${LIBNAME}_RELEASE_BINARY_FILES})
+    MESSAGE(STATUS "BINARY_FILE ${BINARY_FILE}")
+  endforeach()
+
+endmacro()
+
+DOWNLOAD_LIBRARY_BINARY_FILES("bullet" "https://www.dropbox.com/s/cbmdirabylueukr/LIBBULLET_1.3.5_macOS.tar.gz?dl=0" "thirdparty/bullet/lib/macOS")
+
 # set(${CMAKE_PROJECT_NAME}_URL_SDL2_INCLUDE 
 #   "https://www.dropbox.com/s/g0qrc1xkz2qcb9y/SDL2-2.0.7_include.tar.gz?dl=0" 
 #   CACHE STRING "The URL for the include files for SDL2")
