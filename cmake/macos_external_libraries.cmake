@@ -20,8 +20,8 @@ macro(DOWNLOAD_LIBRARY_INCLUDE_FILES LIBNAME LIBRARY_INCLUDE_URL LIBRARY_DIRECTO
 
 endmacro()
 
-DOWNLOAD_LIBRARY_INCLUDE_FILES("bullet" "https://www.dropbox.com/s/bvtxtpqa925godz/BULLET-1.85_include.tar.gz?dl=0" "thirdparty/bullet-1.85/include")
-DOWNLOAD_LIBRARY_INCLUDE_FILES("lua" "https://www.dropbox.com/s/4djlrt4x4ej2k8t/LUA-5.3.2_include.tar.gz?dl=0" "thirdparty/lua-5.3.2/include")
+DOWNLOAD_LIBRARY_INCLUDE_FILES("bullet" "https://www.dropbox.com/s/bvtxtpqa925godz/BULLET-1.85_include.tar.gz?dl=0" "thirdparty/bullet/include")
+DOWNLOAD_LIBRARY_INCLUDE_FILES("lua" "https://www.dropbox.com/s/4djlrt4x4ej2k8t/LUA-5.3.2_include.tar.gz?dl=0" "thirdparty/lua/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("vorbis" "https://www.dropbox.com/s/f6l6iyq6o7fo72e/LIBVORBIS_1.3.5_include.tar.gz?dl=0" "thirdparty/vorbis/include")
 DOWNLOAD_LIBRARY_INCLUDE_FILES("ogg" "https://www.dropbox.com/s/l47bteey7rz2ss4/LIBVOGG_1.3.2_include.tar.gz?dl=0" "thirdparty/ogg/include")
 
@@ -29,12 +29,12 @@ DOWNLOAD_LIBRARY_INCLUDE_FILES("ogg" "https://www.dropbox.com/s/l47bteey7rz2ss4/
 
 macro(DOWNLOAD_LIBRARY_BINARY_FILES LIBNAME LIBRARY_BINARY_URL LIBRARY_DIRECTORY)
 
-  set(${LIBNAME}_URL_INCLUDE 
+  set(${LIBNAME}_URL_BINARY 
     "${LIBRARY_BINARY_URL}" 
     CACHE STRING "The URL for the include files for ${LIBRARY_DIRECTORY}")
 
   RETRIEVE_TAR(
-    "${${LIBNAME}_URL_INCLUDE}"
+    "${${LIBNAME}_URL_BINARY}"
     "${LIBRARY_DIRECTORY}"
     "SKIP"
     )
