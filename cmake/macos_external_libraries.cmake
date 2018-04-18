@@ -79,3 +79,4 @@ ELSEIF( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "sdl" )
   message(STATUS "need to add sdl lib")
 ENDIF()
 
+list(APPEND EXTRA_LIBS "-framework OpenGL")
