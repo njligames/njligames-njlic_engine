@@ -65,6 +65,7 @@ macro(DOWNLOAD_LIBRARY_BINARY_FILES LIBNAME LIBRARY_BINARY_URL LIBRARY_DIRECTORY
 endmacro()
 
 DOWNLOAD_LIBRARY_BINARY_FILES("bullet" "https://www.dropbox.com/s/cbmdirabylueukr/LIBBULLET_1.3.5_macOS.tar.gz?dl=0" "thirdparty/bullet/lib/macOS")
+DOWNLOAD_LIBRARY_BINARY_FILES("lua" "https://www.dropbox.com/s/5wfx8rk9be4apni/LIBLUA-5.3.2_macOS.tar.gz?dl=0" "thirdparty/lua/lib/macOS")
 
 IF( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "fmod" )
   message(STATUS "need to add fmod lib")
