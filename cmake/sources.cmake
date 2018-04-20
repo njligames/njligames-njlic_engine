@@ -294,10 +294,11 @@ ENDIF()
 LIST(REMOVE_ITEM INCLUDE_FILES
   "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/exts/luasocket/compat.h"
   "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/exts/luasocket/wsocket.h"
+  )
+
+LIST(REMOVE_ITEM SOURCE_FILES
   "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/exts/luasocket/compat.c"
-  "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/exts/luasocket/compat.h"
   "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/exts/luasocket/wsocket.c"
-  "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/exts/luasocket/wsocket.h"
   "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/src/loadlib_rel.c"
   "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/src/lua.c"
   "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/src/lua.rc"
