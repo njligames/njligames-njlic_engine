@@ -1,5 +1,18 @@
 include(${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/macros.cmake)
 
+list(APPEND CMAKE_MODULE_PATH "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake")
+
+find_package(SWIG REQUIRED)
+
+#   SWIG_FOUND - set to true if SWIG is found
+#   SWIG_DIR - the directory where swig is installed
+#   SWIG_EXECUTABLE - the path to the swig executable
+#   SWIG_VERSION   - the version number of the swig executable
+MESSAGE(STATUS "SWIG_FOUND ${SWIG_FOUND}")
+MESSAGE(STATUS "SWIG_DIR ${SWIG_DIR}")
+MESSAGE(STATUS "SWIG_EXECUTABLE ${SWIG_EXECUTABLE}")
+MESSAGE(STATUS "SWIG_VERSION ${SWIG_VERSION}")
+
 # General source files
 file(GLOB_RECURSE SOURCE_FILES
   ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/*.c
