@@ -311,6 +311,10 @@ include_directories(
   )
 
 if(${CMAKE_PROJECT_NAME}_SWIG)
-  find_package(SWIG REQUIRED)
-  include(${SWIG_USE_FILE})
+  if(${CMAKE_VERSION} VERSION_LESS "3.11")
+    message("Please consider to switch to CMake 3.11 in order to use SWIG")
+  else()
+    find_package(SWIG REQUIRED)
+    include(${SWIG_USE_FILE})
+  endif()
 endif()
