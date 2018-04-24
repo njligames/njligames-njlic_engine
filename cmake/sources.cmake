@@ -1,20 +1,5 @@
 include(${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/macros.cmake)
 
-set(${CMAKE_PROJECT_NAME}_SWIG_ENABLED_BY_DEFAULT ON)
-
-set(${CMAKE_PROJECT_NAME}_SWIG ${${CMAKE_PROJECT_NAME}_SWIG_ENABLED_BY_DEFAULT} CACHE BOOL "Build the swig module for ${CMAKE_PROJECT_NAME}")
-
-list(APPEND CMAKE_MODULE_PATH "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake")
-
-#   SWIG_FOUND - set to true if SWIG is found
-#   SWIG_DIR - the directory where swig is installed
-#   SWIG_EXECUTABLE - the path to the swig executable
-#   SWIG_VERSION   - the version number of the swig executable
-MESSAGE(STATUS "SWIG_FOUND ${SWIG_FOUND}")
-MESSAGE(STATUS "SWIG_DIR ${SWIG_DIR}")
-MESSAGE(STATUS "SWIG_EXECUTABLE ${SWIG_EXECUTABLE}")
-MESSAGE(STATUS "SWIG_VERSION ${SWIG_VERSION}")
-
 # General source files
 file(GLOB_RECURSE SOURCE_FILES
   ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/njli/*.c
@@ -310,11 +295,3 @@ include_directories(
   ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/lua/exts ${LUA_EXTS_INCLUDE_DIRECTORY_LIST}
   )
 
-if(${CMAKE_PROJECT_NAME}_SWIG)
-  if(${CMAKE_VERSION} VERSION_LESS "3.11")
-    message("Please consider to switch to CMake 3.11 in order to use SWIG")
-  else()
-    find_package(SWIG REQUIRED)
-    include(${SWIG_USE_FILE})
-  endif()
-endif()
