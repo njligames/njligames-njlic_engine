@@ -19,45 +19,49 @@ if(${CMAKE_PROJECT_NAME}_SWIG)
 
       include(${SWIG_USE_FILE})
 
-      # file(GLOB_RECURSE SWIG_SOURCE_FILES
-      #   ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/*.i
-      #   )
-      # foreach(_SWIG_SOURCE_FILE ${SWIG_SOURCE_FILES})
-      #   MESSAGE(STATUS "_SWIG_SOURCE_FILE ${_SWIG_SOURCE_FILE}")
-      # endforeach()
+      set(CMAKE_SWIG_FLAGS "")
 
-      # set(SWIG_LIBRARY_FILES "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i")
-      # file(APPEND SWIG_LIBRARY_FILES ${SOURCE_FILES})
-      # set(SWIG_LIBRARY_FILES ${SOURCE_FILES})
-      # file(APPEND SWIG_LIBRARY_FILES  "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i")
+      file(GLOB_RECURSE SWIG_SOURCE_FILES
+        ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/*.swg
+        )
 
-      # set_property(SOURCE "${SWIG_LIBRARY_FILES}" PROPERTY CPLUSPLUS ON)
-      # foreach(_SWIG_LIBRARY_FILE ${SWIG_LIBRARY_FILES})
-      #   MESSAGE(STATUS "_SWIG_LIBRARY_FILE ${_SWIG_LIBRARY_FILE}")
-      # endforeach()
-      
-      set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-fcompact")
-      set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-fvirtual")
-      set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-v")
-      set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-w201")
-      set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-w312")
-      set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-c++")
-      set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-includeall")
-      set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-ignoremissing")
-      # set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i" PROPERTIES SWIG_FLAGS "-features directors,autodoc=1")
+      list(APPEND SWIG_SOURCE_FILES
+        "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/njlic.i" 
+        )
+
+      foreach(_SWIG_SOURCE_FILE ${SWIG_SOURCE_FILES})
+        MESSAGE(STATUS "_SWIG_SOURCE_FILE ${_SWIG_SOURCE_FILE}")
+      endforeach()
+
+      SUBDIRLIST(SUBDIRS "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script" SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST)
+
+      set_source_files_properties( "${SWIG_SOURCE_FILES}"  PROPERTIES 
+        SWIG_FLAGS "-fcompact"
+        SWIG_FLAGS "-fvirtual"
+        SWIG_FLAGS "-v"
+        SWIG_FLAGS "-w201"
+        SWIG_FLAGS "-w312"
+        SWIG_FLAGS "-c++"
+        SWIG_FLAGS "-includeall"
+        CPLUSPLUS ON
+        SWIG_INCLUDE_DIRECTORIES ${SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST}
+        )
+
+      include_directories("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script" ${SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST})
+
+      foreach(_SWIGIN_SCRIPTS_INCLUDE_DIRECTORY ${SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST})
+        MESSAGE(STATUS "_SWIGIN_SCRIPTS_INCLUDE_DIRECTORY ${_SWIGIN_SCRIPTS_INCLUDE_DIRECTORY}")
+      endforeach()
 
       swig_add_library(
         ${CMAKE_PROJECT_NAME}-lua-static
-        TYPE SHARED
+        TYPE STATIC
         LANGUAGE lua
-        SOURCES "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/_LuaEntry.i"
+        SOURCES "${SWIG_SOURCE_FILES}"
         OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
         OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
       )
-      ADD_DEFINITIONS(-DNJLIC_SWIG)
-
-      SUBDIRLIST(SUBDIRS "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script" SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST)
-      include_directories("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script" ${SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST})
+      set_property(TARGET ${CMAKE_PROJECT_NAME}-lua-static PROPERTY SWIG_COMPILE_DEFINITIONS NJLIC_SWIG SWIG_TYPE_TABLE=myprojectname)
 
       TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}-lua-static ${CMAKE_PROJECT_NAME}-static)
 

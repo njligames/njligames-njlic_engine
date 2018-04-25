@@ -3,8 +3,8 @@
 %module njlic
 
 //MARK: Tested Ignore, successfully
-//              %include "_IgnoreNJLI.i"
-//              %include "_IgnorePlatform.i"
+//              %include "_IgnoreNJLIC.swg"
+//              %include "_IgnorePlatform.swg"
 //              #ifdef USE_BULLET_LIBRARY
 //              %import "/Users/jamesfolk/Documents/NJLI/External/thirdparty/swig.in/script/bullet3/_IgnoreBullet.i"
 //              #endif
@@ -30,36 +30,36 @@
 //              %include "AbstractPhysicsShape.i"
 //              %include "AbstractGeometry.i"
 //              
-//              #if defined(SWIGLUA)
-//              %import <lua/carrays.i>
-//              %import <lua/factory.i>
-//              %import <lua/lua_fnptr.i>
-//              %import <lua/std_common.i>
-//              %import <lua/std_deque.i>
-//              %import <lua/std_except.i>
-//              %import <lua/std_map.i>
-//              %import <lua/std_pair.i>
-//              %import <lua/std_string.i>
-//              %import <lua/std_vector.i>
-//              %import <lua/stl.i>
-//              %import <lua/typemaps.i>
-//              %import <lua/wchar.i>
-//              %import <lua/lua.swg>
-//              #endif
-//              
-//              %include "NJLIArray.i"
-//              %include "NJLICast.i"
-//              %include "NJLITypemaps.i"
-//              %include "NJLISwigOverwrite.i"
-//              
-//              //MARK: Tested Apply, successfully
-//              %include "_ApplyNJLI.i"
-//              %include "_ApplyPlatform.i"
-//              
-//              //MARK: Tested Rename, successfully
-//              %include "_RenameNJLI.i"
-//              %include "_RenamePlatform.i"
-//              
+#if defined(SWIGLUA)
+%import <lua/carrays.i>
+%import <lua/factory.i>
+%import <lua/lua_fnptr.i>
+%import <lua/std_common.i>
+%import <lua/std_deque.i>
+%import <lua/std_except.i>
+%import <lua/std_map.i>
+%import <lua/std_pair.i>
+%import <lua/std_string.i>
+%import <lua/std_vector.i>
+%import <lua/stl.i>
+%import <lua/typemaps.i>
+%import <lua/wchar.i>
+%import <lua/lua.swg>
+#endif
+
+//              %include "NJLICArray.swg"
+//              %include "NJLICCast.swg"
+//              %include "NJLICSwigOverwrite.swg"
+//              %include "NJLICTypemaps.swg"
+
+//MARK: Tested Apply, successfully
+//              %include "_ApplyNJLIC.swg"
+//              %include "_ApplyPlatform.swg"
+
+//MARK: Tested Rename, successfully
+//              %include "_RenameNJLIC.swg"
+//              %include "_RenamePlatform.swg"
+
 #if defined(SWIGLUA)
 //MARK: %luacode wrapper doesn't work in an external file.
 %luacode
@@ -71,10 +71,10 @@
     greet()
 %}
 #endif
-//              
-//              %insert("runtime")
-//              
-//              %{
+
+%insert("runtime")
+
+%{
 //              #include "AbstractActionable.h"
 //              #include "AbstractBuilder.h"
 //              #include "AbstractClock.h"
@@ -293,17 +293,16 @@
 //              #include "WorldInput.h"
 //              //#include "WorldPythonVirtualMachine.h"
 //              #include "WorldSound.h"
-//              %}
-//              
-//              //MARK: Tested Template, successfully
-//              %include "_TemplatePlatform.i"
-//              %include "_TemplateNJLI.i"
-//              
-//              
-//              //MARK: Tested Array, succesfully.
-//              %include "_ArrayPlatform.i"
-//              %include "_ArrayNJLI.i"
-//              
+%}
+
+//MARK: Tested Template, successfully
+//              %include "_TemplatePlatform.swg"
+//              %include "_TemplateNJLIC.swg"
+
+//MARK: Tested Array, succesfully.
+//              %include "_ArrayPlatform.swg"
+//              %include "_ArrayNJLIC.swg"
+
 //              //MARK: Tested Factory, successfully
 //              //%include "AbstractActionable.i"
 //              //%include "AbstractBuilder.i"

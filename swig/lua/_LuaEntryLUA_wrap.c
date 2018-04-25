@@ -2649,10 +2649,544 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 /* ------------------------------ end luarun.swg  ------------------------------ */
 
 
+//              #include "AbstractActionable.h"
+//              #include "AbstractBuilder.h"
+//              #include "AbstractClock.h"
+//              #include "AbstractDecorator.h"
+//              #include "AbstractFactoryObject.h"
+//              #include "AbstractFrameBufferObject.h"
+//              #include "AbstractObject.h"
+//              #include "AbstractRender.h"
+//              #include "AbstractState.h"
+//              #include "AbstractStateMachine.h"
+//              #include "AbstractTransform.h"
+//              #include "Action.h"
+//              #include "ActionBuilder.h"
+//              #include "Camera.h"
+//              #include "CameraBuilder.h"
+//              #include "Clock.h"
+//              #include "ClockBuilder.h"
+//              #include "CollisionResponse.h"
+//              #include "CollisionResponseBuilder.h"
+//              #include "Cube.h"
+//              #include "CubeBuilder.h"
+//              #include "Font.h"
+//              #include "FontBuilder.h"
+//              //#include "GameClock.h"
+//              #include "Geometry.h"
+//              #include "Image.h"
+//              #include "ImageBuilder.h"
+//              //#include "JLIBuilders.h"
+//              //#include "JLIEngine.h"
+//              #include "JLIFactoryTypes.h"
+//              //#include "JLITransform.h"
+//              #include "JsonJLI.h"
+//              #include "JsonJLIBuilder.h"
+//              #include "LevelOfDetail.h"
+//              #include "LevelOfDetailBuilder.h"
+//              #include "Light.h"
+//              #include "LightBuilder.h"
+//              //#include "Lua.h"
+//              //#include "LuaBuilder.h"
+//              #include "Material.h"
+//              #include "MaterialBuilder.h"
+//              #include "MaterialProperty.h"
+//              #include "MaterialPropertyBuilder.h"
+//              #include "Node.h"
+//              #include "NodeBuilder.h"
+//              #include "NodeState.h"
+//              #include "NodeStateBuilder.h"
+//              #include "NodeStateMachine.h"
+//              #include "NodeStateMachineBuilder.h"
+//              #include "ParticleEmitter.h"
+//              #include "ParticleEmitterBuilder.h"
+//              #include "PhysicsBody.h"
+//              #include "PhysicsBodyGhost.h"
+//              #include "PhysicsBodyGhostBuilder.h"
+//              #include "PhysicsBodyRigid.h"
+//              #include "PhysicsBodyRigidBuilder.h"
+//              #include "PhysicsBodySoft.h"
+//              #include "PhysicsBodySoftBuilder.h"
+//              #include "PhysicsCloseContact.h"
+//              #include "PhysicsCloseContactBuilder.h"
+//              #include "PhysicsConstraint.h"
+//              #include "PhysicsConstraintBuilder.h"
+//              #include "PhysicsConstraintConeTwist.h"
+//              #include "PhysicsConstraintConeTwistBuilder.h"
+//              #include "PhysicsConstraintFixed.h"
+//              #include "PhysicsConstraintFixedBuilder.h"
+//              #include "PhysicsConstraintGeneric6Dof.h"
+//              #include "PhysicsConstraintGeneric6DofBuilder.h"
+//              #include "PhysicsConstraintGeneric6DofSpring.h"
+//              #include "PhysicsConstraintGeneric6DofSpringBuilder.h"
+//              #include "PhysicsConstraintHinge.h"
+//              #include "PhysicsConstraintHingeBuilder.h"
+//              #include "PhysicsConstraintPointToPoint.h"
+//              #include "PhysicsConstraintPointToPointBuilder.h"
+//              #include "PhysicsConstraintSlider.h"
+//              #include "PhysicsConstraintSliderBuilder.h"
+//              #include "PhysicsContact.h"
+//              #include "PhysicsContactBuilder.h"
+//              #include "PhysicsField.h"
+//              #include "PhysicsFieldBuilder.h"
+//              #include "PhysicsRayContact.h"
+//              #include "PhysicsRayContactBuilder.h"
+//              #include "PhysicsShape.h"
+//              #include "PhysicsShapeBox.h"
+//              #include "PhysicsShapeBox2D.h"
+//              #include "PhysicsShapeBox2DBuilder.h"
+//              #include "PhysicsShapeBoxBuilder.h"
+//              #include "PhysicsShapeBvhTriangleMesh.h"
+//              #include "PhysicsShapeBvhTriangleMeshBuilder.h"
+//              #include "PhysicsShapeCapsule.h"
+//              #include "PhysicsShapeCapsuleBuilder.h"
+//              #include "PhysicsShapeCone.h"
+//              #include "PhysicsShapeConeBuilder.h"
+//              #include "PhysicsShapeConvexHull.h"
+//              #include "PhysicsShapeConvexHullBuilder.h"
+//              #include "PhysicsShapeConvexTriangleMesh.h"
+//              #include "PhysicsShapeConvexTriangleMeshBuilder.h"
+//              #include "PhysicsShapeCylinder.h"
+//              #include "PhysicsShapeCylinderBuilder.h"
+//              #include "PhysicsShapeHeightfieldTerrain.h"
+//              #include "PhysicsShapeHeightfieldTerrainBuilder.h"
+//              #include "PhysicsShapeMultiSphere.h"
+//              #include "PhysicsShapeMultiSphereBuilder.h"
+//              #include "PhysicsShapeSphere.h"
+//              #include "PhysicsShapeSphereBuilder.h"
+//              #include "PhysicsShapeStaticPlane.h"
+//              #include "PhysicsShapeStaticPlaneBuilder.h"
+//              #include "PhysicsWorld.h"
+//              #include "PhysicsWorldBuilder.h"
+//              #include "Plane.h"
+//              #include "PlaneBuilder.h"
+//              #include "Scene.h"
+//              #include "SceneBuilder.h"
+//              #include "SceneState.h"
+//              #include "SceneStateBuilder.h"
+//              #include "SceneStateMachine.h"
+//              #include "SceneStateMachineBuilder.h"
+//              #include "ShaderProgram.h"
+//              #include "ShaderProgramBuilder.h"
+//              #include "Skinner.h"
+//              #include "SkinnerBuilder.h"
+//              #include "SoundBuilder.h"
+//              #include "Sprite2D.h"
+//              #include "Sprite2DBuilder.h"
+//              #include "SpriteFrameAtlas.h"
+//              #include "SpriteFrameAtlasBuilder.h"
+//              #include "SteeringBehavior.h"
+//              #include "SteeringBehaviorBuilder.h"
+//              #include "SteeringBehaviorAlignment.h"
+//              #include "SteeringBehaviorAlignmentBuilder.h"
+//              #include "SteeringBehaviorArrive.h"
+//              #include "SteeringBehaviorArriveBuilder.h"
+//              #include "SteeringBehaviorCohesion.h"
+//              #include "SteeringBehaviorCohesionBuilder.h"
+//              #include "SteeringBehaviorEvade.h"
+//              #include "SteeringBehaviorEvadeBuilder.h"
+//              #include "SteeringBehaviorFlee.h"
+//              #include "SteeringBehaviorFleeBuilder.h"
+//              #include "SteeringBehaviorFollowPath.h"
+//              #include "SteeringBehaviorFollowPathBuilder.h"
+//              #include "SteeringBehaviorHide.h"
+//              #include "SteeringBehaviorHideBuilder.h"
+//              #include "SteeringBehaviorInterpose.h"
+//              #include "SteeringBehaviorInterposeBuilder.h"
+//              #include "SteeringBehaviorMachine.h"
+//              #include "SteeringBehaviorMachineBuilder.h"
+//              #include "SteeringBehaviorMachineDithered.h"
+//              #include "SteeringBehaviorMachineDitheredBuilder.h"
+//              #include "SteeringBehaviorMachinePrioritized.h"
+//              #include "SteeringBehaviorMachinePrioritizedBuilder.h"
+//              #include "SteeringBehaviorMachineWeighted.h"
+//              #include "SteeringBehaviorMachineWeightedBuilder.h"
+//              #include "SteeringBehaviorObstacleAvoidance.h"
+//              #include "SteeringBehaviorObstacleAvoidanceBuilder.h"
+//              #include "SteeringBehaviorOffsetPursuit.h"
+//              #include "SteeringBehaviorOffsetPursuitBuilder.h"
+//              #include "SteeringBehaviorPursuit.h"
+//              #include "SteeringBehaviorPursuitBuilder.h"
+//              #include "SteeringBehaviorSeek.h"
+//              #include "SteeringBehaviorSeekBuilder.h"
+//              #include "SteeringBehaviorSeparation.h"
+//              #include "SteeringBehaviorSeparationBuilder.h"
+//              #include "SteeringBehaviorWallAvoidance.h"
+//              #include "SteeringBehaviorWallAvoidanceBuilder.h"
+//              #include "SteeringBehaviorWander.h"
+//              #include "SteeringBehaviorWanderBuilder.h"
+//              #include "StopWatch.h"
+//              #include "StopWatchBuilder.h"
+//              #include "Thread.h"
+//              #include "ThreadBuilder.h"
+//              #include "Timer.h"
+//              #include "TimerBuilder.h"
+//              #include "World.h"
+//              #include "WorldClock.h"
+//              #include "WorldDebugDrawer.h"
+//              #include "WorldFactory.h"
+//              #ifdef USE_NANOVG_LIBRARY
+//                  #include "ButtonHUD.h"
+//                  #include "ButtonHUDBuilder.h"
+//                  #include "CheckboxHUD.h"
+//                  #include "CheckboxHUDBuilder.h"
+//                  #include "DropdownHUD.h"
+//                  #include "DropdownHUDBuilder.h"
+//                  #include "LabelHUD.h"
+//                  #include "LabelHUDBuilder.h"
+//                  #include "SliderHUD.h"
+//                  #include "SliderHUDBuilder.h"
+//                  #include "TextboxHUD.h"
+//                  #include "TextboxHUDBuilder.h"
+//                  #include "WorldHUD.h"
+//              #endif
+//              #include "WorldLuaVirtualMachine.h"
+//              #include "WorldResourceLoader.h"
+//              //#include "WorldSQLite.h"
+//              #include "WorldSocket.h"
+//              #include "WorldState.h"
+//              #include "WorldStateBuilder.h"
+//              #include "WorldStateMachine.h"
+//              #include "WorldStateMachineBuilder.h"
+//              #include "Xml.h"
+//              #include "XmlBuilder.h"
+//              //#########################################################################################################
+//              #include "DeviceInputTime.h"
+//              #include "DeviceTouch.h"
+//              #include "File.h"
+//              //#include "Game.h"
+//              //#include "JLIAssetUtil.h"
+//              //#include "JLIFileUtil.h"
+//              #include "Localization.h"
+//              #include "Log.h"
+//              #include "Macros.h"
+//              #include "Sound.h"
+//              #include "Util.h"
+//              #include "ColorUtil.h"
+//              //#include "WorldFacebook.h"
+//              #include "WorldInput.h"
+//              //#include "WorldPythonVirtualMachine.h"
+//              #include "WorldSound.h"
+
+
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-static swig_type_info *swig_types[1];
-static swig_module_info swig_module = {swig_types, 0, 0, 0, 0, 0};
+#define SWIGTYPE_p_f32 swig_types[0]
+#define SWIGTYPE_p_f64 swig_types[1]
+#define SWIGTYPE_p_njli__Action swig_types[2]
+#define SWIGTYPE_p_njli__ActionBuilder swig_types[3]
+#define SWIGTYPE_p_njli__Camera swig_types[4]
+#define SWIGTYPE_p_njli__CameraBuilder swig_types[5]
+#define SWIGTYPE_p_njli__Clock swig_types[6]
+#define SWIGTYPE_p_njli__ClockBuilder swig_types[7]
+#define SWIGTYPE_p_njli__CollisionResponse swig_types[8]
+#define SWIGTYPE_p_njli__CollisionResponseBuilder swig_types[9]
+#define SWIGTYPE_p_njli__Cube swig_types[10]
+#define SWIGTYPE_p_njli__CubeBuilder swig_types[11]
+#define SWIGTYPE_p_njli__Font swig_types[12]
+#define SWIGTYPE_p_njli__FontBuilder swig_types[13]
+#define SWIGTYPE_p_njli__Image swig_types[14]
+#define SWIGTYPE_p_njli__ImageBuilder swig_types[15]
+#define SWIGTYPE_p_njli__JsonJLI swig_types[16]
+#define SWIGTYPE_p_njli__JsonJLIBuilder swig_types[17]
+#define SWIGTYPE_p_njli__LevelOfDetail swig_types[18]
+#define SWIGTYPE_p_njli__LevelOfDetailBuilder swig_types[19]
+#define SWIGTYPE_p_njli__Light swig_types[20]
+#define SWIGTYPE_p_njli__LightBuilder swig_types[21]
+#define SWIGTYPE_p_njli__Material swig_types[22]
+#define SWIGTYPE_p_njli__MaterialBuilder swig_types[23]
+#define SWIGTYPE_p_njli__MaterialProperty swig_types[24]
+#define SWIGTYPE_p_njli__MaterialPropertyBuilder swig_types[25]
+#define SWIGTYPE_p_njli__Node swig_types[26]
+#define SWIGTYPE_p_njli__NodeBuilder swig_types[27]
+#define SWIGTYPE_p_njli__NodeState swig_types[28]
+#define SWIGTYPE_p_njli__NodeStateBuilder swig_types[29]
+#define SWIGTYPE_p_njli__NodeStateMachine swig_types[30]
+#define SWIGTYPE_p_njli__NodeStateMachineBuilder swig_types[31]
+#define SWIGTYPE_p_njli__ParticleEmitter swig_types[32]
+#define SWIGTYPE_p_njli__ParticleEmitterBuilder swig_types[33]
+#define SWIGTYPE_p_njli__PhysicsBodyGhost swig_types[34]
+#define SWIGTYPE_p_njli__PhysicsBodyGhostBuilder swig_types[35]
+#define SWIGTYPE_p_njli__PhysicsBodyRigid swig_types[36]
+#define SWIGTYPE_p_njli__PhysicsBodyRigidBuilder swig_types[37]
+#define SWIGTYPE_p_njli__PhysicsBodySoft swig_types[38]
+#define SWIGTYPE_p_njli__PhysicsBodySoftBuilder swig_types[39]
+#define SWIGTYPE_p_njli__PhysicsCloseContact swig_types[40]
+#define SWIGTYPE_p_njli__PhysicsCloseContactBuilder swig_types[41]
+#define SWIGTYPE_p_njli__PhysicsConstraint swig_types[42]
+#define SWIGTYPE_p_njli__PhysicsConstraintBuilder swig_types[43]
+#define SWIGTYPE_p_njli__PhysicsConstraintConeTwist swig_types[44]
+#define SWIGTYPE_p_njli__PhysicsConstraintConeTwistBuilder swig_types[45]
+#define SWIGTYPE_p_njli__PhysicsConstraintFixed swig_types[46]
+#define SWIGTYPE_p_njli__PhysicsConstraintFixedBuilder swig_types[47]
+#define SWIGTYPE_p_njli__PhysicsConstraintGeneric6Dof swig_types[48]
+#define SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofBuilder swig_types[49]
+#define SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofSpring swig_types[50]
+#define SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofSpringBuilder swig_types[51]
+#define SWIGTYPE_p_njli__PhysicsConstraintHinge swig_types[52]
+#define SWIGTYPE_p_njli__PhysicsConstraintHingeBuilder swig_types[53]
+#define SWIGTYPE_p_njli__PhysicsConstraintPointToPoint swig_types[54]
+#define SWIGTYPE_p_njli__PhysicsConstraintPointToPointBuilder swig_types[55]
+#define SWIGTYPE_p_njli__PhysicsConstraintSlider swig_types[56]
+#define SWIGTYPE_p_njli__PhysicsConstraintSliderBuilder swig_types[57]
+#define SWIGTYPE_p_njli__PhysicsContact swig_types[58]
+#define SWIGTYPE_p_njli__PhysicsContactBuilder swig_types[59]
+#define SWIGTYPE_p_njli__PhysicsField swig_types[60]
+#define SWIGTYPE_p_njli__PhysicsFieldBuilder swig_types[61]
+#define SWIGTYPE_p_njli__PhysicsRayContact swig_types[62]
+#define SWIGTYPE_p_njli__PhysicsRayContactBuilder swig_types[63]
+#define SWIGTYPE_p_njli__PhysicsShapeBox swig_types[64]
+#define SWIGTYPE_p_njli__PhysicsShapeBox2D swig_types[65]
+#define SWIGTYPE_p_njli__PhysicsShapeBox2DBuilder swig_types[66]
+#define SWIGTYPE_p_njli__PhysicsShapeBoxBuilder swig_types[67]
+#define SWIGTYPE_p_njli__PhysicsShapeBvhTriangleMesh swig_types[68]
+#define SWIGTYPE_p_njli__PhysicsShapeBvhTriangleMeshBuilder swig_types[69]
+#define SWIGTYPE_p_njli__PhysicsShapeCapsule swig_types[70]
+#define SWIGTYPE_p_njli__PhysicsShapeCapsuleBuilder swig_types[71]
+#define SWIGTYPE_p_njli__PhysicsShapeCone swig_types[72]
+#define SWIGTYPE_p_njli__PhysicsShapeConeBuilder swig_types[73]
+#define SWIGTYPE_p_njli__PhysicsShapeConvexHull swig_types[74]
+#define SWIGTYPE_p_njli__PhysicsShapeConvexHullBuilder swig_types[75]
+#define SWIGTYPE_p_njli__PhysicsShapeConvexTriangleMesh swig_types[76]
+#define SWIGTYPE_p_njli__PhysicsShapeConvexTriangleMeshBuilder swig_types[77]
+#define SWIGTYPE_p_njli__PhysicsShapeCylinder swig_types[78]
+#define SWIGTYPE_p_njli__PhysicsShapeCylinderBuilder swig_types[79]
+#define SWIGTYPE_p_njli__PhysicsShapeHeightfieldTerrain swig_types[80]
+#define SWIGTYPE_p_njli__PhysicsShapeHeightfieldTerrainBuilder swig_types[81]
+#define SWIGTYPE_p_njli__PhysicsShapeMultiSphere swig_types[82]
+#define SWIGTYPE_p_njli__PhysicsShapeMultiSphereBuilder swig_types[83]
+#define SWIGTYPE_p_njli__PhysicsShapeSphere swig_types[84]
+#define SWIGTYPE_p_njli__PhysicsShapeSphereBuilder swig_types[85]
+#define SWIGTYPE_p_njli__PhysicsShapeStaticPlane swig_types[86]
+#define SWIGTYPE_p_njli__PhysicsShapeStaticPlaneBuilder swig_types[87]
+#define SWIGTYPE_p_njli__PhysicsWorld swig_types[88]
+#define SWIGTYPE_p_njli__PhysicsWorldBuilder swig_types[89]
+#define SWIGTYPE_p_njli__Plane swig_types[90]
+#define SWIGTYPE_p_njli__PlaneBuilder swig_types[91]
+#define SWIGTYPE_p_njli__Scene swig_types[92]
+#define SWIGTYPE_p_njli__SceneBuilder swig_types[93]
+#define SWIGTYPE_p_njli__SceneState swig_types[94]
+#define SWIGTYPE_p_njli__SceneStateBuilder swig_types[95]
+#define SWIGTYPE_p_njli__SceneStateMachine swig_types[96]
+#define SWIGTYPE_p_njli__SceneStateMachineBuilder swig_types[97]
+#define SWIGTYPE_p_njli__ShaderProgram swig_types[98]
+#define SWIGTYPE_p_njli__ShaderProgramBuilder swig_types[99]
+#define SWIGTYPE_p_njli__Skinner swig_types[100]
+#define SWIGTYPE_p_njli__SkinnerBuilder swig_types[101]
+#define SWIGTYPE_p_njli__Sound swig_types[102]
+#define SWIGTYPE_p_njli__SoundBuilder swig_types[103]
+#define SWIGTYPE_p_njli__Sprite2D swig_types[104]
+#define SWIGTYPE_p_njli__Sprite2DBuilder swig_types[105]
+#define SWIGTYPE_p_njli__SpriteFrameAtlas swig_types[106]
+#define SWIGTYPE_p_njli__SpriteFrameAtlasBuilder swig_types[107]
+#define SWIGTYPE_p_njli__SteeringBehaviorAlignment swig_types[108]
+#define SWIGTYPE_p_njli__SteeringBehaviorAlignmentBuilder swig_types[109]
+#define SWIGTYPE_p_njli__SteeringBehaviorArrive swig_types[110]
+#define SWIGTYPE_p_njli__SteeringBehaviorArriveBuilder swig_types[111]
+#define SWIGTYPE_p_njli__SteeringBehaviorCohesion swig_types[112]
+#define SWIGTYPE_p_njli__SteeringBehaviorCohesionBuilder swig_types[113]
+#define SWIGTYPE_p_njli__SteeringBehaviorEvade swig_types[114]
+#define SWIGTYPE_p_njli__SteeringBehaviorEvadeBuilder swig_types[115]
+#define SWIGTYPE_p_njli__SteeringBehaviorFlee swig_types[116]
+#define SWIGTYPE_p_njli__SteeringBehaviorFleeBuilder swig_types[117]
+#define SWIGTYPE_p_njli__SteeringBehaviorFollowPath swig_types[118]
+#define SWIGTYPE_p_njli__SteeringBehaviorFollowPathBuilder swig_types[119]
+#define SWIGTYPE_p_njli__SteeringBehaviorHide swig_types[120]
+#define SWIGTYPE_p_njli__SteeringBehaviorHideBuilder swig_types[121]
+#define SWIGTYPE_p_njli__SteeringBehaviorInterpose swig_types[122]
+#define SWIGTYPE_p_njli__SteeringBehaviorInterposeBuilder swig_types[123]
+#define SWIGTYPE_p_njli__SteeringBehaviorMachineDithered swig_types[124]
+#define SWIGTYPE_p_njli__SteeringBehaviorMachineDitheredBuilder swig_types[125]
+#define SWIGTYPE_p_njli__SteeringBehaviorMachinePrioritized swig_types[126]
+#define SWIGTYPE_p_njli__SteeringBehaviorMachinePrioritizedBuilder swig_types[127]
+#define SWIGTYPE_p_njli__SteeringBehaviorMachineWeighted swig_types[128]
+#define SWIGTYPE_p_njli__SteeringBehaviorMachineWeightedBuilder swig_types[129]
+#define SWIGTYPE_p_njli__SteeringBehaviorObstacleAvoidance swig_types[130]
+#define SWIGTYPE_p_njli__SteeringBehaviorObstacleAvoidanceBuilder swig_types[131]
+#define SWIGTYPE_p_njli__SteeringBehaviorOffsetPursuit swig_types[132]
+#define SWIGTYPE_p_njli__SteeringBehaviorOffsetPursuitBuilder swig_types[133]
+#define SWIGTYPE_p_njli__SteeringBehaviorPursuit swig_types[134]
+#define SWIGTYPE_p_njli__SteeringBehaviorPursuitBuilder swig_types[135]
+#define SWIGTYPE_p_njli__SteeringBehaviorSeek swig_types[136]
+#define SWIGTYPE_p_njli__SteeringBehaviorSeekBuilder swig_types[137]
+#define SWIGTYPE_p_njli__SteeringBehaviorSeparation swig_types[138]
+#define SWIGTYPE_p_njli__SteeringBehaviorSeparationBuilder swig_types[139]
+#define SWIGTYPE_p_njli__SteeringBehaviorWallAvoidance swig_types[140]
+#define SWIGTYPE_p_njli__SteeringBehaviorWallAvoidanceBuilder swig_types[141]
+#define SWIGTYPE_p_njli__SteeringBehaviorWander swig_types[142]
+#define SWIGTYPE_p_njli__SteeringBehaviorWanderBuilder swig_types[143]
+#define SWIGTYPE_p_njli__StopWatch swig_types[144]
+#define SWIGTYPE_p_njli__StopWatchBuilder swig_types[145]
+#define SWIGTYPE_p_njli__Timer swig_types[146]
+#define SWIGTYPE_p_njli__TimerBuilder swig_types[147]
+#define SWIGTYPE_p_njli__WorldState swig_types[148]
+#define SWIGTYPE_p_njli__WorldStateBuilder swig_types[149]
+#define SWIGTYPE_p_njli__WorldStateMachine swig_types[150]
+#define SWIGTYPE_p_njli__WorldStateMachineBuilder swig_types[151]
+#define SWIGTYPE_p_njli__Xml swig_types[152]
+#define SWIGTYPE_p_njli__XmlBuilder swig_types[153]
+#define SWIGTYPE_p_p_njli__Action swig_types[154]
+#define SWIGTYPE_p_p_njli__ActionBuilder swig_types[155]
+#define SWIGTYPE_p_p_njli__Camera swig_types[156]
+#define SWIGTYPE_p_p_njli__CameraBuilder swig_types[157]
+#define SWIGTYPE_p_p_njli__Clock swig_types[158]
+#define SWIGTYPE_p_p_njli__ClockBuilder swig_types[159]
+#define SWIGTYPE_p_p_njli__CollisionResponse swig_types[160]
+#define SWIGTYPE_p_p_njli__CollisionResponseBuilder swig_types[161]
+#define SWIGTYPE_p_p_njli__Cube swig_types[162]
+#define SWIGTYPE_p_p_njli__CubeBuilder swig_types[163]
+#define SWIGTYPE_p_p_njli__Font swig_types[164]
+#define SWIGTYPE_p_p_njli__FontBuilder swig_types[165]
+#define SWIGTYPE_p_p_njli__Image swig_types[166]
+#define SWIGTYPE_p_p_njli__ImageBuilder swig_types[167]
+#define SWIGTYPE_p_p_njli__JsonJLI swig_types[168]
+#define SWIGTYPE_p_p_njli__JsonJLIBuilder swig_types[169]
+#define SWIGTYPE_p_p_njli__LevelOfDetail swig_types[170]
+#define SWIGTYPE_p_p_njli__LevelOfDetailBuilder swig_types[171]
+#define SWIGTYPE_p_p_njli__Light swig_types[172]
+#define SWIGTYPE_p_p_njli__LightBuilder swig_types[173]
+#define SWIGTYPE_p_p_njli__Material swig_types[174]
+#define SWIGTYPE_p_p_njli__MaterialBuilder swig_types[175]
+#define SWIGTYPE_p_p_njli__MaterialProperty swig_types[176]
+#define SWIGTYPE_p_p_njli__MaterialPropertyBuilder swig_types[177]
+#define SWIGTYPE_p_p_njli__Node swig_types[178]
+#define SWIGTYPE_p_p_njli__NodeBuilder swig_types[179]
+#define SWIGTYPE_p_p_njli__NodeState swig_types[180]
+#define SWIGTYPE_p_p_njli__NodeStateBuilder swig_types[181]
+#define SWIGTYPE_p_p_njli__NodeStateMachine swig_types[182]
+#define SWIGTYPE_p_p_njli__NodeStateMachineBuilder swig_types[183]
+#define SWIGTYPE_p_p_njli__ParticleEmitter swig_types[184]
+#define SWIGTYPE_p_p_njli__ParticleEmitterBuilder swig_types[185]
+#define SWIGTYPE_p_p_njli__PhysicsBodyGhost swig_types[186]
+#define SWIGTYPE_p_p_njli__PhysicsBodyGhostBuilder swig_types[187]
+#define SWIGTYPE_p_p_njli__PhysicsBodyRigid swig_types[188]
+#define SWIGTYPE_p_p_njli__PhysicsBodyRigidBuilder swig_types[189]
+#define SWIGTYPE_p_p_njli__PhysicsBodySoft swig_types[190]
+#define SWIGTYPE_p_p_njli__PhysicsBodySoftBuilder swig_types[191]
+#define SWIGTYPE_p_p_njli__PhysicsCloseContact swig_types[192]
+#define SWIGTYPE_p_p_njli__PhysicsCloseContactBuilder swig_types[193]
+#define SWIGTYPE_p_p_njli__PhysicsConstraint swig_types[194]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintBuilder swig_types[195]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintConeTwist swig_types[196]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintConeTwistBuilder swig_types[197]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintFixed swig_types[198]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintFixedBuilder swig_types[199]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6Dof swig_types[200]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofBuilder swig_types[201]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpring swig_types[202]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder swig_types[203]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintHinge swig_types[204]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintHingeBuilder swig_types[205]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintPointToPoint swig_types[206]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintPointToPointBuilder swig_types[207]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintSlider swig_types[208]
+#define SWIGTYPE_p_p_njli__PhysicsConstraintSliderBuilder swig_types[209]
+#define SWIGTYPE_p_p_njli__PhysicsContact swig_types[210]
+#define SWIGTYPE_p_p_njli__PhysicsContactBuilder swig_types[211]
+#define SWIGTYPE_p_p_njli__PhysicsField swig_types[212]
+#define SWIGTYPE_p_p_njli__PhysicsFieldBuilder swig_types[213]
+#define SWIGTYPE_p_p_njli__PhysicsRayContact swig_types[214]
+#define SWIGTYPE_p_p_njli__PhysicsRayContactBuilder swig_types[215]
+#define SWIGTYPE_p_p_njli__PhysicsShapeBox swig_types[216]
+#define SWIGTYPE_p_p_njli__PhysicsShapeBox2D swig_types[217]
+#define SWIGTYPE_p_p_njli__PhysicsShapeBox2DBuilder swig_types[218]
+#define SWIGTYPE_p_p_njli__PhysicsShapeBoxBuilder swig_types[219]
+#define SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMesh swig_types[220]
+#define SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder swig_types[221]
+#define SWIGTYPE_p_p_njli__PhysicsShapeCapsule swig_types[222]
+#define SWIGTYPE_p_p_njli__PhysicsShapeCapsuleBuilder swig_types[223]
+#define SWIGTYPE_p_p_njli__PhysicsShapeCone swig_types[224]
+#define SWIGTYPE_p_p_njli__PhysicsShapeConeBuilder swig_types[225]
+#define SWIGTYPE_p_p_njli__PhysicsShapeConvexHull swig_types[226]
+#define SWIGTYPE_p_p_njli__PhysicsShapeConvexHullBuilder swig_types[227]
+#define SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMesh swig_types[228]
+#define SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder swig_types[229]
+#define SWIGTYPE_p_p_njli__PhysicsShapeCylinder swig_types[230]
+#define SWIGTYPE_p_p_njli__PhysicsShapeCylinderBuilder swig_types[231]
+#define SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrain swig_types[232]
+#define SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder swig_types[233]
+#define SWIGTYPE_p_p_njli__PhysicsShapeMultiSphere swig_types[234]
+#define SWIGTYPE_p_p_njli__PhysicsShapeMultiSphereBuilder swig_types[235]
+#define SWIGTYPE_p_p_njli__PhysicsShapeSphere swig_types[236]
+#define SWIGTYPE_p_p_njli__PhysicsShapeSphereBuilder swig_types[237]
+#define SWIGTYPE_p_p_njli__PhysicsShapeStaticPlane swig_types[238]
+#define SWIGTYPE_p_p_njli__PhysicsShapeStaticPlaneBuilder swig_types[239]
+#define SWIGTYPE_p_p_njli__PhysicsWorld swig_types[240]
+#define SWIGTYPE_p_p_njli__PhysicsWorldBuilder swig_types[241]
+#define SWIGTYPE_p_p_njli__Plane swig_types[242]
+#define SWIGTYPE_p_p_njli__PlaneBuilder swig_types[243]
+#define SWIGTYPE_p_p_njli__Scene swig_types[244]
+#define SWIGTYPE_p_p_njli__SceneBuilder swig_types[245]
+#define SWIGTYPE_p_p_njli__SceneState swig_types[246]
+#define SWIGTYPE_p_p_njli__SceneStateBuilder swig_types[247]
+#define SWIGTYPE_p_p_njli__SceneStateMachine swig_types[248]
+#define SWIGTYPE_p_p_njli__SceneStateMachineBuilder swig_types[249]
+#define SWIGTYPE_p_p_njli__ShaderProgram swig_types[250]
+#define SWIGTYPE_p_p_njli__ShaderProgramBuilder swig_types[251]
+#define SWIGTYPE_p_p_njli__Skinner swig_types[252]
+#define SWIGTYPE_p_p_njli__SkinnerBuilder swig_types[253]
+#define SWIGTYPE_p_p_njli__Sound swig_types[254]
+#define SWIGTYPE_p_p_njli__SoundBuilder swig_types[255]
+#define SWIGTYPE_p_p_njli__Sprite2D swig_types[256]
+#define SWIGTYPE_p_p_njli__Sprite2DBuilder swig_types[257]
+#define SWIGTYPE_p_p_njli__SpriteFrameAtlas swig_types[258]
+#define SWIGTYPE_p_p_njli__SpriteFrameAtlasBuilder swig_types[259]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorAlignment swig_types[260]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorAlignmentBuilder swig_types[261]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorArrive swig_types[262]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorArriveBuilder swig_types[263]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorCohesion swig_types[264]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorCohesionBuilder swig_types[265]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorEvade swig_types[266]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorEvadeBuilder swig_types[267]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorFlee swig_types[268]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorFleeBuilder swig_types[269]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorFollowPath swig_types[270]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorFollowPathBuilder swig_types[271]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorHide swig_types[272]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorHideBuilder swig_types[273]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorInterpose swig_types[274]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorInterposeBuilder swig_types[275]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorMachineDithered swig_types[276]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorMachineDitheredBuilder swig_types[277]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritized swig_types[278]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder swig_types[279]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeighted swig_types[280]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeightedBuilder swig_types[281]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidance swig_types[282]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder swig_types[283]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuit swig_types[284]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuitBuilder swig_types[285]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorPursuit swig_types[286]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorPursuitBuilder swig_types[287]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorSeek swig_types[288]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorSeekBuilder swig_types[289]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorSeparation swig_types[290]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorSeparationBuilder swig_types[291]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidance swig_types[292]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidanceBuilder swig_types[293]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorWander swig_types[294]
+#define SWIGTYPE_p_p_njli__SteeringBehaviorWanderBuilder swig_types[295]
+#define SWIGTYPE_p_p_njli__StopWatch swig_types[296]
+#define SWIGTYPE_p_p_njli__StopWatchBuilder swig_types[297]
+#define SWIGTYPE_p_p_njli__Timer swig_types[298]
+#define SWIGTYPE_p_p_njli__TimerBuilder swig_types[299]
+#define SWIGTYPE_p_p_njli__WorldState swig_types[300]
+#define SWIGTYPE_p_p_njli__WorldStateBuilder swig_types[301]
+#define SWIGTYPE_p_p_njli__WorldStateMachine swig_types[302]
+#define SWIGTYPE_p_p_njli__WorldStateMachineBuilder swig_types[303]
+#define SWIGTYPE_p_p_njli__Xml swig_types[304]
+#define SWIGTYPE_p_p_njli__XmlBuilder swig_types[305]
+#define SWIGTYPE_p_s16 swig_types[306]
+#define SWIGTYPE_p_s32 swig_types[307]
+#define SWIGTYPE_p_s64 swig_types[308]
+#define SWIGTYPE_p_s8 swig_types[309]
+#define SWIGTYPE_p_u16 swig_types[310]
+#define SWIGTYPE_p_u32 swig_types[311]
+#define SWIGTYPE_p_u64 swig_types[312]
+#define SWIGTYPE_p_u8 swig_types[313]
+static swig_type_info *swig_types[315];
+static swig_module_info swig_module = {swig_types, 314, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2663,9 +3197,20293 @@ static swig_module_info swig_module = {swig_types, 0, 0, 0, 0, 0};
 #define SWIG_init_user luaopen_njlic_user
 
 #define SWIG_LUACODE   luaopen_njlic_luacode
+
+#undef SWIG_fail_arg
+#define SWIG_fail_arg(func_name,argnum,type) \
+{lua_Debug ar;\
+lua_getstack(L, 1, &ar);\
+lua_getinfo(L, "nSl", &ar);\
+lua_pushfstring(L,"Error (%s:%d) in %s (arg %d), expected '%s' got '%s'",\
+ar.source,ar.currentline,func_name,argnum,type,SWIG_Lua_typename(L,argnum));\
+goto fail;}
+    
+
+#undef SWIG_check_num_args
+#define SWIG_check_num_args(func_name,a,b) \
+if(LUA_WRAPPER_LOGGING){\
+lua_Debug ar;\
+lua_getstack(L, 1, &ar);\
+lua_getinfo(L, "nSl", &ar);\
+printf("(%s:%d) in %s",\
+ar.short_src,ar.currentline,ar.name); \
+}\
+if (lua_gettop(L)<a || lua_gettop(L)>b) \
+{SWIG_Lua_pushferrstring(L,"Error in %s expected %d..%d args, got %d",func_name,a,b,lua_gettop(L));\
+goto fail;}
+    
+
+    static njli::Sound **new_SoundArray(int nelements) { 
+
+        return njli::Sound::createArray(nelements);
+        
+}
+    
+    static void delete_SoundArray(njli::Sound **ary) { 
+
+        njli::Sound::destroyArray(ary);
+        
+}
+    
+    static njli::Sound *SoundArray_getitem(njli::Sound **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SoundArray_setitem(njli::Sound **ary, int index, njli::Sound *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+static s8 *new_s8Array(int nelements) { 
+  return (s8 *) calloc(nelements,sizeof(s8)); 
+}
+
+static void delete_s8Array(s8 *ary) { 
+  free(ary); 
+}
+
+static s8 s8Array_getitem(s8 *ary, int index) {
+    return ary[index];
+}
+static void s8Array_setitem(s8 *ary, int index, s8 value) {
+    ary[index] = value;
+}
+
+
+static u8 *new_u8Array(int nelements) { 
+  return (u8 *) calloc(nelements,sizeof(u8)); 
+}
+
+static void delete_u8Array(u8 *ary) { 
+  free(ary); 
+}
+
+static u8 u8Array_getitem(u8 *ary, int index) {
+    return ary[index];
+}
+static void u8Array_setitem(u8 *ary, int index, u8 value) {
+    ary[index] = value;
+}
+
+
+static s16 *new_s16Array(int nelements) { 
+  return (s16 *) calloc(nelements,sizeof(s16)); 
+}
+
+static void delete_s16Array(s16 *ary) { 
+  free(ary); 
+}
+
+static s16 s16Array_getitem(s16 *ary, int index) {
+    return ary[index];
+}
+static void s16Array_setitem(s16 *ary, int index, s16 value) {
+    ary[index] = value;
+}
+
+
+static u16 *new_u16Array(int nelements) { 
+  return (u16 *) calloc(nelements,sizeof(u16)); 
+}
+
+static void delete_u16Array(u16 *ary) { 
+  free(ary); 
+}
+
+static u16 u16Array_getitem(u16 *ary, int index) {
+    return ary[index];
+}
+static void u16Array_setitem(u16 *ary, int index, u16 value) {
+    ary[index] = value;
+}
+
+
+static s32 *new_s32Array(int nelements) { 
+  return (s32 *) calloc(nelements,sizeof(s32)); 
+}
+
+static void delete_s32Array(s32 *ary) { 
+  free(ary); 
+}
+
+static s32 s32Array_getitem(s32 *ary, int index) {
+    return ary[index];
+}
+static void s32Array_setitem(s32 *ary, int index, s32 value) {
+    ary[index] = value;
+}
+
+
+static u32 *new_u32Array(int nelements) { 
+  return (u32 *) calloc(nelements,sizeof(u32)); 
+}
+
+static void delete_u32Array(u32 *ary) { 
+  free(ary); 
+}
+
+static u32 u32Array_getitem(u32 *ary, int index) {
+    return ary[index];
+}
+static void u32Array_setitem(u32 *ary, int index, u32 value) {
+    ary[index] = value;
+}
+
+
+static s64 *new_s64Array(int nelements) { 
+  return (s64 *) calloc(nelements,sizeof(s64)); 
+}
+
+static void delete_s64Array(s64 *ary) { 
+  free(ary); 
+}
+
+static s64 s64Array_getitem(s64 *ary, int index) {
+    return ary[index];
+}
+static void s64Array_setitem(s64 *ary, int index, s64 value) {
+    ary[index] = value;
+}
+
+
+static u64 *new_u64Array(int nelements) { 
+  return (u64 *) calloc(nelements,sizeof(u64)); 
+}
+
+static void delete_u64Array(u64 *ary) { 
+  free(ary); 
+}
+
+static u64 u64Array_getitem(u64 *ary, int index) {
+    return ary[index];
+}
+static void u64Array_setitem(u64 *ary, int index, u64 value) {
+    ary[index] = value;
+}
+
+
+static f32 *new_f32Array(int nelements) { 
+  return (f32 *) calloc(nelements,sizeof(f32)); 
+}
+
+static void delete_f32Array(f32 *ary) { 
+  free(ary); 
+}
+
+static f32 f32Array_getitem(f32 *ary, int index) {
+    return ary[index];
+}
+static void f32Array_setitem(f32 *ary, int index, f32 value) {
+    ary[index] = value;
+}
+
+
+static f64 *new_f64Array(int nelements) { 
+  return (f64 *) calloc(nelements,sizeof(f64)); 
+}
+
+static void delete_f64Array(f64 *ary) { 
+  free(ary); 
+}
+
+static f64 f64Array_getitem(f64 *ary, int index) {
+    return ary[index];
+}
+static void f64Array_setitem(f64 *ary, int index, f64 value) {
+    ary[index] = value;
+}
+
+
+    static njli::Action **new_ActionArray(int nelements) { 
+
+        return njli::Action::createArray(nelements);
+        
+}
+    
+    static void delete_ActionArray(njli::Action **ary) { 
+
+        njli::Action::destroyArray(ary);
+        
+}
+    
+    static njli::Action *ActionArray_getitem(njli::Action **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ActionArray_setitem(njli::Action **ary, int index, njli::Action *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::ActionBuilder **new_ActionBuilderArray(int nelements) { 
+
+        return njli::ActionBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_ActionBuilderArray(njli::ActionBuilder **ary) { 
+
+        njli::ActionBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::ActionBuilder *ActionBuilderArray_getitem(njli::ActionBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ActionBuilderArray_setitem(njli::ActionBuilder **ary, int index, njli::ActionBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Camera **new_CameraArray(int nelements) { 
+
+        return njli::Camera::createArray(nelements);
+        
+}
+    
+    static void delete_CameraArray(njli::Camera **ary) { 
+
+        njli::Camera::destroyArray(ary);
+        
+}
+    
+    static njli::Camera *CameraArray_getitem(njli::Camera **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void CameraArray_setitem(njli::Camera **ary, int index, njli::Camera *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::CameraBuilder **new_CameraBuilderArray(int nelements) { 
+
+        return njli::CameraBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_CameraBuilderArray(njli::CameraBuilder **ary) { 
+
+        njli::CameraBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::CameraBuilder *CameraBuilderArray_getitem(njli::CameraBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void CameraBuilderArray_setitem(njli::CameraBuilder **ary, int index, njli::CameraBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Clock **new_ClockArray(int nelements) { 
+
+        return njli::Clock::createArray(nelements);
+        
+}
+    
+    static void delete_ClockArray(njli::Clock **ary) { 
+
+        njli::Clock::destroyArray(ary);
+        
+}
+    
+    static njli::Clock *ClockArray_getitem(njli::Clock **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ClockArray_setitem(njli::Clock **ary, int index, njli::Clock *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::ClockBuilder **new_ClockBuilderArray(int nelements) { 
+
+        return njli::ClockBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_ClockBuilderArray(njli::ClockBuilder **ary) { 
+
+        njli::ClockBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::ClockBuilder *ClockBuilderArray_getitem(njli::ClockBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ClockBuilderArray_setitem(njli::ClockBuilder **ary, int index, njli::ClockBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::CollisionResponse **new_CollisionResponseArray(int nelements) { 
+
+        return njli::CollisionResponse::createArray(nelements);
+        
+}
+    
+    static void delete_CollisionResponseArray(njli::CollisionResponse **ary) { 
+
+        njli::CollisionResponse::destroyArray(ary);
+        
+}
+    
+    static njli::CollisionResponse *CollisionResponseArray_getitem(njli::CollisionResponse **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void CollisionResponseArray_setitem(njli::CollisionResponse **ary, int index, njli::CollisionResponse *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::CollisionResponseBuilder **new_CollisionResponseBuilderArray(int nelements) { 
+
+        return njli::CollisionResponseBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_CollisionResponseBuilderArray(njli::CollisionResponseBuilder **ary) { 
+
+        njli::CollisionResponseBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::CollisionResponseBuilder *CollisionResponseBuilderArray_getitem(njli::CollisionResponseBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void CollisionResponseBuilderArray_setitem(njli::CollisionResponseBuilder **ary, int index, njli::CollisionResponseBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Cube **new_CubeArray(int nelements) { 
+
+        return njli::Cube::createArray(nelements);
+        
+}
+    
+    static void delete_CubeArray(njli::Cube **ary) { 
+
+        njli::Cube::destroyArray(ary);
+        
+}
+    
+    static njli::Cube *CubeArray_getitem(njli::Cube **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void CubeArray_setitem(njli::Cube **ary, int index, njli::Cube *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::CubeBuilder **new_CubeBuilderArray(int nelements) { 
+
+        return njli::CubeBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_CubeBuilderArray(njli::CubeBuilder **ary) { 
+
+        njli::CubeBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::CubeBuilder *CubeBuilderArray_getitem(njli::CubeBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void CubeBuilderArray_setitem(njli::CubeBuilder **ary, int index, njli::CubeBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Font **new_FontArray(int nelements) { 
+
+        return njli::Font::createArray(nelements);
+        
+}
+    
+    static void delete_FontArray(njli::Font **ary) { 
+
+        njli::Font::destroyArray(ary);
+        
+}
+    
+    static njli::Font *FontArray_getitem(njli::Font **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void FontArray_setitem(njli::Font **ary, int index, njli::Font *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::FontBuilder **new_FontBuilderArray(int nelements) { 
+
+        return njli::FontBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_FontBuilderArray(njli::FontBuilder **ary) { 
+
+        njli::FontBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::FontBuilder *FontBuilderArray_getitem(njli::FontBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void FontBuilderArray_setitem(njli::FontBuilder **ary, int index, njli::FontBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Image **new_ImageArray(int nelements) { 
+
+        return njli::Image::createArray(nelements);
+        
+}
+    
+    static void delete_ImageArray(njli::Image **ary) { 
+
+        njli::Image::destroyArray(ary);
+        
+}
+    
+    static njli::Image *ImageArray_getitem(njli::Image **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ImageArray_setitem(njli::Image **ary, int index, njli::Image *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::ImageBuilder **new_ImageBuilderArray(int nelements) { 
+
+        return njli::ImageBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_ImageBuilderArray(njli::ImageBuilder **ary) { 
+
+        njli::ImageBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::ImageBuilder *ImageBuilderArray_getitem(njli::ImageBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ImageBuilderArray_setitem(njli::ImageBuilder **ary, int index, njli::ImageBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::JsonJLI **new_JsonJLIArray(int nelements) { 
+
+        return njli::JsonJLI::createArray(nelements);
+        
+}
+    
+    static void delete_JsonJLIArray(njli::JsonJLI **ary) { 
+
+        njli::JsonJLI::destroyArray(ary);
+        
+}
+    
+    static njli::JsonJLI *JsonJLIArray_getitem(njli::JsonJLI **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void JsonJLIArray_setitem(njli::JsonJLI **ary, int index, njli::JsonJLI *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::JsonJLIBuilder **new_JsonJLIBuilderArray(int nelements) { 
+
+        return njli::JsonJLIBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_JsonJLIBuilderArray(njli::JsonJLIBuilder **ary) { 
+
+        njli::JsonJLIBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::JsonJLIBuilder *JsonJLIBuilderArray_getitem(njli::JsonJLIBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void JsonJLIBuilderArray_setitem(njli::JsonJLIBuilder **ary, int index, njli::JsonJLIBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::LevelOfDetail **new_LevelOfDetailArray(int nelements) { 
+
+        return njli::LevelOfDetail::createArray(nelements);
+        
+}
+    
+    static void delete_LevelOfDetailArray(njli::LevelOfDetail **ary) { 
+
+        njli::LevelOfDetail::destroyArray(ary);
+        
+}
+    
+    static njli::LevelOfDetail *LevelOfDetailArray_getitem(njli::LevelOfDetail **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void LevelOfDetailArray_setitem(njli::LevelOfDetail **ary, int index, njli::LevelOfDetail *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::LevelOfDetailBuilder **new_LevelOfDetailBuilderArray(int nelements) { 
+
+        return njli::LevelOfDetailBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_LevelOfDetailBuilderArray(njli::LevelOfDetailBuilder **ary) { 
+
+        njli::LevelOfDetailBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::LevelOfDetailBuilder *LevelOfDetailBuilderArray_getitem(njli::LevelOfDetailBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void LevelOfDetailBuilderArray_setitem(njli::LevelOfDetailBuilder **ary, int index, njli::LevelOfDetailBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Light **new_LightArray(int nelements) { 
+
+        return njli::Light::createArray(nelements);
+        
+}
+    
+    static void delete_LightArray(njli::Light **ary) { 
+
+        njli::Light::destroyArray(ary);
+        
+}
+    
+    static njli::Light *LightArray_getitem(njli::Light **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void LightArray_setitem(njli::Light **ary, int index, njli::Light *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::LightBuilder **new_LightBuilderArray(int nelements) { 
+
+        return njli::LightBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_LightBuilderArray(njli::LightBuilder **ary) { 
+
+        njli::LightBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::LightBuilder *LightBuilderArray_getitem(njli::LightBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void LightBuilderArray_setitem(njli::LightBuilder **ary, int index, njli::LightBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Material **new_MaterialArray(int nelements) { 
+
+        return njli::Material::createArray(nelements);
+        
+}
+    
+    static void delete_MaterialArray(njli::Material **ary) { 
+
+        njli::Material::destroyArray(ary);
+        
+}
+    
+    static njli::Material *MaterialArray_getitem(njli::Material **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void MaterialArray_setitem(njli::Material **ary, int index, njli::Material *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::MaterialBuilder **new_MaterialBuilderArray(int nelements) { 
+
+        return njli::MaterialBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_MaterialBuilderArray(njli::MaterialBuilder **ary) { 
+
+        njli::MaterialBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::MaterialBuilder *MaterialBuilderArray_getitem(njli::MaterialBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void MaterialBuilderArray_setitem(njli::MaterialBuilder **ary, int index, njli::MaterialBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::MaterialProperty **new_MaterialPropertyArray(int nelements) { 
+
+        return njli::MaterialProperty::createArray(nelements);
+        
+}
+    
+    static void delete_MaterialPropertyArray(njli::MaterialProperty **ary) { 
+
+        njli::MaterialProperty::destroyArray(ary);
+        
+}
+    
+    static njli::MaterialProperty *MaterialPropertyArray_getitem(njli::MaterialProperty **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void MaterialPropertyArray_setitem(njli::MaterialProperty **ary, int index, njli::MaterialProperty *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::MaterialPropertyBuilder **new_MaterialPropertyBuilderArray(int nelements) { 
+
+        return njli::MaterialPropertyBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_MaterialPropertyBuilderArray(njli::MaterialPropertyBuilder **ary) { 
+
+        njli::MaterialPropertyBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::MaterialPropertyBuilder *MaterialPropertyBuilderArray_getitem(njli::MaterialPropertyBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void MaterialPropertyBuilderArray_setitem(njli::MaterialPropertyBuilder **ary, int index, njli::MaterialPropertyBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Node **new_NodeArray(int nelements) { 
+
+        return njli::Node::createArray(nelements);
+        
+}
+    
+    static void delete_NodeArray(njli::Node **ary) { 
+
+        njli::Node::destroyArray(ary);
+        
+}
+    
+    static njli::Node *NodeArray_getitem(njli::Node **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void NodeArray_setitem(njli::Node **ary, int index, njli::Node *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::NodeBuilder **new_NodeBuilderArray(int nelements) { 
+
+        return njli::NodeBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_NodeBuilderArray(njli::NodeBuilder **ary) { 
+
+        njli::NodeBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::NodeBuilder *NodeBuilderArray_getitem(njli::NodeBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void NodeBuilderArray_setitem(njli::NodeBuilder **ary, int index, njli::NodeBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::NodeState **new_NodeStateArray(int nelements) { 
+
+        return njli::NodeState::createArray(nelements);
+        
+}
+    
+    static void delete_NodeStateArray(njli::NodeState **ary) { 
+
+        njli::NodeState::destroyArray(ary);
+        
+}
+    
+    static njli::NodeState *NodeStateArray_getitem(njli::NodeState **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void NodeStateArray_setitem(njli::NodeState **ary, int index, njli::NodeState *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::NodeStateBuilder **new_NodeStateBuilderArray(int nelements) { 
+
+        return njli::NodeStateBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_NodeStateBuilderArray(njli::NodeStateBuilder **ary) { 
+
+        njli::NodeStateBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::NodeStateBuilder *NodeStateBuilderArray_getitem(njli::NodeStateBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void NodeStateBuilderArray_setitem(njli::NodeStateBuilder **ary, int index, njli::NodeStateBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::NodeStateMachine **new_NodeStateMachineArray(int nelements) { 
+
+        return njli::NodeStateMachine::createArray(nelements);
+        
+}
+    
+    static void delete_NodeStateMachineArray(njli::NodeStateMachine **ary) { 
+
+        njli::NodeStateMachine::destroyArray(ary);
+        
+}
+    
+    static njli::NodeStateMachine *NodeStateMachineArray_getitem(njli::NodeStateMachine **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void NodeStateMachineArray_setitem(njli::NodeStateMachine **ary, int index, njli::NodeStateMachine *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::NodeStateMachineBuilder **new_NodeStateMachineBuilderArray(int nelements) { 
+
+        return njli::NodeStateMachineBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_NodeStateMachineBuilderArray(njli::NodeStateMachineBuilder **ary) { 
+
+        njli::NodeStateMachineBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::NodeStateMachineBuilder *NodeStateMachineBuilderArray_getitem(njli::NodeStateMachineBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void NodeStateMachineBuilderArray_setitem(njli::NodeStateMachineBuilder **ary, int index, njli::NodeStateMachineBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::ParticleEmitter **new_ParticleEmitterArray(int nelements) { 
+
+        return njli::ParticleEmitter::createArray(nelements);
+        
+}
+    
+    static void delete_ParticleEmitterArray(njli::ParticleEmitter **ary) { 
+
+        njli::ParticleEmitter::destroyArray(ary);
+        
+}
+    
+    static njli::ParticleEmitter *ParticleEmitterArray_getitem(njli::ParticleEmitter **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ParticleEmitterArray_setitem(njli::ParticleEmitter **ary, int index, njli::ParticleEmitter *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::ParticleEmitterBuilder **new_ParticleEmitterBuilderArray(int nelements) { 
+
+        return njli::ParticleEmitterBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_ParticleEmitterBuilderArray(njli::ParticleEmitterBuilder **ary) { 
+
+        njli::ParticleEmitterBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::ParticleEmitterBuilder *ParticleEmitterBuilderArray_getitem(njli::ParticleEmitterBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ParticleEmitterBuilderArray_setitem(njli::ParticleEmitterBuilder **ary, int index, njli::ParticleEmitterBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsBodyGhost **new_PhysicsBodyGhostArray(int nelements) { 
+
+        return njli::PhysicsBodyGhost::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsBodyGhostArray(njli::PhysicsBodyGhost **ary) { 
+
+        njli::PhysicsBodyGhost::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsBodyGhost *PhysicsBodyGhostArray_getitem(njli::PhysicsBodyGhost **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsBodyGhostArray_setitem(njli::PhysicsBodyGhost **ary, int index, njli::PhysicsBodyGhost *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsBodyGhostBuilder **new_PhysicsBodyGhostBuilderArray(int nelements) { 
+
+        return njli::PhysicsBodyGhostBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsBodyGhostBuilderArray(njli::PhysicsBodyGhostBuilder **ary) { 
+
+        njli::PhysicsBodyGhostBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsBodyGhostBuilder *PhysicsBodyGhostBuilderArray_getitem(njli::PhysicsBodyGhostBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsBodyGhostBuilderArray_setitem(njli::PhysicsBodyGhostBuilder **ary, int index, njli::PhysicsBodyGhostBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsBodyRigid **new_PhysicsBodyRigidArray(int nelements) { 
+
+        return njli::PhysicsBodyRigid::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsBodyRigidArray(njli::PhysicsBodyRigid **ary) { 
+
+        njli::PhysicsBodyRigid::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsBodyRigid *PhysicsBodyRigidArray_getitem(njli::PhysicsBodyRigid **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsBodyRigidArray_setitem(njli::PhysicsBodyRigid **ary, int index, njli::PhysicsBodyRigid *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsBodyRigidBuilder **new_PhysicsBodyRigidBuilderArray(int nelements) { 
+
+        return njli::PhysicsBodyRigidBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsBodyRigidBuilderArray(njli::PhysicsBodyRigidBuilder **ary) { 
+
+        njli::PhysicsBodyRigidBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsBodyRigidBuilder *PhysicsBodyRigidBuilderArray_getitem(njli::PhysicsBodyRigidBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsBodyRigidBuilderArray_setitem(njli::PhysicsBodyRigidBuilder **ary, int index, njli::PhysicsBodyRigidBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsBodySoft **new_PhysicsBodySoftArray(int nelements) { 
+
+        return njli::PhysicsBodySoft::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsBodySoftArray(njli::PhysicsBodySoft **ary) { 
+
+        njli::PhysicsBodySoft::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsBodySoft *PhysicsBodySoftArray_getitem(njli::PhysicsBodySoft **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsBodySoftArray_setitem(njli::PhysicsBodySoft **ary, int index, njli::PhysicsBodySoft *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsBodySoftBuilder **new_PhysicsBodySoftBuilderArray(int nelements) { 
+
+        return njli::PhysicsBodySoftBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsBodySoftBuilderArray(njli::PhysicsBodySoftBuilder **ary) { 
+
+        njli::PhysicsBodySoftBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsBodySoftBuilder *PhysicsBodySoftBuilderArray_getitem(njli::PhysicsBodySoftBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsBodySoftBuilderArray_setitem(njli::PhysicsBodySoftBuilder **ary, int index, njli::PhysicsBodySoftBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsCloseContact **new_PhysicsCloseContactArray(int nelements) { 
+
+        return njli::PhysicsCloseContact::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsCloseContactArray(njli::PhysicsCloseContact **ary) { 
+
+        njli::PhysicsCloseContact::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsCloseContact *PhysicsCloseContactArray_getitem(njli::PhysicsCloseContact **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsCloseContactArray_setitem(njli::PhysicsCloseContact **ary, int index, njli::PhysicsCloseContact *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsCloseContactBuilder **new_PhysicsCloseContactBuilderArray(int nelements) { 
+
+        return njli::PhysicsCloseContactBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsCloseContactBuilderArray(njli::PhysicsCloseContactBuilder **ary) { 
+
+        njli::PhysicsCloseContactBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsCloseContactBuilder *PhysicsCloseContactBuilderArray_getitem(njli::PhysicsCloseContactBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsCloseContactBuilderArray_setitem(njli::PhysicsCloseContactBuilder **ary, int index, njli::PhysicsCloseContactBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraint **new_PhysicsConstraintArray(int nelements) { 
+
+        return njli::PhysicsConstraint::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintArray(njli::PhysicsConstraint **ary) { 
+
+        njli::PhysicsConstraint::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraint *PhysicsConstraintArray_getitem(njli::PhysicsConstraint **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintArray_setitem(njli::PhysicsConstraint **ary, int index, njli::PhysicsConstraint *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintBuilder **new_PhysicsConstraintBuilderArray(int nelements) { 
+
+        return njli::PhysicsConstraintBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintBuilderArray(njli::PhysicsConstraintBuilder **ary) { 
+
+        njli::PhysicsConstraintBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintBuilder *PhysicsConstraintBuilderArray_getitem(njli::PhysicsConstraintBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintBuilderArray_setitem(njli::PhysicsConstraintBuilder **ary, int index, njli::PhysicsConstraintBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintConeTwist **new_PhysicsConstraintConeTwistArray(int nelements) { 
+
+        return njli::PhysicsConstraintConeTwist::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintConeTwistArray(njli::PhysicsConstraintConeTwist **ary) { 
+
+        njli::PhysicsConstraintConeTwist::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintConeTwist *PhysicsConstraintConeTwistArray_getitem(njli::PhysicsConstraintConeTwist **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintConeTwistArray_setitem(njli::PhysicsConstraintConeTwist **ary, int index, njli::PhysicsConstraintConeTwist *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintConeTwistBuilder **new_PhysicsConstraintConeTwistBuilderArray(int nelements) { 
+
+        return njli::PhysicsConstraintConeTwistBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintConeTwistBuilderArray(njli::PhysicsConstraintConeTwistBuilder **ary) { 
+
+        njli::PhysicsConstraintConeTwistBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintConeTwistBuilder *PhysicsConstraintConeTwistBuilderArray_getitem(njli::PhysicsConstraintConeTwistBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintConeTwistBuilderArray_setitem(njli::PhysicsConstraintConeTwistBuilder **ary, int index, njli::PhysicsConstraintConeTwistBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintFixed **new_PhysicsConstraintFixedArray(int nelements) { 
+
+        return njli::PhysicsConstraintFixed::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintFixedArray(njli::PhysicsConstraintFixed **ary) { 
+
+        njli::PhysicsConstraintFixed::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintFixed *PhysicsConstraintFixedArray_getitem(njli::PhysicsConstraintFixed **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintFixedArray_setitem(njli::PhysicsConstraintFixed **ary, int index, njli::PhysicsConstraintFixed *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintFixedBuilder **new_PhysicsConstraintFixedBuilderArray(int nelements) { 
+
+        return njli::PhysicsConstraintFixedBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintFixedBuilderArray(njli::PhysicsConstraintFixedBuilder **ary) { 
+
+        njli::PhysicsConstraintFixedBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintFixedBuilder *PhysicsConstraintFixedBuilderArray_getitem(njli::PhysicsConstraintFixedBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintFixedBuilderArray_setitem(njli::PhysicsConstraintFixedBuilder **ary, int index, njli::PhysicsConstraintFixedBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintGeneric6Dof **new_PhysicsConstraintGeneric6DofArray(int nelements) { 
+
+        return njli::PhysicsConstraintGeneric6Dof::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintGeneric6DofArray(njli::PhysicsConstraintGeneric6Dof **ary) { 
+
+        njli::PhysicsConstraintGeneric6Dof::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintGeneric6Dof *PhysicsConstraintGeneric6DofArray_getitem(njli::PhysicsConstraintGeneric6Dof **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintGeneric6DofArray_setitem(njli::PhysicsConstraintGeneric6Dof **ary, int index, njli::PhysicsConstraintGeneric6Dof *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintGeneric6DofBuilder **new_PhysicsConstraintGeneric6DofBuilderArray(int nelements) { 
+
+        return njli::PhysicsConstraintGeneric6DofBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintGeneric6DofBuilderArray(njli::PhysicsConstraintGeneric6DofBuilder **ary) { 
+
+        njli::PhysicsConstraintGeneric6DofBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintGeneric6DofBuilder *PhysicsConstraintGeneric6DofBuilderArray_getitem(njli::PhysicsConstraintGeneric6DofBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintGeneric6DofBuilderArray_setitem(njli::PhysicsConstraintGeneric6DofBuilder **ary, int index, njli::PhysicsConstraintGeneric6DofBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintGeneric6DofSpring **new_PhysicsConstraintGeneric6DofSpringArray(int nelements) { 
+
+        return njli::PhysicsConstraintGeneric6DofSpring::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintGeneric6DofSpringArray(njli::PhysicsConstraintGeneric6DofSpring **ary) { 
+
+        njli::PhysicsConstraintGeneric6DofSpring::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintGeneric6DofSpring *PhysicsConstraintGeneric6DofSpringArray_getitem(njli::PhysicsConstraintGeneric6DofSpring **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintGeneric6DofSpringArray_setitem(njli::PhysicsConstraintGeneric6DofSpring **ary, int index, njli::PhysicsConstraintGeneric6DofSpring *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintGeneric6DofSpringBuilder **new_PhysicsConstraintGeneric6DofSpringBuilderArray(int nelements) { 
+
+        return njli::PhysicsConstraintGeneric6DofSpringBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintGeneric6DofSpringBuilderArray(njli::PhysicsConstraintGeneric6DofSpringBuilder **ary) { 
+
+        njli::PhysicsConstraintGeneric6DofSpringBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintGeneric6DofSpringBuilder *PhysicsConstraintGeneric6DofSpringBuilderArray_getitem(njli::PhysicsConstraintGeneric6DofSpringBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintGeneric6DofSpringBuilderArray_setitem(njli::PhysicsConstraintGeneric6DofSpringBuilder **ary, int index, njli::PhysicsConstraintGeneric6DofSpringBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintHinge **new_PhysicsConstraintHingeArray(int nelements) { 
+
+        return njli::PhysicsConstraintHinge::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintHingeArray(njli::PhysicsConstraintHinge **ary) { 
+
+        njli::PhysicsConstraintHinge::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintHinge *PhysicsConstraintHingeArray_getitem(njli::PhysicsConstraintHinge **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintHingeArray_setitem(njli::PhysicsConstraintHinge **ary, int index, njli::PhysicsConstraintHinge *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintHingeBuilder **new_PhysicsConstraintHingeBuilderArray(int nelements) { 
+
+        return njli::PhysicsConstraintHingeBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintHingeBuilderArray(njli::PhysicsConstraintHingeBuilder **ary) { 
+
+        njli::PhysicsConstraintHingeBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintHingeBuilder *PhysicsConstraintHingeBuilderArray_getitem(njli::PhysicsConstraintHingeBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintHingeBuilderArray_setitem(njli::PhysicsConstraintHingeBuilder **ary, int index, njli::PhysicsConstraintHingeBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintPointToPoint **new_PhysicsConstraintPointToPointArray(int nelements) { 
+
+        return njli::PhysicsConstraintPointToPoint::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintPointToPointArray(njli::PhysicsConstraintPointToPoint **ary) { 
+
+        njli::PhysicsConstraintPointToPoint::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintPointToPoint *PhysicsConstraintPointToPointArray_getitem(njli::PhysicsConstraintPointToPoint **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintPointToPointArray_setitem(njli::PhysicsConstraintPointToPoint **ary, int index, njli::PhysicsConstraintPointToPoint *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintPointToPointBuilder **new_PhysicsConstraintPointToPointBuilderArray(int nelements) { 
+
+        return njli::PhysicsConstraintPointToPointBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintPointToPointBuilderArray(njli::PhysicsConstraintPointToPointBuilder **ary) { 
+
+        njli::PhysicsConstraintPointToPointBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintPointToPointBuilder *PhysicsConstraintPointToPointBuilderArray_getitem(njli::PhysicsConstraintPointToPointBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintPointToPointBuilderArray_setitem(njli::PhysicsConstraintPointToPointBuilder **ary, int index, njli::PhysicsConstraintPointToPointBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintSlider **new_PhysicsConstraintSliderArray(int nelements) { 
+
+        return njli::PhysicsConstraintSlider::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintSliderArray(njli::PhysicsConstraintSlider **ary) { 
+
+        njli::PhysicsConstraintSlider::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintSlider *PhysicsConstraintSliderArray_getitem(njli::PhysicsConstraintSlider **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintSliderArray_setitem(njli::PhysicsConstraintSlider **ary, int index, njli::PhysicsConstraintSlider *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsConstraintSliderBuilder **new_PhysicsConstraintSliderBuilderArray(int nelements) { 
+
+        return njli::PhysicsConstraintSliderBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsConstraintSliderBuilderArray(njli::PhysicsConstraintSliderBuilder **ary) { 
+
+        njli::PhysicsConstraintSliderBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsConstraintSliderBuilder *PhysicsConstraintSliderBuilderArray_getitem(njli::PhysicsConstraintSliderBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsConstraintSliderBuilderArray_setitem(njli::PhysicsConstraintSliderBuilder **ary, int index, njli::PhysicsConstraintSliderBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsContact **new_PhysicsContactArray(int nelements) { 
+
+        return njli::PhysicsContact::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsContactArray(njli::PhysicsContact **ary) { 
+
+        njli::PhysicsContact::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsContact *PhysicsContactArray_getitem(njli::PhysicsContact **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsContactArray_setitem(njli::PhysicsContact **ary, int index, njli::PhysicsContact *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsContactBuilder **new_PhysicsContactBuilderArray(int nelements) { 
+
+        return njli::PhysicsContactBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsContactBuilderArray(njli::PhysicsContactBuilder **ary) { 
+
+        njli::PhysicsContactBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsContactBuilder *PhysicsContactBuilderArray_getitem(njli::PhysicsContactBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsContactBuilderArray_setitem(njli::PhysicsContactBuilder **ary, int index, njli::PhysicsContactBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsField **new_PhysicsFieldArray(int nelements) { 
+
+        return njli::PhysicsField::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsFieldArray(njli::PhysicsField **ary) { 
+
+        njli::PhysicsField::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsField *PhysicsFieldArray_getitem(njli::PhysicsField **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsFieldArray_setitem(njli::PhysicsField **ary, int index, njli::PhysicsField *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsFieldBuilder **new_PhysicsFieldBuilderArray(int nelements) { 
+
+        return njli::PhysicsFieldBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsFieldBuilderArray(njli::PhysicsFieldBuilder **ary) { 
+
+        njli::PhysicsFieldBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsFieldBuilder *PhysicsFieldBuilderArray_getitem(njli::PhysicsFieldBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsFieldBuilderArray_setitem(njli::PhysicsFieldBuilder **ary, int index, njli::PhysicsFieldBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsRayContact **new_PhysicsRayContactArray(int nelements) { 
+
+        return njli::PhysicsRayContact::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsRayContactArray(njli::PhysicsRayContact **ary) { 
+
+        njli::PhysicsRayContact::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsRayContact *PhysicsRayContactArray_getitem(njli::PhysicsRayContact **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsRayContactArray_setitem(njli::PhysicsRayContact **ary, int index, njli::PhysicsRayContact *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsRayContactBuilder **new_PhysicsRayContactBuilderArray(int nelements) { 
+
+        return njli::PhysicsRayContactBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsRayContactBuilderArray(njli::PhysicsRayContactBuilder **ary) { 
+
+        njli::PhysicsRayContactBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsRayContactBuilder *PhysicsRayContactBuilderArray_getitem(njli::PhysicsRayContactBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsRayContactBuilderArray_setitem(njli::PhysicsRayContactBuilder **ary, int index, njli::PhysicsRayContactBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeBox **new_PhysicsShapeBoxArray(int nelements) { 
+
+        return njli::PhysicsShapeBox::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeBoxArray(njli::PhysicsShapeBox **ary) { 
+
+        njli::PhysicsShapeBox::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeBox *PhysicsShapeBoxArray_getitem(njli::PhysicsShapeBox **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeBoxArray_setitem(njli::PhysicsShapeBox **ary, int index, njli::PhysicsShapeBox *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeBox2D **new_PhysicsShapeBox2DArray(int nelements) { 
+
+        return njli::PhysicsShapeBox2D::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeBox2DArray(njli::PhysicsShapeBox2D **ary) { 
+
+        njli::PhysicsShapeBox2D::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeBox2D *PhysicsShapeBox2DArray_getitem(njli::PhysicsShapeBox2D **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeBox2DArray_setitem(njli::PhysicsShapeBox2D **ary, int index, njli::PhysicsShapeBox2D *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeBox2DBuilder **new_PhysicsShapeBox2DBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeBox2DBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeBox2DBuilderArray(njli::PhysicsShapeBox2DBuilder **ary) { 
+
+        njli::PhysicsShapeBox2DBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeBox2DBuilder *PhysicsShapeBox2DBuilderArray_getitem(njli::PhysicsShapeBox2DBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeBox2DBuilderArray_setitem(njli::PhysicsShapeBox2DBuilder **ary, int index, njli::PhysicsShapeBox2DBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeBoxBuilder **new_PhysicsShapeBoxBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeBoxBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeBoxBuilderArray(njli::PhysicsShapeBoxBuilder **ary) { 
+
+        njli::PhysicsShapeBoxBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeBoxBuilder *PhysicsShapeBoxBuilderArray_getitem(njli::PhysicsShapeBoxBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeBoxBuilderArray_setitem(njli::PhysicsShapeBoxBuilder **ary, int index, njli::PhysicsShapeBoxBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeBvhTriangleMesh **new_PhysicsShapeBvhTriangleMeshArray(int nelements) { 
+
+        return njli::PhysicsShapeBvhTriangleMesh::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeBvhTriangleMeshArray(njli::PhysicsShapeBvhTriangleMesh **ary) { 
+
+        njli::PhysicsShapeBvhTriangleMesh::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeBvhTriangleMesh *PhysicsShapeBvhTriangleMeshArray_getitem(njli::PhysicsShapeBvhTriangleMesh **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeBvhTriangleMeshArray_setitem(njli::PhysicsShapeBvhTriangleMesh **ary, int index, njli::PhysicsShapeBvhTriangleMesh *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeBvhTriangleMeshBuilder **new_PhysicsShapeBvhTriangleMeshBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeBvhTriangleMeshBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeBvhTriangleMeshBuilderArray(njli::PhysicsShapeBvhTriangleMeshBuilder **ary) { 
+
+        njli::PhysicsShapeBvhTriangleMeshBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeBvhTriangleMeshBuilder *PhysicsShapeBvhTriangleMeshBuilderArray_getitem(njli::PhysicsShapeBvhTriangleMeshBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeBvhTriangleMeshBuilderArray_setitem(njli::PhysicsShapeBvhTriangleMeshBuilder **ary, int index, njli::PhysicsShapeBvhTriangleMeshBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeCapsule **new_PhysicsShapeCapsuleArray(int nelements) { 
+
+        return njli::PhysicsShapeCapsule::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeCapsuleArray(njli::PhysicsShapeCapsule **ary) { 
+
+        njli::PhysicsShapeCapsule::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeCapsule *PhysicsShapeCapsuleArray_getitem(njli::PhysicsShapeCapsule **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeCapsuleArray_setitem(njli::PhysicsShapeCapsule **ary, int index, njli::PhysicsShapeCapsule *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeCapsuleBuilder **new_PhysicsShapeCapsuleBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeCapsuleBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeCapsuleBuilderArray(njli::PhysicsShapeCapsuleBuilder **ary) { 
+
+        njli::PhysicsShapeCapsuleBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeCapsuleBuilder *PhysicsShapeCapsuleBuilderArray_getitem(njli::PhysicsShapeCapsuleBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeCapsuleBuilderArray_setitem(njli::PhysicsShapeCapsuleBuilder **ary, int index, njli::PhysicsShapeCapsuleBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeCone **new_PhysicsShapeConeArray(int nelements) { 
+
+        return njli::PhysicsShapeCone::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeConeArray(njli::PhysicsShapeCone **ary) { 
+
+        njli::PhysicsShapeCone::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeCone *PhysicsShapeConeArray_getitem(njli::PhysicsShapeCone **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeConeArray_setitem(njli::PhysicsShapeCone **ary, int index, njli::PhysicsShapeCone *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeConeBuilder **new_PhysicsShapeConeBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeConeBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeConeBuilderArray(njli::PhysicsShapeConeBuilder **ary) { 
+
+        njli::PhysicsShapeConeBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeConeBuilder *PhysicsShapeConeBuilderArray_getitem(njli::PhysicsShapeConeBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeConeBuilderArray_setitem(njli::PhysicsShapeConeBuilder **ary, int index, njli::PhysicsShapeConeBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeConvexHull **new_PhysicsShapeConvexHullArray(int nelements) { 
+
+        return njli::PhysicsShapeConvexHull::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeConvexHullArray(njli::PhysicsShapeConvexHull **ary) { 
+
+        njli::PhysicsShapeConvexHull::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeConvexHull *PhysicsShapeConvexHullArray_getitem(njli::PhysicsShapeConvexHull **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeConvexHullArray_setitem(njli::PhysicsShapeConvexHull **ary, int index, njli::PhysicsShapeConvexHull *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeConvexHullBuilder **new_PhysicsShapeConvexHullBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeConvexHullBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeConvexHullBuilderArray(njli::PhysicsShapeConvexHullBuilder **ary) { 
+
+        njli::PhysicsShapeConvexHullBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeConvexHullBuilder *PhysicsShapeConvexHullBuilderArray_getitem(njli::PhysicsShapeConvexHullBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeConvexHullBuilderArray_setitem(njli::PhysicsShapeConvexHullBuilder **ary, int index, njli::PhysicsShapeConvexHullBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeConvexTriangleMesh **new_PhysicsShapeConvexTriangleMeshArray(int nelements) { 
+
+        return njli::PhysicsShapeConvexTriangleMesh::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeConvexTriangleMeshArray(njli::PhysicsShapeConvexTriangleMesh **ary) { 
+
+        njli::PhysicsShapeConvexTriangleMesh::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeConvexTriangleMesh *PhysicsShapeConvexTriangleMeshArray_getitem(njli::PhysicsShapeConvexTriangleMesh **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeConvexTriangleMeshArray_setitem(njli::PhysicsShapeConvexTriangleMesh **ary, int index, njli::PhysicsShapeConvexTriangleMesh *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeConvexTriangleMeshBuilder **new_PhysicsShapeConvexTriangleMeshBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeConvexTriangleMeshBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeConvexTriangleMeshBuilderArray(njli::PhysicsShapeConvexTriangleMeshBuilder **ary) { 
+
+        njli::PhysicsShapeConvexTriangleMeshBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeConvexTriangleMeshBuilder *PhysicsShapeConvexTriangleMeshBuilderArray_getitem(njli::PhysicsShapeConvexTriangleMeshBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeConvexTriangleMeshBuilderArray_setitem(njli::PhysicsShapeConvexTriangleMeshBuilder **ary, int index, njli::PhysicsShapeConvexTriangleMeshBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeCylinder **new_PhysicsShapeCylinderArray(int nelements) { 
+
+        return njli::PhysicsShapeCylinder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeCylinderArray(njli::PhysicsShapeCylinder **ary) { 
+
+        njli::PhysicsShapeCylinder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeCylinder *PhysicsShapeCylinderArray_getitem(njli::PhysicsShapeCylinder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeCylinderArray_setitem(njli::PhysicsShapeCylinder **ary, int index, njli::PhysicsShapeCylinder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeCylinderBuilder **new_PhysicsShapeCylinderBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeCylinderBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeCylinderBuilderArray(njli::PhysicsShapeCylinderBuilder **ary) { 
+
+        njli::PhysicsShapeCylinderBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeCylinderBuilder *PhysicsShapeCylinderBuilderArray_getitem(njli::PhysicsShapeCylinderBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeCylinderBuilderArray_setitem(njli::PhysicsShapeCylinderBuilder **ary, int index, njli::PhysicsShapeCylinderBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeHeightfieldTerrain **new_PhysicsShapeHeightfieldTerrainArray(int nelements) { 
+
+        return njli::PhysicsShapeHeightfieldTerrain::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeHeightfieldTerrainArray(njli::PhysicsShapeHeightfieldTerrain **ary) { 
+
+        njli::PhysicsShapeHeightfieldTerrain::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeHeightfieldTerrain *PhysicsShapeHeightfieldTerrainArray_getitem(njli::PhysicsShapeHeightfieldTerrain **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeHeightfieldTerrainArray_setitem(njli::PhysicsShapeHeightfieldTerrain **ary, int index, njli::PhysicsShapeHeightfieldTerrain *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeHeightfieldTerrainBuilder **new_PhysicsShapeHeightfieldTerrainBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeHeightfieldTerrainBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeHeightfieldTerrainBuilderArray(njli::PhysicsShapeHeightfieldTerrainBuilder **ary) { 
+
+        njli::PhysicsShapeHeightfieldTerrainBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeHeightfieldTerrainBuilder *PhysicsShapeHeightfieldTerrainBuilderArray_getitem(njli::PhysicsShapeHeightfieldTerrainBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeHeightfieldTerrainBuilderArray_setitem(njli::PhysicsShapeHeightfieldTerrainBuilder **ary, int index, njli::PhysicsShapeHeightfieldTerrainBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeMultiSphere **new_PhysicsShapeMultiSphereArray(int nelements) { 
+
+        return njli::PhysicsShapeMultiSphere::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeMultiSphereArray(njli::PhysicsShapeMultiSphere **ary) { 
+
+        njli::PhysicsShapeMultiSphere::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeMultiSphere *PhysicsShapeMultiSphereArray_getitem(njli::PhysicsShapeMultiSphere **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeMultiSphereArray_setitem(njli::PhysicsShapeMultiSphere **ary, int index, njli::PhysicsShapeMultiSphere *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeMultiSphereBuilder **new_PhysicsShapeMultiSphereBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeMultiSphereBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeMultiSphereBuilderArray(njli::PhysicsShapeMultiSphereBuilder **ary) { 
+
+        njli::PhysicsShapeMultiSphereBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeMultiSphereBuilder *PhysicsShapeMultiSphereBuilderArray_getitem(njli::PhysicsShapeMultiSphereBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeMultiSphereBuilderArray_setitem(njli::PhysicsShapeMultiSphereBuilder **ary, int index, njli::PhysicsShapeMultiSphereBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeSphere **new_PhysicsShapeSphereArray(int nelements) { 
+
+        return njli::PhysicsShapeSphere::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeSphereArray(njli::PhysicsShapeSphere **ary) { 
+
+        njli::PhysicsShapeSphere::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeSphere *PhysicsShapeSphereArray_getitem(njli::PhysicsShapeSphere **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeSphereArray_setitem(njli::PhysicsShapeSphere **ary, int index, njli::PhysicsShapeSphere *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeSphereBuilder **new_PhysicsShapeSphereBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeSphereBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeSphereBuilderArray(njli::PhysicsShapeSphereBuilder **ary) { 
+
+        njli::PhysicsShapeSphereBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeSphereBuilder *PhysicsShapeSphereBuilderArray_getitem(njli::PhysicsShapeSphereBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeSphereBuilderArray_setitem(njli::PhysicsShapeSphereBuilder **ary, int index, njli::PhysicsShapeSphereBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeStaticPlane **new_PhysicsShapeStaticPlaneArray(int nelements) { 
+
+        return njli::PhysicsShapeStaticPlane::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeStaticPlaneArray(njli::PhysicsShapeStaticPlane **ary) { 
+
+        njli::PhysicsShapeStaticPlane::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeStaticPlane *PhysicsShapeStaticPlaneArray_getitem(njli::PhysicsShapeStaticPlane **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeStaticPlaneArray_setitem(njli::PhysicsShapeStaticPlane **ary, int index, njli::PhysicsShapeStaticPlane *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsShapeStaticPlaneBuilder **new_PhysicsShapeStaticPlaneBuilderArray(int nelements) { 
+
+        return njli::PhysicsShapeStaticPlaneBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsShapeStaticPlaneBuilderArray(njli::PhysicsShapeStaticPlaneBuilder **ary) { 
+
+        njli::PhysicsShapeStaticPlaneBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsShapeStaticPlaneBuilder *PhysicsShapeStaticPlaneBuilderArray_getitem(njli::PhysicsShapeStaticPlaneBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsShapeStaticPlaneBuilderArray_setitem(njli::PhysicsShapeStaticPlaneBuilder **ary, int index, njli::PhysicsShapeStaticPlaneBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsWorld **new_PhysicsWorldArray(int nelements) { 
+
+        return njli::PhysicsWorld::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsWorldArray(njli::PhysicsWorld **ary) { 
+
+        njli::PhysicsWorld::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsWorld *PhysicsWorldArray_getitem(njli::PhysicsWorld **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsWorldArray_setitem(njli::PhysicsWorld **ary, int index, njli::PhysicsWorld *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PhysicsWorldBuilder **new_PhysicsWorldBuilderArray(int nelements) { 
+
+        return njli::PhysicsWorldBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PhysicsWorldBuilderArray(njli::PhysicsWorldBuilder **ary) { 
+
+        njli::PhysicsWorldBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PhysicsWorldBuilder *PhysicsWorldBuilderArray_getitem(njli::PhysicsWorldBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PhysicsWorldBuilderArray_setitem(njli::PhysicsWorldBuilder **ary, int index, njli::PhysicsWorldBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Plane **new_PlaneArray(int nelements) { 
+
+        return njli::Plane::createArray(nelements);
+        
+}
+    
+    static void delete_PlaneArray(njli::Plane **ary) { 
+
+        njli::Plane::destroyArray(ary);
+        
+}
+    
+    static njli::Plane *PlaneArray_getitem(njli::Plane **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PlaneArray_setitem(njli::Plane **ary, int index, njli::Plane *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::PlaneBuilder **new_PlaneBuilderArray(int nelements) { 
+
+        return njli::PlaneBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_PlaneBuilderArray(njli::PlaneBuilder **ary) { 
+
+        njli::PlaneBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::PlaneBuilder *PlaneBuilderArray_getitem(njli::PlaneBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void PlaneBuilderArray_setitem(njli::PlaneBuilder **ary, int index, njli::PlaneBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Scene **new_SceneArray(int nelements) { 
+
+        return njli::Scene::createArray(nelements);
+        
+}
+    
+    static void delete_SceneArray(njli::Scene **ary) { 
+
+        njli::Scene::destroyArray(ary);
+        
+}
+    
+    static njli::Scene *SceneArray_getitem(njli::Scene **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SceneArray_setitem(njli::Scene **ary, int index, njli::Scene *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SceneBuilder **new_SceneBuilderArray(int nelements) { 
+
+        return njli::SceneBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SceneBuilderArray(njli::SceneBuilder **ary) { 
+
+        njli::SceneBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SceneBuilder *SceneBuilderArray_getitem(njli::SceneBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SceneBuilderArray_setitem(njli::SceneBuilder **ary, int index, njli::SceneBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SceneState **new_SceneStateArray(int nelements) { 
+
+        return njli::SceneState::createArray(nelements);
+        
+}
+    
+    static void delete_SceneStateArray(njli::SceneState **ary) { 
+
+        njli::SceneState::destroyArray(ary);
+        
+}
+    
+    static njli::SceneState *SceneStateArray_getitem(njli::SceneState **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SceneStateArray_setitem(njli::SceneState **ary, int index, njli::SceneState *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SceneStateBuilder **new_SceneStateBuilderArray(int nelements) { 
+
+        return njli::SceneStateBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SceneStateBuilderArray(njli::SceneStateBuilder **ary) { 
+
+        njli::SceneStateBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SceneStateBuilder *SceneStateBuilderArray_getitem(njli::SceneStateBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SceneStateBuilderArray_setitem(njli::SceneStateBuilder **ary, int index, njli::SceneStateBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SceneStateMachine **new_SceneStateMachineArray(int nelements) { 
+
+        return njli::SceneStateMachine::createArray(nelements);
+        
+}
+    
+    static void delete_SceneStateMachineArray(njli::SceneStateMachine **ary) { 
+
+        njli::SceneStateMachine::destroyArray(ary);
+        
+}
+    
+    static njli::SceneStateMachine *SceneStateMachineArray_getitem(njli::SceneStateMachine **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SceneStateMachineArray_setitem(njli::SceneStateMachine **ary, int index, njli::SceneStateMachine *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SceneStateMachineBuilder **new_SceneStateMachineBuilderArray(int nelements) { 
+
+        return njli::SceneStateMachineBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SceneStateMachineBuilderArray(njli::SceneStateMachineBuilder **ary) { 
+
+        njli::SceneStateMachineBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SceneStateMachineBuilder *SceneStateMachineBuilderArray_getitem(njli::SceneStateMachineBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SceneStateMachineBuilderArray_setitem(njli::SceneStateMachineBuilder **ary, int index, njli::SceneStateMachineBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::ShaderProgram **new_ShaderProgramArray(int nelements) { 
+
+        return njli::ShaderProgram::createArray(nelements);
+        
+}
+    
+    static void delete_ShaderProgramArray(njli::ShaderProgram **ary) { 
+
+        njli::ShaderProgram::destroyArray(ary);
+        
+}
+    
+    static njli::ShaderProgram *ShaderProgramArray_getitem(njli::ShaderProgram **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ShaderProgramArray_setitem(njli::ShaderProgram **ary, int index, njli::ShaderProgram *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::ShaderProgramBuilder **new_ShaderProgramBuilderArray(int nelements) { 
+
+        return njli::ShaderProgramBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_ShaderProgramBuilderArray(njli::ShaderProgramBuilder **ary) { 
+
+        njli::ShaderProgramBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::ShaderProgramBuilder *ShaderProgramBuilderArray_getitem(njli::ShaderProgramBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void ShaderProgramBuilderArray_setitem(njli::ShaderProgramBuilder **ary, int index, njli::ShaderProgramBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Skinner **new_SkinnerArray(int nelements) { 
+
+        return njli::Skinner::createArray(nelements);
+        
+}
+    
+    static void delete_SkinnerArray(njli::Skinner **ary) { 
+
+        njli::Skinner::destroyArray(ary);
+        
+}
+    
+    static njli::Skinner *SkinnerArray_getitem(njli::Skinner **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SkinnerArray_setitem(njli::Skinner **ary, int index, njli::Skinner *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SkinnerBuilder **new_SkinnerBuilderArray(int nelements) { 
+
+        return njli::SkinnerBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SkinnerBuilderArray(njli::SkinnerBuilder **ary) { 
+
+        njli::SkinnerBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SkinnerBuilder *SkinnerBuilderArray_getitem(njli::SkinnerBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SkinnerBuilderArray_setitem(njli::SkinnerBuilder **ary, int index, njli::SkinnerBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SoundBuilder **new_SoundBuilderArray(int nelements) { 
+
+        return njli::SoundBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SoundBuilderArray(njli::SoundBuilder **ary) { 
+
+        njli::SoundBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SoundBuilder *SoundBuilderArray_getitem(njli::SoundBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SoundBuilderArray_setitem(njli::SoundBuilder **ary, int index, njli::SoundBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Sprite2D **new_Sprite2DArray(int nelements) { 
+
+        return njli::Sprite2D::createArray(nelements);
+        
+}
+    
+    static void delete_Sprite2DArray(njli::Sprite2D **ary) { 
+
+        njli::Sprite2D::destroyArray(ary);
+        
+}
+    
+    static njli::Sprite2D *Sprite2DArray_getitem(njli::Sprite2D **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void Sprite2DArray_setitem(njli::Sprite2D **ary, int index, njli::Sprite2D *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Sprite2DBuilder **new_Sprite2DBuilderArray(int nelements) { 
+
+        return njli::Sprite2DBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_Sprite2DBuilderArray(njli::Sprite2DBuilder **ary) { 
+
+        njli::Sprite2DBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::Sprite2DBuilder *Sprite2DBuilderArray_getitem(njli::Sprite2DBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void Sprite2DBuilderArray_setitem(njli::Sprite2DBuilder **ary, int index, njli::Sprite2DBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SpriteFrameAtlas **new_SpriteFrameAtlasArray(int nelements) { 
+
+        return njli::SpriteFrameAtlas::createArray(nelements);
+        
+}
+    
+    static void delete_SpriteFrameAtlasArray(njli::SpriteFrameAtlas **ary) { 
+
+        njli::SpriteFrameAtlas::destroyArray(ary);
+        
+}
+    
+    static njli::SpriteFrameAtlas *SpriteFrameAtlasArray_getitem(njli::SpriteFrameAtlas **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SpriteFrameAtlasArray_setitem(njli::SpriteFrameAtlas **ary, int index, njli::SpriteFrameAtlas *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SpriteFrameAtlasBuilder **new_SpriteFrameAtlasBuilderArray(int nelements) { 
+
+        return njli::SpriteFrameAtlasBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SpriteFrameAtlasBuilderArray(njli::SpriteFrameAtlasBuilder **ary) { 
+
+        njli::SpriteFrameAtlasBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SpriteFrameAtlasBuilder *SpriteFrameAtlasBuilderArray_getitem(njli::SpriteFrameAtlasBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SpriteFrameAtlasBuilderArray_setitem(njli::SpriteFrameAtlasBuilder **ary, int index, njli::SpriteFrameAtlasBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorAlignment **new_SteeringBehaviorAlignment(int nelements) { 
+
+        return njli::SteeringBehaviorAlignment::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorAlignment(njli::SteeringBehaviorAlignment **ary) { 
+
+        njli::SteeringBehaviorAlignment::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorAlignment *SteeringBehaviorAlignment_getitem(njli::SteeringBehaviorAlignment **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorAlignment_setitem(njli::SteeringBehaviorAlignment **ary, int index, njli::SteeringBehaviorAlignment *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorAlignmentBuilder **new_SteeringBehaviorAlignmentBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorAlignmentBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorAlignmentBuilder(njli::SteeringBehaviorAlignmentBuilder **ary) { 
+
+        njli::SteeringBehaviorAlignmentBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorAlignmentBuilder *SteeringBehaviorAlignmentBuilder_getitem(njli::SteeringBehaviorAlignmentBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorAlignmentBuilder_setitem(njli::SteeringBehaviorAlignmentBuilder **ary, int index, njli::SteeringBehaviorAlignmentBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorArrive **new_SteeringBehaviorArrive(int nelements) { 
+
+        return njli::SteeringBehaviorArrive::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorArrive(njli::SteeringBehaviorArrive **ary) { 
+
+        njli::SteeringBehaviorArrive::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorArrive *SteeringBehaviorArrive_getitem(njli::SteeringBehaviorArrive **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorArrive_setitem(njli::SteeringBehaviorArrive **ary, int index, njli::SteeringBehaviorArrive *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorArriveBuilder **new_SteeringBehaviorArriveBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorArriveBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorArriveBuilder(njli::SteeringBehaviorArriveBuilder **ary) { 
+
+        njli::SteeringBehaviorArriveBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorArriveBuilder *SteeringBehaviorArriveBuilder_getitem(njli::SteeringBehaviorArriveBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorArriveBuilder_setitem(njli::SteeringBehaviorArriveBuilder **ary, int index, njli::SteeringBehaviorArriveBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorCohesion **new_SteeringBehaviorCohesion(int nelements) { 
+
+        return njli::SteeringBehaviorCohesion::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorCohesion(njli::SteeringBehaviorCohesion **ary) { 
+
+        njli::SteeringBehaviorCohesion::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorCohesion *SteeringBehaviorCohesion_getitem(njli::SteeringBehaviorCohesion **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorCohesion_setitem(njli::SteeringBehaviorCohesion **ary, int index, njli::SteeringBehaviorCohesion *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorCohesionBuilder **new_SteeringBehaviorCohesionBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorCohesionBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorCohesionBuilder(njli::SteeringBehaviorCohesionBuilder **ary) { 
+
+        njli::SteeringBehaviorCohesionBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorCohesionBuilder *SteeringBehaviorCohesionBuilder_getitem(njli::SteeringBehaviorCohesionBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorCohesionBuilder_setitem(njli::SteeringBehaviorCohesionBuilder **ary, int index, njli::SteeringBehaviorCohesionBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorEvade **new_SteeringBehaviorEvade(int nelements) { 
+
+        return njli::SteeringBehaviorEvade::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorEvade(njli::SteeringBehaviorEvade **ary) { 
+
+        njli::SteeringBehaviorEvade::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorEvade *SteeringBehaviorEvade_getitem(njli::SteeringBehaviorEvade **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorEvade_setitem(njli::SteeringBehaviorEvade **ary, int index, njli::SteeringBehaviorEvade *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorEvadeBuilder **new_SteeringBehaviorEvadeBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorEvadeBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorEvadeBuilder(njli::SteeringBehaviorEvadeBuilder **ary) { 
+
+        njli::SteeringBehaviorEvadeBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorEvadeBuilder *SteeringBehaviorEvadeBuilder_getitem(njli::SteeringBehaviorEvadeBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorEvadeBuilder_setitem(njli::SteeringBehaviorEvadeBuilder **ary, int index, njli::SteeringBehaviorEvadeBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorFlee **new_SteeringBehaviorFlee(int nelements) { 
+
+        return njli::SteeringBehaviorFlee::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorFlee(njli::SteeringBehaviorFlee **ary) { 
+
+        njli::SteeringBehaviorFlee::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorFlee *SteeringBehaviorFlee_getitem(njli::SteeringBehaviorFlee **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorFlee_setitem(njli::SteeringBehaviorFlee **ary, int index, njli::SteeringBehaviorFlee *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorFleeBuilder **new_SteeringBehaviorFleeBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorFleeBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorFleeBuilder(njli::SteeringBehaviorFleeBuilder **ary) { 
+
+        njli::SteeringBehaviorFleeBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorFleeBuilder *SteeringBehaviorFleeBuilder_getitem(njli::SteeringBehaviorFleeBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorFleeBuilder_setitem(njli::SteeringBehaviorFleeBuilder **ary, int index, njli::SteeringBehaviorFleeBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorFollowPath **new_SteeringBehaviorFollowPath(int nelements) { 
+
+        return njli::SteeringBehaviorFollowPath::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorFollowPath(njli::SteeringBehaviorFollowPath **ary) { 
+
+        njli::SteeringBehaviorFollowPath::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorFollowPath *SteeringBehaviorFollowPath_getitem(njli::SteeringBehaviorFollowPath **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorFollowPath_setitem(njli::SteeringBehaviorFollowPath **ary, int index, njli::SteeringBehaviorFollowPath *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorFollowPathBuilder **new_SteeringBehaviorFollowPathBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorFollowPathBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorFollowPathBuilder(njli::SteeringBehaviorFollowPathBuilder **ary) { 
+
+        njli::SteeringBehaviorFollowPathBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorFollowPathBuilder *SteeringBehaviorFollowPathBuilder_getitem(njli::SteeringBehaviorFollowPathBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorFollowPathBuilder_setitem(njli::SteeringBehaviorFollowPathBuilder **ary, int index, njli::SteeringBehaviorFollowPathBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorHide **new_SteeringBehaviorHide(int nelements) { 
+
+        return njli::SteeringBehaviorHide::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorHide(njli::SteeringBehaviorHide **ary) { 
+
+        njli::SteeringBehaviorHide::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorHide *SteeringBehaviorHide_getitem(njli::SteeringBehaviorHide **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorHide_setitem(njli::SteeringBehaviorHide **ary, int index, njli::SteeringBehaviorHide *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorHideBuilder **new_SteeringBehaviorHideBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorHideBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorHideBuilder(njli::SteeringBehaviorHideBuilder **ary) { 
+
+        njli::SteeringBehaviorHideBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorHideBuilder *SteeringBehaviorHideBuilder_getitem(njli::SteeringBehaviorHideBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorHideBuilder_setitem(njli::SteeringBehaviorHideBuilder **ary, int index, njli::SteeringBehaviorHideBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorInterpose **new_SteeringBehaviorInterpose(int nelements) { 
+
+        return njli::SteeringBehaviorInterpose::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorInterpose(njli::SteeringBehaviorInterpose **ary) { 
+
+        njli::SteeringBehaviorInterpose::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorInterpose *SteeringBehaviorInterpose_getitem(njli::SteeringBehaviorInterpose **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorInterpose_setitem(njli::SteeringBehaviorInterpose **ary, int index, njli::SteeringBehaviorInterpose *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorInterposeBuilder **new_SteeringBehaviorInterposeBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorInterposeBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorInterposeBuilder(njli::SteeringBehaviorInterposeBuilder **ary) { 
+
+        njli::SteeringBehaviorInterposeBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorInterposeBuilder *SteeringBehaviorInterposeBuilder_getitem(njli::SteeringBehaviorInterposeBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorInterposeBuilder_setitem(njli::SteeringBehaviorInterposeBuilder **ary, int index, njli::SteeringBehaviorInterposeBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorMachineDithered **new_SteeringBehaviorMachineDithered(int nelements) { 
+
+        return njli::SteeringBehaviorMachineDithered::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorMachineDithered(njli::SteeringBehaviorMachineDithered **ary) { 
+
+        njli::SteeringBehaviorMachineDithered::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorMachineDithered *SteeringBehaviorMachineDithered_getitem(njli::SteeringBehaviorMachineDithered **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorMachineDithered_setitem(njli::SteeringBehaviorMachineDithered **ary, int index, njli::SteeringBehaviorMachineDithered *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorMachineDitheredBuilder **new_SteeringBehaviorMachineDitheredBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorMachineDitheredBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorMachineDitheredBuilder(njli::SteeringBehaviorMachineDitheredBuilder **ary) { 
+
+        njli::SteeringBehaviorMachineDitheredBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorMachineDitheredBuilder *SteeringBehaviorMachineDitheredBuilder_getitem(njli::SteeringBehaviorMachineDitheredBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorMachineDitheredBuilder_setitem(njli::SteeringBehaviorMachineDitheredBuilder **ary, int index, njli::SteeringBehaviorMachineDitheredBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorMachinePrioritized **new_SteeringBehaviorMachinePrioritized(int nelements) { 
+
+        return njli::SteeringBehaviorMachinePrioritized::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorMachinePrioritized(njli::SteeringBehaviorMachinePrioritized **ary) { 
+
+        njli::SteeringBehaviorMachinePrioritized::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorMachinePrioritized *SteeringBehaviorMachinePrioritized_getitem(njli::SteeringBehaviorMachinePrioritized **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorMachinePrioritized_setitem(njli::SteeringBehaviorMachinePrioritized **ary, int index, njli::SteeringBehaviorMachinePrioritized *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorMachinePrioritizedBuilder **new_SteeringBehaviorMachinePrioritizedBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorMachinePrioritizedBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorMachinePrioritizedBuilder(njli::SteeringBehaviorMachinePrioritizedBuilder **ary) { 
+
+        njli::SteeringBehaviorMachinePrioritizedBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorMachinePrioritizedBuilder *SteeringBehaviorMachinePrioritizedBuilder_getitem(njli::SteeringBehaviorMachinePrioritizedBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorMachinePrioritizedBuilder_setitem(njli::SteeringBehaviorMachinePrioritizedBuilder **ary, int index, njli::SteeringBehaviorMachinePrioritizedBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorMachineWeighted **new_SteeringBehaviorMachineWeighted(int nelements) { 
+
+        return njli::SteeringBehaviorMachineWeighted::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorMachineWeighted(njli::SteeringBehaviorMachineWeighted **ary) { 
+
+        njli::SteeringBehaviorMachineWeighted::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorMachineWeighted *SteeringBehaviorMachineWeighted_getitem(njli::SteeringBehaviorMachineWeighted **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorMachineWeighted_setitem(njli::SteeringBehaviorMachineWeighted **ary, int index, njli::SteeringBehaviorMachineWeighted *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorMachineWeightedBuilder **new_SteeringBehaviorMachineWeightedBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorMachineWeightedBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorMachineWeightedBuilder(njli::SteeringBehaviorMachineWeightedBuilder **ary) { 
+
+        njli::SteeringBehaviorMachineWeightedBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorMachineWeightedBuilder *SteeringBehaviorMachineWeightedBuilder_getitem(njli::SteeringBehaviorMachineWeightedBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorMachineWeightedBuilder_setitem(njli::SteeringBehaviorMachineWeightedBuilder **ary, int index, njli::SteeringBehaviorMachineWeightedBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorObstacleAvoidance **new_SteeringBehaviorObstacleAvoidance(int nelements) { 
+
+        return njli::SteeringBehaviorObstacleAvoidance::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorObstacleAvoidance(njli::SteeringBehaviorObstacleAvoidance **ary) { 
+
+        njli::SteeringBehaviorObstacleAvoidance::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorObstacleAvoidance *SteeringBehaviorObstacleAvoidance_getitem(njli::SteeringBehaviorObstacleAvoidance **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorObstacleAvoidance_setitem(njli::SteeringBehaviorObstacleAvoidance **ary, int index, njli::SteeringBehaviorObstacleAvoidance *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorObstacleAvoidanceBuilder **new_SteeringBehaviorObstacleAvoidanceBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorObstacleAvoidanceBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorObstacleAvoidanceBuilder(njli::SteeringBehaviorObstacleAvoidanceBuilder **ary) { 
+
+        njli::SteeringBehaviorObstacleAvoidanceBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorObstacleAvoidanceBuilder *SteeringBehaviorObstacleAvoidanceBuilder_getitem(njli::SteeringBehaviorObstacleAvoidanceBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorObstacleAvoidanceBuilder_setitem(njli::SteeringBehaviorObstacleAvoidanceBuilder **ary, int index, njli::SteeringBehaviorObstacleAvoidanceBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorOffsetPursuit **new_SteeringBehaviorOffsetPursuit(int nelements) { 
+
+        return njli::SteeringBehaviorOffsetPursuit::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorOffsetPursuit(njli::SteeringBehaviorOffsetPursuit **ary) { 
+
+        njli::SteeringBehaviorOffsetPursuit::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorOffsetPursuit *SteeringBehaviorOffsetPursuit_getitem(njli::SteeringBehaviorOffsetPursuit **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorOffsetPursuit_setitem(njli::SteeringBehaviorOffsetPursuit **ary, int index, njli::SteeringBehaviorOffsetPursuit *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorOffsetPursuitBuilder **new_SteeringBehaviorOffsetPursuitBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorOffsetPursuitBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorOffsetPursuitBuilder(njli::SteeringBehaviorOffsetPursuitBuilder **ary) { 
+
+        njli::SteeringBehaviorOffsetPursuitBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorOffsetPursuitBuilder *SteeringBehaviorOffsetPursuitBuilder_getitem(njli::SteeringBehaviorOffsetPursuitBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorOffsetPursuitBuilder_setitem(njli::SteeringBehaviorOffsetPursuitBuilder **ary, int index, njli::SteeringBehaviorOffsetPursuitBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorPursuit **new_SteeringBehaviorPursuit(int nelements) { 
+
+        return njli::SteeringBehaviorPursuit::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorPursuit(njli::SteeringBehaviorPursuit **ary) { 
+
+        njli::SteeringBehaviorPursuit::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorPursuit *SteeringBehaviorPursuit_getitem(njli::SteeringBehaviorPursuit **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorPursuit_setitem(njli::SteeringBehaviorPursuit **ary, int index, njli::SteeringBehaviorPursuit *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorPursuitBuilder **new_SteeringBehaviorPursuitBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorPursuitBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorPursuitBuilder(njli::SteeringBehaviorPursuitBuilder **ary) { 
+
+        njli::SteeringBehaviorPursuitBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorPursuitBuilder *SteeringBehaviorPursuitBuilder_getitem(njli::SteeringBehaviorPursuitBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorPursuitBuilder_setitem(njli::SteeringBehaviorPursuitBuilder **ary, int index, njli::SteeringBehaviorPursuitBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorSeek **new_SteeringBehaviorSeek(int nelements) { 
+
+        return njli::SteeringBehaviorSeek::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorSeek(njli::SteeringBehaviorSeek **ary) { 
+
+        njli::SteeringBehaviorSeek::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorSeek *SteeringBehaviorSeek_getitem(njli::SteeringBehaviorSeek **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorSeek_setitem(njli::SteeringBehaviorSeek **ary, int index, njli::SteeringBehaviorSeek *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorSeekBuilder **new_SteeringBehaviorSeekBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorSeekBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorSeekBuilder(njli::SteeringBehaviorSeekBuilder **ary) { 
+
+        njli::SteeringBehaviorSeekBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorSeekBuilder *SteeringBehaviorSeekBuilder_getitem(njli::SteeringBehaviorSeekBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorSeekBuilder_setitem(njli::SteeringBehaviorSeekBuilder **ary, int index, njli::SteeringBehaviorSeekBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorSeparation **new_SteeringBehaviorSeparation(int nelements) { 
+
+        return njli::SteeringBehaviorSeparation::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorSeparation(njli::SteeringBehaviorSeparation **ary) { 
+
+        njli::SteeringBehaviorSeparation::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorSeparation *SteeringBehaviorSeparation_getitem(njli::SteeringBehaviorSeparation **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorSeparation_setitem(njli::SteeringBehaviorSeparation **ary, int index, njli::SteeringBehaviorSeparation *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorSeparationBuilder **new_SteeringBehaviorSeparationBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorSeparationBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorSeparationBuilder(njli::SteeringBehaviorSeparationBuilder **ary) { 
+
+        njli::SteeringBehaviorSeparationBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorSeparationBuilder *SteeringBehaviorSeparationBuilder_getitem(njli::SteeringBehaviorSeparationBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorSeparationBuilder_setitem(njli::SteeringBehaviorSeparationBuilder **ary, int index, njli::SteeringBehaviorSeparationBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorWallAvoidance **new_SteeringBehaviorWallAvoidance(int nelements) { 
+
+        return njli::SteeringBehaviorWallAvoidance::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorWallAvoidance(njli::SteeringBehaviorWallAvoidance **ary) { 
+
+        njli::SteeringBehaviorWallAvoidance::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorWallAvoidance *SteeringBehaviorWallAvoidance_getitem(njli::SteeringBehaviorWallAvoidance **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorWallAvoidance_setitem(njli::SteeringBehaviorWallAvoidance **ary, int index, njli::SteeringBehaviorWallAvoidance *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorWallAvoidanceBuilder **new_SteeringBehaviorWallAvoidanceBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorWallAvoidanceBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorWallAvoidanceBuilder(njli::SteeringBehaviorWallAvoidanceBuilder **ary) { 
+
+        njli::SteeringBehaviorWallAvoidanceBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorWallAvoidanceBuilder *SteeringBehaviorWallAvoidanceBuilder_getitem(njli::SteeringBehaviorWallAvoidanceBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorWallAvoidanceBuilder_setitem(njli::SteeringBehaviorWallAvoidanceBuilder **ary, int index, njli::SteeringBehaviorWallAvoidanceBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorWander **new_SteeringBehaviorWander(int nelements) { 
+
+        return njli::SteeringBehaviorWander::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorWander(njli::SteeringBehaviorWander **ary) { 
+
+        njli::SteeringBehaviorWander::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorWander *SteeringBehaviorWander_getitem(njli::SteeringBehaviorWander **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorWander_setitem(njli::SteeringBehaviorWander **ary, int index, njli::SteeringBehaviorWander *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::SteeringBehaviorWanderBuilder **new_SteeringBehaviorWanderBuilder(int nelements) { 
+
+        return njli::SteeringBehaviorWanderBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_SteeringBehaviorWanderBuilder(njli::SteeringBehaviorWanderBuilder **ary) { 
+
+        njli::SteeringBehaviorWanderBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::SteeringBehaviorWanderBuilder *SteeringBehaviorWanderBuilder_getitem(njli::SteeringBehaviorWanderBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void SteeringBehaviorWanderBuilder_setitem(njli::SteeringBehaviorWanderBuilder **ary, int index, njli::SteeringBehaviorWanderBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::StopWatch **new_StopWatchArray(int nelements) { 
+
+        return njli::StopWatch::createArray(nelements);
+        
+}
+    
+    static void delete_StopWatchArray(njli::StopWatch **ary) { 
+
+        njli::StopWatch::destroyArray(ary);
+        
+}
+    
+    static njli::StopWatch *StopWatchArray_getitem(njli::StopWatch **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void StopWatchArray_setitem(njli::StopWatch **ary, int index, njli::StopWatch *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::StopWatchBuilder **new_StopWatchBuilderArray(int nelements) { 
+
+        return njli::StopWatchBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_StopWatchBuilderArray(njli::StopWatchBuilder **ary) { 
+
+        njli::StopWatchBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::StopWatchBuilder *StopWatchBuilderArray_getitem(njli::StopWatchBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void StopWatchBuilderArray_setitem(njli::StopWatchBuilder **ary, int index, njli::StopWatchBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Timer **new_TimerArray(int nelements) { 
+
+        return njli::Timer::createArray(nelements);
+        
+}
+    
+    static void delete_TimerArray(njli::Timer **ary) { 
+
+        njli::Timer::destroyArray(ary);
+        
+}
+    
+    static njli::Timer *TimerArray_getitem(njli::Timer **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void TimerArray_setitem(njli::Timer **ary, int index, njli::Timer *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::TimerBuilder **new_TimerBuilderArray(int nelements) { 
+
+        return njli::TimerBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_TimerBuilderArray(njli::TimerBuilder **ary) { 
+
+        njli::TimerBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::TimerBuilder *TimerBuilderArray_getitem(njli::TimerBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void TimerBuilderArray_setitem(njli::TimerBuilder **ary, int index, njli::TimerBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::WorldState **new_WorldStateArray(int nelements) { 
+
+        return njli::WorldState::createArray(nelements);
+        
+}
+    
+    static void delete_WorldStateArray(njli::WorldState **ary) { 
+
+        njli::WorldState::destroyArray(ary);
+        
+}
+    
+    static njli::WorldState *WorldStateArray_getitem(njli::WorldState **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void WorldStateArray_setitem(njli::WorldState **ary, int index, njli::WorldState *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::WorldStateBuilder **new_WorldStateBuilderArray(int nelements) { 
+
+        return njli::WorldStateBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_WorldStateBuilderArray(njli::WorldStateBuilder **ary) { 
+
+        njli::WorldStateBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::WorldStateBuilder *WorldStateBuilderArray_getitem(njli::WorldStateBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void WorldStateBuilderArray_setitem(njli::WorldStateBuilder **ary, int index, njli::WorldStateBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::WorldStateMachine **new_WorldStateMachineArray(int nelements) { 
+
+        return njli::WorldStateMachine::createArray(nelements);
+        
+}
+    
+    static void delete_WorldStateMachineArray(njli::WorldStateMachine **ary) { 
+
+        njli::WorldStateMachine::destroyArray(ary);
+        
+}
+    
+    static njli::WorldStateMachine *WorldStateMachineArray_getitem(njli::WorldStateMachine **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void WorldStateMachineArray_setitem(njli::WorldStateMachine **ary, int index, njli::WorldStateMachine *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::WorldStateMachineBuilder **new_WorldStateMachineBuilderArray(int nelements) { 
+
+        return njli::WorldStateMachineBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_WorldStateMachineBuilderArray(njli::WorldStateMachineBuilder **ary) { 
+
+        njli::WorldStateMachineBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::WorldStateMachineBuilder *WorldStateMachineBuilderArray_getitem(njli::WorldStateMachineBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void WorldStateMachineBuilderArray_setitem(njli::WorldStateMachineBuilder **ary, int index, njli::WorldStateMachineBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::Xml **new_XmlArray(int nelements) { 
+
+        return njli::Xml::createArray(nelements);
+        
+}
+    
+    static void delete_XmlArray(njli::Xml **ary) { 
+
+        njli::Xml::destroyArray(ary);
+        
+}
+    
+    static njli::Xml *XmlArray_getitem(njli::Xml **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void XmlArray_setitem(njli::Xml **ary, int index, njli::Xml *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
+
+    static njli::XmlBuilder **new_XmlBuilderArray(int nelements) { 
+
+        return njli::XmlBuilder::createArray(nelements);
+        
+}
+    
+    static void delete_XmlBuilderArray(njli::XmlBuilder **ary) { 
+
+        njli::XmlBuilder::destroyArray(ary);
+        
+}
+    
+    static njli::XmlBuilder *XmlBuilderArray_getitem(njli::XmlBuilder **ary, int index) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        return ary[index-1];
+    }
+    static void XmlBuilderArray_setitem(njli::XmlBuilder **ary, int index, njli::XmlBuilder *value) {
+        SDL_assertPrint(index > 0, "%s", "index must be greater than zero.");
+        ary[index-1] = value;
+    }
+    
 #ifdef __cplusplus
 extern "C" {
 #endif
+static int _wrap_new_SoundArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Sound **result = 0 ;
+  
+  SWIG_check_num_args("new_SoundArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SoundArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Sound **)new_SoundArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Sound,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SoundArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sound **arg1 = (njli::Sound **) 0 ;
+  
+  SWIG_check_num_args("delete_SoundArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SoundArray",1,"njli::Sound **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sound,0))){
+    SWIG_fail_ptr("delete_SoundArray",1,SWIGTYPE_p_p_njli__Sound);
+  }
+  
+  delete_SoundArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SoundArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sound **arg1 = (njli::Sound **) 0 ;
+  int arg2 ;
+  njli::Sound *result = 0 ;
+  
+  SWIG_check_num_args("SoundArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SoundArray_getitem",1,"njli::Sound **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SoundArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sound,0))){
+    SWIG_fail_ptr("SoundArray_getitem",1,SWIGTYPE_p_p_njli__Sound);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Sound *)SoundArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Sound,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SoundArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sound **arg1 = (njli::Sound **) 0 ;
+  int arg2 ;
+  njli::Sound *arg3 = (njli::Sound *) 0 ;
+  
+  SWIG_check_num_args("SoundArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SoundArray_setitem",1,"njli::Sound **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SoundArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SoundArray_setitem",3,"njli::Sound *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sound,0))){
+    SWIG_fail_ptr("SoundArray_setitem",1,SWIGTYPE_p_p_njli__Sound);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Sound,0))){
+    SWIG_fail_ptr("SoundArray_setitem",3,SWIGTYPE_p_njli__Sound);
+  }
+  
+  SoundArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_s8Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  s8 *result = 0 ;
+  
+  SWIG_check_num_args("new_s8Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_s8Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (s8 *)new_s8Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_s8,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_s8Array(lua_State* L) {
+  int SWIG_arg = 0;
+  s8 *arg1 = (s8 *) 0 ;
+  
+  SWIG_check_num_args("delete_s8Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_s8Array",1,"s8 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s8,0))){
+    SWIG_fail_ptr("delete_s8Array",1,SWIGTYPE_p_s8);
+  }
+  
+  delete_s8Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_s8Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  s8 *arg1 = (s8 *) 0 ;
+  int arg2 ;
+  s8 result;
+  
+  SWIG_check_num_args("s8Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("s8Array_getitem",1,"s8 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("s8Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s8,0))){
+    SWIG_fail_ptr("s8Array_getitem",1,SWIGTYPE_p_s8);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = s8Array_getitem(arg1,arg2);
+  {
+    s8 * resultptr;
+    resultptr = (s8 *) malloc(sizeof(s8));
+    memmove(resultptr, &result, sizeof(s8));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_s8,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_s8Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  s8 *arg1 = (s8 *) 0 ;
+  int arg2 ;
+  s8 arg3 ;
+  s8 *argp3 ;
+  
+  SWIG_check_num_args("s8Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("s8Array_setitem",1,"s8 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("s8Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("s8Array_setitem",3,"s8");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s8,0))){
+    SWIG_fail_ptr("s8Array_setitem",1,SWIGTYPE_p_s8);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_s8,0))){
+    SWIG_fail_ptr("s8Array_setitem",3,SWIGTYPE_p_s8);
+  }
+  arg3 = *argp3;
+  
+  s8Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_u8Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  u8 *result = 0 ;
+  
+  SWIG_check_num_args("new_u8Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_u8Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (u8 *)new_u8Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_u8,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_u8Array(lua_State* L) {
+  int SWIG_arg = 0;
+  u8 *arg1 = (u8 *) 0 ;
+  
+  SWIG_check_num_args("delete_u8Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_u8Array",1,"u8 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u8,0))){
+    SWIG_fail_ptr("delete_u8Array",1,SWIGTYPE_p_u8);
+  }
+  
+  delete_u8Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_u8Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  u8 *arg1 = (u8 *) 0 ;
+  int arg2 ;
+  u8 result;
+  
+  SWIG_check_num_args("u8Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("u8Array_getitem",1,"u8 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("u8Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u8,0))){
+    SWIG_fail_ptr("u8Array_getitem",1,SWIGTYPE_p_u8);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = u8Array_getitem(arg1,arg2);
+  {
+    u8 * resultptr;
+    resultptr = (u8 *) malloc(sizeof(u8));
+    memmove(resultptr, &result, sizeof(u8));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_u8,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_u8Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  u8 *arg1 = (u8 *) 0 ;
+  int arg2 ;
+  u8 arg3 ;
+  u8 *argp3 ;
+  
+  SWIG_check_num_args("u8Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("u8Array_setitem",1,"u8 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("u8Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("u8Array_setitem",3,"u8");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u8,0))){
+    SWIG_fail_ptr("u8Array_setitem",1,SWIGTYPE_p_u8);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_u8,0))){
+    SWIG_fail_ptr("u8Array_setitem",3,SWIGTYPE_p_u8);
+  }
+  arg3 = *argp3;
+  
+  u8Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_s16Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  s16 *result = 0 ;
+  
+  SWIG_check_num_args("new_s16Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_s16Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (s16 *)new_s16Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_s16,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_s16Array(lua_State* L) {
+  int SWIG_arg = 0;
+  s16 *arg1 = (s16 *) 0 ;
+  
+  SWIG_check_num_args("delete_s16Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_s16Array",1,"s16 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s16,0))){
+    SWIG_fail_ptr("delete_s16Array",1,SWIGTYPE_p_s16);
+  }
+  
+  delete_s16Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_s16Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  s16 *arg1 = (s16 *) 0 ;
+  int arg2 ;
+  s16 result;
+  
+  SWIG_check_num_args("s16Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("s16Array_getitem",1,"s16 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("s16Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s16,0))){
+    SWIG_fail_ptr("s16Array_getitem",1,SWIGTYPE_p_s16);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = s16Array_getitem(arg1,arg2);
+  {
+    s16 * resultptr;
+    resultptr = (s16 *) malloc(sizeof(s16));
+    memmove(resultptr, &result, sizeof(s16));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_s16,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_s16Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  s16 *arg1 = (s16 *) 0 ;
+  int arg2 ;
+  s16 arg3 ;
+  s16 *argp3 ;
+  
+  SWIG_check_num_args("s16Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("s16Array_setitem",1,"s16 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("s16Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("s16Array_setitem",3,"s16");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s16,0))){
+    SWIG_fail_ptr("s16Array_setitem",1,SWIGTYPE_p_s16);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_s16,0))){
+    SWIG_fail_ptr("s16Array_setitem",3,SWIGTYPE_p_s16);
+  }
+  arg3 = *argp3;
+  
+  s16Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_u16Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  u16 *result = 0 ;
+  
+  SWIG_check_num_args("new_u16Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_u16Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (u16 *)new_u16Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_u16,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_u16Array(lua_State* L) {
+  int SWIG_arg = 0;
+  u16 *arg1 = (u16 *) 0 ;
+  
+  SWIG_check_num_args("delete_u16Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_u16Array",1,"u16 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u16,0))){
+    SWIG_fail_ptr("delete_u16Array",1,SWIGTYPE_p_u16);
+  }
+  
+  delete_u16Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_u16Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  u16 *arg1 = (u16 *) 0 ;
+  int arg2 ;
+  u16 result;
+  
+  SWIG_check_num_args("u16Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("u16Array_getitem",1,"u16 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("u16Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u16,0))){
+    SWIG_fail_ptr("u16Array_getitem",1,SWIGTYPE_p_u16);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = u16Array_getitem(arg1,arg2);
+  {
+    u16 * resultptr;
+    resultptr = (u16 *) malloc(sizeof(u16));
+    memmove(resultptr, &result, sizeof(u16));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_u16,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_u16Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  u16 *arg1 = (u16 *) 0 ;
+  int arg2 ;
+  u16 arg3 ;
+  u16 *argp3 ;
+  
+  SWIG_check_num_args("u16Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("u16Array_setitem",1,"u16 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("u16Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("u16Array_setitem",3,"u16");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u16,0))){
+    SWIG_fail_ptr("u16Array_setitem",1,SWIGTYPE_p_u16);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_u16,0))){
+    SWIG_fail_ptr("u16Array_setitem",3,SWIGTYPE_p_u16);
+  }
+  arg3 = *argp3;
+  
+  u16Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_s32Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  s32 *result = 0 ;
+  
+  SWIG_check_num_args("new_s32Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_s32Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (s32 *)new_s32Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_s32,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_s32Array(lua_State* L) {
+  int SWIG_arg = 0;
+  s32 *arg1 = (s32 *) 0 ;
+  
+  SWIG_check_num_args("delete_s32Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_s32Array",1,"s32 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s32,0))){
+    SWIG_fail_ptr("delete_s32Array",1,SWIGTYPE_p_s32);
+  }
+  
+  delete_s32Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_s32Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  s32 *arg1 = (s32 *) 0 ;
+  int arg2 ;
+  s32 result;
+  
+  SWIG_check_num_args("s32Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("s32Array_getitem",1,"s32 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("s32Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s32,0))){
+    SWIG_fail_ptr("s32Array_getitem",1,SWIGTYPE_p_s32);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = s32Array_getitem(arg1,arg2);
+  {
+    s32 * resultptr;
+    resultptr = (s32 *) malloc(sizeof(s32));
+    memmove(resultptr, &result, sizeof(s32));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_s32,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_s32Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  s32 *arg1 = (s32 *) 0 ;
+  int arg2 ;
+  s32 arg3 ;
+  s32 *argp3 ;
+  
+  SWIG_check_num_args("s32Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("s32Array_setitem",1,"s32 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("s32Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("s32Array_setitem",3,"s32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s32,0))){
+    SWIG_fail_ptr("s32Array_setitem",1,SWIGTYPE_p_s32);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_s32,0))){
+    SWIG_fail_ptr("s32Array_setitem",3,SWIGTYPE_p_s32);
+  }
+  arg3 = *argp3;
+  
+  s32Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_u32Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  u32 *result = 0 ;
+  
+  SWIG_check_num_args("new_u32Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_u32Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (u32 *)new_u32Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_u32,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_u32Array(lua_State* L) {
+  int SWIG_arg = 0;
+  u32 *arg1 = (u32 *) 0 ;
+  
+  SWIG_check_num_args("delete_u32Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_u32Array",1,"u32 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u32,0))){
+    SWIG_fail_ptr("delete_u32Array",1,SWIGTYPE_p_u32);
+  }
+  
+  delete_u32Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_u32Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  u32 *arg1 = (u32 *) 0 ;
+  int arg2 ;
+  u32 result;
+  
+  SWIG_check_num_args("u32Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("u32Array_getitem",1,"u32 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("u32Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u32,0))){
+    SWIG_fail_ptr("u32Array_getitem",1,SWIGTYPE_p_u32);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = u32Array_getitem(arg1,arg2);
+  {
+    u32 * resultptr;
+    resultptr = (u32 *) malloc(sizeof(u32));
+    memmove(resultptr, &result, sizeof(u32));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_u32,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_u32Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  u32 *arg1 = (u32 *) 0 ;
+  int arg2 ;
+  u32 arg3 ;
+  u32 *argp3 ;
+  
+  SWIG_check_num_args("u32Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("u32Array_setitem",1,"u32 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("u32Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("u32Array_setitem",3,"u32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u32,0))){
+    SWIG_fail_ptr("u32Array_setitem",1,SWIGTYPE_p_u32);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_u32,0))){
+    SWIG_fail_ptr("u32Array_setitem",3,SWIGTYPE_p_u32);
+  }
+  arg3 = *argp3;
+  
+  u32Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_s64Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  s64 *result = 0 ;
+  
+  SWIG_check_num_args("new_s64Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_s64Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (s64 *)new_s64Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_s64,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_s64Array(lua_State* L) {
+  int SWIG_arg = 0;
+  s64 *arg1 = (s64 *) 0 ;
+  
+  SWIG_check_num_args("delete_s64Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_s64Array",1,"s64 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s64,0))){
+    SWIG_fail_ptr("delete_s64Array",1,SWIGTYPE_p_s64);
+  }
+  
+  delete_s64Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_s64Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  s64 *arg1 = (s64 *) 0 ;
+  int arg2 ;
+  s64 result;
+  
+  SWIG_check_num_args("s64Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("s64Array_getitem",1,"s64 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("s64Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s64,0))){
+    SWIG_fail_ptr("s64Array_getitem",1,SWIGTYPE_p_s64);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = s64Array_getitem(arg1,arg2);
+  {
+    s64 * resultptr;
+    resultptr = (s64 *) malloc(sizeof(s64));
+    memmove(resultptr, &result, sizeof(s64));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_s64,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_s64Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  s64 *arg1 = (s64 *) 0 ;
+  int arg2 ;
+  s64 arg3 ;
+  s64 *argp3 ;
+  
+  SWIG_check_num_args("s64Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("s64Array_setitem",1,"s64 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("s64Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("s64Array_setitem",3,"s64");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_s64,0))){
+    SWIG_fail_ptr("s64Array_setitem",1,SWIGTYPE_p_s64);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_s64,0))){
+    SWIG_fail_ptr("s64Array_setitem",3,SWIGTYPE_p_s64);
+  }
+  arg3 = *argp3;
+  
+  s64Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_u64Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  u64 *result = 0 ;
+  
+  SWIG_check_num_args("new_u64Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_u64Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (u64 *)new_u64Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_u64,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_u64Array(lua_State* L) {
+  int SWIG_arg = 0;
+  u64 *arg1 = (u64 *) 0 ;
+  
+  SWIG_check_num_args("delete_u64Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_u64Array",1,"u64 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u64,0))){
+    SWIG_fail_ptr("delete_u64Array",1,SWIGTYPE_p_u64);
+  }
+  
+  delete_u64Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_u64Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  u64 *arg1 = (u64 *) 0 ;
+  int arg2 ;
+  u64 result;
+  
+  SWIG_check_num_args("u64Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("u64Array_getitem",1,"u64 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("u64Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u64,0))){
+    SWIG_fail_ptr("u64Array_getitem",1,SWIGTYPE_p_u64);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = u64Array_getitem(arg1,arg2);
+  {
+    u64 * resultptr;
+    resultptr = (u64 *) malloc(sizeof(u64));
+    memmove(resultptr, &result, sizeof(u64));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_u64,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_u64Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  u64 *arg1 = (u64 *) 0 ;
+  int arg2 ;
+  u64 arg3 ;
+  u64 *argp3 ;
+  
+  SWIG_check_num_args("u64Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("u64Array_setitem",1,"u64 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("u64Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("u64Array_setitem",3,"u64");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_u64,0))){
+    SWIG_fail_ptr("u64Array_setitem",1,SWIGTYPE_p_u64);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_u64,0))){
+    SWIG_fail_ptr("u64Array_setitem",3,SWIGTYPE_p_u64);
+  }
+  arg3 = *argp3;
+  
+  u64Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_f32Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  f32 *result = 0 ;
+  
+  SWIG_check_num_args("new_f32Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_f32Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (f32 *)new_f32Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_f32,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_f32Array(lua_State* L) {
+  int SWIG_arg = 0;
+  f32 *arg1 = (f32 *) 0 ;
+  
+  SWIG_check_num_args("delete_f32Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_f32Array",1,"f32 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_f32,0))){
+    SWIG_fail_ptr("delete_f32Array",1,SWIGTYPE_p_f32);
+  }
+  
+  delete_f32Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_f32Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  f32 *arg1 = (f32 *) 0 ;
+  int arg2 ;
+  f32 result;
+  
+  SWIG_check_num_args("f32Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("f32Array_getitem",1,"f32 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("f32Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_f32,0))){
+    SWIG_fail_ptr("f32Array_getitem",1,SWIGTYPE_p_f32);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = f32Array_getitem(arg1,arg2);
+  {
+    f32 * resultptr;
+    resultptr = (f32 *) malloc(sizeof(f32));
+    memmove(resultptr, &result, sizeof(f32));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_f32,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_f32Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  f32 *arg1 = (f32 *) 0 ;
+  int arg2 ;
+  f32 arg3 ;
+  f32 *argp3 ;
+  
+  SWIG_check_num_args("f32Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("f32Array_setitem",1,"f32 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("f32Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("f32Array_setitem",3,"f32");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_f32,0))){
+    SWIG_fail_ptr("f32Array_setitem",1,SWIGTYPE_p_f32);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_f32,0))){
+    SWIG_fail_ptr("f32Array_setitem",3,SWIGTYPE_p_f32);
+  }
+  arg3 = *argp3;
+  
+  f32Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_f64Array(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  f64 *result = 0 ;
+  
+  SWIG_check_num_args("new_f64Array",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_f64Array",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (f64 *)new_f64Array(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_f64,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_f64Array(lua_State* L) {
+  int SWIG_arg = 0;
+  f64 *arg1 = (f64 *) 0 ;
+  
+  SWIG_check_num_args("delete_f64Array",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_f64Array",1,"f64 *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_f64,0))){
+    SWIG_fail_ptr("delete_f64Array",1,SWIGTYPE_p_f64);
+  }
+  
+  delete_f64Array(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_f64Array_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  f64 *arg1 = (f64 *) 0 ;
+  int arg2 ;
+  f64 result;
+  
+  SWIG_check_num_args("f64Array_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("f64Array_getitem",1,"f64 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("f64Array_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_f64,0))){
+    SWIG_fail_ptr("f64Array_getitem",1,SWIGTYPE_p_f64);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = f64Array_getitem(arg1,arg2);
+  {
+    f64 * resultptr;
+    resultptr = (f64 *) malloc(sizeof(f64));
+    memmove(resultptr, &result, sizeof(f64));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_f64,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_f64Array_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  f64 *arg1 = (f64 *) 0 ;
+  int arg2 ;
+  f64 arg3 ;
+  f64 *argp3 ;
+  
+  SWIG_check_num_args("f64Array_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("f64Array_setitem",1,"f64 *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("f64Array_setitem",2,"int");
+  if(!lua_isuserdata(L,3)) SWIG_fail_arg("f64Array_setitem",3,"f64");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_f64,0))){
+    SWIG_fail_ptr("f64Array_setitem",1,SWIGTYPE_p_f64);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&argp3,SWIGTYPE_p_f64,0))){
+    SWIG_fail_ptr("f64Array_setitem",3,SWIGTYPE_p_f64);
+  }
+  arg3 = *argp3;
+  
+  f64Array_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ActionArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Action **result = 0 ;
+  
+  SWIG_check_num_args("new_ActionArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ActionArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Action **)new_ActionArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Action,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ActionArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Action **arg1 = (njli::Action **) 0 ;
+  
+  SWIG_check_num_args("delete_ActionArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ActionArray",1,"njli::Action **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Action,0))){
+    SWIG_fail_ptr("delete_ActionArray",1,SWIGTYPE_p_p_njli__Action);
+  }
+  
+  delete_ActionArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ActionArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Action **arg1 = (njli::Action **) 0 ;
+  int arg2 ;
+  njli::Action *result = 0 ;
+  
+  SWIG_check_num_args("ActionArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ActionArray_getitem",1,"njli::Action **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ActionArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Action,0))){
+    SWIG_fail_ptr("ActionArray_getitem",1,SWIGTYPE_p_p_njli__Action);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Action *)ActionArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Action,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ActionArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Action **arg1 = (njli::Action **) 0 ;
+  int arg2 ;
+  njli::Action *arg3 = (njli::Action *) 0 ;
+  
+  SWIG_check_num_args("ActionArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ActionArray_setitem",1,"njli::Action **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ActionArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ActionArray_setitem",3,"njli::Action *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Action,0))){
+    SWIG_fail_ptr("ActionArray_setitem",1,SWIGTYPE_p_p_njli__Action);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Action,0))){
+    SWIG_fail_ptr("ActionArray_setitem",3,SWIGTYPE_p_njli__Action);
+  }
+  
+  ActionArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ActionBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::ActionBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_ActionBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ActionBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::ActionBuilder **)new_ActionBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__ActionBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ActionBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ActionBuilder **arg1 = (njli::ActionBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_ActionBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ActionBuilderArray",1,"njli::ActionBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ActionBuilder,0))){
+    SWIG_fail_ptr("delete_ActionBuilderArray",1,SWIGTYPE_p_p_njli__ActionBuilder);
+  }
+  
+  delete_ActionBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ActionBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ActionBuilder **arg1 = (njli::ActionBuilder **) 0 ;
+  int arg2 ;
+  njli::ActionBuilder *result = 0 ;
+  
+  SWIG_check_num_args("ActionBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ActionBuilderArray_getitem",1,"njli::ActionBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ActionBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ActionBuilder,0))){
+    SWIG_fail_ptr("ActionBuilderArray_getitem",1,SWIGTYPE_p_p_njli__ActionBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::ActionBuilder *)ActionBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__ActionBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ActionBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ActionBuilder **arg1 = (njli::ActionBuilder **) 0 ;
+  int arg2 ;
+  njli::ActionBuilder *arg3 = (njli::ActionBuilder *) 0 ;
+  
+  SWIG_check_num_args("ActionBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ActionBuilderArray_setitem",1,"njli::ActionBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ActionBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ActionBuilderArray_setitem",3,"njli::ActionBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ActionBuilder,0))){
+    SWIG_fail_ptr("ActionBuilderArray_setitem",1,SWIGTYPE_p_p_njli__ActionBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__ActionBuilder,0))){
+    SWIG_fail_ptr("ActionBuilderArray_setitem",3,SWIGTYPE_p_njli__ActionBuilder);
+  }
+  
+  ActionBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CameraArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Camera **result = 0 ;
+  
+  SWIG_check_num_args("new_CameraArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_CameraArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Camera **)new_CameraArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Camera,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_CameraArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Camera **arg1 = (njli::Camera **) 0 ;
+  
+  SWIG_check_num_args("delete_CameraArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_CameraArray",1,"njli::Camera **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Camera,0))){
+    SWIG_fail_ptr("delete_CameraArray",1,SWIGTYPE_p_p_njli__Camera);
+  }
+  
+  delete_CameraArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CameraArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Camera **arg1 = (njli::Camera **) 0 ;
+  int arg2 ;
+  njli::Camera *result = 0 ;
+  
+  SWIG_check_num_args("CameraArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CameraArray_getitem",1,"njli::Camera **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CameraArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Camera,0))){
+    SWIG_fail_ptr("CameraArray_getitem",1,SWIGTYPE_p_p_njli__Camera);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Camera *)CameraArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Camera,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CameraArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Camera **arg1 = (njli::Camera **) 0 ;
+  int arg2 ;
+  njli::Camera *arg3 = (njli::Camera *) 0 ;
+  
+  SWIG_check_num_args("CameraArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CameraArray_setitem",1,"njli::Camera **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CameraArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("CameraArray_setitem",3,"njli::Camera *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Camera,0))){
+    SWIG_fail_ptr("CameraArray_setitem",1,SWIGTYPE_p_p_njli__Camera);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Camera,0))){
+    SWIG_fail_ptr("CameraArray_setitem",3,SWIGTYPE_p_njli__Camera);
+  }
+  
+  CameraArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CameraBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::CameraBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_CameraBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_CameraBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::CameraBuilder **)new_CameraBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__CameraBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_CameraBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CameraBuilder **arg1 = (njli::CameraBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_CameraBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_CameraBuilderArray",1,"njli::CameraBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CameraBuilder,0))){
+    SWIG_fail_ptr("delete_CameraBuilderArray",1,SWIGTYPE_p_p_njli__CameraBuilder);
+  }
+  
+  delete_CameraBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CameraBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CameraBuilder **arg1 = (njli::CameraBuilder **) 0 ;
+  int arg2 ;
+  njli::CameraBuilder *result = 0 ;
+  
+  SWIG_check_num_args("CameraBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CameraBuilderArray_getitem",1,"njli::CameraBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CameraBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CameraBuilder,0))){
+    SWIG_fail_ptr("CameraBuilderArray_getitem",1,SWIGTYPE_p_p_njli__CameraBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::CameraBuilder *)CameraBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__CameraBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CameraBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CameraBuilder **arg1 = (njli::CameraBuilder **) 0 ;
+  int arg2 ;
+  njli::CameraBuilder *arg3 = (njli::CameraBuilder *) 0 ;
+  
+  SWIG_check_num_args("CameraBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CameraBuilderArray_setitem",1,"njli::CameraBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CameraBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("CameraBuilderArray_setitem",3,"njli::CameraBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CameraBuilder,0))){
+    SWIG_fail_ptr("CameraBuilderArray_setitem",1,SWIGTYPE_p_p_njli__CameraBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__CameraBuilder,0))){
+    SWIG_fail_ptr("CameraBuilderArray_setitem",3,SWIGTYPE_p_njli__CameraBuilder);
+  }
+  
+  CameraBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ClockArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Clock **result = 0 ;
+  
+  SWIG_check_num_args("new_ClockArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ClockArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Clock **)new_ClockArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Clock,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ClockArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Clock **arg1 = (njli::Clock **) 0 ;
+  
+  SWIG_check_num_args("delete_ClockArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ClockArray",1,"njli::Clock **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Clock,0))){
+    SWIG_fail_ptr("delete_ClockArray",1,SWIGTYPE_p_p_njli__Clock);
+  }
+  
+  delete_ClockArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ClockArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Clock **arg1 = (njli::Clock **) 0 ;
+  int arg2 ;
+  njli::Clock *result = 0 ;
+  
+  SWIG_check_num_args("ClockArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ClockArray_getitem",1,"njli::Clock **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ClockArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Clock,0))){
+    SWIG_fail_ptr("ClockArray_getitem",1,SWIGTYPE_p_p_njli__Clock);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Clock *)ClockArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Clock,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ClockArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Clock **arg1 = (njli::Clock **) 0 ;
+  int arg2 ;
+  njli::Clock *arg3 = (njli::Clock *) 0 ;
+  
+  SWIG_check_num_args("ClockArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ClockArray_setitem",1,"njli::Clock **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ClockArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ClockArray_setitem",3,"njli::Clock *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Clock,0))){
+    SWIG_fail_ptr("ClockArray_setitem",1,SWIGTYPE_p_p_njli__Clock);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Clock,0))){
+    SWIG_fail_ptr("ClockArray_setitem",3,SWIGTYPE_p_njli__Clock);
+  }
+  
+  ClockArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ClockBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::ClockBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_ClockBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ClockBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::ClockBuilder **)new_ClockBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__ClockBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ClockBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ClockBuilder **arg1 = (njli::ClockBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_ClockBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ClockBuilderArray",1,"njli::ClockBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ClockBuilder,0))){
+    SWIG_fail_ptr("delete_ClockBuilderArray",1,SWIGTYPE_p_p_njli__ClockBuilder);
+  }
+  
+  delete_ClockBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ClockBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ClockBuilder **arg1 = (njli::ClockBuilder **) 0 ;
+  int arg2 ;
+  njli::ClockBuilder *result = 0 ;
+  
+  SWIG_check_num_args("ClockBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ClockBuilderArray_getitem",1,"njli::ClockBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ClockBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ClockBuilder,0))){
+    SWIG_fail_ptr("ClockBuilderArray_getitem",1,SWIGTYPE_p_p_njli__ClockBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::ClockBuilder *)ClockBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__ClockBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ClockBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ClockBuilder **arg1 = (njli::ClockBuilder **) 0 ;
+  int arg2 ;
+  njli::ClockBuilder *arg3 = (njli::ClockBuilder *) 0 ;
+  
+  SWIG_check_num_args("ClockBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ClockBuilderArray_setitem",1,"njli::ClockBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ClockBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ClockBuilderArray_setitem",3,"njli::ClockBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ClockBuilder,0))){
+    SWIG_fail_ptr("ClockBuilderArray_setitem",1,SWIGTYPE_p_p_njli__ClockBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__ClockBuilder,0))){
+    SWIG_fail_ptr("ClockBuilderArray_setitem",3,SWIGTYPE_p_njli__ClockBuilder);
+  }
+  
+  ClockBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CollisionResponseArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::CollisionResponse **result = 0 ;
+  
+  SWIG_check_num_args("new_CollisionResponseArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_CollisionResponseArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::CollisionResponse **)new_CollisionResponseArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__CollisionResponse,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_CollisionResponseArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CollisionResponse **arg1 = (njli::CollisionResponse **) 0 ;
+  
+  SWIG_check_num_args("delete_CollisionResponseArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_CollisionResponseArray",1,"njli::CollisionResponse **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CollisionResponse,0))){
+    SWIG_fail_ptr("delete_CollisionResponseArray",1,SWIGTYPE_p_p_njli__CollisionResponse);
+  }
+  
+  delete_CollisionResponseArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CollisionResponseArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CollisionResponse **arg1 = (njli::CollisionResponse **) 0 ;
+  int arg2 ;
+  njli::CollisionResponse *result = 0 ;
+  
+  SWIG_check_num_args("CollisionResponseArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CollisionResponseArray_getitem",1,"njli::CollisionResponse **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CollisionResponseArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CollisionResponse,0))){
+    SWIG_fail_ptr("CollisionResponseArray_getitem",1,SWIGTYPE_p_p_njli__CollisionResponse);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::CollisionResponse *)CollisionResponseArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__CollisionResponse,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CollisionResponseArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CollisionResponse **arg1 = (njli::CollisionResponse **) 0 ;
+  int arg2 ;
+  njli::CollisionResponse *arg3 = (njli::CollisionResponse *) 0 ;
+  
+  SWIG_check_num_args("CollisionResponseArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CollisionResponseArray_setitem",1,"njli::CollisionResponse **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CollisionResponseArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("CollisionResponseArray_setitem",3,"njli::CollisionResponse *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CollisionResponse,0))){
+    SWIG_fail_ptr("CollisionResponseArray_setitem",1,SWIGTYPE_p_p_njli__CollisionResponse);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__CollisionResponse,0))){
+    SWIG_fail_ptr("CollisionResponseArray_setitem",3,SWIGTYPE_p_njli__CollisionResponse);
+  }
+  
+  CollisionResponseArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CollisionResponseBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::CollisionResponseBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_CollisionResponseBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_CollisionResponseBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::CollisionResponseBuilder **)new_CollisionResponseBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__CollisionResponseBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_CollisionResponseBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CollisionResponseBuilder **arg1 = (njli::CollisionResponseBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_CollisionResponseBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_CollisionResponseBuilderArray",1,"njli::CollisionResponseBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CollisionResponseBuilder,0))){
+    SWIG_fail_ptr("delete_CollisionResponseBuilderArray",1,SWIGTYPE_p_p_njli__CollisionResponseBuilder);
+  }
+  
+  delete_CollisionResponseBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CollisionResponseBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CollisionResponseBuilder **arg1 = (njli::CollisionResponseBuilder **) 0 ;
+  int arg2 ;
+  njli::CollisionResponseBuilder *result = 0 ;
+  
+  SWIG_check_num_args("CollisionResponseBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CollisionResponseBuilderArray_getitem",1,"njli::CollisionResponseBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CollisionResponseBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CollisionResponseBuilder,0))){
+    SWIG_fail_ptr("CollisionResponseBuilderArray_getitem",1,SWIGTYPE_p_p_njli__CollisionResponseBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::CollisionResponseBuilder *)CollisionResponseBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__CollisionResponseBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CollisionResponseBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CollisionResponseBuilder **arg1 = (njli::CollisionResponseBuilder **) 0 ;
+  int arg2 ;
+  njli::CollisionResponseBuilder *arg3 = (njli::CollisionResponseBuilder *) 0 ;
+  
+  SWIG_check_num_args("CollisionResponseBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CollisionResponseBuilderArray_setitem",1,"njli::CollisionResponseBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CollisionResponseBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("CollisionResponseBuilderArray_setitem",3,"njli::CollisionResponseBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CollisionResponseBuilder,0))){
+    SWIG_fail_ptr("CollisionResponseBuilderArray_setitem",1,SWIGTYPE_p_p_njli__CollisionResponseBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__CollisionResponseBuilder,0))){
+    SWIG_fail_ptr("CollisionResponseBuilderArray_setitem",3,SWIGTYPE_p_njli__CollisionResponseBuilder);
+  }
+  
+  CollisionResponseBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CubeArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Cube **result = 0 ;
+  
+  SWIG_check_num_args("new_CubeArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_CubeArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Cube **)new_CubeArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Cube,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_CubeArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Cube **arg1 = (njli::Cube **) 0 ;
+  
+  SWIG_check_num_args("delete_CubeArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_CubeArray",1,"njli::Cube **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Cube,0))){
+    SWIG_fail_ptr("delete_CubeArray",1,SWIGTYPE_p_p_njli__Cube);
+  }
+  
+  delete_CubeArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CubeArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Cube **arg1 = (njli::Cube **) 0 ;
+  int arg2 ;
+  njli::Cube *result = 0 ;
+  
+  SWIG_check_num_args("CubeArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CubeArray_getitem",1,"njli::Cube **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CubeArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Cube,0))){
+    SWIG_fail_ptr("CubeArray_getitem",1,SWIGTYPE_p_p_njli__Cube);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Cube *)CubeArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Cube,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CubeArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Cube **arg1 = (njli::Cube **) 0 ;
+  int arg2 ;
+  njli::Cube *arg3 = (njli::Cube *) 0 ;
+  
+  SWIG_check_num_args("CubeArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CubeArray_setitem",1,"njli::Cube **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CubeArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("CubeArray_setitem",3,"njli::Cube *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Cube,0))){
+    SWIG_fail_ptr("CubeArray_setitem",1,SWIGTYPE_p_p_njli__Cube);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Cube,0))){
+    SWIG_fail_ptr("CubeArray_setitem",3,SWIGTYPE_p_njli__Cube);
+  }
+  
+  CubeArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_CubeBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::CubeBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_CubeBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_CubeBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::CubeBuilder **)new_CubeBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__CubeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_CubeBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CubeBuilder **arg1 = (njli::CubeBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_CubeBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_CubeBuilderArray",1,"njli::CubeBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CubeBuilder,0))){
+    SWIG_fail_ptr("delete_CubeBuilderArray",1,SWIGTYPE_p_p_njli__CubeBuilder);
+  }
+  
+  delete_CubeBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CubeBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CubeBuilder **arg1 = (njli::CubeBuilder **) 0 ;
+  int arg2 ;
+  njli::CubeBuilder *result = 0 ;
+  
+  SWIG_check_num_args("CubeBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CubeBuilderArray_getitem",1,"njli::CubeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CubeBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CubeBuilder,0))){
+    SWIG_fail_ptr("CubeBuilderArray_getitem",1,SWIGTYPE_p_p_njli__CubeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::CubeBuilder *)CubeBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__CubeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_CubeBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::CubeBuilder **arg1 = (njli::CubeBuilder **) 0 ;
+  int arg2 ;
+  njli::CubeBuilder *arg3 = (njli::CubeBuilder *) 0 ;
+  
+  SWIG_check_num_args("CubeBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("CubeBuilderArray_setitem",1,"njli::CubeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("CubeBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("CubeBuilderArray_setitem",3,"njli::CubeBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__CubeBuilder,0))){
+    SWIG_fail_ptr("CubeBuilderArray_setitem",1,SWIGTYPE_p_p_njli__CubeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__CubeBuilder,0))){
+    SWIG_fail_ptr("CubeBuilderArray_setitem",3,SWIGTYPE_p_njli__CubeBuilder);
+  }
+  
+  CubeBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_FontArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Font **result = 0 ;
+  
+  SWIG_check_num_args("new_FontArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_FontArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Font **)new_FontArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Font,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_FontArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Font **arg1 = (njli::Font **) 0 ;
+  
+  SWIG_check_num_args("delete_FontArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_FontArray",1,"njli::Font **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Font,0))){
+    SWIG_fail_ptr("delete_FontArray",1,SWIGTYPE_p_p_njli__Font);
+  }
+  
+  delete_FontArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FontArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Font **arg1 = (njli::Font **) 0 ;
+  int arg2 ;
+  njli::Font *result = 0 ;
+  
+  SWIG_check_num_args("FontArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FontArray_getitem",1,"njli::Font **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("FontArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Font,0))){
+    SWIG_fail_ptr("FontArray_getitem",1,SWIGTYPE_p_p_njli__Font);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Font *)FontArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Font,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FontArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Font **arg1 = (njli::Font **) 0 ;
+  int arg2 ;
+  njli::Font *arg3 = (njli::Font *) 0 ;
+  
+  SWIG_check_num_args("FontArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FontArray_setitem",1,"njli::Font **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("FontArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("FontArray_setitem",3,"njli::Font *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Font,0))){
+    SWIG_fail_ptr("FontArray_setitem",1,SWIGTYPE_p_p_njli__Font);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Font,0))){
+    SWIG_fail_ptr("FontArray_setitem",3,SWIGTYPE_p_njli__Font);
+  }
+  
+  FontArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_FontBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::FontBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_FontBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_FontBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::FontBuilder **)new_FontBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__FontBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_FontBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::FontBuilder **arg1 = (njli::FontBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_FontBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_FontBuilderArray",1,"njli::FontBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__FontBuilder,0))){
+    SWIG_fail_ptr("delete_FontBuilderArray",1,SWIGTYPE_p_p_njli__FontBuilder);
+  }
+  
+  delete_FontBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FontBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::FontBuilder **arg1 = (njli::FontBuilder **) 0 ;
+  int arg2 ;
+  njli::FontBuilder *result = 0 ;
+  
+  SWIG_check_num_args("FontBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FontBuilderArray_getitem",1,"njli::FontBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("FontBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__FontBuilder,0))){
+    SWIG_fail_ptr("FontBuilderArray_getitem",1,SWIGTYPE_p_p_njli__FontBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::FontBuilder *)FontBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__FontBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_FontBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::FontBuilder **arg1 = (njli::FontBuilder **) 0 ;
+  int arg2 ;
+  njli::FontBuilder *arg3 = (njli::FontBuilder *) 0 ;
+  
+  SWIG_check_num_args("FontBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("FontBuilderArray_setitem",1,"njli::FontBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("FontBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("FontBuilderArray_setitem",3,"njli::FontBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__FontBuilder,0))){
+    SWIG_fail_ptr("FontBuilderArray_setitem",1,SWIGTYPE_p_p_njli__FontBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__FontBuilder,0))){
+    SWIG_fail_ptr("FontBuilderArray_setitem",3,SWIGTYPE_p_njli__FontBuilder);
+  }
+  
+  FontBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ImageArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Image **result = 0 ;
+  
+  SWIG_check_num_args("new_ImageArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ImageArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Image **)new_ImageArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Image,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ImageArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Image **arg1 = (njli::Image **) 0 ;
+  
+  SWIG_check_num_args("delete_ImageArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ImageArray",1,"njli::Image **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Image,0))){
+    SWIG_fail_ptr("delete_ImageArray",1,SWIGTYPE_p_p_njli__Image);
+  }
+  
+  delete_ImageArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ImageArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Image **arg1 = (njli::Image **) 0 ;
+  int arg2 ;
+  njli::Image *result = 0 ;
+  
+  SWIG_check_num_args("ImageArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ImageArray_getitem",1,"njli::Image **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ImageArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Image,0))){
+    SWIG_fail_ptr("ImageArray_getitem",1,SWIGTYPE_p_p_njli__Image);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Image *)ImageArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Image,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ImageArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Image **arg1 = (njli::Image **) 0 ;
+  int arg2 ;
+  njli::Image *arg3 = (njli::Image *) 0 ;
+  
+  SWIG_check_num_args("ImageArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ImageArray_setitem",1,"njli::Image **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ImageArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ImageArray_setitem",3,"njli::Image *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Image,0))){
+    SWIG_fail_ptr("ImageArray_setitem",1,SWIGTYPE_p_p_njli__Image);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Image,0))){
+    SWIG_fail_ptr("ImageArray_setitem",3,SWIGTYPE_p_njli__Image);
+  }
+  
+  ImageArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ImageBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::ImageBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_ImageBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ImageBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::ImageBuilder **)new_ImageBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__ImageBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ImageBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ImageBuilder **arg1 = (njli::ImageBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_ImageBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ImageBuilderArray",1,"njli::ImageBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ImageBuilder,0))){
+    SWIG_fail_ptr("delete_ImageBuilderArray",1,SWIGTYPE_p_p_njli__ImageBuilder);
+  }
+  
+  delete_ImageBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ImageBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ImageBuilder **arg1 = (njli::ImageBuilder **) 0 ;
+  int arg2 ;
+  njli::ImageBuilder *result = 0 ;
+  
+  SWIG_check_num_args("ImageBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ImageBuilderArray_getitem",1,"njli::ImageBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ImageBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ImageBuilder,0))){
+    SWIG_fail_ptr("ImageBuilderArray_getitem",1,SWIGTYPE_p_p_njli__ImageBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::ImageBuilder *)ImageBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__ImageBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ImageBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ImageBuilder **arg1 = (njli::ImageBuilder **) 0 ;
+  int arg2 ;
+  njli::ImageBuilder *arg3 = (njli::ImageBuilder *) 0 ;
+  
+  SWIG_check_num_args("ImageBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ImageBuilderArray_setitem",1,"njli::ImageBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ImageBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ImageBuilderArray_setitem",3,"njli::ImageBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ImageBuilder,0))){
+    SWIG_fail_ptr("ImageBuilderArray_setitem",1,SWIGTYPE_p_p_njli__ImageBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__ImageBuilder,0))){
+    SWIG_fail_ptr("ImageBuilderArray_setitem",3,SWIGTYPE_p_njli__ImageBuilder);
+  }
+  
+  ImageBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_JsonJLIArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::JsonJLI **result = 0 ;
+  
+  SWIG_check_num_args("new_JsonJLIArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_JsonJLIArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::JsonJLI **)new_JsonJLIArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__JsonJLI,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_JsonJLIArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::JsonJLI **arg1 = (njli::JsonJLI **) 0 ;
+  
+  SWIG_check_num_args("delete_JsonJLIArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_JsonJLIArray",1,"njli::JsonJLI **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__JsonJLI,0))){
+    SWIG_fail_ptr("delete_JsonJLIArray",1,SWIGTYPE_p_p_njli__JsonJLI);
+  }
+  
+  delete_JsonJLIArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_JsonJLIArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::JsonJLI **arg1 = (njli::JsonJLI **) 0 ;
+  int arg2 ;
+  njli::JsonJLI *result = 0 ;
+  
+  SWIG_check_num_args("JsonJLIArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("JsonJLIArray_getitem",1,"njli::JsonJLI **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("JsonJLIArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__JsonJLI,0))){
+    SWIG_fail_ptr("JsonJLIArray_getitem",1,SWIGTYPE_p_p_njli__JsonJLI);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::JsonJLI *)JsonJLIArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__JsonJLI,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_JsonJLIArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::JsonJLI **arg1 = (njli::JsonJLI **) 0 ;
+  int arg2 ;
+  njli::JsonJLI *arg3 = (njli::JsonJLI *) 0 ;
+  
+  SWIG_check_num_args("JsonJLIArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("JsonJLIArray_setitem",1,"njli::JsonJLI **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("JsonJLIArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("JsonJLIArray_setitem",3,"njli::JsonJLI *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__JsonJLI,0))){
+    SWIG_fail_ptr("JsonJLIArray_setitem",1,SWIGTYPE_p_p_njli__JsonJLI);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__JsonJLI,0))){
+    SWIG_fail_ptr("JsonJLIArray_setitem",3,SWIGTYPE_p_njli__JsonJLI);
+  }
+  
+  JsonJLIArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_JsonJLIBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::JsonJLIBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_JsonJLIBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_JsonJLIBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::JsonJLIBuilder **)new_JsonJLIBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__JsonJLIBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_JsonJLIBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::JsonJLIBuilder **arg1 = (njli::JsonJLIBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_JsonJLIBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_JsonJLIBuilderArray",1,"njli::JsonJLIBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__JsonJLIBuilder,0))){
+    SWIG_fail_ptr("delete_JsonJLIBuilderArray",1,SWIGTYPE_p_p_njli__JsonJLIBuilder);
+  }
+  
+  delete_JsonJLIBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_JsonJLIBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::JsonJLIBuilder **arg1 = (njli::JsonJLIBuilder **) 0 ;
+  int arg2 ;
+  njli::JsonJLIBuilder *result = 0 ;
+  
+  SWIG_check_num_args("JsonJLIBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("JsonJLIBuilderArray_getitem",1,"njli::JsonJLIBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("JsonJLIBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__JsonJLIBuilder,0))){
+    SWIG_fail_ptr("JsonJLIBuilderArray_getitem",1,SWIGTYPE_p_p_njli__JsonJLIBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::JsonJLIBuilder *)JsonJLIBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__JsonJLIBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_JsonJLIBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::JsonJLIBuilder **arg1 = (njli::JsonJLIBuilder **) 0 ;
+  int arg2 ;
+  njli::JsonJLIBuilder *arg3 = (njli::JsonJLIBuilder *) 0 ;
+  
+  SWIG_check_num_args("JsonJLIBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("JsonJLIBuilderArray_setitem",1,"njli::JsonJLIBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("JsonJLIBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("JsonJLIBuilderArray_setitem",3,"njli::JsonJLIBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__JsonJLIBuilder,0))){
+    SWIG_fail_ptr("JsonJLIBuilderArray_setitem",1,SWIGTYPE_p_p_njli__JsonJLIBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__JsonJLIBuilder,0))){
+    SWIG_fail_ptr("JsonJLIBuilderArray_setitem",3,SWIGTYPE_p_njli__JsonJLIBuilder);
+  }
+  
+  JsonJLIBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_LevelOfDetailArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::LevelOfDetail **result = 0 ;
+  
+  SWIG_check_num_args("new_LevelOfDetailArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_LevelOfDetailArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::LevelOfDetail **)new_LevelOfDetailArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__LevelOfDetail,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_LevelOfDetailArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LevelOfDetail **arg1 = (njli::LevelOfDetail **) 0 ;
+  
+  SWIG_check_num_args("delete_LevelOfDetailArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_LevelOfDetailArray",1,"njli::LevelOfDetail **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LevelOfDetail,0))){
+    SWIG_fail_ptr("delete_LevelOfDetailArray",1,SWIGTYPE_p_p_njli__LevelOfDetail);
+  }
+  
+  delete_LevelOfDetailArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LevelOfDetailArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LevelOfDetail **arg1 = (njli::LevelOfDetail **) 0 ;
+  int arg2 ;
+  njli::LevelOfDetail *result = 0 ;
+  
+  SWIG_check_num_args("LevelOfDetailArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LevelOfDetailArray_getitem",1,"njli::LevelOfDetail **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LevelOfDetailArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LevelOfDetail,0))){
+    SWIG_fail_ptr("LevelOfDetailArray_getitem",1,SWIGTYPE_p_p_njli__LevelOfDetail);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::LevelOfDetail *)LevelOfDetailArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__LevelOfDetail,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LevelOfDetailArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LevelOfDetail **arg1 = (njli::LevelOfDetail **) 0 ;
+  int arg2 ;
+  njli::LevelOfDetail *arg3 = (njli::LevelOfDetail *) 0 ;
+  
+  SWIG_check_num_args("LevelOfDetailArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LevelOfDetailArray_setitem",1,"njli::LevelOfDetail **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LevelOfDetailArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("LevelOfDetailArray_setitem",3,"njli::LevelOfDetail *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LevelOfDetail,0))){
+    SWIG_fail_ptr("LevelOfDetailArray_setitem",1,SWIGTYPE_p_p_njli__LevelOfDetail);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__LevelOfDetail,0))){
+    SWIG_fail_ptr("LevelOfDetailArray_setitem",3,SWIGTYPE_p_njli__LevelOfDetail);
+  }
+  
+  LevelOfDetailArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_LevelOfDetailBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::LevelOfDetailBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_LevelOfDetailBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_LevelOfDetailBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::LevelOfDetailBuilder **)new_LevelOfDetailBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__LevelOfDetailBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_LevelOfDetailBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LevelOfDetailBuilder **arg1 = (njli::LevelOfDetailBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_LevelOfDetailBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_LevelOfDetailBuilderArray",1,"njli::LevelOfDetailBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LevelOfDetailBuilder,0))){
+    SWIG_fail_ptr("delete_LevelOfDetailBuilderArray",1,SWIGTYPE_p_p_njli__LevelOfDetailBuilder);
+  }
+  
+  delete_LevelOfDetailBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LevelOfDetailBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LevelOfDetailBuilder **arg1 = (njli::LevelOfDetailBuilder **) 0 ;
+  int arg2 ;
+  njli::LevelOfDetailBuilder *result = 0 ;
+  
+  SWIG_check_num_args("LevelOfDetailBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LevelOfDetailBuilderArray_getitem",1,"njli::LevelOfDetailBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LevelOfDetailBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LevelOfDetailBuilder,0))){
+    SWIG_fail_ptr("LevelOfDetailBuilderArray_getitem",1,SWIGTYPE_p_p_njli__LevelOfDetailBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::LevelOfDetailBuilder *)LevelOfDetailBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__LevelOfDetailBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LevelOfDetailBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LevelOfDetailBuilder **arg1 = (njli::LevelOfDetailBuilder **) 0 ;
+  int arg2 ;
+  njli::LevelOfDetailBuilder *arg3 = (njli::LevelOfDetailBuilder *) 0 ;
+  
+  SWIG_check_num_args("LevelOfDetailBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LevelOfDetailBuilderArray_setitem",1,"njli::LevelOfDetailBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LevelOfDetailBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("LevelOfDetailBuilderArray_setitem",3,"njli::LevelOfDetailBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LevelOfDetailBuilder,0))){
+    SWIG_fail_ptr("LevelOfDetailBuilderArray_setitem",1,SWIGTYPE_p_p_njli__LevelOfDetailBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__LevelOfDetailBuilder,0))){
+    SWIG_fail_ptr("LevelOfDetailBuilderArray_setitem",3,SWIGTYPE_p_njli__LevelOfDetailBuilder);
+  }
+  
+  LevelOfDetailBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_LightArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Light **result = 0 ;
+  
+  SWIG_check_num_args("new_LightArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_LightArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Light **)new_LightArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Light,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_LightArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Light **arg1 = (njli::Light **) 0 ;
+  
+  SWIG_check_num_args("delete_LightArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_LightArray",1,"njli::Light **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Light,0))){
+    SWIG_fail_ptr("delete_LightArray",1,SWIGTYPE_p_p_njli__Light);
+  }
+  
+  delete_LightArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LightArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Light **arg1 = (njli::Light **) 0 ;
+  int arg2 ;
+  njli::Light *result = 0 ;
+  
+  SWIG_check_num_args("LightArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LightArray_getitem",1,"njli::Light **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LightArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Light,0))){
+    SWIG_fail_ptr("LightArray_getitem",1,SWIGTYPE_p_p_njli__Light);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Light *)LightArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Light,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LightArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Light **arg1 = (njli::Light **) 0 ;
+  int arg2 ;
+  njli::Light *arg3 = (njli::Light *) 0 ;
+  
+  SWIG_check_num_args("LightArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LightArray_setitem",1,"njli::Light **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LightArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("LightArray_setitem",3,"njli::Light *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Light,0))){
+    SWIG_fail_ptr("LightArray_setitem",1,SWIGTYPE_p_p_njli__Light);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Light,0))){
+    SWIG_fail_ptr("LightArray_setitem",3,SWIGTYPE_p_njli__Light);
+  }
+  
+  LightArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_LightBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::LightBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_LightBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_LightBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::LightBuilder **)new_LightBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__LightBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_LightBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LightBuilder **arg1 = (njli::LightBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_LightBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_LightBuilderArray",1,"njli::LightBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LightBuilder,0))){
+    SWIG_fail_ptr("delete_LightBuilderArray",1,SWIGTYPE_p_p_njli__LightBuilder);
+  }
+  
+  delete_LightBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LightBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LightBuilder **arg1 = (njli::LightBuilder **) 0 ;
+  int arg2 ;
+  njli::LightBuilder *result = 0 ;
+  
+  SWIG_check_num_args("LightBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LightBuilderArray_getitem",1,"njli::LightBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LightBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LightBuilder,0))){
+    SWIG_fail_ptr("LightBuilderArray_getitem",1,SWIGTYPE_p_p_njli__LightBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::LightBuilder *)LightBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__LightBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_LightBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::LightBuilder **arg1 = (njli::LightBuilder **) 0 ;
+  int arg2 ;
+  njli::LightBuilder *arg3 = (njli::LightBuilder *) 0 ;
+  
+  SWIG_check_num_args("LightBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("LightBuilderArray_setitem",1,"njli::LightBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("LightBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("LightBuilderArray_setitem",3,"njli::LightBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__LightBuilder,0))){
+    SWIG_fail_ptr("LightBuilderArray_setitem",1,SWIGTYPE_p_p_njli__LightBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__LightBuilder,0))){
+    SWIG_fail_ptr("LightBuilderArray_setitem",3,SWIGTYPE_p_njli__LightBuilder);
+  }
+  
+  LightBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_MaterialArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Material **result = 0 ;
+  
+  SWIG_check_num_args("new_MaterialArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_MaterialArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Material **)new_MaterialArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Material,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_MaterialArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Material **arg1 = (njli::Material **) 0 ;
+  
+  SWIG_check_num_args("delete_MaterialArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_MaterialArray",1,"njli::Material **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Material,0))){
+    SWIG_fail_ptr("delete_MaterialArray",1,SWIGTYPE_p_p_njli__Material);
+  }
+  
+  delete_MaterialArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_MaterialArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Material **arg1 = (njli::Material **) 0 ;
+  int arg2 ;
+  njli::Material *result = 0 ;
+  
+  SWIG_check_num_args("MaterialArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MaterialArray_getitem",1,"njli::Material **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("MaterialArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Material,0))){
+    SWIG_fail_ptr("MaterialArray_getitem",1,SWIGTYPE_p_p_njli__Material);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Material *)MaterialArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Material,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_MaterialArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Material **arg1 = (njli::Material **) 0 ;
+  int arg2 ;
+  njli::Material *arg3 = (njli::Material *) 0 ;
+  
+  SWIG_check_num_args("MaterialArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MaterialArray_setitem",1,"njli::Material **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("MaterialArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("MaterialArray_setitem",3,"njli::Material *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Material,0))){
+    SWIG_fail_ptr("MaterialArray_setitem",1,SWIGTYPE_p_p_njli__Material);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Material,0))){
+    SWIG_fail_ptr("MaterialArray_setitem",3,SWIGTYPE_p_njli__Material);
+  }
+  
+  MaterialArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_MaterialBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::MaterialBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_MaterialBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_MaterialBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::MaterialBuilder **)new_MaterialBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__MaterialBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_MaterialBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialBuilder **arg1 = (njli::MaterialBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_MaterialBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_MaterialBuilderArray",1,"njli::MaterialBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialBuilder,0))){
+    SWIG_fail_ptr("delete_MaterialBuilderArray",1,SWIGTYPE_p_p_njli__MaterialBuilder);
+  }
+  
+  delete_MaterialBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_MaterialBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialBuilder **arg1 = (njli::MaterialBuilder **) 0 ;
+  int arg2 ;
+  njli::MaterialBuilder *result = 0 ;
+  
+  SWIG_check_num_args("MaterialBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MaterialBuilderArray_getitem",1,"njli::MaterialBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("MaterialBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialBuilder,0))){
+    SWIG_fail_ptr("MaterialBuilderArray_getitem",1,SWIGTYPE_p_p_njli__MaterialBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::MaterialBuilder *)MaterialBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__MaterialBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_MaterialBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialBuilder **arg1 = (njli::MaterialBuilder **) 0 ;
+  int arg2 ;
+  njli::MaterialBuilder *arg3 = (njli::MaterialBuilder *) 0 ;
+  
+  SWIG_check_num_args("MaterialBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MaterialBuilderArray_setitem",1,"njli::MaterialBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("MaterialBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("MaterialBuilderArray_setitem",3,"njli::MaterialBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialBuilder,0))){
+    SWIG_fail_ptr("MaterialBuilderArray_setitem",1,SWIGTYPE_p_p_njli__MaterialBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__MaterialBuilder,0))){
+    SWIG_fail_ptr("MaterialBuilderArray_setitem",3,SWIGTYPE_p_njli__MaterialBuilder);
+  }
+  
+  MaterialBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_MaterialPropertyArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::MaterialProperty **result = 0 ;
+  
+  SWIG_check_num_args("new_MaterialPropertyArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_MaterialPropertyArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::MaterialProperty **)new_MaterialPropertyArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__MaterialProperty,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_MaterialPropertyArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialProperty **arg1 = (njli::MaterialProperty **) 0 ;
+  
+  SWIG_check_num_args("delete_MaterialPropertyArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_MaterialPropertyArray",1,"njli::MaterialProperty **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialProperty,0))){
+    SWIG_fail_ptr("delete_MaterialPropertyArray",1,SWIGTYPE_p_p_njli__MaterialProperty);
+  }
+  
+  delete_MaterialPropertyArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_MaterialPropertyArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialProperty **arg1 = (njli::MaterialProperty **) 0 ;
+  int arg2 ;
+  njli::MaterialProperty *result = 0 ;
+  
+  SWIG_check_num_args("MaterialPropertyArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MaterialPropertyArray_getitem",1,"njli::MaterialProperty **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("MaterialPropertyArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialProperty,0))){
+    SWIG_fail_ptr("MaterialPropertyArray_getitem",1,SWIGTYPE_p_p_njli__MaterialProperty);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::MaterialProperty *)MaterialPropertyArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__MaterialProperty,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_MaterialPropertyArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialProperty **arg1 = (njli::MaterialProperty **) 0 ;
+  int arg2 ;
+  njli::MaterialProperty *arg3 = (njli::MaterialProperty *) 0 ;
+  
+  SWIG_check_num_args("MaterialPropertyArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MaterialPropertyArray_setitem",1,"njli::MaterialProperty **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("MaterialPropertyArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("MaterialPropertyArray_setitem",3,"njli::MaterialProperty *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialProperty,0))){
+    SWIG_fail_ptr("MaterialPropertyArray_setitem",1,SWIGTYPE_p_p_njli__MaterialProperty);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__MaterialProperty,0))){
+    SWIG_fail_ptr("MaterialPropertyArray_setitem",3,SWIGTYPE_p_njli__MaterialProperty);
+  }
+  
+  MaterialPropertyArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_MaterialPropertyBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::MaterialPropertyBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_MaterialPropertyBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_MaterialPropertyBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::MaterialPropertyBuilder **)new_MaterialPropertyBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__MaterialPropertyBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_MaterialPropertyBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialPropertyBuilder **arg1 = (njli::MaterialPropertyBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_MaterialPropertyBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_MaterialPropertyBuilderArray",1,"njli::MaterialPropertyBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialPropertyBuilder,0))){
+    SWIG_fail_ptr("delete_MaterialPropertyBuilderArray",1,SWIGTYPE_p_p_njli__MaterialPropertyBuilder);
+  }
+  
+  delete_MaterialPropertyBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_MaterialPropertyBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialPropertyBuilder **arg1 = (njli::MaterialPropertyBuilder **) 0 ;
+  int arg2 ;
+  njli::MaterialPropertyBuilder *result = 0 ;
+  
+  SWIG_check_num_args("MaterialPropertyBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MaterialPropertyBuilderArray_getitem",1,"njli::MaterialPropertyBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("MaterialPropertyBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialPropertyBuilder,0))){
+    SWIG_fail_ptr("MaterialPropertyBuilderArray_getitem",1,SWIGTYPE_p_p_njli__MaterialPropertyBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::MaterialPropertyBuilder *)MaterialPropertyBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__MaterialPropertyBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_MaterialPropertyBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::MaterialPropertyBuilder **arg1 = (njli::MaterialPropertyBuilder **) 0 ;
+  int arg2 ;
+  njli::MaterialPropertyBuilder *arg3 = (njli::MaterialPropertyBuilder *) 0 ;
+  
+  SWIG_check_num_args("MaterialPropertyBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("MaterialPropertyBuilderArray_setitem",1,"njli::MaterialPropertyBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("MaterialPropertyBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("MaterialPropertyBuilderArray_setitem",3,"njli::MaterialPropertyBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__MaterialPropertyBuilder,0))){
+    SWIG_fail_ptr("MaterialPropertyBuilderArray_setitem",1,SWIGTYPE_p_p_njli__MaterialPropertyBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__MaterialPropertyBuilder,0))){
+    SWIG_fail_ptr("MaterialPropertyBuilderArray_setitem",3,SWIGTYPE_p_njli__MaterialPropertyBuilder);
+  }
+  
+  MaterialPropertyBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_NodeArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Node **result = 0 ;
+  
+  SWIG_check_num_args("new_NodeArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_NodeArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Node **)new_NodeArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Node,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_NodeArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Node **arg1 = (njli::Node **) 0 ;
+  
+  SWIG_check_num_args("delete_NodeArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_NodeArray",1,"njli::Node **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Node,0))){
+    SWIG_fail_ptr("delete_NodeArray",1,SWIGTYPE_p_p_njli__Node);
+  }
+  
+  delete_NodeArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Node **arg1 = (njli::Node **) 0 ;
+  int arg2 ;
+  njli::Node *result = 0 ;
+  
+  SWIG_check_num_args("NodeArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeArray_getitem",1,"njli::Node **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Node,0))){
+    SWIG_fail_ptr("NodeArray_getitem",1,SWIGTYPE_p_p_njli__Node);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Node *)NodeArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Node,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Node **arg1 = (njli::Node **) 0 ;
+  int arg2 ;
+  njli::Node *arg3 = (njli::Node *) 0 ;
+  
+  SWIG_check_num_args("NodeArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeArray_setitem",1,"njli::Node **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("NodeArray_setitem",3,"njli::Node *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Node,0))){
+    SWIG_fail_ptr("NodeArray_setitem",1,SWIGTYPE_p_p_njli__Node);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Node,0))){
+    SWIG_fail_ptr("NodeArray_setitem",3,SWIGTYPE_p_njli__Node);
+  }
+  
+  NodeArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_NodeBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::NodeBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_NodeBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_NodeBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::NodeBuilder **)new_NodeBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__NodeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_NodeBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeBuilder **arg1 = (njli::NodeBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_NodeBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_NodeBuilderArray",1,"njli::NodeBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeBuilder,0))){
+    SWIG_fail_ptr("delete_NodeBuilderArray",1,SWIGTYPE_p_p_njli__NodeBuilder);
+  }
+  
+  delete_NodeBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeBuilder **arg1 = (njli::NodeBuilder **) 0 ;
+  int arg2 ;
+  njli::NodeBuilder *result = 0 ;
+  
+  SWIG_check_num_args("NodeBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeBuilderArray_getitem",1,"njli::NodeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeBuilder,0))){
+    SWIG_fail_ptr("NodeBuilderArray_getitem",1,SWIGTYPE_p_p_njli__NodeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::NodeBuilder *)NodeBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__NodeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeBuilder **arg1 = (njli::NodeBuilder **) 0 ;
+  int arg2 ;
+  njli::NodeBuilder *arg3 = (njli::NodeBuilder *) 0 ;
+  
+  SWIG_check_num_args("NodeBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeBuilderArray_setitem",1,"njli::NodeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("NodeBuilderArray_setitem",3,"njli::NodeBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeBuilder,0))){
+    SWIG_fail_ptr("NodeBuilderArray_setitem",1,SWIGTYPE_p_p_njli__NodeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__NodeBuilder,0))){
+    SWIG_fail_ptr("NodeBuilderArray_setitem",3,SWIGTYPE_p_njli__NodeBuilder);
+  }
+  
+  NodeBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_NodeStateArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::NodeState **result = 0 ;
+  
+  SWIG_check_num_args("new_NodeStateArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_NodeStateArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::NodeState **)new_NodeStateArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__NodeState,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_NodeStateArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeState **arg1 = (njli::NodeState **) 0 ;
+  
+  SWIG_check_num_args("delete_NodeStateArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_NodeStateArray",1,"njli::NodeState **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeState,0))){
+    SWIG_fail_ptr("delete_NodeStateArray",1,SWIGTYPE_p_p_njli__NodeState);
+  }
+  
+  delete_NodeStateArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeStateArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeState **arg1 = (njli::NodeState **) 0 ;
+  int arg2 ;
+  njli::NodeState *result = 0 ;
+  
+  SWIG_check_num_args("NodeStateArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeStateArray_getitem",1,"njli::NodeState **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeStateArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeState,0))){
+    SWIG_fail_ptr("NodeStateArray_getitem",1,SWIGTYPE_p_p_njli__NodeState);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::NodeState *)NodeStateArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__NodeState,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeStateArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeState **arg1 = (njli::NodeState **) 0 ;
+  int arg2 ;
+  njli::NodeState *arg3 = (njli::NodeState *) 0 ;
+  
+  SWIG_check_num_args("NodeStateArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeStateArray_setitem",1,"njli::NodeState **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeStateArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("NodeStateArray_setitem",3,"njli::NodeState *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeState,0))){
+    SWIG_fail_ptr("NodeStateArray_setitem",1,SWIGTYPE_p_p_njli__NodeState);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__NodeState,0))){
+    SWIG_fail_ptr("NodeStateArray_setitem",3,SWIGTYPE_p_njli__NodeState);
+  }
+  
+  NodeStateArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_NodeStateBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::NodeStateBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_NodeStateBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_NodeStateBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::NodeStateBuilder **)new_NodeStateBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__NodeStateBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_NodeStateBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateBuilder **arg1 = (njli::NodeStateBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_NodeStateBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_NodeStateBuilderArray",1,"njli::NodeStateBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateBuilder,0))){
+    SWIG_fail_ptr("delete_NodeStateBuilderArray",1,SWIGTYPE_p_p_njli__NodeStateBuilder);
+  }
+  
+  delete_NodeStateBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeStateBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateBuilder **arg1 = (njli::NodeStateBuilder **) 0 ;
+  int arg2 ;
+  njli::NodeStateBuilder *result = 0 ;
+  
+  SWIG_check_num_args("NodeStateBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeStateBuilderArray_getitem",1,"njli::NodeStateBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeStateBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateBuilder,0))){
+    SWIG_fail_ptr("NodeStateBuilderArray_getitem",1,SWIGTYPE_p_p_njli__NodeStateBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::NodeStateBuilder *)NodeStateBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__NodeStateBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeStateBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateBuilder **arg1 = (njli::NodeStateBuilder **) 0 ;
+  int arg2 ;
+  njli::NodeStateBuilder *arg3 = (njli::NodeStateBuilder *) 0 ;
+  
+  SWIG_check_num_args("NodeStateBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeStateBuilderArray_setitem",1,"njli::NodeStateBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeStateBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("NodeStateBuilderArray_setitem",3,"njli::NodeStateBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateBuilder,0))){
+    SWIG_fail_ptr("NodeStateBuilderArray_setitem",1,SWIGTYPE_p_p_njli__NodeStateBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__NodeStateBuilder,0))){
+    SWIG_fail_ptr("NodeStateBuilderArray_setitem",3,SWIGTYPE_p_njli__NodeStateBuilder);
+  }
+  
+  NodeStateBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_NodeStateMachineArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::NodeStateMachine **result = 0 ;
+  
+  SWIG_check_num_args("new_NodeStateMachineArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_NodeStateMachineArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::NodeStateMachine **)new_NodeStateMachineArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__NodeStateMachine,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_NodeStateMachineArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateMachine **arg1 = (njli::NodeStateMachine **) 0 ;
+  
+  SWIG_check_num_args("delete_NodeStateMachineArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_NodeStateMachineArray",1,"njli::NodeStateMachine **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateMachine,0))){
+    SWIG_fail_ptr("delete_NodeStateMachineArray",1,SWIGTYPE_p_p_njli__NodeStateMachine);
+  }
+  
+  delete_NodeStateMachineArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeStateMachineArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateMachine **arg1 = (njli::NodeStateMachine **) 0 ;
+  int arg2 ;
+  njli::NodeStateMachine *result = 0 ;
+  
+  SWIG_check_num_args("NodeStateMachineArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeStateMachineArray_getitem",1,"njli::NodeStateMachine **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeStateMachineArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateMachine,0))){
+    SWIG_fail_ptr("NodeStateMachineArray_getitem",1,SWIGTYPE_p_p_njli__NodeStateMachine);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::NodeStateMachine *)NodeStateMachineArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__NodeStateMachine,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeStateMachineArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateMachine **arg1 = (njli::NodeStateMachine **) 0 ;
+  int arg2 ;
+  njli::NodeStateMachine *arg3 = (njli::NodeStateMachine *) 0 ;
+  
+  SWIG_check_num_args("NodeStateMachineArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeStateMachineArray_setitem",1,"njli::NodeStateMachine **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeStateMachineArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("NodeStateMachineArray_setitem",3,"njli::NodeStateMachine *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateMachine,0))){
+    SWIG_fail_ptr("NodeStateMachineArray_setitem",1,SWIGTYPE_p_p_njli__NodeStateMachine);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__NodeStateMachine,0))){
+    SWIG_fail_ptr("NodeStateMachineArray_setitem",3,SWIGTYPE_p_njli__NodeStateMachine);
+  }
+  
+  NodeStateMachineArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_NodeStateMachineBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::NodeStateMachineBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_NodeStateMachineBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_NodeStateMachineBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::NodeStateMachineBuilder **)new_NodeStateMachineBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__NodeStateMachineBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_NodeStateMachineBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateMachineBuilder **arg1 = (njli::NodeStateMachineBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_NodeStateMachineBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_NodeStateMachineBuilderArray",1,"njli::NodeStateMachineBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateMachineBuilder,0))){
+    SWIG_fail_ptr("delete_NodeStateMachineBuilderArray",1,SWIGTYPE_p_p_njli__NodeStateMachineBuilder);
+  }
+  
+  delete_NodeStateMachineBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeStateMachineBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateMachineBuilder **arg1 = (njli::NodeStateMachineBuilder **) 0 ;
+  int arg2 ;
+  njli::NodeStateMachineBuilder *result = 0 ;
+  
+  SWIG_check_num_args("NodeStateMachineBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeStateMachineBuilderArray_getitem",1,"njli::NodeStateMachineBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeStateMachineBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateMachineBuilder,0))){
+    SWIG_fail_ptr("NodeStateMachineBuilderArray_getitem",1,SWIGTYPE_p_p_njli__NodeStateMachineBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::NodeStateMachineBuilder *)NodeStateMachineBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__NodeStateMachineBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_NodeStateMachineBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::NodeStateMachineBuilder **arg1 = (njli::NodeStateMachineBuilder **) 0 ;
+  int arg2 ;
+  njli::NodeStateMachineBuilder *arg3 = (njli::NodeStateMachineBuilder *) 0 ;
+  
+  SWIG_check_num_args("NodeStateMachineBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("NodeStateMachineBuilderArray_setitem",1,"njli::NodeStateMachineBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("NodeStateMachineBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("NodeStateMachineBuilderArray_setitem",3,"njli::NodeStateMachineBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__NodeStateMachineBuilder,0))){
+    SWIG_fail_ptr("NodeStateMachineBuilderArray_setitem",1,SWIGTYPE_p_p_njli__NodeStateMachineBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__NodeStateMachineBuilder,0))){
+    SWIG_fail_ptr("NodeStateMachineBuilderArray_setitem",3,SWIGTYPE_p_njli__NodeStateMachineBuilder);
+  }
+  
+  NodeStateMachineBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ParticleEmitterArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::ParticleEmitter **result = 0 ;
+  
+  SWIG_check_num_args("new_ParticleEmitterArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ParticleEmitterArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::ParticleEmitter **)new_ParticleEmitterArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__ParticleEmitter,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ParticleEmitterArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ParticleEmitter **arg1 = (njli::ParticleEmitter **) 0 ;
+  
+  SWIG_check_num_args("delete_ParticleEmitterArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ParticleEmitterArray",1,"njli::ParticleEmitter **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ParticleEmitter,0))){
+    SWIG_fail_ptr("delete_ParticleEmitterArray",1,SWIGTYPE_p_p_njli__ParticleEmitter);
+  }
+  
+  delete_ParticleEmitterArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ParticleEmitterArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ParticleEmitter **arg1 = (njli::ParticleEmitter **) 0 ;
+  int arg2 ;
+  njli::ParticleEmitter *result = 0 ;
+  
+  SWIG_check_num_args("ParticleEmitterArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ParticleEmitterArray_getitem",1,"njli::ParticleEmitter **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ParticleEmitterArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ParticleEmitter,0))){
+    SWIG_fail_ptr("ParticleEmitterArray_getitem",1,SWIGTYPE_p_p_njli__ParticleEmitter);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::ParticleEmitter *)ParticleEmitterArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__ParticleEmitter,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ParticleEmitterArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ParticleEmitter **arg1 = (njli::ParticleEmitter **) 0 ;
+  int arg2 ;
+  njli::ParticleEmitter *arg3 = (njli::ParticleEmitter *) 0 ;
+  
+  SWIG_check_num_args("ParticleEmitterArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ParticleEmitterArray_setitem",1,"njli::ParticleEmitter **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ParticleEmitterArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ParticleEmitterArray_setitem",3,"njli::ParticleEmitter *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ParticleEmitter,0))){
+    SWIG_fail_ptr("ParticleEmitterArray_setitem",1,SWIGTYPE_p_p_njli__ParticleEmitter);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__ParticleEmitter,0))){
+    SWIG_fail_ptr("ParticleEmitterArray_setitem",3,SWIGTYPE_p_njli__ParticleEmitter);
+  }
+  
+  ParticleEmitterArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ParticleEmitterBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::ParticleEmitterBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_ParticleEmitterBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ParticleEmitterBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::ParticleEmitterBuilder **)new_ParticleEmitterBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__ParticleEmitterBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ParticleEmitterBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ParticleEmitterBuilder **arg1 = (njli::ParticleEmitterBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_ParticleEmitterBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ParticleEmitterBuilderArray",1,"njli::ParticleEmitterBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ParticleEmitterBuilder,0))){
+    SWIG_fail_ptr("delete_ParticleEmitterBuilderArray",1,SWIGTYPE_p_p_njli__ParticleEmitterBuilder);
+  }
+  
+  delete_ParticleEmitterBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ParticleEmitterBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ParticleEmitterBuilder **arg1 = (njli::ParticleEmitterBuilder **) 0 ;
+  int arg2 ;
+  njli::ParticleEmitterBuilder *result = 0 ;
+  
+  SWIG_check_num_args("ParticleEmitterBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ParticleEmitterBuilderArray_getitem",1,"njli::ParticleEmitterBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ParticleEmitterBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ParticleEmitterBuilder,0))){
+    SWIG_fail_ptr("ParticleEmitterBuilderArray_getitem",1,SWIGTYPE_p_p_njli__ParticleEmitterBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::ParticleEmitterBuilder *)ParticleEmitterBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__ParticleEmitterBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ParticleEmitterBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ParticleEmitterBuilder **arg1 = (njli::ParticleEmitterBuilder **) 0 ;
+  int arg2 ;
+  njli::ParticleEmitterBuilder *arg3 = (njli::ParticleEmitterBuilder *) 0 ;
+  
+  SWIG_check_num_args("ParticleEmitterBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ParticleEmitterBuilderArray_setitem",1,"njli::ParticleEmitterBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ParticleEmitterBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ParticleEmitterBuilderArray_setitem",3,"njli::ParticleEmitterBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ParticleEmitterBuilder,0))){
+    SWIG_fail_ptr("ParticleEmitterBuilderArray_setitem",1,SWIGTYPE_p_p_njli__ParticleEmitterBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__ParticleEmitterBuilder,0))){
+    SWIG_fail_ptr("ParticleEmitterBuilderArray_setitem",3,SWIGTYPE_p_njli__ParticleEmitterBuilder);
+  }
+  
+  ParticleEmitterBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsBodyGhostArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsBodyGhost **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsBodyGhostArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsBodyGhostArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsBodyGhost **)new_PhysicsBodyGhostArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsBodyGhost,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsBodyGhostArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyGhost **arg1 = (njli::PhysicsBodyGhost **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsBodyGhostArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsBodyGhostArray",1,"njli::PhysicsBodyGhost **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyGhost,0))){
+    SWIG_fail_ptr("delete_PhysicsBodyGhostArray",1,SWIGTYPE_p_p_njli__PhysicsBodyGhost);
+  }
+  
+  delete_PhysicsBodyGhostArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodyGhostArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyGhost **arg1 = (njli::PhysicsBodyGhost **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodyGhost *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsBodyGhostArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodyGhostArray_getitem",1,"njli::PhysicsBodyGhost **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodyGhostArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyGhost,0))){
+    SWIG_fail_ptr("PhysicsBodyGhostArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsBodyGhost);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsBodyGhost *)PhysicsBodyGhostArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsBodyGhost,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodyGhostArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyGhost **arg1 = (njli::PhysicsBodyGhost **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodyGhost *arg3 = (njli::PhysicsBodyGhost *) 0 ;
+  
+  SWIG_check_num_args("PhysicsBodyGhostArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodyGhostArray_setitem",1,"njli::PhysicsBodyGhost **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodyGhostArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsBodyGhostArray_setitem",3,"njli::PhysicsBodyGhost *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyGhost,0))){
+    SWIG_fail_ptr("PhysicsBodyGhostArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsBodyGhost);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsBodyGhost,0))){
+    SWIG_fail_ptr("PhysicsBodyGhostArray_setitem",3,SWIGTYPE_p_njli__PhysicsBodyGhost);
+  }
+  
+  PhysicsBodyGhostArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsBodyGhostBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsBodyGhostBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsBodyGhostBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsBodyGhostBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsBodyGhostBuilder **)new_PhysicsBodyGhostBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsBodyGhostBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsBodyGhostBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyGhostBuilder **arg1 = (njli::PhysicsBodyGhostBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsBodyGhostBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsBodyGhostBuilderArray",1,"njli::PhysicsBodyGhostBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyGhostBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsBodyGhostBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsBodyGhostBuilder);
+  }
+  
+  delete_PhysicsBodyGhostBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodyGhostBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyGhostBuilder **arg1 = (njli::PhysicsBodyGhostBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodyGhostBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsBodyGhostBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodyGhostBuilderArray_getitem",1,"njli::PhysicsBodyGhostBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodyGhostBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyGhostBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodyGhostBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsBodyGhostBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsBodyGhostBuilder *)PhysicsBodyGhostBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsBodyGhostBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodyGhostBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyGhostBuilder **arg1 = (njli::PhysicsBodyGhostBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodyGhostBuilder *arg3 = (njli::PhysicsBodyGhostBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsBodyGhostBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodyGhostBuilderArray_setitem",1,"njli::PhysicsBodyGhostBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodyGhostBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsBodyGhostBuilderArray_setitem",3,"njli::PhysicsBodyGhostBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyGhostBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodyGhostBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsBodyGhostBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsBodyGhostBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodyGhostBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsBodyGhostBuilder);
+  }
+  
+  PhysicsBodyGhostBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsBodyRigidArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsBodyRigid **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsBodyRigidArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsBodyRigidArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsBodyRigid **)new_PhysicsBodyRigidArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsBodyRigid,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsBodyRigidArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyRigid **arg1 = (njli::PhysicsBodyRigid **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsBodyRigidArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsBodyRigidArray",1,"njli::PhysicsBodyRigid **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyRigid,0))){
+    SWIG_fail_ptr("delete_PhysicsBodyRigidArray",1,SWIGTYPE_p_p_njli__PhysicsBodyRigid);
+  }
+  
+  delete_PhysicsBodyRigidArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodyRigidArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyRigid **arg1 = (njli::PhysicsBodyRigid **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodyRigid *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsBodyRigidArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodyRigidArray_getitem",1,"njli::PhysicsBodyRigid **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodyRigidArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyRigid,0))){
+    SWIG_fail_ptr("PhysicsBodyRigidArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsBodyRigid);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsBodyRigid *)PhysicsBodyRigidArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsBodyRigid,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodyRigidArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyRigid **arg1 = (njli::PhysicsBodyRigid **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodyRigid *arg3 = (njli::PhysicsBodyRigid *) 0 ;
+  
+  SWIG_check_num_args("PhysicsBodyRigidArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodyRigidArray_setitem",1,"njli::PhysicsBodyRigid **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodyRigidArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsBodyRigidArray_setitem",3,"njli::PhysicsBodyRigid *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyRigid,0))){
+    SWIG_fail_ptr("PhysicsBodyRigidArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsBodyRigid);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsBodyRigid,0))){
+    SWIG_fail_ptr("PhysicsBodyRigidArray_setitem",3,SWIGTYPE_p_njli__PhysicsBodyRigid);
+  }
+  
+  PhysicsBodyRigidArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsBodyRigidBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsBodyRigidBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsBodyRigidBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsBodyRigidBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsBodyRigidBuilder **)new_PhysicsBodyRigidBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsBodyRigidBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsBodyRigidBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyRigidBuilder **arg1 = (njli::PhysicsBodyRigidBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsBodyRigidBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsBodyRigidBuilderArray",1,"njli::PhysicsBodyRigidBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyRigidBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsBodyRigidBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsBodyRigidBuilder);
+  }
+  
+  delete_PhysicsBodyRigidBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodyRigidBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyRigidBuilder **arg1 = (njli::PhysicsBodyRigidBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodyRigidBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsBodyRigidBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodyRigidBuilderArray_getitem",1,"njli::PhysicsBodyRigidBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodyRigidBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyRigidBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodyRigidBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsBodyRigidBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsBodyRigidBuilder *)PhysicsBodyRigidBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsBodyRigidBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodyRigidBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodyRigidBuilder **arg1 = (njli::PhysicsBodyRigidBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodyRigidBuilder *arg3 = (njli::PhysicsBodyRigidBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsBodyRigidBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodyRigidBuilderArray_setitem",1,"njli::PhysicsBodyRigidBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodyRigidBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsBodyRigidBuilderArray_setitem",3,"njli::PhysicsBodyRigidBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodyRigidBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodyRigidBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsBodyRigidBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsBodyRigidBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodyRigidBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsBodyRigidBuilder);
+  }
+  
+  PhysicsBodyRigidBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsBodySoftArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsBodySoft **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsBodySoftArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsBodySoftArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsBodySoft **)new_PhysicsBodySoftArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsBodySoft,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsBodySoftArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodySoft **arg1 = (njli::PhysicsBodySoft **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsBodySoftArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsBodySoftArray",1,"njli::PhysicsBodySoft **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodySoft,0))){
+    SWIG_fail_ptr("delete_PhysicsBodySoftArray",1,SWIGTYPE_p_p_njli__PhysicsBodySoft);
+  }
+  
+  delete_PhysicsBodySoftArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodySoftArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodySoft **arg1 = (njli::PhysicsBodySoft **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodySoft *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsBodySoftArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodySoftArray_getitem",1,"njli::PhysicsBodySoft **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodySoftArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodySoft,0))){
+    SWIG_fail_ptr("PhysicsBodySoftArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsBodySoft);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsBodySoft *)PhysicsBodySoftArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsBodySoft,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodySoftArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodySoft **arg1 = (njli::PhysicsBodySoft **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodySoft *arg3 = (njli::PhysicsBodySoft *) 0 ;
+  
+  SWIG_check_num_args("PhysicsBodySoftArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodySoftArray_setitem",1,"njli::PhysicsBodySoft **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodySoftArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsBodySoftArray_setitem",3,"njli::PhysicsBodySoft *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodySoft,0))){
+    SWIG_fail_ptr("PhysicsBodySoftArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsBodySoft);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsBodySoft,0))){
+    SWIG_fail_ptr("PhysicsBodySoftArray_setitem",3,SWIGTYPE_p_njli__PhysicsBodySoft);
+  }
+  
+  PhysicsBodySoftArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsBodySoftBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsBodySoftBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsBodySoftBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsBodySoftBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsBodySoftBuilder **)new_PhysicsBodySoftBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsBodySoftBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsBodySoftBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodySoftBuilder **arg1 = (njli::PhysicsBodySoftBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsBodySoftBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsBodySoftBuilderArray",1,"njli::PhysicsBodySoftBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodySoftBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsBodySoftBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsBodySoftBuilder);
+  }
+  
+  delete_PhysicsBodySoftBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodySoftBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodySoftBuilder **arg1 = (njli::PhysicsBodySoftBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodySoftBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsBodySoftBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodySoftBuilderArray_getitem",1,"njli::PhysicsBodySoftBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodySoftBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodySoftBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodySoftBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsBodySoftBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsBodySoftBuilder *)PhysicsBodySoftBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsBodySoftBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsBodySoftBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsBodySoftBuilder **arg1 = (njli::PhysicsBodySoftBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsBodySoftBuilder *arg3 = (njli::PhysicsBodySoftBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsBodySoftBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsBodySoftBuilderArray_setitem",1,"njli::PhysicsBodySoftBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsBodySoftBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsBodySoftBuilderArray_setitem",3,"njli::PhysicsBodySoftBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsBodySoftBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodySoftBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsBodySoftBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsBodySoftBuilder,0))){
+    SWIG_fail_ptr("PhysicsBodySoftBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsBodySoftBuilder);
+  }
+  
+  PhysicsBodySoftBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsCloseContactArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsCloseContact **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsCloseContactArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsCloseContactArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsCloseContact **)new_PhysicsCloseContactArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsCloseContact,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsCloseContactArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsCloseContact **arg1 = (njli::PhysicsCloseContact **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsCloseContactArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsCloseContactArray",1,"njli::PhysicsCloseContact **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsCloseContact,0))){
+    SWIG_fail_ptr("delete_PhysicsCloseContactArray",1,SWIGTYPE_p_p_njli__PhysicsCloseContact);
+  }
+  
+  delete_PhysicsCloseContactArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsCloseContactArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsCloseContact **arg1 = (njli::PhysicsCloseContact **) 0 ;
+  int arg2 ;
+  njli::PhysicsCloseContact *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsCloseContactArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsCloseContactArray_getitem",1,"njli::PhysicsCloseContact **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsCloseContactArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsCloseContact,0))){
+    SWIG_fail_ptr("PhysicsCloseContactArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsCloseContact);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsCloseContact *)PhysicsCloseContactArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsCloseContact,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsCloseContactArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsCloseContact **arg1 = (njli::PhysicsCloseContact **) 0 ;
+  int arg2 ;
+  njli::PhysicsCloseContact *arg3 = (njli::PhysicsCloseContact *) 0 ;
+  
+  SWIG_check_num_args("PhysicsCloseContactArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsCloseContactArray_setitem",1,"njli::PhysicsCloseContact **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsCloseContactArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsCloseContactArray_setitem",3,"njli::PhysicsCloseContact *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsCloseContact,0))){
+    SWIG_fail_ptr("PhysicsCloseContactArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsCloseContact);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsCloseContact,0))){
+    SWIG_fail_ptr("PhysicsCloseContactArray_setitem",3,SWIGTYPE_p_njli__PhysicsCloseContact);
+  }
+  
+  PhysicsCloseContactArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsCloseContactBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsCloseContactBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsCloseContactBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsCloseContactBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsCloseContactBuilder **)new_PhysicsCloseContactBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsCloseContactBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsCloseContactBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsCloseContactBuilder **arg1 = (njli::PhysicsCloseContactBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsCloseContactBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsCloseContactBuilderArray",1,"njli::PhysicsCloseContactBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsCloseContactBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsCloseContactBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsCloseContactBuilder);
+  }
+  
+  delete_PhysicsCloseContactBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsCloseContactBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsCloseContactBuilder **arg1 = (njli::PhysicsCloseContactBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsCloseContactBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsCloseContactBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsCloseContactBuilderArray_getitem",1,"njli::PhysicsCloseContactBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsCloseContactBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsCloseContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsCloseContactBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsCloseContactBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsCloseContactBuilder *)PhysicsCloseContactBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsCloseContactBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsCloseContactBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsCloseContactBuilder **arg1 = (njli::PhysicsCloseContactBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsCloseContactBuilder *arg3 = (njli::PhysicsCloseContactBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsCloseContactBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsCloseContactBuilderArray_setitem",1,"njli::PhysicsCloseContactBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsCloseContactBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsCloseContactBuilderArray_setitem",3,"njli::PhysicsCloseContactBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsCloseContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsCloseContactBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsCloseContactBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsCloseContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsCloseContactBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsCloseContactBuilder);
+  }
+  
+  PhysicsCloseContactBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraint **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraint **)new_PhysicsConstraintArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraint,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraint **arg1 = (njli::PhysicsConstraint **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintArray",1,"njli::PhysicsConstraint **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraint,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintArray",1,SWIGTYPE_p_p_njli__PhysicsConstraint);
+  }
+  
+  delete_PhysicsConstraintArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraint **arg1 = (njli::PhysicsConstraint **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraint *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintArray_getitem",1,"njli::PhysicsConstraint **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraint,0))){
+    SWIG_fail_ptr("PhysicsConstraintArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraint);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraint *)PhysicsConstraintArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraint,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraint **arg1 = (njli::PhysicsConstraint **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraint *arg3 = (njli::PhysicsConstraint *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintArray_setitem",1,"njli::PhysicsConstraint **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintArray_setitem",3,"njli::PhysicsConstraint *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraint,0))){
+    SWIG_fail_ptr("PhysicsConstraintArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraint);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraint,0))){
+    SWIG_fail_ptr("PhysicsConstraintArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraint);
+  }
+  
+  PhysicsConstraintArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintBuilder **)new_PhysicsConstraintBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintBuilder **arg1 = (njli::PhysicsConstraintBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintBuilderArray",1,"njli::PhysicsConstraintBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintBuilder);
+  }
+  
+  delete_PhysicsConstraintBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintBuilder **arg1 = (njli::PhysicsConstraintBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintBuilderArray_getitem",1,"njli::PhysicsConstraintBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintBuilder *)PhysicsConstraintBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintBuilder **arg1 = (njli::PhysicsConstraintBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintBuilder *arg3 = (njli::PhysicsConstraintBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintBuilderArray_setitem",1,"njli::PhysicsConstraintBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintBuilderArray_setitem",3,"njli::PhysicsConstraintBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintBuilder);
+  }
+  
+  PhysicsConstraintBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintConeTwistArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintConeTwist **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintConeTwistArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintConeTwistArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintConeTwist **)new_PhysicsConstraintConeTwistArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwist,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintConeTwistArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintConeTwist **arg1 = (njli::PhysicsConstraintConeTwist **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintConeTwistArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintConeTwistArray",1,"njli::PhysicsConstraintConeTwist **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwist,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintConeTwistArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwist);
+  }
+  
+  delete_PhysicsConstraintConeTwistArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintConeTwistArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintConeTwist **arg1 = (njli::PhysicsConstraintConeTwist **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintConeTwist *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintConeTwistArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintConeTwistArray_getitem",1,"njli::PhysicsConstraintConeTwist **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintConeTwistArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwist,0))){
+    SWIG_fail_ptr("PhysicsConstraintConeTwistArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwist);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintConeTwist *)PhysicsConstraintConeTwistArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintConeTwist,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintConeTwistArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintConeTwist **arg1 = (njli::PhysicsConstraintConeTwist **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintConeTwist *arg3 = (njli::PhysicsConstraintConeTwist *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintConeTwistArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintConeTwistArray_setitem",1,"njli::PhysicsConstraintConeTwist **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintConeTwistArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintConeTwistArray_setitem",3,"njli::PhysicsConstraintConeTwist *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwist,0))){
+    SWIG_fail_ptr("PhysicsConstraintConeTwistArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwist);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintConeTwist,0))){
+    SWIG_fail_ptr("PhysicsConstraintConeTwistArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintConeTwist);
+  }
+  
+  PhysicsConstraintConeTwistArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintConeTwistBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintConeTwistBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintConeTwistBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintConeTwistBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintConeTwistBuilder **)new_PhysicsConstraintConeTwistBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwistBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintConeTwistBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintConeTwistBuilder **arg1 = (njli::PhysicsConstraintConeTwistBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintConeTwistBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintConeTwistBuilderArray",1,"njli::PhysicsConstraintConeTwistBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwistBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintConeTwistBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwistBuilder);
+  }
+  
+  delete_PhysicsConstraintConeTwistBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintConeTwistBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintConeTwistBuilder **arg1 = (njli::PhysicsConstraintConeTwistBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintConeTwistBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintConeTwistBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintConeTwistBuilderArray_getitem",1,"njli::PhysicsConstraintConeTwistBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintConeTwistBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwistBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintConeTwistBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwistBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintConeTwistBuilder *)PhysicsConstraintConeTwistBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintConeTwistBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintConeTwistBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintConeTwistBuilder **arg1 = (njli::PhysicsConstraintConeTwistBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintConeTwistBuilder *arg3 = (njli::PhysicsConstraintConeTwistBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintConeTwistBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintConeTwistBuilderArray_setitem",1,"njli::PhysicsConstraintConeTwistBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintConeTwistBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintConeTwistBuilderArray_setitem",3,"njli::PhysicsConstraintConeTwistBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwistBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintConeTwistBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintConeTwistBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintConeTwistBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintConeTwistBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintConeTwistBuilder);
+  }
+  
+  PhysicsConstraintConeTwistBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintFixedArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintFixed **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintFixedArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintFixedArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintFixed **)new_PhysicsConstraintFixedArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintFixed,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintFixedArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintFixed **arg1 = (njli::PhysicsConstraintFixed **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintFixedArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintFixedArray",1,"njli::PhysicsConstraintFixed **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintFixed,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintFixedArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintFixed);
+  }
+  
+  delete_PhysicsConstraintFixedArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintFixedArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintFixed **arg1 = (njli::PhysicsConstraintFixed **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintFixed *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintFixedArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintFixedArray_getitem",1,"njli::PhysicsConstraintFixed **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintFixedArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintFixed,0))){
+    SWIG_fail_ptr("PhysicsConstraintFixedArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintFixed);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintFixed *)PhysicsConstraintFixedArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintFixed,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintFixedArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintFixed **arg1 = (njli::PhysicsConstraintFixed **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintFixed *arg3 = (njli::PhysicsConstraintFixed *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintFixedArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintFixedArray_setitem",1,"njli::PhysicsConstraintFixed **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintFixedArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintFixedArray_setitem",3,"njli::PhysicsConstraintFixed *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintFixed,0))){
+    SWIG_fail_ptr("PhysicsConstraintFixedArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintFixed);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintFixed,0))){
+    SWIG_fail_ptr("PhysicsConstraintFixedArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintFixed);
+  }
+  
+  PhysicsConstraintFixedArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintFixedBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintFixedBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintFixedBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintFixedBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintFixedBuilder **)new_PhysicsConstraintFixedBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintFixedBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintFixedBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintFixedBuilder **arg1 = (njli::PhysicsConstraintFixedBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintFixedBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintFixedBuilderArray",1,"njli::PhysicsConstraintFixedBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintFixedBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintFixedBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintFixedBuilder);
+  }
+  
+  delete_PhysicsConstraintFixedBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintFixedBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintFixedBuilder **arg1 = (njli::PhysicsConstraintFixedBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintFixedBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintFixedBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintFixedBuilderArray_getitem",1,"njli::PhysicsConstraintFixedBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintFixedBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintFixedBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintFixedBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintFixedBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintFixedBuilder *)PhysicsConstraintFixedBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintFixedBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintFixedBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintFixedBuilder **arg1 = (njli::PhysicsConstraintFixedBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintFixedBuilder *arg3 = (njli::PhysicsConstraintFixedBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintFixedBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintFixedBuilderArray_setitem",1,"njli::PhysicsConstraintFixedBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintFixedBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintFixedBuilderArray_setitem",3,"njli::PhysicsConstraintFixedBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintFixedBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintFixedBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintFixedBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintFixedBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintFixedBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintFixedBuilder);
+  }
+  
+  PhysicsConstraintFixedBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintGeneric6DofArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintGeneric6Dof **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintGeneric6DofArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintGeneric6DofArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintGeneric6Dof **)new_PhysicsConstraintGeneric6DofArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6Dof,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintGeneric6DofArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6Dof **arg1 = (njli::PhysicsConstraintGeneric6Dof **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintGeneric6DofArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintGeneric6DofArray",1,"njli::PhysicsConstraintGeneric6Dof **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6Dof,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintGeneric6DofArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6Dof);
+  }
+  
+  delete_PhysicsConstraintGeneric6DofArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintGeneric6DofArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6Dof **arg1 = (njli::PhysicsConstraintGeneric6Dof **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintGeneric6Dof *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintGeneric6DofArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintGeneric6DofArray_getitem",1,"njli::PhysicsConstraintGeneric6Dof **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintGeneric6DofArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6Dof,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6Dof);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintGeneric6Dof *)PhysicsConstraintGeneric6DofArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintGeneric6Dof,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintGeneric6DofArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6Dof **arg1 = (njli::PhysicsConstraintGeneric6Dof **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintGeneric6Dof *arg3 = (njli::PhysicsConstraintGeneric6Dof *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintGeneric6DofArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintGeneric6DofArray_setitem",1,"njli::PhysicsConstraintGeneric6Dof **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintGeneric6DofArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintGeneric6DofArray_setitem",3,"njli::PhysicsConstraintGeneric6Dof *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6Dof,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6Dof);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintGeneric6Dof,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintGeneric6Dof);
+  }
+  
+  PhysicsConstraintGeneric6DofArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintGeneric6DofBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintGeneric6DofBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintGeneric6DofBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintGeneric6DofBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintGeneric6DofBuilder **)new_PhysicsConstraintGeneric6DofBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintGeneric6DofBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofBuilder **arg1 = (njli::PhysicsConstraintGeneric6DofBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintGeneric6DofBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintGeneric6DofBuilderArray",1,"njli::PhysicsConstraintGeneric6DofBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintGeneric6DofBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofBuilder);
+  }
+  
+  delete_PhysicsConstraintGeneric6DofBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintGeneric6DofBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofBuilder **arg1 = (njli::PhysicsConstraintGeneric6DofBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintGeneric6DofBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintGeneric6DofBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintGeneric6DofBuilderArray_getitem",1,"njli::PhysicsConstraintGeneric6DofBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintGeneric6DofBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintGeneric6DofBuilder *)PhysicsConstraintGeneric6DofBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintGeneric6DofBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofBuilder **arg1 = (njli::PhysicsConstraintGeneric6DofBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintGeneric6DofBuilder *arg3 = (njli::PhysicsConstraintGeneric6DofBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintGeneric6DofBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintGeneric6DofBuilderArray_setitem",1,"njli::PhysicsConstraintGeneric6DofBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintGeneric6DofBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintGeneric6DofBuilderArray_setitem",3,"njli::PhysicsConstraintGeneric6DofBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofBuilder);
+  }
+  
+  PhysicsConstraintGeneric6DofBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintGeneric6DofSpringArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintGeneric6DofSpring **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintGeneric6DofSpringArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintGeneric6DofSpringArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintGeneric6DofSpring **)new_PhysicsConstraintGeneric6DofSpringArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpring,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintGeneric6DofSpringArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofSpring **arg1 = (njli::PhysicsConstraintGeneric6DofSpring **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintGeneric6DofSpringArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintGeneric6DofSpringArray",1,"njli::PhysicsConstraintGeneric6DofSpring **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpring,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintGeneric6DofSpringArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpring);
+  }
+  
+  delete_PhysicsConstraintGeneric6DofSpringArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintGeneric6DofSpringArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofSpring **arg1 = (njli::PhysicsConstraintGeneric6DofSpring **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintGeneric6DofSpring *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintGeneric6DofSpringArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringArray_getitem",1,"njli::PhysicsConstraintGeneric6DofSpring **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpring,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofSpringArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpring);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintGeneric6DofSpring *)PhysicsConstraintGeneric6DofSpringArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofSpring,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintGeneric6DofSpringArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofSpring **arg1 = (njli::PhysicsConstraintGeneric6DofSpring **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintGeneric6DofSpring *arg3 = (njli::PhysicsConstraintGeneric6DofSpring *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintGeneric6DofSpringArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringArray_setitem",1,"njli::PhysicsConstraintGeneric6DofSpring **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringArray_setitem",3,"njli::PhysicsConstraintGeneric6DofSpring *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpring,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofSpringArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpring);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofSpring,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofSpringArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofSpring);
+  }
+  
+  PhysicsConstraintGeneric6DofSpringArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintGeneric6DofSpringBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintGeneric6DofSpringBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintGeneric6DofSpringBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintGeneric6DofSpringBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintGeneric6DofSpringBuilder **)new_PhysicsConstraintGeneric6DofSpringBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintGeneric6DofSpringBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofSpringBuilder **arg1 = (njli::PhysicsConstraintGeneric6DofSpringBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintGeneric6DofSpringBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintGeneric6DofSpringBuilderArray",1,"njli::PhysicsConstraintGeneric6DofSpringBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintGeneric6DofSpringBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder);
+  }
+  
+  delete_PhysicsConstraintGeneric6DofSpringBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintGeneric6DofSpringBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofSpringBuilder **arg1 = (njli::PhysicsConstraintGeneric6DofSpringBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintGeneric6DofSpringBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintGeneric6DofSpringBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringBuilderArray_getitem",1,"njli::PhysicsConstraintGeneric6DofSpringBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofSpringBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintGeneric6DofSpringBuilder *)PhysicsConstraintGeneric6DofSpringBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofSpringBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintGeneric6DofSpringBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintGeneric6DofSpringBuilder **arg1 = (njli::PhysicsConstraintGeneric6DofSpringBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintGeneric6DofSpringBuilder *arg3 = (njli::PhysicsConstraintGeneric6DofSpringBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintGeneric6DofSpringBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringBuilderArray_setitem",1,"njli::PhysicsConstraintGeneric6DofSpringBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintGeneric6DofSpringBuilderArray_setitem",3,"njli::PhysicsConstraintGeneric6DofSpringBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofSpringBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofSpringBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintGeneric6DofSpringBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintGeneric6DofSpringBuilder);
+  }
+  
+  PhysicsConstraintGeneric6DofSpringBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintHingeArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintHinge **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintHingeArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintHingeArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintHinge **)new_PhysicsConstraintHingeArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintHinge,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintHingeArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintHinge **arg1 = (njli::PhysicsConstraintHinge **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintHingeArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintHingeArray",1,"njli::PhysicsConstraintHinge **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintHinge,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintHingeArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintHinge);
+  }
+  
+  delete_PhysicsConstraintHingeArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintHingeArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintHinge **arg1 = (njli::PhysicsConstraintHinge **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintHinge *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintHingeArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintHingeArray_getitem",1,"njli::PhysicsConstraintHinge **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintHingeArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintHinge,0))){
+    SWIG_fail_ptr("PhysicsConstraintHingeArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintHinge);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintHinge *)PhysicsConstraintHingeArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintHinge,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintHingeArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintHinge **arg1 = (njli::PhysicsConstraintHinge **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintHinge *arg3 = (njli::PhysicsConstraintHinge *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintHingeArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintHingeArray_setitem",1,"njli::PhysicsConstraintHinge **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintHingeArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintHingeArray_setitem",3,"njli::PhysicsConstraintHinge *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintHinge,0))){
+    SWIG_fail_ptr("PhysicsConstraintHingeArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintHinge);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintHinge,0))){
+    SWIG_fail_ptr("PhysicsConstraintHingeArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintHinge);
+  }
+  
+  PhysicsConstraintHingeArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintHingeBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintHingeBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintHingeBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintHingeBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintHingeBuilder **)new_PhysicsConstraintHingeBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintHingeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintHingeBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintHingeBuilder **arg1 = (njli::PhysicsConstraintHingeBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintHingeBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintHingeBuilderArray",1,"njli::PhysicsConstraintHingeBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintHingeBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintHingeBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintHingeBuilder);
+  }
+  
+  delete_PhysicsConstraintHingeBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintHingeBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintHingeBuilder **arg1 = (njli::PhysicsConstraintHingeBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintHingeBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintHingeBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintHingeBuilderArray_getitem",1,"njli::PhysicsConstraintHingeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintHingeBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintHingeBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintHingeBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintHingeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintHingeBuilder *)PhysicsConstraintHingeBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintHingeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintHingeBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintHingeBuilder **arg1 = (njli::PhysicsConstraintHingeBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintHingeBuilder *arg3 = (njli::PhysicsConstraintHingeBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintHingeBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintHingeBuilderArray_setitem",1,"njli::PhysicsConstraintHingeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintHingeBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintHingeBuilderArray_setitem",3,"njli::PhysicsConstraintHingeBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintHingeBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintHingeBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintHingeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintHingeBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintHingeBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintHingeBuilder);
+  }
+  
+  PhysicsConstraintHingeBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintPointToPointArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintPointToPoint **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintPointToPointArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintPointToPointArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintPointToPoint **)new_PhysicsConstraintPointToPointArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPoint,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintPointToPointArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintPointToPoint **arg1 = (njli::PhysicsConstraintPointToPoint **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintPointToPointArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintPointToPointArray",1,"njli::PhysicsConstraintPointToPoint **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPoint,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintPointToPointArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPoint);
+  }
+  
+  delete_PhysicsConstraintPointToPointArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintPointToPointArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintPointToPoint **arg1 = (njli::PhysicsConstraintPointToPoint **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintPointToPoint *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintPointToPointArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintPointToPointArray_getitem",1,"njli::PhysicsConstraintPointToPoint **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintPointToPointArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPoint,0))){
+    SWIG_fail_ptr("PhysicsConstraintPointToPointArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPoint);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintPointToPoint *)PhysicsConstraintPointToPointArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintPointToPoint,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintPointToPointArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintPointToPoint **arg1 = (njli::PhysicsConstraintPointToPoint **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintPointToPoint *arg3 = (njli::PhysicsConstraintPointToPoint *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintPointToPointArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintPointToPointArray_setitem",1,"njli::PhysicsConstraintPointToPoint **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintPointToPointArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintPointToPointArray_setitem",3,"njli::PhysicsConstraintPointToPoint *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPoint,0))){
+    SWIG_fail_ptr("PhysicsConstraintPointToPointArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPoint);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintPointToPoint,0))){
+    SWIG_fail_ptr("PhysicsConstraintPointToPointArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintPointToPoint);
+  }
+  
+  PhysicsConstraintPointToPointArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintPointToPointBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintPointToPointBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintPointToPointBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintPointToPointBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintPointToPointBuilder **)new_PhysicsConstraintPointToPointBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPointBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintPointToPointBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintPointToPointBuilder **arg1 = (njli::PhysicsConstraintPointToPointBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintPointToPointBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintPointToPointBuilderArray",1,"njli::PhysicsConstraintPointToPointBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPointBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintPointToPointBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPointBuilder);
+  }
+  
+  delete_PhysicsConstraintPointToPointBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintPointToPointBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintPointToPointBuilder **arg1 = (njli::PhysicsConstraintPointToPointBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintPointToPointBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintPointToPointBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintPointToPointBuilderArray_getitem",1,"njli::PhysicsConstraintPointToPointBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintPointToPointBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPointBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintPointToPointBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPointBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintPointToPointBuilder *)PhysicsConstraintPointToPointBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintPointToPointBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintPointToPointBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintPointToPointBuilder **arg1 = (njli::PhysicsConstraintPointToPointBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintPointToPointBuilder *arg3 = (njli::PhysicsConstraintPointToPointBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintPointToPointBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintPointToPointBuilderArray_setitem",1,"njli::PhysicsConstraintPointToPointBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintPointToPointBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintPointToPointBuilderArray_setitem",3,"njli::PhysicsConstraintPointToPointBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPointBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintPointToPointBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintPointToPointBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintPointToPointBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintPointToPointBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintPointToPointBuilder);
+  }
+  
+  PhysicsConstraintPointToPointBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintSliderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintSlider **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintSliderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintSliderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintSlider **)new_PhysicsConstraintSliderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintSlider,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintSliderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintSlider **arg1 = (njli::PhysicsConstraintSlider **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintSliderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintSliderArray",1,"njli::PhysicsConstraintSlider **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintSlider,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintSliderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintSlider);
+  }
+  
+  delete_PhysicsConstraintSliderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintSliderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintSlider **arg1 = (njli::PhysicsConstraintSlider **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintSlider *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintSliderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintSliderArray_getitem",1,"njli::PhysicsConstraintSlider **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintSliderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintSlider,0))){
+    SWIG_fail_ptr("PhysicsConstraintSliderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintSlider);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintSlider *)PhysicsConstraintSliderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintSlider,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintSliderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintSlider **arg1 = (njli::PhysicsConstraintSlider **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintSlider *arg3 = (njli::PhysicsConstraintSlider *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintSliderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintSliderArray_setitem",1,"njli::PhysicsConstraintSlider **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintSliderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintSliderArray_setitem",3,"njli::PhysicsConstraintSlider *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintSlider,0))){
+    SWIG_fail_ptr("PhysicsConstraintSliderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintSlider);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintSlider,0))){
+    SWIG_fail_ptr("PhysicsConstraintSliderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintSlider);
+  }
+  
+  PhysicsConstraintSliderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsConstraintSliderBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsConstraintSliderBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsConstraintSliderBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsConstraintSliderBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsConstraintSliderBuilder **)new_PhysicsConstraintSliderBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsConstraintSliderBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsConstraintSliderBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintSliderBuilder **arg1 = (njli::PhysicsConstraintSliderBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsConstraintSliderBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsConstraintSliderBuilderArray",1,"njli::PhysicsConstraintSliderBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintSliderBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsConstraintSliderBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsConstraintSliderBuilder);
+  }
+  
+  delete_PhysicsConstraintSliderBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintSliderBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintSliderBuilder **arg1 = (njli::PhysicsConstraintSliderBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintSliderBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintSliderBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintSliderBuilderArray_getitem",1,"njli::PhysicsConstraintSliderBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintSliderBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintSliderBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintSliderBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintSliderBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsConstraintSliderBuilder *)PhysicsConstraintSliderBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsConstraintSliderBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsConstraintSliderBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsConstraintSliderBuilder **arg1 = (njli::PhysicsConstraintSliderBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsConstraintSliderBuilder *arg3 = (njli::PhysicsConstraintSliderBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsConstraintSliderBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsConstraintSliderBuilderArray_setitem",1,"njli::PhysicsConstraintSliderBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsConstraintSliderBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsConstraintSliderBuilderArray_setitem",3,"njli::PhysicsConstraintSliderBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsConstraintSliderBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintSliderBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsConstraintSliderBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsConstraintSliderBuilder,0))){
+    SWIG_fail_ptr("PhysicsConstraintSliderBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsConstraintSliderBuilder);
+  }
+  
+  PhysicsConstraintSliderBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsContactArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsContact **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsContactArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsContactArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsContact **)new_PhysicsContactArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsContact,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsContactArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsContact **arg1 = (njli::PhysicsContact **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsContactArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsContactArray",1,"njli::PhysicsContact **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsContact,0))){
+    SWIG_fail_ptr("delete_PhysicsContactArray",1,SWIGTYPE_p_p_njli__PhysicsContact);
+  }
+  
+  delete_PhysicsContactArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsContactArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsContact **arg1 = (njli::PhysicsContact **) 0 ;
+  int arg2 ;
+  njli::PhysicsContact *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsContactArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsContactArray_getitem",1,"njli::PhysicsContact **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsContactArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsContact,0))){
+    SWIG_fail_ptr("PhysicsContactArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsContact);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsContact *)PhysicsContactArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsContact,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsContactArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsContact **arg1 = (njli::PhysicsContact **) 0 ;
+  int arg2 ;
+  njli::PhysicsContact *arg3 = (njli::PhysicsContact *) 0 ;
+  
+  SWIG_check_num_args("PhysicsContactArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsContactArray_setitem",1,"njli::PhysicsContact **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsContactArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsContactArray_setitem",3,"njli::PhysicsContact *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsContact,0))){
+    SWIG_fail_ptr("PhysicsContactArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsContact);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsContact,0))){
+    SWIG_fail_ptr("PhysicsContactArray_setitem",3,SWIGTYPE_p_njli__PhysicsContact);
+  }
+  
+  PhysicsContactArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsContactBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsContactBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsContactBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsContactBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsContactBuilder **)new_PhysicsContactBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsContactBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsContactBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsContactBuilder **arg1 = (njli::PhysicsContactBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsContactBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsContactBuilderArray",1,"njli::PhysicsContactBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsContactBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsContactBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsContactBuilder);
+  }
+  
+  delete_PhysicsContactBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsContactBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsContactBuilder **arg1 = (njli::PhysicsContactBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsContactBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsContactBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsContactBuilderArray_getitem",1,"njli::PhysicsContactBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsContactBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsContactBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsContactBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsContactBuilder *)PhysicsContactBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsContactBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsContactBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsContactBuilder **arg1 = (njli::PhysicsContactBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsContactBuilder *arg3 = (njli::PhysicsContactBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsContactBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsContactBuilderArray_setitem",1,"njli::PhysicsContactBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsContactBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsContactBuilderArray_setitem",3,"njli::PhysicsContactBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsContactBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsContactBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsContactBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsContactBuilder);
+  }
+  
+  PhysicsContactBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsFieldArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsField **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsFieldArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsFieldArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsField **)new_PhysicsFieldArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsField,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsFieldArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsField **arg1 = (njli::PhysicsField **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsFieldArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsFieldArray",1,"njli::PhysicsField **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsField,0))){
+    SWIG_fail_ptr("delete_PhysicsFieldArray",1,SWIGTYPE_p_p_njli__PhysicsField);
+  }
+  
+  delete_PhysicsFieldArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsFieldArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsField **arg1 = (njli::PhysicsField **) 0 ;
+  int arg2 ;
+  njli::PhysicsField *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsFieldArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsFieldArray_getitem",1,"njli::PhysicsField **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsFieldArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsField,0))){
+    SWIG_fail_ptr("PhysicsFieldArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsField);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsField *)PhysicsFieldArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsField,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsFieldArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsField **arg1 = (njli::PhysicsField **) 0 ;
+  int arg2 ;
+  njli::PhysicsField *arg3 = (njli::PhysicsField *) 0 ;
+  
+  SWIG_check_num_args("PhysicsFieldArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsFieldArray_setitem",1,"njli::PhysicsField **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsFieldArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsFieldArray_setitem",3,"njli::PhysicsField *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsField,0))){
+    SWIG_fail_ptr("PhysicsFieldArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsField);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsField,0))){
+    SWIG_fail_ptr("PhysicsFieldArray_setitem",3,SWIGTYPE_p_njli__PhysicsField);
+  }
+  
+  PhysicsFieldArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsFieldBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsFieldBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsFieldBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsFieldBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsFieldBuilder **)new_PhysicsFieldBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsFieldBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsFieldBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsFieldBuilder **arg1 = (njli::PhysicsFieldBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsFieldBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsFieldBuilderArray",1,"njli::PhysicsFieldBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsFieldBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsFieldBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsFieldBuilder);
+  }
+  
+  delete_PhysicsFieldBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsFieldBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsFieldBuilder **arg1 = (njli::PhysicsFieldBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsFieldBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsFieldBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsFieldBuilderArray_getitem",1,"njli::PhysicsFieldBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsFieldBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsFieldBuilder,0))){
+    SWIG_fail_ptr("PhysicsFieldBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsFieldBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsFieldBuilder *)PhysicsFieldBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsFieldBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsFieldBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsFieldBuilder **arg1 = (njli::PhysicsFieldBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsFieldBuilder *arg3 = (njli::PhysicsFieldBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsFieldBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsFieldBuilderArray_setitem",1,"njli::PhysicsFieldBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsFieldBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsFieldBuilderArray_setitem",3,"njli::PhysicsFieldBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsFieldBuilder,0))){
+    SWIG_fail_ptr("PhysicsFieldBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsFieldBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsFieldBuilder,0))){
+    SWIG_fail_ptr("PhysicsFieldBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsFieldBuilder);
+  }
+  
+  PhysicsFieldBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsRayContactArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsRayContact **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsRayContactArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsRayContactArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsRayContact **)new_PhysicsRayContactArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsRayContact,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsRayContactArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsRayContact **arg1 = (njli::PhysicsRayContact **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsRayContactArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsRayContactArray",1,"njli::PhysicsRayContact **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsRayContact,0))){
+    SWIG_fail_ptr("delete_PhysicsRayContactArray",1,SWIGTYPE_p_p_njli__PhysicsRayContact);
+  }
+  
+  delete_PhysicsRayContactArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsRayContactArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsRayContact **arg1 = (njli::PhysicsRayContact **) 0 ;
+  int arg2 ;
+  njli::PhysicsRayContact *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsRayContactArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsRayContactArray_getitem",1,"njli::PhysicsRayContact **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsRayContactArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsRayContact,0))){
+    SWIG_fail_ptr("PhysicsRayContactArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsRayContact);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsRayContact *)PhysicsRayContactArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsRayContact,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsRayContactArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsRayContact **arg1 = (njli::PhysicsRayContact **) 0 ;
+  int arg2 ;
+  njli::PhysicsRayContact *arg3 = (njli::PhysicsRayContact *) 0 ;
+  
+  SWIG_check_num_args("PhysicsRayContactArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsRayContactArray_setitem",1,"njli::PhysicsRayContact **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsRayContactArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsRayContactArray_setitem",3,"njli::PhysicsRayContact *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsRayContact,0))){
+    SWIG_fail_ptr("PhysicsRayContactArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsRayContact);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsRayContact,0))){
+    SWIG_fail_ptr("PhysicsRayContactArray_setitem",3,SWIGTYPE_p_njli__PhysicsRayContact);
+  }
+  
+  PhysicsRayContactArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsRayContactBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsRayContactBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsRayContactBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsRayContactBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsRayContactBuilder **)new_PhysicsRayContactBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsRayContactBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsRayContactBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsRayContactBuilder **arg1 = (njli::PhysicsRayContactBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsRayContactBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsRayContactBuilderArray",1,"njli::PhysicsRayContactBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsRayContactBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsRayContactBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsRayContactBuilder);
+  }
+  
+  delete_PhysicsRayContactBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsRayContactBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsRayContactBuilder **arg1 = (njli::PhysicsRayContactBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsRayContactBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsRayContactBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsRayContactBuilderArray_getitem",1,"njli::PhysicsRayContactBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsRayContactBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsRayContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsRayContactBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsRayContactBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsRayContactBuilder *)PhysicsRayContactBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsRayContactBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsRayContactBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsRayContactBuilder **arg1 = (njli::PhysicsRayContactBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsRayContactBuilder *arg3 = (njli::PhysicsRayContactBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsRayContactBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsRayContactBuilderArray_setitem",1,"njli::PhysicsRayContactBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsRayContactBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsRayContactBuilderArray_setitem",3,"njli::PhysicsRayContactBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsRayContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsRayContactBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsRayContactBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsRayContactBuilder,0))){
+    SWIG_fail_ptr("PhysicsRayContactBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsRayContactBuilder);
+  }
+  
+  PhysicsRayContactBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeBoxArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeBox **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeBoxArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeBoxArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeBox **)new_PhysicsShapeBoxArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeBox,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeBoxArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox **arg1 = (njli::PhysicsShapeBox **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeBoxArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeBoxArray",1,"njli::PhysicsShapeBox **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeBoxArray",1,SWIGTYPE_p_p_njli__PhysicsShapeBox);
+  }
+  
+  delete_PhysicsShapeBoxArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBoxArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox **arg1 = (njli::PhysicsShapeBox **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBox *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBoxArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBoxArray_getitem",1,"njli::PhysicsShapeBox **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBoxArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox,0))){
+    SWIG_fail_ptr("PhysicsShapeBoxArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBox);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeBox *)PhysicsShapeBoxArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeBox,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBoxArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox **arg1 = (njli::PhysicsShapeBox **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBox *arg3 = (njli::PhysicsShapeBox *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBoxArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBoxArray_setitem",1,"njli::PhysicsShapeBox **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBoxArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeBoxArray_setitem",3,"njli::PhysicsShapeBox *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox,0))){
+    SWIG_fail_ptr("PhysicsShapeBoxArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBox);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeBox,0))){
+    SWIG_fail_ptr("PhysicsShapeBoxArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeBox);
+  }
+  
+  PhysicsShapeBoxArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeBox2DArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeBox2D **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeBox2DArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeBox2DArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeBox2D **)new_PhysicsShapeBox2DArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeBox2D,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeBox2DArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox2D **arg1 = (njli::PhysicsShapeBox2D **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeBox2DArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeBox2DArray",1,"njli::PhysicsShapeBox2D **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox2D,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeBox2DArray",1,SWIGTYPE_p_p_njli__PhysicsShapeBox2D);
+  }
+  
+  delete_PhysicsShapeBox2DArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBox2DArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox2D **arg1 = (njli::PhysicsShapeBox2D **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBox2D *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBox2DArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBox2DArray_getitem",1,"njli::PhysicsShapeBox2D **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBox2DArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox2D,0))){
+    SWIG_fail_ptr("PhysicsShapeBox2DArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBox2D);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeBox2D *)PhysicsShapeBox2DArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeBox2D,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBox2DArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox2D **arg1 = (njli::PhysicsShapeBox2D **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBox2D *arg3 = (njli::PhysicsShapeBox2D *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBox2DArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBox2DArray_setitem",1,"njli::PhysicsShapeBox2D **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBox2DArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeBox2DArray_setitem",3,"njli::PhysicsShapeBox2D *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox2D,0))){
+    SWIG_fail_ptr("PhysicsShapeBox2DArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBox2D);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeBox2D,0))){
+    SWIG_fail_ptr("PhysicsShapeBox2DArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeBox2D);
+  }
+  
+  PhysicsShapeBox2DArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeBox2DBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeBox2DBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeBox2DBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeBox2DBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeBox2DBuilder **)new_PhysicsShapeBox2DBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeBox2DBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeBox2DBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox2DBuilder **arg1 = (njli::PhysicsShapeBox2DBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeBox2DBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeBox2DBuilderArray",1,"njli::PhysicsShapeBox2DBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox2DBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeBox2DBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeBox2DBuilder);
+  }
+  
+  delete_PhysicsShapeBox2DBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBox2DBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox2DBuilder **arg1 = (njli::PhysicsShapeBox2DBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBox2DBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBox2DBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBox2DBuilderArray_getitem",1,"njli::PhysicsShapeBox2DBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBox2DBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox2DBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBox2DBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBox2DBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeBox2DBuilder *)PhysicsShapeBox2DBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeBox2DBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBox2DBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBox2DBuilder **arg1 = (njli::PhysicsShapeBox2DBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBox2DBuilder *arg3 = (njli::PhysicsShapeBox2DBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBox2DBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBox2DBuilderArray_setitem",1,"njli::PhysicsShapeBox2DBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBox2DBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeBox2DBuilderArray_setitem",3,"njli::PhysicsShapeBox2DBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBox2DBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBox2DBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBox2DBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeBox2DBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBox2DBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeBox2DBuilder);
+  }
+  
+  PhysicsShapeBox2DBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeBoxBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeBoxBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeBoxBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeBoxBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeBoxBuilder **)new_PhysicsShapeBoxBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeBoxBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeBoxBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBoxBuilder **arg1 = (njli::PhysicsShapeBoxBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeBoxBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeBoxBuilderArray",1,"njli::PhysicsShapeBoxBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBoxBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeBoxBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeBoxBuilder);
+  }
+  
+  delete_PhysicsShapeBoxBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBoxBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBoxBuilder **arg1 = (njli::PhysicsShapeBoxBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBoxBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBoxBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBoxBuilderArray_getitem",1,"njli::PhysicsShapeBoxBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBoxBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBoxBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBoxBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBoxBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeBoxBuilder *)PhysicsShapeBoxBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeBoxBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBoxBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBoxBuilder **arg1 = (njli::PhysicsShapeBoxBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBoxBuilder *arg3 = (njli::PhysicsShapeBoxBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBoxBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBoxBuilderArray_setitem",1,"njli::PhysicsShapeBoxBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBoxBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeBoxBuilderArray_setitem",3,"njli::PhysicsShapeBoxBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBoxBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBoxBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBoxBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeBoxBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBoxBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeBoxBuilder);
+  }
+  
+  PhysicsShapeBoxBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeBvhTriangleMeshArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeBvhTriangleMesh **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeBvhTriangleMeshArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeBvhTriangleMeshArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeBvhTriangleMesh **)new_PhysicsShapeBvhTriangleMeshArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMesh,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeBvhTriangleMeshArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBvhTriangleMesh **arg1 = (njli::PhysicsShapeBvhTriangleMesh **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeBvhTriangleMeshArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeBvhTriangleMeshArray",1,"njli::PhysicsShapeBvhTriangleMesh **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMesh,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeBvhTriangleMeshArray",1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMesh);
+  }
+  
+  delete_PhysicsShapeBvhTriangleMeshArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBvhTriangleMeshArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBvhTriangleMesh **arg1 = (njli::PhysicsShapeBvhTriangleMesh **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBvhTriangleMesh *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBvhTriangleMeshArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshArray_getitem",1,"njli::PhysicsShapeBvhTriangleMesh **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMesh,0))){
+    SWIG_fail_ptr("PhysicsShapeBvhTriangleMeshArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMesh);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeBvhTriangleMesh *)PhysicsShapeBvhTriangleMeshArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeBvhTriangleMesh,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBvhTriangleMeshArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBvhTriangleMesh **arg1 = (njli::PhysicsShapeBvhTriangleMesh **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBvhTriangleMesh *arg3 = (njli::PhysicsShapeBvhTriangleMesh *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBvhTriangleMeshArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshArray_setitem",1,"njli::PhysicsShapeBvhTriangleMesh **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshArray_setitem",3,"njli::PhysicsShapeBvhTriangleMesh *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMesh,0))){
+    SWIG_fail_ptr("PhysicsShapeBvhTriangleMeshArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMesh);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeBvhTriangleMesh,0))){
+    SWIG_fail_ptr("PhysicsShapeBvhTriangleMeshArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeBvhTriangleMesh);
+  }
+  
+  PhysicsShapeBvhTriangleMeshArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeBvhTriangleMeshBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeBvhTriangleMeshBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeBvhTriangleMeshBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeBvhTriangleMeshBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeBvhTriangleMeshBuilder **)new_PhysicsShapeBvhTriangleMeshBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeBvhTriangleMeshBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBvhTriangleMeshBuilder **arg1 = (njli::PhysicsShapeBvhTriangleMeshBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeBvhTriangleMeshBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeBvhTriangleMeshBuilderArray",1,"njli::PhysicsShapeBvhTriangleMeshBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeBvhTriangleMeshBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder);
+  }
+  
+  delete_PhysicsShapeBvhTriangleMeshBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBvhTriangleMeshBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBvhTriangleMeshBuilder **arg1 = (njli::PhysicsShapeBvhTriangleMeshBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBvhTriangleMeshBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBvhTriangleMeshBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshBuilderArray_getitem",1,"njli::PhysicsShapeBvhTriangleMeshBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBvhTriangleMeshBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeBvhTriangleMeshBuilder *)PhysicsShapeBvhTriangleMeshBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeBvhTriangleMeshBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeBvhTriangleMeshBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeBvhTriangleMeshBuilder **arg1 = (njli::PhysicsShapeBvhTriangleMeshBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeBvhTriangleMeshBuilder *arg3 = (njli::PhysicsShapeBvhTriangleMeshBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeBvhTriangleMeshBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshBuilderArray_setitem",1,"njli::PhysicsShapeBvhTriangleMeshBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeBvhTriangleMeshBuilderArray_setitem",3,"njli::PhysicsShapeBvhTriangleMeshBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBvhTriangleMeshBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeBvhTriangleMeshBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeBvhTriangleMeshBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeBvhTriangleMeshBuilder);
+  }
+  
+  PhysicsShapeBvhTriangleMeshBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeCapsuleArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeCapsule **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeCapsuleArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeCapsuleArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeCapsule **)new_PhysicsShapeCapsuleArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeCapsule,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeCapsuleArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCapsule **arg1 = (njli::PhysicsShapeCapsule **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeCapsuleArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeCapsuleArray",1,"njli::PhysicsShapeCapsule **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCapsule,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeCapsuleArray",1,SWIGTYPE_p_p_njli__PhysicsShapeCapsule);
+  }
+  
+  delete_PhysicsShapeCapsuleArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeCapsuleArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCapsule **arg1 = (njli::PhysicsShapeCapsule **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCapsule *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeCapsuleArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeCapsuleArray_getitem",1,"njli::PhysicsShapeCapsule **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeCapsuleArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCapsule,0))){
+    SWIG_fail_ptr("PhysicsShapeCapsuleArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCapsule);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeCapsule *)PhysicsShapeCapsuleArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeCapsule,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeCapsuleArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCapsule **arg1 = (njli::PhysicsShapeCapsule **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCapsule *arg3 = (njli::PhysicsShapeCapsule *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeCapsuleArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeCapsuleArray_setitem",1,"njli::PhysicsShapeCapsule **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeCapsuleArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeCapsuleArray_setitem",3,"njli::PhysicsShapeCapsule *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCapsule,0))){
+    SWIG_fail_ptr("PhysicsShapeCapsuleArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCapsule);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeCapsule,0))){
+    SWIG_fail_ptr("PhysicsShapeCapsuleArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeCapsule);
+  }
+  
+  PhysicsShapeCapsuleArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeCapsuleBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeCapsuleBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeCapsuleBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeCapsuleBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeCapsuleBuilder **)new_PhysicsShapeCapsuleBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeCapsuleBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeCapsuleBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCapsuleBuilder **arg1 = (njli::PhysicsShapeCapsuleBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeCapsuleBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeCapsuleBuilderArray",1,"njli::PhysicsShapeCapsuleBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCapsuleBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeCapsuleBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeCapsuleBuilder);
+  }
+  
+  delete_PhysicsShapeCapsuleBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeCapsuleBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCapsuleBuilder **arg1 = (njli::PhysicsShapeCapsuleBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCapsuleBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeCapsuleBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeCapsuleBuilderArray_getitem",1,"njli::PhysicsShapeCapsuleBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeCapsuleBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCapsuleBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeCapsuleBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCapsuleBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeCapsuleBuilder *)PhysicsShapeCapsuleBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeCapsuleBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeCapsuleBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCapsuleBuilder **arg1 = (njli::PhysicsShapeCapsuleBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCapsuleBuilder *arg3 = (njli::PhysicsShapeCapsuleBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeCapsuleBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeCapsuleBuilderArray_setitem",1,"njli::PhysicsShapeCapsuleBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeCapsuleBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeCapsuleBuilderArray_setitem",3,"njli::PhysicsShapeCapsuleBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCapsuleBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeCapsuleBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCapsuleBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeCapsuleBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeCapsuleBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeCapsuleBuilder);
+  }
+  
+  PhysicsShapeCapsuleBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeConeArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeCone **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeConeArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeConeArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeCone **)new_PhysicsShapeConeArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeCone,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeConeArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCone **arg1 = (njli::PhysicsShapeCone **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeConeArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeConeArray",1,"njli::PhysicsShapeCone **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCone,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeConeArray",1,SWIGTYPE_p_p_njli__PhysicsShapeCone);
+  }
+  
+  delete_PhysicsShapeConeArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConeArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCone **arg1 = (njli::PhysicsShapeCone **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCone *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConeArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConeArray_getitem",1,"njli::PhysicsShapeCone **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConeArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCone,0))){
+    SWIG_fail_ptr("PhysicsShapeConeArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCone);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeCone *)PhysicsShapeConeArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeCone,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConeArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCone **arg1 = (njli::PhysicsShapeCone **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCone *arg3 = (njli::PhysicsShapeCone *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConeArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConeArray_setitem",1,"njli::PhysicsShapeCone **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConeArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeConeArray_setitem",3,"njli::PhysicsShapeCone *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCone,0))){
+    SWIG_fail_ptr("PhysicsShapeConeArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCone);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeCone,0))){
+    SWIG_fail_ptr("PhysicsShapeConeArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeCone);
+  }
+  
+  PhysicsShapeConeArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeConeBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeConeBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeConeBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeConeBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeConeBuilder **)new_PhysicsShapeConeBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeConeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeConeBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConeBuilder **arg1 = (njli::PhysicsShapeConeBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeConeBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeConeBuilderArray",1,"njli::PhysicsShapeConeBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConeBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeConeBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeConeBuilder);
+  }
+  
+  delete_PhysicsShapeConeBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConeBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConeBuilder **arg1 = (njli::PhysicsShapeConeBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConeBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConeBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConeBuilderArray_getitem",1,"njli::PhysicsShapeConeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConeBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConeBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConeBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeConeBuilder *)PhysicsShapeConeBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeConeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConeBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConeBuilder **arg1 = (njli::PhysicsShapeConeBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConeBuilder *arg3 = (njli::PhysicsShapeConeBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConeBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConeBuilderArray_setitem",1,"njli::PhysicsShapeConeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConeBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeConeBuilderArray_setitem",3,"njli::PhysicsShapeConeBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConeBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConeBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeConeBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConeBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeConeBuilder);
+  }
+  
+  PhysicsShapeConeBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeConvexHullArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeConvexHull **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeConvexHullArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeConvexHullArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeConvexHull **)new_PhysicsShapeConvexHullArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeConvexHull,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeConvexHullArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexHull **arg1 = (njli::PhysicsShapeConvexHull **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeConvexHullArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeConvexHullArray",1,"njli::PhysicsShapeConvexHull **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHull,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeConvexHullArray",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHull);
+  }
+  
+  delete_PhysicsShapeConvexHullArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConvexHullArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexHull **arg1 = (njli::PhysicsShapeConvexHull **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConvexHull *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConvexHullArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConvexHullArray_getitem",1,"njli::PhysicsShapeConvexHull **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConvexHullArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHull,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexHullArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHull);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeConvexHull *)PhysicsShapeConvexHullArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeConvexHull,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConvexHullArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexHull **arg1 = (njli::PhysicsShapeConvexHull **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConvexHull *arg3 = (njli::PhysicsShapeConvexHull *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConvexHullArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConvexHullArray_setitem",1,"njli::PhysicsShapeConvexHull **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConvexHullArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeConvexHullArray_setitem",3,"njli::PhysicsShapeConvexHull *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHull,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexHullArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHull);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeConvexHull,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexHullArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeConvexHull);
+  }
+  
+  PhysicsShapeConvexHullArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeConvexHullBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeConvexHullBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeConvexHullBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeConvexHullBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeConvexHullBuilder **)new_PhysicsShapeConvexHullBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeConvexHullBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeConvexHullBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexHullBuilder **arg1 = (njli::PhysicsShapeConvexHullBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeConvexHullBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeConvexHullBuilderArray",1,"njli::PhysicsShapeConvexHullBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHullBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeConvexHullBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHullBuilder);
+  }
+  
+  delete_PhysicsShapeConvexHullBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConvexHullBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexHullBuilder **arg1 = (njli::PhysicsShapeConvexHullBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConvexHullBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConvexHullBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConvexHullBuilderArray_getitem",1,"njli::PhysicsShapeConvexHullBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConvexHullBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHullBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexHullBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHullBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeConvexHullBuilder *)PhysicsShapeConvexHullBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeConvexHullBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConvexHullBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexHullBuilder **arg1 = (njli::PhysicsShapeConvexHullBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConvexHullBuilder *arg3 = (njli::PhysicsShapeConvexHullBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConvexHullBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConvexHullBuilderArray_setitem",1,"njli::PhysicsShapeConvexHullBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConvexHullBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeConvexHullBuilderArray_setitem",3,"njli::PhysicsShapeConvexHullBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHullBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexHullBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexHullBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeConvexHullBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexHullBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeConvexHullBuilder);
+  }
+  
+  PhysicsShapeConvexHullBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeConvexTriangleMeshArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeConvexTriangleMesh **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeConvexTriangleMeshArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeConvexTriangleMeshArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeConvexTriangleMesh **)new_PhysicsShapeConvexTriangleMeshArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMesh,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeConvexTriangleMeshArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexTriangleMesh **arg1 = (njli::PhysicsShapeConvexTriangleMesh **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeConvexTriangleMeshArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeConvexTriangleMeshArray",1,"njli::PhysicsShapeConvexTriangleMesh **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMesh,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeConvexTriangleMeshArray",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMesh);
+  }
+  
+  delete_PhysicsShapeConvexTriangleMeshArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConvexTriangleMeshArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexTriangleMesh **arg1 = (njli::PhysicsShapeConvexTriangleMesh **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConvexTriangleMesh *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConvexTriangleMeshArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshArray_getitem",1,"njli::PhysicsShapeConvexTriangleMesh **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMesh,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexTriangleMeshArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMesh);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeConvexTriangleMesh *)PhysicsShapeConvexTriangleMeshArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeConvexTriangleMesh,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConvexTriangleMeshArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexTriangleMesh **arg1 = (njli::PhysicsShapeConvexTriangleMesh **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConvexTriangleMesh *arg3 = (njli::PhysicsShapeConvexTriangleMesh *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConvexTriangleMeshArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshArray_setitem",1,"njli::PhysicsShapeConvexTriangleMesh **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshArray_setitem",3,"njli::PhysicsShapeConvexTriangleMesh *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMesh,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexTriangleMeshArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMesh);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeConvexTriangleMesh,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexTriangleMeshArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeConvexTriangleMesh);
+  }
+  
+  PhysicsShapeConvexTriangleMeshArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeConvexTriangleMeshBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeConvexTriangleMeshBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeConvexTriangleMeshBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeConvexTriangleMeshBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeConvexTriangleMeshBuilder **)new_PhysicsShapeConvexTriangleMeshBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeConvexTriangleMeshBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexTriangleMeshBuilder **arg1 = (njli::PhysicsShapeConvexTriangleMeshBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeConvexTriangleMeshBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeConvexTriangleMeshBuilderArray",1,"njli::PhysicsShapeConvexTriangleMeshBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeConvexTriangleMeshBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder);
+  }
+  
+  delete_PhysicsShapeConvexTriangleMeshBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConvexTriangleMeshBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexTriangleMeshBuilder **arg1 = (njli::PhysicsShapeConvexTriangleMeshBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConvexTriangleMeshBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConvexTriangleMeshBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshBuilderArray_getitem",1,"njli::PhysicsShapeConvexTriangleMeshBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexTriangleMeshBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeConvexTriangleMeshBuilder *)PhysicsShapeConvexTriangleMeshBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeConvexTriangleMeshBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeConvexTriangleMeshBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeConvexTriangleMeshBuilder **arg1 = (njli::PhysicsShapeConvexTriangleMeshBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeConvexTriangleMeshBuilder *arg3 = (njli::PhysicsShapeConvexTriangleMeshBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeConvexTriangleMeshBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshBuilderArray_setitem",1,"njli::PhysicsShapeConvexTriangleMeshBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeConvexTriangleMeshBuilderArray_setitem",3,"njli::PhysicsShapeConvexTriangleMeshBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexTriangleMeshBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeConvexTriangleMeshBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeConvexTriangleMeshBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeConvexTriangleMeshBuilder);
+  }
+  
+  PhysicsShapeConvexTriangleMeshBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeCylinderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeCylinder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeCylinderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeCylinderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeCylinder **)new_PhysicsShapeCylinderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeCylinder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeCylinderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCylinder **arg1 = (njli::PhysicsShapeCylinder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeCylinderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeCylinderArray",1,"njli::PhysicsShapeCylinder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCylinder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeCylinderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeCylinder);
+  }
+  
+  delete_PhysicsShapeCylinderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeCylinderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCylinder **arg1 = (njli::PhysicsShapeCylinder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCylinder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeCylinderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeCylinderArray_getitem",1,"njli::PhysicsShapeCylinder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeCylinderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCylinder,0))){
+    SWIG_fail_ptr("PhysicsShapeCylinderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCylinder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeCylinder *)PhysicsShapeCylinderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeCylinder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeCylinderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCylinder **arg1 = (njli::PhysicsShapeCylinder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCylinder *arg3 = (njli::PhysicsShapeCylinder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeCylinderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeCylinderArray_setitem",1,"njli::PhysicsShapeCylinder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeCylinderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeCylinderArray_setitem",3,"njli::PhysicsShapeCylinder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCylinder,0))){
+    SWIG_fail_ptr("PhysicsShapeCylinderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCylinder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeCylinder,0))){
+    SWIG_fail_ptr("PhysicsShapeCylinderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeCylinder);
+  }
+  
+  PhysicsShapeCylinderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeCylinderBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeCylinderBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeCylinderBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeCylinderBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeCylinderBuilder **)new_PhysicsShapeCylinderBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeCylinderBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeCylinderBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCylinderBuilder **arg1 = (njli::PhysicsShapeCylinderBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeCylinderBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeCylinderBuilderArray",1,"njli::PhysicsShapeCylinderBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCylinderBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeCylinderBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeCylinderBuilder);
+  }
+  
+  delete_PhysicsShapeCylinderBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeCylinderBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCylinderBuilder **arg1 = (njli::PhysicsShapeCylinderBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCylinderBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeCylinderBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeCylinderBuilderArray_getitem",1,"njli::PhysicsShapeCylinderBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeCylinderBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCylinderBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeCylinderBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCylinderBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeCylinderBuilder *)PhysicsShapeCylinderBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeCylinderBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeCylinderBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeCylinderBuilder **arg1 = (njli::PhysicsShapeCylinderBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeCylinderBuilder *arg3 = (njli::PhysicsShapeCylinderBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeCylinderBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeCylinderBuilderArray_setitem",1,"njli::PhysicsShapeCylinderBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeCylinderBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeCylinderBuilderArray_setitem",3,"njli::PhysicsShapeCylinderBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeCylinderBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeCylinderBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeCylinderBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeCylinderBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeCylinderBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeCylinderBuilder);
+  }
+  
+  PhysicsShapeCylinderBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeHeightfieldTerrainArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeHeightfieldTerrain **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeHeightfieldTerrainArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeHeightfieldTerrainArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeHeightfieldTerrain **)new_PhysicsShapeHeightfieldTerrainArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrain,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeHeightfieldTerrainArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeHeightfieldTerrain **arg1 = (njli::PhysicsShapeHeightfieldTerrain **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeHeightfieldTerrainArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeHeightfieldTerrainArray",1,"njli::PhysicsShapeHeightfieldTerrain **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrain,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeHeightfieldTerrainArray",1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrain);
+  }
+  
+  delete_PhysicsShapeHeightfieldTerrainArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeHeightfieldTerrainArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeHeightfieldTerrain **arg1 = (njli::PhysicsShapeHeightfieldTerrain **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeHeightfieldTerrain *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeHeightfieldTerrainArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainArray_getitem",1,"njli::PhysicsShapeHeightfieldTerrain **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrain,0))){
+    SWIG_fail_ptr("PhysicsShapeHeightfieldTerrainArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrain);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeHeightfieldTerrain *)PhysicsShapeHeightfieldTerrainArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeHeightfieldTerrain,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeHeightfieldTerrainArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeHeightfieldTerrain **arg1 = (njli::PhysicsShapeHeightfieldTerrain **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeHeightfieldTerrain *arg3 = (njli::PhysicsShapeHeightfieldTerrain *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeHeightfieldTerrainArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainArray_setitem",1,"njli::PhysicsShapeHeightfieldTerrain **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainArray_setitem",3,"njli::PhysicsShapeHeightfieldTerrain *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrain,0))){
+    SWIG_fail_ptr("PhysicsShapeHeightfieldTerrainArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrain);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeHeightfieldTerrain,0))){
+    SWIG_fail_ptr("PhysicsShapeHeightfieldTerrainArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeHeightfieldTerrain);
+  }
+  
+  PhysicsShapeHeightfieldTerrainArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeHeightfieldTerrainBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeHeightfieldTerrainBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeHeightfieldTerrainBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeHeightfieldTerrainBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeHeightfieldTerrainBuilder **)new_PhysicsShapeHeightfieldTerrainBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeHeightfieldTerrainBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeHeightfieldTerrainBuilder **arg1 = (njli::PhysicsShapeHeightfieldTerrainBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeHeightfieldTerrainBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeHeightfieldTerrainBuilderArray",1,"njli::PhysicsShapeHeightfieldTerrainBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeHeightfieldTerrainBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder);
+  }
+  
+  delete_PhysicsShapeHeightfieldTerrainBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeHeightfieldTerrainBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeHeightfieldTerrainBuilder **arg1 = (njli::PhysicsShapeHeightfieldTerrainBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeHeightfieldTerrainBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeHeightfieldTerrainBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainBuilderArray_getitem",1,"njli::PhysicsShapeHeightfieldTerrainBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeHeightfieldTerrainBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeHeightfieldTerrainBuilder *)PhysicsShapeHeightfieldTerrainBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeHeightfieldTerrainBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeHeightfieldTerrainBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeHeightfieldTerrainBuilder **arg1 = (njli::PhysicsShapeHeightfieldTerrainBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeHeightfieldTerrainBuilder *arg3 = (njli::PhysicsShapeHeightfieldTerrainBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeHeightfieldTerrainBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainBuilderArray_setitem",1,"njli::PhysicsShapeHeightfieldTerrainBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeHeightfieldTerrainBuilderArray_setitem",3,"njli::PhysicsShapeHeightfieldTerrainBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeHeightfieldTerrainBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeHeightfieldTerrainBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeHeightfieldTerrainBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeHeightfieldTerrainBuilder);
+  }
+  
+  PhysicsShapeHeightfieldTerrainBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeMultiSphereArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeMultiSphere **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeMultiSphereArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeMultiSphereArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeMultiSphere **)new_PhysicsShapeMultiSphereArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphere,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeMultiSphereArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeMultiSphere **arg1 = (njli::PhysicsShapeMultiSphere **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeMultiSphereArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeMultiSphereArray",1,"njli::PhysicsShapeMultiSphere **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphere,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeMultiSphereArray",1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphere);
+  }
+  
+  delete_PhysicsShapeMultiSphereArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeMultiSphereArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeMultiSphere **arg1 = (njli::PhysicsShapeMultiSphere **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeMultiSphere *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeMultiSphereArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeMultiSphereArray_getitem",1,"njli::PhysicsShapeMultiSphere **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeMultiSphereArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphere,0))){
+    SWIG_fail_ptr("PhysicsShapeMultiSphereArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphere);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeMultiSphere *)PhysicsShapeMultiSphereArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeMultiSphere,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeMultiSphereArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeMultiSphere **arg1 = (njli::PhysicsShapeMultiSphere **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeMultiSphere *arg3 = (njli::PhysicsShapeMultiSphere *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeMultiSphereArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeMultiSphereArray_setitem",1,"njli::PhysicsShapeMultiSphere **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeMultiSphereArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeMultiSphereArray_setitem",3,"njli::PhysicsShapeMultiSphere *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphere,0))){
+    SWIG_fail_ptr("PhysicsShapeMultiSphereArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphere);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeMultiSphere,0))){
+    SWIG_fail_ptr("PhysicsShapeMultiSphereArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeMultiSphere);
+  }
+  
+  PhysicsShapeMultiSphereArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeMultiSphereBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeMultiSphereBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeMultiSphereBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeMultiSphereBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeMultiSphereBuilder **)new_PhysicsShapeMultiSphereBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphereBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeMultiSphereBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeMultiSphereBuilder **arg1 = (njli::PhysicsShapeMultiSphereBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeMultiSphereBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeMultiSphereBuilderArray",1,"njli::PhysicsShapeMultiSphereBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphereBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeMultiSphereBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphereBuilder);
+  }
+  
+  delete_PhysicsShapeMultiSphereBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeMultiSphereBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeMultiSphereBuilder **arg1 = (njli::PhysicsShapeMultiSphereBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeMultiSphereBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeMultiSphereBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeMultiSphereBuilderArray_getitem",1,"njli::PhysicsShapeMultiSphereBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeMultiSphereBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphereBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeMultiSphereBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphereBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeMultiSphereBuilder *)PhysicsShapeMultiSphereBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeMultiSphereBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeMultiSphereBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeMultiSphereBuilder **arg1 = (njli::PhysicsShapeMultiSphereBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeMultiSphereBuilder *arg3 = (njli::PhysicsShapeMultiSphereBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeMultiSphereBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeMultiSphereBuilderArray_setitem",1,"njli::PhysicsShapeMultiSphereBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeMultiSphereBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeMultiSphereBuilderArray_setitem",3,"njli::PhysicsShapeMultiSphereBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphereBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeMultiSphereBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeMultiSphereBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeMultiSphereBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeMultiSphereBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeMultiSphereBuilder);
+  }
+  
+  PhysicsShapeMultiSphereBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeSphereArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeSphere **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeSphereArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeSphereArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeSphere **)new_PhysicsShapeSphereArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeSphere,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeSphereArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeSphere **arg1 = (njli::PhysicsShapeSphere **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeSphereArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeSphereArray",1,"njli::PhysicsShapeSphere **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeSphere,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeSphereArray",1,SWIGTYPE_p_p_njli__PhysicsShapeSphere);
+  }
+  
+  delete_PhysicsShapeSphereArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeSphereArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeSphere **arg1 = (njli::PhysicsShapeSphere **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeSphere *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeSphereArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeSphereArray_getitem",1,"njli::PhysicsShapeSphere **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeSphereArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeSphere,0))){
+    SWIG_fail_ptr("PhysicsShapeSphereArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeSphere);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeSphere *)PhysicsShapeSphereArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeSphere,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeSphereArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeSphere **arg1 = (njli::PhysicsShapeSphere **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeSphere *arg3 = (njli::PhysicsShapeSphere *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeSphereArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeSphereArray_setitem",1,"njli::PhysicsShapeSphere **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeSphereArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeSphereArray_setitem",3,"njli::PhysicsShapeSphere *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeSphere,0))){
+    SWIG_fail_ptr("PhysicsShapeSphereArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeSphere);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeSphere,0))){
+    SWIG_fail_ptr("PhysicsShapeSphereArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeSphere);
+  }
+  
+  PhysicsShapeSphereArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeSphereBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeSphereBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeSphereBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeSphereBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeSphereBuilder **)new_PhysicsShapeSphereBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeSphereBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeSphereBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeSphereBuilder **arg1 = (njli::PhysicsShapeSphereBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeSphereBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeSphereBuilderArray",1,"njli::PhysicsShapeSphereBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeSphereBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeSphereBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeSphereBuilder);
+  }
+  
+  delete_PhysicsShapeSphereBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeSphereBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeSphereBuilder **arg1 = (njli::PhysicsShapeSphereBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeSphereBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeSphereBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeSphereBuilderArray_getitem",1,"njli::PhysicsShapeSphereBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeSphereBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeSphereBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeSphereBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeSphereBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeSphereBuilder *)PhysicsShapeSphereBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeSphereBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeSphereBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeSphereBuilder **arg1 = (njli::PhysicsShapeSphereBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeSphereBuilder *arg3 = (njli::PhysicsShapeSphereBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeSphereBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeSphereBuilderArray_setitem",1,"njli::PhysicsShapeSphereBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeSphereBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeSphereBuilderArray_setitem",3,"njli::PhysicsShapeSphereBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeSphereBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeSphereBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeSphereBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeSphereBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeSphereBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeSphereBuilder);
+  }
+  
+  PhysicsShapeSphereBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeStaticPlaneArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeStaticPlane **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeStaticPlaneArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeStaticPlaneArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeStaticPlane **)new_PhysicsShapeStaticPlaneArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlane,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeStaticPlaneArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeStaticPlane **arg1 = (njli::PhysicsShapeStaticPlane **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeStaticPlaneArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeStaticPlaneArray",1,"njli::PhysicsShapeStaticPlane **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlane,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeStaticPlaneArray",1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlane);
+  }
+  
+  delete_PhysicsShapeStaticPlaneArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeStaticPlaneArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeStaticPlane **arg1 = (njli::PhysicsShapeStaticPlane **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeStaticPlane *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeStaticPlaneArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeStaticPlaneArray_getitem",1,"njli::PhysicsShapeStaticPlane **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeStaticPlaneArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlane,0))){
+    SWIG_fail_ptr("PhysicsShapeStaticPlaneArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlane);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeStaticPlane *)PhysicsShapeStaticPlaneArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeStaticPlane,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeStaticPlaneArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeStaticPlane **arg1 = (njli::PhysicsShapeStaticPlane **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeStaticPlane *arg3 = (njli::PhysicsShapeStaticPlane *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeStaticPlaneArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeStaticPlaneArray_setitem",1,"njli::PhysicsShapeStaticPlane **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeStaticPlaneArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeStaticPlaneArray_setitem",3,"njli::PhysicsShapeStaticPlane *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlane,0))){
+    SWIG_fail_ptr("PhysicsShapeStaticPlaneArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlane);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeStaticPlane,0))){
+    SWIG_fail_ptr("PhysicsShapeStaticPlaneArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeStaticPlane);
+  }
+  
+  PhysicsShapeStaticPlaneArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsShapeStaticPlaneBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsShapeStaticPlaneBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsShapeStaticPlaneBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsShapeStaticPlaneBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsShapeStaticPlaneBuilder **)new_PhysicsShapeStaticPlaneBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlaneBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsShapeStaticPlaneBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeStaticPlaneBuilder **arg1 = (njli::PhysicsShapeStaticPlaneBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsShapeStaticPlaneBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsShapeStaticPlaneBuilderArray",1,"njli::PhysicsShapeStaticPlaneBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlaneBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsShapeStaticPlaneBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlaneBuilder);
+  }
+  
+  delete_PhysicsShapeStaticPlaneBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeStaticPlaneBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeStaticPlaneBuilder **arg1 = (njli::PhysicsShapeStaticPlaneBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeStaticPlaneBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeStaticPlaneBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeStaticPlaneBuilderArray_getitem",1,"njli::PhysicsShapeStaticPlaneBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeStaticPlaneBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlaneBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeStaticPlaneBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlaneBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsShapeStaticPlaneBuilder *)PhysicsShapeStaticPlaneBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsShapeStaticPlaneBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsShapeStaticPlaneBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsShapeStaticPlaneBuilder **arg1 = (njli::PhysicsShapeStaticPlaneBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsShapeStaticPlaneBuilder *arg3 = (njli::PhysicsShapeStaticPlaneBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsShapeStaticPlaneBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsShapeStaticPlaneBuilderArray_setitem",1,"njli::PhysicsShapeStaticPlaneBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsShapeStaticPlaneBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsShapeStaticPlaneBuilderArray_setitem",3,"njli::PhysicsShapeStaticPlaneBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlaneBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeStaticPlaneBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsShapeStaticPlaneBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsShapeStaticPlaneBuilder,0))){
+    SWIG_fail_ptr("PhysicsShapeStaticPlaneBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsShapeStaticPlaneBuilder);
+  }
+  
+  PhysicsShapeStaticPlaneBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsWorldArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsWorld **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsWorldArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsWorldArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsWorld **)new_PhysicsWorldArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsWorld,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsWorldArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsWorld **arg1 = (njli::PhysicsWorld **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsWorldArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsWorldArray",1,"njli::PhysicsWorld **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsWorld,0))){
+    SWIG_fail_ptr("delete_PhysicsWorldArray",1,SWIGTYPE_p_p_njli__PhysicsWorld);
+  }
+  
+  delete_PhysicsWorldArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsWorldArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsWorld **arg1 = (njli::PhysicsWorld **) 0 ;
+  int arg2 ;
+  njli::PhysicsWorld *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsWorldArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsWorldArray_getitem",1,"njli::PhysicsWorld **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsWorldArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsWorld,0))){
+    SWIG_fail_ptr("PhysicsWorldArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsWorld);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsWorld *)PhysicsWorldArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsWorld,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsWorldArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsWorld **arg1 = (njli::PhysicsWorld **) 0 ;
+  int arg2 ;
+  njli::PhysicsWorld *arg3 = (njli::PhysicsWorld *) 0 ;
+  
+  SWIG_check_num_args("PhysicsWorldArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsWorldArray_setitem",1,"njli::PhysicsWorld **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsWorldArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsWorldArray_setitem",3,"njli::PhysicsWorld *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsWorld,0))){
+    SWIG_fail_ptr("PhysicsWorldArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsWorld);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsWorld,0))){
+    SWIG_fail_ptr("PhysicsWorldArray_setitem",3,SWIGTYPE_p_njli__PhysicsWorld);
+  }
+  
+  PhysicsWorldArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PhysicsWorldBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PhysicsWorldBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PhysicsWorldBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PhysicsWorldBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PhysicsWorldBuilder **)new_PhysicsWorldBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PhysicsWorldBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PhysicsWorldBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsWorldBuilder **arg1 = (njli::PhysicsWorldBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PhysicsWorldBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PhysicsWorldBuilderArray",1,"njli::PhysicsWorldBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsWorldBuilder,0))){
+    SWIG_fail_ptr("delete_PhysicsWorldBuilderArray",1,SWIGTYPE_p_p_njli__PhysicsWorldBuilder);
+  }
+  
+  delete_PhysicsWorldBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsWorldBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsWorldBuilder **arg1 = (njli::PhysicsWorldBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsWorldBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PhysicsWorldBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsWorldBuilderArray_getitem",1,"njli::PhysicsWorldBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsWorldBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsWorldBuilder,0))){
+    SWIG_fail_ptr("PhysicsWorldBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PhysicsWorldBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PhysicsWorldBuilder *)PhysicsWorldBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PhysicsWorldBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PhysicsWorldBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PhysicsWorldBuilder **arg1 = (njli::PhysicsWorldBuilder **) 0 ;
+  int arg2 ;
+  njli::PhysicsWorldBuilder *arg3 = (njli::PhysicsWorldBuilder *) 0 ;
+  
+  SWIG_check_num_args("PhysicsWorldBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PhysicsWorldBuilderArray_setitem",1,"njli::PhysicsWorldBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PhysicsWorldBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PhysicsWorldBuilderArray_setitem",3,"njli::PhysicsWorldBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PhysicsWorldBuilder,0))){
+    SWIG_fail_ptr("PhysicsWorldBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PhysicsWorldBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PhysicsWorldBuilder,0))){
+    SWIG_fail_ptr("PhysicsWorldBuilderArray_setitem",3,SWIGTYPE_p_njli__PhysicsWorldBuilder);
+  }
+  
+  PhysicsWorldBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PlaneArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Plane **result = 0 ;
+  
+  SWIG_check_num_args("new_PlaneArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PlaneArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Plane **)new_PlaneArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Plane,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PlaneArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Plane **arg1 = (njli::Plane **) 0 ;
+  
+  SWIG_check_num_args("delete_PlaneArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PlaneArray",1,"njli::Plane **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Plane,0))){
+    SWIG_fail_ptr("delete_PlaneArray",1,SWIGTYPE_p_p_njli__Plane);
+  }
+  
+  delete_PlaneArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PlaneArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Plane **arg1 = (njli::Plane **) 0 ;
+  int arg2 ;
+  njli::Plane *result = 0 ;
+  
+  SWIG_check_num_args("PlaneArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlaneArray_getitem",1,"njli::Plane **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PlaneArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Plane,0))){
+    SWIG_fail_ptr("PlaneArray_getitem",1,SWIGTYPE_p_p_njli__Plane);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Plane *)PlaneArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Plane,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PlaneArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Plane **arg1 = (njli::Plane **) 0 ;
+  int arg2 ;
+  njli::Plane *arg3 = (njli::Plane *) 0 ;
+  
+  SWIG_check_num_args("PlaneArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlaneArray_setitem",1,"njli::Plane **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PlaneArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PlaneArray_setitem",3,"njli::Plane *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Plane,0))){
+    SWIG_fail_ptr("PlaneArray_setitem",1,SWIGTYPE_p_p_njli__Plane);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Plane,0))){
+    SWIG_fail_ptr("PlaneArray_setitem",3,SWIGTYPE_p_njli__Plane);
+  }
+  
+  PlaneArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_PlaneBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::PlaneBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_PlaneBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_PlaneBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::PlaneBuilder **)new_PlaneBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__PlaneBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_PlaneBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PlaneBuilder **arg1 = (njli::PlaneBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_PlaneBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_PlaneBuilderArray",1,"njli::PlaneBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PlaneBuilder,0))){
+    SWIG_fail_ptr("delete_PlaneBuilderArray",1,SWIGTYPE_p_p_njli__PlaneBuilder);
+  }
+  
+  delete_PlaneBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PlaneBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PlaneBuilder **arg1 = (njli::PlaneBuilder **) 0 ;
+  int arg2 ;
+  njli::PlaneBuilder *result = 0 ;
+  
+  SWIG_check_num_args("PlaneBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlaneBuilderArray_getitem",1,"njli::PlaneBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PlaneBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PlaneBuilder,0))){
+    SWIG_fail_ptr("PlaneBuilderArray_getitem",1,SWIGTYPE_p_p_njli__PlaneBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::PlaneBuilder *)PlaneBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__PlaneBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_PlaneBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::PlaneBuilder **arg1 = (njli::PlaneBuilder **) 0 ;
+  int arg2 ;
+  njli::PlaneBuilder *arg3 = (njli::PlaneBuilder *) 0 ;
+  
+  SWIG_check_num_args("PlaneBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("PlaneBuilderArray_setitem",1,"njli::PlaneBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("PlaneBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("PlaneBuilderArray_setitem",3,"njli::PlaneBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__PlaneBuilder,0))){
+    SWIG_fail_ptr("PlaneBuilderArray_setitem",1,SWIGTYPE_p_p_njli__PlaneBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__PlaneBuilder,0))){
+    SWIG_fail_ptr("PlaneBuilderArray_setitem",3,SWIGTYPE_p_njli__PlaneBuilder);
+  }
+  
+  PlaneBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SceneArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Scene **result = 0 ;
+  
+  SWIG_check_num_args("new_SceneArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SceneArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Scene **)new_SceneArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Scene,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SceneArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Scene **arg1 = (njli::Scene **) 0 ;
+  
+  SWIG_check_num_args("delete_SceneArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SceneArray",1,"njli::Scene **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Scene,0))){
+    SWIG_fail_ptr("delete_SceneArray",1,SWIGTYPE_p_p_njli__Scene);
+  }
+  
+  delete_SceneArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Scene **arg1 = (njli::Scene **) 0 ;
+  int arg2 ;
+  njli::Scene *result = 0 ;
+  
+  SWIG_check_num_args("SceneArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneArray_getitem",1,"njli::Scene **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Scene,0))){
+    SWIG_fail_ptr("SceneArray_getitem",1,SWIGTYPE_p_p_njli__Scene);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Scene *)SceneArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Scene,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Scene **arg1 = (njli::Scene **) 0 ;
+  int arg2 ;
+  njli::Scene *arg3 = (njli::Scene *) 0 ;
+  
+  SWIG_check_num_args("SceneArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneArray_setitem",1,"njli::Scene **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SceneArray_setitem",3,"njli::Scene *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Scene,0))){
+    SWIG_fail_ptr("SceneArray_setitem",1,SWIGTYPE_p_p_njli__Scene);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Scene,0))){
+    SWIG_fail_ptr("SceneArray_setitem",3,SWIGTYPE_p_njli__Scene);
+  }
+  
+  SceneArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SceneBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SceneBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SceneBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SceneBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SceneBuilder **)new_SceneBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SceneBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SceneBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneBuilder **arg1 = (njli::SceneBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SceneBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SceneBuilderArray",1,"njli::SceneBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneBuilder,0))){
+    SWIG_fail_ptr("delete_SceneBuilderArray",1,SWIGTYPE_p_p_njli__SceneBuilder);
+  }
+  
+  delete_SceneBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneBuilder **arg1 = (njli::SceneBuilder **) 0 ;
+  int arg2 ;
+  njli::SceneBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SceneBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneBuilderArray_getitem",1,"njli::SceneBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneBuilder,0))){
+    SWIG_fail_ptr("SceneBuilderArray_getitem",1,SWIGTYPE_p_p_njli__SceneBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SceneBuilder *)SceneBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SceneBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneBuilder **arg1 = (njli::SceneBuilder **) 0 ;
+  int arg2 ;
+  njli::SceneBuilder *arg3 = (njli::SceneBuilder *) 0 ;
+  
+  SWIG_check_num_args("SceneBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneBuilderArray_setitem",1,"njli::SceneBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SceneBuilderArray_setitem",3,"njli::SceneBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneBuilder,0))){
+    SWIG_fail_ptr("SceneBuilderArray_setitem",1,SWIGTYPE_p_p_njli__SceneBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SceneBuilder,0))){
+    SWIG_fail_ptr("SceneBuilderArray_setitem",3,SWIGTYPE_p_njli__SceneBuilder);
+  }
+  
+  SceneBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SceneStateArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SceneState **result = 0 ;
+  
+  SWIG_check_num_args("new_SceneStateArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SceneStateArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SceneState **)new_SceneStateArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SceneState,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SceneStateArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneState **arg1 = (njli::SceneState **) 0 ;
+  
+  SWIG_check_num_args("delete_SceneStateArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SceneStateArray",1,"njli::SceneState **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneState,0))){
+    SWIG_fail_ptr("delete_SceneStateArray",1,SWIGTYPE_p_p_njli__SceneState);
+  }
+  
+  delete_SceneStateArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneStateArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneState **arg1 = (njli::SceneState **) 0 ;
+  int arg2 ;
+  njli::SceneState *result = 0 ;
+  
+  SWIG_check_num_args("SceneStateArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneStateArray_getitem",1,"njli::SceneState **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneStateArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneState,0))){
+    SWIG_fail_ptr("SceneStateArray_getitem",1,SWIGTYPE_p_p_njli__SceneState);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SceneState *)SceneStateArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SceneState,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneStateArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneState **arg1 = (njli::SceneState **) 0 ;
+  int arg2 ;
+  njli::SceneState *arg3 = (njli::SceneState *) 0 ;
+  
+  SWIG_check_num_args("SceneStateArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneStateArray_setitem",1,"njli::SceneState **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneStateArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SceneStateArray_setitem",3,"njli::SceneState *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneState,0))){
+    SWIG_fail_ptr("SceneStateArray_setitem",1,SWIGTYPE_p_p_njli__SceneState);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SceneState,0))){
+    SWIG_fail_ptr("SceneStateArray_setitem",3,SWIGTYPE_p_njli__SceneState);
+  }
+  
+  SceneStateArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SceneStateBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SceneStateBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SceneStateBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SceneStateBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SceneStateBuilder **)new_SceneStateBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SceneStateBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SceneStateBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateBuilder **arg1 = (njli::SceneStateBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SceneStateBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SceneStateBuilderArray",1,"njli::SceneStateBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateBuilder,0))){
+    SWIG_fail_ptr("delete_SceneStateBuilderArray",1,SWIGTYPE_p_p_njli__SceneStateBuilder);
+  }
+  
+  delete_SceneStateBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneStateBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateBuilder **arg1 = (njli::SceneStateBuilder **) 0 ;
+  int arg2 ;
+  njli::SceneStateBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SceneStateBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneStateBuilderArray_getitem",1,"njli::SceneStateBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneStateBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateBuilder,0))){
+    SWIG_fail_ptr("SceneStateBuilderArray_getitem",1,SWIGTYPE_p_p_njli__SceneStateBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SceneStateBuilder *)SceneStateBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SceneStateBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneStateBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateBuilder **arg1 = (njli::SceneStateBuilder **) 0 ;
+  int arg2 ;
+  njli::SceneStateBuilder *arg3 = (njli::SceneStateBuilder *) 0 ;
+  
+  SWIG_check_num_args("SceneStateBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneStateBuilderArray_setitem",1,"njli::SceneStateBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneStateBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SceneStateBuilderArray_setitem",3,"njli::SceneStateBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateBuilder,0))){
+    SWIG_fail_ptr("SceneStateBuilderArray_setitem",1,SWIGTYPE_p_p_njli__SceneStateBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SceneStateBuilder,0))){
+    SWIG_fail_ptr("SceneStateBuilderArray_setitem",3,SWIGTYPE_p_njli__SceneStateBuilder);
+  }
+  
+  SceneStateBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SceneStateMachineArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SceneStateMachine **result = 0 ;
+  
+  SWIG_check_num_args("new_SceneStateMachineArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SceneStateMachineArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SceneStateMachine **)new_SceneStateMachineArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SceneStateMachine,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SceneStateMachineArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateMachine **arg1 = (njli::SceneStateMachine **) 0 ;
+  
+  SWIG_check_num_args("delete_SceneStateMachineArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SceneStateMachineArray",1,"njli::SceneStateMachine **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateMachine,0))){
+    SWIG_fail_ptr("delete_SceneStateMachineArray",1,SWIGTYPE_p_p_njli__SceneStateMachine);
+  }
+  
+  delete_SceneStateMachineArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneStateMachineArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateMachine **arg1 = (njli::SceneStateMachine **) 0 ;
+  int arg2 ;
+  njli::SceneStateMachine *result = 0 ;
+  
+  SWIG_check_num_args("SceneStateMachineArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneStateMachineArray_getitem",1,"njli::SceneStateMachine **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneStateMachineArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateMachine,0))){
+    SWIG_fail_ptr("SceneStateMachineArray_getitem",1,SWIGTYPE_p_p_njli__SceneStateMachine);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SceneStateMachine *)SceneStateMachineArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SceneStateMachine,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneStateMachineArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateMachine **arg1 = (njli::SceneStateMachine **) 0 ;
+  int arg2 ;
+  njli::SceneStateMachine *arg3 = (njli::SceneStateMachine *) 0 ;
+  
+  SWIG_check_num_args("SceneStateMachineArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneStateMachineArray_setitem",1,"njli::SceneStateMachine **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneStateMachineArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SceneStateMachineArray_setitem",3,"njli::SceneStateMachine *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateMachine,0))){
+    SWIG_fail_ptr("SceneStateMachineArray_setitem",1,SWIGTYPE_p_p_njli__SceneStateMachine);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SceneStateMachine,0))){
+    SWIG_fail_ptr("SceneStateMachineArray_setitem",3,SWIGTYPE_p_njli__SceneStateMachine);
+  }
+  
+  SceneStateMachineArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SceneStateMachineBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SceneStateMachineBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SceneStateMachineBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SceneStateMachineBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SceneStateMachineBuilder **)new_SceneStateMachineBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SceneStateMachineBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SceneStateMachineBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateMachineBuilder **arg1 = (njli::SceneStateMachineBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SceneStateMachineBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SceneStateMachineBuilderArray",1,"njli::SceneStateMachineBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateMachineBuilder,0))){
+    SWIG_fail_ptr("delete_SceneStateMachineBuilderArray",1,SWIGTYPE_p_p_njli__SceneStateMachineBuilder);
+  }
+  
+  delete_SceneStateMachineBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneStateMachineBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateMachineBuilder **arg1 = (njli::SceneStateMachineBuilder **) 0 ;
+  int arg2 ;
+  njli::SceneStateMachineBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SceneStateMachineBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneStateMachineBuilderArray_getitem",1,"njli::SceneStateMachineBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneStateMachineBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateMachineBuilder,0))){
+    SWIG_fail_ptr("SceneStateMachineBuilderArray_getitem",1,SWIGTYPE_p_p_njli__SceneStateMachineBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SceneStateMachineBuilder *)SceneStateMachineBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SceneStateMachineBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SceneStateMachineBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SceneStateMachineBuilder **arg1 = (njli::SceneStateMachineBuilder **) 0 ;
+  int arg2 ;
+  njli::SceneStateMachineBuilder *arg3 = (njli::SceneStateMachineBuilder *) 0 ;
+  
+  SWIG_check_num_args("SceneStateMachineBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SceneStateMachineBuilderArray_setitem",1,"njli::SceneStateMachineBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SceneStateMachineBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SceneStateMachineBuilderArray_setitem",3,"njli::SceneStateMachineBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SceneStateMachineBuilder,0))){
+    SWIG_fail_ptr("SceneStateMachineBuilderArray_setitem",1,SWIGTYPE_p_p_njli__SceneStateMachineBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SceneStateMachineBuilder,0))){
+    SWIG_fail_ptr("SceneStateMachineBuilderArray_setitem",3,SWIGTYPE_p_njli__SceneStateMachineBuilder);
+  }
+  
+  SceneStateMachineBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ShaderProgramArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::ShaderProgram **result = 0 ;
+  
+  SWIG_check_num_args("new_ShaderProgramArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ShaderProgramArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::ShaderProgram **)new_ShaderProgramArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__ShaderProgram,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ShaderProgramArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ShaderProgram **arg1 = (njli::ShaderProgram **) 0 ;
+  
+  SWIG_check_num_args("delete_ShaderProgramArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ShaderProgramArray",1,"njli::ShaderProgram **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ShaderProgram,0))){
+    SWIG_fail_ptr("delete_ShaderProgramArray",1,SWIGTYPE_p_p_njli__ShaderProgram);
+  }
+  
+  delete_ShaderProgramArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ShaderProgramArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ShaderProgram **arg1 = (njli::ShaderProgram **) 0 ;
+  int arg2 ;
+  njli::ShaderProgram *result = 0 ;
+  
+  SWIG_check_num_args("ShaderProgramArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ShaderProgramArray_getitem",1,"njli::ShaderProgram **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ShaderProgramArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ShaderProgram,0))){
+    SWIG_fail_ptr("ShaderProgramArray_getitem",1,SWIGTYPE_p_p_njli__ShaderProgram);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::ShaderProgram *)ShaderProgramArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__ShaderProgram,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ShaderProgramArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ShaderProgram **arg1 = (njli::ShaderProgram **) 0 ;
+  int arg2 ;
+  njli::ShaderProgram *arg3 = (njli::ShaderProgram *) 0 ;
+  
+  SWIG_check_num_args("ShaderProgramArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ShaderProgramArray_setitem",1,"njli::ShaderProgram **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ShaderProgramArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ShaderProgramArray_setitem",3,"njli::ShaderProgram *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ShaderProgram,0))){
+    SWIG_fail_ptr("ShaderProgramArray_setitem",1,SWIGTYPE_p_p_njli__ShaderProgram);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__ShaderProgram,0))){
+    SWIG_fail_ptr("ShaderProgramArray_setitem",3,SWIGTYPE_p_njli__ShaderProgram);
+  }
+  
+  ShaderProgramArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_ShaderProgramBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::ShaderProgramBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_ShaderProgramBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_ShaderProgramBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::ShaderProgramBuilder **)new_ShaderProgramBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__ShaderProgramBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_ShaderProgramBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ShaderProgramBuilder **arg1 = (njli::ShaderProgramBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_ShaderProgramBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_ShaderProgramBuilderArray",1,"njli::ShaderProgramBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ShaderProgramBuilder,0))){
+    SWIG_fail_ptr("delete_ShaderProgramBuilderArray",1,SWIGTYPE_p_p_njli__ShaderProgramBuilder);
+  }
+  
+  delete_ShaderProgramBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ShaderProgramBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ShaderProgramBuilder **arg1 = (njli::ShaderProgramBuilder **) 0 ;
+  int arg2 ;
+  njli::ShaderProgramBuilder *result = 0 ;
+  
+  SWIG_check_num_args("ShaderProgramBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ShaderProgramBuilderArray_getitem",1,"njli::ShaderProgramBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ShaderProgramBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ShaderProgramBuilder,0))){
+    SWIG_fail_ptr("ShaderProgramBuilderArray_getitem",1,SWIGTYPE_p_p_njli__ShaderProgramBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::ShaderProgramBuilder *)ShaderProgramBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__ShaderProgramBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_ShaderProgramBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::ShaderProgramBuilder **arg1 = (njli::ShaderProgramBuilder **) 0 ;
+  int arg2 ;
+  njli::ShaderProgramBuilder *arg3 = (njli::ShaderProgramBuilder *) 0 ;
+  
+  SWIG_check_num_args("ShaderProgramBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("ShaderProgramBuilderArray_setitem",1,"njli::ShaderProgramBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("ShaderProgramBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("ShaderProgramBuilderArray_setitem",3,"njli::ShaderProgramBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__ShaderProgramBuilder,0))){
+    SWIG_fail_ptr("ShaderProgramBuilderArray_setitem",1,SWIGTYPE_p_p_njli__ShaderProgramBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__ShaderProgramBuilder,0))){
+    SWIG_fail_ptr("ShaderProgramBuilderArray_setitem",3,SWIGTYPE_p_njli__ShaderProgramBuilder);
+  }
+  
+  ShaderProgramBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SkinnerArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Skinner **result = 0 ;
+  
+  SWIG_check_num_args("new_SkinnerArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SkinnerArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Skinner **)new_SkinnerArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Skinner,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SkinnerArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Skinner **arg1 = (njli::Skinner **) 0 ;
+  
+  SWIG_check_num_args("delete_SkinnerArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SkinnerArray",1,"njli::Skinner **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Skinner,0))){
+    SWIG_fail_ptr("delete_SkinnerArray",1,SWIGTYPE_p_p_njli__Skinner);
+  }
+  
+  delete_SkinnerArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SkinnerArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Skinner **arg1 = (njli::Skinner **) 0 ;
+  int arg2 ;
+  njli::Skinner *result = 0 ;
+  
+  SWIG_check_num_args("SkinnerArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SkinnerArray_getitem",1,"njli::Skinner **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SkinnerArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Skinner,0))){
+    SWIG_fail_ptr("SkinnerArray_getitem",1,SWIGTYPE_p_p_njli__Skinner);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Skinner *)SkinnerArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Skinner,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SkinnerArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Skinner **arg1 = (njli::Skinner **) 0 ;
+  int arg2 ;
+  njli::Skinner *arg3 = (njli::Skinner *) 0 ;
+  
+  SWIG_check_num_args("SkinnerArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SkinnerArray_setitem",1,"njli::Skinner **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SkinnerArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SkinnerArray_setitem",3,"njli::Skinner *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Skinner,0))){
+    SWIG_fail_ptr("SkinnerArray_setitem",1,SWIGTYPE_p_p_njli__Skinner);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Skinner,0))){
+    SWIG_fail_ptr("SkinnerArray_setitem",3,SWIGTYPE_p_njli__Skinner);
+  }
+  
+  SkinnerArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SkinnerBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SkinnerBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SkinnerBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SkinnerBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SkinnerBuilder **)new_SkinnerBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SkinnerBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SkinnerBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SkinnerBuilder **arg1 = (njli::SkinnerBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SkinnerBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SkinnerBuilderArray",1,"njli::SkinnerBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SkinnerBuilder,0))){
+    SWIG_fail_ptr("delete_SkinnerBuilderArray",1,SWIGTYPE_p_p_njli__SkinnerBuilder);
+  }
+  
+  delete_SkinnerBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SkinnerBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SkinnerBuilder **arg1 = (njli::SkinnerBuilder **) 0 ;
+  int arg2 ;
+  njli::SkinnerBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SkinnerBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SkinnerBuilderArray_getitem",1,"njli::SkinnerBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SkinnerBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SkinnerBuilder,0))){
+    SWIG_fail_ptr("SkinnerBuilderArray_getitem",1,SWIGTYPE_p_p_njli__SkinnerBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SkinnerBuilder *)SkinnerBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SkinnerBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SkinnerBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SkinnerBuilder **arg1 = (njli::SkinnerBuilder **) 0 ;
+  int arg2 ;
+  njli::SkinnerBuilder *arg3 = (njli::SkinnerBuilder *) 0 ;
+  
+  SWIG_check_num_args("SkinnerBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SkinnerBuilderArray_setitem",1,"njli::SkinnerBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SkinnerBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SkinnerBuilderArray_setitem",3,"njli::SkinnerBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SkinnerBuilder,0))){
+    SWIG_fail_ptr("SkinnerBuilderArray_setitem",1,SWIGTYPE_p_p_njli__SkinnerBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SkinnerBuilder,0))){
+    SWIG_fail_ptr("SkinnerBuilderArray_setitem",3,SWIGTYPE_p_njli__SkinnerBuilder);
+  }
+  
+  SkinnerBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SoundBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SoundBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SoundBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SoundBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SoundBuilder **)new_SoundBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SoundBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SoundBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SoundBuilder **arg1 = (njli::SoundBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SoundBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SoundBuilderArray",1,"njli::SoundBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SoundBuilder,0))){
+    SWIG_fail_ptr("delete_SoundBuilderArray",1,SWIGTYPE_p_p_njli__SoundBuilder);
+  }
+  
+  delete_SoundBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SoundBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SoundBuilder **arg1 = (njli::SoundBuilder **) 0 ;
+  int arg2 ;
+  njli::SoundBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SoundBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SoundBuilderArray_getitem",1,"njli::SoundBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SoundBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SoundBuilder,0))){
+    SWIG_fail_ptr("SoundBuilderArray_getitem",1,SWIGTYPE_p_p_njli__SoundBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SoundBuilder *)SoundBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SoundBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SoundBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SoundBuilder **arg1 = (njli::SoundBuilder **) 0 ;
+  int arg2 ;
+  njli::SoundBuilder *arg3 = (njli::SoundBuilder *) 0 ;
+  
+  SWIG_check_num_args("SoundBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SoundBuilderArray_setitem",1,"njli::SoundBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SoundBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SoundBuilderArray_setitem",3,"njli::SoundBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SoundBuilder,0))){
+    SWIG_fail_ptr("SoundBuilderArray_setitem",1,SWIGTYPE_p_p_njli__SoundBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SoundBuilder,0))){
+    SWIG_fail_ptr("SoundBuilderArray_setitem",3,SWIGTYPE_p_njli__SoundBuilder);
+  }
+  
+  SoundBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Sprite2DArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Sprite2D **result = 0 ;
+  
+  SWIG_check_num_args("new_Sprite2DArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_Sprite2DArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Sprite2D **)new_Sprite2DArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Sprite2D,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_Sprite2DArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sprite2D **arg1 = (njli::Sprite2D **) 0 ;
+  
+  SWIG_check_num_args("delete_Sprite2DArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_Sprite2DArray",1,"njli::Sprite2D **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sprite2D,0))){
+    SWIG_fail_ptr("delete_Sprite2DArray",1,SWIGTYPE_p_p_njli__Sprite2D);
+  }
+  
+  delete_Sprite2DArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Sprite2DArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sprite2D **arg1 = (njli::Sprite2D **) 0 ;
+  int arg2 ;
+  njli::Sprite2D *result = 0 ;
+  
+  SWIG_check_num_args("Sprite2DArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sprite2DArray_getitem",1,"njli::Sprite2D **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Sprite2DArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sprite2D,0))){
+    SWIG_fail_ptr("Sprite2DArray_getitem",1,SWIGTYPE_p_p_njli__Sprite2D);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Sprite2D *)Sprite2DArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Sprite2D,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Sprite2DArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sprite2D **arg1 = (njli::Sprite2D **) 0 ;
+  int arg2 ;
+  njli::Sprite2D *arg3 = (njli::Sprite2D *) 0 ;
+  
+  SWIG_check_num_args("Sprite2DArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sprite2DArray_setitem",1,"njli::Sprite2D **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Sprite2DArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Sprite2DArray_setitem",3,"njli::Sprite2D *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sprite2D,0))){
+    SWIG_fail_ptr("Sprite2DArray_setitem",1,SWIGTYPE_p_p_njli__Sprite2D);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Sprite2D,0))){
+    SWIG_fail_ptr("Sprite2DArray_setitem",3,SWIGTYPE_p_njli__Sprite2D);
+  }
+  
+  Sprite2DArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_Sprite2DBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Sprite2DBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_Sprite2DBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_Sprite2DBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Sprite2DBuilder **)new_Sprite2DBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Sprite2DBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_Sprite2DBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sprite2DBuilder **arg1 = (njli::Sprite2DBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_Sprite2DBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_Sprite2DBuilderArray",1,"njli::Sprite2DBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sprite2DBuilder,0))){
+    SWIG_fail_ptr("delete_Sprite2DBuilderArray",1,SWIGTYPE_p_p_njli__Sprite2DBuilder);
+  }
+  
+  delete_Sprite2DBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Sprite2DBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sprite2DBuilder **arg1 = (njli::Sprite2DBuilder **) 0 ;
+  int arg2 ;
+  njli::Sprite2DBuilder *result = 0 ;
+  
+  SWIG_check_num_args("Sprite2DBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sprite2DBuilderArray_getitem",1,"njli::Sprite2DBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Sprite2DBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sprite2DBuilder,0))){
+    SWIG_fail_ptr("Sprite2DBuilderArray_getitem",1,SWIGTYPE_p_p_njli__Sprite2DBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Sprite2DBuilder *)Sprite2DBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Sprite2DBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_Sprite2DBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Sprite2DBuilder **arg1 = (njli::Sprite2DBuilder **) 0 ;
+  int arg2 ;
+  njli::Sprite2DBuilder *arg3 = (njli::Sprite2DBuilder *) 0 ;
+  
+  SWIG_check_num_args("Sprite2DBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("Sprite2DBuilderArray_setitem",1,"njli::Sprite2DBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("Sprite2DBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("Sprite2DBuilderArray_setitem",3,"njli::Sprite2DBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Sprite2DBuilder,0))){
+    SWIG_fail_ptr("Sprite2DBuilderArray_setitem",1,SWIGTYPE_p_p_njli__Sprite2DBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Sprite2DBuilder,0))){
+    SWIG_fail_ptr("Sprite2DBuilderArray_setitem",3,SWIGTYPE_p_njli__Sprite2DBuilder);
+  }
+  
+  Sprite2DBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SpriteFrameAtlasArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SpriteFrameAtlas **result = 0 ;
+  
+  SWIG_check_num_args("new_SpriteFrameAtlasArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SpriteFrameAtlasArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SpriteFrameAtlas **)new_SpriteFrameAtlasArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SpriteFrameAtlas,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SpriteFrameAtlasArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SpriteFrameAtlas **arg1 = (njli::SpriteFrameAtlas **) 0 ;
+  
+  SWIG_check_num_args("delete_SpriteFrameAtlasArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SpriteFrameAtlasArray",1,"njli::SpriteFrameAtlas **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SpriteFrameAtlas,0))){
+    SWIG_fail_ptr("delete_SpriteFrameAtlasArray",1,SWIGTYPE_p_p_njli__SpriteFrameAtlas);
+  }
+  
+  delete_SpriteFrameAtlasArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SpriteFrameAtlasArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SpriteFrameAtlas **arg1 = (njli::SpriteFrameAtlas **) 0 ;
+  int arg2 ;
+  njli::SpriteFrameAtlas *result = 0 ;
+  
+  SWIG_check_num_args("SpriteFrameAtlasArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SpriteFrameAtlasArray_getitem",1,"njli::SpriteFrameAtlas **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SpriteFrameAtlasArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SpriteFrameAtlas,0))){
+    SWIG_fail_ptr("SpriteFrameAtlasArray_getitem",1,SWIGTYPE_p_p_njli__SpriteFrameAtlas);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SpriteFrameAtlas *)SpriteFrameAtlasArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SpriteFrameAtlas,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SpriteFrameAtlasArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SpriteFrameAtlas **arg1 = (njli::SpriteFrameAtlas **) 0 ;
+  int arg2 ;
+  njli::SpriteFrameAtlas *arg3 = (njli::SpriteFrameAtlas *) 0 ;
+  
+  SWIG_check_num_args("SpriteFrameAtlasArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SpriteFrameAtlasArray_setitem",1,"njli::SpriteFrameAtlas **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SpriteFrameAtlasArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SpriteFrameAtlasArray_setitem",3,"njli::SpriteFrameAtlas *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SpriteFrameAtlas,0))){
+    SWIG_fail_ptr("SpriteFrameAtlasArray_setitem",1,SWIGTYPE_p_p_njli__SpriteFrameAtlas);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SpriteFrameAtlas,0))){
+    SWIG_fail_ptr("SpriteFrameAtlasArray_setitem",3,SWIGTYPE_p_njli__SpriteFrameAtlas);
+  }
+  
+  SpriteFrameAtlasArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SpriteFrameAtlasBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SpriteFrameAtlasBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SpriteFrameAtlasBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SpriteFrameAtlasBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SpriteFrameAtlasBuilder **)new_SpriteFrameAtlasBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SpriteFrameAtlasBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SpriteFrameAtlasBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SpriteFrameAtlasBuilder **arg1 = (njli::SpriteFrameAtlasBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SpriteFrameAtlasBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SpriteFrameAtlasBuilderArray",1,"njli::SpriteFrameAtlasBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SpriteFrameAtlasBuilder,0))){
+    SWIG_fail_ptr("delete_SpriteFrameAtlasBuilderArray",1,SWIGTYPE_p_p_njli__SpriteFrameAtlasBuilder);
+  }
+  
+  delete_SpriteFrameAtlasBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SpriteFrameAtlasBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SpriteFrameAtlasBuilder **arg1 = (njli::SpriteFrameAtlasBuilder **) 0 ;
+  int arg2 ;
+  njli::SpriteFrameAtlasBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SpriteFrameAtlasBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SpriteFrameAtlasBuilderArray_getitem",1,"njli::SpriteFrameAtlasBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SpriteFrameAtlasBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SpriteFrameAtlasBuilder,0))){
+    SWIG_fail_ptr("SpriteFrameAtlasBuilderArray_getitem",1,SWIGTYPE_p_p_njli__SpriteFrameAtlasBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SpriteFrameAtlasBuilder *)SpriteFrameAtlasBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SpriteFrameAtlasBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SpriteFrameAtlasBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SpriteFrameAtlasBuilder **arg1 = (njli::SpriteFrameAtlasBuilder **) 0 ;
+  int arg2 ;
+  njli::SpriteFrameAtlasBuilder *arg3 = (njli::SpriteFrameAtlasBuilder *) 0 ;
+  
+  SWIG_check_num_args("SpriteFrameAtlasBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SpriteFrameAtlasBuilderArray_setitem",1,"njli::SpriteFrameAtlasBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SpriteFrameAtlasBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SpriteFrameAtlasBuilderArray_setitem",3,"njli::SpriteFrameAtlasBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SpriteFrameAtlasBuilder,0))){
+    SWIG_fail_ptr("SpriteFrameAtlasBuilderArray_setitem",1,SWIGTYPE_p_p_njli__SpriteFrameAtlasBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SpriteFrameAtlasBuilder,0))){
+    SWIG_fail_ptr("SpriteFrameAtlasBuilderArray_setitem",3,SWIGTYPE_p_njli__SpriteFrameAtlasBuilder);
+  }
+  
+  SpriteFrameAtlasBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorAlignment(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorAlignment **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorAlignment",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorAlignment",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorAlignment **)new_SteeringBehaviorAlignment(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorAlignment,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorAlignment(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorAlignment **arg1 = (njli::SteeringBehaviorAlignment **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorAlignment",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorAlignment",1,"njli::SteeringBehaviorAlignment **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignment,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorAlignment",1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignment);
+  }
+  
+  delete_SteeringBehaviorAlignment(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorAlignment_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorAlignment **arg1 = (njli::SteeringBehaviorAlignment **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorAlignment *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorAlignment_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorAlignment_getitem",1,"njli::SteeringBehaviorAlignment **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorAlignment_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignment,0))){
+    SWIG_fail_ptr("SteeringBehaviorAlignment_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignment);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorAlignment *)SteeringBehaviorAlignment_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorAlignment,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorAlignment_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorAlignment **arg1 = (njli::SteeringBehaviorAlignment **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorAlignment *arg3 = (njli::SteeringBehaviorAlignment *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorAlignment_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorAlignment_setitem",1,"njli::SteeringBehaviorAlignment **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorAlignment_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorAlignment_setitem",3,"njli::SteeringBehaviorAlignment *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignment,0))){
+    SWIG_fail_ptr("SteeringBehaviorAlignment_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignment);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorAlignment,0))){
+    SWIG_fail_ptr("SteeringBehaviorAlignment_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorAlignment);
+  }
+  
+  SteeringBehaviorAlignment_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorAlignmentBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorAlignmentBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorAlignmentBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorAlignmentBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorAlignmentBuilder **)new_SteeringBehaviorAlignmentBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorAlignmentBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorAlignmentBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorAlignmentBuilder **arg1 = (njli::SteeringBehaviorAlignmentBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorAlignmentBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorAlignmentBuilder",1,"njli::SteeringBehaviorAlignmentBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignmentBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorAlignmentBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignmentBuilder);
+  }
+  
+  delete_SteeringBehaviorAlignmentBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorAlignmentBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorAlignmentBuilder **arg1 = (njli::SteeringBehaviorAlignmentBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorAlignmentBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorAlignmentBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorAlignmentBuilder_getitem",1,"njli::SteeringBehaviorAlignmentBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorAlignmentBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignmentBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorAlignmentBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignmentBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorAlignmentBuilder *)SteeringBehaviorAlignmentBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorAlignmentBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorAlignmentBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorAlignmentBuilder **arg1 = (njli::SteeringBehaviorAlignmentBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorAlignmentBuilder *arg3 = (njli::SteeringBehaviorAlignmentBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorAlignmentBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorAlignmentBuilder_setitem",1,"njli::SteeringBehaviorAlignmentBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorAlignmentBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorAlignmentBuilder_setitem",3,"njli::SteeringBehaviorAlignmentBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignmentBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorAlignmentBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorAlignmentBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorAlignmentBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorAlignmentBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorAlignmentBuilder);
+  }
+  
+  SteeringBehaviorAlignmentBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorArrive(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorArrive **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorArrive",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorArrive",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorArrive **)new_SteeringBehaviorArrive(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorArrive,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorArrive(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorArrive **arg1 = (njli::SteeringBehaviorArrive **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorArrive",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorArrive",1,"njli::SteeringBehaviorArrive **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorArrive,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorArrive",1,SWIGTYPE_p_p_njli__SteeringBehaviorArrive);
+  }
+  
+  delete_SteeringBehaviorArrive(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorArrive_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorArrive **arg1 = (njli::SteeringBehaviorArrive **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorArrive *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorArrive_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorArrive_getitem",1,"njli::SteeringBehaviorArrive **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorArrive_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorArrive,0))){
+    SWIG_fail_ptr("SteeringBehaviorArrive_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorArrive);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorArrive *)SteeringBehaviorArrive_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorArrive,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorArrive_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorArrive **arg1 = (njli::SteeringBehaviorArrive **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorArrive *arg3 = (njli::SteeringBehaviorArrive *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorArrive_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorArrive_setitem",1,"njli::SteeringBehaviorArrive **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorArrive_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorArrive_setitem",3,"njli::SteeringBehaviorArrive *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorArrive,0))){
+    SWIG_fail_ptr("SteeringBehaviorArrive_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorArrive);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorArrive,0))){
+    SWIG_fail_ptr("SteeringBehaviorArrive_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorArrive);
+  }
+  
+  SteeringBehaviorArrive_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorArriveBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorArriveBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorArriveBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorArriveBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorArriveBuilder **)new_SteeringBehaviorArriveBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorArriveBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorArriveBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorArriveBuilder **arg1 = (njli::SteeringBehaviorArriveBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorArriveBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorArriveBuilder",1,"njli::SteeringBehaviorArriveBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorArriveBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorArriveBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorArriveBuilder);
+  }
+  
+  delete_SteeringBehaviorArriveBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorArriveBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorArriveBuilder **arg1 = (njli::SteeringBehaviorArriveBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorArriveBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorArriveBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorArriveBuilder_getitem",1,"njli::SteeringBehaviorArriveBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorArriveBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorArriveBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorArriveBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorArriveBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorArriveBuilder *)SteeringBehaviorArriveBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorArriveBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorArriveBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorArriveBuilder **arg1 = (njli::SteeringBehaviorArriveBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorArriveBuilder *arg3 = (njli::SteeringBehaviorArriveBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorArriveBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorArriveBuilder_setitem",1,"njli::SteeringBehaviorArriveBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorArriveBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorArriveBuilder_setitem",3,"njli::SteeringBehaviorArriveBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorArriveBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorArriveBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorArriveBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorArriveBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorArriveBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorArriveBuilder);
+  }
+  
+  SteeringBehaviorArriveBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorCohesion(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorCohesion **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorCohesion",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorCohesion",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorCohesion **)new_SteeringBehaviorCohesion(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorCohesion,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorCohesion(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorCohesion **arg1 = (njli::SteeringBehaviorCohesion **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorCohesion",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorCohesion",1,"njli::SteeringBehaviorCohesion **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesion,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorCohesion",1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesion);
+  }
+  
+  delete_SteeringBehaviorCohesion(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorCohesion_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorCohesion **arg1 = (njli::SteeringBehaviorCohesion **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorCohesion *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorCohesion_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorCohesion_getitem",1,"njli::SteeringBehaviorCohesion **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorCohesion_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesion,0))){
+    SWIG_fail_ptr("SteeringBehaviorCohesion_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesion);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorCohesion *)SteeringBehaviorCohesion_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorCohesion,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorCohesion_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorCohesion **arg1 = (njli::SteeringBehaviorCohesion **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorCohesion *arg3 = (njli::SteeringBehaviorCohesion *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorCohesion_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorCohesion_setitem",1,"njli::SteeringBehaviorCohesion **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorCohesion_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorCohesion_setitem",3,"njli::SteeringBehaviorCohesion *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesion,0))){
+    SWIG_fail_ptr("SteeringBehaviorCohesion_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesion);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorCohesion,0))){
+    SWIG_fail_ptr("SteeringBehaviorCohesion_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorCohesion);
+  }
+  
+  SteeringBehaviorCohesion_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorCohesionBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorCohesionBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorCohesionBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorCohesionBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorCohesionBuilder **)new_SteeringBehaviorCohesionBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorCohesionBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorCohesionBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorCohesionBuilder **arg1 = (njli::SteeringBehaviorCohesionBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorCohesionBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorCohesionBuilder",1,"njli::SteeringBehaviorCohesionBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesionBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorCohesionBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesionBuilder);
+  }
+  
+  delete_SteeringBehaviorCohesionBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorCohesionBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorCohesionBuilder **arg1 = (njli::SteeringBehaviorCohesionBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorCohesionBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorCohesionBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorCohesionBuilder_getitem",1,"njli::SteeringBehaviorCohesionBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorCohesionBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesionBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorCohesionBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesionBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorCohesionBuilder *)SteeringBehaviorCohesionBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorCohesionBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorCohesionBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorCohesionBuilder **arg1 = (njli::SteeringBehaviorCohesionBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorCohesionBuilder *arg3 = (njli::SteeringBehaviorCohesionBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorCohesionBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorCohesionBuilder_setitem",1,"njli::SteeringBehaviorCohesionBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorCohesionBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorCohesionBuilder_setitem",3,"njli::SteeringBehaviorCohesionBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesionBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorCohesionBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorCohesionBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorCohesionBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorCohesionBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorCohesionBuilder);
+  }
+  
+  SteeringBehaviorCohesionBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorEvade(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorEvade **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorEvade",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorEvade",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorEvade **)new_SteeringBehaviorEvade(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorEvade,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorEvade(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorEvade **arg1 = (njli::SteeringBehaviorEvade **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorEvade",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorEvade",1,"njli::SteeringBehaviorEvade **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorEvade,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorEvade",1,SWIGTYPE_p_p_njli__SteeringBehaviorEvade);
+  }
+  
+  delete_SteeringBehaviorEvade(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorEvade_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorEvade **arg1 = (njli::SteeringBehaviorEvade **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorEvade *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorEvade_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorEvade_getitem",1,"njli::SteeringBehaviorEvade **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorEvade_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorEvade,0))){
+    SWIG_fail_ptr("SteeringBehaviorEvade_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorEvade);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorEvade *)SteeringBehaviorEvade_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorEvade,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorEvade_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorEvade **arg1 = (njli::SteeringBehaviorEvade **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorEvade *arg3 = (njli::SteeringBehaviorEvade *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorEvade_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorEvade_setitem",1,"njli::SteeringBehaviorEvade **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorEvade_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorEvade_setitem",3,"njli::SteeringBehaviorEvade *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorEvade,0))){
+    SWIG_fail_ptr("SteeringBehaviorEvade_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorEvade);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorEvade,0))){
+    SWIG_fail_ptr("SteeringBehaviorEvade_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorEvade);
+  }
+  
+  SteeringBehaviorEvade_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorEvadeBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorEvadeBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorEvadeBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorEvadeBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorEvadeBuilder **)new_SteeringBehaviorEvadeBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorEvadeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorEvadeBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorEvadeBuilder **arg1 = (njli::SteeringBehaviorEvadeBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorEvadeBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorEvadeBuilder",1,"njli::SteeringBehaviorEvadeBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorEvadeBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorEvadeBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorEvadeBuilder);
+  }
+  
+  delete_SteeringBehaviorEvadeBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorEvadeBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorEvadeBuilder **arg1 = (njli::SteeringBehaviorEvadeBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorEvadeBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorEvadeBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorEvadeBuilder_getitem",1,"njli::SteeringBehaviorEvadeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorEvadeBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorEvadeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorEvadeBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorEvadeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorEvadeBuilder *)SteeringBehaviorEvadeBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorEvadeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorEvadeBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorEvadeBuilder **arg1 = (njli::SteeringBehaviorEvadeBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorEvadeBuilder *arg3 = (njli::SteeringBehaviorEvadeBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorEvadeBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorEvadeBuilder_setitem",1,"njli::SteeringBehaviorEvadeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorEvadeBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorEvadeBuilder_setitem",3,"njli::SteeringBehaviorEvadeBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorEvadeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorEvadeBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorEvadeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorEvadeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorEvadeBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorEvadeBuilder);
+  }
+  
+  SteeringBehaviorEvadeBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorFlee(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorFlee **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorFlee",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorFlee",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorFlee **)new_SteeringBehaviorFlee(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorFlee,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorFlee(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFlee **arg1 = (njli::SteeringBehaviorFlee **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorFlee",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorFlee",1,"njli::SteeringBehaviorFlee **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFlee,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorFlee",1,SWIGTYPE_p_p_njli__SteeringBehaviorFlee);
+  }
+  
+  delete_SteeringBehaviorFlee(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorFlee_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFlee **arg1 = (njli::SteeringBehaviorFlee **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorFlee *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorFlee_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorFlee_getitem",1,"njli::SteeringBehaviorFlee **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorFlee_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFlee,0))){
+    SWIG_fail_ptr("SteeringBehaviorFlee_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorFlee);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorFlee *)SteeringBehaviorFlee_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorFlee,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorFlee_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFlee **arg1 = (njli::SteeringBehaviorFlee **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorFlee *arg3 = (njli::SteeringBehaviorFlee *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorFlee_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorFlee_setitem",1,"njli::SteeringBehaviorFlee **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorFlee_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorFlee_setitem",3,"njli::SteeringBehaviorFlee *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFlee,0))){
+    SWIG_fail_ptr("SteeringBehaviorFlee_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorFlee);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorFlee,0))){
+    SWIG_fail_ptr("SteeringBehaviorFlee_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorFlee);
+  }
+  
+  SteeringBehaviorFlee_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorFleeBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorFleeBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorFleeBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorFleeBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorFleeBuilder **)new_SteeringBehaviorFleeBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorFleeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorFleeBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFleeBuilder **arg1 = (njli::SteeringBehaviorFleeBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorFleeBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorFleeBuilder",1,"njli::SteeringBehaviorFleeBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFleeBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorFleeBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorFleeBuilder);
+  }
+  
+  delete_SteeringBehaviorFleeBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorFleeBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFleeBuilder **arg1 = (njli::SteeringBehaviorFleeBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorFleeBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorFleeBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorFleeBuilder_getitem",1,"njli::SteeringBehaviorFleeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorFleeBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFleeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorFleeBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorFleeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorFleeBuilder *)SteeringBehaviorFleeBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorFleeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorFleeBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFleeBuilder **arg1 = (njli::SteeringBehaviorFleeBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorFleeBuilder *arg3 = (njli::SteeringBehaviorFleeBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorFleeBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorFleeBuilder_setitem",1,"njli::SteeringBehaviorFleeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorFleeBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorFleeBuilder_setitem",3,"njli::SteeringBehaviorFleeBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFleeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorFleeBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorFleeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorFleeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorFleeBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorFleeBuilder);
+  }
+  
+  SteeringBehaviorFleeBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorFollowPath(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorFollowPath **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorFollowPath",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorFollowPath",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorFollowPath **)new_SteeringBehaviorFollowPath(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPath,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorFollowPath(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFollowPath **arg1 = (njli::SteeringBehaviorFollowPath **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorFollowPath",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorFollowPath",1,"njli::SteeringBehaviorFollowPath **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPath,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorFollowPath",1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPath);
+  }
+  
+  delete_SteeringBehaviorFollowPath(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorFollowPath_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFollowPath **arg1 = (njli::SteeringBehaviorFollowPath **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorFollowPath *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorFollowPath_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorFollowPath_getitem",1,"njli::SteeringBehaviorFollowPath **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorFollowPath_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPath,0))){
+    SWIG_fail_ptr("SteeringBehaviorFollowPath_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPath);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorFollowPath *)SteeringBehaviorFollowPath_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorFollowPath,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorFollowPath_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFollowPath **arg1 = (njli::SteeringBehaviorFollowPath **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorFollowPath *arg3 = (njli::SteeringBehaviorFollowPath *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorFollowPath_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorFollowPath_setitem",1,"njli::SteeringBehaviorFollowPath **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorFollowPath_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorFollowPath_setitem",3,"njli::SteeringBehaviorFollowPath *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPath,0))){
+    SWIG_fail_ptr("SteeringBehaviorFollowPath_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPath);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorFollowPath,0))){
+    SWIG_fail_ptr("SteeringBehaviorFollowPath_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorFollowPath);
+  }
+  
+  SteeringBehaviorFollowPath_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorFollowPathBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorFollowPathBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorFollowPathBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorFollowPathBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorFollowPathBuilder **)new_SteeringBehaviorFollowPathBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPathBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorFollowPathBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFollowPathBuilder **arg1 = (njli::SteeringBehaviorFollowPathBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorFollowPathBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorFollowPathBuilder",1,"njli::SteeringBehaviorFollowPathBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPathBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorFollowPathBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPathBuilder);
+  }
+  
+  delete_SteeringBehaviorFollowPathBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorFollowPathBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFollowPathBuilder **arg1 = (njli::SteeringBehaviorFollowPathBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorFollowPathBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorFollowPathBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorFollowPathBuilder_getitem",1,"njli::SteeringBehaviorFollowPathBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorFollowPathBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPathBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorFollowPathBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPathBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorFollowPathBuilder *)SteeringBehaviorFollowPathBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorFollowPathBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorFollowPathBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorFollowPathBuilder **arg1 = (njli::SteeringBehaviorFollowPathBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorFollowPathBuilder *arg3 = (njli::SteeringBehaviorFollowPathBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorFollowPathBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorFollowPathBuilder_setitem",1,"njli::SteeringBehaviorFollowPathBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorFollowPathBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorFollowPathBuilder_setitem",3,"njli::SteeringBehaviorFollowPathBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPathBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorFollowPathBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorFollowPathBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorFollowPathBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorFollowPathBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorFollowPathBuilder);
+  }
+  
+  SteeringBehaviorFollowPathBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorHide(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorHide **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorHide",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorHide",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorHide **)new_SteeringBehaviorHide(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorHide,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorHide(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorHide **arg1 = (njli::SteeringBehaviorHide **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorHide",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorHide",1,"njli::SteeringBehaviorHide **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorHide,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorHide",1,SWIGTYPE_p_p_njli__SteeringBehaviorHide);
+  }
+  
+  delete_SteeringBehaviorHide(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorHide_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorHide **arg1 = (njli::SteeringBehaviorHide **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorHide *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorHide_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorHide_getitem",1,"njli::SteeringBehaviorHide **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorHide_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorHide,0))){
+    SWIG_fail_ptr("SteeringBehaviorHide_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorHide);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorHide *)SteeringBehaviorHide_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorHide,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorHide_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorHide **arg1 = (njli::SteeringBehaviorHide **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorHide *arg3 = (njli::SteeringBehaviorHide *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorHide_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorHide_setitem",1,"njli::SteeringBehaviorHide **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorHide_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorHide_setitem",3,"njli::SteeringBehaviorHide *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorHide,0))){
+    SWIG_fail_ptr("SteeringBehaviorHide_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorHide);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorHide,0))){
+    SWIG_fail_ptr("SteeringBehaviorHide_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorHide);
+  }
+  
+  SteeringBehaviorHide_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorHideBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorHideBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorHideBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorHideBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorHideBuilder **)new_SteeringBehaviorHideBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorHideBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorHideBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorHideBuilder **arg1 = (njli::SteeringBehaviorHideBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorHideBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorHideBuilder",1,"njli::SteeringBehaviorHideBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorHideBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorHideBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorHideBuilder);
+  }
+  
+  delete_SteeringBehaviorHideBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorHideBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorHideBuilder **arg1 = (njli::SteeringBehaviorHideBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorHideBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorHideBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorHideBuilder_getitem",1,"njli::SteeringBehaviorHideBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorHideBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorHideBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorHideBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorHideBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorHideBuilder *)SteeringBehaviorHideBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorHideBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorHideBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorHideBuilder **arg1 = (njli::SteeringBehaviorHideBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorHideBuilder *arg3 = (njli::SteeringBehaviorHideBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorHideBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorHideBuilder_setitem",1,"njli::SteeringBehaviorHideBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorHideBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorHideBuilder_setitem",3,"njli::SteeringBehaviorHideBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorHideBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorHideBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorHideBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorHideBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorHideBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorHideBuilder);
+  }
+  
+  SteeringBehaviorHideBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorInterpose(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorInterpose **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorInterpose",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorInterpose",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorInterpose **)new_SteeringBehaviorInterpose(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorInterpose,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorInterpose(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorInterpose **arg1 = (njli::SteeringBehaviorInterpose **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorInterpose",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorInterpose",1,"njli::SteeringBehaviorInterpose **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorInterpose,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorInterpose",1,SWIGTYPE_p_p_njli__SteeringBehaviorInterpose);
+  }
+  
+  delete_SteeringBehaviorInterpose(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorInterpose_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorInterpose **arg1 = (njli::SteeringBehaviorInterpose **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorInterpose *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorInterpose_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorInterpose_getitem",1,"njli::SteeringBehaviorInterpose **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorInterpose_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorInterpose,0))){
+    SWIG_fail_ptr("SteeringBehaviorInterpose_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorInterpose);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorInterpose *)SteeringBehaviorInterpose_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorInterpose,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorInterpose_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorInterpose **arg1 = (njli::SteeringBehaviorInterpose **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorInterpose *arg3 = (njli::SteeringBehaviorInterpose *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorInterpose_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorInterpose_setitem",1,"njli::SteeringBehaviorInterpose **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorInterpose_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorInterpose_setitem",3,"njli::SteeringBehaviorInterpose *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorInterpose,0))){
+    SWIG_fail_ptr("SteeringBehaviorInterpose_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorInterpose);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorInterpose,0))){
+    SWIG_fail_ptr("SteeringBehaviorInterpose_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorInterpose);
+  }
+  
+  SteeringBehaviorInterpose_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorInterposeBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorInterposeBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorInterposeBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorInterposeBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorInterposeBuilder **)new_SteeringBehaviorInterposeBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorInterposeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorInterposeBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorInterposeBuilder **arg1 = (njli::SteeringBehaviorInterposeBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorInterposeBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorInterposeBuilder",1,"njli::SteeringBehaviorInterposeBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorInterposeBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorInterposeBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorInterposeBuilder);
+  }
+  
+  delete_SteeringBehaviorInterposeBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorInterposeBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorInterposeBuilder **arg1 = (njli::SteeringBehaviorInterposeBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorInterposeBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorInterposeBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorInterposeBuilder_getitem",1,"njli::SteeringBehaviorInterposeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorInterposeBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorInterposeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorInterposeBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorInterposeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorInterposeBuilder *)SteeringBehaviorInterposeBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorInterposeBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorInterposeBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorInterposeBuilder **arg1 = (njli::SteeringBehaviorInterposeBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorInterposeBuilder *arg3 = (njli::SteeringBehaviorInterposeBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorInterposeBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorInterposeBuilder_setitem",1,"njli::SteeringBehaviorInterposeBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorInterposeBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorInterposeBuilder_setitem",3,"njli::SteeringBehaviorInterposeBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorInterposeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorInterposeBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorInterposeBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorInterposeBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorInterposeBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorInterposeBuilder);
+  }
+  
+  SteeringBehaviorInterposeBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorMachineDithered(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorMachineDithered **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorMachineDithered",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorMachineDithered",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorMachineDithered **)new_SteeringBehaviorMachineDithered(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDithered,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorMachineDithered(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineDithered **arg1 = (njli::SteeringBehaviorMachineDithered **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorMachineDithered",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorMachineDithered",1,"njli::SteeringBehaviorMachineDithered **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDithered,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorMachineDithered",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDithered);
+  }
+  
+  delete_SteeringBehaviorMachineDithered(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachineDithered_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineDithered **arg1 = (njli::SteeringBehaviorMachineDithered **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachineDithered *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachineDithered_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachineDithered_getitem",1,"njli::SteeringBehaviorMachineDithered **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachineDithered_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDithered,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineDithered_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDithered);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorMachineDithered *)SteeringBehaviorMachineDithered_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorMachineDithered,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachineDithered_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineDithered **arg1 = (njli::SteeringBehaviorMachineDithered **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachineDithered *arg3 = (njli::SteeringBehaviorMachineDithered *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachineDithered_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachineDithered_setitem",1,"njli::SteeringBehaviorMachineDithered **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachineDithered_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorMachineDithered_setitem",3,"njli::SteeringBehaviorMachineDithered *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDithered,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineDithered_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDithered);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorMachineDithered,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineDithered_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorMachineDithered);
+  }
+  
+  SteeringBehaviorMachineDithered_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorMachineDitheredBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorMachineDitheredBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorMachineDitheredBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorMachineDitheredBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorMachineDitheredBuilder **)new_SteeringBehaviorMachineDitheredBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDitheredBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorMachineDitheredBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineDitheredBuilder **arg1 = (njli::SteeringBehaviorMachineDitheredBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorMachineDitheredBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorMachineDitheredBuilder",1,"njli::SteeringBehaviorMachineDitheredBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDitheredBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorMachineDitheredBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDitheredBuilder);
+  }
+  
+  delete_SteeringBehaviorMachineDitheredBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachineDitheredBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineDitheredBuilder **arg1 = (njli::SteeringBehaviorMachineDitheredBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachineDitheredBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachineDitheredBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachineDitheredBuilder_getitem",1,"njli::SteeringBehaviorMachineDitheredBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachineDitheredBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDitheredBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineDitheredBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDitheredBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorMachineDitheredBuilder *)SteeringBehaviorMachineDitheredBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorMachineDitheredBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachineDitheredBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineDitheredBuilder **arg1 = (njli::SteeringBehaviorMachineDitheredBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachineDitheredBuilder *arg3 = (njli::SteeringBehaviorMachineDitheredBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachineDitheredBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachineDitheredBuilder_setitem",1,"njli::SteeringBehaviorMachineDitheredBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachineDitheredBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorMachineDitheredBuilder_setitem",3,"njli::SteeringBehaviorMachineDitheredBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDitheredBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineDitheredBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineDitheredBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorMachineDitheredBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineDitheredBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorMachineDitheredBuilder);
+  }
+  
+  SteeringBehaviorMachineDitheredBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorMachinePrioritized(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorMachinePrioritized **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorMachinePrioritized",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorMachinePrioritized",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorMachinePrioritized **)new_SteeringBehaviorMachinePrioritized(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritized,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorMachinePrioritized(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachinePrioritized **arg1 = (njli::SteeringBehaviorMachinePrioritized **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorMachinePrioritized",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorMachinePrioritized",1,"njli::SteeringBehaviorMachinePrioritized **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritized,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorMachinePrioritized",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritized);
+  }
+  
+  delete_SteeringBehaviorMachinePrioritized(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachinePrioritized_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachinePrioritized **arg1 = (njli::SteeringBehaviorMachinePrioritized **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachinePrioritized *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachinePrioritized_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachinePrioritized_getitem",1,"njli::SteeringBehaviorMachinePrioritized **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachinePrioritized_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritized,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachinePrioritized_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritized);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorMachinePrioritized *)SteeringBehaviorMachinePrioritized_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorMachinePrioritized,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachinePrioritized_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachinePrioritized **arg1 = (njli::SteeringBehaviorMachinePrioritized **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachinePrioritized *arg3 = (njli::SteeringBehaviorMachinePrioritized *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachinePrioritized_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachinePrioritized_setitem",1,"njli::SteeringBehaviorMachinePrioritized **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachinePrioritized_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorMachinePrioritized_setitem",3,"njli::SteeringBehaviorMachinePrioritized *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritized,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachinePrioritized_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritized);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorMachinePrioritized,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachinePrioritized_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorMachinePrioritized);
+  }
+  
+  SteeringBehaviorMachinePrioritized_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorMachinePrioritizedBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorMachinePrioritizedBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorMachinePrioritizedBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorMachinePrioritizedBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorMachinePrioritizedBuilder **)new_SteeringBehaviorMachinePrioritizedBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorMachinePrioritizedBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachinePrioritizedBuilder **arg1 = (njli::SteeringBehaviorMachinePrioritizedBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorMachinePrioritizedBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorMachinePrioritizedBuilder",1,"njli::SteeringBehaviorMachinePrioritizedBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorMachinePrioritizedBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder);
+  }
+  
+  delete_SteeringBehaviorMachinePrioritizedBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachinePrioritizedBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachinePrioritizedBuilder **arg1 = (njli::SteeringBehaviorMachinePrioritizedBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachinePrioritizedBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachinePrioritizedBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachinePrioritizedBuilder_getitem",1,"njli::SteeringBehaviorMachinePrioritizedBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachinePrioritizedBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachinePrioritizedBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorMachinePrioritizedBuilder *)SteeringBehaviorMachinePrioritizedBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorMachinePrioritizedBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachinePrioritizedBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachinePrioritizedBuilder **arg1 = (njli::SteeringBehaviorMachinePrioritizedBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachinePrioritizedBuilder *arg3 = (njli::SteeringBehaviorMachinePrioritizedBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachinePrioritizedBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachinePrioritizedBuilder_setitem",1,"njli::SteeringBehaviorMachinePrioritizedBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachinePrioritizedBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorMachinePrioritizedBuilder_setitem",3,"njli::SteeringBehaviorMachinePrioritizedBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachinePrioritizedBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorMachinePrioritizedBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachinePrioritizedBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorMachinePrioritizedBuilder);
+  }
+  
+  SteeringBehaviorMachinePrioritizedBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorMachineWeighted(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorMachineWeighted **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorMachineWeighted",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorMachineWeighted",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorMachineWeighted **)new_SteeringBehaviorMachineWeighted(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeighted,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorMachineWeighted(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineWeighted **arg1 = (njli::SteeringBehaviorMachineWeighted **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorMachineWeighted",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorMachineWeighted",1,"njli::SteeringBehaviorMachineWeighted **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeighted,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorMachineWeighted",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeighted);
+  }
+  
+  delete_SteeringBehaviorMachineWeighted(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachineWeighted_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineWeighted **arg1 = (njli::SteeringBehaviorMachineWeighted **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachineWeighted *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachineWeighted_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachineWeighted_getitem",1,"njli::SteeringBehaviorMachineWeighted **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachineWeighted_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeighted,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineWeighted_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeighted);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorMachineWeighted *)SteeringBehaviorMachineWeighted_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorMachineWeighted,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachineWeighted_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineWeighted **arg1 = (njli::SteeringBehaviorMachineWeighted **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachineWeighted *arg3 = (njli::SteeringBehaviorMachineWeighted *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachineWeighted_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachineWeighted_setitem",1,"njli::SteeringBehaviorMachineWeighted **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachineWeighted_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorMachineWeighted_setitem",3,"njli::SteeringBehaviorMachineWeighted *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeighted,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineWeighted_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeighted);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorMachineWeighted,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineWeighted_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorMachineWeighted);
+  }
+  
+  SteeringBehaviorMachineWeighted_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorMachineWeightedBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorMachineWeightedBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorMachineWeightedBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorMachineWeightedBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorMachineWeightedBuilder **)new_SteeringBehaviorMachineWeightedBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeightedBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorMachineWeightedBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineWeightedBuilder **arg1 = (njli::SteeringBehaviorMachineWeightedBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorMachineWeightedBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorMachineWeightedBuilder",1,"njli::SteeringBehaviorMachineWeightedBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeightedBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorMachineWeightedBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeightedBuilder);
+  }
+  
+  delete_SteeringBehaviorMachineWeightedBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachineWeightedBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineWeightedBuilder **arg1 = (njli::SteeringBehaviorMachineWeightedBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachineWeightedBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachineWeightedBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachineWeightedBuilder_getitem",1,"njli::SteeringBehaviorMachineWeightedBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachineWeightedBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeightedBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineWeightedBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeightedBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorMachineWeightedBuilder *)SteeringBehaviorMachineWeightedBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorMachineWeightedBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorMachineWeightedBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorMachineWeightedBuilder **arg1 = (njli::SteeringBehaviorMachineWeightedBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorMachineWeightedBuilder *arg3 = (njli::SteeringBehaviorMachineWeightedBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorMachineWeightedBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorMachineWeightedBuilder_setitem",1,"njli::SteeringBehaviorMachineWeightedBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorMachineWeightedBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorMachineWeightedBuilder_setitem",3,"njli::SteeringBehaviorMachineWeightedBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeightedBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineWeightedBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorMachineWeightedBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorMachineWeightedBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorMachineWeightedBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorMachineWeightedBuilder);
+  }
+  
+  SteeringBehaviorMachineWeightedBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorObstacleAvoidance(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorObstacleAvoidance **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorObstacleAvoidance",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorObstacleAvoidance",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorObstacleAvoidance **)new_SteeringBehaviorObstacleAvoidance(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidance,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorObstacleAvoidance(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorObstacleAvoidance **arg1 = (njli::SteeringBehaviorObstacleAvoidance **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorObstacleAvoidance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorObstacleAvoidance",1,"njli::SteeringBehaviorObstacleAvoidance **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidance,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorObstacleAvoidance",1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidance);
+  }
+  
+  delete_SteeringBehaviorObstacleAvoidance(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorObstacleAvoidance_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorObstacleAvoidance **arg1 = (njli::SteeringBehaviorObstacleAvoidance **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorObstacleAvoidance *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorObstacleAvoidance_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidance_getitem",1,"njli::SteeringBehaviorObstacleAvoidance **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidance_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidance,0))){
+    SWIG_fail_ptr("SteeringBehaviorObstacleAvoidance_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidance);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorObstacleAvoidance *)SteeringBehaviorObstacleAvoidance_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorObstacleAvoidance,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorObstacleAvoidance_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorObstacleAvoidance **arg1 = (njli::SteeringBehaviorObstacleAvoidance **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorObstacleAvoidance *arg3 = (njli::SteeringBehaviorObstacleAvoidance *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorObstacleAvoidance_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidance_setitem",1,"njli::SteeringBehaviorObstacleAvoidance **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidance_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidance_setitem",3,"njli::SteeringBehaviorObstacleAvoidance *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidance,0))){
+    SWIG_fail_ptr("SteeringBehaviorObstacleAvoidance_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidance);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorObstacleAvoidance,0))){
+    SWIG_fail_ptr("SteeringBehaviorObstacleAvoidance_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorObstacleAvoidance);
+  }
+  
+  SteeringBehaviorObstacleAvoidance_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorObstacleAvoidanceBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorObstacleAvoidanceBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorObstacleAvoidanceBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorObstacleAvoidanceBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorObstacleAvoidanceBuilder **)new_SteeringBehaviorObstacleAvoidanceBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorObstacleAvoidanceBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorObstacleAvoidanceBuilder **arg1 = (njli::SteeringBehaviorObstacleAvoidanceBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorObstacleAvoidanceBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorObstacleAvoidanceBuilder",1,"njli::SteeringBehaviorObstacleAvoidanceBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorObstacleAvoidanceBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder);
+  }
+  
+  delete_SteeringBehaviorObstacleAvoidanceBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorObstacleAvoidanceBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorObstacleAvoidanceBuilder **arg1 = (njli::SteeringBehaviorObstacleAvoidanceBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorObstacleAvoidanceBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorObstacleAvoidanceBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidanceBuilder_getitem",1,"njli::SteeringBehaviorObstacleAvoidanceBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidanceBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorObstacleAvoidanceBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorObstacleAvoidanceBuilder *)SteeringBehaviorObstacleAvoidanceBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorObstacleAvoidanceBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorObstacleAvoidanceBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorObstacleAvoidanceBuilder **arg1 = (njli::SteeringBehaviorObstacleAvoidanceBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorObstacleAvoidanceBuilder *arg3 = (njli::SteeringBehaviorObstacleAvoidanceBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorObstacleAvoidanceBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidanceBuilder_setitem",1,"njli::SteeringBehaviorObstacleAvoidanceBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidanceBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorObstacleAvoidanceBuilder_setitem",3,"njli::SteeringBehaviorObstacleAvoidanceBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorObstacleAvoidanceBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorObstacleAvoidanceBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorObstacleAvoidanceBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorObstacleAvoidanceBuilder);
+  }
+  
+  SteeringBehaviorObstacleAvoidanceBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorOffsetPursuit(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorOffsetPursuit **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorOffsetPursuit",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorOffsetPursuit",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorOffsetPursuit **)new_SteeringBehaviorOffsetPursuit(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuit,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorOffsetPursuit(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorOffsetPursuit **arg1 = (njli::SteeringBehaviorOffsetPursuit **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorOffsetPursuit",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorOffsetPursuit",1,"njli::SteeringBehaviorOffsetPursuit **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuit,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorOffsetPursuit",1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuit);
+  }
+  
+  delete_SteeringBehaviorOffsetPursuit(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorOffsetPursuit_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorOffsetPursuit **arg1 = (njli::SteeringBehaviorOffsetPursuit **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorOffsetPursuit *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorOffsetPursuit_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorOffsetPursuit_getitem",1,"njli::SteeringBehaviorOffsetPursuit **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorOffsetPursuit_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuit,0))){
+    SWIG_fail_ptr("SteeringBehaviorOffsetPursuit_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuit);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorOffsetPursuit *)SteeringBehaviorOffsetPursuit_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorOffsetPursuit,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorOffsetPursuit_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorOffsetPursuit **arg1 = (njli::SteeringBehaviorOffsetPursuit **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorOffsetPursuit *arg3 = (njli::SteeringBehaviorOffsetPursuit *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorOffsetPursuit_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorOffsetPursuit_setitem",1,"njli::SteeringBehaviorOffsetPursuit **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorOffsetPursuit_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorOffsetPursuit_setitem",3,"njli::SteeringBehaviorOffsetPursuit *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuit,0))){
+    SWIG_fail_ptr("SteeringBehaviorOffsetPursuit_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuit);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorOffsetPursuit,0))){
+    SWIG_fail_ptr("SteeringBehaviorOffsetPursuit_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorOffsetPursuit);
+  }
+  
+  SteeringBehaviorOffsetPursuit_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorOffsetPursuitBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorOffsetPursuitBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorOffsetPursuitBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorOffsetPursuitBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorOffsetPursuitBuilder **)new_SteeringBehaviorOffsetPursuitBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuitBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorOffsetPursuitBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorOffsetPursuitBuilder **arg1 = (njli::SteeringBehaviorOffsetPursuitBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorOffsetPursuitBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorOffsetPursuitBuilder",1,"njli::SteeringBehaviorOffsetPursuitBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuitBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorOffsetPursuitBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuitBuilder);
+  }
+  
+  delete_SteeringBehaviorOffsetPursuitBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorOffsetPursuitBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorOffsetPursuitBuilder **arg1 = (njli::SteeringBehaviorOffsetPursuitBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorOffsetPursuitBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorOffsetPursuitBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorOffsetPursuitBuilder_getitem",1,"njli::SteeringBehaviorOffsetPursuitBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorOffsetPursuitBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuitBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorOffsetPursuitBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuitBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorOffsetPursuitBuilder *)SteeringBehaviorOffsetPursuitBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorOffsetPursuitBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorOffsetPursuitBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorOffsetPursuitBuilder **arg1 = (njli::SteeringBehaviorOffsetPursuitBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorOffsetPursuitBuilder *arg3 = (njli::SteeringBehaviorOffsetPursuitBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorOffsetPursuitBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorOffsetPursuitBuilder_setitem",1,"njli::SteeringBehaviorOffsetPursuitBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorOffsetPursuitBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorOffsetPursuitBuilder_setitem",3,"njli::SteeringBehaviorOffsetPursuitBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuitBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorOffsetPursuitBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorOffsetPursuitBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorOffsetPursuitBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorOffsetPursuitBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorOffsetPursuitBuilder);
+  }
+  
+  SteeringBehaviorOffsetPursuitBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorPursuit(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorPursuit **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorPursuit",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorPursuit",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorPursuit **)new_SteeringBehaviorPursuit(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorPursuit,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorPursuit(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorPursuit **arg1 = (njli::SteeringBehaviorPursuit **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorPursuit",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorPursuit",1,"njli::SteeringBehaviorPursuit **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuit,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorPursuit",1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuit);
+  }
+  
+  delete_SteeringBehaviorPursuit(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorPursuit_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorPursuit **arg1 = (njli::SteeringBehaviorPursuit **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorPursuit *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorPursuit_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorPursuit_getitem",1,"njli::SteeringBehaviorPursuit **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorPursuit_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuit,0))){
+    SWIG_fail_ptr("SteeringBehaviorPursuit_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuit);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorPursuit *)SteeringBehaviorPursuit_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorPursuit,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorPursuit_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorPursuit **arg1 = (njli::SteeringBehaviorPursuit **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorPursuit *arg3 = (njli::SteeringBehaviorPursuit *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorPursuit_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorPursuit_setitem",1,"njli::SteeringBehaviorPursuit **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorPursuit_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorPursuit_setitem",3,"njli::SteeringBehaviorPursuit *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuit,0))){
+    SWIG_fail_ptr("SteeringBehaviorPursuit_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuit);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorPursuit,0))){
+    SWIG_fail_ptr("SteeringBehaviorPursuit_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorPursuit);
+  }
+  
+  SteeringBehaviorPursuit_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorPursuitBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorPursuitBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorPursuitBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorPursuitBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorPursuitBuilder **)new_SteeringBehaviorPursuitBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorPursuitBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorPursuitBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorPursuitBuilder **arg1 = (njli::SteeringBehaviorPursuitBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorPursuitBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorPursuitBuilder",1,"njli::SteeringBehaviorPursuitBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuitBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorPursuitBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuitBuilder);
+  }
+  
+  delete_SteeringBehaviorPursuitBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorPursuitBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorPursuitBuilder **arg1 = (njli::SteeringBehaviorPursuitBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorPursuitBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorPursuitBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorPursuitBuilder_getitem",1,"njli::SteeringBehaviorPursuitBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorPursuitBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuitBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorPursuitBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuitBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorPursuitBuilder *)SteeringBehaviorPursuitBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorPursuitBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorPursuitBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorPursuitBuilder **arg1 = (njli::SteeringBehaviorPursuitBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorPursuitBuilder *arg3 = (njli::SteeringBehaviorPursuitBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorPursuitBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorPursuitBuilder_setitem",1,"njli::SteeringBehaviorPursuitBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorPursuitBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorPursuitBuilder_setitem",3,"njli::SteeringBehaviorPursuitBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuitBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorPursuitBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorPursuitBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorPursuitBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorPursuitBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorPursuitBuilder);
+  }
+  
+  SteeringBehaviorPursuitBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorSeek(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorSeek **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorSeek",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorSeek",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorSeek **)new_SteeringBehaviorSeek(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorSeek,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorSeek(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeek **arg1 = (njli::SteeringBehaviorSeek **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorSeek",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorSeek",1,"njli::SteeringBehaviorSeek **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeek,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorSeek",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeek);
+  }
+  
+  delete_SteeringBehaviorSeek(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorSeek_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeek **arg1 = (njli::SteeringBehaviorSeek **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorSeek *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorSeek_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorSeek_getitem",1,"njli::SteeringBehaviorSeek **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorSeek_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeek,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeek_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeek);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorSeek *)SteeringBehaviorSeek_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorSeek,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorSeek_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeek **arg1 = (njli::SteeringBehaviorSeek **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorSeek *arg3 = (njli::SteeringBehaviorSeek *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorSeek_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorSeek_setitem",1,"njli::SteeringBehaviorSeek **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorSeek_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorSeek_setitem",3,"njli::SteeringBehaviorSeek *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeek,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeek_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeek);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorSeek,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeek_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorSeek);
+  }
+  
+  SteeringBehaviorSeek_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorSeekBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorSeekBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorSeekBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorSeekBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorSeekBuilder **)new_SteeringBehaviorSeekBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorSeekBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorSeekBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeekBuilder **arg1 = (njli::SteeringBehaviorSeekBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorSeekBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorSeekBuilder",1,"njli::SteeringBehaviorSeekBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeekBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorSeekBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeekBuilder);
+  }
+  
+  delete_SteeringBehaviorSeekBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorSeekBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeekBuilder **arg1 = (njli::SteeringBehaviorSeekBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorSeekBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorSeekBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorSeekBuilder_getitem",1,"njli::SteeringBehaviorSeekBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorSeekBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeekBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeekBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeekBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorSeekBuilder *)SteeringBehaviorSeekBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorSeekBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorSeekBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeekBuilder **arg1 = (njli::SteeringBehaviorSeekBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorSeekBuilder *arg3 = (njli::SteeringBehaviorSeekBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorSeekBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorSeekBuilder_setitem",1,"njli::SteeringBehaviorSeekBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorSeekBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorSeekBuilder_setitem",3,"njli::SteeringBehaviorSeekBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeekBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeekBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeekBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorSeekBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeekBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorSeekBuilder);
+  }
+  
+  SteeringBehaviorSeekBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorSeparation(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorSeparation **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorSeparation",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorSeparation",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorSeparation **)new_SteeringBehaviorSeparation(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorSeparation,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorSeparation(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeparation **arg1 = (njli::SteeringBehaviorSeparation **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorSeparation",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorSeparation",1,"njli::SteeringBehaviorSeparation **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparation,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorSeparation",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparation);
+  }
+  
+  delete_SteeringBehaviorSeparation(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorSeparation_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeparation **arg1 = (njli::SteeringBehaviorSeparation **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorSeparation *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorSeparation_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorSeparation_getitem",1,"njli::SteeringBehaviorSeparation **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorSeparation_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparation,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeparation_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparation);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorSeparation *)SteeringBehaviorSeparation_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorSeparation,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorSeparation_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeparation **arg1 = (njli::SteeringBehaviorSeparation **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorSeparation *arg3 = (njli::SteeringBehaviorSeparation *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorSeparation_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorSeparation_setitem",1,"njli::SteeringBehaviorSeparation **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorSeparation_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorSeparation_setitem",3,"njli::SteeringBehaviorSeparation *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparation,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeparation_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparation);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorSeparation,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeparation_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorSeparation);
+  }
+  
+  SteeringBehaviorSeparation_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorSeparationBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorSeparationBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorSeparationBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorSeparationBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorSeparationBuilder **)new_SteeringBehaviorSeparationBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorSeparationBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorSeparationBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeparationBuilder **arg1 = (njli::SteeringBehaviorSeparationBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorSeparationBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorSeparationBuilder",1,"njli::SteeringBehaviorSeparationBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparationBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorSeparationBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparationBuilder);
+  }
+  
+  delete_SteeringBehaviorSeparationBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorSeparationBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeparationBuilder **arg1 = (njli::SteeringBehaviorSeparationBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorSeparationBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorSeparationBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorSeparationBuilder_getitem",1,"njli::SteeringBehaviorSeparationBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorSeparationBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparationBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeparationBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparationBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorSeparationBuilder *)SteeringBehaviorSeparationBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorSeparationBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorSeparationBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorSeparationBuilder **arg1 = (njli::SteeringBehaviorSeparationBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorSeparationBuilder *arg3 = (njli::SteeringBehaviorSeparationBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorSeparationBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorSeparationBuilder_setitem",1,"njli::SteeringBehaviorSeparationBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorSeparationBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorSeparationBuilder_setitem",3,"njli::SteeringBehaviorSeparationBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparationBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeparationBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorSeparationBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorSeparationBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorSeparationBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorSeparationBuilder);
+  }
+  
+  SteeringBehaviorSeparationBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorWallAvoidance(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorWallAvoidance **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorWallAvoidance",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorWallAvoidance",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorWallAvoidance **)new_SteeringBehaviorWallAvoidance(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidance,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorWallAvoidance(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWallAvoidance **arg1 = (njli::SteeringBehaviorWallAvoidance **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorWallAvoidance",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorWallAvoidance",1,"njli::SteeringBehaviorWallAvoidance **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidance,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorWallAvoidance",1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidance);
+  }
+  
+  delete_SteeringBehaviorWallAvoidance(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorWallAvoidance_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWallAvoidance **arg1 = (njli::SteeringBehaviorWallAvoidance **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorWallAvoidance *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorWallAvoidance_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorWallAvoidance_getitem",1,"njli::SteeringBehaviorWallAvoidance **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorWallAvoidance_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidance,0))){
+    SWIG_fail_ptr("SteeringBehaviorWallAvoidance_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidance);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorWallAvoidance *)SteeringBehaviorWallAvoidance_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorWallAvoidance,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorWallAvoidance_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWallAvoidance **arg1 = (njli::SteeringBehaviorWallAvoidance **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorWallAvoidance *arg3 = (njli::SteeringBehaviorWallAvoidance *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorWallAvoidance_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorWallAvoidance_setitem",1,"njli::SteeringBehaviorWallAvoidance **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorWallAvoidance_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorWallAvoidance_setitem",3,"njli::SteeringBehaviorWallAvoidance *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidance,0))){
+    SWIG_fail_ptr("SteeringBehaviorWallAvoidance_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidance);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorWallAvoidance,0))){
+    SWIG_fail_ptr("SteeringBehaviorWallAvoidance_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorWallAvoidance);
+  }
+  
+  SteeringBehaviorWallAvoidance_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorWallAvoidanceBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorWallAvoidanceBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorWallAvoidanceBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorWallAvoidanceBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorWallAvoidanceBuilder **)new_SteeringBehaviorWallAvoidanceBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidanceBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorWallAvoidanceBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWallAvoidanceBuilder **arg1 = (njli::SteeringBehaviorWallAvoidanceBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorWallAvoidanceBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorWallAvoidanceBuilder",1,"njli::SteeringBehaviorWallAvoidanceBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidanceBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorWallAvoidanceBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidanceBuilder);
+  }
+  
+  delete_SteeringBehaviorWallAvoidanceBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorWallAvoidanceBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWallAvoidanceBuilder **arg1 = (njli::SteeringBehaviorWallAvoidanceBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorWallAvoidanceBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorWallAvoidanceBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorWallAvoidanceBuilder_getitem",1,"njli::SteeringBehaviorWallAvoidanceBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorWallAvoidanceBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidanceBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorWallAvoidanceBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidanceBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorWallAvoidanceBuilder *)SteeringBehaviorWallAvoidanceBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorWallAvoidanceBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorWallAvoidanceBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWallAvoidanceBuilder **arg1 = (njli::SteeringBehaviorWallAvoidanceBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorWallAvoidanceBuilder *arg3 = (njli::SteeringBehaviorWallAvoidanceBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorWallAvoidanceBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorWallAvoidanceBuilder_setitem",1,"njli::SteeringBehaviorWallAvoidanceBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorWallAvoidanceBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorWallAvoidanceBuilder_setitem",3,"njli::SteeringBehaviorWallAvoidanceBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidanceBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorWallAvoidanceBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorWallAvoidanceBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorWallAvoidanceBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorWallAvoidanceBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorWallAvoidanceBuilder);
+  }
+  
+  SteeringBehaviorWallAvoidanceBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorWander(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorWander **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorWander",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorWander",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorWander **)new_SteeringBehaviorWander(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorWander,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorWander(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWander **arg1 = (njli::SteeringBehaviorWander **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorWander",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorWander",1,"njli::SteeringBehaviorWander **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWander,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorWander",1,SWIGTYPE_p_p_njli__SteeringBehaviorWander);
+  }
+  
+  delete_SteeringBehaviorWander(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorWander_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWander **arg1 = (njli::SteeringBehaviorWander **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorWander *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorWander_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorWander_getitem",1,"njli::SteeringBehaviorWander **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorWander_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWander,0))){
+    SWIG_fail_ptr("SteeringBehaviorWander_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorWander);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorWander *)SteeringBehaviorWander_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorWander,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorWander_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWander **arg1 = (njli::SteeringBehaviorWander **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorWander *arg3 = (njli::SteeringBehaviorWander *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorWander_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorWander_setitem",1,"njli::SteeringBehaviorWander **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorWander_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorWander_setitem",3,"njli::SteeringBehaviorWander *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWander,0))){
+    SWIG_fail_ptr("SteeringBehaviorWander_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorWander);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorWander,0))){
+    SWIG_fail_ptr("SteeringBehaviorWander_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorWander);
+  }
+  
+  SteeringBehaviorWander_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_SteeringBehaviorWanderBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::SteeringBehaviorWanderBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_SteeringBehaviorWanderBuilder",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_SteeringBehaviorWanderBuilder",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::SteeringBehaviorWanderBuilder **)new_SteeringBehaviorWanderBuilder(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__SteeringBehaviorWanderBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_SteeringBehaviorWanderBuilder(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWanderBuilder **arg1 = (njli::SteeringBehaviorWanderBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_SteeringBehaviorWanderBuilder",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_SteeringBehaviorWanderBuilder",1,"njli::SteeringBehaviorWanderBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWanderBuilder,0))){
+    SWIG_fail_ptr("delete_SteeringBehaviorWanderBuilder",1,SWIGTYPE_p_p_njli__SteeringBehaviorWanderBuilder);
+  }
+  
+  delete_SteeringBehaviorWanderBuilder(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorWanderBuilder_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWanderBuilder **arg1 = (njli::SteeringBehaviorWanderBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorWanderBuilder *result = 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorWanderBuilder_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorWanderBuilder_getitem",1,"njli::SteeringBehaviorWanderBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorWanderBuilder_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWanderBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorWanderBuilder_getitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorWanderBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::SteeringBehaviorWanderBuilder *)SteeringBehaviorWanderBuilder_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__SteeringBehaviorWanderBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_SteeringBehaviorWanderBuilder_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::SteeringBehaviorWanderBuilder **arg1 = (njli::SteeringBehaviorWanderBuilder **) 0 ;
+  int arg2 ;
+  njli::SteeringBehaviorWanderBuilder *arg3 = (njli::SteeringBehaviorWanderBuilder *) 0 ;
+  
+  SWIG_check_num_args("SteeringBehaviorWanderBuilder_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("SteeringBehaviorWanderBuilder_setitem",1,"njli::SteeringBehaviorWanderBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("SteeringBehaviorWanderBuilder_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("SteeringBehaviorWanderBuilder_setitem",3,"njli::SteeringBehaviorWanderBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__SteeringBehaviorWanderBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorWanderBuilder_setitem",1,SWIGTYPE_p_p_njli__SteeringBehaviorWanderBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__SteeringBehaviorWanderBuilder,0))){
+    SWIG_fail_ptr("SteeringBehaviorWanderBuilder_setitem",3,SWIGTYPE_p_njli__SteeringBehaviorWanderBuilder);
+  }
+  
+  SteeringBehaviorWanderBuilder_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_StopWatchArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::StopWatch **result = 0 ;
+  
+  SWIG_check_num_args("new_StopWatchArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_StopWatchArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::StopWatch **)new_StopWatchArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__StopWatch,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_StopWatchArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::StopWatch **arg1 = (njli::StopWatch **) 0 ;
+  
+  SWIG_check_num_args("delete_StopWatchArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_StopWatchArray",1,"njli::StopWatch **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__StopWatch,0))){
+    SWIG_fail_ptr("delete_StopWatchArray",1,SWIGTYPE_p_p_njli__StopWatch);
+  }
+  
+  delete_StopWatchArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_StopWatchArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::StopWatch **arg1 = (njli::StopWatch **) 0 ;
+  int arg2 ;
+  njli::StopWatch *result = 0 ;
+  
+  SWIG_check_num_args("StopWatchArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopWatchArray_getitem",1,"njli::StopWatch **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("StopWatchArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__StopWatch,0))){
+    SWIG_fail_ptr("StopWatchArray_getitem",1,SWIGTYPE_p_p_njli__StopWatch);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::StopWatch *)StopWatchArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__StopWatch,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_StopWatchArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::StopWatch **arg1 = (njli::StopWatch **) 0 ;
+  int arg2 ;
+  njli::StopWatch *arg3 = (njli::StopWatch *) 0 ;
+  
+  SWIG_check_num_args("StopWatchArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopWatchArray_setitem",1,"njli::StopWatch **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("StopWatchArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("StopWatchArray_setitem",3,"njli::StopWatch *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__StopWatch,0))){
+    SWIG_fail_ptr("StopWatchArray_setitem",1,SWIGTYPE_p_p_njli__StopWatch);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__StopWatch,0))){
+    SWIG_fail_ptr("StopWatchArray_setitem",3,SWIGTYPE_p_njli__StopWatch);
+  }
+  
+  StopWatchArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_StopWatchBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::StopWatchBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_StopWatchBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_StopWatchBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::StopWatchBuilder **)new_StopWatchBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__StopWatchBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_StopWatchBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::StopWatchBuilder **arg1 = (njli::StopWatchBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_StopWatchBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_StopWatchBuilderArray",1,"njli::StopWatchBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__StopWatchBuilder,0))){
+    SWIG_fail_ptr("delete_StopWatchBuilderArray",1,SWIGTYPE_p_p_njli__StopWatchBuilder);
+  }
+  
+  delete_StopWatchBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_StopWatchBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::StopWatchBuilder **arg1 = (njli::StopWatchBuilder **) 0 ;
+  int arg2 ;
+  njli::StopWatchBuilder *result = 0 ;
+  
+  SWIG_check_num_args("StopWatchBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopWatchBuilderArray_getitem",1,"njli::StopWatchBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("StopWatchBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__StopWatchBuilder,0))){
+    SWIG_fail_ptr("StopWatchBuilderArray_getitem",1,SWIGTYPE_p_p_njli__StopWatchBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::StopWatchBuilder *)StopWatchBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__StopWatchBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_StopWatchBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::StopWatchBuilder **arg1 = (njli::StopWatchBuilder **) 0 ;
+  int arg2 ;
+  njli::StopWatchBuilder *arg3 = (njli::StopWatchBuilder *) 0 ;
+  
+  SWIG_check_num_args("StopWatchBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("StopWatchBuilderArray_setitem",1,"njli::StopWatchBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("StopWatchBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("StopWatchBuilderArray_setitem",3,"njli::StopWatchBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__StopWatchBuilder,0))){
+    SWIG_fail_ptr("StopWatchBuilderArray_setitem",1,SWIGTYPE_p_p_njli__StopWatchBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__StopWatchBuilder,0))){
+    SWIG_fail_ptr("StopWatchBuilderArray_setitem",3,SWIGTYPE_p_njli__StopWatchBuilder);
+  }
+  
+  StopWatchBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_TimerArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Timer **result = 0 ;
+  
+  SWIG_check_num_args("new_TimerArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_TimerArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Timer **)new_TimerArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Timer,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_TimerArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Timer **arg1 = (njli::Timer **) 0 ;
+  
+  SWIG_check_num_args("delete_TimerArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_TimerArray",1,"njli::Timer **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Timer,0))){
+    SWIG_fail_ptr("delete_TimerArray",1,SWIGTYPE_p_p_njli__Timer);
+  }
+  
+  delete_TimerArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_TimerArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Timer **arg1 = (njli::Timer **) 0 ;
+  int arg2 ;
+  njli::Timer *result = 0 ;
+  
+  SWIG_check_num_args("TimerArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TimerArray_getitem",1,"njli::Timer **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("TimerArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Timer,0))){
+    SWIG_fail_ptr("TimerArray_getitem",1,SWIGTYPE_p_p_njli__Timer);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Timer *)TimerArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Timer,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_TimerArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Timer **arg1 = (njli::Timer **) 0 ;
+  int arg2 ;
+  njli::Timer *arg3 = (njli::Timer *) 0 ;
+  
+  SWIG_check_num_args("TimerArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TimerArray_setitem",1,"njli::Timer **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("TimerArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("TimerArray_setitem",3,"njli::Timer *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Timer,0))){
+    SWIG_fail_ptr("TimerArray_setitem",1,SWIGTYPE_p_p_njli__Timer);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Timer,0))){
+    SWIG_fail_ptr("TimerArray_setitem",3,SWIGTYPE_p_njli__Timer);
+  }
+  
+  TimerArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_TimerBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::TimerBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_TimerBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_TimerBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::TimerBuilder **)new_TimerBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__TimerBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_TimerBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::TimerBuilder **arg1 = (njli::TimerBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_TimerBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_TimerBuilderArray",1,"njli::TimerBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__TimerBuilder,0))){
+    SWIG_fail_ptr("delete_TimerBuilderArray",1,SWIGTYPE_p_p_njli__TimerBuilder);
+  }
+  
+  delete_TimerBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_TimerBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::TimerBuilder **arg1 = (njli::TimerBuilder **) 0 ;
+  int arg2 ;
+  njli::TimerBuilder *result = 0 ;
+  
+  SWIG_check_num_args("TimerBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TimerBuilderArray_getitem",1,"njli::TimerBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("TimerBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__TimerBuilder,0))){
+    SWIG_fail_ptr("TimerBuilderArray_getitem",1,SWIGTYPE_p_p_njli__TimerBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::TimerBuilder *)TimerBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__TimerBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_TimerBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::TimerBuilder **arg1 = (njli::TimerBuilder **) 0 ;
+  int arg2 ;
+  njli::TimerBuilder *arg3 = (njli::TimerBuilder *) 0 ;
+  
+  SWIG_check_num_args("TimerBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("TimerBuilderArray_setitem",1,"njli::TimerBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("TimerBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("TimerBuilderArray_setitem",3,"njli::TimerBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__TimerBuilder,0))){
+    SWIG_fail_ptr("TimerBuilderArray_setitem",1,SWIGTYPE_p_p_njli__TimerBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__TimerBuilder,0))){
+    SWIG_fail_ptr("TimerBuilderArray_setitem",3,SWIGTYPE_p_njli__TimerBuilder);
+  }
+  
+  TimerBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_WorldStateArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::WorldState **result = 0 ;
+  
+  SWIG_check_num_args("new_WorldStateArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_WorldStateArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::WorldState **)new_WorldStateArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__WorldState,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_WorldStateArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldState **arg1 = (njli::WorldState **) 0 ;
+  
+  SWIG_check_num_args("delete_WorldStateArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_WorldStateArray",1,"njli::WorldState **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldState,0))){
+    SWIG_fail_ptr("delete_WorldStateArray",1,SWIGTYPE_p_p_njli__WorldState);
+  }
+  
+  delete_WorldStateArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_WorldStateArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldState **arg1 = (njli::WorldState **) 0 ;
+  int arg2 ;
+  njli::WorldState *result = 0 ;
+  
+  SWIG_check_num_args("WorldStateArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldStateArray_getitem",1,"njli::WorldState **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("WorldStateArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldState,0))){
+    SWIG_fail_ptr("WorldStateArray_getitem",1,SWIGTYPE_p_p_njli__WorldState);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::WorldState *)WorldStateArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__WorldState,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_WorldStateArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldState **arg1 = (njli::WorldState **) 0 ;
+  int arg2 ;
+  njli::WorldState *arg3 = (njli::WorldState *) 0 ;
+  
+  SWIG_check_num_args("WorldStateArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldStateArray_setitem",1,"njli::WorldState **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("WorldStateArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("WorldStateArray_setitem",3,"njli::WorldState *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldState,0))){
+    SWIG_fail_ptr("WorldStateArray_setitem",1,SWIGTYPE_p_p_njli__WorldState);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__WorldState,0))){
+    SWIG_fail_ptr("WorldStateArray_setitem",3,SWIGTYPE_p_njli__WorldState);
+  }
+  
+  WorldStateArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_WorldStateBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::WorldStateBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_WorldStateBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_WorldStateBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::WorldStateBuilder **)new_WorldStateBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__WorldStateBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_WorldStateBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateBuilder **arg1 = (njli::WorldStateBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_WorldStateBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_WorldStateBuilderArray",1,"njli::WorldStateBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateBuilder,0))){
+    SWIG_fail_ptr("delete_WorldStateBuilderArray",1,SWIGTYPE_p_p_njli__WorldStateBuilder);
+  }
+  
+  delete_WorldStateBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_WorldStateBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateBuilder **arg1 = (njli::WorldStateBuilder **) 0 ;
+  int arg2 ;
+  njli::WorldStateBuilder *result = 0 ;
+  
+  SWIG_check_num_args("WorldStateBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldStateBuilderArray_getitem",1,"njli::WorldStateBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("WorldStateBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateBuilder,0))){
+    SWIG_fail_ptr("WorldStateBuilderArray_getitem",1,SWIGTYPE_p_p_njli__WorldStateBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::WorldStateBuilder *)WorldStateBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__WorldStateBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_WorldStateBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateBuilder **arg1 = (njli::WorldStateBuilder **) 0 ;
+  int arg2 ;
+  njli::WorldStateBuilder *arg3 = (njli::WorldStateBuilder *) 0 ;
+  
+  SWIG_check_num_args("WorldStateBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldStateBuilderArray_setitem",1,"njli::WorldStateBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("WorldStateBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("WorldStateBuilderArray_setitem",3,"njli::WorldStateBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateBuilder,0))){
+    SWIG_fail_ptr("WorldStateBuilderArray_setitem",1,SWIGTYPE_p_p_njli__WorldStateBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__WorldStateBuilder,0))){
+    SWIG_fail_ptr("WorldStateBuilderArray_setitem",3,SWIGTYPE_p_njli__WorldStateBuilder);
+  }
+  
+  WorldStateBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_WorldStateMachineArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::WorldStateMachine **result = 0 ;
+  
+  SWIG_check_num_args("new_WorldStateMachineArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_WorldStateMachineArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::WorldStateMachine **)new_WorldStateMachineArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__WorldStateMachine,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_WorldStateMachineArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateMachine **arg1 = (njli::WorldStateMachine **) 0 ;
+  
+  SWIG_check_num_args("delete_WorldStateMachineArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_WorldStateMachineArray",1,"njli::WorldStateMachine **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateMachine,0))){
+    SWIG_fail_ptr("delete_WorldStateMachineArray",1,SWIGTYPE_p_p_njli__WorldStateMachine);
+  }
+  
+  delete_WorldStateMachineArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_WorldStateMachineArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateMachine **arg1 = (njli::WorldStateMachine **) 0 ;
+  int arg2 ;
+  njli::WorldStateMachine *result = 0 ;
+  
+  SWIG_check_num_args("WorldStateMachineArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldStateMachineArray_getitem",1,"njli::WorldStateMachine **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("WorldStateMachineArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateMachine,0))){
+    SWIG_fail_ptr("WorldStateMachineArray_getitem",1,SWIGTYPE_p_p_njli__WorldStateMachine);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::WorldStateMachine *)WorldStateMachineArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__WorldStateMachine,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_WorldStateMachineArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateMachine **arg1 = (njli::WorldStateMachine **) 0 ;
+  int arg2 ;
+  njli::WorldStateMachine *arg3 = (njli::WorldStateMachine *) 0 ;
+  
+  SWIG_check_num_args("WorldStateMachineArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldStateMachineArray_setitem",1,"njli::WorldStateMachine **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("WorldStateMachineArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("WorldStateMachineArray_setitem",3,"njli::WorldStateMachine *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateMachine,0))){
+    SWIG_fail_ptr("WorldStateMachineArray_setitem",1,SWIGTYPE_p_p_njli__WorldStateMachine);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__WorldStateMachine,0))){
+    SWIG_fail_ptr("WorldStateMachineArray_setitem",3,SWIGTYPE_p_njli__WorldStateMachine);
+  }
+  
+  WorldStateMachineArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_WorldStateMachineBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::WorldStateMachineBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_WorldStateMachineBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_WorldStateMachineBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::WorldStateMachineBuilder **)new_WorldStateMachineBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__WorldStateMachineBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_WorldStateMachineBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateMachineBuilder **arg1 = (njli::WorldStateMachineBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_WorldStateMachineBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_WorldStateMachineBuilderArray",1,"njli::WorldStateMachineBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateMachineBuilder,0))){
+    SWIG_fail_ptr("delete_WorldStateMachineBuilderArray",1,SWIGTYPE_p_p_njli__WorldStateMachineBuilder);
+  }
+  
+  delete_WorldStateMachineBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_WorldStateMachineBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateMachineBuilder **arg1 = (njli::WorldStateMachineBuilder **) 0 ;
+  int arg2 ;
+  njli::WorldStateMachineBuilder *result = 0 ;
+  
+  SWIG_check_num_args("WorldStateMachineBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldStateMachineBuilderArray_getitem",1,"njli::WorldStateMachineBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("WorldStateMachineBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateMachineBuilder,0))){
+    SWIG_fail_ptr("WorldStateMachineBuilderArray_getitem",1,SWIGTYPE_p_p_njli__WorldStateMachineBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::WorldStateMachineBuilder *)WorldStateMachineBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__WorldStateMachineBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_WorldStateMachineBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::WorldStateMachineBuilder **arg1 = (njli::WorldStateMachineBuilder **) 0 ;
+  int arg2 ;
+  njli::WorldStateMachineBuilder *arg3 = (njli::WorldStateMachineBuilder *) 0 ;
+  
+  SWIG_check_num_args("WorldStateMachineBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("WorldStateMachineBuilderArray_setitem",1,"njli::WorldStateMachineBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("WorldStateMachineBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("WorldStateMachineBuilderArray_setitem",3,"njli::WorldStateMachineBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__WorldStateMachineBuilder,0))){
+    SWIG_fail_ptr("WorldStateMachineBuilderArray_setitem",1,SWIGTYPE_p_p_njli__WorldStateMachineBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__WorldStateMachineBuilder,0))){
+    SWIG_fail_ptr("WorldStateMachineBuilderArray_setitem",3,SWIGTYPE_p_njli__WorldStateMachineBuilder);
+  }
+  
+  WorldStateMachineBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_XmlArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::Xml **result = 0 ;
+  
+  SWIG_check_num_args("new_XmlArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_XmlArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::Xml **)new_XmlArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__Xml,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_XmlArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Xml **arg1 = (njli::Xml **) 0 ;
+  
+  SWIG_check_num_args("delete_XmlArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_XmlArray",1,"njli::Xml **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Xml,0))){
+    SWIG_fail_ptr("delete_XmlArray",1,SWIGTYPE_p_p_njli__Xml);
+  }
+  
+  delete_XmlArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_XmlArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Xml **arg1 = (njli::Xml **) 0 ;
+  int arg2 ;
+  njli::Xml *result = 0 ;
+  
+  SWIG_check_num_args("XmlArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("XmlArray_getitem",1,"njli::Xml **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("XmlArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Xml,0))){
+    SWIG_fail_ptr("XmlArray_getitem",1,SWIGTYPE_p_p_njli__Xml);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::Xml *)XmlArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__Xml,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_XmlArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::Xml **arg1 = (njli::Xml **) 0 ;
+  int arg2 ;
+  njli::Xml *arg3 = (njli::Xml *) 0 ;
+  
+  SWIG_check_num_args("XmlArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("XmlArray_setitem",1,"njli::Xml **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("XmlArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("XmlArray_setitem",3,"njli::Xml *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__Xml,0))){
+    SWIG_fail_ptr("XmlArray_setitem",1,SWIGTYPE_p_p_njli__Xml);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__Xml,0))){
+    SWIG_fail_ptr("XmlArray_setitem",3,SWIGTYPE_p_njli__Xml);
+  }
+  
+  XmlArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_XmlBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  njli::XmlBuilder **result = 0 ;
+  
+  SWIG_check_num_args("new_XmlBuilderArray",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("new_XmlBuilderArray",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = (njli::XmlBuilder **)new_XmlBuilderArray(arg1);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_p_njli__XmlBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_delete_XmlBuilderArray(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::XmlBuilder **arg1 = (njli::XmlBuilder **) 0 ;
+  
+  SWIG_check_num_args("delete_XmlBuilderArray",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("delete_XmlBuilderArray",1,"njli::XmlBuilder **");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__XmlBuilder,0))){
+    SWIG_fail_ptr("delete_XmlBuilderArray",1,SWIGTYPE_p_p_njli__XmlBuilder);
+  }
+  
+  delete_XmlBuilderArray(arg1);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_XmlBuilderArray_getitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::XmlBuilder **arg1 = (njli::XmlBuilder **) 0 ;
+  int arg2 ;
+  njli::XmlBuilder *result = 0 ;
+  
+  SWIG_check_num_args("XmlBuilderArray_getitem",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("XmlBuilderArray_getitem",1,"njli::XmlBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("XmlBuilderArray_getitem",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__XmlBuilder,0))){
+    SWIG_fail_ptr("XmlBuilderArray_getitem",1,SWIGTYPE_p_p_njli__XmlBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  result = (njli::XmlBuilder *)XmlBuilderArray_getitem(arg1,arg2);
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_njli__XmlBuilder,0); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_XmlBuilderArray_setitem(lua_State* L) {
+  int SWIG_arg = 0;
+  njli::XmlBuilder **arg1 = (njli::XmlBuilder **) 0 ;
+  int arg2 ;
+  njli::XmlBuilder *arg3 = (njli::XmlBuilder *) 0 ;
+  
+  SWIG_check_num_args("XmlBuilderArray_setitem",3,3)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("XmlBuilderArray_setitem",1,"njli::XmlBuilder **");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("XmlBuilderArray_setitem",2,"int");
+  if(!SWIG_isptrtype(L,3)) SWIG_fail_arg("XmlBuilderArray_setitem",3,"njli::XmlBuilder *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_p_njli__XmlBuilder,0))){
+    SWIG_fail_ptr("XmlBuilderArray_setitem",1,SWIGTYPE_p_p_njli__XmlBuilder);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,3,(void**)&arg3,SWIGTYPE_p_njli__XmlBuilder,0))){
+    SWIG_fail_ptr("XmlBuilderArray_setitem",3,SWIGTYPE_p_njli__XmlBuilder);
+  }
+  
+  XmlBuilderArray_setitem(arg1,arg2,arg3);
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_attribute swig_SwigModule_attributes[] = {
     {0,0,0}
 };
@@ -2673,6 +23491,654 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
     {0,0,0,0,0,0}
 };
 static swig_lua_method swig_SwigModule_methods[]= {
+    { "new_SoundArray", _wrap_new_SoundArray},
+    { "delete_SoundArray", _wrap_delete_SoundArray},
+    { "SoundArray_getitem", _wrap_SoundArray_getitem},
+    { "SoundArray_setitem", _wrap_SoundArray_setitem},
+    { "new_s8Array", _wrap_new_s8Array},
+    { "delete_s8Array", _wrap_delete_s8Array},
+    { "s8Array_getitem", _wrap_s8Array_getitem},
+    { "s8Array_setitem", _wrap_s8Array_setitem},
+    { "new_u8Array", _wrap_new_u8Array},
+    { "delete_u8Array", _wrap_delete_u8Array},
+    { "u8Array_getitem", _wrap_u8Array_getitem},
+    { "u8Array_setitem", _wrap_u8Array_setitem},
+    { "new_s16Array", _wrap_new_s16Array},
+    { "delete_s16Array", _wrap_delete_s16Array},
+    { "s16Array_getitem", _wrap_s16Array_getitem},
+    { "s16Array_setitem", _wrap_s16Array_setitem},
+    { "new_u16Array", _wrap_new_u16Array},
+    { "delete_u16Array", _wrap_delete_u16Array},
+    { "u16Array_getitem", _wrap_u16Array_getitem},
+    { "u16Array_setitem", _wrap_u16Array_setitem},
+    { "new_s32Array", _wrap_new_s32Array},
+    { "delete_s32Array", _wrap_delete_s32Array},
+    { "s32Array_getitem", _wrap_s32Array_getitem},
+    { "s32Array_setitem", _wrap_s32Array_setitem},
+    { "new_u32Array", _wrap_new_u32Array},
+    { "delete_u32Array", _wrap_delete_u32Array},
+    { "u32Array_getitem", _wrap_u32Array_getitem},
+    { "u32Array_setitem", _wrap_u32Array_setitem},
+    { "new_s64Array", _wrap_new_s64Array},
+    { "delete_s64Array", _wrap_delete_s64Array},
+    { "s64Array_getitem", _wrap_s64Array_getitem},
+    { "s64Array_setitem", _wrap_s64Array_setitem},
+    { "new_u64Array", _wrap_new_u64Array},
+    { "delete_u64Array", _wrap_delete_u64Array},
+    { "u64Array_getitem", _wrap_u64Array_getitem},
+    { "u64Array_setitem", _wrap_u64Array_setitem},
+    { "new_f32Array", _wrap_new_f32Array},
+    { "delete_f32Array", _wrap_delete_f32Array},
+    { "f32Array_getitem", _wrap_f32Array_getitem},
+    { "f32Array_setitem", _wrap_f32Array_setitem},
+    { "new_f64Array", _wrap_new_f64Array},
+    { "delete_f64Array", _wrap_delete_f64Array},
+    { "f64Array_getitem", _wrap_f64Array_getitem},
+    { "f64Array_setitem", _wrap_f64Array_setitem},
+    { "new_ActionArray", _wrap_new_ActionArray},
+    { "delete_ActionArray", _wrap_delete_ActionArray},
+    { "ActionArray_getitem", _wrap_ActionArray_getitem},
+    { "ActionArray_setitem", _wrap_ActionArray_setitem},
+    { "new_ActionBuilderArray", _wrap_new_ActionBuilderArray},
+    { "delete_ActionBuilderArray", _wrap_delete_ActionBuilderArray},
+    { "ActionBuilderArray_getitem", _wrap_ActionBuilderArray_getitem},
+    { "ActionBuilderArray_setitem", _wrap_ActionBuilderArray_setitem},
+    { "new_CameraArray", _wrap_new_CameraArray},
+    { "delete_CameraArray", _wrap_delete_CameraArray},
+    { "CameraArray_getitem", _wrap_CameraArray_getitem},
+    { "CameraArray_setitem", _wrap_CameraArray_setitem},
+    { "new_CameraBuilderArray", _wrap_new_CameraBuilderArray},
+    { "delete_CameraBuilderArray", _wrap_delete_CameraBuilderArray},
+    { "CameraBuilderArray_getitem", _wrap_CameraBuilderArray_getitem},
+    { "CameraBuilderArray_setitem", _wrap_CameraBuilderArray_setitem},
+    { "new_ClockArray", _wrap_new_ClockArray},
+    { "delete_ClockArray", _wrap_delete_ClockArray},
+    { "ClockArray_getitem", _wrap_ClockArray_getitem},
+    { "ClockArray_setitem", _wrap_ClockArray_setitem},
+    { "new_ClockBuilderArray", _wrap_new_ClockBuilderArray},
+    { "delete_ClockBuilderArray", _wrap_delete_ClockBuilderArray},
+    { "ClockBuilderArray_getitem", _wrap_ClockBuilderArray_getitem},
+    { "ClockBuilderArray_setitem", _wrap_ClockBuilderArray_setitem},
+    { "new_CollisionResponseArray", _wrap_new_CollisionResponseArray},
+    { "delete_CollisionResponseArray", _wrap_delete_CollisionResponseArray},
+    { "CollisionResponseArray_getitem", _wrap_CollisionResponseArray_getitem},
+    { "CollisionResponseArray_setitem", _wrap_CollisionResponseArray_setitem},
+    { "new_CollisionResponseBuilderArray", _wrap_new_CollisionResponseBuilderArray},
+    { "delete_CollisionResponseBuilderArray", _wrap_delete_CollisionResponseBuilderArray},
+    { "CollisionResponseBuilderArray_getitem", _wrap_CollisionResponseBuilderArray_getitem},
+    { "CollisionResponseBuilderArray_setitem", _wrap_CollisionResponseBuilderArray_setitem},
+    { "new_CubeArray", _wrap_new_CubeArray},
+    { "delete_CubeArray", _wrap_delete_CubeArray},
+    { "CubeArray_getitem", _wrap_CubeArray_getitem},
+    { "CubeArray_setitem", _wrap_CubeArray_setitem},
+    { "new_CubeBuilderArray", _wrap_new_CubeBuilderArray},
+    { "delete_CubeBuilderArray", _wrap_delete_CubeBuilderArray},
+    { "CubeBuilderArray_getitem", _wrap_CubeBuilderArray_getitem},
+    { "CubeBuilderArray_setitem", _wrap_CubeBuilderArray_setitem},
+    { "new_FontArray", _wrap_new_FontArray},
+    { "delete_FontArray", _wrap_delete_FontArray},
+    { "FontArray_getitem", _wrap_FontArray_getitem},
+    { "FontArray_setitem", _wrap_FontArray_setitem},
+    { "new_FontBuilderArray", _wrap_new_FontBuilderArray},
+    { "delete_FontBuilderArray", _wrap_delete_FontBuilderArray},
+    { "FontBuilderArray_getitem", _wrap_FontBuilderArray_getitem},
+    { "FontBuilderArray_setitem", _wrap_FontBuilderArray_setitem},
+    { "new_ImageArray", _wrap_new_ImageArray},
+    { "delete_ImageArray", _wrap_delete_ImageArray},
+    { "ImageArray_getitem", _wrap_ImageArray_getitem},
+    { "ImageArray_setitem", _wrap_ImageArray_setitem},
+    { "new_ImageBuilderArray", _wrap_new_ImageBuilderArray},
+    { "delete_ImageBuilderArray", _wrap_delete_ImageBuilderArray},
+    { "ImageBuilderArray_getitem", _wrap_ImageBuilderArray_getitem},
+    { "ImageBuilderArray_setitem", _wrap_ImageBuilderArray_setitem},
+    { "new_JsonJLIArray", _wrap_new_JsonJLIArray},
+    { "delete_JsonJLIArray", _wrap_delete_JsonJLIArray},
+    { "JsonJLIArray_getitem", _wrap_JsonJLIArray_getitem},
+    { "JsonJLIArray_setitem", _wrap_JsonJLIArray_setitem},
+    { "new_JsonJLIBuilderArray", _wrap_new_JsonJLIBuilderArray},
+    { "delete_JsonJLIBuilderArray", _wrap_delete_JsonJLIBuilderArray},
+    { "JsonJLIBuilderArray_getitem", _wrap_JsonJLIBuilderArray_getitem},
+    { "JsonJLIBuilderArray_setitem", _wrap_JsonJLIBuilderArray_setitem},
+    { "new_LevelOfDetailArray", _wrap_new_LevelOfDetailArray},
+    { "delete_LevelOfDetailArray", _wrap_delete_LevelOfDetailArray},
+    { "LevelOfDetailArray_getitem", _wrap_LevelOfDetailArray_getitem},
+    { "LevelOfDetailArray_setitem", _wrap_LevelOfDetailArray_setitem},
+    { "new_LevelOfDetailBuilderArray", _wrap_new_LevelOfDetailBuilderArray},
+    { "delete_LevelOfDetailBuilderArray", _wrap_delete_LevelOfDetailBuilderArray},
+    { "LevelOfDetailBuilderArray_getitem", _wrap_LevelOfDetailBuilderArray_getitem},
+    { "LevelOfDetailBuilderArray_setitem", _wrap_LevelOfDetailBuilderArray_setitem},
+    { "new_LightArray", _wrap_new_LightArray},
+    { "delete_LightArray", _wrap_delete_LightArray},
+    { "LightArray_getitem", _wrap_LightArray_getitem},
+    { "LightArray_setitem", _wrap_LightArray_setitem},
+    { "new_LightBuilderArray", _wrap_new_LightBuilderArray},
+    { "delete_LightBuilderArray", _wrap_delete_LightBuilderArray},
+    { "LightBuilderArray_getitem", _wrap_LightBuilderArray_getitem},
+    { "LightBuilderArray_setitem", _wrap_LightBuilderArray_setitem},
+    { "new_MaterialArray", _wrap_new_MaterialArray},
+    { "delete_MaterialArray", _wrap_delete_MaterialArray},
+    { "MaterialArray_getitem", _wrap_MaterialArray_getitem},
+    { "MaterialArray_setitem", _wrap_MaterialArray_setitem},
+    { "new_MaterialBuilderArray", _wrap_new_MaterialBuilderArray},
+    { "delete_MaterialBuilderArray", _wrap_delete_MaterialBuilderArray},
+    { "MaterialBuilderArray_getitem", _wrap_MaterialBuilderArray_getitem},
+    { "MaterialBuilderArray_setitem", _wrap_MaterialBuilderArray_setitem},
+    { "new_MaterialPropertyArray", _wrap_new_MaterialPropertyArray},
+    { "delete_MaterialPropertyArray", _wrap_delete_MaterialPropertyArray},
+    { "MaterialPropertyArray_getitem", _wrap_MaterialPropertyArray_getitem},
+    { "MaterialPropertyArray_setitem", _wrap_MaterialPropertyArray_setitem},
+    { "new_MaterialPropertyBuilderArray", _wrap_new_MaterialPropertyBuilderArray},
+    { "delete_MaterialPropertyBuilderArray", _wrap_delete_MaterialPropertyBuilderArray},
+    { "MaterialPropertyBuilderArray_getitem", _wrap_MaterialPropertyBuilderArray_getitem},
+    { "MaterialPropertyBuilderArray_setitem", _wrap_MaterialPropertyBuilderArray_setitem},
+    { "new_NodeArray", _wrap_new_NodeArray},
+    { "delete_NodeArray", _wrap_delete_NodeArray},
+    { "NodeArray_getitem", _wrap_NodeArray_getitem},
+    { "NodeArray_setitem", _wrap_NodeArray_setitem},
+    { "new_NodeBuilderArray", _wrap_new_NodeBuilderArray},
+    { "delete_NodeBuilderArray", _wrap_delete_NodeBuilderArray},
+    { "NodeBuilderArray_getitem", _wrap_NodeBuilderArray_getitem},
+    { "NodeBuilderArray_setitem", _wrap_NodeBuilderArray_setitem},
+    { "new_NodeStateArray", _wrap_new_NodeStateArray},
+    { "delete_NodeStateArray", _wrap_delete_NodeStateArray},
+    { "NodeStateArray_getitem", _wrap_NodeStateArray_getitem},
+    { "NodeStateArray_setitem", _wrap_NodeStateArray_setitem},
+    { "new_NodeStateBuilderArray", _wrap_new_NodeStateBuilderArray},
+    { "delete_NodeStateBuilderArray", _wrap_delete_NodeStateBuilderArray},
+    { "NodeStateBuilderArray_getitem", _wrap_NodeStateBuilderArray_getitem},
+    { "NodeStateBuilderArray_setitem", _wrap_NodeStateBuilderArray_setitem},
+    { "new_NodeStateMachineArray", _wrap_new_NodeStateMachineArray},
+    { "delete_NodeStateMachineArray", _wrap_delete_NodeStateMachineArray},
+    { "NodeStateMachineArray_getitem", _wrap_NodeStateMachineArray_getitem},
+    { "NodeStateMachineArray_setitem", _wrap_NodeStateMachineArray_setitem},
+    { "new_NodeStateMachineBuilderArray", _wrap_new_NodeStateMachineBuilderArray},
+    { "delete_NodeStateMachineBuilderArray", _wrap_delete_NodeStateMachineBuilderArray},
+    { "NodeStateMachineBuilderArray_getitem", _wrap_NodeStateMachineBuilderArray_getitem},
+    { "NodeStateMachineBuilderArray_setitem", _wrap_NodeStateMachineBuilderArray_setitem},
+    { "new_ParticleEmitterArray", _wrap_new_ParticleEmitterArray},
+    { "delete_ParticleEmitterArray", _wrap_delete_ParticleEmitterArray},
+    { "ParticleEmitterArray_getitem", _wrap_ParticleEmitterArray_getitem},
+    { "ParticleEmitterArray_setitem", _wrap_ParticleEmitterArray_setitem},
+    { "new_ParticleEmitterBuilderArray", _wrap_new_ParticleEmitterBuilderArray},
+    { "delete_ParticleEmitterBuilderArray", _wrap_delete_ParticleEmitterBuilderArray},
+    { "ParticleEmitterBuilderArray_getitem", _wrap_ParticleEmitterBuilderArray_getitem},
+    { "ParticleEmitterBuilderArray_setitem", _wrap_ParticleEmitterBuilderArray_setitem},
+    { "new_PhysicsBodyGhostArray", _wrap_new_PhysicsBodyGhostArray},
+    { "delete_PhysicsBodyGhostArray", _wrap_delete_PhysicsBodyGhostArray},
+    { "PhysicsBodyGhostArray_getitem", _wrap_PhysicsBodyGhostArray_getitem},
+    { "PhysicsBodyGhostArray_setitem", _wrap_PhysicsBodyGhostArray_setitem},
+    { "new_PhysicsBodyGhostBuilderArray", _wrap_new_PhysicsBodyGhostBuilderArray},
+    { "delete_PhysicsBodyGhostBuilderArray", _wrap_delete_PhysicsBodyGhostBuilderArray},
+    { "PhysicsBodyGhostBuilderArray_getitem", _wrap_PhysicsBodyGhostBuilderArray_getitem},
+    { "PhysicsBodyGhostBuilderArray_setitem", _wrap_PhysicsBodyGhostBuilderArray_setitem},
+    { "new_PhysicsBodyRigidArray", _wrap_new_PhysicsBodyRigidArray},
+    { "delete_PhysicsBodyRigidArray", _wrap_delete_PhysicsBodyRigidArray},
+    { "PhysicsBodyRigidArray_getitem", _wrap_PhysicsBodyRigidArray_getitem},
+    { "PhysicsBodyRigidArray_setitem", _wrap_PhysicsBodyRigidArray_setitem},
+    { "new_PhysicsBodyRigidBuilderArray", _wrap_new_PhysicsBodyRigidBuilderArray},
+    { "delete_PhysicsBodyRigidBuilderArray", _wrap_delete_PhysicsBodyRigidBuilderArray},
+    { "PhysicsBodyRigidBuilderArray_getitem", _wrap_PhysicsBodyRigidBuilderArray_getitem},
+    { "PhysicsBodyRigidBuilderArray_setitem", _wrap_PhysicsBodyRigidBuilderArray_setitem},
+    { "new_PhysicsBodySoftArray", _wrap_new_PhysicsBodySoftArray},
+    { "delete_PhysicsBodySoftArray", _wrap_delete_PhysicsBodySoftArray},
+    { "PhysicsBodySoftArray_getitem", _wrap_PhysicsBodySoftArray_getitem},
+    { "PhysicsBodySoftArray_setitem", _wrap_PhysicsBodySoftArray_setitem},
+    { "new_PhysicsBodySoftBuilderArray", _wrap_new_PhysicsBodySoftBuilderArray},
+    { "delete_PhysicsBodySoftBuilderArray", _wrap_delete_PhysicsBodySoftBuilderArray},
+    { "PhysicsBodySoftBuilderArray_getitem", _wrap_PhysicsBodySoftBuilderArray_getitem},
+    { "PhysicsBodySoftBuilderArray_setitem", _wrap_PhysicsBodySoftBuilderArray_setitem},
+    { "new_PhysicsCloseContactArray", _wrap_new_PhysicsCloseContactArray},
+    { "delete_PhysicsCloseContactArray", _wrap_delete_PhysicsCloseContactArray},
+    { "PhysicsCloseContactArray_getitem", _wrap_PhysicsCloseContactArray_getitem},
+    { "PhysicsCloseContactArray_setitem", _wrap_PhysicsCloseContactArray_setitem},
+    { "new_PhysicsCloseContactBuilderArray", _wrap_new_PhysicsCloseContactBuilderArray},
+    { "delete_PhysicsCloseContactBuilderArray", _wrap_delete_PhysicsCloseContactBuilderArray},
+    { "PhysicsCloseContactBuilderArray_getitem", _wrap_PhysicsCloseContactBuilderArray_getitem},
+    { "PhysicsCloseContactBuilderArray_setitem", _wrap_PhysicsCloseContactBuilderArray_setitem},
+    { "new_PhysicsConstraintArray", _wrap_new_PhysicsConstraintArray},
+    { "delete_PhysicsConstraintArray", _wrap_delete_PhysicsConstraintArray},
+    { "PhysicsConstraintArray_getitem", _wrap_PhysicsConstraintArray_getitem},
+    { "PhysicsConstraintArray_setitem", _wrap_PhysicsConstraintArray_setitem},
+    { "new_PhysicsConstraintBuilderArray", _wrap_new_PhysicsConstraintBuilderArray},
+    { "delete_PhysicsConstraintBuilderArray", _wrap_delete_PhysicsConstraintBuilderArray},
+    { "PhysicsConstraintBuilderArray_getitem", _wrap_PhysicsConstraintBuilderArray_getitem},
+    { "PhysicsConstraintBuilderArray_setitem", _wrap_PhysicsConstraintBuilderArray_setitem},
+    { "new_PhysicsConstraintConeTwistArray", _wrap_new_PhysicsConstraintConeTwistArray},
+    { "delete_PhysicsConstraintConeTwistArray", _wrap_delete_PhysicsConstraintConeTwistArray},
+    { "PhysicsConstraintConeTwistArray_getitem", _wrap_PhysicsConstraintConeTwistArray_getitem},
+    { "PhysicsConstraintConeTwistArray_setitem", _wrap_PhysicsConstraintConeTwistArray_setitem},
+    { "new_PhysicsConstraintConeTwistBuilderArray", _wrap_new_PhysicsConstraintConeTwistBuilderArray},
+    { "delete_PhysicsConstraintConeTwistBuilderArray", _wrap_delete_PhysicsConstraintConeTwistBuilderArray},
+    { "PhysicsConstraintConeTwistBuilderArray_getitem", _wrap_PhysicsConstraintConeTwistBuilderArray_getitem},
+    { "PhysicsConstraintConeTwistBuilderArray_setitem", _wrap_PhysicsConstraintConeTwistBuilderArray_setitem},
+    { "new_PhysicsConstraintFixedArray", _wrap_new_PhysicsConstraintFixedArray},
+    { "delete_PhysicsConstraintFixedArray", _wrap_delete_PhysicsConstraintFixedArray},
+    { "PhysicsConstraintFixedArray_getitem", _wrap_PhysicsConstraintFixedArray_getitem},
+    { "PhysicsConstraintFixedArray_setitem", _wrap_PhysicsConstraintFixedArray_setitem},
+    { "new_PhysicsConstraintFixedBuilderArray", _wrap_new_PhysicsConstraintFixedBuilderArray},
+    { "delete_PhysicsConstraintFixedBuilderArray", _wrap_delete_PhysicsConstraintFixedBuilderArray},
+    { "PhysicsConstraintFixedBuilderArray_getitem", _wrap_PhysicsConstraintFixedBuilderArray_getitem},
+    { "PhysicsConstraintFixedBuilderArray_setitem", _wrap_PhysicsConstraintFixedBuilderArray_setitem},
+    { "new_PhysicsConstraintGeneric6DofArray", _wrap_new_PhysicsConstraintGeneric6DofArray},
+    { "delete_PhysicsConstraintGeneric6DofArray", _wrap_delete_PhysicsConstraintGeneric6DofArray},
+    { "PhysicsConstraintGeneric6DofArray_getitem", _wrap_PhysicsConstraintGeneric6DofArray_getitem},
+    { "PhysicsConstraintGeneric6DofArray_setitem", _wrap_PhysicsConstraintGeneric6DofArray_setitem},
+    { "new_PhysicsConstraintGeneric6DofBuilderArray", _wrap_new_PhysicsConstraintGeneric6DofBuilderArray},
+    { "delete_PhysicsConstraintGeneric6DofBuilderArray", _wrap_delete_PhysicsConstraintGeneric6DofBuilderArray},
+    { "PhysicsConstraintGeneric6DofBuilderArray_getitem", _wrap_PhysicsConstraintGeneric6DofBuilderArray_getitem},
+    { "PhysicsConstraintGeneric6DofBuilderArray_setitem", _wrap_PhysicsConstraintGeneric6DofBuilderArray_setitem},
+    { "new_PhysicsConstraintGeneric6DofSpringArray", _wrap_new_PhysicsConstraintGeneric6DofSpringArray},
+    { "delete_PhysicsConstraintGeneric6DofSpringArray", _wrap_delete_PhysicsConstraintGeneric6DofSpringArray},
+    { "PhysicsConstraintGeneric6DofSpringArray_getitem", _wrap_PhysicsConstraintGeneric6DofSpringArray_getitem},
+    { "PhysicsConstraintGeneric6DofSpringArray_setitem", _wrap_PhysicsConstraintGeneric6DofSpringArray_setitem},
+    { "new_PhysicsConstraintGeneric6DofSpringBuilderArray", _wrap_new_PhysicsConstraintGeneric6DofSpringBuilderArray},
+    { "delete_PhysicsConstraintGeneric6DofSpringBuilderArray", _wrap_delete_PhysicsConstraintGeneric6DofSpringBuilderArray},
+    { "PhysicsConstraintGeneric6DofSpringBuilderArray_getitem", _wrap_PhysicsConstraintGeneric6DofSpringBuilderArray_getitem},
+    { "PhysicsConstraintGeneric6DofSpringBuilderArray_setitem", _wrap_PhysicsConstraintGeneric6DofSpringBuilderArray_setitem},
+    { "new_PhysicsConstraintHingeArray", _wrap_new_PhysicsConstraintHingeArray},
+    { "delete_PhysicsConstraintHingeArray", _wrap_delete_PhysicsConstraintHingeArray},
+    { "PhysicsConstraintHingeArray_getitem", _wrap_PhysicsConstraintHingeArray_getitem},
+    { "PhysicsConstraintHingeArray_setitem", _wrap_PhysicsConstraintHingeArray_setitem},
+    { "new_PhysicsConstraintHingeBuilderArray", _wrap_new_PhysicsConstraintHingeBuilderArray},
+    { "delete_PhysicsConstraintHingeBuilderArray", _wrap_delete_PhysicsConstraintHingeBuilderArray},
+    { "PhysicsConstraintHingeBuilderArray_getitem", _wrap_PhysicsConstraintHingeBuilderArray_getitem},
+    { "PhysicsConstraintHingeBuilderArray_setitem", _wrap_PhysicsConstraintHingeBuilderArray_setitem},
+    { "new_PhysicsConstraintPointToPointArray", _wrap_new_PhysicsConstraintPointToPointArray},
+    { "delete_PhysicsConstraintPointToPointArray", _wrap_delete_PhysicsConstraintPointToPointArray},
+    { "PhysicsConstraintPointToPointArray_getitem", _wrap_PhysicsConstraintPointToPointArray_getitem},
+    { "PhysicsConstraintPointToPointArray_setitem", _wrap_PhysicsConstraintPointToPointArray_setitem},
+    { "new_PhysicsConstraintPointToPointBuilderArray", _wrap_new_PhysicsConstraintPointToPointBuilderArray},
+    { "delete_PhysicsConstraintPointToPointBuilderArray", _wrap_delete_PhysicsConstraintPointToPointBuilderArray},
+    { "PhysicsConstraintPointToPointBuilderArray_getitem", _wrap_PhysicsConstraintPointToPointBuilderArray_getitem},
+    { "PhysicsConstraintPointToPointBuilderArray_setitem", _wrap_PhysicsConstraintPointToPointBuilderArray_setitem},
+    { "new_PhysicsConstraintSliderArray", _wrap_new_PhysicsConstraintSliderArray},
+    { "delete_PhysicsConstraintSliderArray", _wrap_delete_PhysicsConstraintSliderArray},
+    { "PhysicsConstraintSliderArray_getitem", _wrap_PhysicsConstraintSliderArray_getitem},
+    { "PhysicsConstraintSliderArray_setitem", _wrap_PhysicsConstraintSliderArray_setitem},
+    { "new_PhysicsConstraintSliderBuilderArray", _wrap_new_PhysicsConstraintSliderBuilderArray},
+    { "delete_PhysicsConstraintSliderBuilderArray", _wrap_delete_PhysicsConstraintSliderBuilderArray},
+    { "PhysicsConstraintSliderBuilderArray_getitem", _wrap_PhysicsConstraintSliderBuilderArray_getitem},
+    { "PhysicsConstraintSliderBuilderArray_setitem", _wrap_PhysicsConstraintSliderBuilderArray_setitem},
+    { "new_PhysicsContactArray", _wrap_new_PhysicsContactArray},
+    { "delete_PhysicsContactArray", _wrap_delete_PhysicsContactArray},
+    { "PhysicsContactArray_getitem", _wrap_PhysicsContactArray_getitem},
+    { "PhysicsContactArray_setitem", _wrap_PhysicsContactArray_setitem},
+    { "new_PhysicsContactBuilderArray", _wrap_new_PhysicsContactBuilderArray},
+    { "delete_PhysicsContactBuilderArray", _wrap_delete_PhysicsContactBuilderArray},
+    { "PhysicsContactBuilderArray_getitem", _wrap_PhysicsContactBuilderArray_getitem},
+    { "PhysicsContactBuilderArray_setitem", _wrap_PhysicsContactBuilderArray_setitem},
+    { "new_PhysicsFieldArray", _wrap_new_PhysicsFieldArray},
+    { "delete_PhysicsFieldArray", _wrap_delete_PhysicsFieldArray},
+    { "PhysicsFieldArray_getitem", _wrap_PhysicsFieldArray_getitem},
+    { "PhysicsFieldArray_setitem", _wrap_PhysicsFieldArray_setitem},
+    { "new_PhysicsFieldBuilderArray", _wrap_new_PhysicsFieldBuilderArray},
+    { "delete_PhysicsFieldBuilderArray", _wrap_delete_PhysicsFieldBuilderArray},
+    { "PhysicsFieldBuilderArray_getitem", _wrap_PhysicsFieldBuilderArray_getitem},
+    { "PhysicsFieldBuilderArray_setitem", _wrap_PhysicsFieldBuilderArray_setitem},
+    { "new_PhysicsRayContactArray", _wrap_new_PhysicsRayContactArray},
+    { "delete_PhysicsRayContactArray", _wrap_delete_PhysicsRayContactArray},
+    { "PhysicsRayContactArray_getitem", _wrap_PhysicsRayContactArray_getitem},
+    { "PhysicsRayContactArray_setitem", _wrap_PhysicsRayContactArray_setitem},
+    { "new_PhysicsRayContactBuilderArray", _wrap_new_PhysicsRayContactBuilderArray},
+    { "delete_PhysicsRayContactBuilderArray", _wrap_delete_PhysicsRayContactBuilderArray},
+    { "PhysicsRayContactBuilderArray_getitem", _wrap_PhysicsRayContactBuilderArray_getitem},
+    { "PhysicsRayContactBuilderArray_setitem", _wrap_PhysicsRayContactBuilderArray_setitem},
+    { "new_PhysicsShapeBoxArray", _wrap_new_PhysicsShapeBoxArray},
+    { "delete_PhysicsShapeBoxArray", _wrap_delete_PhysicsShapeBoxArray},
+    { "PhysicsShapeBoxArray_getitem", _wrap_PhysicsShapeBoxArray_getitem},
+    { "PhysicsShapeBoxArray_setitem", _wrap_PhysicsShapeBoxArray_setitem},
+    { "new_PhysicsShapeBox2DArray", _wrap_new_PhysicsShapeBox2DArray},
+    { "delete_PhysicsShapeBox2DArray", _wrap_delete_PhysicsShapeBox2DArray},
+    { "PhysicsShapeBox2DArray_getitem", _wrap_PhysicsShapeBox2DArray_getitem},
+    { "PhysicsShapeBox2DArray_setitem", _wrap_PhysicsShapeBox2DArray_setitem},
+    { "new_PhysicsShapeBox2DBuilderArray", _wrap_new_PhysicsShapeBox2DBuilderArray},
+    { "delete_PhysicsShapeBox2DBuilderArray", _wrap_delete_PhysicsShapeBox2DBuilderArray},
+    { "PhysicsShapeBox2DBuilderArray_getitem", _wrap_PhysicsShapeBox2DBuilderArray_getitem},
+    { "PhysicsShapeBox2DBuilderArray_setitem", _wrap_PhysicsShapeBox2DBuilderArray_setitem},
+    { "new_PhysicsShapeBoxBuilderArray", _wrap_new_PhysicsShapeBoxBuilderArray},
+    { "delete_PhysicsShapeBoxBuilderArray", _wrap_delete_PhysicsShapeBoxBuilderArray},
+    { "PhysicsShapeBoxBuilderArray_getitem", _wrap_PhysicsShapeBoxBuilderArray_getitem},
+    { "PhysicsShapeBoxBuilderArray_setitem", _wrap_PhysicsShapeBoxBuilderArray_setitem},
+    { "new_PhysicsShapeBvhTriangleMeshArray", _wrap_new_PhysicsShapeBvhTriangleMeshArray},
+    { "delete_PhysicsShapeBvhTriangleMeshArray", _wrap_delete_PhysicsShapeBvhTriangleMeshArray},
+    { "PhysicsShapeBvhTriangleMeshArray_getitem", _wrap_PhysicsShapeBvhTriangleMeshArray_getitem},
+    { "PhysicsShapeBvhTriangleMeshArray_setitem", _wrap_PhysicsShapeBvhTriangleMeshArray_setitem},
+    { "new_PhysicsShapeBvhTriangleMeshBuilderArray", _wrap_new_PhysicsShapeBvhTriangleMeshBuilderArray},
+    { "delete_PhysicsShapeBvhTriangleMeshBuilderArray", _wrap_delete_PhysicsShapeBvhTriangleMeshBuilderArray},
+    { "PhysicsShapeBvhTriangleMeshBuilderArray_getitem", _wrap_PhysicsShapeBvhTriangleMeshBuilderArray_getitem},
+    { "PhysicsShapeBvhTriangleMeshBuilderArray_setitem", _wrap_PhysicsShapeBvhTriangleMeshBuilderArray_setitem},
+    { "new_PhysicsShapeCapsuleArray", _wrap_new_PhysicsShapeCapsuleArray},
+    { "delete_PhysicsShapeCapsuleArray", _wrap_delete_PhysicsShapeCapsuleArray},
+    { "PhysicsShapeCapsuleArray_getitem", _wrap_PhysicsShapeCapsuleArray_getitem},
+    { "PhysicsShapeCapsuleArray_setitem", _wrap_PhysicsShapeCapsuleArray_setitem},
+    { "new_PhysicsShapeCapsuleBuilderArray", _wrap_new_PhysicsShapeCapsuleBuilderArray},
+    { "delete_PhysicsShapeCapsuleBuilderArray", _wrap_delete_PhysicsShapeCapsuleBuilderArray},
+    { "PhysicsShapeCapsuleBuilderArray_getitem", _wrap_PhysicsShapeCapsuleBuilderArray_getitem},
+    { "PhysicsShapeCapsuleBuilderArray_setitem", _wrap_PhysicsShapeCapsuleBuilderArray_setitem},
+    { "new_PhysicsShapeConeArray", _wrap_new_PhysicsShapeConeArray},
+    { "delete_PhysicsShapeConeArray", _wrap_delete_PhysicsShapeConeArray},
+    { "PhysicsShapeConeArray_getitem", _wrap_PhysicsShapeConeArray_getitem},
+    { "PhysicsShapeConeArray_setitem", _wrap_PhysicsShapeConeArray_setitem},
+    { "new_PhysicsShapeConeBuilderArray", _wrap_new_PhysicsShapeConeBuilderArray},
+    { "delete_PhysicsShapeConeBuilderArray", _wrap_delete_PhysicsShapeConeBuilderArray},
+    { "PhysicsShapeConeBuilderArray_getitem", _wrap_PhysicsShapeConeBuilderArray_getitem},
+    { "PhysicsShapeConeBuilderArray_setitem", _wrap_PhysicsShapeConeBuilderArray_setitem},
+    { "new_PhysicsShapeConvexHullArray", _wrap_new_PhysicsShapeConvexHullArray},
+    { "delete_PhysicsShapeConvexHullArray", _wrap_delete_PhysicsShapeConvexHullArray},
+    { "PhysicsShapeConvexHullArray_getitem", _wrap_PhysicsShapeConvexHullArray_getitem},
+    { "PhysicsShapeConvexHullArray_setitem", _wrap_PhysicsShapeConvexHullArray_setitem},
+    { "new_PhysicsShapeConvexHullBuilderArray", _wrap_new_PhysicsShapeConvexHullBuilderArray},
+    { "delete_PhysicsShapeConvexHullBuilderArray", _wrap_delete_PhysicsShapeConvexHullBuilderArray},
+    { "PhysicsShapeConvexHullBuilderArray_getitem", _wrap_PhysicsShapeConvexHullBuilderArray_getitem},
+    { "PhysicsShapeConvexHullBuilderArray_setitem", _wrap_PhysicsShapeConvexHullBuilderArray_setitem},
+    { "new_PhysicsShapeConvexTriangleMeshArray", _wrap_new_PhysicsShapeConvexTriangleMeshArray},
+    { "delete_PhysicsShapeConvexTriangleMeshArray", _wrap_delete_PhysicsShapeConvexTriangleMeshArray},
+    { "PhysicsShapeConvexTriangleMeshArray_getitem", _wrap_PhysicsShapeConvexTriangleMeshArray_getitem},
+    { "PhysicsShapeConvexTriangleMeshArray_setitem", _wrap_PhysicsShapeConvexTriangleMeshArray_setitem},
+    { "new_PhysicsShapeConvexTriangleMeshBuilderArray", _wrap_new_PhysicsShapeConvexTriangleMeshBuilderArray},
+    { "delete_PhysicsShapeConvexTriangleMeshBuilderArray", _wrap_delete_PhysicsShapeConvexTriangleMeshBuilderArray},
+    { "PhysicsShapeConvexTriangleMeshBuilderArray_getitem", _wrap_PhysicsShapeConvexTriangleMeshBuilderArray_getitem},
+    { "PhysicsShapeConvexTriangleMeshBuilderArray_setitem", _wrap_PhysicsShapeConvexTriangleMeshBuilderArray_setitem},
+    { "new_PhysicsShapeCylinderArray", _wrap_new_PhysicsShapeCylinderArray},
+    { "delete_PhysicsShapeCylinderArray", _wrap_delete_PhysicsShapeCylinderArray},
+    { "PhysicsShapeCylinderArray_getitem", _wrap_PhysicsShapeCylinderArray_getitem},
+    { "PhysicsShapeCylinderArray_setitem", _wrap_PhysicsShapeCylinderArray_setitem},
+    { "new_PhysicsShapeCylinderBuilderArray", _wrap_new_PhysicsShapeCylinderBuilderArray},
+    { "delete_PhysicsShapeCylinderBuilderArray", _wrap_delete_PhysicsShapeCylinderBuilderArray},
+    { "PhysicsShapeCylinderBuilderArray_getitem", _wrap_PhysicsShapeCylinderBuilderArray_getitem},
+    { "PhysicsShapeCylinderBuilderArray_setitem", _wrap_PhysicsShapeCylinderBuilderArray_setitem},
+    { "new_PhysicsShapeHeightfieldTerrainArray", _wrap_new_PhysicsShapeHeightfieldTerrainArray},
+    { "delete_PhysicsShapeHeightfieldTerrainArray", _wrap_delete_PhysicsShapeHeightfieldTerrainArray},
+    { "PhysicsShapeHeightfieldTerrainArray_getitem", _wrap_PhysicsShapeHeightfieldTerrainArray_getitem},
+    { "PhysicsShapeHeightfieldTerrainArray_setitem", _wrap_PhysicsShapeHeightfieldTerrainArray_setitem},
+    { "new_PhysicsShapeHeightfieldTerrainBuilderArray", _wrap_new_PhysicsShapeHeightfieldTerrainBuilderArray},
+    { "delete_PhysicsShapeHeightfieldTerrainBuilderArray", _wrap_delete_PhysicsShapeHeightfieldTerrainBuilderArray},
+    { "PhysicsShapeHeightfieldTerrainBuilderArray_getitem", _wrap_PhysicsShapeHeightfieldTerrainBuilderArray_getitem},
+    { "PhysicsShapeHeightfieldTerrainBuilderArray_setitem", _wrap_PhysicsShapeHeightfieldTerrainBuilderArray_setitem},
+    { "new_PhysicsShapeMultiSphereArray", _wrap_new_PhysicsShapeMultiSphereArray},
+    { "delete_PhysicsShapeMultiSphereArray", _wrap_delete_PhysicsShapeMultiSphereArray},
+    { "PhysicsShapeMultiSphereArray_getitem", _wrap_PhysicsShapeMultiSphereArray_getitem},
+    { "PhysicsShapeMultiSphereArray_setitem", _wrap_PhysicsShapeMultiSphereArray_setitem},
+    { "new_PhysicsShapeMultiSphereBuilderArray", _wrap_new_PhysicsShapeMultiSphereBuilderArray},
+    { "delete_PhysicsShapeMultiSphereBuilderArray", _wrap_delete_PhysicsShapeMultiSphereBuilderArray},
+    { "PhysicsShapeMultiSphereBuilderArray_getitem", _wrap_PhysicsShapeMultiSphereBuilderArray_getitem},
+    { "PhysicsShapeMultiSphereBuilderArray_setitem", _wrap_PhysicsShapeMultiSphereBuilderArray_setitem},
+    { "new_PhysicsShapeSphereArray", _wrap_new_PhysicsShapeSphereArray},
+    { "delete_PhysicsShapeSphereArray", _wrap_delete_PhysicsShapeSphereArray},
+    { "PhysicsShapeSphereArray_getitem", _wrap_PhysicsShapeSphereArray_getitem},
+    { "PhysicsShapeSphereArray_setitem", _wrap_PhysicsShapeSphereArray_setitem},
+    { "new_PhysicsShapeSphereBuilderArray", _wrap_new_PhysicsShapeSphereBuilderArray},
+    { "delete_PhysicsShapeSphereBuilderArray", _wrap_delete_PhysicsShapeSphereBuilderArray},
+    { "PhysicsShapeSphereBuilderArray_getitem", _wrap_PhysicsShapeSphereBuilderArray_getitem},
+    { "PhysicsShapeSphereBuilderArray_setitem", _wrap_PhysicsShapeSphereBuilderArray_setitem},
+    { "new_PhysicsShapeStaticPlaneArray", _wrap_new_PhysicsShapeStaticPlaneArray},
+    { "delete_PhysicsShapeStaticPlaneArray", _wrap_delete_PhysicsShapeStaticPlaneArray},
+    { "PhysicsShapeStaticPlaneArray_getitem", _wrap_PhysicsShapeStaticPlaneArray_getitem},
+    { "PhysicsShapeStaticPlaneArray_setitem", _wrap_PhysicsShapeStaticPlaneArray_setitem},
+    { "new_PhysicsShapeStaticPlaneBuilderArray", _wrap_new_PhysicsShapeStaticPlaneBuilderArray},
+    { "delete_PhysicsShapeStaticPlaneBuilderArray", _wrap_delete_PhysicsShapeStaticPlaneBuilderArray},
+    { "PhysicsShapeStaticPlaneBuilderArray_getitem", _wrap_PhysicsShapeStaticPlaneBuilderArray_getitem},
+    { "PhysicsShapeStaticPlaneBuilderArray_setitem", _wrap_PhysicsShapeStaticPlaneBuilderArray_setitem},
+    { "new_PhysicsWorldArray", _wrap_new_PhysicsWorldArray},
+    { "delete_PhysicsWorldArray", _wrap_delete_PhysicsWorldArray},
+    { "PhysicsWorldArray_getitem", _wrap_PhysicsWorldArray_getitem},
+    { "PhysicsWorldArray_setitem", _wrap_PhysicsWorldArray_setitem},
+    { "new_PhysicsWorldBuilderArray", _wrap_new_PhysicsWorldBuilderArray},
+    { "delete_PhysicsWorldBuilderArray", _wrap_delete_PhysicsWorldBuilderArray},
+    { "PhysicsWorldBuilderArray_getitem", _wrap_PhysicsWorldBuilderArray_getitem},
+    { "PhysicsWorldBuilderArray_setitem", _wrap_PhysicsWorldBuilderArray_setitem},
+    { "new_PlaneArray", _wrap_new_PlaneArray},
+    { "delete_PlaneArray", _wrap_delete_PlaneArray},
+    { "PlaneArray_getitem", _wrap_PlaneArray_getitem},
+    { "PlaneArray_setitem", _wrap_PlaneArray_setitem},
+    { "new_PlaneBuilderArray", _wrap_new_PlaneBuilderArray},
+    { "delete_PlaneBuilderArray", _wrap_delete_PlaneBuilderArray},
+    { "PlaneBuilderArray_getitem", _wrap_PlaneBuilderArray_getitem},
+    { "PlaneBuilderArray_setitem", _wrap_PlaneBuilderArray_setitem},
+    { "new_SceneArray", _wrap_new_SceneArray},
+    { "delete_SceneArray", _wrap_delete_SceneArray},
+    { "SceneArray_getitem", _wrap_SceneArray_getitem},
+    { "SceneArray_setitem", _wrap_SceneArray_setitem},
+    { "new_SceneBuilderArray", _wrap_new_SceneBuilderArray},
+    { "delete_SceneBuilderArray", _wrap_delete_SceneBuilderArray},
+    { "SceneBuilderArray_getitem", _wrap_SceneBuilderArray_getitem},
+    { "SceneBuilderArray_setitem", _wrap_SceneBuilderArray_setitem},
+    { "new_SceneStateArray", _wrap_new_SceneStateArray},
+    { "delete_SceneStateArray", _wrap_delete_SceneStateArray},
+    { "SceneStateArray_getitem", _wrap_SceneStateArray_getitem},
+    { "SceneStateArray_setitem", _wrap_SceneStateArray_setitem},
+    { "new_SceneStateBuilderArray", _wrap_new_SceneStateBuilderArray},
+    { "delete_SceneStateBuilderArray", _wrap_delete_SceneStateBuilderArray},
+    { "SceneStateBuilderArray_getitem", _wrap_SceneStateBuilderArray_getitem},
+    { "SceneStateBuilderArray_setitem", _wrap_SceneStateBuilderArray_setitem},
+    { "new_SceneStateMachineArray", _wrap_new_SceneStateMachineArray},
+    { "delete_SceneStateMachineArray", _wrap_delete_SceneStateMachineArray},
+    { "SceneStateMachineArray_getitem", _wrap_SceneStateMachineArray_getitem},
+    { "SceneStateMachineArray_setitem", _wrap_SceneStateMachineArray_setitem},
+    { "new_SceneStateMachineBuilderArray", _wrap_new_SceneStateMachineBuilderArray},
+    { "delete_SceneStateMachineBuilderArray", _wrap_delete_SceneStateMachineBuilderArray},
+    { "SceneStateMachineBuilderArray_getitem", _wrap_SceneStateMachineBuilderArray_getitem},
+    { "SceneStateMachineBuilderArray_setitem", _wrap_SceneStateMachineBuilderArray_setitem},
+    { "new_ShaderProgramArray", _wrap_new_ShaderProgramArray},
+    { "delete_ShaderProgramArray", _wrap_delete_ShaderProgramArray},
+    { "ShaderProgramArray_getitem", _wrap_ShaderProgramArray_getitem},
+    { "ShaderProgramArray_setitem", _wrap_ShaderProgramArray_setitem},
+    { "new_ShaderProgramBuilderArray", _wrap_new_ShaderProgramBuilderArray},
+    { "delete_ShaderProgramBuilderArray", _wrap_delete_ShaderProgramBuilderArray},
+    { "ShaderProgramBuilderArray_getitem", _wrap_ShaderProgramBuilderArray_getitem},
+    { "ShaderProgramBuilderArray_setitem", _wrap_ShaderProgramBuilderArray_setitem},
+    { "new_SkinnerArray", _wrap_new_SkinnerArray},
+    { "delete_SkinnerArray", _wrap_delete_SkinnerArray},
+    { "SkinnerArray_getitem", _wrap_SkinnerArray_getitem},
+    { "SkinnerArray_setitem", _wrap_SkinnerArray_setitem},
+    { "new_SkinnerBuilderArray", _wrap_new_SkinnerBuilderArray},
+    { "delete_SkinnerBuilderArray", _wrap_delete_SkinnerBuilderArray},
+    { "SkinnerBuilderArray_getitem", _wrap_SkinnerBuilderArray_getitem},
+    { "SkinnerBuilderArray_setitem", _wrap_SkinnerBuilderArray_setitem},
+    { "new_SoundBuilderArray", _wrap_new_SoundBuilderArray},
+    { "delete_SoundBuilderArray", _wrap_delete_SoundBuilderArray},
+    { "SoundBuilderArray_getitem", _wrap_SoundBuilderArray_getitem},
+    { "SoundBuilderArray_setitem", _wrap_SoundBuilderArray_setitem},
+    { "new_Sprite2DArray", _wrap_new_Sprite2DArray},
+    { "delete_Sprite2DArray", _wrap_delete_Sprite2DArray},
+    { "Sprite2DArray_getitem", _wrap_Sprite2DArray_getitem},
+    { "Sprite2DArray_setitem", _wrap_Sprite2DArray_setitem},
+    { "new_Sprite2DBuilderArray", _wrap_new_Sprite2DBuilderArray},
+    { "delete_Sprite2DBuilderArray", _wrap_delete_Sprite2DBuilderArray},
+    { "Sprite2DBuilderArray_getitem", _wrap_Sprite2DBuilderArray_getitem},
+    { "Sprite2DBuilderArray_setitem", _wrap_Sprite2DBuilderArray_setitem},
+    { "new_SpriteFrameAtlasArray", _wrap_new_SpriteFrameAtlasArray},
+    { "delete_SpriteFrameAtlasArray", _wrap_delete_SpriteFrameAtlasArray},
+    { "SpriteFrameAtlasArray_getitem", _wrap_SpriteFrameAtlasArray_getitem},
+    { "SpriteFrameAtlasArray_setitem", _wrap_SpriteFrameAtlasArray_setitem},
+    { "new_SpriteFrameAtlasBuilderArray", _wrap_new_SpriteFrameAtlasBuilderArray},
+    { "delete_SpriteFrameAtlasBuilderArray", _wrap_delete_SpriteFrameAtlasBuilderArray},
+    { "SpriteFrameAtlasBuilderArray_getitem", _wrap_SpriteFrameAtlasBuilderArray_getitem},
+    { "SpriteFrameAtlasBuilderArray_setitem", _wrap_SpriteFrameAtlasBuilderArray_setitem},
+    { "new_SteeringBehaviorAlignment", _wrap_new_SteeringBehaviorAlignment},
+    { "delete_SteeringBehaviorAlignment", _wrap_delete_SteeringBehaviorAlignment},
+    { "SteeringBehaviorAlignment_getitem", _wrap_SteeringBehaviorAlignment_getitem},
+    { "SteeringBehaviorAlignment_setitem", _wrap_SteeringBehaviorAlignment_setitem},
+    { "new_SteeringBehaviorAlignmentBuilder", _wrap_new_SteeringBehaviorAlignmentBuilder},
+    { "delete_SteeringBehaviorAlignmentBuilder", _wrap_delete_SteeringBehaviorAlignmentBuilder},
+    { "SteeringBehaviorAlignmentBuilder_getitem", _wrap_SteeringBehaviorAlignmentBuilder_getitem},
+    { "SteeringBehaviorAlignmentBuilder_setitem", _wrap_SteeringBehaviorAlignmentBuilder_setitem},
+    { "new_SteeringBehaviorArrive", _wrap_new_SteeringBehaviorArrive},
+    { "delete_SteeringBehaviorArrive", _wrap_delete_SteeringBehaviorArrive},
+    { "SteeringBehaviorArrive_getitem", _wrap_SteeringBehaviorArrive_getitem},
+    { "SteeringBehaviorArrive_setitem", _wrap_SteeringBehaviorArrive_setitem},
+    { "new_SteeringBehaviorArriveBuilder", _wrap_new_SteeringBehaviorArriveBuilder},
+    { "delete_SteeringBehaviorArriveBuilder", _wrap_delete_SteeringBehaviorArriveBuilder},
+    { "SteeringBehaviorArriveBuilder_getitem", _wrap_SteeringBehaviorArriveBuilder_getitem},
+    { "SteeringBehaviorArriveBuilder_setitem", _wrap_SteeringBehaviorArriveBuilder_setitem},
+    { "new_SteeringBehaviorCohesion", _wrap_new_SteeringBehaviorCohesion},
+    { "delete_SteeringBehaviorCohesion", _wrap_delete_SteeringBehaviorCohesion},
+    { "SteeringBehaviorCohesion_getitem", _wrap_SteeringBehaviorCohesion_getitem},
+    { "SteeringBehaviorCohesion_setitem", _wrap_SteeringBehaviorCohesion_setitem},
+    { "new_SteeringBehaviorCohesionBuilder", _wrap_new_SteeringBehaviorCohesionBuilder},
+    { "delete_SteeringBehaviorCohesionBuilder", _wrap_delete_SteeringBehaviorCohesionBuilder},
+    { "SteeringBehaviorCohesionBuilder_getitem", _wrap_SteeringBehaviorCohesionBuilder_getitem},
+    { "SteeringBehaviorCohesionBuilder_setitem", _wrap_SteeringBehaviorCohesionBuilder_setitem},
+    { "new_SteeringBehaviorEvade", _wrap_new_SteeringBehaviorEvade},
+    { "delete_SteeringBehaviorEvade", _wrap_delete_SteeringBehaviorEvade},
+    { "SteeringBehaviorEvade_getitem", _wrap_SteeringBehaviorEvade_getitem},
+    { "SteeringBehaviorEvade_setitem", _wrap_SteeringBehaviorEvade_setitem},
+    { "new_SteeringBehaviorEvadeBuilder", _wrap_new_SteeringBehaviorEvadeBuilder},
+    { "delete_SteeringBehaviorEvadeBuilder", _wrap_delete_SteeringBehaviorEvadeBuilder},
+    { "SteeringBehaviorEvadeBuilder_getitem", _wrap_SteeringBehaviorEvadeBuilder_getitem},
+    { "SteeringBehaviorEvadeBuilder_setitem", _wrap_SteeringBehaviorEvadeBuilder_setitem},
+    { "new_SteeringBehaviorFlee", _wrap_new_SteeringBehaviorFlee},
+    { "delete_SteeringBehaviorFlee", _wrap_delete_SteeringBehaviorFlee},
+    { "SteeringBehaviorFlee_getitem", _wrap_SteeringBehaviorFlee_getitem},
+    { "SteeringBehaviorFlee_setitem", _wrap_SteeringBehaviorFlee_setitem},
+    { "new_SteeringBehaviorFleeBuilder", _wrap_new_SteeringBehaviorFleeBuilder},
+    { "delete_SteeringBehaviorFleeBuilder", _wrap_delete_SteeringBehaviorFleeBuilder},
+    { "SteeringBehaviorFleeBuilder_getitem", _wrap_SteeringBehaviorFleeBuilder_getitem},
+    { "SteeringBehaviorFleeBuilder_setitem", _wrap_SteeringBehaviorFleeBuilder_setitem},
+    { "new_SteeringBehaviorFollowPath", _wrap_new_SteeringBehaviorFollowPath},
+    { "delete_SteeringBehaviorFollowPath", _wrap_delete_SteeringBehaviorFollowPath},
+    { "SteeringBehaviorFollowPath_getitem", _wrap_SteeringBehaviorFollowPath_getitem},
+    { "SteeringBehaviorFollowPath_setitem", _wrap_SteeringBehaviorFollowPath_setitem},
+    { "new_SteeringBehaviorFollowPathBuilder", _wrap_new_SteeringBehaviorFollowPathBuilder},
+    { "delete_SteeringBehaviorFollowPathBuilder", _wrap_delete_SteeringBehaviorFollowPathBuilder},
+    { "SteeringBehaviorFollowPathBuilder_getitem", _wrap_SteeringBehaviorFollowPathBuilder_getitem},
+    { "SteeringBehaviorFollowPathBuilder_setitem", _wrap_SteeringBehaviorFollowPathBuilder_setitem},
+    { "new_SteeringBehaviorHide", _wrap_new_SteeringBehaviorHide},
+    { "delete_SteeringBehaviorHide", _wrap_delete_SteeringBehaviorHide},
+    { "SteeringBehaviorHide_getitem", _wrap_SteeringBehaviorHide_getitem},
+    { "SteeringBehaviorHide_setitem", _wrap_SteeringBehaviorHide_setitem},
+    { "new_SteeringBehaviorHideBuilder", _wrap_new_SteeringBehaviorHideBuilder},
+    { "delete_SteeringBehaviorHideBuilder", _wrap_delete_SteeringBehaviorHideBuilder},
+    { "SteeringBehaviorHideBuilder_getitem", _wrap_SteeringBehaviorHideBuilder_getitem},
+    { "SteeringBehaviorHideBuilder_setitem", _wrap_SteeringBehaviorHideBuilder_setitem},
+    { "new_SteeringBehaviorInterpose", _wrap_new_SteeringBehaviorInterpose},
+    { "delete_SteeringBehaviorInterpose", _wrap_delete_SteeringBehaviorInterpose},
+    { "SteeringBehaviorInterpose_getitem", _wrap_SteeringBehaviorInterpose_getitem},
+    { "SteeringBehaviorInterpose_setitem", _wrap_SteeringBehaviorInterpose_setitem},
+    { "new_SteeringBehaviorInterposeBuilder", _wrap_new_SteeringBehaviorInterposeBuilder},
+    { "delete_SteeringBehaviorInterposeBuilder", _wrap_delete_SteeringBehaviorInterposeBuilder},
+    { "SteeringBehaviorInterposeBuilder_getitem", _wrap_SteeringBehaviorInterposeBuilder_getitem},
+    { "SteeringBehaviorInterposeBuilder_setitem", _wrap_SteeringBehaviorInterposeBuilder_setitem},
+    { "new_SteeringBehaviorMachineDithered", _wrap_new_SteeringBehaviorMachineDithered},
+    { "delete_SteeringBehaviorMachineDithered", _wrap_delete_SteeringBehaviorMachineDithered},
+    { "SteeringBehaviorMachineDithered_getitem", _wrap_SteeringBehaviorMachineDithered_getitem},
+    { "SteeringBehaviorMachineDithered_setitem", _wrap_SteeringBehaviorMachineDithered_setitem},
+    { "new_SteeringBehaviorMachineDitheredBuilder", _wrap_new_SteeringBehaviorMachineDitheredBuilder},
+    { "delete_SteeringBehaviorMachineDitheredBuilder", _wrap_delete_SteeringBehaviorMachineDitheredBuilder},
+    { "SteeringBehaviorMachineDitheredBuilder_getitem", _wrap_SteeringBehaviorMachineDitheredBuilder_getitem},
+    { "SteeringBehaviorMachineDitheredBuilder_setitem", _wrap_SteeringBehaviorMachineDitheredBuilder_setitem},
+    { "new_SteeringBehaviorMachinePrioritized", _wrap_new_SteeringBehaviorMachinePrioritized},
+    { "delete_SteeringBehaviorMachinePrioritized", _wrap_delete_SteeringBehaviorMachinePrioritized},
+    { "SteeringBehaviorMachinePrioritized_getitem", _wrap_SteeringBehaviorMachinePrioritized_getitem},
+    { "SteeringBehaviorMachinePrioritized_setitem", _wrap_SteeringBehaviorMachinePrioritized_setitem},
+    { "new_SteeringBehaviorMachinePrioritizedBuilder", _wrap_new_SteeringBehaviorMachinePrioritizedBuilder},
+    { "delete_SteeringBehaviorMachinePrioritizedBuilder", _wrap_delete_SteeringBehaviorMachinePrioritizedBuilder},
+    { "SteeringBehaviorMachinePrioritizedBuilder_getitem", _wrap_SteeringBehaviorMachinePrioritizedBuilder_getitem},
+    { "SteeringBehaviorMachinePrioritizedBuilder_setitem", _wrap_SteeringBehaviorMachinePrioritizedBuilder_setitem},
+    { "new_SteeringBehaviorMachineWeighted", _wrap_new_SteeringBehaviorMachineWeighted},
+    { "delete_SteeringBehaviorMachineWeighted", _wrap_delete_SteeringBehaviorMachineWeighted},
+    { "SteeringBehaviorMachineWeighted_getitem", _wrap_SteeringBehaviorMachineWeighted_getitem},
+    { "SteeringBehaviorMachineWeighted_setitem", _wrap_SteeringBehaviorMachineWeighted_setitem},
+    { "new_SteeringBehaviorMachineWeightedBuilder", _wrap_new_SteeringBehaviorMachineWeightedBuilder},
+    { "delete_SteeringBehaviorMachineWeightedBuilder", _wrap_delete_SteeringBehaviorMachineWeightedBuilder},
+    { "SteeringBehaviorMachineWeightedBuilder_getitem", _wrap_SteeringBehaviorMachineWeightedBuilder_getitem},
+    { "SteeringBehaviorMachineWeightedBuilder_setitem", _wrap_SteeringBehaviorMachineWeightedBuilder_setitem},
+    { "new_SteeringBehaviorObstacleAvoidance", _wrap_new_SteeringBehaviorObstacleAvoidance},
+    { "delete_SteeringBehaviorObstacleAvoidance", _wrap_delete_SteeringBehaviorObstacleAvoidance},
+    { "SteeringBehaviorObstacleAvoidance_getitem", _wrap_SteeringBehaviorObstacleAvoidance_getitem},
+    { "SteeringBehaviorObstacleAvoidance_setitem", _wrap_SteeringBehaviorObstacleAvoidance_setitem},
+    { "new_SteeringBehaviorObstacleAvoidanceBuilder", _wrap_new_SteeringBehaviorObstacleAvoidanceBuilder},
+    { "delete_SteeringBehaviorObstacleAvoidanceBuilder", _wrap_delete_SteeringBehaviorObstacleAvoidanceBuilder},
+    { "SteeringBehaviorObstacleAvoidanceBuilder_getitem", _wrap_SteeringBehaviorObstacleAvoidanceBuilder_getitem},
+    { "SteeringBehaviorObstacleAvoidanceBuilder_setitem", _wrap_SteeringBehaviorObstacleAvoidanceBuilder_setitem},
+    { "new_SteeringBehaviorOffsetPursuit", _wrap_new_SteeringBehaviorOffsetPursuit},
+    { "delete_SteeringBehaviorOffsetPursuit", _wrap_delete_SteeringBehaviorOffsetPursuit},
+    { "SteeringBehaviorOffsetPursuit_getitem", _wrap_SteeringBehaviorOffsetPursuit_getitem},
+    { "SteeringBehaviorOffsetPursuit_setitem", _wrap_SteeringBehaviorOffsetPursuit_setitem},
+    { "new_SteeringBehaviorOffsetPursuitBuilder", _wrap_new_SteeringBehaviorOffsetPursuitBuilder},
+    { "delete_SteeringBehaviorOffsetPursuitBuilder", _wrap_delete_SteeringBehaviorOffsetPursuitBuilder},
+    { "SteeringBehaviorOffsetPursuitBuilder_getitem", _wrap_SteeringBehaviorOffsetPursuitBuilder_getitem},
+    { "SteeringBehaviorOffsetPursuitBuilder_setitem", _wrap_SteeringBehaviorOffsetPursuitBuilder_setitem},
+    { "new_SteeringBehaviorPursuit", _wrap_new_SteeringBehaviorPursuit},
+    { "delete_SteeringBehaviorPursuit", _wrap_delete_SteeringBehaviorPursuit},
+    { "SteeringBehaviorPursuit_getitem", _wrap_SteeringBehaviorPursuit_getitem},
+    { "SteeringBehaviorPursuit_setitem", _wrap_SteeringBehaviorPursuit_setitem},
+    { "new_SteeringBehaviorPursuitBuilder", _wrap_new_SteeringBehaviorPursuitBuilder},
+    { "delete_SteeringBehaviorPursuitBuilder", _wrap_delete_SteeringBehaviorPursuitBuilder},
+    { "SteeringBehaviorPursuitBuilder_getitem", _wrap_SteeringBehaviorPursuitBuilder_getitem},
+    { "SteeringBehaviorPursuitBuilder_setitem", _wrap_SteeringBehaviorPursuitBuilder_setitem},
+    { "new_SteeringBehaviorSeek", _wrap_new_SteeringBehaviorSeek},
+    { "delete_SteeringBehaviorSeek", _wrap_delete_SteeringBehaviorSeek},
+    { "SteeringBehaviorSeek_getitem", _wrap_SteeringBehaviorSeek_getitem},
+    { "SteeringBehaviorSeek_setitem", _wrap_SteeringBehaviorSeek_setitem},
+    { "new_SteeringBehaviorSeekBuilder", _wrap_new_SteeringBehaviorSeekBuilder},
+    { "delete_SteeringBehaviorSeekBuilder", _wrap_delete_SteeringBehaviorSeekBuilder},
+    { "SteeringBehaviorSeekBuilder_getitem", _wrap_SteeringBehaviorSeekBuilder_getitem},
+    { "SteeringBehaviorSeekBuilder_setitem", _wrap_SteeringBehaviorSeekBuilder_setitem},
+    { "new_SteeringBehaviorSeparation", _wrap_new_SteeringBehaviorSeparation},
+    { "delete_SteeringBehaviorSeparation", _wrap_delete_SteeringBehaviorSeparation},
+    { "SteeringBehaviorSeparation_getitem", _wrap_SteeringBehaviorSeparation_getitem},
+    { "SteeringBehaviorSeparation_setitem", _wrap_SteeringBehaviorSeparation_setitem},
+    { "new_SteeringBehaviorSeparationBuilder", _wrap_new_SteeringBehaviorSeparationBuilder},
+    { "delete_SteeringBehaviorSeparationBuilder", _wrap_delete_SteeringBehaviorSeparationBuilder},
+    { "SteeringBehaviorSeparationBuilder_getitem", _wrap_SteeringBehaviorSeparationBuilder_getitem},
+    { "SteeringBehaviorSeparationBuilder_setitem", _wrap_SteeringBehaviorSeparationBuilder_setitem},
+    { "new_SteeringBehaviorWallAvoidance", _wrap_new_SteeringBehaviorWallAvoidance},
+    { "delete_SteeringBehaviorWallAvoidance", _wrap_delete_SteeringBehaviorWallAvoidance},
+    { "SteeringBehaviorWallAvoidance_getitem", _wrap_SteeringBehaviorWallAvoidance_getitem},
+    { "SteeringBehaviorWallAvoidance_setitem", _wrap_SteeringBehaviorWallAvoidance_setitem},
+    { "new_SteeringBehaviorWallAvoidanceBuilder", _wrap_new_SteeringBehaviorWallAvoidanceBuilder},
+    { "delete_SteeringBehaviorWallAvoidanceBuilder", _wrap_delete_SteeringBehaviorWallAvoidanceBuilder},
+    { "SteeringBehaviorWallAvoidanceBuilder_getitem", _wrap_SteeringBehaviorWallAvoidanceBuilder_getitem},
+    { "SteeringBehaviorWallAvoidanceBuilder_setitem", _wrap_SteeringBehaviorWallAvoidanceBuilder_setitem},
+    { "new_SteeringBehaviorWander", _wrap_new_SteeringBehaviorWander},
+    { "delete_SteeringBehaviorWander", _wrap_delete_SteeringBehaviorWander},
+    { "SteeringBehaviorWander_getitem", _wrap_SteeringBehaviorWander_getitem},
+    { "SteeringBehaviorWander_setitem", _wrap_SteeringBehaviorWander_setitem},
+    { "new_SteeringBehaviorWanderBuilder", _wrap_new_SteeringBehaviorWanderBuilder},
+    { "delete_SteeringBehaviorWanderBuilder", _wrap_delete_SteeringBehaviorWanderBuilder},
+    { "SteeringBehaviorWanderBuilder_getitem", _wrap_SteeringBehaviorWanderBuilder_getitem},
+    { "SteeringBehaviorWanderBuilder_setitem", _wrap_SteeringBehaviorWanderBuilder_setitem},
+    { "new_StopWatchArray", _wrap_new_StopWatchArray},
+    { "delete_StopWatchArray", _wrap_delete_StopWatchArray},
+    { "StopWatchArray_getitem", _wrap_StopWatchArray_getitem},
+    { "StopWatchArray_setitem", _wrap_StopWatchArray_setitem},
+    { "new_StopWatchBuilderArray", _wrap_new_StopWatchBuilderArray},
+    { "delete_StopWatchBuilderArray", _wrap_delete_StopWatchBuilderArray},
+    { "StopWatchBuilderArray_getitem", _wrap_StopWatchBuilderArray_getitem},
+    { "StopWatchBuilderArray_setitem", _wrap_StopWatchBuilderArray_setitem},
+    { "new_TimerArray", _wrap_new_TimerArray},
+    { "delete_TimerArray", _wrap_delete_TimerArray},
+    { "TimerArray_getitem", _wrap_TimerArray_getitem},
+    { "TimerArray_setitem", _wrap_TimerArray_setitem},
+    { "new_TimerBuilderArray", _wrap_new_TimerBuilderArray},
+    { "delete_TimerBuilderArray", _wrap_delete_TimerBuilderArray},
+    { "TimerBuilderArray_getitem", _wrap_TimerBuilderArray_getitem},
+    { "TimerBuilderArray_setitem", _wrap_TimerBuilderArray_setitem},
+    { "new_WorldStateArray", _wrap_new_WorldStateArray},
+    { "delete_WorldStateArray", _wrap_delete_WorldStateArray},
+    { "WorldStateArray_getitem", _wrap_WorldStateArray_getitem},
+    { "WorldStateArray_setitem", _wrap_WorldStateArray_setitem},
+    { "new_WorldStateBuilderArray", _wrap_new_WorldStateBuilderArray},
+    { "delete_WorldStateBuilderArray", _wrap_delete_WorldStateBuilderArray},
+    { "WorldStateBuilderArray_getitem", _wrap_WorldStateBuilderArray_getitem},
+    { "WorldStateBuilderArray_setitem", _wrap_WorldStateBuilderArray_setitem},
+    { "new_WorldStateMachineArray", _wrap_new_WorldStateMachineArray},
+    { "delete_WorldStateMachineArray", _wrap_delete_WorldStateMachineArray},
+    { "WorldStateMachineArray_getitem", _wrap_WorldStateMachineArray_getitem},
+    { "WorldStateMachineArray_setitem", _wrap_WorldStateMachineArray_setitem},
+    { "new_WorldStateMachineBuilderArray", _wrap_new_WorldStateMachineBuilderArray},
+    { "delete_WorldStateMachineBuilderArray", _wrap_delete_WorldStateMachineBuilderArray},
+    { "WorldStateMachineBuilderArray_getitem", _wrap_WorldStateMachineBuilderArray_getitem},
+    { "WorldStateMachineBuilderArray_setitem", _wrap_WorldStateMachineBuilderArray_setitem},
+    { "new_XmlArray", _wrap_new_XmlArray},
+    { "delete_XmlArray", _wrap_delete_XmlArray},
+    { "XmlArray_getitem", _wrap_XmlArray_getitem},
+    { "XmlArray_setitem", _wrap_XmlArray_setitem},
+    { "new_XmlBuilderArray", _wrap_new_XmlBuilderArray},
+    { "delete_XmlBuilderArray", _wrap_delete_XmlBuilderArray},
+    { "XmlBuilderArray_getitem", _wrap_XmlBuilderArray_getitem},
+    { "XmlBuilderArray_setitem", _wrap_XmlBuilderArray_setitem},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
@@ -2696,14 +24162,1268 @@ static swig_lua_namespace swig_SwigModule = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
+static swig_type_info _swigt__p_f32 = {"_p_f32", "f32 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f64 = {"_p_f64", "f64 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Action = {"_p_njli__Action", "njli::Action *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__ActionBuilder = {"_p_njli__ActionBuilder", "njli::ActionBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Camera = {"_p_njli__Camera", "njli::Camera *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__CameraBuilder = {"_p_njli__CameraBuilder", "njli::CameraBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Clock = {"_p_njli__Clock", "njli::Clock *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__ClockBuilder = {"_p_njli__ClockBuilder", "njli::ClockBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__CollisionResponse = {"_p_njli__CollisionResponse", "njli::CollisionResponse *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__CollisionResponseBuilder = {"_p_njli__CollisionResponseBuilder", "njli::CollisionResponseBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Cube = {"_p_njli__Cube", "njli::Cube *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__CubeBuilder = {"_p_njli__CubeBuilder", "njli::CubeBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Font = {"_p_njli__Font", "njli::Font *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__FontBuilder = {"_p_njli__FontBuilder", "njli::FontBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Image = {"_p_njli__Image", "njli::Image *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__ImageBuilder = {"_p_njli__ImageBuilder", "njli::ImageBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__JsonJLI = {"_p_njli__JsonJLI", "njli::JsonJLI *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__JsonJLIBuilder = {"_p_njli__JsonJLIBuilder", "njli::JsonJLIBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__LevelOfDetail = {"_p_njli__LevelOfDetail", "njli::LevelOfDetail *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__LevelOfDetailBuilder = {"_p_njli__LevelOfDetailBuilder", "njli::LevelOfDetailBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Light = {"_p_njli__Light", "njli::Light *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__LightBuilder = {"_p_njli__LightBuilder", "njli::LightBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Material = {"_p_njli__Material", "njli::Material *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__MaterialBuilder = {"_p_njli__MaterialBuilder", "njli::MaterialBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__MaterialProperty = {"_p_njli__MaterialProperty", "njli::MaterialProperty *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__MaterialPropertyBuilder = {"_p_njli__MaterialPropertyBuilder", "njli::MaterialPropertyBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Node = {"_p_njli__Node", "njli::Node *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__NodeBuilder = {"_p_njli__NodeBuilder", "njli::NodeBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__NodeState = {"_p_njli__NodeState", "njli::NodeState *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__NodeStateBuilder = {"_p_njli__NodeStateBuilder", "njli::NodeStateBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__NodeStateMachine = {"_p_njli__NodeStateMachine", "njli::NodeStateMachine *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__NodeStateMachineBuilder = {"_p_njli__NodeStateMachineBuilder", "njli::NodeStateMachineBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__ParticleEmitter = {"_p_njli__ParticleEmitter", "njli::ParticleEmitter *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__ParticleEmitterBuilder = {"_p_njli__ParticleEmitterBuilder", "njli::ParticleEmitterBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsBodyGhost = {"_p_njli__PhysicsBodyGhost", "njli::PhysicsBodyGhost *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsBodyGhostBuilder = {"_p_njli__PhysicsBodyGhostBuilder", "njli::PhysicsBodyGhostBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsBodyRigid = {"_p_njli__PhysicsBodyRigid", "njli::PhysicsBodyRigid *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsBodyRigidBuilder = {"_p_njli__PhysicsBodyRigidBuilder", "njli::PhysicsBodyRigidBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsBodySoft = {"_p_njli__PhysicsBodySoft", "njli::PhysicsBodySoft *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsBodySoftBuilder = {"_p_njli__PhysicsBodySoftBuilder", "njli::PhysicsBodySoftBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsCloseContact = {"_p_njli__PhysicsCloseContact", "njli::PhysicsCloseContact *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsCloseContactBuilder = {"_p_njli__PhysicsCloseContactBuilder", "njli::PhysicsCloseContactBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraint = {"_p_njli__PhysicsConstraint", "njli::PhysicsConstraint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintBuilder = {"_p_njli__PhysicsConstraintBuilder", "njli::PhysicsConstraintBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintConeTwist = {"_p_njli__PhysicsConstraintConeTwist", "njli::PhysicsConstraintConeTwist *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintConeTwistBuilder = {"_p_njli__PhysicsConstraintConeTwistBuilder", "njli::PhysicsConstraintConeTwistBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintFixed = {"_p_njli__PhysicsConstraintFixed", "njli::PhysicsConstraintFixed *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintFixedBuilder = {"_p_njli__PhysicsConstraintFixedBuilder", "njli::PhysicsConstraintFixedBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintGeneric6Dof = {"_p_njli__PhysicsConstraintGeneric6Dof", "njli::PhysicsConstraintGeneric6Dof *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintGeneric6DofBuilder = {"_p_njli__PhysicsConstraintGeneric6DofBuilder", "njli::PhysicsConstraintGeneric6DofBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintGeneric6DofSpring = {"_p_njli__PhysicsConstraintGeneric6DofSpring", "njli::PhysicsConstraintGeneric6DofSpring *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintGeneric6DofSpringBuilder = {"_p_njli__PhysicsConstraintGeneric6DofSpringBuilder", "njli::PhysicsConstraintGeneric6DofSpringBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintHinge = {"_p_njli__PhysicsConstraintHinge", "njli::PhysicsConstraintHinge *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintHingeBuilder = {"_p_njli__PhysicsConstraintHingeBuilder", "njli::PhysicsConstraintHingeBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintPointToPoint = {"_p_njli__PhysicsConstraintPointToPoint", "njli::PhysicsConstraintPointToPoint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintPointToPointBuilder = {"_p_njli__PhysicsConstraintPointToPointBuilder", "njli::PhysicsConstraintPointToPointBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintSlider = {"_p_njli__PhysicsConstraintSlider", "njli::PhysicsConstraintSlider *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsConstraintSliderBuilder = {"_p_njli__PhysicsConstraintSliderBuilder", "njli::PhysicsConstraintSliderBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsContact = {"_p_njli__PhysicsContact", "njli::PhysicsContact *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsContactBuilder = {"_p_njli__PhysicsContactBuilder", "njli::PhysicsContactBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsField = {"_p_njli__PhysicsField", "njli::PhysicsField *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsFieldBuilder = {"_p_njli__PhysicsFieldBuilder", "njli::PhysicsFieldBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsRayContact = {"_p_njli__PhysicsRayContact", "njli::PhysicsRayContact *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsRayContactBuilder = {"_p_njli__PhysicsRayContactBuilder", "njli::PhysicsRayContactBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeBox = {"_p_njli__PhysicsShapeBox", "njli::PhysicsShapeBox *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeBox2D = {"_p_njli__PhysicsShapeBox2D", "njli::PhysicsShapeBox2D *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeBox2DBuilder = {"_p_njli__PhysicsShapeBox2DBuilder", "njli::PhysicsShapeBox2DBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeBoxBuilder = {"_p_njli__PhysicsShapeBoxBuilder", "njli::PhysicsShapeBoxBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeBvhTriangleMesh = {"_p_njli__PhysicsShapeBvhTriangleMesh", "njli::PhysicsShapeBvhTriangleMesh *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeBvhTriangleMeshBuilder = {"_p_njli__PhysicsShapeBvhTriangleMeshBuilder", "njli::PhysicsShapeBvhTriangleMeshBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeCapsule = {"_p_njli__PhysicsShapeCapsule", "njli::PhysicsShapeCapsule *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeCapsuleBuilder = {"_p_njli__PhysicsShapeCapsuleBuilder", "njli::PhysicsShapeCapsuleBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeCone = {"_p_njli__PhysicsShapeCone", "njli::PhysicsShapeCone *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeConeBuilder = {"_p_njli__PhysicsShapeConeBuilder", "njli::PhysicsShapeConeBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeConvexHull = {"_p_njli__PhysicsShapeConvexHull", "njli::PhysicsShapeConvexHull *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeConvexHullBuilder = {"_p_njli__PhysicsShapeConvexHullBuilder", "njli::PhysicsShapeConvexHullBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeConvexTriangleMesh = {"_p_njli__PhysicsShapeConvexTriangleMesh", "njli::PhysicsShapeConvexTriangleMesh *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeConvexTriangleMeshBuilder = {"_p_njli__PhysicsShapeConvexTriangleMeshBuilder", "njli::PhysicsShapeConvexTriangleMeshBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeCylinder = {"_p_njli__PhysicsShapeCylinder", "njli::PhysicsShapeCylinder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeCylinderBuilder = {"_p_njli__PhysicsShapeCylinderBuilder", "njli::PhysicsShapeCylinderBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeHeightfieldTerrain = {"_p_njli__PhysicsShapeHeightfieldTerrain", "njli::PhysicsShapeHeightfieldTerrain *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeHeightfieldTerrainBuilder = {"_p_njli__PhysicsShapeHeightfieldTerrainBuilder", "njli::PhysicsShapeHeightfieldTerrainBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeMultiSphere = {"_p_njli__PhysicsShapeMultiSphere", "njli::PhysicsShapeMultiSphere *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeMultiSphereBuilder = {"_p_njli__PhysicsShapeMultiSphereBuilder", "njli::PhysicsShapeMultiSphereBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeSphere = {"_p_njli__PhysicsShapeSphere", "njli::PhysicsShapeSphere *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeSphereBuilder = {"_p_njli__PhysicsShapeSphereBuilder", "njli::PhysicsShapeSphereBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeStaticPlane = {"_p_njli__PhysicsShapeStaticPlane", "njli::PhysicsShapeStaticPlane *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsShapeStaticPlaneBuilder = {"_p_njli__PhysicsShapeStaticPlaneBuilder", "njli::PhysicsShapeStaticPlaneBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsWorld = {"_p_njli__PhysicsWorld", "njli::PhysicsWorld *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PhysicsWorldBuilder = {"_p_njli__PhysicsWorldBuilder", "njli::PhysicsWorldBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Plane = {"_p_njli__Plane", "njli::Plane *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__PlaneBuilder = {"_p_njli__PlaneBuilder", "njli::PlaneBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Scene = {"_p_njli__Scene", "njli::Scene *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SceneBuilder = {"_p_njli__SceneBuilder", "njli::SceneBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SceneState = {"_p_njli__SceneState", "njli::SceneState *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SceneStateBuilder = {"_p_njli__SceneStateBuilder", "njli::SceneStateBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SceneStateMachine = {"_p_njli__SceneStateMachine", "njli::SceneStateMachine *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SceneStateMachineBuilder = {"_p_njli__SceneStateMachineBuilder", "njli::SceneStateMachineBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__ShaderProgram = {"_p_njli__ShaderProgram", "njli::ShaderProgram *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__ShaderProgramBuilder = {"_p_njli__ShaderProgramBuilder", "njli::ShaderProgramBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Skinner = {"_p_njli__Skinner", "njli::Skinner *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SkinnerBuilder = {"_p_njli__SkinnerBuilder", "njli::SkinnerBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Sound = {"_p_njli__Sound", "njli::Sound *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SoundBuilder = {"_p_njli__SoundBuilder", "njli::SoundBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Sprite2D = {"_p_njli__Sprite2D", "njli::Sprite2D *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Sprite2DBuilder = {"_p_njli__Sprite2DBuilder", "njli::Sprite2DBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SpriteFrameAtlas = {"_p_njli__SpriteFrameAtlas", "njli::SpriteFrameAtlas *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SpriteFrameAtlasBuilder = {"_p_njli__SpriteFrameAtlasBuilder", "njli::SpriteFrameAtlasBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorAlignment = {"_p_njli__SteeringBehaviorAlignment", "njli::SteeringBehaviorAlignment *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorAlignmentBuilder = {"_p_njli__SteeringBehaviorAlignmentBuilder", "njli::SteeringBehaviorAlignmentBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorArrive = {"_p_njli__SteeringBehaviorArrive", "njli::SteeringBehaviorArrive *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorArriveBuilder = {"_p_njli__SteeringBehaviorArriveBuilder", "njli::SteeringBehaviorArriveBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorCohesion = {"_p_njli__SteeringBehaviorCohesion", "njli::SteeringBehaviorCohesion *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorCohesionBuilder = {"_p_njli__SteeringBehaviorCohesionBuilder", "njli::SteeringBehaviorCohesionBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorEvade = {"_p_njli__SteeringBehaviorEvade", "njli::SteeringBehaviorEvade *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorEvadeBuilder = {"_p_njli__SteeringBehaviorEvadeBuilder", "njli::SteeringBehaviorEvadeBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorFlee = {"_p_njli__SteeringBehaviorFlee", "njli::SteeringBehaviorFlee *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorFleeBuilder = {"_p_njli__SteeringBehaviorFleeBuilder", "njli::SteeringBehaviorFleeBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorFollowPath = {"_p_njli__SteeringBehaviorFollowPath", "njli::SteeringBehaviorFollowPath *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorFollowPathBuilder = {"_p_njli__SteeringBehaviorFollowPathBuilder", "njli::SteeringBehaviorFollowPathBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorHide = {"_p_njli__SteeringBehaviorHide", "njli::SteeringBehaviorHide *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorHideBuilder = {"_p_njli__SteeringBehaviorHideBuilder", "njli::SteeringBehaviorHideBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorInterpose = {"_p_njli__SteeringBehaviorInterpose", "njli::SteeringBehaviorInterpose *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorInterposeBuilder = {"_p_njli__SteeringBehaviorInterposeBuilder", "njli::SteeringBehaviorInterposeBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorMachineDithered = {"_p_njli__SteeringBehaviorMachineDithered", "njli::SteeringBehaviorMachineDithered *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorMachineDitheredBuilder = {"_p_njli__SteeringBehaviorMachineDitheredBuilder", "njli::SteeringBehaviorMachineDitheredBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorMachinePrioritized = {"_p_njli__SteeringBehaviorMachinePrioritized", "njli::SteeringBehaviorMachinePrioritized *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorMachinePrioritizedBuilder = {"_p_njli__SteeringBehaviorMachinePrioritizedBuilder", "njli::SteeringBehaviorMachinePrioritizedBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorMachineWeighted = {"_p_njli__SteeringBehaviorMachineWeighted", "njli::SteeringBehaviorMachineWeighted *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorMachineWeightedBuilder = {"_p_njli__SteeringBehaviorMachineWeightedBuilder", "njli::SteeringBehaviorMachineWeightedBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorObstacleAvoidance = {"_p_njli__SteeringBehaviorObstacleAvoidance", "njli::SteeringBehaviorObstacleAvoidance *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorObstacleAvoidanceBuilder = {"_p_njli__SteeringBehaviorObstacleAvoidanceBuilder", "njli::SteeringBehaviorObstacleAvoidanceBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorOffsetPursuit = {"_p_njli__SteeringBehaviorOffsetPursuit", "njli::SteeringBehaviorOffsetPursuit *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorOffsetPursuitBuilder = {"_p_njli__SteeringBehaviorOffsetPursuitBuilder", "njli::SteeringBehaviorOffsetPursuitBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorPursuit = {"_p_njli__SteeringBehaviorPursuit", "njli::SteeringBehaviorPursuit *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorPursuitBuilder = {"_p_njli__SteeringBehaviorPursuitBuilder", "njli::SteeringBehaviorPursuitBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorSeek = {"_p_njli__SteeringBehaviorSeek", "njli::SteeringBehaviorSeek *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorSeekBuilder = {"_p_njli__SteeringBehaviorSeekBuilder", "njli::SteeringBehaviorSeekBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorSeparation = {"_p_njli__SteeringBehaviorSeparation", "njli::SteeringBehaviorSeparation *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorSeparationBuilder = {"_p_njli__SteeringBehaviorSeparationBuilder", "njli::SteeringBehaviorSeparationBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorWallAvoidance = {"_p_njli__SteeringBehaviorWallAvoidance", "njli::SteeringBehaviorWallAvoidance *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorWallAvoidanceBuilder = {"_p_njli__SteeringBehaviorWallAvoidanceBuilder", "njli::SteeringBehaviorWallAvoidanceBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorWander = {"_p_njli__SteeringBehaviorWander", "njli::SteeringBehaviorWander *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__SteeringBehaviorWanderBuilder = {"_p_njli__SteeringBehaviorWanderBuilder", "njli::SteeringBehaviorWanderBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__StopWatch = {"_p_njli__StopWatch", "njli::StopWatch *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__StopWatchBuilder = {"_p_njli__StopWatchBuilder", "njli::StopWatchBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Timer = {"_p_njli__Timer", "njli::Timer *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__TimerBuilder = {"_p_njli__TimerBuilder", "njli::TimerBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__WorldState = {"_p_njli__WorldState", "njli::WorldState *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__WorldStateBuilder = {"_p_njli__WorldStateBuilder", "njli::WorldStateBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__WorldStateMachine = {"_p_njli__WorldStateMachine", "njli::WorldStateMachine *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__WorldStateMachineBuilder = {"_p_njli__WorldStateMachineBuilder", "njli::WorldStateMachineBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__Xml = {"_p_njli__Xml", "njli::Xml *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_njli__XmlBuilder = {"_p_njli__XmlBuilder", "njli::XmlBuilder *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Action = {"_p_p_njli__Action", "njli::Action **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__ActionBuilder = {"_p_p_njli__ActionBuilder", "njli::ActionBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Camera = {"_p_p_njli__Camera", "njli::Camera **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__CameraBuilder = {"_p_p_njli__CameraBuilder", "njli::CameraBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Clock = {"_p_p_njli__Clock", "njli::Clock **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__ClockBuilder = {"_p_p_njli__ClockBuilder", "njli::ClockBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__CollisionResponse = {"_p_p_njli__CollisionResponse", "njli::CollisionResponse **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__CollisionResponseBuilder = {"_p_p_njli__CollisionResponseBuilder", "njli::CollisionResponseBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Cube = {"_p_p_njli__Cube", "njli::Cube **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__CubeBuilder = {"_p_p_njli__CubeBuilder", "njli::CubeBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Font = {"_p_p_njli__Font", "njli::Font **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__FontBuilder = {"_p_p_njli__FontBuilder", "njli::FontBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Image = {"_p_p_njli__Image", "njli::Image **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__ImageBuilder = {"_p_p_njli__ImageBuilder", "njli::ImageBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__JsonJLI = {"_p_p_njli__JsonJLI", "njli::JsonJLI **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__JsonJLIBuilder = {"_p_p_njli__JsonJLIBuilder", "njli::JsonJLIBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__LevelOfDetail = {"_p_p_njli__LevelOfDetail", "njli::LevelOfDetail **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__LevelOfDetailBuilder = {"_p_p_njli__LevelOfDetailBuilder", "njli::LevelOfDetailBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Light = {"_p_p_njli__Light", "njli::Light **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__LightBuilder = {"_p_p_njli__LightBuilder", "njli::LightBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Material = {"_p_p_njli__Material", "njli::Material **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__MaterialBuilder = {"_p_p_njli__MaterialBuilder", "njli::MaterialBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__MaterialProperty = {"_p_p_njli__MaterialProperty", "njli::MaterialProperty **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__MaterialPropertyBuilder = {"_p_p_njli__MaterialPropertyBuilder", "njli::MaterialPropertyBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Node = {"_p_p_njli__Node", "njli::Node **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__NodeBuilder = {"_p_p_njli__NodeBuilder", "njli::NodeBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__NodeState = {"_p_p_njli__NodeState", "njli::NodeState **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__NodeStateBuilder = {"_p_p_njli__NodeStateBuilder", "njli::NodeStateBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__NodeStateMachine = {"_p_p_njli__NodeStateMachine", "njli::NodeStateMachine **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__NodeStateMachineBuilder = {"_p_p_njli__NodeStateMachineBuilder", "njli::NodeStateMachineBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__ParticleEmitter = {"_p_p_njli__ParticleEmitter", "njli::ParticleEmitter **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__ParticleEmitterBuilder = {"_p_p_njli__ParticleEmitterBuilder", "njli::ParticleEmitterBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsBodyGhost = {"_p_p_njli__PhysicsBodyGhost", "njli::PhysicsBodyGhost **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsBodyGhostBuilder = {"_p_p_njli__PhysicsBodyGhostBuilder", "njli::PhysicsBodyGhostBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsBodyRigid = {"_p_p_njli__PhysicsBodyRigid", "njli::PhysicsBodyRigid **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsBodyRigidBuilder = {"_p_p_njli__PhysicsBodyRigidBuilder", "njli::PhysicsBodyRigidBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsBodySoft = {"_p_p_njli__PhysicsBodySoft", "njli::PhysicsBodySoft **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsBodySoftBuilder = {"_p_p_njli__PhysicsBodySoftBuilder", "njli::PhysicsBodySoftBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsCloseContact = {"_p_p_njli__PhysicsCloseContact", "njli::PhysicsCloseContact **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsCloseContactBuilder = {"_p_p_njli__PhysicsCloseContactBuilder", "njli::PhysicsCloseContactBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraint = {"_p_p_njli__PhysicsConstraint", "njli::PhysicsConstraint **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintBuilder = {"_p_p_njli__PhysicsConstraintBuilder", "njli::PhysicsConstraintBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintConeTwist = {"_p_p_njli__PhysicsConstraintConeTwist", "njli::PhysicsConstraintConeTwist **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintConeTwistBuilder = {"_p_p_njli__PhysicsConstraintConeTwistBuilder", "njli::PhysicsConstraintConeTwistBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintFixed = {"_p_p_njli__PhysicsConstraintFixed", "njli::PhysicsConstraintFixed **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintFixedBuilder = {"_p_p_njli__PhysicsConstraintFixedBuilder", "njli::PhysicsConstraintFixedBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintGeneric6Dof = {"_p_p_njli__PhysicsConstraintGeneric6Dof", "njli::PhysicsConstraintGeneric6Dof **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintGeneric6DofBuilder = {"_p_p_njli__PhysicsConstraintGeneric6DofBuilder", "njli::PhysicsConstraintGeneric6DofBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintGeneric6DofSpring = {"_p_p_njli__PhysicsConstraintGeneric6DofSpring", "njli::PhysicsConstraintGeneric6DofSpring **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder = {"_p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder", "njli::PhysicsConstraintGeneric6DofSpringBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintHinge = {"_p_p_njli__PhysicsConstraintHinge", "njli::PhysicsConstraintHinge **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintHingeBuilder = {"_p_p_njli__PhysicsConstraintHingeBuilder", "njli::PhysicsConstraintHingeBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintPointToPoint = {"_p_p_njli__PhysicsConstraintPointToPoint", "njli::PhysicsConstraintPointToPoint **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintPointToPointBuilder = {"_p_p_njli__PhysicsConstraintPointToPointBuilder", "njli::PhysicsConstraintPointToPointBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintSlider = {"_p_p_njli__PhysicsConstraintSlider", "njli::PhysicsConstraintSlider **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsConstraintSliderBuilder = {"_p_p_njli__PhysicsConstraintSliderBuilder", "njli::PhysicsConstraintSliderBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsContact = {"_p_p_njli__PhysicsContact", "njli::PhysicsContact **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsContactBuilder = {"_p_p_njli__PhysicsContactBuilder", "njli::PhysicsContactBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsField = {"_p_p_njli__PhysicsField", "njli::PhysicsField **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsFieldBuilder = {"_p_p_njli__PhysicsFieldBuilder", "njli::PhysicsFieldBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsRayContact = {"_p_p_njli__PhysicsRayContact", "njli::PhysicsRayContact **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsRayContactBuilder = {"_p_p_njli__PhysicsRayContactBuilder", "njli::PhysicsRayContactBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeBox = {"_p_p_njli__PhysicsShapeBox", "njli::PhysicsShapeBox **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeBox2D = {"_p_p_njli__PhysicsShapeBox2D", "njli::PhysicsShapeBox2D **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeBox2DBuilder = {"_p_p_njli__PhysicsShapeBox2DBuilder", "njli::PhysicsShapeBox2DBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeBoxBuilder = {"_p_p_njli__PhysicsShapeBoxBuilder", "njli::PhysicsShapeBoxBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeBvhTriangleMesh = {"_p_p_njli__PhysicsShapeBvhTriangleMesh", "njli::PhysicsShapeBvhTriangleMesh **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeBvhTriangleMeshBuilder = {"_p_p_njli__PhysicsShapeBvhTriangleMeshBuilder", "njli::PhysicsShapeBvhTriangleMeshBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeCapsule = {"_p_p_njli__PhysicsShapeCapsule", "njli::PhysicsShapeCapsule **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeCapsuleBuilder = {"_p_p_njli__PhysicsShapeCapsuleBuilder", "njli::PhysicsShapeCapsuleBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeCone = {"_p_p_njli__PhysicsShapeCone", "njli::PhysicsShapeCone **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeConeBuilder = {"_p_p_njli__PhysicsShapeConeBuilder", "njli::PhysicsShapeConeBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeConvexHull = {"_p_p_njli__PhysicsShapeConvexHull", "njli::PhysicsShapeConvexHull **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeConvexHullBuilder = {"_p_p_njli__PhysicsShapeConvexHullBuilder", "njli::PhysicsShapeConvexHullBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeConvexTriangleMesh = {"_p_p_njli__PhysicsShapeConvexTriangleMesh", "njli::PhysicsShapeConvexTriangleMesh **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeConvexTriangleMeshBuilder = {"_p_p_njli__PhysicsShapeConvexTriangleMeshBuilder", "njli::PhysicsShapeConvexTriangleMeshBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeCylinder = {"_p_p_njli__PhysicsShapeCylinder", "njli::PhysicsShapeCylinder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeCylinderBuilder = {"_p_p_njli__PhysicsShapeCylinderBuilder", "njli::PhysicsShapeCylinderBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeHeightfieldTerrain = {"_p_p_njli__PhysicsShapeHeightfieldTerrain", "njli::PhysicsShapeHeightfieldTerrain **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeHeightfieldTerrainBuilder = {"_p_p_njli__PhysicsShapeHeightfieldTerrainBuilder", "njli::PhysicsShapeHeightfieldTerrainBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeMultiSphere = {"_p_p_njli__PhysicsShapeMultiSphere", "njli::PhysicsShapeMultiSphere **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeMultiSphereBuilder = {"_p_p_njli__PhysicsShapeMultiSphereBuilder", "njli::PhysicsShapeMultiSphereBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeSphere = {"_p_p_njli__PhysicsShapeSphere", "njli::PhysicsShapeSphere **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeSphereBuilder = {"_p_p_njli__PhysicsShapeSphereBuilder", "njli::PhysicsShapeSphereBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeStaticPlane = {"_p_p_njli__PhysicsShapeStaticPlane", "njli::PhysicsShapeStaticPlane **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsShapeStaticPlaneBuilder = {"_p_p_njli__PhysicsShapeStaticPlaneBuilder", "njli::PhysicsShapeStaticPlaneBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsWorld = {"_p_p_njli__PhysicsWorld", "njli::PhysicsWorld **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PhysicsWorldBuilder = {"_p_p_njli__PhysicsWorldBuilder", "njli::PhysicsWorldBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Plane = {"_p_p_njli__Plane", "njli::Plane **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__PlaneBuilder = {"_p_p_njli__PlaneBuilder", "njli::PlaneBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Scene = {"_p_p_njli__Scene", "njli::Scene **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SceneBuilder = {"_p_p_njli__SceneBuilder", "njli::SceneBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SceneState = {"_p_p_njli__SceneState", "njli::SceneState **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SceneStateBuilder = {"_p_p_njli__SceneStateBuilder", "njli::SceneStateBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SceneStateMachine = {"_p_p_njli__SceneStateMachine", "njli::SceneStateMachine **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SceneStateMachineBuilder = {"_p_p_njli__SceneStateMachineBuilder", "njli::SceneStateMachineBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__ShaderProgram = {"_p_p_njli__ShaderProgram", "njli::ShaderProgram **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__ShaderProgramBuilder = {"_p_p_njli__ShaderProgramBuilder", "njli::ShaderProgramBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Skinner = {"_p_p_njli__Skinner", "njli::Skinner **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SkinnerBuilder = {"_p_p_njli__SkinnerBuilder", "njli::SkinnerBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Sound = {"_p_p_njli__Sound", "njli::Sound **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SoundBuilder = {"_p_p_njli__SoundBuilder", "njli::SoundBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Sprite2D = {"_p_p_njli__Sprite2D", "njli::Sprite2D **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Sprite2DBuilder = {"_p_p_njli__Sprite2DBuilder", "njli::Sprite2DBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SpriteFrameAtlas = {"_p_p_njli__SpriteFrameAtlas", "njli::SpriteFrameAtlas **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SpriteFrameAtlasBuilder = {"_p_p_njli__SpriteFrameAtlasBuilder", "njli::SpriteFrameAtlasBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorAlignment = {"_p_p_njli__SteeringBehaviorAlignment", "njli::SteeringBehaviorAlignment **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorAlignmentBuilder = {"_p_p_njli__SteeringBehaviorAlignmentBuilder", "njli::SteeringBehaviorAlignmentBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorArrive = {"_p_p_njli__SteeringBehaviorArrive", "njli::SteeringBehaviorArrive **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorArriveBuilder = {"_p_p_njli__SteeringBehaviorArriveBuilder", "njli::SteeringBehaviorArriveBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorCohesion = {"_p_p_njli__SteeringBehaviorCohesion", "njli::SteeringBehaviorCohesion **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorCohesionBuilder = {"_p_p_njli__SteeringBehaviorCohesionBuilder", "njli::SteeringBehaviorCohesionBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorEvade = {"_p_p_njli__SteeringBehaviorEvade", "njli::SteeringBehaviorEvade **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorEvadeBuilder = {"_p_p_njli__SteeringBehaviorEvadeBuilder", "njli::SteeringBehaviorEvadeBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorFlee = {"_p_p_njli__SteeringBehaviorFlee", "njli::SteeringBehaviorFlee **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorFleeBuilder = {"_p_p_njli__SteeringBehaviorFleeBuilder", "njli::SteeringBehaviorFleeBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorFollowPath = {"_p_p_njli__SteeringBehaviorFollowPath", "njli::SteeringBehaviorFollowPath **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorFollowPathBuilder = {"_p_p_njli__SteeringBehaviorFollowPathBuilder", "njli::SteeringBehaviorFollowPathBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorHide = {"_p_p_njli__SteeringBehaviorHide", "njli::SteeringBehaviorHide **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorHideBuilder = {"_p_p_njli__SteeringBehaviorHideBuilder", "njli::SteeringBehaviorHideBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorInterpose = {"_p_p_njli__SteeringBehaviorInterpose", "njli::SteeringBehaviorInterpose **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorInterposeBuilder = {"_p_p_njli__SteeringBehaviorInterposeBuilder", "njli::SteeringBehaviorInterposeBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorMachineDithered = {"_p_p_njli__SteeringBehaviorMachineDithered", "njli::SteeringBehaviorMachineDithered **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorMachineDitheredBuilder = {"_p_p_njli__SteeringBehaviorMachineDitheredBuilder", "njli::SteeringBehaviorMachineDitheredBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorMachinePrioritized = {"_p_p_njli__SteeringBehaviorMachinePrioritized", "njli::SteeringBehaviorMachinePrioritized **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorMachinePrioritizedBuilder = {"_p_p_njli__SteeringBehaviorMachinePrioritizedBuilder", "njli::SteeringBehaviorMachinePrioritizedBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorMachineWeighted = {"_p_p_njli__SteeringBehaviorMachineWeighted", "njli::SteeringBehaviorMachineWeighted **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorMachineWeightedBuilder = {"_p_p_njli__SteeringBehaviorMachineWeightedBuilder", "njli::SteeringBehaviorMachineWeightedBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorObstacleAvoidance = {"_p_p_njli__SteeringBehaviorObstacleAvoidance", "njli::SteeringBehaviorObstacleAvoidance **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder = {"_p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder", "njli::SteeringBehaviorObstacleAvoidanceBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorOffsetPursuit = {"_p_p_njli__SteeringBehaviorOffsetPursuit", "njli::SteeringBehaviorOffsetPursuit **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorOffsetPursuitBuilder = {"_p_p_njli__SteeringBehaviorOffsetPursuitBuilder", "njli::SteeringBehaviorOffsetPursuitBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorPursuit = {"_p_p_njli__SteeringBehaviorPursuit", "njli::SteeringBehaviorPursuit **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorPursuitBuilder = {"_p_p_njli__SteeringBehaviorPursuitBuilder", "njli::SteeringBehaviorPursuitBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorSeek = {"_p_p_njli__SteeringBehaviorSeek", "njli::SteeringBehaviorSeek **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorSeekBuilder = {"_p_p_njli__SteeringBehaviorSeekBuilder", "njli::SteeringBehaviorSeekBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorSeparation = {"_p_p_njli__SteeringBehaviorSeparation", "njli::SteeringBehaviorSeparation **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorSeparationBuilder = {"_p_p_njli__SteeringBehaviorSeparationBuilder", "njli::SteeringBehaviorSeparationBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorWallAvoidance = {"_p_p_njli__SteeringBehaviorWallAvoidance", "njli::SteeringBehaviorWallAvoidance **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorWallAvoidanceBuilder = {"_p_p_njli__SteeringBehaviorWallAvoidanceBuilder", "njli::SteeringBehaviorWallAvoidanceBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorWander = {"_p_p_njli__SteeringBehaviorWander", "njli::SteeringBehaviorWander **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__SteeringBehaviorWanderBuilder = {"_p_p_njli__SteeringBehaviorWanderBuilder", "njli::SteeringBehaviorWanderBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__StopWatch = {"_p_p_njli__StopWatch", "njli::StopWatch **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__StopWatchBuilder = {"_p_p_njli__StopWatchBuilder", "njli::StopWatchBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Timer = {"_p_p_njli__Timer", "njli::Timer **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__TimerBuilder = {"_p_p_njli__TimerBuilder", "njli::TimerBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__WorldState = {"_p_p_njli__WorldState", "njli::WorldState **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__WorldStateBuilder = {"_p_p_njli__WorldStateBuilder", "njli::WorldStateBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__WorldStateMachine = {"_p_p_njli__WorldStateMachine", "njli::WorldStateMachine **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__WorldStateMachineBuilder = {"_p_p_njli__WorldStateMachineBuilder", "njli::WorldStateMachineBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__Xml = {"_p_p_njli__Xml", "njli::Xml **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_njli__XmlBuilder = {"_p_p_njli__XmlBuilder", "njli::XmlBuilder **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_s16 = {"_p_s16", "s16 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_s32 = {"_p_s32", "s32 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_s64 = {"_p_s64", "s64 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_s8 = {"_p_s8", "s8 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_u16 = {"_p_u16", "u16 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_u32 = {"_p_u32", "u32 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_u64 = {"_p_u64", "u64 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_u8 = {"_p_u8", "u8 *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  NULL
+  &_swigt__p_f32,
+  &_swigt__p_f64,
+  &_swigt__p_njli__Action,
+  &_swigt__p_njli__ActionBuilder,
+  &_swigt__p_njli__Camera,
+  &_swigt__p_njli__CameraBuilder,
+  &_swigt__p_njli__Clock,
+  &_swigt__p_njli__ClockBuilder,
+  &_swigt__p_njli__CollisionResponse,
+  &_swigt__p_njli__CollisionResponseBuilder,
+  &_swigt__p_njli__Cube,
+  &_swigt__p_njli__CubeBuilder,
+  &_swigt__p_njli__Font,
+  &_swigt__p_njli__FontBuilder,
+  &_swigt__p_njli__Image,
+  &_swigt__p_njli__ImageBuilder,
+  &_swigt__p_njli__JsonJLI,
+  &_swigt__p_njli__JsonJLIBuilder,
+  &_swigt__p_njli__LevelOfDetail,
+  &_swigt__p_njli__LevelOfDetailBuilder,
+  &_swigt__p_njli__Light,
+  &_swigt__p_njli__LightBuilder,
+  &_swigt__p_njli__Material,
+  &_swigt__p_njli__MaterialBuilder,
+  &_swigt__p_njli__MaterialProperty,
+  &_swigt__p_njli__MaterialPropertyBuilder,
+  &_swigt__p_njli__Node,
+  &_swigt__p_njli__NodeBuilder,
+  &_swigt__p_njli__NodeState,
+  &_swigt__p_njli__NodeStateBuilder,
+  &_swigt__p_njli__NodeStateMachine,
+  &_swigt__p_njli__NodeStateMachineBuilder,
+  &_swigt__p_njli__ParticleEmitter,
+  &_swigt__p_njli__ParticleEmitterBuilder,
+  &_swigt__p_njli__PhysicsBodyGhost,
+  &_swigt__p_njli__PhysicsBodyGhostBuilder,
+  &_swigt__p_njli__PhysicsBodyRigid,
+  &_swigt__p_njli__PhysicsBodyRigidBuilder,
+  &_swigt__p_njli__PhysicsBodySoft,
+  &_swigt__p_njli__PhysicsBodySoftBuilder,
+  &_swigt__p_njli__PhysicsCloseContact,
+  &_swigt__p_njli__PhysicsCloseContactBuilder,
+  &_swigt__p_njli__PhysicsConstraint,
+  &_swigt__p_njli__PhysicsConstraintBuilder,
+  &_swigt__p_njli__PhysicsConstraintConeTwist,
+  &_swigt__p_njli__PhysicsConstraintConeTwistBuilder,
+  &_swigt__p_njli__PhysicsConstraintFixed,
+  &_swigt__p_njli__PhysicsConstraintFixedBuilder,
+  &_swigt__p_njli__PhysicsConstraintGeneric6Dof,
+  &_swigt__p_njli__PhysicsConstraintGeneric6DofBuilder,
+  &_swigt__p_njli__PhysicsConstraintGeneric6DofSpring,
+  &_swigt__p_njli__PhysicsConstraintGeneric6DofSpringBuilder,
+  &_swigt__p_njli__PhysicsConstraintHinge,
+  &_swigt__p_njli__PhysicsConstraintHingeBuilder,
+  &_swigt__p_njli__PhysicsConstraintPointToPoint,
+  &_swigt__p_njli__PhysicsConstraintPointToPointBuilder,
+  &_swigt__p_njli__PhysicsConstraintSlider,
+  &_swigt__p_njli__PhysicsConstraintSliderBuilder,
+  &_swigt__p_njli__PhysicsContact,
+  &_swigt__p_njli__PhysicsContactBuilder,
+  &_swigt__p_njli__PhysicsField,
+  &_swigt__p_njli__PhysicsFieldBuilder,
+  &_swigt__p_njli__PhysicsRayContact,
+  &_swigt__p_njli__PhysicsRayContactBuilder,
+  &_swigt__p_njli__PhysicsShapeBox,
+  &_swigt__p_njli__PhysicsShapeBox2D,
+  &_swigt__p_njli__PhysicsShapeBox2DBuilder,
+  &_swigt__p_njli__PhysicsShapeBoxBuilder,
+  &_swigt__p_njli__PhysicsShapeBvhTriangleMesh,
+  &_swigt__p_njli__PhysicsShapeBvhTriangleMeshBuilder,
+  &_swigt__p_njli__PhysicsShapeCapsule,
+  &_swigt__p_njli__PhysicsShapeCapsuleBuilder,
+  &_swigt__p_njli__PhysicsShapeCone,
+  &_swigt__p_njli__PhysicsShapeConeBuilder,
+  &_swigt__p_njli__PhysicsShapeConvexHull,
+  &_swigt__p_njli__PhysicsShapeConvexHullBuilder,
+  &_swigt__p_njli__PhysicsShapeConvexTriangleMesh,
+  &_swigt__p_njli__PhysicsShapeConvexTriangleMeshBuilder,
+  &_swigt__p_njli__PhysicsShapeCylinder,
+  &_swigt__p_njli__PhysicsShapeCylinderBuilder,
+  &_swigt__p_njli__PhysicsShapeHeightfieldTerrain,
+  &_swigt__p_njli__PhysicsShapeHeightfieldTerrainBuilder,
+  &_swigt__p_njli__PhysicsShapeMultiSphere,
+  &_swigt__p_njli__PhysicsShapeMultiSphereBuilder,
+  &_swigt__p_njli__PhysicsShapeSphere,
+  &_swigt__p_njli__PhysicsShapeSphereBuilder,
+  &_swigt__p_njli__PhysicsShapeStaticPlane,
+  &_swigt__p_njli__PhysicsShapeStaticPlaneBuilder,
+  &_swigt__p_njli__PhysicsWorld,
+  &_swigt__p_njli__PhysicsWorldBuilder,
+  &_swigt__p_njli__Plane,
+  &_swigt__p_njli__PlaneBuilder,
+  &_swigt__p_njli__Scene,
+  &_swigt__p_njli__SceneBuilder,
+  &_swigt__p_njli__SceneState,
+  &_swigt__p_njli__SceneStateBuilder,
+  &_swigt__p_njli__SceneStateMachine,
+  &_swigt__p_njli__SceneStateMachineBuilder,
+  &_swigt__p_njli__ShaderProgram,
+  &_swigt__p_njli__ShaderProgramBuilder,
+  &_swigt__p_njli__Skinner,
+  &_swigt__p_njli__SkinnerBuilder,
+  &_swigt__p_njli__Sound,
+  &_swigt__p_njli__SoundBuilder,
+  &_swigt__p_njli__Sprite2D,
+  &_swigt__p_njli__Sprite2DBuilder,
+  &_swigt__p_njli__SpriteFrameAtlas,
+  &_swigt__p_njli__SpriteFrameAtlasBuilder,
+  &_swigt__p_njli__SteeringBehaviorAlignment,
+  &_swigt__p_njli__SteeringBehaviorAlignmentBuilder,
+  &_swigt__p_njli__SteeringBehaviorArrive,
+  &_swigt__p_njli__SteeringBehaviorArriveBuilder,
+  &_swigt__p_njli__SteeringBehaviorCohesion,
+  &_swigt__p_njli__SteeringBehaviorCohesionBuilder,
+  &_swigt__p_njli__SteeringBehaviorEvade,
+  &_swigt__p_njli__SteeringBehaviorEvadeBuilder,
+  &_swigt__p_njli__SteeringBehaviorFlee,
+  &_swigt__p_njli__SteeringBehaviorFleeBuilder,
+  &_swigt__p_njli__SteeringBehaviorFollowPath,
+  &_swigt__p_njli__SteeringBehaviorFollowPathBuilder,
+  &_swigt__p_njli__SteeringBehaviorHide,
+  &_swigt__p_njli__SteeringBehaviorHideBuilder,
+  &_swigt__p_njli__SteeringBehaviorInterpose,
+  &_swigt__p_njli__SteeringBehaviorInterposeBuilder,
+  &_swigt__p_njli__SteeringBehaviorMachineDithered,
+  &_swigt__p_njli__SteeringBehaviorMachineDitheredBuilder,
+  &_swigt__p_njli__SteeringBehaviorMachinePrioritized,
+  &_swigt__p_njli__SteeringBehaviorMachinePrioritizedBuilder,
+  &_swigt__p_njli__SteeringBehaviorMachineWeighted,
+  &_swigt__p_njli__SteeringBehaviorMachineWeightedBuilder,
+  &_swigt__p_njli__SteeringBehaviorObstacleAvoidance,
+  &_swigt__p_njli__SteeringBehaviorObstacleAvoidanceBuilder,
+  &_swigt__p_njli__SteeringBehaviorOffsetPursuit,
+  &_swigt__p_njli__SteeringBehaviorOffsetPursuitBuilder,
+  &_swigt__p_njli__SteeringBehaviorPursuit,
+  &_swigt__p_njli__SteeringBehaviorPursuitBuilder,
+  &_swigt__p_njli__SteeringBehaviorSeek,
+  &_swigt__p_njli__SteeringBehaviorSeekBuilder,
+  &_swigt__p_njli__SteeringBehaviorSeparation,
+  &_swigt__p_njli__SteeringBehaviorSeparationBuilder,
+  &_swigt__p_njli__SteeringBehaviorWallAvoidance,
+  &_swigt__p_njli__SteeringBehaviorWallAvoidanceBuilder,
+  &_swigt__p_njli__SteeringBehaviorWander,
+  &_swigt__p_njli__SteeringBehaviorWanderBuilder,
+  &_swigt__p_njli__StopWatch,
+  &_swigt__p_njli__StopWatchBuilder,
+  &_swigt__p_njli__Timer,
+  &_swigt__p_njli__TimerBuilder,
+  &_swigt__p_njli__WorldState,
+  &_swigt__p_njli__WorldStateBuilder,
+  &_swigt__p_njli__WorldStateMachine,
+  &_swigt__p_njli__WorldStateMachineBuilder,
+  &_swigt__p_njli__Xml,
+  &_swigt__p_njli__XmlBuilder,
+  &_swigt__p_p_njli__Action,
+  &_swigt__p_p_njli__ActionBuilder,
+  &_swigt__p_p_njli__Camera,
+  &_swigt__p_p_njli__CameraBuilder,
+  &_swigt__p_p_njli__Clock,
+  &_swigt__p_p_njli__ClockBuilder,
+  &_swigt__p_p_njli__CollisionResponse,
+  &_swigt__p_p_njli__CollisionResponseBuilder,
+  &_swigt__p_p_njli__Cube,
+  &_swigt__p_p_njli__CubeBuilder,
+  &_swigt__p_p_njli__Font,
+  &_swigt__p_p_njli__FontBuilder,
+  &_swigt__p_p_njli__Image,
+  &_swigt__p_p_njli__ImageBuilder,
+  &_swigt__p_p_njli__JsonJLI,
+  &_swigt__p_p_njli__JsonJLIBuilder,
+  &_swigt__p_p_njli__LevelOfDetail,
+  &_swigt__p_p_njli__LevelOfDetailBuilder,
+  &_swigt__p_p_njli__Light,
+  &_swigt__p_p_njli__LightBuilder,
+  &_swigt__p_p_njli__Material,
+  &_swigt__p_p_njli__MaterialBuilder,
+  &_swigt__p_p_njli__MaterialProperty,
+  &_swigt__p_p_njli__MaterialPropertyBuilder,
+  &_swigt__p_p_njli__Node,
+  &_swigt__p_p_njli__NodeBuilder,
+  &_swigt__p_p_njli__NodeState,
+  &_swigt__p_p_njli__NodeStateBuilder,
+  &_swigt__p_p_njli__NodeStateMachine,
+  &_swigt__p_p_njli__NodeStateMachineBuilder,
+  &_swigt__p_p_njli__ParticleEmitter,
+  &_swigt__p_p_njli__ParticleEmitterBuilder,
+  &_swigt__p_p_njli__PhysicsBodyGhost,
+  &_swigt__p_p_njli__PhysicsBodyGhostBuilder,
+  &_swigt__p_p_njli__PhysicsBodyRigid,
+  &_swigt__p_p_njli__PhysicsBodyRigidBuilder,
+  &_swigt__p_p_njli__PhysicsBodySoft,
+  &_swigt__p_p_njli__PhysicsBodySoftBuilder,
+  &_swigt__p_p_njli__PhysicsCloseContact,
+  &_swigt__p_p_njli__PhysicsCloseContactBuilder,
+  &_swigt__p_p_njli__PhysicsConstraint,
+  &_swigt__p_p_njli__PhysicsConstraintBuilder,
+  &_swigt__p_p_njli__PhysicsConstraintConeTwist,
+  &_swigt__p_p_njli__PhysicsConstraintConeTwistBuilder,
+  &_swigt__p_p_njli__PhysicsConstraintFixed,
+  &_swigt__p_p_njli__PhysicsConstraintFixedBuilder,
+  &_swigt__p_p_njli__PhysicsConstraintGeneric6Dof,
+  &_swigt__p_p_njli__PhysicsConstraintGeneric6DofBuilder,
+  &_swigt__p_p_njli__PhysicsConstraintGeneric6DofSpring,
+  &_swigt__p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder,
+  &_swigt__p_p_njli__PhysicsConstraintHinge,
+  &_swigt__p_p_njli__PhysicsConstraintHingeBuilder,
+  &_swigt__p_p_njli__PhysicsConstraintPointToPoint,
+  &_swigt__p_p_njli__PhysicsConstraintPointToPointBuilder,
+  &_swigt__p_p_njli__PhysicsConstraintSlider,
+  &_swigt__p_p_njli__PhysicsConstraintSliderBuilder,
+  &_swigt__p_p_njli__PhysicsContact,
+  &_swigt__p_p_njli__PhysicsContactBuilder,
+  &_swigt__p_p_njli__PhysicsField,
+  &_swigt__p_p_njli__PhysicsFieldBuilder,
+  &_swigt__p_p_njli__PhysicsRayContact,
+  &_swigt__p_p_njli__PhysicsRayContactBuilder,
+  &_swigt__p_p_njli__PhysicsShapeBox,
+  &_swigt__p_p_njli__PhysicsShapeBox2D,
+  &_swigt__p_p_njli__PhysicsShapeBox2DBuilder,
+  &_swigt__p_p_njli__PhysicsShapeBoxBuilder,
+  &_swigt__p_p_njli__PhysicsShapeBvhTriangleMesh,
+  &_swigt__p_p_njli__PhysicsShapeBvhTriangleMeshBuilder,
+  &_swigt__p_p_njli__PhysicsShapeCapsule,
+  &_swigt__p_p_njli__PhysicsShapeCapsuleBuilder,
+  &_swigt__p_p_njli__PhysicsShapeCone,
+  &_swigt__p_p_njli__PhysicsShapeConeBuilder,
+  &_swigt__p_p_njli__PhysicsShapeConvexHull,
+  &_swigt__p_p_njli__PhysicsShapeConvexHullBuilder,
+  &_swigt__p_p_njli__PhysicsShapeConvexTriangleMesh,
+  &_swigt__p_p_njli__PhysicsShapeConvexTriangleMeshBuilder,
+  &_swigt__p_p_njli__PhysicsShapeCylinder,
+  &_swigt__p_p_njli__PhysicsShapeCylinderBuilder,
+  &_swigt__p_p_njli__PhysicsShapeHeightfieldTerrain,
+  &_swigt__p_p_njli__PhysicsShapeHeightfieldTerrainBuilder,
+  &_swigt__p_p_njli__PhysicsShapeMultiSphere,
+  &_swigt__p_p_njli__PhysicsShapeMultiSphereBuilder,
+  &_swigt__p_p_njli__PhysicsShapeSphere,
+  &_swigt__p_p_njli__PhysicsShapeSphereBuilder,
+  &_swigt__p_p_njli__PhysicsShapeStaticPlane,
+  &_swigt__p_p_njli__PhysicsShapeStaticPlaneBuilder,
+  &_swigt__p_p_njli__PhysicsWorld,
+  &_swigt__p_p_njli__PhysicsWorldBuilder,
+  &_swigt__p_p_njli__Plane,
+  &_swigt__p_p_njli__PlaneBuilder,
+  &_swigt__p_p_njli__Scene,
+  &_swigt__p_p_njli__SceneBuilder,
+  &_swigt__p_p_njli__SceneState,
+  &_swigt__p_p_njli__SceneStateBuilder,
+  &_swigt__p_p_njli__SceneStateMachine,
+  &_swigt__p_p_njli__SceneStateMachineBuilder,
+  &_swigt__p_p_njli__ShaderProgram,
+  &_swigt__p_p_njli__ShaderProgramBuilder,
+  &_swigt__p_p_njli__Skinner,
+  &_swigt__p_p_njli__SkinnerBuilder,
+  &_swigt__p_p_njli__Sound,
+  &_swigt__p_p_njli__SoundBuilder,
+  &_swigt__p_p_njli__Sprite2D,
+  &_swigt__p_p_njli__Sprite2DBuilder,
+  &_swigt__p_p_njli__SpriteFrameAtlas,
+  &_swigt__p_p_njli__SpriteFrameAtlasBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorAlignment,
+  &_swigt__p_p_njli__SteeringBehaviorAlignmentBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorArrive,
+  &_swigt__p_p_njli__SteeringBehaviorArriveBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorCohesion,
+  &_swigt__p_p_njli__SteeringBehaviorCohesionBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorEvade,
+  &_swigt__p_p_njli__SteeringBehaviorEvadeBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorFlee,
+  &_swigt__p_p_njli__SteeringBehaviorFleeBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorFollowPath,
+  &_swigt__p_p_njli__SteeringBehaviorFollowPathBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorHide,
+  &_swigt__p_p_njli__SteeringBehaviorHideBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorInterpose,
+  &_swigt__p_p_njli__SteeringBehaviorInterposeBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorMachineDithered,
+  &_swigt__p_p_njli__SteeringBehaviorMachineDitheredBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorMachinePrioritized,
+  &_swigt__p_p_njli__SteeringBehaviorMachinePrioritizedBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorMachineWeighted,
+  &_swigt__p_p_njli__SteeringBehaviorMachineWeightedBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorObstacleAvoidance,
+  &_swigt__p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorOffsetPursuit,
+  &_swigt__p_p_njli__SteeringBehaviorOffsetPursuitBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorPursuit,
+  &_swigt__p_p_njli__SteeringBehaviorPursuitBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorSeek,
+  &_swigt__p_p_njli__SteeringBehaviorSeekBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorSeparation,
+  &_swigt__p_p_njli__SteeringBehaviorSeparationBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorWallAvoidance,
+  &_swigt__p_p_njli__SteeringBehaviorWallAvoidanceBuilder,
+  &_swigt__p_p_njli__SteeringBehaviorWander,
+  &_swigt__p_p_njli__SteeringBehaviorWanderBuilder,
+  &_swigt__p_p_njli__StopWatch,
+  &_swigt__p_p_njli__StopWatchBuilder,
+  &_swigt__p_p_njli__Timer,
+  &_swigt__p_p_njli__TimerBuilder,
+  &_swigt__p_p_njli__WorldState,
+  &_swigt__p_p_njli__WorldStateBuilder,
+  &_swigt__p_p_njli__WorldStateMachine,
+  &_swigt__p_p_njli__WorldStateMachineBuilder,
+  &_swigt__p_p_njli__Xml,
+  &_swigt__p_p_njli__XmlBuilder,
+  &_swigt__p_s16,
+  &_swigt__p_s32,
+  &_swigt__p_s64,
+  &_swigt__p_s8,
+  &_swigt__p_u16,
+  &_swigt__p_u32,
+  &_swigt__p_u64,
+  &_swigt__p_u8,
 };
 
+static swig_cast_info _swigc__p_f32[] = {  {&_swigt__p_f32, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f64[] = {  {&_swigt__p_f64, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Action[] = {  {&_swigt__p_njli__Action, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__ActionBuilder[] = {  {&_swigt__p_njli__ActionBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Camera[] = {  {&_swigt__p_njli__Camera, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__CameraBuilder[] = {  {&_swigt__p_njli__CameraBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Clock[] = {  {&_swigt__p_njli__Clock, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__ClockBuilder[] = {  {&_swigt__p_njli__ClockBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__CollisionResponse[] = {  {&_swigt__p_njli__CollisionResponse, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__CollisionResponseBuilder[] = {  {&_swigt__p_njli__CollisionResponseBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Cube[] = {  {&_swigt__p_njli__Cube, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__CubeBuilder[] = {  {&_swigt__p_njli__CubeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Font[] = {  {&_swigt__p_njli__Font, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__FontBuilder[] = {  {&_swigt__p_njli__FontBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Image[] = {  {&_swigt__p_njli__Image, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__ImageBuilder[] = {  {&_swigt__p_njli__ImageBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__JsonJLI[] = {  {&_swigt__p_njli__JsonJLI, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__JsonJLIBuilder[] = {  {&_swigt__p_njli__JsonJLIBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__LevelOfDetail[] = {  {&_swigt__p_njli__LevelOfDetail, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__LevelOfDetailBuilder[] = {  {&_swigt__p_njli__LevelOfDetailBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Light[] = {  {&_swigt__p_njli__Light, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__LightBuilder[] = {  {&_swigt__p_njli__LightBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Material[] = {  {&_swigt__p_njli__Material, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__MaterialBuilder[] = {  {&_swigt__p_njli__MaterialBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__MaterialProperty[] = {  {&_swigt__p_njli__MaterialProperty, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__MaterialPropertyBuilder[] = {  {&_swigt__p_njli__MaterialPropertyBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Node[] = {  {&_swigt__p_njli__Node, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__NodeBuilder[] = {  {&_swigt__p_njli__NodeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__NodeState[] = {  {&_swigt__p_njli__NodeState, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__NodeStateBuilder[] = {  {&_swigt__p_njli__NodeStateBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__NodeStateMachine[] = {  {&_swigt__p_njli__NodeStateMachine, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__NodeStateMachineBuilder[] = {  {&_swigt__p_njli__NodeStateMachineBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__ParticleEmitter[] = {  {&_swigt__p_njli__ParticleEmitter, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__ParticleEmitterBuilder[] = {  {&_swigt__p_njli__ParticleEmitterBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsBodyGhost[] = {  {&_swigt__p_njli__PhysicsBodyGhost, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsBodyGhostBuilder[] = {  {&_swigt__p_njli__PhysicsBodyGhostBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsBodyRigid[] = {  {&_swigt__p_njli__PhysicsBodyRigid, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsBodyRigidBuilder[] = {  {&_swigt__p_njli__PhysicsBodyRigidBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsBodySoft[] = {  {&_swigt__p_njli__PhysicsBodySoft, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsBodySoftBuilder[] = {  {&_swigt__p_njli__PhysicsBodySoftBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsCloseContact[] = {  {&_swigt__p_njli__PhysicsCloseContact, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsCloseContactBuilder[] = {  {&_swigt__p_njli__PhysicsCloseContactBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraint[] = {  {&_swigt__p_njli__PhysicsConstraint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintBuilder[] = {  {&_swigt__p_njli__PhysicsConstraintBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintConeTwist[] = {  {&_swigt__p_njli__PhysicsConstraintConeTwist, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintConeTwistBuilder[] = {  {&_swigt__p_njli__PhysicsConstraintConeTwistBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintFixed[] = {  {&_swigt__p_njli__PhysicsConstraintFixed, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintFixedBuilder[] = {  {&_swigt__p_njli__PhysicsConstraintFixedBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintGeneric6Dof[] = {  {&_swigt__p_njli__PhysicsConstraintGeneric6Dof, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintGeneric6DofBuilder[] = {  {&_swigt__p_njli__PhysicsConstraintGeneric6DofBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintGeneric6DofSpring[] = {  {&_swigt__p_njli__PhysicsConstraintGeneric6DofSpring, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintGeneric6DofSpringBuilder[] = {  {&_swigt__p_njli__PhysicsConstraintGeneric6DofSpringBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintHinge[] = {  {&_swigt__p_njli__PhysicsConstraintHinge, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintHingeBuilder[] = {  {&_swigt__p_njli__PhysicsConstraintHingeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintPointToPoint[] = {  {&_swigt__p_njli__PhysicsConstraintPointToPoint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintPointToPointBuilder[] = {  {&_swigt__p_njli__PhysicsConstraintPointToPointBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintSlider[] = {  {&_swigt__p_njli__PhysicsConstraintSlider, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsConstraintSliderBuilder[] = {  {&_swigt__p_njli__PhysicsConstraintSliderBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsContact[] = {  {&_swigt__p_njli__PhysicsContact, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsContactBuilder[] = {  {&_swigt__p_njli__PhysicsContactBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsField[] = {  {&_swigt__p_njli__PhysicsField, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsFieldBuilder[] = {  {&_swigt__p_njli__PhysicsFieldBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsRayContact[] = {  {&_swigt__p_njli__PhysicsRayContact, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsRayContactBuilder[] = {  {&_swigt__p_njli__PhysicsRayContactBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeBox[] = {  {&_swigt__p_njli__PhysicsShapeBox, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeBox2D[] = {  {&_swigt__p_njli__PhysicsShapeBox2D, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeBox2DBuilder[] = {  {&_swigt__p_njli__PhysicsShapeBox2DBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeBoxBuilder[] = {  {&_swigt__p_njli__PhysicsShapeBoxBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeBvhTriangleMesh[] = {  {&_swigt__p_njli__PhysicsShapeBvhTriangleMesh, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeBvhTriangleMeshBuilder[] = {  {&_swigt__p_njli__PhysicsShapeBvhTriangleMeshBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeCapsule[] = {  {&_swigt__p_njli__PhysicsShapeCapsule, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeCapsuleBuilder[] = {  {&_swigt__p_njli__PhysicsShapeCapsuleBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeCone[] = {  {&_swigt__p_njli__PhysicsShapeCone, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeConeBuilder[] = {  {&_swigt__p_njli__PhysicsShapeConeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeConvexHull[] = {  {&_swigt__p_njli__PhysicsShapeConvexHull, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeConvexHullBuilder[] = {  {&_swigt__p_njli__PhysicsShapeConvexHullBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeConvexTriangleMesh[] = {  {&_swigt__p_njli__PhysicsShapeConvexTriangleMesh, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeConvexTriangleMeshBuilder[] = {  {&_swigt__p_njli__PhysicsShapeConvexTriangleMeshBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeCylinder[] = {  {&_swigt__p_njli__PhysicsShapeCylinder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeCylinderBuilder[] = {  {&_swigt__p_njli__PhysicsShapeCylinderBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeHeightfieldTerrain[] = {  {&_swigt__p_njli__PhysicsShapeHeightfieldTerrain, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeHeightfieldTerrainBuilder[] = {  {&_swigt__p_njli__PhysicsShapeHeightfieldTerrainBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeMultiSphere[] = {  {&_swigt__p_njli__PhysicsShapeMultiSphere, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeMultiSphereBuilder[] = {  {&_swigt__p_njli__PhysicsShapeMultiSphereBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeSphere[] = {  {&_swigt__p_njli__PhysicsShapeSphere, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeSphereBuilder[] = {  {&_swigt__p_njli__PhysicsShapeSphereBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeStaticPlane[] = {  {&_swigt__p_njli__PhysicsShapeStaticPlane, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsShapeStaticPlaneBuilder[] = {  {&_swigt__p_njli__PhysicsShapeStaticPlaneBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsWorld[] = {  {&_swigt__p_njli__PhysicsWorld, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PhysicsWorldBuilder[] = {  {&_swigt__p_njli__PhysicsWorldBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Plane[] = {  {&_swigt__p_njli__Plane, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__PlaneBuilder[] = {  {&_swigt__p_njli__PlaneBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Scene[] = {  {&_swigt__p_njli__Scene, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SceneBuilder[] = {  {&_swigt__p_njli__SceneBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SceneState[] = {  {&_swigt__p_njli__SceneState, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SceneStateBuilder[] = {  {&_swigt__p_njli__SceneStateBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SceneStateMachine[] = {  {&_swigt__p_njli__SceneStateMachine, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SceneStateMachineBuilder[] = {  {&_swigt__p_njli__SceneStateMachineBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__ShaderProgram[] = {  {&_swigt__p_njli__ShaderProgram, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__ShaderProgramBuilder[] = {  {&_swigt__p_njli__ShaderProgramBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Skinner[] = {  {&_swigt__p_njli__Skinner, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SkinnerBuilder[] = {  {&_swigt__p_njli__SkinnerBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Sound[] = {  {&_swigt__p_njli__Sound, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SoundBuilder[] = {  {&_swigt__p_njli__SoundBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Sprite2D[] = {  {&_swigt__p_njli__Sprite2D, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Sprite2DBuilder[] = {  {&_swigt__p_njli__Sprite2DBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SpriteFrameAtlas[] = {  {&_swigt__p_njli__SpriteFrameAtlas, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SpriteFrameAtlasBuilder[] = {  {&_swigt__p_njli__SpriteFrameAtlasBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorAlignment[] = {  {&_swigt__p_njli__SteeringBehaviorAlignment, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorAlignmentBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorAlignmentBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorArrive[] = {  {&_swigt__p_njli__SteeringBehaviorArrive, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorArriveBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorArriveBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorCohesion[] = {  {&_swigt__p_njli__SteeringBehaviorCohesion, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorCohesionBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorCohesionBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorEvade[] = {  {&_swigt__p_njli__SteeringBehaviorEvade, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorEvadeBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorEvadeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorFlee[] = {  {&_swigt__p_njli__SteeringBehaviorFlee, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorFleeBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorFleeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorFollowPath[] = {  {&_swigt__p_njli__SteeringBehaviorFollowPath, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorFollowPathBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorFollowPathBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorHide[] = {  {&_swigt__p_njli__SteeringBehaviorHide, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorHideBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorHideBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorInterpose[] = {  {&_swigt__p_njli__SteeringBehaviorInterpose, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorInterposeBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorInterposeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorMachineDithered[] = {  {&_swigt__p_njli__SteeringBehaviorMachineDithered, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorMachineDitheredBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorMachineDitheredBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorMachinePrioritized[] = {  {&_swigt__p_njli__SteeringBehaviorMachinePrioritized, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorMachinePrioritizedBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorMachinePrioritizedBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorMachineWeighted[] = {  {&_swigt__p_njli__SteeringBehaviorMachineWeighted, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorMachineWeightedBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorMachineWeightedBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorObstacleAvoidance[] = {  {&_swigt__p_njli__SteeringBehaviorObstacleAvoidance, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorObstacleAvoidanceBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorObstacleAvoidanceBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorOffsetPursuit[] = {  {&_swigt__p_njli__SteeringBehaviorOffsetPursuit, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorOffsetPursuitBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorOffsetPursuitBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorPursuit[] = {  {&_swigt__p_njli__SteeringBehaviorPursuit, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorPursuitBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorPursuitBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorSeek[] = {  {&_swigt__p_njli__SteeringBehaviorSeek, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorSeekBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorSeekBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorSeparation[] = {  {&_swigt__p_njli__SteeringBehaviorSeparation, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorSeparationBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorSeparationBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorWallAvoidance[] = {  {&_swigt__p_njli__SteeringBehaviorWallAvoidance, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorWallAvoidanceBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorWallAvoidanceBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorWander[] = {  {&_swigt__p_njli__SteeringBehaviorWander, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__SteeringBehaviorWanderBuilder[] = {  {&_swigt__p_njli__SteeringBehaviorWanderBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__StopWatch[] = {  {&_swigt__p_njli__StopWatch, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__StopWatchBuilder[] = {  {&_swigt__p_njli__StopWatchBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Timer[] = {  {&_swigt__p_njli__Timer, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__TimerBuilder[] = {  {&_swigt__p_njli__TimerBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__WorldState[] = {  {&_swigt__p_njli__WorldState, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__WorldStateBuilder[] = {  {&_swigt__p_njli__WorldStateBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__WorldStateMachine[] = {  {&_swigt__p_njli__WorldStateMachine, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__WorldStateMachineBuilder[] = {  {&_swigt__p_njli__WorldStateMachineBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__Xml[] = {  {&_swigt__p_njli__Xml, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_njli__XmlBuilder[] = {  {&_swigt__p_njli__XmlBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Action[] = {  {&_swigt__p_p_njli__Action, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__ActionBuilder[] = {  {&_swigt__p_p_njli__ActionBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Camera[] = {  {&_swigt__p_p_njli__Camera, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__CameraBuilder[] = {  {&_swigt__p_p_njli__CameraBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Clock[] = {  {&_swigt__p_p_njli__Clock, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__ClockBuilder[] = {  {&_swigt__p_p_njli__ClockBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__CollisionResponse[] = {  {&_swigt__p_p_njli__CollisionResponse, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__CollisionResponseBuilder[] = {  {&_swigt__p_p_njli__CollisionResponseBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Cube[] = {  {&_swigt__p_p_njli__Cube, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__CubeBuilder[] = {  {&_swigt__p_p_njli__CubeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Font[] = {  {&_swigt__p_p_njli__Font, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__FontBuilder[] = {  {&_swigt__p_p_njli__FontBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Image[] = {  {&_swigt__p_p_njli__Image, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__ImageBuilder[] = {  {&_swigt__p_p_njli__ImageBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__JsonJLI[] = {  {&_swigt__p_p_njli__JsonJLI, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__JsonJLIBuilder[] = {  {&_swigt__p_p_njli__JsonJLIBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__LevelOfDetail[] = {  {&_swigt__p_p_njli__LevelOfDetail, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__LevelOfDetailBuilder[] = {  {&_swigt__p_p_njli__LevelOfDetailBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Light[] = {  {&_swigt__p_p_njli__Light, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__LightBuilder[] = {  {&_swigt__p_p_njli__LightBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Material[] = {  {&_swigt__p_p_njli__Material, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__MaterialBuilder[] = {  {&_swigt__p_p_njli__MaterialBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__MaterialProperty[] = {  {&_swigt__p_p_njli__MaterialProperty, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__MaterialPropertyBuilder[] = {  {&_swigt__p_p_njli__MaterialPropertyBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Node[] = {  {&_swigt__p_p_njli__Node, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__NodeBuilder[] = {  {&_swigt__p_p_njli__NodeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__NodeState[] = {  {&_swigt__p_p_njli__NodeState, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__NodeStateBuilder[] = {  {&_swigt__p_p_njli__NodeStateBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__NodeStateMachine[] = {  {&_swigt__p_p_njli__NodeStateMachine, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__NodeStateMachineBuilder[] = {  {&_swigt__p_p_njli__NodeStateMachineBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__ParticleEmitter[] = {  {&_swigt__p_p_njli__ParticleEmitter, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__ParticleEmitterBuilder[] = {  {&_swigt__p_p_njli__ParticleEmitterBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsBodyGhost[] = {  {&_swigt__p_p_njli__PhysicsBodyGhost, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsBodyGhostBuilder[] = {  {&_swigt__p_p_njli__PhysicsBodyGhostBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsBodyRigid[] = {  {&_swigt__p_p_njli__PhysicsBodyRigid, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsBodyRigidBuilder[] = {  {&_swigt__p_p_njli__PhysicsBodyRigidBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsBodySoft[] = {  {&_swigt__p_p_njli__PhysicsBodySoft, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsBodySoftBuilder[] = {  {&_swigt__p_p_njli__PhysicsBodySoftBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsCloseContact[] = {  {&_swigt__p_p_njli__PhysicsCloseContact, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsCloseContactBuilder[] = {  {&_swigt__p_p_njli__PhysicsCloseContactBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraint[] = {  {&_swigt__p_p_njli__PhysicsConstraint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintBuilder[] = {  {&_swigt__p_p_njli__PhysicsConstraintBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintConeTwist[] = {  {&_swigt__p_p_njli__PhysicsConstraintConeTwist, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintConeTwistBuilder[] = {  {&_swigt__p_p_njli__PhysicsConstraintConeTwistBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintFixed[] = {  {&_swigt__p_p_njli__PhysicsConstraintFixed, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintFixedBuilder[] = {  {&_swigt__p_p_njli__PhysicsConstraintFixedBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintGeneric6Dof[] = {  {&_swigt__p_p_njli__PhysicsConstraintGeneric6Dof, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintGeneric6DofBuilder[] = {  {&_swigt__p_p_njli__PhysicsConstraintGeneric6DofBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintGeneric6DofSpring[] = {  {&_swigt__p_p_njli__PhysicsConstraintGeneric6DofSpring, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder[] = {  {&_swigt__p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintHinge[] = {  {&_swigt__p_p_njli__PhysicsConstraintHinge, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintHingeBuilder[] = {  {&_swigt__p_p_njli__PhysicsConstraintHingeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintPointToPoint[] = {  {&_swigt__p_p_njli__PhysicsConstraintPointToPoint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintPointToPointBuilder[] = {  {&_swigt__p_p_njli__PhysicsConstraintPointToPointBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintSlider[] = {  {&_swigt__p_p_njli__PhysicsConstraintSlider, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsConstraintSliderBuilder[] = {  {&_swigt__p_p_njli__PhysicsConstraintSliderBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsContact[] = {  {&_swigt__p_p_njli__PhysicsContact, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsContactBuilder[] = {  {&_swigt__p_p_njli__PhysicsContactBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsField[] = {  {&_swigt__p_p_njli__PhysicsField, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsFieldBuilder[] = {  {&_swigt__p_p_njli__PhysicsFieldBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsRayContact[] = {  {&_swigt__p_p_njli__PhysicsRayContact, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsRayContactBuilder[] = {  {&_swigt__p_p_njli__PhysicsRayContactBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeBox[] = {  {&_swigt__p_p_njli__PhysicsShapeBox, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeBox2D[] = {  {&_swigt__p_p_njli__PhysicsShapeBox2D, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeBox2DBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeBox2DBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeBoxBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeBoxBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeBvhTriangleMesh[] = {  {&_swigt__p_p_njli__PhysicsShapeBvhTriangleMesh, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeBvhTriangleMeshBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeBvhTriangleMeshBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeCapsule[] = {  {&_swigt__p_p_njli__PhysicsShapeCapsule, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeCapsuleBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeCapsuleBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeCone[] = {  {&_swigt__p_p_njli__PhysicsShapeCone, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeConeBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeConeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeConvexHull[] = {  {&_swigt__p_p_njli__PhysicsShapeConvexHull, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeConvexHullBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeConvexHullBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeConvexTriangleMesh[] = {  {&_swigt__p_p_njli__PhysicsShapeConvexTriangleMesh, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeConvexTriangleMeshBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeConvexTriangleMeshBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeCylinder[] = {  {&_swigt__p_p_njli__PhysicsShapeCylinder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeCylinderBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeCylinderBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeHeightfieldTerrain[] = {  {&_swigt__p_p_njli__PhysicsShapeHeightfieldTerrain, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeHeightfieldTerrainBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeHeightfieldTerrainBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeMultiSphere[] = {  {&_swigt__p_p_njli__PhysicsShapeMultiSphere, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeMultiSphereBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeMultiSphereBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeSphere[] = {  {&_swigt__p_p_njli__PhysicsShapeSphere, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeSphereBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeSphereBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeStaticPlane[] = {  {&_swigt__p_p_njli__PhysicsShapeStaticPlane, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsShapeStaticPlaneBuilder[] = {  {&_swigt__p_p_njli__PhysicsShapeStaticPlaneBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsWorld[] = {  {&_swigt__p_p_njli__PhysicsWorld, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PhysicsWorldBuilder[] = {  {&_swigt__p_p_njli__PhysicsWorldBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Plane[] = {  {&_swigt__p_p_njli__Plane, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__PlaneBuilder[] = {  {&_swigt__p_p_njli__PlaneBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Scene[] = {  {&_swigt__p_p_njli__Scene, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SceneBuilder[] = {  {&_swigt__p_p_njli__SceneBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SceneState[] = {  {&_swigt__p_p_njli__SceneState, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SceneStateBuilder[] = {  {&_swigt__p_p_njli__SceneStateBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SceneStateMachine[] = {  {&_swigt__p_p_njli__SceneStateMachine, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SceneStateMachineBuilder[] = {  {&_swigt__p_p_njli__SceneStateMachineBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__ShaderProgram[] = {  {&_swigt__p_p_njli__ShaderProgram, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__ShaderProgramBuilder[] = {  {&_swigt__p_p_njli__ShaderProgramBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Skinner[] = {  {&_swigt__p_p_njli__Skinner, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SkinnerBuilder[] = {  {&_swigt__p_p_njli__SkinnerBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Sound[] = {  {&_swigt__p_p_njli__Sound, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SoundBuilder[] = {  {&_swigt__p_p_njli__SoundBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Sprite2D[] = {  {&_swigt__p_p_njli__Sprite2D, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Sprite2DBuilder[] = {  {&_swigt__p_p_njli__Sprite2DBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SpriteFrameAtlas[] = {  {&_swigt__p_p_njli__SpriteFrameAtlas, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SpriteFrameAtlasBuilder[] = {  {&_swigt__p_p_njli__SpriteFrameAtlasBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorAlignment[] = {  {&_swigt__p_p_njli__SteeringBehaviorAlignment, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorAlignmentBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorAlignmentBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorArrive[] = {  {&_swigt__p_p_njli__SteeringBehaviorArrive, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorArriveBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorArriveBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorCohesion[] = {  {&_swigt__p_p_njli__SteeringBehaviorCohesion, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorCohesionBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorCohesionBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorEvade[] = {  {&_swigt__p_p_njli__SteeringBehaviorEvade, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorEvadeBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorEvadeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorFlee[] = {  {&_swigt__p_p_njli__SteeringBehaviorFlee, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorFleeBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorFleeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorFollowPath[] = {  {&_swigt__p_p_njli__SteeringBehaviorFollowPath, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorFollowPathBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorFollowPathBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorHide[] = {  {&_swigt__p_p_njli__SteeringBehaviorHide, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorHideBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorHideBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorInterpose[] = {  {&_swigt__p_p_njli__SteeringBehaviorInterpose, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorInterposeBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorInterposeBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorMachineDithered[] = {  {&_swigt__p_p_njli__SteeringBehaviorMachineDithered, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorMachineDitheredBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorMachineDitheredBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorMachinePrioritized[] = {  {&_swigt__p_p_njli__SteeringBehaviorMachinePrioritized, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorMachinePrioritizedBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorMachinePrioritizedBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorMachineWeighted[] = {  {&_swigt__p_p_njli__SteeringBehaviorMachineWeighted, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorMachineWeightedBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorMachineWeightedBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorObstacleAvoidance[] = {  {&_swigt__p_p_njli__SteeringBehaviorObstacleAvoidance, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorOffsetPursuit[] = {  {&_swigt__p_p_njli__SteeringBehaviorOffsetPursuit, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorOffsetPursuitBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorOffsetPursuitBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorPursuit[] = {  {&_swigt__p_p_njli__SteeringBehaviorPursuit, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorPursuitBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorPursuitBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorSeek[] = {  {&_swigt__p_p_njli__SteeringBehaviorSeek, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorSeekBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorSeekBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorSeparation[] = {  {&_swigt__p_p_njli__SteeringBehaviorSeparation, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorSeparationBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorSeparationBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorWallAvoidance[] = {  {&_swigt__p_p_njli__SteeringBehaviorWallAvoidance, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorWallAvoidanceBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorWallAvoidanceBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorWander[] = {  {&_swigt__p_p_njli__SteeringBehaviorWander, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__SteeringBehaviorWanderBuilder[] = {  {&_swigt__p_p_njli__SteeringBehaviorWanderBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__StopWatch[] = {  {&_swigt__p_p_njli__StopWatch, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__StopWatchBuilder[] = {  {&_swigt__p_p_njli__StopWatchBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Timer[] = {  {&_swigt__p_p_njli__Timer, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__TimerBuilder[] = {  {&_swigt__p_p_njli__TimerBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__WorldState[] = {  {&_swigt__p_p_njli__WorldState, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__WorldStateBuilder[] = {  {&_swigt__p_p_njli__WorldStateBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__WorldStateMachine[] = {  {&_swigt__p_p_njli__WorldStateMachine, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__WorldStateMachineBuilder[] = {  {&_swigt__p_p_njli__WorldStateMachineBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__Xml[] = {  {&_swigt__p_p_njli__Xml, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_njli__XmlBuilder[] = {  {&_swigt__p_p_njli__XmlBuilder, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_s16[] = {  {&_swigt__p_s16, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_s32[] = {  {&_swigt__p_s32, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_s64[] = {  {&_swigt__p_s64, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_s8[] = {  {&_swigt__p_s8, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_u16[] = {  {&_swigt__p_u16, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_u32[] = {  {&_swigt__p_u32, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_u64[] = {  {&_swigt__p_u64, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_u8[] = {  {&_swigt__p_u8, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  NULL
+  _swigc__p_f32,
+  _swigc__p_f64,
+  _swigc__p_njli__Action,
+  _swigc__p_njli__ActionBuilder,
+  _swigc__p_njli__Camera,
+  _swigc__p_njli__CameraBuilder,
+  _swigc__p_njli__Clock,
+  _swigc__p_njli__ClockBuilder,
+  _swigc__p_njli__CollisionResponse,
+  _swigc__p_njli__CollisionResponseBuilder,
+  _swigc__p_njli__Cube,
+  _swigc__p_njli__CubeBuilder,
+  _swigc__p_njli__Font,
+  _swigc__p_njli__FontBuilder,
+  _swigc__p_njli__Image,
+  _swigc__p_njli__ImageBuilder,
+  _swigc__p_njli__JsonJLI,
+  _swigc__p_njli__JsonJLIBuilder,
+  _swigc__p_njli__LevelOfDetail,
+  _swigc__p_njli__LevelOfDetailBuilder,
+  _swigc__p_njli__Light,
+  _swigc__p_njli__LightBuilder,
+  _swigc__p_njli__Material,
+  _swigc__p_njli__MaterialBuilder,
+  _swigc__p_njli__MaterialProperty,
+  _swigc__p_njli__MaterialPropertyBuilder,
+  _swigc__p_njli__Node,
+  _swigc__p_njli__NodeBuilder,
+  _swigc__p_njli__NodeState,
+  _swigc__p_njli__NodeStateBuilder,
+  _swigc__p_njli__NodeStateMachine,
+  _swigc__p_njli__NodeStateMachineBuilder,
+  _swigc__p_njli__ParticleEmitter,
+  _swigc__p_njli__ParticleEmitterBuilder,
+  _swigc__p_njli__PhysicsBodyGhost,
+  _swigc__p_njli__PhysicsBodyGhostBuilder,
+  _swigc__p_njli__PhysicsBodyRigid,
+  _swigc__p_njli__PhysicsBodyRigidBuilder,
+  _swigc__p_njli__PhysicsBodySoft,
+  _swigc__p_njli__PhysicsBodySoftBuilder,
+  _swigc__p_njli__PhysicsCloseContact,
+  _swigc__p_njli__PhysicsCloseContactBuilder,
+  _swigc__p_njli__PhysicsConstraint,
+  _swigc__p_njli__PhysicsConstraintBuilder,
+  _swigc__p_njli__PhysicsConstraintConeTwist,
+  _swigc__p_njli__PhysicsConstraintConeTwistBuilder,
+  _swigc__p_njli__PhysicsConstraintFixed,
+  _swigc__p_njli__PhysicsConstraintFixedBuilder,
+  _swigc__p_njli__PhysicsConstraintGeneric6Dof,
+  _swigc__p_njli__PhysicsConstraintGeneric6DofBuilder,
+  _swigc__p_njli__PhysicsConstraintGeneric6DofSpring,
+  _swigc__p_njli__PhysicsConstraintGeneric6DofSpringBuilder,
+  _swigc__p_njli__PhysicsConstraintHinge,
+  _swigc__p_njli__PhysicsConstraintHingeBuilder,
+  _swigc__p_njli__PhysicsConstraintPointToPoint,
+  _swigc__p_njli__PhysicsConstraintPointToPointBuilder,
+  _swigc__p_njli__PhysicsConstraintSlider,
+  _swigc__p_njli__PhysicsConstraintSliderBuilder,
+  _swigc__p_njli__PhysicsContact,
+  _swigc__p_njli__PhysicsContactBuilder,
+  _swigc__p_njli__PhysicsField,
+  _swigc__p_njli__PhysicsFieldBuilder,
+  _swigc__p_njli__PhysicsRayContact,
+  _swigc__p_njli__PhysicsRayContactBuilder,
+  _swigc__p_njli__PhysicsShapeBox,
+  _swigc__p_njli__PhysicsShapeBox2D,
+  _swigc__p_njli__PhysicsShapeBox2DBuilder,
+  _swigc__p_njli__PhysicsShapeBoxBuilder,
+  _swigc__p_njli__PhysicsShapeBvhTriangleMesh,
+  _swigc__p_njli__PhysicsShapeBvhTriangleMeshBuilder,
+  _swigc__p_njli__PhysicsShapeCapsule,
+  _swigc__p_njli__PhysicsShapeCapsuleBuilder,
+  _swigc__p_njli__PhysicsShapeCone,
+  _swigc__p_njli__PhysicsShapeConeBuilder,
+  _swigc__p_njli__PhysicsShapeConvexHull,
+  _swigc__p_njli__PhysicsShapeConvexHullBuilder,
+  _swigc__p_njli__PhysicsShapeConvexTriangleMesh,
+  _swigc__p_njli__PhysicsShapeConvexTriangleMeshBuilder,
+  _swigc__p_njli__PhysicsShapeCylinder,
+  _swigc__p_njli__PhysicsShapeCylinderBuilder,
+  _swigc__p_njli__PhysicsShapeHeightfieldTerrain,
+  _swigc__p_njli__PhysicsShapeHeightfieldTerrainBuilder,
+  _swigc__p_njli__PhysicsShapeMultiSphere,
+  _swigc__p_njli__PhysicsShapeMultiSphereBuilder,
+  _swigc__p_njli__PhysicsShapeSphere,
+  _swigc__p_njli__PhysicsShapeSphereBuilder,
+  _swigc__p_njli__PhysicsShapeStaticPlane,
+  _swigc__p_njli__PhysicsShapeStaticPlaneBuilder,
+  _swigc__p_njli__PhysicsWorld,
+  _swigc__p_njli__PhysicsWorldBuilder,
+  _swigc__p_njli__Plane,
+  _swigc__p_njli__PlaneBuilder,
+  _swigc__p_njli__Scene,
+  _swigc__p_njli__SceneBuilder,
+  _swigc__p_njli__SceneState,
+  _swigc__p_njli__SceneStateBuilder,
+  _swigc__p_njli__SceneStateMachine,
+  _swigc__p_njli__SceneStateMachineBuilder,
+  _swigc__p_njli__ShaderProgram,
+  _swigc__p_njli__ShaderProgramBuilder,
+  _swigc__p_njli__Skinner,
+  _swigc__p_njli__SkinnerBuilder,
+  _swigc__p_njli__Sound,
+  _swigc__p_njli__SoundBuilder,
+  _swigc__p_njli__Sprite2D,
+  _swigc__p_njli__Sprite2DBuilder,
+  _swigc__p_njli__SpriteFrameAtlas,
+  _swigc__p_njli__SpriteFrameAtlasBuilder,
+  _swigc__p_njli__SteeringBehaviorAlignment,
+  _swigc__p_njli__SteeringBehaviorAlignmentBuilder,
+  _swigc__p_njli__SteeringBehaviorArrive,
+  _swigc__p_njli__SteeringBehaviorArriveBuilder,
+  _swigc__p_njli__SteeringBehaviorCohesion,
+  _swigc__p_njli__SteeringBehaviorCohesionBuilder,
+  _swigc__p_njli__SteeringBehaviorEvade,
+  _swigc__p_njli__SteeringBehaviorEvadeBuilder,
+  _swigc__p_njli__SteeringBehaviorFlee,
+  _swigc__p_njli__SteeringBehaviorFleeBuilder,
+  _swigc__p_njli__SteeringBehaviorFollowPath,
+  _swigc__p_njli__SteeringBehaviorFollowPathBuilder,
+  _swigc__p_njli__SteeringBehaviorHide,
+  _swigc__p_njli__SteeringBehaviorHideBuilder,
+  _swigc__p_njli__SteeringBehaviorInterpose,
+  _swigc__p_njli__SteeringBehaviorInterposeBuilder,
+  _swigc__p_njli__SteeringBehaviorMachineDithered,
+  _swigc__p_njli__SteeringBehaviorMachineDitheredBuilder,
+  _swigc__p_njli__SteeringBehaviorMachinePrioritized,
+  _swigc__p_njli__SteeringBehaviorMachinePrioritizedBuilder,
+  _swigc__p_njli__SteeringBehaviorMachineWeighted,
+  _swigc__p_njli__SteeringBehaviorMachineWeightedBuilder,
+  _swigc__p_njli__SteeringBehaviorObstacleAvoidance,
+  _swigc__p_njli__SteeringBehaviorObstacleAvoidanceBuilder,
+  _swigc__p_njli__SteeringBehaviorOffsetPursuit,
+  _swigc__p_njli__SteeringBehaviorOffsetPursuitBuilder,
+  _swigc__p_njli__SteeringBehaviorPursuit,
+  _swigc__p_njli__SteeringBehaviorPursuitBuilder,
+  _swigc__p_njli__SteeringBehaviorSeek,
+  _swigc__p_njli__SteeringBehaviorSeekBuilder,
+  _swigc__p_njli__SteeringBehaviorSeparation,
+  _swigc__p_njli__SteeringBehaviorSeparationBuilder,
+  _swigc__p_njli__SteeringBehaviorWallAvoidance,
+  _swigc__p_njli__SteeringBehaviorWallAvoidanceBuilder,
+  _swigc__p_njli__SteeringBehaviorWander,
+  _swigc__p_njli__SteeringBehaviorWanderBuilder,
+  _swigc__p_njli__StopWatch,
+  _swigc__p_njli__StopWatchBuilder,
+  _swigc__p_njli__Timer,
+  _swigc__p_njli__TimerBuilder,
+  _swigc__p_njli__WorldState,
+  _swigc__p_njli__WorldStateBuilder,
+  _swigc__p_njli__WorldStateMachine,
+  _swigc__p_njli__WorldStateMachineBuilder,
+  _swigc__p_njli__Xml,
+  _swigc__p_njli__XmlBuilder,
+  _swigc__p_p_njli__Action,
+  _swigc__p_p_njli__ActionBuilder,
+  _swigc__p_p_njli__Camera,
+  _swigc__p_p_njli__CameraBuilder,
+  _swigc__p_p_njli__Clock,
+  _swigc__p_p_njli__ClockBuilder,
+  _swigc__p_p_njli__CollisionResponse,
+  _swigc__p_p_njli__CollisionResponseBuilder,
+  _swigc__p_p_njli__Cube,
+  _swigc__p_p_njli__CubeBuilder,
+  _swigc__p_p_njli__Font,
+  _swigc__p_p_njli__FontBuilder,
+  _swigc__p_p_njli__Image,
+  _swigc__p_p_njli__ImageBuilder,
+  _swigc__p_p_njli__JsonJLI,
+  _swigc__p_p_njli__JsonJLIBuilder,
+  _swigc__p_p_njli__LevelOfDetail,
+  _swigc__p_p_njli__LevelOfDetailBuilder,
+  _swigc__p_p_njli__Light,
+  _swigc__p_p_njli__LightBuilder,
+  _swigc__p_p_njli__Material,
+  _swigc__p_p_njli__MaterialBuilder,
+  _swigc__p_p_njli__MaterialProperty,
+  _swigc__p_p_njli__MaterialPropertyBuilder,
+  _swigc__p_p_njli__Node,
+  _swigc__p_p_njli__NodeBuilder,
+  _swigc__p_p_njli__NodeState,
+  _swigc__p_p_njli__NodeStateBuilder,
+  _swigc__p_p_njli__NodeStateMachine,
+  _swigc__p_p_njli__NodeStateMachineBuilder,
+  _swigc__p_p_njli__ParticleEmitter,
+  _swigc__p_p_njli__ParticleEmitterBuilder,
+  _swigc__p_p_njli__PhysicsBodyGhost,
+  _swigc__p_p_njli__PhysicsBodyGhostBuilder,
+  _swigc__p_p_njli__PhysicsBodyRigid,
+  _swigc__p_p_njli__PhysicsBodyRigidBuilder,
+  _swigc__p_p_njli__PhysicsBodySoft,
+  _swigc__p_p_njli__PhysicsBodySoftBuilder,
+  _swigc__p_p_njli__PhysicsCloseContact,
+  _swigc__p_p_njli__PhysicsCloseContactBuilder,
+  _swigc__p_p_njli__PhysicsConstraint,
+  _swigc__p_p_njli__PhysicsConstraintBuilder,
+  _swigc__p_p_njli__PhysicsConstraintConeTwist,
+  _swigc__p_p_njli__PhysicsConstraintConeTwistBuilder,
+  _swigc__p_p_njli__PhysicsConstraintFixed,
+  _swigc__p_p_njli__PhysicsConstraintFixedBuilder,
+  _swigc__p_p_njli__PhysicsConstraintGeneric6Dof,
+  _swigc__p_p_njli__PhysicsConstraintGeneric6DofBuilder,
+  _swigc__p_p_njli__PhysicsConstraintGeneric6DofSpring,
+  _swigc__p_p_njli__PhysicsConstraintGeneric6DofSpringBuilder,
+  _swigc__p_p_njli__PhysicsConstraintHinge,
+  _swigc__p_p_njli__PhysicsConstraintHingeBuilder,
+  _swigc__p_p_njli__PhysicsConstraintPointToPoint,
+  _swigc__p_p_njli__PhysicsConstraintPointToPointBuilder,
+  _swigc__p_p_njli__PhysicsConstraintSlider,
+  _swigc__p_p_njli__PhysicsConstraintSliderBuilder,
+  _swigc__p_p_njli__PhysicsContact,
+  _swigc__p_p_njli__PhysicsContactBuilder,
+  _swigc__p_p_njli__PhysicsField,
+  _swigc__p_p_njli__PhysicsFieldBuilder,
+  _swigc__p_p_njli__PhysicsRayContact,
+  _swigc__p_p_njli__PhysicsRayContactBuilder,
+  _swigc__p_p_njli__PhysicsShapeBox,
+  _swigc__p_p_njli__PhysicsShapeBox2D,
+  _swigc__p_p_njli__PhysicsShapeBox2DBuilder,
+  _swigc__p_p_njli__PhysicsShapeBoxBuilder,
+  _swigc__p_p_njli__PhysicsShapeBvhTriangleMesh,
+  _swigc__p_p_njli__PhysicsShapeBvhTriangleMeshBuilder,
+  _swigc__p_p_njli__PhysicsShapeCapsule,
+  _swigc__p_p_njli__PhysicsShapeCapsuleBuilder,
+  _swigc__p_p_njli__PhysicsShapeCone,
+  _swigc__p_p_njli__PhysicsShapeConeBuilder,
+  _swigc__p_p_njli__PhysicsShapeConvexHull,
+  _swigc__p_p_njli__PhysicsShapeConvexHullBuilder,
+  _swigc__p_p_njli__PhysicsShapeConvexTriangleMesh,
+  _swigc__p_p_njli__PhysicsShapeConvexTriangleMeshBuilder,
+  _swigc__p_p_njli__PhysicsShapeCylinder,
+  _swigc__p_p_njli__PhysicsShapeCylinderBuilder,
+  _swigc__p_p_njli__PhysicsShapeHeightfieldTerrain,
+  _swigc__p_p_njli__PhysicsShapeHeightfieldTerrainBuilder,
+  _swigc__p_p_njli__PhysicsShapeMultiSphere,
+  _swigc__p_p_njli__PhysicsShapeMultiSphereBuilder,
+  _swigc__p_p_njli__PhysicsShapeSphere,
+  _swigc__p_p_njli__PhysicsShapeSphereBuilder,
+  _swigc__p_p_njli__PhysicsShapeStaticPlane,
+  _swigc__p_p_njli__PhysicsShapeStaticPlaneBuilder,
+  _swigc__p_p_njli__PhysicsWorld,
+  _swigc__p_p_njli__PhysicsWorldBuilder,
+  _swigc__p_p_njli__Plane,
+  _swigc__p_p_njli__PlaneBuilder,
+  _swigc__p_p_njli__Scene,
+  _swigc__p_p_njli__SceneBuilder,
+  _swigc__p_p_njli__SceneState,
+  _swigc__p_p_njli__SceneStateBuilder,
+  _swigc__p_p_njli__SceneStateMachine,
+  _swigc__p_p_njli__SceneStateMachineBuilder,
+  _swigc__p_p_njli__ShaderProgram,
+  _swigc__p_p_njli__ShaderProgramBuilder,
+  _swigc__p_p_njli__Skinner,
+  _swigc__p_p_njli__SkinnerBuilder,
+  _swigc__p_p_njli__Sound,
+  _swigc__p_p_njli__SoundBuilder,
+  _swigc__p_p_njli__Sprite2D,
+  _swigc__p_p_njli__Sprite2DBuilder,
+  _swigc__p_p_njli__SpriteFrameAtlas,
+  _swigc__p_p_njli__SpriteFrameAtlasBuilder,
+  _swigc__p_p_njli__SteeringBehaviorAlignment,
+  _swigc__p_p_njli__SteeringBehaviorAlignmentBuilder,
+  _swigc__p_p_njli__SteeringBehaviorArrive,
+  _swigc__p_p_njli__SteeringBehaviorArriveBuilder,
+  _swigc__p_p_njli__SteeringBehaviorCohesion,
+  _swigc__p_p_njli__SteeringBehaviorCohesionBuilder,
+  _swigc__p_p_njli__SteeringBehaviorEvade,
+  _swigc__p_p_njli__SteeringBehaviorEvadeBuilder,
+  _swigc__p_p_njli__SteeringBehaviorFlee,
+  _swigc__p_p_njli__SteeringBehaviorFleeBuilder,
+  _swigc__p_p_njli__SteeringBehaviorFollowPath,
+  _swigc__p_p_njli__SteeringBehaviorFollowPathBuilder,
+  _swigc__p_p_njli__SteeringBehaviorHide,
+  _swigc__p_p_njli__SteeringBehaviorHideBuilder,
+  _swigc__p_p_njli__SteeringBehaviorInterpose,
+  _swigc__p_p_njli__SteeringBehaviorInterposeBuilder,
+  _swigc__p_p_njli__SteeringBehaviorMachineDithered,
+  _swigc__p_p_njli__SteeringBehaviorMachineDitheredBuilder,
+  _swigc__p_p_njli__SteeringBehaviorMachinePrioritized,
+  _swigc__p_p_njli__SteeringBehaviorMachinePrioritizedBuilder,
+  _swigc__p_p_njli__SteeringBehaviorMachineWeighted,
+  _swigc__p_p_njli__SteeringBehaviorMachineWeightedBuilder,
+  _swigc__p_p_njli__SteeringBehaviorObstacleAvoidance,
+  _swigc__p_p_njli__SteeringBehaviorObstacleAvoidanceBuilder,
+  _swigc__p_p_njli__SteeringBehaviorOffsetPursuit,
+  _swigc__p_p_njli__SteeringBehaviorOffsetPursuitBuilder,
+  _swigc__p_p_njli__SteeringBehaviorPursuit,
+  _swigc__p_p_njli__SteeringBehaviorPursuitBuilder,
+  _swigc__p_p_njli__SteeringBehaviorSeek,
+  _swigc__p_p_njli__SteeringBehaviorSeekBuilder,
+  _swigc__p_p_njli__SteeringBehaviorSeparation,
+  _swigc__p_p_njli__SteeringBehaviorSeparationBuilder,
+  _swigc__p_p_njli__SteeringBehaviorWallAvoidance,
+  _swigc__p_p_njli__SteeringBehaviorWallAvoidanceBuilder,
+  _swigc__p_p_njli__SteeringBehaviorWander,
+  _swigc__p_p_njli__SteeringBehaviorWanderBuilder,
+  _swigc__p_p_njli__StopWatch,
+  _swigc__p_p_njli__StopWatchBuilder,
+  _swigc__p_p_njli__Timer,
+  _swigc__p_p_njli__TimerBuilder,
+  _swigc__p_p_njli__WorldState,
+  _swigc__p_p_njli__WorldStateBuilder,
+  _swigc__p_p_njli__WorldStateMachine,
+  _swigc__p_p_njli__WorldStateMachineBuilder,
+  _swigc__p_p_njli__Xml,
+  _swigc__p_p_njli__XmlBuilder,
+  _swigc__p_s16,
+  _swigc__p_s32,
+  _swigc__p_s64,
+  _swigc__p_s8,
+  _swigc__p_u16,
+  _swigc__p_u32,
+  _swigc__p_u64,
+  _swigc__p_u8,
 };
 
 
