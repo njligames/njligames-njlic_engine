@@ -18,3 +18,6 @@
 %ignore operator new[];
 %ignore operator delete[];
 
+//%ignore LUA_UNSIGNED;
+//%ignore lua_Unsigned;
+
