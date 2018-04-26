@@ -264,3 +264,5 @@
 %ignore btAngle;
 %ignore dot;
 #endif
+
+%ignore btInfMaskConverter;

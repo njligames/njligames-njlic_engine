@@ -57,7 +57,10 @@ static const luaL_Reg loadedlibs[] = {
 #if defined(NJLIC_SWIG)
     {LUA_NJLICLIBNAME, luaopen_njlic},
 #endif
-//    {LUA_BULLETLIBNAME, luaopen_bullet},
+    
+#if defined(BULLET_SWIG)
+    {LUA_BULLETLIBNAME, luaopen_bullet},
+#endif
     {LUA_BITLIBNAME, luaopen_bit},
   {NULL, NULL}
 };

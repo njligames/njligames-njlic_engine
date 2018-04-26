@@ -14,6 +14,13 @@ macro(LUA_BULLET_SWIG)
     "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/thirdparty/bullet3/bullet3.i" 
   )
 
+  file(GLOB_RECURSE NJLIC_INCLUDE_SWIG_SOURCE_FILES
+    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njli/include/*.swg
+    )
+  list(APPEND LUA_SWIG_SOURCE_FILES
+    "${NJLIC_INCLUDE_SWIG_SOURCE_FILES}" 
+  )
+
   SUBDIRLIST(SUBDIRS "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/thirdparty/bullet3" SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST)
 
   set(${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-includeall")
@@ -22,7 +29,8 @@ macro(LUA_BULLET_SWIG)
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-v")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w201")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w312")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-c++")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-ignoremissing")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-cpperraswarn")
 
   foreach(_SWIG_SOURCE_FILE ${LUA_SWIG_SOURCE_FILES})
     MESSAGE(STATUS "_SWIG_SOURCE_FILE ${_SWIG_SOURCE_FILE}")
@@ -46,7 +54,7 @@ macro(LUA_BULLET_SWIG)
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
 
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC BULLET3_SWIG=1 SWIG_TYPE_TABLE=myprojectname)
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC BULLET_SWIG=1 SWIG_TYPE_TABLE=myprojectname BT_INFINITY=1)
 
   TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static ${CMAKE_PROJECT_NAME}-static)
 
@@ -73,7 +81,8 @@ macro(LUA_NJLI_SWIG)
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-v")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w201")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w312")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-c++")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-ignoremissing")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-cpperraswarn")
 
   foreach(_SWIG_SOURCE_FILE ${LUA_SWIG_SOURCE_FILES})
     MESSAGE(STATUS "_SWIG_SOURCE_FILE ${_SWIG_SOURCE_FILE}")
@@ -97,7 +106,7 @@ macro(LUA_NJLI_SWIG)
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
 
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njli-static PUBLIC NJLIC_SWIG=1 SWIG_TYPE_TABLE=myprojectname)
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njli-static PUBLIC NJLIC_SWIG=1 SWIG_TYPE_TABLE=myprojectname BT_INFINITY=1)
 
   TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}-lua-swig-njli-static ${CMAKE_PROJECT_NAME}-static)
 
