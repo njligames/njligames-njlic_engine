@@ -56,7 +56,8 @@ macro(LUA_BULLET_SWIG)
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
 
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC BULLET_SWIG=1)
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS BULLET_SWIG=1)
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static ${CMAKE_PROJECT_NAME}-static)
 
@@ -110,7 +111,8 @@ macro(LUA_NJLI_SWIG)
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
 
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njli-static PUBLIC NJLIC_SWIG=1)
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1)
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njli-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}-lua-swig-njli-static ${CMAKE_PROJECT_NAME}-static)
 
