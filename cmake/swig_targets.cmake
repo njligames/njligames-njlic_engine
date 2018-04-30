@@ -52,9 +52,10 @@ macro(LUA_BULLET_SWIG)
     TYPE STATIC
     LANGUAGE lua
     SOURCES "${LUA_SWIG_SOURCE_FILES}"
-    OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
-    OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
+    OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bullet3
+    OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bullet3
     )
+  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bullet3)
 
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS BULLET_SWIG=1)
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
@@ -103,20 +104,21 @@ macro(LUA_NJLI_SWIG)
   endforeach()
 
   swig_add_library(
-    ${CMAKE_PROJECT_NAME}-lua-swig-njli-static
+    ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
     TYPE STATIC
     LANGUAGE lua
     SOURCES "${LUA_SWIG_SOURCE_FILES}"
-    OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
-    OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
+    OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlic
+    OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlic
     )
+  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bullet3)
 
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1)
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njli-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
-  TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}-lua-swig-njli-static ${CMAKE_PROJECT_NAME}-static)
+  TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static ${CMAKE_PROJECT_NAME}-static)
 
-  list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-njli-static)
+  list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
 endmacro()
 
