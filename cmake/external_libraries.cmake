@@ -2,7 +2,7 @@
 
 OPTION(${CMAKE_PROJECT_NAME}_USE_NANOVG_LIBRARY "Use nanovg library" ON)
 IF(${CMAKE_PROJECT_NAME}_USE_NANOVG_LIBRARY)
-  ADD_DEFINITIONS(-DUSE_NANOVG_LIBRARY=1)
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS USE_NANOVG_LIBRARY=1)
 endif()
 
 DOWNLOAD_LIBRARY_INCLUDE_FILES("bullet" "https://www.dropbox.com/s/bvtxtpqa925godz/BULLET-1.85_include.tar.gz?dl=0" "thirdparty/bullet/include")
