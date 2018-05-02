@@ -1,0 +1,9 @@
+
+#cmakedefine __GL_ES2__
+#cmakedefine __GL_ES3__
+#cmakedefine __GL_2__
+#cmakedefine __GL_3__
+
+#cmakedefine __FMOD__
+#cmakedefine __OPENAL__
+#cmakedefine __SDL__

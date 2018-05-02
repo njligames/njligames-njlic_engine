@@ -62,6 +62,8 @@
 %include "_RenameNJLIC.swg"
 %include "_RenamePlatform.swg"
 
+%include "_Defines.swg"
+
 #if defined(SWIGLUA)
 //MARK: %luacode wrapper doesn't work in an external file.
 %luacode
