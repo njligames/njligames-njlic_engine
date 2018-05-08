@@ -5,8 +5,10 @@
 #include "SDL_config.h"
 #include "SDL_log.h"
 
-#include "SDL_test.h"
-#include "SDL_test_log.h"
+//#ifndef SWIGLUA
+//#include "SDL_test.h"
+//#include "SDL_test_log.h"
+//#endif
 
 #if !(defined(NDEBUG))
 #define LOGGING_ON 1
@@ -119,7 +121,7 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
     {                                                                          \
       char string[3584];                                                       \
       snprintf(string, (3584 - 1), fmt, ##args);                               \
-      if ((condition) == ASSERT_FAIL)                                          \
+      if ((condition) == 0)                                          \
         {                                                                      \
           SDL_LogError(SDL_LOG_CATEGORY_TEST, "Assert '%s': %s", string,       \
                        "Failed");                                              \

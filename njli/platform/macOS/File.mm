@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string>
 #include <unistd.h>
+#include "SDL.h"
 
 //#define MAC_PATH "/Users/jamesfolk/NJLI/GameEngine/COMMON/assets/"
 //#define MAC_PATH

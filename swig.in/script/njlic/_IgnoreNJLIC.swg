@@ -18,3 +18,7 @@
 %ignore operator new[];
 %ignore operator delete[];
 
+%ignore SDL_vsscanf;
+%ignore SDL_vsnprintf;
+%ignore SDL_LogMessageV;
+%ignore lua_pushvfstring;

@@ -13,11 +13,12 @@
 #include "Util.h"
 #include "btIDebugDraw.h"
 #include "debug_draw.hpp"
-#include "glm/glm.hpp"
+//#include "glm/glm.hpp"
 #if defined(USE_USYNERGY_LIBRARY)
 #include "uSynergy.h"
 #endif
 #include <thread>
+#include "SDL.h"
 
 namespace njli
 {
@@ -358,7 +359,8 @@ namespace njli
   private:
     int m_DebugMode;
 
-    glm::mat4 m_mvpMatrix;
+//    glm::mat4 m_mvpMatrix;
+      Camera *m_Camera;
 
     GLuint linePointProgram;
     GLint linePointProgram_MvpMatrixLocation;
