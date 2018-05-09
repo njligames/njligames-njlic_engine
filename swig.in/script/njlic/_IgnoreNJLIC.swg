@@ -22,3 +22,7 @@
 %ignore SDL_vsnprintf;
 %ignore SDL_LogMessageV;
 %ignore lua_pushvfstring;
+
+%ignore Json::Value::demand;
+
+%ignore SDL_main;

@@ -1,6 +1,6 @@
 //Lua interface file
 
-%module njli
+%module njlic
 
 #define LLONG_MAX
 //MARK: Tested Ignore, successfully

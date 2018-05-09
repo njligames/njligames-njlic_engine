@@ -14,13 +14,13 @@ goto fail;}
 %{
 #undef SWIG_check_num_args
 #define SWIG_check_num_args(func_name,a,b) \
-#if defined(LUA_WRAPPER_LOGGING)\
+//#if defined(LUA_WRAPPER_LOGGING)\
 lua_Debug ar;\
 lua_getstack(L, 1, &ar);\
 lua_getinfo(L, "nSl", &ar);\
 printf("(%s:%d) in %s",\
 ar.short_src,ar.currentline,ar.name); \
-#endif\
+//#endif\
 if (lua_gettop(L)<a || lua_gettop(L)>b) \
 {SWIG_Lua_pushferrstring(L,"Error in %s expected %d..%d args, got %d",func_name,a,b,lua_gettop(L));\
 goto fail;}
