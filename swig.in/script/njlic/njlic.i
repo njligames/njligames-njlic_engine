@@ -65,14 +65,7 @@
 
 #if defined(SWIGLUA)
 //MARK: %luacode wrapper doesn't work in an external file.
-%luacode
-%{
-    function greet()
-    print "hello world from NJLIGameEngine."
-    end
-
-    greet()
-%}
+%include "_LuaCodeNJLIC.swg"
 #endif
 
 %insert("runtime")
