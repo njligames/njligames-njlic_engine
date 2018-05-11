@@ -227,4 +227,4 @@ namespace njli
 
     return getCalculatedForce();
   }
-}
+} // namespace njli

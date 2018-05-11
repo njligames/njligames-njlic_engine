@@ -158,4 +158,4 @@ namespace njli
   }
 
   u32 CheckboxHUDBuilder::type() { return JLI_OBJECT_TYPE_CheckboxHUDBuilder; }
-}
+} // namespace njli

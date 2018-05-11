@@ -324,4 +324,4 @@ namespace njli
     m_knobPos = v;
   }
   f32 SliderHUD::getValue() const { return m_knobPos; }
-}
+} // namespace njli

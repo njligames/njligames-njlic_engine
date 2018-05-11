@@ -468,4 +468,4 @@ namespace njli
 
     this->SetMasterVolume(mLastVolume); // restore volume
   }
-}
+} // namespace njli

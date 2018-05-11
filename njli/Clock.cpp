@@ -199,4 +199,4 @@ namespace njli
   {
     return m_btClock->getTimeMicroseconds();
   }
-}
+} // namespace njli

@@ -251,4 +251,4 @@ namespace njli
   void LabelHUD::setText(const char *text) { m_text = text; }
 
   const char *LabelHUD::getText() const { return m_text.c_str(); }
-}
+} // namespace njli

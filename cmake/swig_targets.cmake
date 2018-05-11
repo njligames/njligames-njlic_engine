@@ -46,6 +46,10 @@ macro(LUA_BULLET_SWIG)
     MESSAGE(STATUS "BULLET_SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
   endforeach()
 
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
+  set_source_files_properties("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bulletLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
+  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "bulletLUA_wrap.cxx")
+
   swig_add_library(
     ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static
     TYPE STATIC
@@ -54,17 +58,22 @@ macro(LUA_BULLET_SWIG)
     OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
- SET_SOURCE_FILES_PROPERTIES(
-   "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bulletLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
- SET_DIRECTORY_PROPERTIES(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "bulletLUA_wrap.cxx")
-
-  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
-
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static ${CMAKE_PROJECT_NAME}-static)
-
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
+
+  swig_add_library(
+    ${CMAKE_PROJECT_NAME}-lua-swig-bullet
+    TYPE MODULE
+    LANGUAGE lua
+    SOURCES "${LUA_SWIG_SOURCE_FILES}"
+    OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
+    OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
+    )
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet ${CMAKE_PROJECT_NAME}-static)
+
 endmacro()
 
 macro(LUA_NJLI_SWIG)
@@ -132,6 +141,10 @@ macro(LUA_NJLI_SWIG)
   foreach(_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORIES})
     MESSAGE(STATUS "SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
   endforeach()
+  
+  set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlicLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
+  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "njlicLUA_wrap.cxx")
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
 
   swig_add_library(
     ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
@@ -141,17 +154,41 @@ macro(LUA_NJLI_SWIG)
     OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
-
- SET_SOURCE_FILES_PROPERTIES( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlicLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
- SET_DIRECTORY_PROPERTIES(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "njlicLUA_wrap.cxx")
-
-  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
-
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static ${CMAKE_PROJECT_NAME}-static)
-
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
+
+
+  swig_add_library(
+    ${CMAKE_PROJECT_NAME}-lua-swig-njlic
+    TYPE MODULE
+    LANGUAGE lua
+    SOURCES "${LUA_SWIG_SOURCE_FILES}"
+    OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
+    OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
+    )
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  if(APPLE)
+    set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES MACOSX_RPATH 1)
+    if(IOS OR TVOS)
+      SET_TARGET_PROPERTIES (
+        ${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES
+        XCODE_ATTRIBUTE_ENABLE_BITCODE "NO"
+        )
+    endif(IOS OR TVOS)
+  elseif(UNIX AND NOT ANDROID)
+    set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES
+      VERSION ${LT_VERSION}
+      SOVERSION ${LT_REVISION}
+      OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic-${LT_RELEASE}")
+  else()
+    set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES
+      VERSION ${${CMAKE_PROJECT_NAME}-lua-swig-njlic_VERSION}
+      SOVERSION ${LT_REVISION}
+      OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic")
+  endif()
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic ${CMAKE_PROJECT_NAME}-static)
 endmacro()
 
 if(${CMAKE_PROJECT_NAME}_LUA_SWIG)

@@ -1014,4 +1014,4 @@ namespace njli
       }
     return 1 << 11;
   }
-}
+} // namespace njli

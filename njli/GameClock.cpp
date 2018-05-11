@@ -25,4 +25,4 @@ namespace njli
   }
 
   void GameClock::update(f64 milliseconds) {}
-}
+} // namespace njli

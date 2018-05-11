@@ -163,4 +163,4 @@ namespace njli
   }
 
   u32 Xml::type() { return JLI_OBJECT_TYPE_Xml; }
-}
+} // namespace njli

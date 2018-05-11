@@ -111,4 +111,4 @@ namespace njli
   {
     m_isRenderObject = enable;
   }
-}
+} // namespace njli

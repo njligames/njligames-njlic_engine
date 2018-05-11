@@ -334,4 +334,4 @@ namespace njli
   //        if(nodeB && !nodeB->getPhysicsBody()->isDynamicPhysics())
   //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "%s", nodeB->getName());
   //    }
-}
+} // namespace njli

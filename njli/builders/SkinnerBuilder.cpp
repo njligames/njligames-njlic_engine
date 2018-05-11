@@ -146,4 +146,4 @@ namespace njli
   }
 
   u32 SkinnerBuilder::type() { return JLI_OBJECT_TYPE_SkinnerBuilder; }
-}
+} // namespace njli

@@ -511,7 +511,7 @@ namespace njli
     while (SDL_PollEvent(&event))
       {
         njli::NJLIGameEngine::handleEvent(&event);
-                SDLTest_PrintEvent(&event);
+        SDLTest_PrintEvent(&event);
         switch (event.type)
           {
 
@@ -787,10 +787,9 @@ namespace njli
                           SDL_GetWindowFromID(event.key.windowID);
                       if (window)
                         {
-                          SDL_SetWindowGrab(window,
-                                            !SDL_GetWindowGrab(window)
-                                                ? SDL_TRUE
-                                                : SDL_FALSE);
+                          SDL_SetWindowGrab(window, !SDL_GetWindowGrab(window)
+                                                        ? SDL_TRUE
+                                                        : SDL_FALSE);
                         }
                     }
                   break;
@@ -983,10 +982,11 @@ namespace njli
                     "(reversed: %d) in window %d",
                     event.wheel.x, event.wheel.y, event.wheel.direction,
                     event.wheel.windowID);
-//            gXOffset -= (event.wheel.x * 1);
-//            gYOffset -= (event.wheel.y * 1);
-//            NJLI_HandleResize(gDisplayMode.w, gDisplayMode.h,
-//                              gDisplayMode.format, gDisplayMode.refresh_rate);
+            //            gXOffset -= (event.wheel.x * 1);
+            //            gYOffset -= (event.wheel.y * 1);
+            //            NJLI_HandleResize(gDisplayMode.w, gDisplayMode.h,
+            //                              gDisplayMode.format,
+            //                              gDisplayMode.refresh_rate);
             // SDL_MouseWheelEvent wheel = event.wheel;
 
             break;
@@ -1284,9 +1284,9 @@ namespace njli
 #endif
 
 #if defined(__EMSCRIPTEN__)
-      gDisplayMode.h = 725.0f;
-      float div = gDisplayMode.h / 9.0;
-      gDisplayMode.w = div * 16.0f;
+    gDisplayMode.h = 725.0f;
+    float div = gDisplayMode.h / 9.0;
+    gDisplayMode.w = div * 16.0f;
 //      gDisplayMode.h = 600.0f;
 #endif
 
@@ -1310,8 +1310,9 @@ namespace njli
         SDL_CreateWindow("NJLIGameEngine", SDL_WINDOWPOS_CENTERED,
                          SDL_WINDOWPOS_CENTERED, gDisplayMode.w, gDisplayMode.h,
                          SDL_WINDOW_OPENGL
-#if defined(__MACOSX__) 
-                             | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_ALWAYS_ON_TOP | SDL_WINDOW_UTILITY
+#if defined(__MACOSX__)
+                             | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_ALWAYS_ON_TOP |
+                             SDL_WINDOW_UTILITY
 #elif !defined(__EMSCRIPTEN__)
                              | SDL_WINDOW_FULLSCREEN
 #endif
@@ -1319,7 +1320,7 @@ namespace njli
 #if !defined(__EMSCRIPTEN__)
                              | SDL_WINDOW_ALLOW_HIGHDPI
 #endif
-                         );
+        );
 
 #if defined(__MACOSX__)
     createRenderer();
@@ -1373,10 +1374,10 @@ namespace njli
      * enabled,
      * due to the increased pixel density of the drawable. */
     SDL_GetWindowSize(gWindow, &screen_w, &screen_h);
-//    SDL_GL_GetDrawableSize(gWindow, &drawableW, &drawableH);
-      drawableW = gDisplayMode.w;
-      drawableH = gDisplayMode.h;
-      
+    //    SDL_GL_GetDrawableSize(gWindow, &drawableW, &drawableH);
+    drawableW = gDisplayMode.w;
+    drawableH = gDisplayMode.h;
+
     /* In OpenGL, point sizes are always in pixels. We don't want them looking
      * tiny on a retina screen. */
     pointSizeScale = (float)drawableH / (float)screen_h;
@@ -1412,4 +1413,4 @@ namespace njli
 
     return 0;
   }
-}
+} // namespace njli

@@ -216,4 +216,4 @@ namespace njli
   }
 
   void JsonJLI::append(const JsonJLI &value) { m_value.append(value.m_value); }
-}
+} // namespace njli

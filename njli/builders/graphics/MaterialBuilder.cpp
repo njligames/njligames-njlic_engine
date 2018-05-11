@@ -152,4 +152,4 @@ namespace njli
   }
 
   u32 MaterialBuilder::type() { return JLI_OBJECT_TYPE_MaterialBuilder; }
-}
+} // namespace njli

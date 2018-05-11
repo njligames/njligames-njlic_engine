@@ -155,4 +155,4 @@ namespace njli
   }
 
   u32 ButtonHUDBuilder::type() { return JLI_OBJECT_TYPE_ButtonHUDBuilder; }
-}
+} // namespace njli

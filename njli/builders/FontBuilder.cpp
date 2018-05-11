@@ -143,4 +143,4 @@ namespace njli
   }
 
   u32 FontBuilder::type() { return JLI_OBJECT_TYPE_FontBuilder; }
-}
+} // namespace njli

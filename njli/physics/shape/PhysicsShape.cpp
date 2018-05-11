@@ -188,4 +188,4 @@ namespace njli
     // return dynamic_cast<const PhysicsBody*>(getParent());
     return NULL;
   }
-}
+} // namespace njli

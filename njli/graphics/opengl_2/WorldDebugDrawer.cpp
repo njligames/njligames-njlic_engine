@@ -16,8 +16,8 @@
 #include "ImGuizmo.h"
 #include "JsonJLI.h"
 #include "NJLIInterface.h"
-#include "imgui.h"
 #include "glm/glm.hpp"
+#include "imgui.h"
 //#include "uSynergy.h"
 
 glm::vec3 bulletToGlm(const btVector3 &v)
@@ -114,11 +114,11 @@ namespace njli
 
   WorldDebugDrawer::WorldDebugDrawer()
       : m_DebugMode(btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE),
-//        m_mvpMatrix(glm::mat4(1.0f)),
-    linePointProgram(0),
-        linePointProgram_MvpMatrixLocation(-1), textProgram(0),
-        textProgram_GlyphTextureLocation(-1), textProgram_ScreenDimensions(-1),
-        linePointVAO(0), linePointVBO(0), textVAO(0), textVBO(0)
+        //        m_mvpMatrix(glm::mat4(1.0f)),
+        linePointProgram(0), linePointProgram_MvpMatrixLocation(-1),
+        textProgram(0), textProgram_GlyphTextureLocation(-1),
+        textProgram_ScreenDimensions(-1), linePointVAO(0), linePointVBO(0),
+        textVAO(0), textVBO(0)
   {
   }
 
@@ -163,11 +163,11 @@ namespace njli
 
     glBindVertexArrayAPPLE(linePointVAO);
     glUseProgram(linePointProgram);
-      
-      glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
-      glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
-      
-      glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
+
+    glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
+    glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
+
+    glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
 
     glUniformMatrix4fv(linePointProgram_MvpMatrixLocation, 1, GL_FALSE,
                        glm::value_ptr(mvpMatrix));
@@ -206,11 +206,11 @@ namespace njli
 
     glUseProgram(linePointProgram);
 
-      glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
-      glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
-      
-      glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
-      
+    glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
+    glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
+
+    glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
+
     glUniformMatrix4fv(linePointProgram_MvpMatrixLocation, 1, GL_FALSE,
                        glm::value_ptr(mvpMatrix));
 
@@ -288,11 +288,11 @@ namespace njli
     const float _pos[] = {location.x(), location.y(), location.z()};
     const float _color[] = {color.x(), color.y(), color.z()};
 
-      glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
-      glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
-      
-      glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
-      
+    glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
+    glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
+
+    glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
+
     dd::projectedText(std::string(textString), _pos, _color,
                       glm::value_ptr(mvpMatrix), 0, 0,
                       njli::World::getInstance()->getViewportDimensions().x(),
@@ -335,11 +335,11 @@ namespace njli
   void WorldDebugDrawer::draw(Camera *camera)
   {
 
-      m_Camera = camera;
-//    glm::mat4 viewMatrix = bulletToGlm(camera->getModelView());
-//    glm::mat4 perspectiveMatrix = bulletToGlm(camera->getProjection());
-//
-//    m_mvpMatrix = perspectiveMatrix * viewMatrix;
+    m_Camera = camera;
+    //    glm::mat4 viewMatrix = bulletToGlm(camera->getModelView());
+    //    glm::mat4 perspectiveMatrix = bulletToGlm(camera->getProjection());
+    //
+    //    m_mvpMatrix = perspectiveMatrix * viewMatrix;
 
     if (dd::hasPendingDraws())
       {
@@ -385,11 +385,11 @@ namespace njli
     const float _pos[] = {pos.x(), pos.y(), pos.z()};
     const float _color[] = {color.x(), color.y(), color.z()};
 
-      glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
-      glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
-      
-      glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
-      
+    glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
+    glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
+
+    glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
+
     dd::projectedText(str, _pos, _color, glm::value_ptr(mvpMatrix), 0, 0,
                       njli::World::getInstance()->getViewportDimensions().x(),
                       njli::World::getInstance()->getViewportDimensions().y());
@@ -1598,4 +1598,4 @@ namespace njli
 
     return true;
   }
-}
+} // namespace njli

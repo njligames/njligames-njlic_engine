@@ -440,26 +440,26 @@ namespace njli
     return 0;
   }
 
-//    bool WorldResourceLoader::copyDataPtr(const char* filePath, u8 **dataPtr,
-//    long *size)const
-//    {
-//        bool retVal = false;
-//
-//        SDL_assert(*dataPtr);
-//        SDL_assert(*size);
-//
-//        if (filePath)
-//        {
-//            FileData *fileData = getFileData(filePath);
-//            if(fileData)
-//            {
-//                memcpy(*dataPtr, fileData->getBufferPtr(),
-//                fileData->getSize());
-//                retVal = true;
-//            }
-//        }
-//        return retVal;
-//    }
+  //    bool WorldResourceLoader::copyDataPtr(const char* filePath, u8
+  //    **dataPtr, long *size)const
+  //    {
+  //        bool retVal = false;
+  //
+  //        SDL_assert(*dataPtr);
+  //        SDL_assert(*size);
+  //
+  //        if (filePath)
+  //        {
+  //            FileData *fileData = getFileData(filePath);
+  //            if(fileData)
+  //            {
+  //                memcpy(*dataPtr, fileData->getBufferPtr(),
+  //                fileData->getSize());
+  //                retVal = true;
+  //            }
+  //        }
+  //        return retVal;
+  //    }
 
 #define ROUND(val, places) (roundf(val * pow(10, places)) / (pow(10, places)))
   //    float rounded_down = floorf(val * 100) / 100;   /* Result: 37.77 */
@@ -1029,7 +1029,7 @@ namespace njli
               {
                   void *_buffer = malloc( fi.uncompressed_size + 1);
                   SDL_assert(_buffer);
-//                    buffer[ fi.uncompressed_size ] = 0;
+  //                    buffer[ fi.uncompressed_size ] = 0;
                   uLong _size = fi.uncompressed_size;
 
                   int error = UNZ_OK;
@@ -1037,12 +1037,12 @@ namespace njli
                   do
                   {
                       error = unzReadCurrentFile( uf, _buffer,
-fi.uncompressed_size );
+  fi.uncompressed_size );
                       if ( error < 0 )
                       {
-//                            SDL_LogError(SDL_LOG_CATEGORY_TEST, "error %d\n",
-error);
-//                            return false;
+  //                            SDL_LogError(SDL_LOG_CATEGORY_TEST, "error
+  %d\n", error);
+  //                            return false;
                           continue;
                       }
 
@@ -1057,22 +1057,22 @@ error);
                       strcpy(directory, name);
                       char * pch = strtok (directory, "/");
                       if(0 == strcmp(RESOURCE_PATH[j], pch) && (strstr(name,
-"/.DS_Store") == NULL))
+  "/.DS_Store") == NULL))
                       {
 
-//                            void *p = NULL;
-//                            bool exists = getFileData(name, &p, &_size);
+  //                            void *p = NULL;
+  //                            bool exists = getFileData(name, &p, &_size);
 
                           if(getFileData(name) != NULL)
                           {
                               addFileData(name);
                               SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Added file:
-%s - size: %lu\n", name, _size);
+  %s - size: %lu\n", name, _size);
                           }
                           else
                           {
                               SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "File
-exists: %s - size: %lu\n", name, _size);
+  exists: %s - size: %lu\n", name, _size);
                           }
                       }
                       ++j;
@@ -1084,7 +1084,7 @@ exists: %s - size: %lu\n", name, _size);
               else
               {
                   SDL_LogError(SDL_LOG_CATEGORY_TEST, "Invalid password %s\n",
-"");
+  "");
                   return false;
               }
           }
@@ -1157,18 +1157,18 @@ exists: %s - size: %lu\n", name, _size);
 
   void WorldResourceLoader::openBrowser(const char *url)
   {
-    
+
 #if defined(__MACOSX__)
-      std::string s("open ");
-      s = s + url;
+    std::string s("open ");
+    s = s + url;
     std::system(s.c_str());
 #endif
 #if defined(__EMSCRIPTEN__)
-      std::string s("open(\"");
-      s = s + url;
-      s = s + "\");";
+    std::string s("open(\"");
+    s = s + url;
+    s = s + "\");";
 
-      emscripten_run_script(s.c_str());
+    emscripten_run_script(s.c_str());
 #endif
   }
 
@@ -1258,4 +1258,4 @@ exists: %s - size: %lu\n", name, _size);
       }
     return fileData;
   }
-}
+} // namespace njli

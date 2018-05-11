@@ -1242,4 +1242,4 @@ namespace njli
 
     m_FBOvector.erase(iter);
   }
-}
+} // namespace njli

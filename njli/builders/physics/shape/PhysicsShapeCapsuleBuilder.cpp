@@ -173,4 +173,4 @@ namespace njli
   {
     return JLI_OBJECT_TYPE_PhysicsShapeCapsuleBuilder;
   }
-}
+} // namespace njli

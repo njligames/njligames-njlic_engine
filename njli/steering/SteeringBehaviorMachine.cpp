@@ -411,4 +411,4 @@ namespace njli
 
     return *m_CurrentForce;
   }
-}
+} // namespace njli

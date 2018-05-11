@@ -334,4 +334,4 @@ namespace njli
     *m_btConvexHullShape =
         btConvexHullShape(&points[0], convexhull->getNumPoints());
   }
-}
+} // namespace njli

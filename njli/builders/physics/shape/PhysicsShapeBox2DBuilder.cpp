@@ -171,4 +171,4 @@ namespace njli
   {
     return JLI_OBJECT_TYPE_PhysicsShapeBox2DBuilder;
   }
-}
+} // namespace njli

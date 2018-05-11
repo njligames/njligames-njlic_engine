@@ -210,4 +210,4 @@ namespace njli
     glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
     // gl end renderInternal
   }
-}
+} // namespace njli

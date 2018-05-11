@@ -771,37 +771,37 @@ namespace njli
       }
   }
 
-//    void MaterialProperty::render()
-//    {
-//        if (m_njliLoadGPUType != JLI_LOAD_GPU_TYPE_NONE)
-//        {
-//            switch (m_njliLoadGPUType)
-//            {
-//                case JLI_LOAD_GPU_TYPE_2D:
-//                    loadGPU_Internal(*m_loadGPU_images[0]);
-//                    break;
-//                case JLI_LOAD_GPU_TYPE_2D_EMPTY:
-//                    loadGPU_Internal();
-//
-//                    break;
-//                case JLI_LOAD_GPU_TYPE_CUBE:
-//                    loadGPU_Internal(*m_loadGPU_images[0],
-//                                     *m_loadGPU_images[1],
-//                                     *m_loadGPU_images[2],
-//                                     *m_loadGPU_images[3],
-//                                     *m_loadGPU_images[4],
-//                                     *m_loadGPU_images[5]);
-//                    break;
-//                case JLI_LOAD_GPU_TYPE_FBO:
-//                    loadGPU_Internal(m_loadGPU_fbo);
-//                    break;
-//
-//                default:
-//                    break;
-//            }
-//            m_njliLoadGPUType = JLI_LOAD_GPU_TYPE_NONE;
-//        }
-//    }
+  //    void MaterialProperty::render()
+  //    {
+  //        if (m_njliLoadGPUType != JLI_LOAD_GPU_TYPE_NONE)
+  //        {
+  //            switch (m_njliLoadGPUType)
+  //            {
+  //                case JLI_LOAD_GPU_TYPE_2D:
+  //                    loadGPU_Internal(*m_loadGPU_images[0]);
+  //                    break;
+  //                case JLI_LOAD_GPU_TYPE_2D_EMPTY:
+  //                    loadGPU_Internal();
+  //
+  //                    break;
+  //                case JLI_LOAD_GPU_TYPE_CUBE:
+  //                    loadGPU_Internal(*m_loadGPU_images[0],
+  //                                     *m_loadGPU_images[1],
+  //                                     *m_loadGPU_images[2],
+  //                                     *m_loadGPU_images[3],
+  //                                     *m_loadGPU_images[4],
+  //                                     *m_loadGPU_images[5]);
+  //                    break;
+  //                case JLI_LOAD_GPU_TYPE_FBO:
+  //                    loadGPU_Internal(m_loadGPU_fbo);
+  //                    break;
+  //
+  //                default:
+  //                    break;
+  //            }
+  //            m_njliLoadGPUType = JLI_LOAD_GPU_TYPE_NONE;
+  //        }
+  //    }
 
 #if !(defined(NDEBUG))
   u64 MaterialProperty::s_MaxTextureUnits = 0;
@@ -980,4 +980,4 @@ namespace njli
 
     m_textureType = GL_TEXTURE_2D;
   }
-}
+} // namespace njli

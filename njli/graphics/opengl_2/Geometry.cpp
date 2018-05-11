@@ -1185,4 +1185,4 @@ namespace njli
         m_vertexAttribChanged = true;
       }
   }
-}
+} // namespace njli

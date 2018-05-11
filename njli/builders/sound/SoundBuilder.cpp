@@ -144,4 +144,4 @@ namespace njli
   }
 
   u32 SoundBuilder::type() { return JLI_OBJECT_TYPE_SoundBuilder; }
-}
+} // namespace njli

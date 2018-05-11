@@ -465,4 +465,4 @@ namespace njli
       delete m_btConeTwistConstraint;
     m_btConeTwistConstraint = NULL;
   }
-}
+} // namespace njli

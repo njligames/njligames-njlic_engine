@@ -179,4 +179,4 @@ namespace njli
   }
 
   u32 CollisionResponse::type() { return JLI_OBJECT_TYPE_CollisionResponse; }
-}
+} // namespace njli

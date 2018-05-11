@@ -165,4 +165,4 @@ namespace njli
   {
     return JLI_OBJECT_TYPE_PhysicsBodySoftBuilder;
   }
-}
+} // namespace njli

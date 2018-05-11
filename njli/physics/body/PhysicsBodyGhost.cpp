@@ -255,4 +255,4 @@ namespace njli
   {
     return dynamic_cast<btPairCachingGhostObject *>(m_btPairCachingGhostObject);
   }
-}
+} // namespace njli

@@ -366,4 +366,4 @@ namespace njli
   void CheckboxHUD::unCheck() { m_isChecked = false; }
 
   bool CheckboxHUD::isChecked() const { return m_isChecked; }
-}
+} // namespace njli

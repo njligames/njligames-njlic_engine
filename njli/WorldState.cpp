@@ -365,4 +365,4 @@ namespace njli
     njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
                                                                      touch);
   }
-}
+} // namespace njli

@@ -176,4 +176,4 @@ namespace njli
   {
     return JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofBuilder;
   }
-}
+} // namespace njli

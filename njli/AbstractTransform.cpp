@@ -136,4 +136,4 @@ namespace njli
   {
     *m_Pivot = pivot;
   }
-}
+} // namespace njli

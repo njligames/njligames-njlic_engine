@@ -343,4 +343,4 @@ namespace njli
       delete m_btGeneric6DofSpringConstraint;
     m_btGeneric6DofSpringConstraint = NULL;
   }
-}
+} // namespace njli

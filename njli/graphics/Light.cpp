@@ -163,4 +163,4 @@ namespace njli
   }
 
   u32 Light::type() { return JLI_OBJECT_TYPE_Light; }
-}
+} // namespace njli

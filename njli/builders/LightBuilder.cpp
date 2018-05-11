@@ -144,4 +144,4 @@ namespace njli
   }
 
   u32 LightBuilder::type() { return JLI_OBJECT_TYPE_LightBuilder; }
-}
+} // namespace njli

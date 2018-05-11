@@ -340,4 +340,4 @@ namespace njli
     return dynamic_cast<const SteeringBehaviorMachine *>(
         AbstractDecorator::getParent());
   }
-}
+} // namespace njli

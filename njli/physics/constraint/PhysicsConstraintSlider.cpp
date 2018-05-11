@@ -774,4 +774,4 @@ namespace njli
       delete m_btSliderConstraint;
     m_btSliderConstraint = NULL;
   }
-}
+} // namespace njli

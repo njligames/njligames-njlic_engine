@@ -242,4 +242,4 @@ namespace njli
   {
     // TODO: implement
   }
-}
+} // namespace njli

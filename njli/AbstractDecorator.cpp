@@ -245,4 +245,4 @@ namespace njli
     m_Tag = tag;
   }
   const char *AbstractDecorator::getTag() const { return m_Tag.c_str(); }
-}
+} // namespace njli

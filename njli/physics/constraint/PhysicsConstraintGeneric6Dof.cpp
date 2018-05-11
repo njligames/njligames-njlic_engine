@@ -489,4 +489,4 @@ namespace njli
       delete m_btGeneric6DofConstraint;
     m_btGeneric6DofConstraint = NULL;
   }
-}
+} // namespace njli

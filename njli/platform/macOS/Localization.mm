@@ -10,7 +10,8 @@
 #import <Foundation/Foundation.h>
 
 std::string LOCALIZED_TEXT(const char *key, const char *default_value,
-                           const char *comment) {
+                           const char *comment)
+{
   NSString *_key =
       [[NSString alloc] initWithCString:key encoding:NSASCIIStringEncoding];
   NSString *_val = [[NSString alloc] initWithCString:default_value
@@ -24,7 +25,8 @@ std::string LOCALIZED_TEXT(const char *key, const char *default_value,
   return std::string(_value);
 }
 
-std::string LOCALIZED_LANGUAGE() {
+std::string LOCALIZED_LANGUAGE()
+{
   //    NSUserDefaults* defs = [NSUserDefaults standardUserDefaults];
   //    NSArray* languages = [defs objectForKey:@"AppleLanguages"];
   //    NSString* preferredLang = [languages objectAtIndex:0];

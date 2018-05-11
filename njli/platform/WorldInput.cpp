@@ -285,4 +285,4 @@ namespace njli
     //        [viewController showKeyboard:[NSString
     //        stringWithCString:currentText encoding:NSUTF8StringEncoding]];
   }
-}
+} // namespace njli

@@ -692,4 +692,4 @@ namespace njli
     njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
                                                                      object);
   }
-}
+} // namespace njli

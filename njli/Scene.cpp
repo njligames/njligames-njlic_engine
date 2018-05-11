@@ -1373,4 +1373,4 @@ namespace njli
           }
       }
   }
-}
+} // namespace njli

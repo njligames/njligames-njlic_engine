@@ -28,4 +28,4 @@ namespace njli
       }
     return *this;
   }
-}
+} // namespace njli

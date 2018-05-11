@@ -30,7 +30,8 @@
 #include "LinearMath/btVector3.h"
 #include "btVector2.h"
 
-njli::NJLIGameEngine::PlatformID njli::NJLIGameEngine::platformID() {
+njli::NJLIGameEngine::PlatformID njli::NJLIGameEngine::platformID()
+{
   return njli::NJLIGameEngine::PlatformID_MacOSx;
 }
 
@@ -45,23 +46,28 @@ njli::NJLIGameEngine::PlatformID njli::NJLIGameEngine::platformID() {
   vprintf(fmt, args);                                                          \
   va_end(args);
 
-void _debug_log_v(const char *tag, const char *fmt, ...) {
+void _debug_log_v(const char *tag, const char *fmt, ...)
+{
   LOG_VPRINTF("VERBOSE");
 }
 
-void _debug_log_d(const char *tag, const char *fmt, ...) {
+void _debug_log_d(const char *tag, const char *fmt, ...)
+{
   LOG_VPRINTF("DEBUG");
 }
 
-void _debug_log_w(const char *tag, const char *fmt, ...) {
+void _debug_log_w(const char *tag, const char *fmt, ...)
+{
   LOG_VPRINTF("WARN");
 }
 
-void _debug_log_e(const char *tag, const char *fmt, ...) {
+void _debug_log_e(const char *tag, const char *fmt, ...)
+{
   LOG_VPRINTF("ERROR");
 }
 
-void _script_error(const char *tag, const char *fmt, ...) {
+void _script_error(const char *tag, const char *fmt, ...)
+{
   char buffer[2048];
   va_list args;
 
@@ -72,11 +78,13 @@ void _script_error(const char *tag, const char *fmt, ...) {
   njli::World::getInstance()->getWorldLuaVirtualMachine()->error(buffer);
 }
 
-void _script_crash() {
+void _script_crash()
+{
   njli::World::getInstance()->getWorldLuaVirtualMachine()->error("");
 }
 
-void LUA_WRITE(const char *c) {
+void LUA_WRITE(const char *c)
+{
 #if !(defined(NDEBUG))
   fwrite(c, sizeof(char), strlen(c), stdout);
   if (njli::World::hasInstance())
@@ -84,7 +92,8 @@ void LUA_WRITE(const char *c) {
 #endif
 }
 
-void _debug_log_stderr(const char *tag, const char *fmt, ...) {
+void _debug_log_stderr(const char *tag, const char *fmt, ...)
+{
   //    va_list args;
   //
   //    va_start(args, fmt);
@@ -101,7 +110,8 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...) {
   njli::World::getInstance()->getWorldLuaVirtualMachine()->error(buffer);
 }
 
-void njliSleep(unsigned int _ms) {
+void njliSleep(unsigned int _ms)
+{
   //    int microsecs;
   //
   //    struct timeval tv;
@@ -118,21 +128,24 @@ void njliSleep(unsigned int _ms) {
   ////    select( 0, NULL, NULL, NULL, &tv );
 }
 
-const char *string_format(const char *fmt, ...) {
+const char *string_format(const char *fmt, ...)
+{
   std::vector<char> str(100, '\0');
   va_list ap;
-  while (1) {
-    va_start(ap, fmt);
-    auto n = vsnprintf(str.data(), str.size(), fmt, ap);
-    va_end(ap);
-    if ((n > -1) && (size_t(n) < str.size())) {
-      return str.data();
+  while (1)
+    {
+      va_start(ap, fmt);
+      auto n = vsnprintf(str.data(), str.size(), fmt, ap);
+      va_end(ap);
+      if ((n > -1) && (size_t(n) < str.size()))
+        {
+          return str.data();
+        }
+      if (n > -1)
+        str.resize(n + 1);
+      else
+        str.resize(str.size() * 2);
     }
-    if (n > -1)
-      str.resize(n + 1);
-    else
-      str.resize(str.size() * 2);
-  }
   return str.data();
 }
 

@@ -253,4 +253,4 @@ namespace njli
         njliSleep(1);
       }
   }
-}
+} // namespace njli

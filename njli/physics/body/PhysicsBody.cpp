@@ -684,4 +684,4 @@ namespace njli
   s32 PhysicsBody::getCollisionFlags() const { return m_CollisionFlags; }
 
   s32 PhysicsBody::getActivationState() const { return m_ActivationState; }
-}
+} // namespace njli

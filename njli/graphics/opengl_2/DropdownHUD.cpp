@@ -187,4 +187,4 @@ namespace njli
   }
 
   u32 DropdownHUD::type() { return JLI_OBJECT_TYPE_DropdownHUD; }
-}
+} // namespace njli

@@ -144,4 +144,4 @@ namespace njli
   }
 
   u32 SceneBuilder::type() { return JLI_OBJECT_TYPE_SceneBuilder; }
-}
+} // namespace njli

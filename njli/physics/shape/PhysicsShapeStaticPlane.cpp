@@ -296,4 +296,4 @@ namespace njli
     *m_btStaticPlaneShape = btStaticPlaneShape(staticplane->getPlaneNormal(),
                                                staticplane->getPlaneConstant());
   }
-}
+} // namespace njli

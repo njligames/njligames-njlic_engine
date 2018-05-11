@@ -44,4 +44,4 @@ namespace njli
     m_Y = y;
     m_Clicks = clicks;
   }
-}
+} // namespace njli

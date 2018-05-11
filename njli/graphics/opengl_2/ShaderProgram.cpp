@@ -475,10 +475,11 @@ namespace njli
     SDL_assert(m_Program == currentProgram);
     SDL_assert(glIsProgram(m_Program));
 
-    SDL_assertPrint(-1 != location, "The named attribute variable (%s) is not "
-                                    "an active attribute in the specified "
-                                    "program object or if name starts with the "
-                                    "reserved prefix \"gl_\"",
+    SDL_assertPrint(-1 != location,
+                    "The named attribute variable (%s) is not "
+                    "an active attribute in the specified "
+                    "program object or if name starts with the "
+                    "reserved prefix \"gl_\"",
                     attributeName);
 
     glBindAttribLocation(m_Program, location, attributeName);
@@ -501,10 +502,11 @@ namespace njli
     s32 location = glGetAttribLocation(m_Program, attributeName);
     DEBUG_GL_ERROR_WRITE("glGetAttribLocation\n");
 
-    SDL_assertPrint(-1 != location, "The named attribute variable (%s) is not "
-                                    "an active attribute in the specified "
-                                    "program object or if name starts with the "
-                                    "reserved prefix \"gl_\"",
+    SDL_assertPrint(-1 != location,
+                    "The named attribute variable (%s) is not "
+                    "an active attribute in the specified "
+                    "program object or if name starts with the "
+                    "reserved prefix \"gl_\"",
                     attributeName);
 
     return location;
@@ -901,4 +903,4 @@ namespace njli
   {
     return dynamic_cast<const Geometry *>(AbstractDecorator::getParent());
   }
-}
+} // namespace njli

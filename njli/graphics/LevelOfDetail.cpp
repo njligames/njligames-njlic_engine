@@ -175,4 +175,4 @@ namespace njli
   }
 
   u32 LevelOfDetail::type() { return JLI_OBJECT_TYPE_LevelOfDetail; }
-}
+} // namespace njli

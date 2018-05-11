@@ -1158,7 +1158,8 @@ namespace njli
     luax_loadexts(m_lua_State);
 
     const char *paths[] = {
-        "scripts", "scripts/?",
+        "scripts",
+        "scripts/?",
     };
 
     for (s32 i = 0; i < 2; ++i)
@@ -2205,4 +2206,4 @@ namespace njli
 
     return false;
   }
-}
+} // namespace njli

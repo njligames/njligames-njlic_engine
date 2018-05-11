@@ -295,21 +295,21 @@ namespace njli
     return NULL;
   }
 
-/*WorldFacebook *World::getWorldFacebook()
-{
-    s32 idx = getChildIndex(m_WorldFacebook);
-    if(idx != -1)
-        return dynamic_cast<WorldFacebook*>(getChild(idx));
-    return NULL;
-}*/
+  /*WorldFacebook *World::getWorldFacebook()
+  {
+      s32 idx = getChildIndex(m_WorldFacebook);
+      if(idx != -1)
+          return dynamic_cast<WorldFacebook*>(getChild(idx));
+      return NULL;
+  }*/
 
-/*const WorldFacebook *World::getWorldFacebook() const
-{
-    s32 idx = getChildIndex(m_WorldFacebook);
-    if(idx != -1)
-        return dynamic_cast<const WorldFacebook*>(getChild(idx));
-    return NULL;
-}*/
+  /*const WorldFacebook *World::getWorldFacebook() const
+  {
+      s32 idx = getChildIndex(m_WorldFacebook);
+      if(idx != -1)
+          return dynamic_cast<const WorldFacebook*>(getChild(idx));
+      return NULL;
+  }*/
 
 #if defined(USE_NANOVG_LIBRARY)
   WorldHUD *World::getWorldHUD()
@@ -2330,4 +2330,4 @@ namespace njli
    enter (myTestNode->myTestNode)
 
    */
-}
+} // namespace njli

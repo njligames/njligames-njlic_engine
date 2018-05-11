@@ -2067,4 +2067,4 @@ namespace ImGuizmo
             faceCoordsScreen, 4, directionColor[normalIndex] | 0x808080, true);
       }
   }
-};
+}; // namespace ImGuizmo

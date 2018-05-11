@@ -159,4 +159,4 @@ namespace njli
   }
 
   u32 ThreadBuilder::type() { return JLI_OBJECT_TYPE_ThreadBuilder; }
-}
+} // namespace njli

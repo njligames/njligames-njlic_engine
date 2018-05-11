@@ -528,4 +528,4 @@ namespace njli
       delete m_btHingeConstraint;
     m_btHingeConstraint = NULL;
   }
-}
+} // namespace njli

@@ -178,4 +178,4 @@ namespace njli
   }
 
   u32 WorldStateMachine::type() { return JLI_OBJECT_TYPE_WorldStateMachine; }
-}
+} // namespace njli

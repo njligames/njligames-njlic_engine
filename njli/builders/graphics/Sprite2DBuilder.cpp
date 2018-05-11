@@ -152,4 +152,4 @@ namespace njli
   }
 
   u32 Sprite2DBuilder::type() { return JLI_OBJECT_TYPE_Sprite2DBuilder; }
-}
+} // namespace njli

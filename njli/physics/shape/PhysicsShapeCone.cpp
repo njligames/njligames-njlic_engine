@@ -308,4 +308,4 @@ namespace njli
     setRadiusY(cone->getRadius());
     setHeightY(cone->getHeight());
   }
-}
+} // namespace njli

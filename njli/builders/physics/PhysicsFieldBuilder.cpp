@@ -162,4 +162,4 @@ namespace njli
   {
     return JLI_OBJECT_TYPE_PhysicsFieldBuilder;
   }
-}
+} // namespace njli

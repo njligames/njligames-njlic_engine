@@ -154,4 +154,4 @@ namespace njli
   }
 
   u32 WorldStateBuilder::type() { return JLI_OBJECT_TYPE_WorldStateBuilder; }
-}
+} // namespace njli

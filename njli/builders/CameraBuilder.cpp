@@ -146,4 +146,4 @@ namespace njli
   }
 
   u32 CameraBuilder::type() { return JLI_OBJECT_TYPE_CameraBuilder; }
-}
+} // namespace njli

@@ -773,4 +773,4 @@ namespace njli
   //    {
   //        getDiffuse()->render();
   //    }
-}
+} // namespace njli

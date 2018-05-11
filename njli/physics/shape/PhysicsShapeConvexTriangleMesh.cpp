@@ -258,4 +258,4 @@ namespace njli
       const btCollisionShape &shape)
   {
   }
-}
+} // namespace njli

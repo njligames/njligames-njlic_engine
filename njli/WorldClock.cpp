@@ -41,4 +41,4 @@ namespace njli
 
     //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%f",milliseconds);
   }
-}
+} // namespace njli

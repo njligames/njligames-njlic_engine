@@ -144,4 +144,4 @@ namespace njli
   }
 
   u32 PlaneBuilder::type() { return JLI_OBJECT_TYPE_PlaneBuilder; }
-}
+} // namespace njli

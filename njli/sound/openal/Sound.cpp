@@ -906,4 +906,4 @@ namespace njli
   template void Sound::GetRawDataNormalized(std::vector<float> *rawData);
 
   template void Sound::GetRawDataNormalized(std::vector<double> *rawData);
-}
+} // namespace njli

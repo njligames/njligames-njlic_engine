@@ -156,4 +156,4 @@ namespace njli
   }
 
   u32 SliderHUDBuilder::type() { return JLI_OBJECT_TYPE_SliderHUDBuilder; }
-}
+} // namespace njli

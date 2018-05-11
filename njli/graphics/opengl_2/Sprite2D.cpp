@@ -949,4 +949,4 @@ namespace njli
     //
     //        setVertexPositions(index, p, p, p, p);
   }
-}
+} // namespace njli

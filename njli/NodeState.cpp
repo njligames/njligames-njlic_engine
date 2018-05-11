@@ -206,4 +206,4 @@ namespace njli
 
     return ret;
   }
-}
+} // namespace njli

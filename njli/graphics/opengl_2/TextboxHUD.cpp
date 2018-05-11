@@ -263,4 +263,4 @@ namespace njli
   }
 
   u32 TextboxHUD::type() { return JLI_OBJECT_TYPE_TextboxHUD; }
-}
+} // namespace njli

@@ -311,4 +311,4 @@ namespace njli
         dynamic_cast<const btCylinderShape *>(&shape);
     setHalfExtentsY(cylinder->getHalfExtentsWithoutMargin());
   }
-}
+} // namespace njli

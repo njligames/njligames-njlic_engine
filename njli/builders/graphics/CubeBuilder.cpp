@@ -143,4 +143,4 @@ namespace njli
   }
 
   u32 CubeBuilder::type() { return JLI_OBJECT_TYPE_CubeBuilder; }
-}
+} // namespace njli

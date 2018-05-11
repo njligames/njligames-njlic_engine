@@ -256,4 +256,4 @@ namespace njli
   PhysicsShapeBvhTriangleMesh::setCollisionShape(const btCollisionShape &shape)
   {
   }
-}
+} // namespace njli

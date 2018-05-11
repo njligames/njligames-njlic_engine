@@ -143,4 +143,4 @@ namespace njli
   }
 
   u32 NodeBuilder::type() { return JLI_OBJECT_TYPE_NodeBuilder; }
-}
+} // namespace njli

@@ -178,4 +178,4 @@ namespace njli
   }
 
   u32 NodeStateMachine::type() { return JLI_OBJECT_TYPE_NodeStateMachine; }
-}
+} // namespace njli

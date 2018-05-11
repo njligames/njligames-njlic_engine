@@ -309,4 +309,4 @@ namespace njli
       delete m_btPoint2PointConstraint;
     m_btPoint2PointConstraint = NULL;
   }
-}
+} // namespace njli

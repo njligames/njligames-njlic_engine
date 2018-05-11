@@ -351,4 +351,4 @@ namespace njli
 
     fcntl(m_sck, F_SETFL, O_NONBLOCK);
   }
-}
+} // namespace njli

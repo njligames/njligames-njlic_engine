@@ -157,12 +157,11 @@ namespace njli
   float Action::elasticInOut(float t)
   {
     assert(t >= 0 && t <= 1.0);
-    return t < 0.5
-               ? 0.5 * sin(+13.0 * SIMD_HALF_PI * 2.0 * t) *
-                     pow(2.0, 10.0 * (2.0 * t - 1.0))
-               : 0.5 * sin(-13.0 * SIMD_HALF_PI * ((2.0 * t - 1.0) + 1.0)) *
-                         pow(2.0, -10.0 * (2.0 * t - 1.0)) +
-                     1.0;
+    return t < 0.5 ? 0.5 * sin(+13.0 * SIMD_HALF_PI * 2.0 * t) *
+                         pow(2.0, 10.0 * (2.0 * t - 1.0))
+                   : 0.5 * sin(-13.0 * SIMD_HALF_PI * ((2.0 * t - 1.0) + 1.0)) *
+                             pow(2.0, -10.0 * (2.0 * t - 1.0)) +
+                         1.0;
   }
 
   float Action::circularIn(float t)
@@ -587,4 +586,4 @@ namespace njli
             m_ActionGroups.at(i)->sequenceQueue->size();
       }
   }
-}
+} // namespace njli

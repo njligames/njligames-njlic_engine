@@ -259,4 +259,4 @@ namespace njli
       delete m_btFixedConstraint;
     m_btFixedConstraint = NULL;
   }
-}
+} // namespace njli

@@ -204,4 +204,4 @@ namespace njli
     SDL_assertPrint(false, "TODO");
     return *m_CurrentForce;
   }
-}
+} // namespace njli

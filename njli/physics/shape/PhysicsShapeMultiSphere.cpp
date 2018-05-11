@@ -329,4 +329,4 @@ namespace njli
     *m_btMultiSphereShape = btMultiSphereShape(
         &m_localPositionArray[0], &m_radiArray[0], m_localPositionArray.size());
   }
-}
+} // namespace njli

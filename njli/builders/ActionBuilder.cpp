@@ -146,4 +146,4 @@ namespace njli
   }
 
   u32 ActionBuilder::type() { return JLI_OBJECT_TYPE_ActionBuilder; }
-}
+} // namespace njli

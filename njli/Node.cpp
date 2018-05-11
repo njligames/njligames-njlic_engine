@@ -1552,4 +1552,4 @@ namespace njli
     can = can && !hasChildrenNodes();
     return can;
   }
-}
+} // namespace njli

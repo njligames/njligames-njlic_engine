@@ -146,4 +146,4 @@ namespace njli
   }
 
   u32 JsonJLIBuilder::type() { return JLI_OBJECT_TYPE_JsonJLIBuilder; }
-}
+} // namespace njli

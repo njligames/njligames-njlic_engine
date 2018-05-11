@@ -156,4 +156,4 @@ namespace njli
   }
 
   u32 LabelHUDBuilder::type() { return JLI_OBJECT_TYPE_LabelHUDBuilder; }
-}
+} // namespace njli

@@ -4044,4 +4044,4 @@ namespace njli
   {
     return m_ObjectsToDelete_GPU.size() + m_ArrayObjectsToDelete_GPU.size();
   }
-}
+} // namespace njli

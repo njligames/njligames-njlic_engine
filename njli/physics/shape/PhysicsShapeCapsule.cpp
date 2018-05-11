@@ -328,4 +328,4 @@ namespace njli
     setRadiusY(capsule->getRadius());
     setHeightY(capsule->getHalfHeight() * 2);
   }
-}
+} // namespace njli

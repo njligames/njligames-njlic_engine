@@ -160,4 +160,4 @@ namespace njli
   }
 
   u32 Font::type() { return JLI_OBJECT_TYPE_Font; }
-}
+} // namespace njli

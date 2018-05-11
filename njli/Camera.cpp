@@ -1824,4 +1824,4 @@ namespace njli
   //    {
   //        m_PropertyChanged = enable;
   //    }
-}
+} // namespace njli

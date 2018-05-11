@@ -209,4 +209,4 @@ namespace njli
   {
     return m_CurrentTime;
   }
-}
+} // namespace njli

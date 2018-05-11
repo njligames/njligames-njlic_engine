@@ -218,4 +218,4 @@ namespace njli
     this->setCalculatedForce(force);
     return getCalculatedForce();
   }
-}
+} // namespace njli

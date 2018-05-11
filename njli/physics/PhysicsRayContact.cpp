@@ -243,4 +243,4 @@ namespace njli
     m_node = node;
     m_node->enableTouched();
   }
-}
+} // namespace njli

@@ -144,4 +144,4 @@ namespace njli
   }
 
   u32 TimerBuilder::type() { return JLI_OBJECT_TYPE_TimerBuilder; }
-}
+} // namespace njli

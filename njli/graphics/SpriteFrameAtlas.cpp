@@ -646,4 +646,4 @@ namespace njli
   {
     return *m_ContentDimension;
   }
-}
+} // namespace njli

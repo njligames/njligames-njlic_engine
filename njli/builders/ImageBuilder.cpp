@@ -144,4 +144,4 @@ namespace njli
   }
 
   u32 ImageBuilder::type() { return JLI_OBJECT_TYPE_ImageBuilder; }
-}
+} // namespace njli

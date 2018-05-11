@@ -1248,10 +1248,9 @@ namespace njli
 
     // Calculate the particles life span using the life span and variance passed
     // in
-    particle->timeToLive = btMax<f32>(0,
-                                      particleLifespan +
-                                          particleLifespanVariance *
-                                              RANDOM_MINUS_1_TO_1() * scale);
+    particle->timeToLive =
+        btMax<f32>(0, particleLifespan + particleLifespanVariance *
+                                             RANDOM_MINUS_1_TO_1() * scale);
 
     f32 startRadius = maxRadius + maxRadiusVariance * RANDOM_MINUS_1_TO_1();
     f32 endRadius = minRadius + minRadiusVariance * RANDOM_MINUS_1_TO_1();
@@ -1271,12 +1270,12 @@ namespace njli
         tangentialAccelVariance * RANDOM_MINUS_1_TO_1() * scale;
 
     // Calculate the particle size using the start and finish particle sizes
-    f32 particleStartSize =
-        startParticleSize +
-        startParticleSizeVariance * RANDOM_MINUS_1_TO_1() * scale;
-    f32 particleFinishSize =
-        finishParticleSize +
-        finishParticleSizeVariance * RANDOM_MINUS_1_TO_1() * scale;
+    f32 particleStartSize = startParticleSize + startParticleSizeVariance *
+                                                    RANDOM_MINUS_1_TO_1() *
+                                                    scale;
+    f32 particleFinishSize = finishParticleSize + finishParticleSizeVariance *
+                                                      RANDOM_MINUS_1_TO_1() *
+                                                      scale;
     particle->particleSizeDelta =
         ((particleFinishSize - particleStartSize) / particle->timeToLive);
     particle->particleSize = btMax<f32>(0, particleStartSize);
@@ -1378,4 +1377,4 @@ namespace njli
     delete position;
     position = NULL;
   }
-}
+} // namespace njli

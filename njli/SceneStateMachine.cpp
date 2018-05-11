@@ -180,4 +180,4 @@ namespace njli
   }
 
   u32 SceneStateMachine::type() { return JLI_OBJECT_TYPE_SceneStateMachine; }
-}
+} // namespace njli

@@ -145,4 +145,4 @@ namespace njli
   }
 
   u32 ClockBuilder::type() { return JLI_OBJECT_TYPE_ClockBuilder; }
-}
+} // namespace njli

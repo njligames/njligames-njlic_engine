@@ -170,4 +170,4 @@ namespace njli
   }
 
   u32 PhysicsField::type() { return JLI_OBJECT_TYPE_PhysicsField; }
-}
+} // namespace njli

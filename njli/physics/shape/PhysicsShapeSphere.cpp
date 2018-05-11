@@ -307,4 +307,4 @@ namespace njli
         dynamic_cast<const btSphereShape *>(&shape);
     setRadius(_btSphereShape->getRadius());
   }
-}
+} // namespace njli

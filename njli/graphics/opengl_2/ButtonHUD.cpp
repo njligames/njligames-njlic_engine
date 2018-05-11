@@ -344,4 +344,4 @@ namespace njli
   }
 
   f32 ButtonHUD::getCornerRadius() const { return m_cornerRadius; }
-}
+} // namespace njli

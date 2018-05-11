@@ -275,4 +275,4 @@ namespace njli
   {
     return dynamic_cast<btSoftBody *>(m_btSoftBody);
   }
-}
+} // namespace njli

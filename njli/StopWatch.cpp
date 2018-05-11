@@ -239,4 +239,4 @@ namespace njli
 
   // return the current number of laps.
   u64 StopWatch::numberOfLaps() { return m_Laps.size(); }
-}
+} // namespace njli

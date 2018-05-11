@@ -337,4 +337,4 @@ namespace njli
   {
     return dynamic_cast<btBoxShape *>(m_btBoxShape);
   }
-}
+} // namespace njli

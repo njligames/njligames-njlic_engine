@@ -155,4 +155,4 @@ namespace njli
         actionNames.push_back(m_Actions[i]->key);
       }
   }
-}
+} // namespace njli

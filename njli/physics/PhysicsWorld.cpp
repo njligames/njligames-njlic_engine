@@ -656,8 +656,8 @@ namespace njli
     rayCallback.m_collisionFilterMask = collisionMask;
     rayCallback.m_flags = 0;
 
-      m_dynamicsWorld->updateAabbs();
-      m_dynamicsWorld->computeOverlappingPairs();
+    m_dynamicsWorld->updateAabbs();
+    m_dynamicsWorld->computeOverlappingPairs();
     m_dynamicsWorld->rayTest(rayFromWorld, rayToWorld, rayCallback);
 
     if (rayCallback.hasHit())
@@ -732,10 +732,10 @@ namespace njli
                     i, rayContacts.size());
               }
           }
-        //SDL_LogError(SDL_LOG_CATEGORY_TEST, "HIT - END\n");
+        // SDL_LogError(SDL_LOG_CATEGORY_TEST, "HIT - END\n");
         return true;
       }
-    //SDL_LogError(SDL_LOG_CATEGORY_TEST, "MISSED\n");
+    // SDL_LogError(SDL_LOG_CATEGORY_TEST, "MISSED\n");
     return false;
   }
 
@@ -869,4 +869,4 @@ namespace njli
           }
       }
   }
-}
+} // namespace njli

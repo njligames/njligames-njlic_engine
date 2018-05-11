@@ -172,4 +172,4 @@ namespace njli
   }
 
   u32 PhysicsContact::type() { return JLI_OBJECT_TYPE_PhysicsContact; }
-}
+} // namespace njli

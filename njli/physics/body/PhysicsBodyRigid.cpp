@@ -656,4 +656,4 @@ namespace njli
     *m_Position = btVector3(0, 0, 0);
     *m_Force = btVector3(0, 0, 0);
   }
-}
+} // namespace njli

@@ -85,27 +85,27 @@ namespace njli
   {
     njli::World::getInstance()->getWorldClock()->reset();
 
-//    std::string source = R"(
-//
-//        )";
+    //    std::string source = R"(
+    //
+    //        )";
 
-//    bool ret = false;
-//    if (World::getInstance()->getWorldLuaVirtualMachine()->compileString(
-//            source.c_str()))
-//      {
-//        ret = World::getInstance()->getWorldLuaVirtualMachine()->compileFile(
-//            "scripts/main.lua");
-//        njli::World::getInstance()->createScript();
-//      }
-//    return ret;
-      bool ret = World::getInstance()->getWorldLuaVirtualMachine()->compileFile(
-                                                                           "scripts/main.lua");
-      if(!ret)
+    //    bool ret = false;
+    //    if (World::getInstance()->getWorldLuaVirtualMachine()->compileString(
+    //            source.c_str()))
+    //      {
+    //        ret =
+    //        World::getInstance()->getWorldLuaVirtualMachine()->compileFile(
+    //            "scripts/main.lua");
+    //        njli::World::getInstance()->createScript();
+    //      }
+    //    return ret;
+    bool ret = World::getInstance()->getWorldLuaVirtualMachine()->compileFile(
+        "scripts/main.lua");
+    if (!ret)
       {
-          
       }
-      njli::World::getInstance()->createScript();
-      return true;
+    njli::World::getInstance()->createScript();
+    return true;
   }
   void NJLIGameEngine::update(float step)
   {
@@ -385,4 +385,4 @@ namespace njli
     if (njli::World::getInstance()->getScene())
       njli::World::getInstance()->getScene()->receivedMemoryWarning();
   }
-}
+} // namespace njli
