@@ -23,6 +23,8 @@ if (DOXYGEN_FOUND)
   add_custom_command(
     OUTPUT
     ${CMAKE_CURRENT_BINARY_DIR}/doc/html/index.html
+    SOURCES
+    ${CMAKE_CURRENT_BINARY_DIR}/doc/html/index.html
     COMMAND
     ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
     WORKING_DIRECTORY
