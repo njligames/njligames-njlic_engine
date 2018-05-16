@@ -1243,7 +1243,17 @@ namespace njli
         theerror += "\n\t</ERROR>\n";
 
         std::string theerrordescription = "\t<DESCRIPTION>\n\t";
-        theerrordescription += lua_tostring(m_lua_State, -1);
+          const char *s = lua_tostring(m_lua_State, -1);
+          if(s)
+          {
+              std::string desc(s);
+              theerrordescription += desc;
+          }
+          else
+          {
+              theerrordescription += "Unknown.";
+          }
+          
         theerrordescription += "\n\t</DESCRIPTION>\n";
 
         std::string thecode = "\t<CODE>\n\t";
@@ -1276,14 +1286,11 @@ namespace njli
   {
     if (loadString(code))
       {
-        if (m_lua_State)
-          {
-            int status = docall(m_lua_State, 0, LUA_MULTRET);
-
-            if (LUA_OK == status)
+          int status = doString(code);
+          
+          if (LUA_OK == status)
               return true;
-            getError(code, status);
-          }
+          getError(code, status);
       }
     return false;
   }
