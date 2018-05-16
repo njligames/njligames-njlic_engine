@@ -35,6 +35,8 @@ if (DOXYGEN_FOUND)
   add_custom_target(${CMAKE_PROJECT_NAME}-documentation ALL
     DEPENDS
     ${CMAKE_CURRENT_BINARY_DIR}/doc/html/index.html
+    SOURCES
+    ${CMAKE_CURRENT_BINARY_DIR}/doc/html/index.html
     )
   
   set_source_files_properties( ${CMAKE_CURRENT_BINARY_DIR}/doc/html/index.html PROPERTIES GENERATED TRUE )
