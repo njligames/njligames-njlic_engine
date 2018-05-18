@@ -9,6 +9,8 @@
 #ifndef JLIGameEngineTest_Util_h
 #define JLIGameEngineTest_Util_h
 
+extern "C"
+{
 //#include "Game.h"
 #include "Log.h"
 //#include <csignal>
@@ -17,6 +19,7 @@
 #include <stdlib.h>
 //#include <string>
 #include <math.h>
+};
 
 #ifndef NULL
 #define NULL ((void *)0)
