@@ -26,3 +26,8 @@
 %ignore Json::Value::demand;
 
 %ignore SDL_main;
+
+%ignore SDL_GetShapedWindowMode;
+%ignore SDL_SetWindowShape;
+%ignore SDL_IsShapedWindow;
+%ignore SDL_CreateShapedWindow;

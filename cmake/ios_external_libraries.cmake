@@ -369,10 +369,10 @@ DOWNLOAD_LIBRARY_TAR(
 
 ADD_LIBRARIES(
   "${BULLET3_BINARY_FILENAMES}"
-  "thirdparty/bullet3/lib/iphone/Release\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/bullet3/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/bullet3/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/bullet3/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
+  "thirdparty/bullet3/lib/iphone/\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/bullet3/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/bullet3/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/bullet3/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
@@ -380,10 +380,10 @@ endforeach()
 
 ADD_LIBRARIES(
   "${IMGUI_BINARY_FILENAMES}"
-  "thirdparty/imgui/lib/iphone/Release\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/imgui/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/imgui/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/imgui/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
+  "thirdparty/imgui/lib/iphone/\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/imgui/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/imgui/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/imgui/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
@@ -391,10 +391,10 @@ endforeach()
 
 ADD_LIBRARIES(
   "${IMGUIZMO_BINARY_FILENAMES}"
-  "thirdparty/imguizmo/lib/iphone/Release\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/imguizmo/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/imguizmo/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/imguizmo/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
+  "thirdparty/imguizmo/lib/iphone/\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/imguizmo/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/imguizmo/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/imguizmo/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
@@ -402,10 +402,10 @@ endforeach()
 
 ADD_LIBRARIES(
   "${JSONCPP_BINARY_FILENAMES}"
-  "thirdparty/jsoncpp/lib/iphone/Release\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/jsoncpp/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/jsoncpp/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/jsoncpp/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
+  "thirdparty/jsoncpp/lib/iphone/\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/jsoncpp/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/jsoncpp/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/jsoncpp/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
@@ -413,10 +413,10 @@ endforeach()
 
 ADD_LIBRARIES(
   "${NANOVG_BINARY_FILENAMES}"
-  "thirdparty/nanovg/lib/iphone/Release\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/nanovg/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/nanovg/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/nanovg/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
+  "thirdparty/nanovg/lib/iphone/\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/nanovg/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/nanovg/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/nanovg/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
@@ -424,10 +424,10 @@ endforeach()
 
 ADD_LIBRARIES(
   "${OGG_BINARY_FILENAMES}"
-  "thirdparty/ogg/lib/iphone/Release\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/ogg/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/ogg/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/ogg/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
+  "thirdparty/ogg/lib/iphone/\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/ogg/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/ogg/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/ogg/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
@@ -435,10 +435,10 @@ endforeach()
 
 ADD_LIBRARIES(
   "${VORBIS_BINARY_FILENAMES}"
-  "thirdparty/vorbis/lib/iphone/Release\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/vorbis/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/vorbis/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  "thirdparty/vorbis/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
+  "thirdparty/vorbis/lib/iphone/\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/vorbis/lib/iphone/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/vorbis/lib/iphone/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
+  # "thirdparty/vorbis/lib/iphone/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
