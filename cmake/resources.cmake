@@ -1,4 +1,11 @@
 set( GAME_RESOURCES "${GAMEPROJECT_REPO_DIRECTORY}/assets" )
 list(APPEND RESOURCE_FILES ${GAME_RESOURCES})
 
+if(EMSCRIPTEN)
+  # SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --memory-init-file 1 --embed-file ${GAME_RESOURCES}@/")
+
+  list(APPEND EXTRA_LDFLAGS "--memory-init-file 1")
+  list(APPEND EXTRA_LDFLAGS "--embed-file ${GAME_RESOURCES}@/")
+endif()
+
 
