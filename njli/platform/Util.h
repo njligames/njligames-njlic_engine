@@ -9,6 +9,8 @@
 #ifndef JLIGameEngineTest_Util_h
 #define JLIGameEngineTest_Util_h
 
+#include <stddef.h>
+
 //#include "Game.h"
 #include "Log.h"
 //#include <csignal>
