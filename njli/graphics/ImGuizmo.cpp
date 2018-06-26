@@ -21,6 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include <stddef.h>
+
 #include "imgui.h"
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "ImGuizmo.h"
