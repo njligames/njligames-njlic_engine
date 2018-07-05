@@ -183,10 +183,10 @@ macro(LUA_NJLI_SWIG)
       SOVERSION ${LT_REVISION}
       OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic-${LT_RELEASE}")
   else()
-    set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES
-      VERSION ${${CMAKE_PROJECT_NAME}-lua-swig-njlic_VERSION}
-      SOVERSION ${LT_REVISION}
-      OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic")
+    # set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES
+    #   VERSION ${${CMAKE_PROJECT_NAME}-lua-swig-njlic_VERSION}
+    #   SOVERSION ${LT_REVISION}
+    #   OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic")
   endif()
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic ${CMAKE_PROJECT_NAME}-static)
 endmacro()
