@@ -9,7 +9,10 @@
 #ifndef __JLIGameEngineTest__WorldSocket__
 #define __JLIGameEngineTest__WorldSocket__
 
+#if !defined (_WIN32)
 #include <netinet/in.h>
+#endif
+
 //#include <netinet/tcp.h>
 //#include <arpa/inet.h>
 //#include <fcntl.h>
@@ -95,7 +98,9 @@ namespace njli
     WorldSocket &operator=(const WorldSocket &);
 
     s32 m_sck;
+#if !defined (_WIN32)
     struct sockaddr_in m_sck_addr;
+#endif
     s8 *m_buffer;
     bool m_isConnected;
 

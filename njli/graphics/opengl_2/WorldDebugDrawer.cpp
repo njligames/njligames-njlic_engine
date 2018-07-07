@@ -1152,6 +1152,7 @@ namespace njli
 
   void WorldDebugDrawer::renderImgui() { ImGui::Render(); }
 
+#if !defined(_WIN32)
   static void GetPrimaryIp(char *buffer, size_t buflen)
   {
     setenv("LANG", "C", 1);
@@ -1179,11 +1180,14 @@ namespace njli
       }
     pclose(fp);
   }
+#endif
 
   void WorldDebugDrawer::newFrameImgui()
   {
+#if !defined(_WIN32)
     static char buffer[256];
     GetPrimaryIp(buffer, 256);
+#endif
 
     ImGuiIO &io = ImGui::GetIO();
     ImGuiStyle &style = ImGui::GetStyle();

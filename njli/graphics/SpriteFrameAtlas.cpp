@@ -589,7 +589,7 @@ namespace njli
     m_ContentDimension->setY(height);
   }
 
-  void SpriteFrameAtlas::addFrame(Rect rect)
+  void SpriteFrameAtlas::addFrame(const Rect &rect)
   {
     m_Frames.push_back(rect);
     //        m_FrameNames.insert(btHashString(rect.getTrimmedName().c_str()),

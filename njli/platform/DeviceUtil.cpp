@@ -13,7 +13,11 @@
 #if defined(__ANDROID__) || defined(__EMSCRIPTEN__) || defined(__linux__)
 #include <sys/utsname.h>
 #else
+
+#if !defined(_WIN32)
 #include <sys/sysctl.h>
+#endif
+
 #endif
 
 std::string DeviceUtil::hardwareString()
@@ -43,6 +47,7 @@ std::string DeviceUtil::hardwareString()
   return hardware;
 
 #else
+#if !defined(_WIN32)
   int name[] = {CTL_HW, HW_MACHINE};
   size_t size = 100;
   sysctl(name, 2, NULL, &size, NULL, 0); // getting size of answer
@@ -55,6 +60,8 @@ std::string DeviceUtil::hardwareString()
   delete[] hw_machine;
 
   return hardware;
+#endif
+  return "";
 #endif
 }
 
@@ -161,6 +168,7 @@ std::string DeviceUtil::hardwareDescription()
   if (hardware == std::string("x86_64"))
     return "x86_64";
 
+#if !defined(_WIN32)
   std::string foo("iPhone");
   std::string foobar(hardware);
   auto res = std::mismatch(foo.begin(), foo.end(), foobar.begin());
@@ -187,7 +195,7 @@ std::string DeviceUtil::hardwareDescription()
       // foo is a prefix of foobar.
       return "iPad";
     }
-
+#endif
   return "";
 }
 

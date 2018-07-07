@@ -16,9 +16,11 @@
 #include "Log.h"
 #include "lua.hpp"
 
+#if !defined (_WIN32)
 extern "C" {
 #include "pthread.h"
 }
+#endif
 
 typedef void(JLIthreadcallback(void *));
 
@@ -172,7 +174,9 @@ namespace njli
 
     int m_priority;
 
+#if !defined (_WIN32)
     pthread_t m_thread;
+#endif
     unsigned int m_thread_hdl;
 
     JLIthreadcallback *m_JLIthreadcallback;

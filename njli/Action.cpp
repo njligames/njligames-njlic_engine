@@ -18,6 +18,8 @@
 #include "btPrint.h"
 
 #include "btQuickprof.h"
+#include <assert.h>
+#include <limits>
 
 namespace njli
 {

@@ -467,7 +467,7 @@ namespace njli
          *
          *  @param paint <#paint description#>
          */
-    void strokePaint(JLIPaint paint);
+    void strokePaint(const JLIPaint &paint);
     /**
          *  <#Description#>
          *
@@ -479,7 +479,7 @@ namespace njli
          *
          *  @param paint <#paint description#>
          */
-    void fillPaint(JLIPaint paint);
+    void fillPaint(const JLIPaint &paint);
     /**
          *  <#Description#>
          *

@@ -1,5 +1,5 @@
 
-message(STATUS "Platform is ios for project")
+message(STATUS "Platform is macos for project")
 
 set(THIRDPARTY_BULLET3_DEBUG_MACOS_URL                   "https://www.dropbox.com/s/uthinr4qer5k81p/libbullet3_macos_Debug.tar.gz?dl=0" CACHE STRING "The URL for library")
 set(THIRDPARTY_BULLET3_MINSIZEREL_MACOS_URL              "https://www.dropbox.com/s/blbm8w3e39o19qd/libbullet3_macos_MinSizeRel.tar.gz?dl=0" CACHE STRING "The URL for library")
