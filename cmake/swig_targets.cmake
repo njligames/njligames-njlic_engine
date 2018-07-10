@@ -159,6 +159,11 @@ macro(LUA_NJLI_SWIG)
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
 
+  # message(status "AFTER - ${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRECTORES}")
+  target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRECTORES}>
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
+    )
 
   swig_add_library(
     ${CMAKE_PROJECT_NAME}-lua-swig-njlic
@@ -189,6 +194,11 @@ macro(LUA_NJLI_SWIG)
     #   OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic")
   endif()
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic ${CMAKE_PROJECT_NAME}-static)
+
+  target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-njlic
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRECTORES}>
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
+    )
 endmacro()
 
 if(${CMAKE_PROJECT_NAME}_LUA_SWIG)

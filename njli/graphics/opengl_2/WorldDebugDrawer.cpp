@@ -368,7 +368,7 @@ namespace njli
     dd::line(_from, _to, _color, durationMillis, depthEnabled);
   }
 
-  void WorldDebugDrawer::screenText(ddStrParam str, const btVector3 &pos,
+  void WorldDebugDrawer::screenText(const std::string &str, const btVector3 &pos,
                                     const btVector3 &color, float scaling,
                                     int durationMillis)
   {
@@ -378,7 +378,7 @@ namespace njli
     dd::screenText(str, _pos, _color);
   }
 
-  void WorldDebugDrawer::projectedText(ddStrParam str, const btVector3 &pos,
+  void WorldDebugDrawer::projectedText(const std::string &str, const btVector3 &pos,
                                        const btVector3 &color, float scaling,
                                        int durationMillis)
   {
