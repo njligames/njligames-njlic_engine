@@ -61,14 +61,14 @@ DOWNLOAD_LIBRARY_TAR(
   "${THIRDPARTY_IMGUIZMO_RELEASE_WINDOWS32_URL}"
   "thirdparty/imguizmo/lib/windows32/Release"
   )
-set(IMGUIZMO_RELEASE_BINARIES ${IMGUI_BINARY_FILENAMES})
+set(IMGUIZMO_RELEASE_BINARIES ${IMGUIZMO_BINARY_FILENAMES})
 
 DOWNLOAD_LIBRARY_TAR(
   "imguizmo"
   "${THIRDPARTY_IMGUIZMO_DEBUG_WINDOWS32_URL}"
   "thirdparty/imguizmo/lib/windows32/Debug"
   )
-set(IMGUIZMO_DEBUG_BINARIES ${IMGUI_BINARY_FILENAMES})
+set(IMGUIZMO_DEBUG_BINARIES ${IMGUIZMO_BINARY_FILENAMES})
 
 # JsonCPP #########################################################################
 
