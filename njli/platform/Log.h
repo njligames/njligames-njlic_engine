@@ -116,22 +116,25 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
   while (0)
 
 #if !(defined(NDEBUG))
-#define SDL_assertCheck(condition, fmt, args...)                               \
-  do                                                                           \
-    {                                                                          \
-      char string[3584];                                                       \
-      snprintf(string, (3584 - 1), fmt, ##args);                               \
-      if ((condition) == 0)                                          \
-        {                                                                      \
-          SDL_LogError(SDL_LOG_CATEGORY_TEST, "Assert '%s': %s", string,       \
-                       "Failed");                                              \
-        }                                                                      \
-      else                                                                     \
-        {                                                                      \
-          /*                SDL_Log("Assert '%s': %s", string, "Passed");*/    \
-        }                                                                      \
-    }                                                                          \
-  while (0)
+#define SDL_assertCheck(condition, fmt, ...)                                   \
+  {                                                                            \
+  }
+//#define SDL_assertCheck(condition, fmt, ...)                               \
+//  do                                                                           \
+//    {                                                                          \
+//      char string[3584];                                                       \
+//      snprintf(string, (3584 - 1), fmt, ##args);                               \
+//      if ((condition) == 0)                                          \
+//        {                                                                      \
+//          SDL_LogError(SDL_LOG_CATEGORY_TEST, "Assert '%s': %s", string,       \
+//                       "Failed");                                              \
+//        }                                                                      \
+//      else                                                                     \
+//        {                                                                      \
+//          /*                SDL_Log("Assert '%s': %s", string, "Passed");*/    \
+//        }                                                                      \
+//    }                                                                          \
+//  while (0)
 
 #else
 #define SDL_assertCheck(condition, fmt, ...)                                   \
@@ -140,7 +143,7 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
 #endif
 
 #if !(defined(NDEBUG))
-#define SDL_assertPrint(condition, fmt, args...)                               \
+#define SDL_assertPrint(condition, fmt, ...)                               \
   do                                                                           \
     {                                                                          \
       SDL_assertCheck((condition), fmt, ##args);                               \

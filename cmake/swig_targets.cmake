@@ -59,6 +59,7 @@ macro(LUA_BULLET_SWIG)
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static ${CMAKE_PROJECT_NAME}-static)
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
@@ -72,7 +73,7 @@ macro(LUA_BULLET_SWIG)
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
-  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet ${CMAKE_PROJECT_NAME}-static)
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet ${CMAKE_PROJECT_NAME}-static ${EXTRA_LIBS})
 
 endmacro()
 
@@ -199,6 +200,10 @@ macro(LUA_NJLI_SWIG)
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRECTORES}>
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
+
+
+
+
 endmacro()
 
 if(${CMAKE_PROJECT_NAME}_LUA_SWIG)

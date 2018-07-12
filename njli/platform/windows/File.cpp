@@ -69,4 +69,4 @@ const char* DOCUMENT_BASEPATH()
     return tempBuffer;
 }
 
-
+void setupFileSystem(){}

@@ -29,11 +29,14 @@ DOWNLOAD_LIBRARY_TAR(
   "${THIRDPARTY_BULLET3_RELEASE_WINDOWS32_URL}"
   "thirdparty/bullet3/lib/windows32/Release"
   )
+set(BULLET3_RELEASE_BINARIES ${BULLET3_BINARY_FILENAMES})
+
 DOWNLOAD_LIBRARY_TAR(
   "bullet3"
   "${THIRDPARTY_BULLET3_DEBUG_WINDOWS32_URL}"
   "thirdparty/bullet3/lib/windows32/Debug"
   )
+set(BULLET3_DEBUG_BINARIES ${BULLET3_BINARY_FILENAMES})
 
 # ImGui #########################################################################
 
@@ -42,11 +45,14 @@ DOWNLOAD_LIBRARY_TAR(
   "${THIRDPARTY_IMGUI_RELEASE_WINDOWS32_URL}"
   "thirdparty/imgui/lib/windows32/Release"
   )
+set(IMGUI_RELEASE_BINARIES ${IMGUI_BINARY_FILENAMES})
+
 DOWNLOAD_LIBRARY_TAR(
   "imgui"
   "${THIRDPARTY_IMGUI_DEBUG_WINDOWS32_URL}"
   "thirdparty/imgui/lib/windows32/Debug"
   )
+set(IMGUI_DEBUG_BINARIES ${IMGUI_BINARY_FILENAMES})
 
 # ImGuizmo #########################################################################
 
@@ -55,11 +61,14 @@ DOWNLOAD_LIBRARY_TAR(
   "${THIRDPARTY_IMGUIZMO_RELEASE_WINDOWS32_URL}"
   "thirdparty/imguizmo/lib/windows32/Release"
   )
+set(IMGUIZMO_RELEASE_BINARIES ${IMGUI_BINARY_FILENAMES})
+
 DOWNLOAD_LIBRARY_TAR(
   "imguizmo"
   "${THIRDPARTY_IMGUIZMO_DEBUG_WINDOWS32_URL}"
   "thirdparty/imguizmo/lib/windows32/Debug"
   )
+set(IMGUIZMO_DEBUG_BINARIES ${IMGUI_BINARY_FILENAMES})
 
 # JsonCPP #########################################################################
 
@@ -68,11 +77,14 @@ DOWNLOAD_LIBRARY_TAR(
   "${THIRDPARTY_JSONCPP_RELEASE_WINDOWS32_URL}"
   "thirdparty/jsoncpp/lib/windows32/Release"
   )
+set(JSONCPP_RELEASE_BINARIES ${JSONCPP_BINARY_FILENAMES})
+
 DOWNLOAD_LIBRARY_TAR(
   "jsoncpp"
   "${THIRDPARTY_JSONCPP_DEBUG_WINDOWS32_URL}"
   "thirdparty/jsoncpp/lib/windows32/Debug"
   )
+set(JSONCPP_DEBUG_BINARIES ${JSONCPP_BINARY_FILENAMES})
 
 # NanoVG #########################################################################
 
@@ -81,11 +93,14 @@ DOWNLOAD_LIBRARY_TAR(
   "${THIRDPARTY_NANOVG_RELEASE_WINDOWS32_URL}"
   "thirdparty/nanovg/lib/windows32/Release"
   )
+set(NANOVG_RELEASE_BINARIES ${NANOVG_BINARY_FILENAMES})
+
 DOWNLOAD_LIBRARY_TAR(
   "nanovg"
   "${THIRDPARTY_NANOVG_DEBUG_WINDOWS32_URL}"
   "thirdparty/nanovg/lib/windows32/Debug"
   )
+set(NANOVG_DEBUG_BINARIES ${NANOVG_BINARY_FILENAMES})
 
 # OGG #########################################################################
 
@@ -94,11 +109,14 @@ DOWNLOAD_LIBRARY_TAR(
   "${THIRDPARTY_OGG_RELEASE_WINDOWS32_URL}"
   "thirdparty/ogg/lib/windows32/Release"
   )
+set(OGG_RELEASE_BINARIES ${OGG_BINARY_FILENAMES})
+
 DOWNLOAD_LIBRARY_TAR(
   "ogg"
   "${THIRDPARTY_OGG_DEBUG_WINDOWS32_URL}"
   "thirdparty/ogg/lib/windows32/Debug"
   )
+set(OGG_DEBUG_BINARIES ${OGG_BINARY_FILENAMES})
 
 # Vorbis #########################################################################
 
@@ -107,88 +125,151 @@ DOWNLOAD_LIBRARY_TAR(
   "${THIRDPARTY_VORBIS_RELEASE_WINDOWS32_URL}"
   "thirdparty/vorbis/lib/windows32/Release"
   )
+set(VORBIS_RELEASE_BINARIES ${VORBIS_BINARY_FILENAMES})
+
 DOWNLOAD_LIBRARY_TAR(
   "vorbis"
   "${THIRDPARTY_VORBIS_DEBUG_WINDOWS32_URL}"
   "thirdparty/vorbis/lib/windows32/Debug"
   )
+set(VORBIS_DEBUG_BINARIES ${VORBIS_BINARY_FILENAMES})
+
+####################################################################################
+# ADD_LIBRARIES #####################################################################
+####################################################################################
+
+# 
 
 ADD_LIBRARIES(
-  "${BULLET3_BINARY_FILENAMES}"
+  "${BULLET3_RELEASE_BINARIES}"
   "thirdparty/bullet3/lib/windows32/Release" 
-  # "thirdparty/bullet3/lib/windows32/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/bullet3/lib/windows32/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/bullet3/lib/windows32/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
 endforeach()
 
 ADD_LIBRARIES(
-  "${IMGUI_BINARY_FILENAMES}"
+  "${IMGUI_RELEASE_BINARIES}"
   "thirdparty/imgui/lib/windows32/Release" 
-  # "thirdparty/imgui/lib/windows32/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/imgui/lib/windows32/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/imgui/lib/windows32/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
 endforeach()
 
+MESSAGE(STATUS "IMGUIZMO_RELEASE_BINARIES ${IMGUIZMO_RELEASE_BINARIES}")
 ADD_LIBRARIES(
-  "${IMGUIZMO_BINARY_FILENAMES}"
+  "${IMGUIZMO_RELEASE_BINARIES}"
   "thirdparty/imguizmo/lib/windows32/Release" 
-  # "thirdparty/imguizmo/lib/windows32/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/imguizmo/lib/windows32/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/imguizmo/lib/windows32/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
 endforeach()
 
 ADD_LIBRARIES(
-  "${JSONCPP_BINARY_FILENAMES}"
+  "${JSONCPP_RELEASE_BINARIES}"
   "thirdparty/jsoncpp/lib/windows32/Release" 
-  # "thirdparty/jsoncpp/lib/windows32/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/jsoncpp/lib/windows32/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/jsoncpp/lib/windows32/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
 endforeach()
 
 ADD_LIBRARIES(
-  "${NANOVG_BINARY_FILENAMES}"
+  "${NANOVG_RELEASE_BINARIES}"
   "thirdparty/nanovg/lib/windows32/Release" 
-  # "thirdparty/nanovg/lib/windows32/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/nanovg/lib/windows32/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/nanovg/lib/windows32/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
 endforeach()
 
 ADD_LIBRARIES(
-  "${OGG_BINARY_FILENAMES}"
+  "${OGG_RELEASE_BINARIES}"
   "thirdparty/ogg/lib/windows32/Release" 
-  # "thirdparty/ogg/lib/windows32/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/ogg/lib/windows32/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/ogg/lib/windows32/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
 endforeach()
 
 ADD_LIBRARIES(
-  "${VORBIS_BINARY_FILENAMES}"
+  "${VORBIS_RELEASE_BINARIES}"
   "thirdparty/vorbis/lib/windows32/Release" 
-  # "thirdparty/vorbis/lib/windows32/Debug\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/vorbis/lib/windows32/MinSizeRel\$(EFFECTIVE_PLATFORM_NAME)" 
-  # "thirdparty/vorbis/lib/windows32/RelWithDebugInfo\$(EFFECTIVE_PLATFORM_NAME)" 
   )
 foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
   list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
 endforeach()
+
+
+
+
+
+
+
+
+
+
+
+ADD_LIBRARIES(
+  "${BULLET3_DEBUG_BINARIES}"
+  "thirdparty/bullet3/lib/windows32/Debug" 
+  )
+foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
+  list(APPEND EXTRA_DEBUG_LIBS ${LIBRARY_TARGET_NAME})
+endforeach()
+
+ADD_LIBRARIES(
+  "${IMGUI_DEBUG_BINARIES}"
+  "thirdparty/imgui/lib/windows32/Debug" 
+  )
+foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
+  list(APPEND EXTRA_DEBUG_LIBS ${LIBRARY_TARGET_NAME})
+endforeach()
+
+MESSAGE(STATUS "IMGUIZMO_RELEASE_BINARIES ${IMGUIZMO_RELEASE_BINARIES}")
+ADD_LIBRARIES(
+  "${IMGUIZMO_DEBUG_BINARIES}"
+  "thirdparty/imguizmo/lib/windows32/Debug" 
+  )
+foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
+  list(APPEND EXTRA_DEBUG_LIBS ${LIBRARY_TARGET_NAME})
+endforeach()
+
+ADD_LIBRARIES(
+  "${JSONCPP_DEBUG_BINARIES}"
+  "thirdparty/jsoncpp/lib/windows32/Debug" 
+  )
+foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
+  list(APPEND EXTRA_DEBUG_LIBS ${LIBRARY_TARGET_NAME})
+endforeach()
+
+ADD_LIBRARIES(
+  "${NANOVG_DEBUG_BINARIES}"
+  "thirdparty/nanovg/lib/windows32/Debug" 
+  )
+foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
+  list(APPEND EXTRA_DEBUG_LIBS ${LIBRARY_TARGET_NAME})
+endforeach()
+
+ADD_LIBRARIES(
+  "${OGG_DEBUG_BINARIES}"
+  "thirdparty/ogg/lib/windows32/Debug" 
+  )
+foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
+  list(APPEND EXTRA_DEBUG_LIBS ${LIBRARY_TARGET_NAME})
+endforeach()
+
+ADD_LIBRARIES(
+  "${VORBIS_DEBUG_BINARIES}"
+  "thirdparty/vorbis/lib/windows32/Debug" 
+  )
+foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
+  list(APPEND EXTRA_DEBUG_LIBS ${LIBRARY_TARGET_NAME})
+endforeach()
+
+
+
+
+
+
+
 
 if( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "fmod" )
   message(STATUS "need to add fmod lib")
@@ -207,7 +288,7 @@ elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "openal" )
     )
   ADD_LIBRARIES(
     "${OPENAL_BINARY_FILENAMES}"
-    "thirdparty/openal/lib/windows32" 
+    "thirdparty/openal/lib/openal" 
     )
   foreach(LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAMES})
     list(APPEND EXTRA_LIBS ${LIBRARY_TARGET_NAME})
