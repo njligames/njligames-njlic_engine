@@ -142,8 +142,8 @@ macro(ADD_LIBRARIES
 
     set_target_properties(${LIBRARY_TARGET_NAME} PROPERTIES IMPORTED_LOCATION "${_IMPORT_LOCATION}")
     list(APPEND LIBRARY_TARGET_NAMES ${LIBRARY_TARGET_NAME})
-    message(status "LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAME}")
-    message(status "_IMPORT_LOCATION ${_IMPORT_LOCATION}")
+    # message(status "LIBRARY_TARGET_NAME ${LIBRARY_TARGET_NAME}")
+    # message(status "_IMPORT_LOCATION ${_IMPORT_LOCATION}")
   endforeach()
 endmacro()
 

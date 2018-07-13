@@ -302,4 +302,9 @@ find_package(OpenGL REQUIRED)
 list(APPEND EXTRA_LIBS ${OPENGL_LIBRARIES})
 include_directories(${OPENGL_INCLUDE_DIR})
 
+find_package(GLEW REQUIRED)
+if (GLEW_FOUND)
+  list(APPEND EXTRA_LIBS ${GLEW_LIBRARIES})
+  include_directories(${GLEW_INCLUDE_DIRS})
+endif()
 

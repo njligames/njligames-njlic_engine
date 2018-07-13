@@ -42,9 +42,9 @@ macro(LUA_BULLET_SWIG)
     )
 
   get_property(_INCLUDE_DIRECTORIES DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-  foreach(_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORIES})
-    MESSAGE(STATUS "BULLET_SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
-  endforeach()
+  # foreach(_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORIES})
+  #   MESSAGE(STATUS "BULLET_SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
+  # endforeach()
 
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
   set_source_files_properties("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bulletLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
@@ -61,6 +61,13 @@ macro(LUA_BULLET_SWIG)
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static ${CMAKE_PROJECT_NAME}-static)
+  foreach(EXTRA_LIB ${EXTRA_LIBS})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static optimized ${EXTRA_LIB})
+  endforeach()
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static ${EXTRA_LDFLAGS})
+  foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static debug ${EXTRA_DEBUG_LIB})
+  endforeach()
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
 
@@ -73,7 +80,16 @@ macro(LUA_BULLET_SWIG)
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
-  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet ${CMAKE_PROJECT_NAME}-static ${EXTRA_LIBS})
+
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet ${CMAKE_PROJECT_NAME}-static )
+  foreach(EXTRA_LIB ${EXTRA_LIBS})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet optimized ${EXTRA_LIB})
+  endforeach()
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet ${EXTRA_LDFLAGS})
+  foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet debug ${EXTRA_DEBUG_LIB})
+  endforeach()
+
 
 endmacro()
 
@@ -139,9 +155,9 @@ macro(LUA_NJLI_SWIG)
     )
 
   get_property(_INCLUDE_DIRECTORIES DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-  foreach(_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORIES})
-    MESSAGE(STATUS "SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
-  endforeach()
+  # foreach(_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORIES})
+  #   MESSAGE(STATUS "SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
+  # endforeach()
   
   set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlicLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
   set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "njlicLUA_wrap.cxx")
