@@ -3,19 +3,45 @@ set(${CMAKE_PROJECT_NAME}_LUA_SWIG ${${CMAKE_PROJECT_NAME}_LUA_SWIG_ENABLED_BY_D
 
 list(APPEND CMAKE_MODULE_PATH "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake")
 
-macro(LUA_BULLET_SWIG)
+macro(LUA_BULLET3_SWIG)
+  if(NOT CMAKE_PROJECT_NAME)
+    MESSAGE(FATAL_ERROR "CMAKE_PROJECT_NAME variable is empty.")
+  endif()
+  if(NOT ${CMAKE_PROJECT_NAME}_REPO_DIRECTORY)
+    MESSAGE(FATAL_ERROR "${CMAKE_PROJECT_NAME}_REPO_DIRECTORY variable is empty.")
+  endif()
+
+  set(BULLET3_SWIG_DIRECTORY "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/thirdparty/bullet3")
+
+  if(NOT BULLET3_SWIG_DIRECTORY)
+    MESSAGE(FATAL_ERROR "BULLET3_SWIG_DIRECTORY variable is empty.")
+  endif()
+  if(NOT BULLET3_INCLUDE_DIR)
+    MESSAGE(FATAL_ERROR "BULLET3_INCLUDE_DIR variable is empty.")
+  endif()
+
+  if(NOT EXISTS "${BULLET3_SWIG_DIRECTORY}")
+    MESSAGE(FATAL_ERROR "Path doesn't exist: ${BULLET3_SWIG_DIRECTORY}")
+  endif()
+  if(NOT EXISTS "${BULLET3_INCLUDE_DIR}")
+    MESSAGE(FATAL_ERROR "Path doesn't exist: ${BULLET3_INCLUDE_DIR}")
+  endif()
+  if(NOT EXISTS "${BULLET3_SWIG_DIRECTORY}/bullet3.i")
+    MESSAGE(FATAL_ERROR "Path doesn't exist: ${BULLET3_SWIG_DIRECTORY}/bullet3.i")
+  endif()
+
   set(CMAKE_SWIG_FLAGS "")
 
   file(GLOB_RECURSE LUA_SWIG_SOURCE_FILES
-    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/thirdparty/bullet3/*.swg
-    "${CMAKE_BINARY_DIR}/${BULLET_INCLUDE_DIRECTORY}" 
+    "${BULLET3_SWIG_DIRECTORY}/*.swg"
+    "${BULLET3_INCLUDE_DIR}" 
     )
 
   list(APPEND LUA_SWIG_SOURCE_FILES
-    "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/thirdparty/bullet3/bullet3.i" 
+    "${BULLET3_SWIG_DIRECTORY}/bullet3.i" 
   )
 
-  SUBDIRLIST(SUBDIRS "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/thirdparty/bullet3" SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST)
+  SUBDIRLIST(SUBDIRS "${BULLET3_SWIG_DIRECTORY}" SWIGIN_SCRIPTS_INCLUDE_DIRS)
 
   set(${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-includeall")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-fcompact")
@@ -31,137 +57,140 @@ macro(LUA_BULLET_SWIG)
   foreach(_SWIG_SOURCE_FILE ${LUA_SWIG_SOURCE_FILES})
     set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_FLAGS ${${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS})
     set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY CPLUSPLUS ON)
-    set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_INCLUDE_DIRECTORIES "${SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST}")
+    set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_INCLUDE_DIRECTORIES "${SWIGIN_SCRIPTS_INCLUDE_DIRS}")
   endforeach()
 
 
+  # include_directories("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic" 
+  #   ${SWIGIN_SCRIPTS_INCLUDE_DIRS} 
+  #   ${BULLET3_INCLUDE_DIR} 
+  #   ${BULLET3_INCLUDE_DIRS}
+  #   )
   include_directories("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic" 
-    ${SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST} 
-    "${CMAKE_BINARY_DIR}/${BULLET_INCLUDE_DIRECTORY}" 
-    ${BULLET_INCLUDE_DIRECTORY_LIST}
+    ${SWIGIN_SCRIPTS_INCLUDE_DIRS} 
     )
 
-  get_property(_INCLUDE_DIRECTORIES DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+  # get_property(_INCLUDE_DIRECTORIES DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
   # foreach(_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORIES})
   #   MESSAGE(STATUS "BULLET_SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
   # endforeach()
 
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
-  set_source_files_properties("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bulletLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
-  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "bulletLUA_wrap.cxx")
+  set_source_files_properties("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bullet3LUA_wrap.cxx" PROPERTIES GENERATED TRUE )
+  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "bullet3LUA_wrap.cxx")
 
   swig_add_library(
-    ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static
+    ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static
     TYPE STATIC
     LANGUAGE lua
     SOURCES "${LUA_SWIG_SOURCE_FILES}"
     OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
-  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static ${CMAKE_PROJECT_NAME}-static)
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static ${CMAKE_PROJECT_NAME}-static)
   foreach(EXTRA_LIB ${EXTRA_LIBS})
-    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static optimized ${EXTRA_LIB})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static optimized ${EXTRA_LIB})
   endforeach()
-  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet-static ${EXTRA_LDFLAGS})
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static ${EXTRA_LDFLAGS})
   foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
-    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static debug ${EXTRA_DEBUG_LIB})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static debug ${EXTRA_DEBUG_LIB})
   endforeach()
-  list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-bullet-static)
+  list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
 
   swig_add_library(
-    ${CMAKE_PROJECT_NAME}-lua-swig-bullet
+    ${CMAKE_PROJECT_NAME}-lua-swig-bullet3
     TYPE MODULE
     LANGUAGE lua
     SOURCES "${LUA_SWIG_SOURCE_FILES}"
     OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
-  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet ${CMAKE_PROJECT_NAME}-static )
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 ${CMAKE_PROJECT_NAME}-static )
   foreach(EXTRA_LIB ${EXTRA_LIBS})
-    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet optimized ${EXTRA_LIB})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3 optimized ${EXTRA_LIB})
   endforeach()
-  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet ${EXTRA_LDFLAGS})
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 ${EXTRA_LDFLAGS})
   foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
-    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet debug ${EXTRA_DEBUG_LIB})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3 debug ${EXTRA_DEBUG_LIB})
   endforeach()
-
 
 endmacro()
 
-macro(LUA_NJLI_SWIG)
-  set(CMAKE_SWIG_FLAGS "")
+macro(LUA_NJLIC_SWIG)
 
-  SUBDIRLIST(SUBDIRS "${CMAKE_BINARY_DIR}/${BULLET_INCLUDE_DIRECTORY}" BULLET_INCLUDE_DIRECTORY_LIST)
-  SUBDIRLIST(SUBDIRS "${CMAKE_BINARY_DIR}/${JSONCPP_INCLUDE_DIRECTORY}" JSONCPP_INCLUDE_DIRECTORY_LIST)
+  if(NOT CMAKE_PROJECT_NAME)
+    MESSAGE(FATAL_ERROR "CMAKE_PROJECT_NAME variable is empty.")
+  endif()
 
-  configure_file("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic/_Defines.swg.in"
-    "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic/_Defines.swg")
+  if(NOT ${CMAKE_PROJECT_NAME}_REPO_DIRECTORY)
+    MESSAGE(FATAL_ERROR "${CMAKE_PROJECT_NAME}_REPO_DIRECTORY variable is empty.")
+  endif()
+
+  set(NJLIC_SWIG_INCLUDE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic")
+
+  if(NOT NJLIC_SWIG_INCLUDE_DIR)
+    MESSAGE(FATAL_ERROR "NJLIC_SWIG_INCLUDE_DIR variable is empty.")
+  endif()
+
+  if(NOT NJLIC_INCLUDE_DIR)
+    MESSAGE(FATAL_ERROR "NJLIC_INCLUDE_DIR variable is empty.")
+  endif()
+
+  if(NOT EXISTS "${NJLIC_SWIG_INCLUDE_DIR}")
+    MESSAGE(FATAL_ERROR "Path doesn't exist: ${NJLIC_SWIG_INCLUDE_DIR}")
+  endif()
+  if(NOT EXISTS "${NJLIC_INCLUDE_DIR}")
+    MESSAGE(FATAL_ERROR "Path doesn't exist: ${NJLIC_INCLUDE_DIR}")
+  endif()
+
+  if(NOT EXISTS "${NJLIC_SWIG_INCLUDE_DIR}/njlic.i")
+    MESSAGE(FATAL_ERROR "Path doesn't exist: ${NJLIC_SWIG_INCLUDE_DIR}/njlic.i")
+  endif()
+
+  configure_file("${NJLIC_SWIG_INCLUDE_DIR}/_Defines.swg.in"
+    "${NJLIC_SWIG_INCLUDE_DIR}/_Defines.swg")
 
   file(GLOB_RECURSE LUA_SWIG_SOURCE_FILES
-    ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic/*.swg
-    "${CMAKE_BINARY_DIR}/${BULLET_INCLUDE_DIRECTORY}" 
-    ${BULLET_INCLUDE_DIRECTORY_LIST}
-    "${CMAKE_BINARY_DIR}/${JSONCPP_INCLUDE_DIRECTORY}" 
-    ${JSONCPP_INCLUDE_DIRECTORY_LIST}
-    "${CMAKE_BINARY_DIR}/${DEBUGDRAW_INCLUDE_DIRECTORY}" 
-    "${CMAKE_BINARY_DIR}/${NANOVG_INCLUDE_DIRECTORY}" 
+    ${NJLIC_SWIG_INCLUDE_DIR}/*.swg
     )
 
   list(APPEND LUA_SWIG_SOURCE_FILES
-    "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic/njlic.i" 
+    "${NJLIC_SWIG_INCLUDE_DIR}/njlic.i" 
   )
 
-  SUBDIRLIST(SUBDIRS "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic" SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST)
+  SUBDIRLIST(SUBDIRS "${NJLIC_SWIG_INCLUDE_DIR}" NJLIC_SWIG_INCLUDE_DIRS)
+  list(APPEND NJLIC_SWIG_INCLUDE_DIRS ${NJLIC_INCLUDE_DIRS})
 
-  set(${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-includeall")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-fcompact")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-fvirtual")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-v")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w201")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w312")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-ignoremissing")
-  # list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-cpperraswarn")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-DBT_INFINITY")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-DSWIG_TYPE_TABLE=myprojectname")
+  set(CMAKE_SWIG_FLAGS "-includeall")
+  list(APPEND CMAKE_SWIG_FLAGS "-fcompact")
+  list(APPEND CMAKE_SWIG_FLAGS "-fvirtual")
+  list(APPEND CMAKE_SWIG_FLAGS "-v")
+  list(APPEND CMAKE_SWIG_FLAGS "-w201")
+  list(APPEND CMAKE_SWIG_FLAGS "-w312")
+  list(APPEND CMAKE_SWIG_FLAGS "-ignoremissing")
+  # list(APPEND CMAKE_SWIG_FLAGS "-cpperraswarn")
+  list(APPEND CMAKE_SWIG_FLAGS "-DBT_INFINITY")
+  list(APPEND CMAKE_SWIG_FLAGS "-DSWIG_TYPE_TABLE=myprojectname")
 
   foreach(_SWIG_SOURCE_FILE ${LUA_SWIG_SOURCE_FILES})
-    set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_FLAGS ${${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS})
+    # set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_FLAGS ${${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS})
     set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY CPLUSPLUS ON)
-    set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_INCLUDE_DIRECTORIES "${SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST}")
+    set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_INCLUDE_DIRECTORIES "${NJLIC_SWIG_INCLUDE_DIRS}")
   endforeach()
 
-
-  include_directories("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic" 
-    ${SWIGIN_SCRIPTS_INCLUDE_DIRECTORY_LIST} 
-
-    "${CMAKE_BINARY_DIR}/${BULLET_INCLUDE_DIRECTORY}" 
-    ${BULLET_INCLUDE_DIRECTORY_LIST}
-
-    "${CMAKE_BINARY_DIR}/${JSONCPP_INCLUDE_DIRECTORY}" 
-
-    "${CMAKE_BINARY_DIR}/${DEBUGDRAW_INCLUDE_DIRECTORY}" 
-
-    "${CMAKE_BINARY_DIR}/${NANOVG_INCLUDE_DIRECTORY}" 
-
-    ${NJLIC_INCLUDE_DIRECTORIES} ${NJLIC_INCLUDE_DIRECTORY_LIST} 
-    ${BULLET_LOCAL_INCLUDE_DIRECTORIES} 
-    ${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}
-    ${LUAEXTS_LOCAL_INCLUDE_DIRECTORIES} ${LUAEXTS_LOCAL_INCLUDE_DIRECTORY_LIST}
+  include_directories(
+    ${NJLIC_SWIG_INCLUDE_DIRS}
+    ${BULLET3_INCLUDE_DIRS}
     )
 
-  get_property(_INCLUDE_DIRECTORIES DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-  # foreach(_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORIES})
-  #   MESSAGE(STATUS "SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
-  # endforeach()
-  
   set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlicLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
-  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "njlicLUA_wrap.cxx")
-  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
+  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlicLUA_wrap.cxx")
+  # list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
 
   swig_add_library(
     ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
@@ -171,14 +200,13 @@ macro(LUA_NJLI_SWIG)
     OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  # target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static ${CMAKE_PROJECT_NAME}-static)
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
 
-  # message(status "AFTER - ${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRECTORES}")
   target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
-    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRECTORES}>
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
 
@@ -190,7 +218,8 @@ macro(LUA_NJLI_SWIG)
     OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  # target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+
   if(APPLE)
     set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES MACOSX_RPATH 1)
     if(IOS OR TVOS)
@@ -213,12 +242,9 @@ macro(LUA_NJLI_SWIG)
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic ${CMAKE_PROJECT_NAME}-static)
 
   target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-njlic
-    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRECTORES}>
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
-
-
-
 
 endmacro()
 
@@ -236,8 +262,8 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
 
       include(${SWIG_USE_FILE})
 
-      LUA_NJLI_SWIG()
-      LUA_BULLET_SWIG()
+      LUA_NJLIC_SWIG()
+      LUA_BULLET3_SWIG()
 
     endif()
   endif()

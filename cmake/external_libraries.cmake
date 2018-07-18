@@ -1,28 +1,121 @@
+OPTION(THIRDPARTY_BULLET3_ENABLED "Use bullet3 library" ON)
+mark_as_advanced(${THIRDPARTY_BULLET3_ENABLED})
 
-OPTION(${CMAKE_PROJECT_NAME}_USE_NANOVG_LIBRARY "Use nanovg library" ON)
-IF(${CMAKE_PROJECT_NAME}_USE_NANOVG_LIBRARY)
-  add_definitions(-DUSE_NANOVG_LIBRARY)
+OPTION(THIRDPARTY_DEBUGDRAW_ENABLED "Use DebugDraw library" ON)
+mark_as_advanced(${THIRDPARTY_DEBUGDRAW_ENABLED})
+
+OPTION(THIRDPARTY_GLM_ENABLED "Use GLM library" ON)
+mark_as_advanced(${THIRDPARTY_GLM_ENABLED})
+
+OPTION(THIRDPARTY_IMGUI_ENABLED "Use ImGui library" ON)
+mark_as_advanced(${THIRDPARTY_IMGUI_ENABLED})
+
+OPTION(THIRDPARTY_IMGUIZMO_ENABLED "Use ImGuizmo library" ON)
+mark_as_advanced(${THIRDPARTY_IMGUIZMO_ENABLED})
+
+OPTION(THIRDPARTY_JSONCPP_ENABLED "Use JsonCPP library" ON)
+mark_as_advanced(${THIRDPARTY_JSONCPP_ENABLED})
+
+OPTION(THIRDPARTY_NANOVG_ENABLED "Use Nanovg library" ON)
+mark_as_advanced(${THIRDPARTY_NANOVG_ENABLED})
+
+list(APPEND CMAKE_MODULE_PATH "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake")
+
+IF(THIRDPARTY_BULLET3_ENABLED)
+  add_definitions(-DUSE_BULLET3_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadBullet3.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${BULLET3_INCLUDE_DIRS}")
+
+  find_package(Bullet3 REQUIRED)
+  list(APPEND EXTRA_LIBS ${BULLET3_TARGETS})
 endif()
 
-set(BULLET_INCLUDE_DIRECTORY "thirdparty/bullet3/include")
-set(DEBUGDRAW_INCLUDE_DIRECTORY "thirdparty/debug-draw/include")
-set(GLM_INCLUDE_DIRECTORY "thirdparty/glm/include")
-set(IMGUI_INCLUDE_DIRECTORY "thirdparty/imgui/include")
-set(IMGUIZMO_INCLUDE_DIRECTORY "thirdparty/imguizmo/include")
-set(JSONCPP_INCLUDE_DIRECTORY "thirdparty/jsoncpp/include")
-set(NANOVG_INCLUDE_DIRECTORY "thirdparty/nanovg/include")
-set(OGG_INCLUDE_DIRECTORY "thirdparty/ogg/include")
-set(VORBIS_INCLUDE_DIRECTORY "thirdparty/vorbis/include")
+IF(THIRDPARTY_DEBUGDRAW_ENABLED)
+  add_definitions(-DUSE_DEBUGDRAW_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadDebug-Draw.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${DEBUG-DRAW_INCLUDE_DIRS}")
 
-DOWNLOAD_LIBRARY_INCLUDE_FILES("bullet3" "https://www.dropbox.com/s/f2zfpkdx2agtk00/libbullet3_includes.tar.gz?dl=0" ${BULLET_INCLUDE_DIRECTORY})
-DOWNLOAD_LIBRARY_INCLUDE_FILES("debug-draw" "https://www.dropbox.com/s/c405ev7l3d0ruvb/libdebug-draw_includes.tar.gz?dl=0" ${DEBUGDRAW_INCLUDE_DIRECTORY})
-DOWNLOAD_LIBRARY_INCLUDE_FILES("glm" "https://www.dropbox.com/s/fferowgwlio96m5/libglm_includes.tar.gz?dl=0" ${GLM_INCLUDE_DIRECTORY})
-DOWNLOAD_LIBRARY_INCLUDE_FILES("imgui" "https://www.dropbox.com/s/xhauwvyy48g5dd7/libimgui_includes.tar.gz?dl=0" ${IMGUI_INCLUDE_DIRECTORY})
-DOWNLOAD_LIBRARY_INCLUDE_FILES("imguizmo" "https://www.dropbox.com/s/vi20so6cykm4zxx/libimguizmo_includes.tar.gz?dl=0" ${IMGUIZMO_INCLUDE_DIRECTORY})
-DOWNLOAD_LIBRARY_INCLUDE_FILES("jsoncpp" "https://www.dropbox.com/s/7tqgfvuygusxlbd/libjsoncpp_includes.tar.gz?dl=0" ${JSONCPP_INCLUDE_DIRECTORY})
-DOWNLOAD_LIBRARY_INCLUDE_FILES("nanovg" "https://www.dropbox.com/s/bikbkbly3in24ng/libnanovg_includes.tar.gz?dl=0" ${NANOVG_INCLUDE_DIRECTORY})
-DOWNLOAD_LIBRARY_INCLUDE_FILES("ogg" "https://www.dropbox.com/s/agc7zmqg9m64x9i/libogg_includes.tar.gz?dl=0" ${OGG_INCLUDE_DIRECTORY})
-DOWNLOAD_LIBRARY_INCLUDE_FILES("vorbis" "https://www.dropbox.com/s/erbp79zazwqsknv/libvorbis_includes.tar.gz?dl=0" ${VORBIS_INCLUDE_DIRECTORY})
+  find_package(Debug-Draw REQUIRED)
+  list(APPEND EXTRA_LIBS ${DEBUG-DRAW_TARGETS})
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${DEBUG-DRAW_INCLUDE_DIR}")
+endif()
+
+IF(THIRDPARTY_GLM_ENABLED)
+  add_definitions(-DUSE_GLM_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadGLM.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${GLM_INCLUDE_DIRS}")
+
+  find_package(GLM REQUIRED)
+  list(APPEND EXTRA_LIBS ${GLM_TARGETS})
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${GLM_INCLUDE_DIR}")
+endif()
+
+IF(THIRDPARTY_IMGUI_ENABLED)
+  add_definitions(-DUSE_IMGUI_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadImgui.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${IMGUI_INCLUDE_DIRS}")
+
+  find_package(ImGui REQUIRED)
+  list(APPEND EXTRA_LIBS ${IMGUI_TARGETS})
+endif()
+
+IF(THIRDPARTY_IMGUIZMO_ENABLED)
+  add_definitions(-DUSE_IMGUIZMO_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadImGuizmo.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${IMGUIZMO_INCLUDE_DIRS}")
+
+  find_package(ImGuizmo REQUIRED)
+  list(APPEND EXTRA_LIBS ${IMGUIZMO_TARGETS})
+endif()
+
+IF(THIRDPARTY_JSONCPP_ENABLED)
+  add_definitions(-DUSE_JSONCPP_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadJsonCPP.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${JSONCPP_INCLUDE_DIRS}")
+
+  find_package(JsonCPP REQUIRED)
+  list(APPEND EXTRA_LIBS ${JSONCPP_TARGETS})
+endif()
+
+IF(THIRDPARTY_NANOVG_ENABLED)
+  add_definitions(-DUSE_NANOVG_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadNanoVG.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${NANOVG_INCLUDE_DIRS}")
+
+  find_package(NanoVG REQUIRED)
+  list(APPEND EXTRA_LIBS ${NANOVG_TARGETS})
+endif()
+
+if( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "fmod" )
+  message(STATUS "need to add fmod lib")
+elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "openal" )
+
+  add_definitions(-DUSE_OGG_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadOGG.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${OGG_INCLUDE_DIRS}")
+
+  find_package(OGG REQUIRED)
+  list(APPEND EXTRA_LIBS ${OGG_TARGETS})
+
+
+  add_definitions(-DUSE_VORBIS_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadVorbis.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${VORBIS_INCLUDE_DIRS}")
+
+  find_package(Vorbis REQUIRED)
+  list(APPEND EXTRA_LIBS ${VORBIS_TARGETS})
+
+
+  add_definitions(-DUSE_OPENAL_LIBRARY)
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadOpenAL.cmake")
+  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${OPENAL_INCLUDE_DIRS}")
+
+  find_package(OpenAL REQUIRED)
+  list(APPEND EXTRA_LIBS ${OPENAL_TARGETS})
+
+elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "sdl" )
+  message(STATUS "need to add sdl lib")
+endif()
 
 if(EMSCRIPTEN)
   include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/emscripten_external_libraries.cmake")
@@ -73,4 +166,3 @@ elseif(ANDROID)
     include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/android_external_libraries.cmake")
   endif()
 endif()
-

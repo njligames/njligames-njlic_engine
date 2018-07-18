@@ -24,9 +24,12 @@
 
 #include "lauxlib.h"
 #include "lua.h"
+
+#if !defined(_WIN32)
 extern "C" {
 #include "lualoadexts.h"
 }
+#endif
 
 #include "AbstractActionable.h"
 #include "AbstractBuilder.h"
@@ -1155,7 +1158,9 @@ namespace njli
 
     luaL_openlibs(m_lua_State);
 
+#if !defined(_WIN32)
     luax_loadexts(m_lua_State);
+#endif
 
     const char *paths[] = {
         "scripts",
