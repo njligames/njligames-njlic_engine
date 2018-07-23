@@ -1,12 +1,12 @@
-set(LIBRARY_NAME "jsoncpp")
+set(LIBRARY_NAME "glew")
 
-set(INCLUDE_URL "https://www.dropbox.com/s/7tqgfvuygusxlbd/libjsoncpp_includes.tar.gz?dl=0")
+set(INCLUDE_URL "https://www.dropbox.com/s/6y4hx7aqfyenlpp/libglew_include.tar.gz?dl=0")
 
 set(EMSCRIPTEN_DEBUG_URL "")
 set(EMSCRIPTEN_RELEASE_URL "")
 
-set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/zllvsm3esdte1ej/libjsoncpp_windows32_Debug.tar.gz?dl=0")
-set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/bje4gfkt1av5lyc/libjsoncpp_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/cn284l3y9q9ddde/libglew_windows32_Debug.tar.gz?dl=0")
+set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/a9gj19jqrjc488p/libglew_windows32_Release.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "")
 set(WINDOWS64_RELEASE_URL "")
