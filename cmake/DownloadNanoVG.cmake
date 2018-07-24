@@ -20,8 +20,8 @@ set(APPLETV_RELEASE_URL "")
 set(MACOS_DEBUG_URL "")
 set(MACOS_RELEASE_URL "")
 
-set(LINUX_DEBUG_URL "")
-set(LINUX_RELEASE_URL "")
+set(LINUX_DEBUG_URL "https://www.dropbox.com/s/gcpxqr09rb736yd/libnanovg_linux_Debug.tar.gz?dl=0")
+set(LINUX_RELEASE_URL "https://www.dropbox.com/s/uopujyokr2ys50m/libnanovg_linux_Release.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")
