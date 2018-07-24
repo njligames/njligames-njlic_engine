@@ -5,7 +5,7 @@ set(INCLUDE_URL "https://www.dropbox.com/s/vi20so6cykm4zxx/libimguizmo_includes.
 set(EMSCRIPTEN_DEBUG_URL "")
 set(EMSCRIPTEN_RELEASE_URL "")
 
-set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/l1y75af78kafr1w/libimguizmo_macos_Debug.tar.gz?dl=0")
+set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/6cl359lyi6a2g08/libImGuizmo_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/tbkqhseagh0yd7r/libImGuizmo_windows32_Release.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "")

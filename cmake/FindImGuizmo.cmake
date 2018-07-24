@@ -1,5 +1,5 @@
 
-set(LIBRARY_NAME "imguizmo")
+set(LIBRARY_NAME "ImGuizmo")
 set(SUB_LIBRARY_NAMES
   "ImGuizmo"
   )
