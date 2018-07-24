@@ -52,7 +52,7 @@ endif()
 
 IF(THIRDPARTY_IMGUI_ENABLED)
   add_definitions(-DUSE_IMGUI_LIBRARY)
-  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadImgui.cmake")
+  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadImGui.cmake")
   list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${IMGUI_INCLUDE_DIRS}")
 
   find_package(ImGui REQUIRED)
