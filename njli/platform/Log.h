@@ -146,7 +146,7 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
 #define SDL_assertPrint(condition, fmt, ...)                               \
   do                                                                           \
     {                                                                          \
-      SDL_assertCheck((condition), fmt, ##args);                               \
+      SDL_assertCheck((condition), fmt, __VA_ARGS__);                               \
       SDL_assert((condition));                                                 \
     }                                                                          \
   while (0)
