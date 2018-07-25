@@ -165,6 +165,7 @@ namespace njli
             SDL_Log("SDL EVENT: Window %d lost keyboard focus",
                     event->window.windowID);
             break;
+#if !defined(__LINUX__)
           case SDL_WINDOWEVENT_CLOSE:
             SDL_Log("SDL EVENT: Window %d closed", event->window.windowID);
             break;
@@ -174,6 +175,7 @@ namespace njli
           case SDL_WINDOWEVENT_HIT_TEST:
             SDL_Log("SDL EVENT: Window %d hit test", event->window.windowID);
             break;
+#endif
           default:
             SDL_Log("SDL EVENT: Window %d got unknown event %d",
                     event->window.windowID, event->window.event);
@@ -695,6 +697,7 @@ namespace njli
                 case SDLK_o:
                   if (withControl)
                     {
+#if !defined(__LINUX__)
                       /* Ctrl-O (or Ctrl-Shift-O) changes window opacity. */
                       SDL_Window *window =
                           SDL_GetWindowFromID(event.key.windowID);
@@ -714,6 +717,7 @@ namespace njli
                               SDL_SetWindowOpacity(window, opacity);
                             }
                         }
+#endif
                     }
                   break;
 
@@ -997,6 +1001,7 @@ namespace njli
               SDL_free(dropped_filedir);
             }
             break;
+#if !defined(__LINUX__)
           case SDL_DROPTEXT:
             {
               char *dropped_filedir = event.drop.file;
@@ -1013,6 +1018,7 @@ namespace njli
             {
               printf("Dropped file begin: %u\n", event.drop.windowID);
             }
+#endif
             break;
           default:
             break;

@@ -169,6 +169,7 @@ namespace njli
 
   std::string JsonJLI::parse(const char *jsonMessage, bool compact)
   {
+#if defined(USE_JSONCPP_LIBRARY)
     Json::Value parsedFromString;
     Json::Reader reader;
     if (reader.parse(jsonMessage, parsedFromString))
@@ -181,39 +182,57 @@ namespace njli
         Json::StyledWriter styledWriter;
         return styledWriter.write(parsedFromString);
       }
+#endif
     return "";
   }
 
   bool JsonJLI::parseJson(const char *jsonMessage)
   {
+#if defined(USE_JSONCPP_LIBRARY)
     Json::Reader reader;
     return reader.parse(jsonMessage, m_value);
+#else
+    return false;
+#endif
   }
 
   void JsonJLI::addValue(const std::string &key, const std::string &value)
   {
+#if defined(USE_JSONCPP_LIBRARY)
     m_value[key.c_str()] = value;
+#endif
   }
 
   void JsonJLI::addValue(const std::string &key, const JsonJLI &value)
   {
+#if defined(USE_JSONCPP_LIBRARY)
     m_value[key.c_str()] = value.m_value;
+#endif
   }
 
   std::string JsonJLI::getValue(const std::string &key)
   {
+#if defined(USE_JSONCPP_LIBRARY)
     Json::Value v = m_value.get(key.c_str(), "");
     if (v.isString())
       {
         return v.asString();
       }
+#endif
     return "";
   }
 
   void JsonJLI::append(const std::string &value)
   {
+#if defined(USE_JSONCPP_LIBRARY)
     m_value.append(value.c_str());
+#endif
   }
 
-  void JsonJLI::append(const JsonJLI &value) { m_value.append(value.m_value); }
+  void JsonJLI::append(const JsonJLI &value) 
+  { 
+#if defined(USE_JSONCPP_LIBRARY)
+    m_value.append(value.m_value); 
+#endif
+  }
 } // namespace njli
