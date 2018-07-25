@@ -107,13 +107,12 @@ foreach(LIB ${SUB_LIBRARY_NAMES})
 
     set(${LIB}_INCLUDE_DIRS ${${LIBRARY_NAME_UPPER}_INCLUDE_DIR})
 
-    # if(NOT ${LIB}_LIBRARIES)
-    #   set(${LIB}_LIBRARIES ${${LIB}_LIBRARY})
-    # endif()
-    list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
+    if(EXISTS ${${LIB}_LIBRARY})
+      list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
+    endif()
 
     if (NOT TARGET ${LIB})
-      add_library(${LIB} UNKNOWN IMPORTED)
+      add_library(${LIB} STATIC IMPORTED)
       set_target_properties(${LIB} PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}")
 
