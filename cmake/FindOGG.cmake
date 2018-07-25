@@ -1,7 +1,7 @@
 
 set(LIBRARY_NAME "ogg")
 set(SUB_LIBRARY_NAMES
-  "ogg-static"
+  "ogg"
   )
 
 set(INCLUDE_FILE "ogg/ogg.h")
