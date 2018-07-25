@@ -2,6 +2,7 @@
 #include "Macros.h"
 
 #include "SDL_assert.h"
+
 #include "SDL_config.h"
 #include "SDL_log.h"
 
@@ -68,16 +69,16 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
   }
 #endif
 
-//#if !(defined(NDEBUG))
-//#define DEBUG_ASSERT(cond) \
-//    do {                   \
-//        SDL_assert((cond));\
-//    } while (0)
-//#else
-//#define DEBUG_ASSERT(cond) \
-//    {                      \
-//    }
-//#endif
+#if !(defined(NDEBUG))
+#define DEBUG_ASSERT(cond) \
+    do {                   \
+        SDL_assert((cond)); \
+    } while (0)
+#else
+#define DEBUG_ASSERT(cond) \
+    {                      \
+    }
+#endif
 
 #define DEBUG_LOG_PRINT_V(tag, fmt, ...)                                       \
   do                                                                           \
@@ -147,7 +148,7 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
   do                                                                           \
     {                                                                          \
       SDL_assertCheck((condition), fmt, __VA_ARGS__);                               \
-      SDL_assert((condition));                                                 \
+      DEBUG_ASSERT((condition));                                                 \
     }                                                                          \
   while (0)
 #else

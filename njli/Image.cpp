@@ -10,7 +10,9 @@
 #include "ImageBuilder.h"
 #include "JLIFactoryTypes.h"
 #include "World.h"
+#if defined(USE_NANOVG_LIBRARY)
 #include "stb_image.h"
+#endif
 
 #include "WorldResourceLoader.h"
 

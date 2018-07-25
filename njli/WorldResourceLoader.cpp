@@ -28,7 +28,9 @@
 
 #include "File.h"
 
+#if defined(USE_NANOVG_LIBRARY)
 #include "stb_image.h"
+#endif
 
 #include "Log.h"
 
@@ -344,8 +346,12 @@ namespace njli
       {
         if (m_buffer)
           free(m_buffer);
+#if defined(USE_NANOVG_LIBRARY)
         m_buffer = (void *)stbi_load(ASSET_PATH(filePath), &m_width, &m_height,
                                      &m_components, 0);
+#else
+        m_buffer = 0;
+#endif
         SDL_assertPrint(m_buffer, "Failed to load file (%s). Reason: %s",
                         ASSET_PATH(filePath), stbi_failure_reason());
 

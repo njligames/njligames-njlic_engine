@@ -16,8 +16,28 @@ mark_as_advanced(${THIRDPARTY_IMGUIZMO_ENABLED})
 OPTION(THIRDPARTY_JSONCPP_ENABLED "Use JsonCPP library" OFF)
 mark_as_advanced(${THIRDPARTY_JSONCPP_ENABLED})
 
-OPTION(THIRDPARTY_NANOVG_ENABLED "Use Nanovg library" ON)
+OPTION(THIRDPARTY_NANOVG_ENABLED "Use Nanovg library" OFF)
 mark_as_advanced(${THIRDPARTY_NANOVG_ENABLED})
+
+set(${CMAKE_PROJECT_NAME}_SOUND_PLATFORM "openal" CACHE STRING "The rendering platform to use")
+set(${CMAKE_PROJECT_NAME}_SOUND_PLATFORM_Values "openal;fmod;sdl")
+set_property(CACHE ${CMAKE_PROJECT_NAME}_SOUND_PLATFORM PROPERTY STRINGS ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM_Values})
+
+set(FMOD OFF)
+set(OPENAL OFF)
+set(SDL_SOUND OFF)
+
+IF( "${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM}" STREQUAL "fmod" )
+  set(FMOD ON)
+ELSEIF( "${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM}" STREQUAL "openal" )
+  set(OPENAL ON)
+ELSEIF( "${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM}" STREQUAL "sdl" )
+  set(SDL_SOUND ON)
+ENDIF()
+
+# OPTION(__FMOD__ "fmod include" ${FMOD})
+# OPTION(__OPENAL__ "OpenAL include" ${OPENAL})
+# OPTION(__SDL__ "SDL2 sound include" ${SDL_SOUND})
 
 list(APPEND CMAKE_MODULE_PATH "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake")
 
@@ -86,9 +106,10 @@ IF(THIRDPARTY_NANOVG_ENABLED)
   list(APPEND EXTRA_LIBS ${NANOVG_TARGETS})
 endif()
 
-if( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "fmod" )
+if( FMOD )
   message(STATUS "need to add fmod lib")
-elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "openal" )
+  add_definitions(-D__FMOD__)
+elseif( OPENAL )
 
   add_definitions(-DUSE_OGG_LIBRARY)
   include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadOGG.cmake")
@@ -103,31 +124,17 @@ elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "openal" )
   find_package(Vorbis REQUIRED)
   list(APPEND EXTRA_LIBS ${VORBIS_TARGETS})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   if(EMSCRIPTEN)
     MESSAGE(STATUS "No need to include openal")
   elseif(WINDOWS)
     if(ARCH_64)
-      add_definitions(-DUSE_OPENAL_LIBRARY)
+      add_definitions(-D__OPENAL__)
       include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadOpenAL.cmake")
       list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${OPENAL_INCLUDE_DIRS}")
       find_package(OpenAL REQUIRED)
       list(APPEND EXTRA_LIBS ${OPENAL_TARGETS})
     else()
-      add_definitions(-DUSE_OPENAL_LIBRARY)
+      add_definitions(-D__OPENAL__)
       include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadOpenAL.cmake")
       list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${OPENAL_INCLUDE_DIRS}")
       find_package(OpenAL_NJLIC REQUIRED)
@@ -151,7 +158,7 @@ elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "openal" )
     endif()
   elseif(UNIX AND NOT APPLE AND NOT ANDROID)
     if(LINUX)
-      add_definitions(-DUSE_OPENAL_LIBRARY)
+      add_definitions(-D__OPENAL__)
       find_package(OpenAL REQUIRED)
       if(OPENAL_FOUND)
         MESSAGE(STATUS "OPENAL_INCLUDE_DIR ${OPENAL_INCLUDE_DIR}")
@@ -170,8 +177,9 @@ elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "openal" )
     endif()
   endif()
 
-elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "sdl" )
+elseif( SDL_SOUND )
   message(STATUS "need to add sdl lib")
+  add_definitions(-D__SDL__)
 endif()
 
 if(EMSCRIPTEN)

@@ -127,11 +127,19 @@ namespace njli
     glDeleteProgram(linePointProgram);
     glDeleteProgram(textProgram);
 
+#if defined(__APPLE__)
     glDeleteVertexArraysAPPLE(1, &linePointVAO);
+#else
+    glDeleteVertexArrays(1, &linePointVAO);
+#endif
 
     glDeleteBuffers(1, &linePointVBO);
 
+#if defined(__APPLE__)
     glDeleteVertexArraysAPPLE(1, &textVAO);
+#else
+    glDeleteVertexArrays(1, &textVAO);
+#endif
 
     glDeleteBuffers(1, &textVBO);
   }
@@ -161,7 +169,12 @@ namespace njli
     SDL_assert(points != nullptr);
     SDL_assert(count > 0 && count <= DEBUG_DRAW_VERTEX_BUFFER_SIZE);
 
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(linePointVAO);
+#else
+    glBindVertexArray(linePointVAO);
+#endif
+
     glUseProgram(linePointProgram);
 
     glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
@@ -191,7 +204,11 @@ namespace njli
 
     glUseProgram(0);
 
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(0);
+#else
+    glBindVertexArray(0);
+#endif
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
   }
@@ -202,7 +219,11 @@ namespace njli
     assert(lines != nullptr);
     assert(count > 0 && count <= DEBUG_DRAW_VERTEX_BUFFER_SIZE);
 
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(linePointVAO);
+#else
+    glBindVertexArray(linePointVAO);
+#endif
 
     glUseProgram(linePointProgram);
 
@@ -233,7 +254,11 @@ namespace njli
 
     glUseProgram(0);
 
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(0);
+#else
+    glBindVertexArray(0);
+#endif
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
   }
@@ -640,11 +665,19 @@ namespace njli
     // Lines/points vertex buffer:
     //
     {
+#if defined(__APPLE__)
       glGenVertexArraysAPPLE(1, &linePointVAO);
+#else
+      glGenVertexArrays(1, &linePointVAO);
+#endif
 
       glGenBuffers(1, &linePointVBO);
 
+#if defined(__APPLE__)
       glBindVertexArrayAPPLE(linePointVAO);
+#else
+      glBindVertexArray(linePointVAO);
+#endif
 
       glBindBuffer(GL_ARRAY_BUFFER, linePointVBO);
 
@@ -677,7 +710,11 @@ namespace njli
           /* stride    = */ sizeof(dd::DrawVertex),
           /* offset    = */ reinterpret_cast<void *>(offset));
 
+#if defined(__APPLE__)
       glBindVertexArrayAPPLE(0);
+#else
+      glBindVertexArray(0);
+#endif
 
       glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -686,11 +723,19 @@ namespace njli
     // Text rendering vertex buffer:
     //
     {
+#if defined(__APPLE__)
       glGenVertexArraysAPPLE(1, &textVAO);
+#else
+      glGenVertexArrays(1, &textVAO);
+#endif
 
       glGenBuffers(1, &textVBO);
 
+#if defined(__APPLE__)
       glBindVertexArrayAPPLE(textVAO);
+#else
+      glBindVertexArray(textVAO);
+#endif
 
       glBindBuffer(GL_ARRAY_BUFFER, textVBO);
 
@@ -732,7 +777,11 @@ namespace njli
           /* stride    = */ sizeof(dd::DrawVertex),
           /* offset    = */ reinterpret_cast<void *>(offset));
 
+#if defined(__APPLE__)
       glBindVertexArrayAPPLE(0);
+#else
+      glBindVertexArray(0);
+#endif
 
       glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -1403,7 +1452,11 @@ namespace njli
     glUniform1i(g_AttribLocationTex, 0);
     glUniformMatrix4fv(g_AttribLocationProjMtx, 1, GL_FALSE,
                        &ortho_projection[0][0]);
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(g_VaoHandle);
+#else
+    glBindVertexArray(g_VaoHandle);
+#endif
 
     for (int n = 0; n < draw_data->CmdListsCount; n++)
       {
@@ -1468,7 +1521,11 @@ namespace njli
       }
 
     // Restore modified state
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(0);
+#else
+    glBindVertexArray(0);
+#endif
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
@@ -1577,8 +1634,13 @@ namespace njli
     glGenBuffers(1, &g_VboHandle);
     glGenBuffers(1, &g_ElementsHandle);
 
+#if defined(__APPLE__)
     glGenVertexArraysAPPLE(1, &g_VaoHandle);
     glBindVertexArrayAPPLE(g_VaoHandle);
+#else
+    glGenVertexArrays(1, &g_VaoHandle);
+    glBindVertexArray(g_VaoHandle);
+#endif
     glBindBuffer(GL_ARRAY_BUFFER, g_VboHandle);
     glEnableVertexAttribArray(g_AttribLocationPosition);
     glEnableVertexAttribArray(g_AttribLocationUV);
@@ -1595,7 +1657,11 @@ namespace njli
                           sizeof(ImDrawVert),
                           (GLvoid *)OFFSETOF(ImDrawVert, col));
 #undef OFFSETOF
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(0);
+#else
+    glBindVertexArray(0);
+#endif
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     ImGui_ImplIOS_CreateFontsTexture();

@@ -100,6 +100,10 @@ macro(LUA_BULLET3_SWIG)
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
 
+  target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
+    )
   if(NOT LINUX)
     swig_add_library(
       ${CMAKE_PROJECT_NAME}-lua-swig-bullet3
