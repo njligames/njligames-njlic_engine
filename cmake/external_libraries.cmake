@@ -106,12 +106,70 @@ elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "openal" )
   list(APPEND EXTRA_LIBS ${VORBIS_TARGETS})
 
 
-  add_definitions(-DUSE_OPENAL_LIBRARY)
-  include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadOpenAL.cmake")
-  list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${OPENAL_INCLUDE_DIRS}")
 
-  find_package(OpenAL REQUIRED)
-  list(APPEND EXTRA_LIBS ${OPENAL_TARGETS})
+
+
+
+
+
+
+
+
+
+
+
+
+  if(EMSCRIPTEN)
+    MESSAGE(STATUS "No need to include openal")
+  elseif(WINDOWS)
+    if(ARCH_64)
+      add_definitions(-DUSE_OPENAL_LIBRARY)
+      include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadOpenAL.cmake")
+      list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${OPENAL_INCLUDE_DIRS}")
+      find_package(OpenAL REQUIRED)
+      list(APPEND EXTRA_LIBS ${OPENAL_TARGETS})
+    else()
+      add_definitions(-DUSE_OPENAL_LIBRARY)
+      include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadOpenAL.cmake")
+      list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${OPENAL_INCLUDE_DIRS}")
+      find_package(OpenAL REQUIRED)
+      list(APPEND EXTRA_LIBS ${OPENAL_TARGETS})
+    endif()
+  elseif(APPLE)
+    if(IOS)
+      if(VR)
+        MESSAGE(STATUS "No need to include openal")
+      else()
+        MESSAGE(STATUS "No need to include openal")
+      endif()
+    elseif(TVOS)
+      MESSAGE(STATUS "No need to include openal")
+    else()
+      if(OCULUS)
+        MESSAGE(STATUS "No need to include openal")
+      else()
+        MESSAGE(STATUS "No need to include openal")
+      endif()
+    endif()
+  elseif(UNIX AND NOT APPLE AND NOT ANDROID)
+    if(LINUX)
+      find_package(OpenAL REQUIRED)
+      if(OPENAL_FOUND)
+        MESSAGE(STATUS "OPENAL_INCLUDE_DIR ${OPENAL_INCLUDE_DIR}")
+        MESSAGE(STATUS "OPENAL_LIBRARIES ${OPENAL_LIBRARIES}")
+        list(APPEND EXTRA_LIBS "${OPENAL_LIBRARIES}")
+        list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRECTORES "${OPENAL_INCLUDE_DIR}")
+      endif()
+    elseif(UNIX)
+      MESSAGE(STATUS "No need to include openal")
+    endif()
+  elseif(ANDROID)
+    if(VR)
+      MESSAGE(STATUS "No need to include openal")
+    else()
+      MESSAGE(STATUS "No need to include openal")
+    endif()
+  endif()
 
 elseif( ${${CMAKE_PROJECT_NAME}_SOUND_PLATFORM} STREQUAL "sdl" )
   message(STATUS "need to add sdl lib")
