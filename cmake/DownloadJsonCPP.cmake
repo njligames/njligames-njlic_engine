@@ -2,8 +2,8 @@ set(LIBRARY_NAME "jsoncpp")
 
 set(INCLUDE_URL "https://www.dropbox.com/s/7tqgfvuygusxlbd/libjsoncpp_includes.tar.gz?dl=0")
 
-set(EMSCRIPTEN_DEBUG_URL "")
-set(EMSCRIPTEN_RELEASE_URL "")
+set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/63xv2sdoq6nmyk1/libjsoncpp_emscripten_Debug.tar.gz?dl=0")
+set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/tvmsolbi44kq4n0/libjsoncpp_emscripten_Release.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/zllvsm3esdte1ej/libjsoncpp_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/bje4gfkt1av5lyc/libjsoncpp_windows32_Release.tar.gz?dl=0")

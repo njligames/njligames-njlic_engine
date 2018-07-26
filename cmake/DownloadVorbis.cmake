@@ -2,8 +2,8 @@ set(LIBRARY_NAME "vorbis")
 
 set(INCLUDE_URL "https://www.dropbox.com/s/erbp79zazwqsknv/libvorbis_includes.tar.gz?dl=0")
 
-set(EMSCRIPTEN_DEBUG_URL "")
-set(EMSCRIPTEN_RELEASE_URL "")
+set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/0ig52kw8yq7p6m0/libvorbis_emscripten_Debug.tar.gz?dl=0")
+set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/04dzeh85fb63fx4/libvorbis_emscripten_Release.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/d4ksrmreonrwei9/libvorbis_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/sxh1v9z8sbcd15o/libvorbis_windows32_Release.tar.gz?dl=0")

@@ -2,8 +2,8 @@ set(LIBRARY_NAME "imgui")
 
 set(INCLUDE_URL "https://www.dropbox.com/s/xhauwvyy48g5dd7/libimgui_includes.tar.gz?dl=0")
 
-set(EMSCRIPTEN_DEBUG_URL "")
-set(EMSCRIPTEN_RELEASE_URL "")
+set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/ng1y3czu53zb638/libimgui_emscripten_Debug.tar.gz?dl=0")
+set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/8sk81o71uqtg625/libimgui_emscripten_Release.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/7cwy84q8yod6trr/libimgui_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/7tveus8vnqf3hbd/libimgui_windows32_Release.tar.gz?dl=0")
