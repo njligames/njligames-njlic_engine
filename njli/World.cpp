@@ -1402,7 +1402,7 @@ namespace njli
                     if (!wrote)
                       SDL_LogVerbose(
                           SDL_LOG_CATEGORY_TEST,
-                          "Couldn't write file %s - (%d bytes of %u)",
+                          "Couldn't write file %s - (%d bytes of %lu)",
                           filePath.c_str(), numwrote, source.length());
                     else
                       SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s",

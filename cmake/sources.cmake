@@ -207,10 +207,10 @@ ELSEIF( "${${CMAKE_PROJECT_NAME}_GRAPHICS_PLATFORM}" STREQUAL "opengl_3" )
   add_definitions(-D__GL_3__)
 ENDIF()
 
-# OPTION(__GL_ES2__ "GLES2 include" ${GL_ES2})
-# OPTION(__GL_ES3__ "GLES3 include" ${GL_ES3})
-# OPTION(__GL_2__ "GL2 include" ${GL_2})
-# OPTION(__GL_3__ "GL3 include" ${GL_3})
+OPTION(__GL_ES2__ "GLES2 include" ${GL_ES2})
+OPTION(__GL_ES3__ "GLES3 include" ${GL_ES3})
+OPTION(__GL_2__ "GL2 include" ${GL_2})
+OPTION(__GL_3__ "GL3 include" ${GL_3})
 
 if(NOT THIRDPARTY_NANOVG_ENABLED)
   file(GLOB_RECURSE GL_NANOVG_INCLUDE_FILES

@@ -111,24 +111,20 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
   do                                                                           \
     {                                                                          \
       if (LOGGING_ON)                                                          \
-        _debug_log_e(tag, "%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__,    \
-                     __VA_ARGS__);                                             \
+        _debug_log_e(tag, "%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__, __VA_ARGS__);                                             \
     }                                                                          \
   while (0)
 
 #if !(defined(NDEBUG))
 #define SDL_assertCheck(condition, fmt, ...)                                   \
-  {                                                                            \
-  }
-//#define SDL_assertCheck(condition, fmt, ...)                               \
+{}
+
+//#define SDL_assertCheck(condition, fmt, ...)                                   \
 //  do                                                                           \
 //    {                                                                          \
-//      char string[3584];                                                       \
-//      snprintf(string, (3584 - 1), fmt, ##args);                               \
-//      if ((condition) == 0)                                          \
+//      if ((condition) == 0)                                                    \
 //        {                                                                      \
-//          SDL_LogError(SDL_LOG_CATEGORY_TEST, "Assert '%s': %s", string,       \
-//                       "Failed");                                              \
+//          SDL_LogError(SDL_LOG_CATEGORY_TEST, fmt, ##__VA_ARGS__); \
 //        }                                                                      \
 //      else                                                                     \
 //        {                                                                      \

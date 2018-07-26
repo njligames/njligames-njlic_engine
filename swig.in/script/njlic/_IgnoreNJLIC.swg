@@ -32,8 +32,8 @@
 %ignore SDL_IsShapedWindow;
 %ignore SDL_CreateShapedWindow;
 
-%ignore _debug_log_v
-%ignore _debug_log_d
-%ignore _debug_log_w
-%ignore _debug_log_e
-%ignore _debug_log_stderr
+%ignore _debug_log_v;
+%ignore _debug_log_d;
+%ignore _debug_log_w;
+%ignore _debug_log_e;
+%ignore _debug_log_stderr;
