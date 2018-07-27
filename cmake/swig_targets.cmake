@@ -76,8 +76,6 @@ macro(LUA_BULLET3_SWIG)
   # endforeach()
 
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
-  set_source_files_properties("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/bullet3LUA_wrap.cxx" PROPERTIES GENERATED TRUE )
-  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "bullet3LUA_wrap.cxx")
 
   swig_add_library(
     ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static
@@ -194,8 +192,6 @@ macro(LUA_NJLIC_SWIG)
     ${BULLET3_INCLUDE_DIRS}
     )
 
-  set_source_files_properties( "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlicLUA_wrap.cxx" PROPERTIES GENERATED TRUE )
-  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/njlicLUA_wrap.cxx")
   # list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
 
   swig_add_library(
@@ -273,6 +269,12 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
       LUA_NJLIC_SWIG()
       LUA_BULLET3_SWIG()
 
+      file(GLOB_RECURSE LUA_SWIG_GENERATED_FILES
+        "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/*.c*"
+        )
+
+      set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${LUA_SWIG_GENERATED_FILES})
+      set_source_files_properties( ${LUA_SWIG_GENERATED_FILES} PROPERTIES GENERATED TRUE )
     endif()
   endif()
 endif()
