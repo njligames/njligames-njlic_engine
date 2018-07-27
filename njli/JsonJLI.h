@@ -13,7 +13,9 @@
 #include "AbstractFactoryObject.h"
 #include "lua.hpp"
 
+#if defined(USE_JSONCPP_LIBRARY)
 #include "json/json.h"
+#endif
 
 namespace njli
 {
@@ -160,7 +162,9 @@ namespace njli
 
   protected:
   private:
+#if defined(USE_JSONCPP_LIBRARY)
     Json::Value m_value;
+#endif
   };
 }
 

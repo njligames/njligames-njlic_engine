@@ -1,6 +1,6 @@
 //Lua interface file
 
-%module bullet
+%module bullet3
 
 //MARK: Tested Ignore, successfully
 %include "_IgnoreBullet.swg"

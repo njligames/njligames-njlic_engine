@@ -99,7 +99,7 @@ namespace njli
      @param .0f <#.0f description#>
      @param durationMillis <#durationMillis description#>
      */
-    void screenText(ddStrParam str, const btVector3 &pos,
+    void screenText(const std::string &str, const btVector3 &pos,
                     const btVector3 &color, float scaling = 1.0f,
                     int durationMillis = 0);
 
@@ -116,7 +116,7 @@ namespace njli
      @param .0f <#.0f description#>
      @param durationMillis <#durationMillis description#>
      */
-    void projectedText(ddStrParam str, const btVector3 &pos,
+    void projectedText(const std::string &str, const btVector3 &pos,
                        const btVector3 &color, float scaling = 1.0f,
                        int durationMillis = 0);
 

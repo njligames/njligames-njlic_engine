@@ -45,7 +45,10 @@ namespace njli
         njliSleep(1);
       }
 
+#if !defined (_WIN32)
     pthread_join(m_thread, NULL);
+#endif
+    
   }
 
   Thread &Thread::operator=(const Thread &rhs)
@@ -209,23 +212,25 @@ namespace njli
 
   void Thread::run()
   {
+#if !defined (_WIN32)
 #ifndef __EMSCRIPTEN__
-    struct sched_param param;
+      struct sched_param param;
 
-    param.sched_priority = m_priority;
-    pthread_setschedparam(m_thread, SCHED_RR, &param);
+      param.sched_priority = m_priority;
+      pthread_setschedparam(m_thread, SCHED_RR, &param);
 
-    enablePause();
+      enablePause();
 
-    while (m_state)
+      while (m_state)
       {
-        if (m_state == SIO2_PLAY)
+          if (m_state == SIO2_PLAY)
           {
-            m_JLIthreadcallback(m_userdata);
+              m_JLIthreadcallback(m_userdata);
           }
 
-        njliSleep(1);
+          njliSleep(1);
       }
+#endif
 #endif
   }
 
@@ -246,7 +251,9 @@ namespace njli
 
     wrap *w = new wrap(Thread(*this));
 
+#if !defined (_WIN32)
     w->ins.m_thread_hdl = pthread_create(&w->ins.m_thread, NULL, call_func, w);
+#endif
 
     while (w->ins.m_state != SIO2_PAUSE)
       {

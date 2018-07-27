@@ -2,8 +2,8 @@
 #include "fmod.hpp"
 #include "fmod_errors.h"
 #elif defined(__OPENAL__)
-#include <AL/al.h>
-#include <AL/alc.h>
+#include "AL/al.h"
+#include "AL/alc.h"
 #elif defined(__SDL__)
 #include "SDL_audio.h"
 #else

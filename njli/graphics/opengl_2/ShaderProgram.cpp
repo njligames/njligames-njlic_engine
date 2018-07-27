@@ -96,23 +96,26 @@ static const char *getGLSLVarTypeName(njliGLSLVarType var)
 ////    }
 //}
 
+static GLchar *s_shader_log_buffer = NULL;
 static void log_shader_info_log(GLuint shader_object_id)
 {
   //    if (LOGGING_ON) {
   SDL_assertPrint(glIsShader(shader_object_id), "%s:%d", "Is a shader",
                   shader_object_id);
+  if (s_shader_log_buffer == NULL)
+      s_shader_log_buffer = new GLchar[1024];
 
   GLint log_length = 0;
   glGetShaderiv(shader_object_id, GL_INFO_LOG_LENGTH, &log_length);
   DEBUG_GL_ERROR_WRITE("glGetShaderiv");
   if (log_length > 0)
     {
-      GLchar log_buffer[log_length];
-      glGetShaderInfoLog(shader_object_id, log_length, NULL, log_buffer);
+      //GLchar log_buffer[log_length];
+      glGetShaderInfoLog(shader_object_id, log_length, NULL, s_shader_log_buffer);
       DEBUG_GL_ERROR_WRITE("glGetShaderInfoLog");
 
       SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "The glGetShaderiv log = `%s`",
-                  log_buffer);
+          s_shader_log_buffer);
     }
   //    }
 }
@@ -128,11 +131,11 @@ static void log_program_info_log(GLuint program_object_id)
   DEBUG_GL_ERROR_WRITE("glGetProgramiv");
   if (log_length > 1)
     {
-      GLchar log_buffer[log_length];
-      glGetProgramInfoLog(program_object_id, log_length, NULL, log_buffer);
+      //GLchar log_buffer[log_length];
+      glGetProgramInfoLog(program_object_id, log_length, NULL, s_shader_log_buffer);
       DEBUG_GL_ERROR_WRITE("glGetProgramInfoLog");
       SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "The glGetProgramiv log = `%s`",
-                  log_buffer);
+          s_shader_log_buffer);
     }
   //    }
 }

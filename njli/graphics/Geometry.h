@@ -505,8 +505,8 @@ namespace njli
             hidden(0.0f)
       {
       }
-      TexturedColoredVertex(const btVector3 vertex, const btVector4 color,
-                            const btVector2 texture, const f32 opacity,
+      TexturedColoredVertex(const btVector3 &vertex, const btVector4 &color,
+                            const btVector2 &texture, const f32 opacity,
                             const f32 hidden)
           : vertex(vertex), color(color), texture(texture), opacity(opacity),
             hidden(hidden)

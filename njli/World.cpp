@@ -28,7 +28,11 @@
 
 #include "SDL_log.h"
 #include "btQuickprof.h"
+
+#if !defined (_WIN32)
 #include "unistd.h"
+#endif
+
 #include <signal.h>
 #ifdef USE_NANOVG_LIBRARY
 #include "WorldHUD.h"
@@ -1335,6 +1339,9 @@ namespace njli
   void World::processMessage(const std::string &socketMessage,
                              const std::string delimeter)
   {
+     
+#if !defined(_WIN32)
+
     TiXmlDocument document;
     document.Parse(socketMessage.c_str());
 
@@ -1395,7 +1402,7 @@ namespace njli
                     if (!wrote)
                       SDL_LogVerbose(
                           SDL_LOG_CATEGORY_TEST,
-                          "Couldn't write file %s - (%d bytes of %u)",
+                          "Couldn't write file %s - (%d bytes of %lu)",
                           filePath.c_str(), numwrote, source.length());
                     else
                       SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s",
@@ -1441,6 +1448,7 @@ namespace njli
             //                    e->GetText());
           }
       }
+#endif
   }
 
   void World::handleSocketMessage()

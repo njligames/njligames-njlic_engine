@@ -10,6 +10,7 @@
 #include "JLIFactoryTypes.h"
 
 #include <errno.h>
+#if !defined(_WIN32)
 #include <unistd.h>
 
 //#ifdef __ANDROID__
@@ -20,6 +21,7 @@
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <netinet/tcp.h>
+#endif
 
 #include "Log.h"
 #define TAG "WORLDSOCKET.CPP"
@@ -34,10 +36,17 @@
 namespace njli
 {
   WorldSocket::WorldSocket()
-      : m_sck(-1), m_sck_addr(), m_buffer(new s8[JLI_SOCKET_BUFFER_SIZE]),
-        m_isConnected(false), m_SocketData("")
+      : m_sck(-1), 
+#if !defined(_WIN32)
+      m_sck_addr(), 
+#endif
+      m_buffer(new s8[JLI_SOCKET_BUFFER_SIZE]),
+      m_isConnected(false), 
+      m_SocketData("")
   {
+#if !defined(_WIN32)
     m_sck_addr.sin_family = AF_INET;
+#endif
 
     // signal(SIGPIPE, SIG_IGN);
   }
@@ -63,6 +72,7 @@ namespace njli
   {
     disconnectJLI();
 
+#if !defined(_WIN32)
     int res;
     struct sockaddr_in addr;
     long arg;
@@ -186,6 +196,7 @@ namespace njli
     // I hope that is all
 
     m_isConnected = true;
+#endif
     return isConnected();
 
     //        if(m_sck != -1)
@@ -213,6 +224,7 @@ namespace njli
     //        }
     //
     //        return isConnected();
+
   }
 
   //#include <algorithm>
@@ -253,6 +265,7 @@ namespace njli
 
   void WorldSocket::parseMessage(const std::string &delimeter)
   {
+#if !defined(_WIN32)
     if (isConnected())
       {
         s64 len = 0;
@@ -291,7 +304,9 @@ namespace njli
         //            if(len!=-1)
         //                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Received a
         //                message of %lld length", len);
+
       }
+#endif
   }
 
   bool WorldSocket::hasMessage() const { return (m_MessageQueue.size() > 0); }
@@ -309,7 +324,7 @@ namespace njli
 
   void WorldSocket::sendMessage(const std::string &message)
   {
-
+#if !defined(_WIN32)
     if (isConnected())
       {
         size_t nbytes_sent = 0;
@@ -318,10 +333,12 @@ namespace njli
         //            printf("Bytes_sent: %s -> %zu\n", message.c_str(),
         //            nbytes_sent);
       }
+#endif
   }
 
   void WorldSocket::disconnectJLI()
   {
+#if !defined(_WIN32)
     if (m_sck > -1)
       {
         close(m_sck);
@@ -329,7 +346,7 @@ namespace njli
 
         m_sck = -1;
       }
-
+#endif
     m_isConnected = false;
   }
 
@@ -337,6 +354,7 @@ namespace njli
 
   void WorldSocket::socketSetOpt()
   {
+#if !defined(_WIN32)
     int r = 0, v = 1;
 
     r = setsockopt(m_sck, SOL_SOCKET, SO_REUSEADDR, (char *)&v, sizeof(v));
@@ -350,5 +368,6 @@ namespace njli
     r = setsockopt(m_sck, SOL_SOCKET, SO_RCVBUF, (char *)&v, sizeof(v));
 
     fcntl(m_sck, F_SETFL, O_NONBLOCK);
+#endif
   }
 } // namespace njli

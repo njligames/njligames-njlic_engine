@@ -7,7 +7,7 @@
 #include "World.h"
 #include <string>
 
-#ifdef __ANDROID__
+#if defined( __ANDROID__) || defined(_WIN32)
 #else
 #include <sys/sysctl.h>
 #include <sys/types.h>

@@ -376,7 +376,7 @@ namespace njli
     nvgStrokeColor(m_NVGContext, nvgcolor);
   }
 
-  void WorldHUD::strokePaint(JLIPaint paint)
+  void WorldHUD::strokePaint(const JLIPaint &paint)
   {
     NVGpaint _paint;
     JLIPaintToNVGPaint(_paint, paint);
@@ -390,7 +390,7 @@ namespace njli
     nvgFillColor(m_NVGContext, nvgcolor);
   }
 
-  void WorldHUD::fillPaint(JLIPaint paint)
+  void WorldHUD::fillPaint(const JLIPaint &paint)
   {
     NVGpaint _paint;
     JLIPaintToNVGPaint(_paint, paint);

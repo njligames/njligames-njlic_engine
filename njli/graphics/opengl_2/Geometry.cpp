@@ -24,7 +24,6 @@
 #include "btPrint.h"
 
 #include "Image.h"
-#define USE_OES
 
 static const u32 MAX_SPRITES = NUMBER_OF_MESHES;
 
@@ -756,7 +755,7 @@ namespace njli
         loadGPU_Internal();
       }
 
-#ifdef USE_OES
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(m_vertexArrayID);
 #else
     glBindVertexArray(m_vertexArrayID);
@@ -1000,7 +999,7 @@ namespace njli
     SDL_assert(m_LoadGPU);
 
     SDL_assert(m_vertexArrayID == -1);
-#ifdef USE_OES
+#if defined(__APPLE__)
     glGenVertexArraysAPPLE(1, &m_vertexArrayID);
     glBindVertexArrayAPPLE(m_vertexArrayID);
 #else
@@ -1049,7 +1048,7 @@ namespace njli
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
       }
     }
-#ifdef USE_OES
+#if defined(__APPLE__)
     glBindVertexArrayAPPLE(0);
 #else
     glBindVertexArray(0);
@@ -1119,7 +1118,7 @@ namespace njli
 
     if (m_vertexArrayID == -1)
       {
-#ifdef USE_OES
+#if defined(__APPLE__)
         glDeleteVertexArraysAPPLE(1, &m_vertexArrayID);
 #else
         glDeleteVertexArrays(1, &m_vertexArrayID);

@@ -25,6 +25,7 @@
 #include "Geometry.h"
 #include "ParticleEmitter.h"
 #include "btQuickprof.h"
+#include <stdlib.h>
 
 // Macro which returns a random value between -1 and 1
 #define RANDOM_MINUS_1_TO_1() ((rand() / (f32)0x3fffffff) - 1.0f)

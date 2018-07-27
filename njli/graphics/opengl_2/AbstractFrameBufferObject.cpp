@@ -51,7 +51,7 @@ namespace njli
 
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFBO);
     glGetIntegerv(GL_RENDERBUFFER_BINDING, &defaultRBO);
-
+    
     // Create frame buffer
     glGenFramebuffers(1, &frameBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);

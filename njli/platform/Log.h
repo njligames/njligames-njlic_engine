@@ -2,6 +2,7 @@
 #include "Macros.h"
 
 #include "SDL_assert.h"
+
 #include "SDL_config.h"
 #include "SDL_log.h"
 
@@ -68,16 +69,16 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
   }
 #endif
 
-//#if !(defined(NDEBUG))
-//#define DEBUG_ASSERT(cond) \
-//    do {                   \
-//        SDL_assert((cond));\
-//    } while (0)
-//#else
-//#define DEBUG_ASSERT(cond) \
-//    {                      \
-//    }
-//#endif
+#if !(defined(NDEBUG))
+#define DEBUG_ASSERT(cond) \
+    do {                   \
+        SDL_assert((cond)); \
+    } while (0)
+#else
+#define DEBUG_ASSERT(cond) \
+    {                      \
+    }
+#endif
 
 #define DEBUG_LOG_PRINT_V(tag, fmt, ...)                                       \
   do                                                                           \
@@ -110,28 +111,27 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
   do                                                                           \
     {                                                                          \
       if (LOGGING_ON)                                                          \
-        _debug_log_e(tag, "%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__,    \
-                     __VA_ARGS__);                                             \
+        _debug_log_e(tag, "%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__, __VA_ARGS__);                                             \
     }                                                                          \
   while (0)
 
 #if !(defined(NDEBUG))
-#define SDL_assertCheck(condition, fmt, args...)                               \
-  do                                                                           \
-    {                                                                          \
-      char string[3584];                                                       \
-      snprintf(string, (3584 - 1), fmt, ##args);                               \
-      if ((condition) == 0)                                          \
-        {                                                                      \
-          SDL_LogError(SDL_LOG_CATEGORY_TEST, "Assert '%s': %s", string,       \
-                       "Failed");                                              \
-        }                                                                      \
-      else                                                                     \
-        {                                                                      \
-          /*                SDL_Log("Assert '%s': %s", string, "Passed");*/    \
-        }                                                                      \
-    }                                                                          \
-  while (0)
+#define SDL_assertCheck(condition, fmt, ...)                                   \
+{}
+
+//#define SDL_assertCheck(condition, fmt, ...)                                   \
+//  do                                                                           \
+//    {                                                                          \
+//      if ((condition) == 0)                                                    \
+//        {                                                                      \
+//          SDL_LogError(SDL_LOG_CATEGORY_TEST, fmt, ##__VA_ARGS__); \
+//        }                                                                      \
+//      else                                                                     \
+//        {                                                                      \
+//          /*                SDL_Log("Assert '%s': %s", string, "Passed");*/    \
+//        }                                                                      \
+//    }                                                                          \
+//  while (0)
 
 #else
 #define SDL_assertCheck(condition, fmt, ...)                                   \
@@ -140,11 +140,11 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
 #endif
 
 #if !(defined(NDEBUG))
-#define SDL_assertPrint(condition, fmt, args...)                               \
+#define SDL_assertPrint(condition, fmt, ...)                               \
   do                                                                           \
     {                                                                          \
-      SDL_assertCheck((condition), fmt, ##args);                               \
-      SDL_assert((condition));                                                 \
+      SDL_assertCheck((condition), fmt, __VA_ARGS__);                               \
+      DEBUG_ASSERT((condition));                                                 \
     }                                                                          \
   while (0)
 #else
