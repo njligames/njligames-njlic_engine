@@ -17,8 +17,8 @@ set(IOS_RELEASE_URL "")
 set(APPLETV_DEBUG_URL "")
 set(APPLETV_RELEASE_URL "")
 
-set(MACOS_DEBUG_URL "")
-set(MACOS_RELEASE_URL "")
+set(MACOS_DEBUG_URL "https://www.dropbox.com/s/afav2q67eujxnpn/libvorbis_macos_Debug.tar.gz?dl=0")
+set(MACOS_RELEASE_URL "https://www.dropbox.com/s/9bs3e8ibm4w5bh8/libvorbis_macos_Release.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/9ph5xwk7ckrpnj6/libvorbis_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/ean2y0u1zclih04/libvorbis_linux_Release.tar.gz?dl=0")

@@ -17,8 +17,8 @@ set(IOS_RELEASE_URL "")
 set(APPLETV_DEBUG_URL "")
 set(APPLETV_RELEASE_URL "")
 
-set(MACOS_DEBUG_URL "")
-set(MACOS_RELEASE_URL "")
+set(MACOS_DEBUG_URL "https://www.dropbox.com/s/4ho6qfymeuxor2r/libjsoncpp_macos_Debug.tar.gz?dl=0")
+set(MACOS_RELEASE_URL "https://www.dropbox.com/s/clvfj12666rtd7q/libjsoncpp_macos_Release.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/57vn3yu9bx3acvm/libjsoncpp_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/mesfvmvrmz3hcqc/libjsoncpp_linux_Release.tar.gz?dl=0")

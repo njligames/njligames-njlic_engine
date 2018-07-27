@@ -17,8 +17,8 @@ set(IOS_RELEASE_URL "")
 set(APPLETV_DEBUG_URL "")
 set(APPLETV_RELEASE_URL "")
 
-set(MACOS_DEBUG_URL "")
-set(MACOS_RELEASE_URL "")
+set(MACOS_DEBUG_URL "https://www.dropbox.com/s/uthinr4qer5k81p/libbullet3_macos_Debug.tar.gz?dl=0")
+set(MACOS_RELEASE_URL "https://www.dropbox.com/s/olzpklmcosf5of4/libbullet3_macos_Release.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/1mk5dr5hrsk78lq/libbullet3_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/mrqliccd90oitk6/libbullet3_linux_Release.tar.gz?dl=0")

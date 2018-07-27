@@ -17,8 +17,8 @@ set(IOS_RELEASE_URL "")
 set(APPLETV_DEBUG_URL "")
 set(APPLETV_RELEASE_URL "")
 
-set(MACOS_DEBUG_URL "")
-set(MACOS_RELEASE_URL "")
+set(MACOS_DEBUG_URL "https://www.dropbox.com/s/rrlq3la5v9yflyp/libogg_macos_Debug.tar.gz?dl=0")
+set(MACOS_RELEASE_URL "https://www.dropbox.com/s/htqjt4tmws7r8y2/libogg_macos_Release.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/jch02hzlxr00bs0/libogg_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/m0ikljr1gnm3lat/libogg_linux_Release.tar.gz?dl=0")

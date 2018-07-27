@@ -17,8 +17,8 @@ set(IOS_RELEASE_URL "")
 set(APPLETV_DEBUG_URL "")
 set(APPLETV_RELEASE_URL "")
 
-set(MACOS_DEBUG_URL "")
-set(MACOS_RELEASE_URL "")
+set(MACOS_DEBUG_URL "https://www.dropbox.com/s/l1y75af78kafr1w/libimguizmo_macos_Debug.tar.gz?dl=0")
+set(MACOS_RELEASE_URL "https://www.dropbox.com/s/0yon05cklycutiq/libimguizmo_macos_Release.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/yh8g0qls2d2hssl/libImGuizmo_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/rfincechrbpa6gb/libImGuizmo_linux_Release.tar.gz?dl=0")
