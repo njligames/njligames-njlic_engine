@@ -59,7 +59,46 @@ else()
   MESSAGE(STATUS "${LIBRARY_NAME_UPPER} Library Path: '${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}'")
 endif()
 
-if(EMSCRIPTEN)
+if(EMSCRIPTEN OR IOS OR TVOS)
+
+  set(RELEASE_SUFFIX "Release")
+  set(DEBUG_SUFFIX "Debug")
+  if(IOS OR TVOS)
+    set(RELEASE_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+    set(DEBUG_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+  endif()
+
+  foreach(LIB ${SUB_LIBRARY_NAMES})
+    set(${LIB}_LIBRARY_RELEASE "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELEASE_SUFFIX}/lib${LIB}.a")
+    if(EMSCRIPTEN AND NOT EXISTS "${${LIB}_LIBRARY_RELEASE}")
+      MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELEASE}")
+    endif()
+
+    set(${LIB}_LIBRARY_DEBUG "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${DEBUG_SUFFIX}/lib${LIB}.a")
+    if(EMSCRIPTEN AND NOT EXISTS "${${LIB}_LIBRARY_DEBUG}")
+      MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_DEBUG}")
+    endif()
+
+    list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
+
+    if (NOT TARGET ${LIB})
+      add_library(${LIB} STATIC IMPORTED)
+
+      set_target_properties(${LIB} PROPERTIES 
+        INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}"
+        )
+
+      set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+      set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELEASE "${${LIB}_LIBRARY_RELEASE}")
+
+      set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+      set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_DEBUG "${${LIB}_LIBRARY_DEBUG}")
+
+      list(APPEND ${LIBRARY_NAME_UPPER}_TARGETS ${LIB})
+    endif()
+
+  endforeach()
+
 else()
   include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
   include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
