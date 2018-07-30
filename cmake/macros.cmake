@@ -31,11 +31,19 @@ macro(DOWNLOAD_LIBRARY_INCLUDE_FILES LIBNAME LIBRARY_INCLUDE_URL LIBRARY_DIRECTO
     "${LIBRARY_INCLUDE_URL}"
     CACHE STRING "The URL for the include files for ${LIBRARY_DIRECTORY}")
 
-  RETRIEVE_TAR(
-    "${${LIBNAME}_URL_INCLUDE}"
-    "${LIBRARY_DIRECTORY}"
-    "SKIP"
-    )
+  if(ANDROID)
+    RETRIEVE_TAR(
+      "${${LIBNAME}_URL_INCLUDE}"
+      "../../../../../${LIBRARY_DIRECTORY}"
+      "SKIP"
+      )
+  else()
+    RETRIEVE_TAR(
+      "${${LIBNAME}_URL_INCLUDE}"
+      "${LIBRARY_DIRECTORY}"
+      "SKIP"
+      )
+  endif()
 
   # SET(SUBDIRS "")
   # SUBDIRLIST(SUBDIRS "${CMAKE_BINARY_DIR}/${LIBRARY_DIRECTORY}" ${LIBNAME}_INCLUDE_DIRECTORY_LIST)
@@ -56,11 +64,19 @@ endmacro()
 
 macro(DOWNLOAD_LIBRARY_TAR LIBRARY_NAME LIBRARY_BINARY_URL LIBRARY_DIRECTORY)
 
-  RETRIEVE_TAR(
-    "${LIBRARY_BINARY_URL}"
-    "${LIBRARY_DIRECTORY}"
-    "SKIP"
-    )
+  if(ANDROID)
+    RETRIEVE_TAR(
+      "${LIBRARY_BINARY_URL}"
+      "../../../../../${LIBRARY_DIRECTORY}"
+      "SKIP"
+      )
+  else()
+    RETRIEVE_TAR(
+      "${LIBRARY_BINARY_URL}"
+      "${LIBRARY_DIRECTORY}"
+      "SKIP"
+      )
+  endif()
 
   if(WINDOWS)
     file(GLOB_RECURSE _LIBRARY_BINARY_FILES

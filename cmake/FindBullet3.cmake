@@ -118,6 +118,8 @@ if(EMSCRIPTEN OR IOS OR TVOS)
 
   endforeach()
 
+elseif(ANROID)
+
 else()
   include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
   include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
