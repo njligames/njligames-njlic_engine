@@ -122,7 +122,8 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
     {                                                                          \
       if ((condition) == 0)                                                    \
         {                                                                      \
-          SDL_LogError(SDL_LOG_CATEGORY_TEST, fmt, __VA_ARGS__); \
+      if (LOGGING_ON)                                                          \
+        _debug_log_e(tag, "%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__, __VA_ARGS__);                                             \
         }                                                                      \
       else                                                                     \
         {                                                                      \
