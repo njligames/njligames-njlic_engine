@@ -119,19 +119,19 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
 #define SDL_assertCheck(condition, fmt, ...)                                   \
 {}
 
-//#define SDL_assertCheck(condition, fmt, ...)                                   \
-//  do                                                                           \
-//    {                                                                          \
-//      if ((condition) == 0)                                                    \
-//        {                                                                      \
-//          SDL_LogError(SDL_LOG_CATEGORY_TEST, fmt, ##__VA_ARGS__); \
-//        }                                                                      \
-//      else                                                                     \
-//        {                                                                      \
-//          /*                SDL_Log("Assert '%s': %s", string, "Passed");*/    \
-//        }                                                                      \
-//    }                                                                          \
-//  while (0)
+#define SDL_assertCheck(condition, fmt, ...)                                   \
+  do                                                                           \
+    {                                                                          \
+      if ((condition) == 0)                                                    \
+        {                                                                      \
+          SDL_LogError(SDL_LOG_CATEGORY_TEST, fmt, ##__VA_ARGS__); \
+        }                                                                      \
+      else                                                                     \
+        {                                                                      \
+          /*                SDL_Log("Assert '%s': %s", string, "Passed");*/    \
+        }                                                                      \
+    }                                                                          \
+  while (0)
 
 #else
 #define SDL_assertCheck(condition, fmt, ...)                                   \
