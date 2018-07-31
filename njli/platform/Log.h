@@ -122,7 +122,7 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
     {                                                                          \
       if ((condition) == 0)                                                    \
         {                                                                      \
-          SDL_LogError(SDL_LOG_CATEGORY_TEST, fmt, ##__VA_ARGS__); \
+          SDL_LogError(SDL_LOG_CATEGORY_TEST, fmt, __VA_ARGS__); \
         }                                                                      \
       else                                                                     \
         {                                                                      \
