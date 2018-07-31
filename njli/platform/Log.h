@@ -123,7 +123,7 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
       if ((condition) == 0)                                                    \
         {                                                                      \
       if (LOGGING_ON)                                                          \
-        _debug_log_e(tag, "%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__, __VA_ARGS__);                                             \
+        _debug_log_e("DEFAULT", "%s:%d:%s(): " fmt, __FILE__, __LINE__, __func__, __VA_ARGS__);                                             \
         }                                                                      \
       else                                                                     \
         {                                                                      \
