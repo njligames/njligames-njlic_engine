@@ -122,8 +122,8 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
     {                                                                          \
       if ((condition) == 0)                                                    \
         {                                                                      \
-      if (LOGGING_ON)                                                          \
-        DEBUG_LOG_E ("DEFAULT", fmt __VA_OPT__(,) __VA_ARGS__);             \
+          /*if (LOGGING_ON)*/                                                          \
+            /*DEBUG_LOG_E ("DEFAULT", fmt __VA_OPT__(,) __VA_ARGS__);*/             \
         }                                                                      \
       else                                                                     \
         {                                                                      \
