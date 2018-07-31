@@ -116,8 +116,6 @@ void _debug_log_stderr(const char *tag, const char *fmt, ...);
   while (0)
 
 #if !(defined(NDEBUG))
-#define SDL_assertCheck(condition, fmt, ...)                                   \
-{}
 
 #define SDL_assertCheck(condition, fmt, ...)                                   \
   do                                                                           \
