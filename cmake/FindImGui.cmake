@@ -39,8 +39,8 @@ elseif(ANDROID)
     set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/android")
 endif()
 
-if(EMSCRIPTEN)
-  set(${LIBRARY_NAME_UPPER}_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include)
+if(EMSCRIPTEN OR ANDROID)
+  set(${LIBRARY_NAME_UPPER}_INCLUDE_DIR "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}")
 else()
   find_path(${LIBRARY_NAME_UPPER}_INCLUDE_DIR ${INCLUDE_FILE}
     PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include"
@@ -49,7 +49,7 @@ else()
 endif()
 
 if(NOT EXISTS "${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}")
-  MESSAGE(FATAL_ERROR "Cannot find the include directory for ${LIBRARY_NAME} '${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}'")
+  MESSAGE(FATAL_ERROR "Cannot find the include directory for ${LIBRARY_NAME} '${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}' PATHS='${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include'")
 else()
   MESSAGE(STATUS "Include dir for ${LIBRARY_NAME_UPPER}_INCLUDE_DIR '${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}'")
 endif()
@@ -60,25 +60,32 @@ else()
   MESSAGE(STATUS "${LIBRARY_NAME_UPPER} Library Path: '${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}'")
 endif()
 
-if(EMSCRIPTEN OR IOS OR TVOS)
+if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
 
   set(RELEASE_SUFFIX "Release")
   set(DEBUG_SUFFIX "Debug")
   if(IOS OR TVOS)
     set(RELEASE_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
     set(DEBUG_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+  elseif(ANDROID)
+    set(RELEASE_SUFFIX "${ANDROID_ABI}/Release")
+    set(DEBUG_SUFFIX "${ANDROID_ABI}/Debug")
   endif()
 
   foreach(LIB ${SUB_LIBRARY_NAMES})
 
     set(${LIB}_LIBRARY_RELEASE "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELEASE_SUFFIX}/lib${LIB}.a")
-    if(EMSCRIPTEN AND NOT EXISTS "${${LIB}_LIBRARY_RELEASE}")
-      MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELEASE}")
+    if(EMSCRIPTEN OR ANDROID)
+      if(NOT EXISTS "${${LIB}_LIBRARY_RELEASE}")
+        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELEASE}")
+      endif()
     endif()
 
     set(${LIB}_LIBRARY_DEBUG "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${DEBUG_SUFFIX}/lib${LIB}.a")
-    if(EMSCRIPTEN AND NOT EXISTS "${${LIB}_LIBRARY_DEBUG}")
-      MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_DEBUG}")
+    if(EMSCRIPTEN OR ANDROID)
+      if(NOT EXISTS "${${LIB}_LIBRARY_DEBUG}")
+        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_DEBUG}")
+      endif()
     endif()
 
     list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
@@ -100,8 +107,6 @@ if(EMSCRIPTEN OR IOS OR TVOS)
     endif()
 
   endforeach()
-
-elseif(ANROID)
 
 else()
   include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)

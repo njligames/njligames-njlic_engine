@@ -30,8 +30,15 @@ set(LINUX_RELEASE_URL "https://www.dropbox.com/s/x2y6hlq8mlpzlx5/libimgui_linux_
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")
 
-set(ANDROID_DEBUG_URL "")
-set(ANDROID_RELEASE_URL "")
+set(ANDROID_ARM64_DEBUG_URL "https://www.dropbox.com/s/t5w9z6zzlygny44/libimgui_android_Debug-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_ARMEABI_DEBUG_URL "https://www.dropbox.com/s/dir3yq9mbhckpuj/libimgui_android_Debug-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_X86_64_DEBUG_URL "https://www.dropbox.com/s/8f3zz2ilkx7qao6/libimgui_android_Debug-x86_64.tar.gz?dl=0")
+set(ANDROID_X86_DEBUG_URL "https://www.dropbox.com/s/55yr0j3diwkcdyj/libimgui_android_Debug-x86.tar.gz?dl=0")
+
+set(ANDROID_ARM64_RELEASE_URL "https://www.dropbox.com/s/nad20x7anl40j5l/libimgui_android_Release-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_ARMEABI_RELEASE_URL "https://www.dropbox.com/s/kjlr2w0svp7b90g/libimgui_android_Release-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_X86_64_RELEASE_URL "https://www.dropbox.com/s/qfkgh727fsavas7/libimgui_android_Release-x86_64.tar.gz?dl=0")
+set(ANDROID_X86_RELEASE_URL "https://www.dropbox.com/s/6wo2m3960ryhw06/libimgui_android_Release-x86.tar.gz?dl=0")
 
 ###########################################################################################################################
 
@@ -45,6 +52,9 @@ set(${LIBRARY_NAME_UPPER}_BASE_PATH "thirdparty/${LIBRARY_NAME}")
 
 set(THIRDPARTY_${LIBRARY_NAME_UPPER}_INCLUDE_URL "${INCLUDE_URL}" CACHE STRING "The URL for include Bullet3")
 mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_INCLUDE_URL})
+
+unset(THIRDPARTY_${LIBRARY_NAME_UPPER}_DEBUG_URL CACHE)
+unset(THIRDPARTY_${LIBRARY_NAME_UPPER}_RELEASE_URL CACHE)
 
 if(EMSCRIPTEN)
   set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/emscripten")
@@ -74,6 +84,12 @@ elseif(WINDOWS)
   endif()
 elseif(APPLE)
   if(IOS)
+    set(PLATFORM_PATH_SUFFIX_RELEASE "Release-iphoneos")
+    set(PLATFORM_PATH_SUFFIX_DEBUG "Debug-iphoneos")
+
+    set(PLATFORM_SIMULATOR_PATH_SUFFIX_RELEASE "Release-iphonesimulator")
+    set(PLATFORM_SIMULATOR_PATH_SUFFIX_DEBUG "Debug-iphonesimulator")
+
     set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/ios")
     if(IOS_DEVICE_DEBUG_URL)
       set(THIRDPARTY_${LIBRARY_NAME_UPPER}_DEBUG_URL "${IOS_DEVICE_DEBUG_URL}" CACHE STRING "The URL for Debug Bullet3")
@@ -88,12 +104,13 @@ elseif(APPLE)
       set(THIRDPARTY_${LIBRARY_NAME_UPPER}_SIMULATOR_RELEASE_URL "${IOS_SIMULATOR_RELEASE_URL}" CACHE STRING "The URL for Release Bullet3 in the Simulator")
     endif()
 
-    set(PLATFORM_PATH_SUFFIX_RELEASE "Release-iphoneos")
-    set(PLATFORM_PATH_SUFFIX_DEBUG "Debug-iphoneos")
-
-    set(PLATFORM_SIMULATOR_PATH_SUFFIX_RELEASE "Release-iphonesimulator")
-    set(PLATFORM_SIMULATOR_PATH_SUFFIX_DEBUG "Debug-iphonesimulator")
   elseif(TVOS)
+    set(PLATFORM_PATH_SUFFIX_RELEASE "Release-appletvos")
+    set(PLATFORM_PATH_SUFFIX_DEBUG "Debug-appletvos")
+
+    set(PLATFORM_SIMULATOR_PATH_SUFFIX_RELEASE "Release-appletvsimulator")
+    set(PLATFORM_SIMULATOR_PATH_SUFFIX_DEBUG "Debug-appletvsimulator")
+
     set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/appletv")
     if(APPLETV_DEVICE_DEBUG_URL)
       set(THIRDPARTY_${LIBRARY_NAME_UPPER}_DEBUG_URL "${APPLETV_DEVICE_DEBUG_URL}" CACHE STRING "The URL for Debug Bullet3")
@@ -108,11 +125,6 @@ elseif(APPLE)
       set(THIRDPARTY_${LIBRARY_NAME_UPPER}_SIMULATOR_RELEASE_URL "${APPLETV_SIMULATOR_RELEASE_URL}" CACHE STRING "The URL for Release Bullet3")
     endif()
 
-    set(PLATFORM_PATH_SUFFIX_RELEASE "Release-appletvos")
-    set(PLATFORM_PATH_SUFFIX_DEBUG "Debug-appletvos")
-
-    set(PLATFORM_SIMULATOR_PATH_SUFFIX_RELEASE "Release-appletvsimulator")
-    set(PLATFORM_SIMULATOR_PATH_SUFFIX_DEBUG "Debug-appletvsimulator")
   else()
     set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/macos")
     if(MACOS_DEBUG_URL)
@@ -141,13 +153,93 @@ elseif(UNIX AND NOT APPLE AND NOT ANDROID)
     endif()
   endif()
 elseif(ANDROID)
-    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/android")
-    if(ANDROID_DEBUG_URL)
-      set(THIRDPARTY_${LIBRARY_NAME_UPPER}_DEBUG_URL "${ANDROID_DEBUG_URL}" CACHE STRING "The URL for Debug Bullet3")
-    endif()
-    if(ANDROID_RELEASE_URL)
-      set(THIRDPARTY_${LIBRARY_NAME_UPPER}_RELEASE_URL "${ANDROID_RELEASE_URL}" CACHE STRING "The URL for Release Bullet3")
-    endif()
+  set(PLATFORM_PATH_SUFFIX_RELEASE "${ANDROID_ABI}/Release")
+  set(PLATFORM_PATH_SUFFIX_DEBUG "${ANDROID_ABI}/Debug")
+
+  set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/android")
+
+  if(ANDROID_ARM64_DEBUG_URL)
+    set(THIRDPARTY_${LIBRARY_NAME_UPPER}_ARM64_DEBUG_URL ${ANDROID_ARM64_DEBUG_URL} CACHE STRING "The URL for Bullet3")
+    mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARM64_DEBUG_URL})
+    DOWNLOAD_LIBRARY_TAR(
+      "${LIBRARY_NAME}"
+      "${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARM64_DEBUG_URL}"
+      "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_DEBUG}"
+      )
+  endif()
+
+  if(ANDROID_ARMEABI_DEBUG_URL)
+    set(THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_DEBUG_URL ${ANDROID_ARMEABI_DEBUG_URL} CACHE STRING "The URL for Bullet3")
+    mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_DEBUG_URL})
+    DOWNLOAD_LIBRARY_TAR(
+      "${LIBRARY_NAME}"
+      "${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_DEBUG_URL}"
+      "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_DEBUG}"
+      )
+  endif()
+
+  if(ANDROID_X86_64_DEBUG_URL)
+    set(THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_DEBUG_URL ${ANDROID_X86_64_DEBUG_URL} CACHE STRING "The URL for Bullet3")
+    mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_DEBUG_URL})
+    DOWNLOAD_LIBRARY_TAR(
+      "${LIBRARY_NAME}"
+      "${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_DEBUG_URL}"
+      "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_DEBUG}"
+      )
+  endif()
+
+  if(ANDROID_X86_DEBUG_URL)
+    set(THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_DEBUG_URL ${ANDROID_X86_DEBUG_URL} CACHE STRING "The URL for Bullet3")
+    mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_DEBUG_URL})
+    DOWNLOAD_LIBRARY_TAR(
+      "${LIBRARY_NAME}"
+      "${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_DEBUG_URL}"
+      "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_DEBUG}"
+      )
+  endif()
+
+  # 
+
+  if(ANDROID_ARM64_RELEASE_URL)
+    set(THIRDPARTY_${LIBRARY_NAME_UPPER}_ARM64_RELEASE_URL ${ANDROID_ARM64_RELEASE_URL} CACHE STRING "The URL for Bullet3")
+    mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARM64_RELEASE_URL})
+    DOWNLOAD_LIBRARY_TAR(
+      "${LIBRARY_NAME}"
+      "${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARM64_RELEASE_URL}"
+      "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_RELEASE}"
+      )
+  endif()
+
+  if(ANDROID_ARMEABI_RELEASE_URL)
+    set(THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_RELEASE_URL ${ANDROID_ARMEABI_RELEASE_URL} CACHE STRING "The URL for Bullet3")
+    mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_RELEASE_URL})
+    DOWNLOAD_LIBRARY_TAR(
+      "${LIBRARY_NAME}"
+      "${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_RELEASE_URL}"
+      "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_RELEASE}"
+      )
+  endif()
+
+  if(ANDROID_X86_64_RELEASE_URL)
+    set(THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_RELEASE_URL ${ANDROID_X86_64_RELEASE_URL} CACHE STRING "The URL for Bullet3")
+    mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_RELEASE_URL})
+    DOWNLOAD_LIBRARY_TAR(
+      "${LIBRARY_NAME}"
+      "${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_RELEASE_URL}"
+      "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_RELEASE}"
+      )
+  endif()
+
+  if(ANDROID_X86_RELEASE_URL)
+    set(THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_RELEASE_URL ${ANDROID_X86_RELEASE_URL} CACHE STRING "The URL for Bullet3")
+    mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_RELEASE_URL})
+    DOWNLOAD_LIBRARY_TAR(
+      "${LIBRARY_NAME}"
+      "${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_RELEASE_URL}"
+      "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_RELEASE}"
+      )
+  endif()
+
 endif()
 
 if(THIRDPARTY_${LIBRARY_NAME_UPPER}_DEBUG_URL)
@@ -204,5 +296,4 @@ if(THIRDPARTY_${LIBRARY_NAME_UPPER}_INCLUDE_URL)
   SUBDIRLIST(SUBDIRS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include" ${LIBRARY_NAME_UPPER}_INCLUDE_DIRS)
   list(APPEND ${LIBRARY_NAME_UPPER}_INCLUDE_DIRS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include")
 endif()
-
 

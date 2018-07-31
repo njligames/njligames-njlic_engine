@@ -442,6 +442,7 @@ namespace njli
   }
 #endif
 
+
   static void SDLTest_ScreenShot(SDL_Renderer *renderer)
   {
     SDL_Rect viewport;
@@ -462,21 +463,21 @@ namespace njli
                                    0x00000000);
     if (!surface)
       {
-        fprintf(stderr, "Couldn't create surface: %s\n", SDL_GetError());
+//        fprintf(stderr, "Couldn't create surface: %s\n", SDL_GetError());
         return;
       }
 
     if (SDL_RenderReadPixels(renderer, NULL, surface->format->format,
                              surface->pixels, surface->pitch) < 0)
       {
-        fprintf(stderr, "Couldn't read screen: %s\n", SDL_GetError());
+//        fprintf(stderr, "Couldn't read screen: %s\n", SDL_GetError());
         SDL_free(surface);
         return;
       }
 
     if (SDL_SaveBMP(surface, "screenshot.bmp") < 0)
       {
-        fprintf(stderr, "Couldn't save screenshot.bmp: %s\n", SDL_GetError());
+//        fprintf(stderr, "Couldn't save screenshot.bmp: %s\n", SDL_GetError());
         SDL_free(surface);
         return;
       }
