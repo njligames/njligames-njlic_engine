@@ -11,10 +11,10 @@ set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/bje4gfkt1av5lyc/libjsoncpp_
 set(WINDOWS64_DEBUG_URL "")
 set(WINDOWS64_RELEASE_URL "")
 
-set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/a0cowzik4izjo9f/libjsoncpp_ios_Debug-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/1nfqffgc6ryi4mv/libjsoncpp_ios_Debug-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/vxlpvwxhk2jr8ia/libjsoncpp_ios_Release-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/rqhc5gh8npjuhcd/libjsoncpp_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/4ne9v1vew6yan2k/libjsoncpp_ios_Debug-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/n2rnwjazs8jh4um/libjsoncpp_ios_Debug-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/7m9i9zp77zzuz4m/libjsoncpp_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/c5vu7gnrlw6spw7/libjsoncpp_ios_Release-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/rk8iszobjo7n9fb/libjsoncpp_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/3sd1unj8b4fd6wp/libjsoncpp_appletv_Debug-appletvsimulator.tar.gz?dl=0")

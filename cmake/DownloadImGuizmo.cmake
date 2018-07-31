@@ -11,10 +11,10 @@ set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/tbkqhseagh0yd7r/libImGuizmo
 set(WINDOWS64_DEBUG_URL "")
 set(WINDOWS64_RELEASE_URL "")
 
-set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/wlw1a6d731ts8fy/libimguizmo_ios_Debug-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/h3rgw29dquzv4tq/libimguizmo_ios_Debug-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/4dd92qavofxbdtr/libimguizmo_ios_Release-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/roch7p1y2xjycku/libimguizmo_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/wjdyza4ftxrbwly/libimguizmo_ios_Debug-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/enkvlby04dkhjcn/libimguizmo_ios_Debug-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/5lfqld0a24i3ex4/libimguizmo_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/z1hnra7s18zfb04/libimguizmo_ios_Release-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/nb6sxnhxj4c8h6t/libimguizmo_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/l30pt40upskog2k/libimguizmo_appletv_Debug-appletvsimulator.tar.gz?dl=0")

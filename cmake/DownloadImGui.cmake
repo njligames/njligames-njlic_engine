@@ -11,10 +11,10 @@ set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/7tveus8vnqf3hbd/libimgui_wi
 set(WINDOWS64_DEBUG_URL "")
 set(WINDOWS64_RELEASE_URL "")
 
-set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/qvu45vw6kmtybc4/libimgui_ios_Debug-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/5cl8i07i2e9d5wb/libimgui_ios_Debug-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/9cvgvl88ddutl15/libimgui_ios_Release-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/95ifagdv4mx0nxb/libimgui_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/833u6bnlgt2fvz9/libimgui_ios_Debug-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/osoy00o0vn0ymzn/libimgui_ios_Debug-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/9x60xzsy9n2d85l/libimgui_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/yc10dmu8royk3pp/libimgui_ios_Release-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/spejpx7xjurdy6b/libimgui_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/kwzf7xfoic59qtl/libimgui_appletv_Debug-appletvsimulator.tar.gz?dl=0")
