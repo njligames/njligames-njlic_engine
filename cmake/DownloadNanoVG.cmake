@@ -2,8 +2,8 @@ set(LIBRARY_NAME "nanovg")
 
 set(INCLUDE_URL "https://www.dropbox.com/s/bikbkbly3in24ng/libnanovg_includes.tar.gz?dl=0")
 
-set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/slkt1fcenhvylzd/libnanovg_emscripten_Debug.tar.gz?dl=0")
-set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/ivjkhj0lpf8x58w/libnanovg_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/6udoianp2cacyhr/libnanovg_emscripten_Debug.tar.gz?dl=0")
+set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/4fyie5sswkae0t9/libnanovg_emscripten_Release.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/sion6fqywf4yq6m/libnanovg_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/avi8ef7cdex495c/libnanovg_windows32_Release.tar.gz?dl=0")

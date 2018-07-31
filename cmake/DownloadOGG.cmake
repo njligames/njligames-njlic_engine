@@ -2,8 +2,8 @@ set(LIBRARY_NAME "ogg")
 
 set(INCLUDE_URL "https://www.dropbox.com/s/agc7zmqg9m64x9i/libogg_includes.tar.gz?dl=0")
 
-set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/r02a1hsc1tqqhlx/libogg_emscripten_Debug.tar.gz?dl=0")
-set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/p2mtfld322dzyxf/libogg_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/tqvf2039tjjqpb6/libogg_emscripten_Debug.tar.gz?dl=0")
+set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/rp5yob3wabc9vcn/libogg_emscripten_Release.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/7h5jygomq7xcyc1/libogg_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/0p7srknrepbltiq/libogg_windows32_Release.tar.gz?dl=0")

@@ -2,8 +2,8 @@ set(LIBRARY_NAME "ImGuizmo")
 
 set(INCLUDE_URL "https://www.dropbox.com/s/vi20so6cykm4zxx/libimguizmo_includes.tar.gz?dl=0")
 
-set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/cslibguorkiaarl/libimguizmo_emscripten_Debug.tar.gz?dl=0")
-set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/xbp9f9bstpz1i6y/libimguizmo_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/zv4ue76ursi1x3s/libimguizmo_emscripten_Debug.tar.gz?dl=0")
+set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/57faktvdv02yias/libimguizmo_emscripten_Release.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/6cl359lyi6a2g08/libImGuizmo_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/tbkqhseagh0yd7r/libImGuizmo_windows32_Release.tar.gz?dl=0")
