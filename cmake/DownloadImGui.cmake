@@ -16,10 +16,10 @@ set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/5cl8i07i2e9d5wb/libimgui_
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/9cvgvl88ddutl15/libimgui_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/95ifagdv4mx0nxb/libimgui_ios_Release-iphonesimulator.tar.gz?dl=0")
 
-set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/kqv94jhk1og4qtl/libimgui_appletv_Debug-appletvos.tar.gz?dl=0")
-set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/rv43988civzcviq/libimgui_appletv_Debug-appletvsimulator.tar.gz?dl=0")
-set(APPLETV_DEVICE_RELEASE_URL "https://www.dropbox.com/s/yprp4armj3npayp/libimgui_appletv_Release-appletvos.tar.gz?dl=0")
-set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/6rutnktb445dbl4/libimgui_appletv_Release-appletvsimulator.tar.gz?dl=0")
+set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/spejpx7xjurdy6b/libimgui_appletv_Debug-appletvos.tar.gz?dl=0")
+set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/kwzf7xfoic59qtl/libimgui_appletv_Debug-appletvsimulator.tar.gz?dl=0")
+set(APPLETV_DEVICE_RELEASE_URL "https://www.dropbox.com/s/hpquraa8ghdhb9g/libimgui_appletv_Release-appletvos.tar.gz?dl=0")
+set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/9yybtreh53tskbh/libimgui_appletv_Release-appletvsimulator.tar.gz?dl=0")
 
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/33vlb6h0zsvnapl/libimgui_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/ing0jztefzfnyre/libimgui_macos_Release.tar.gz?dl=0")

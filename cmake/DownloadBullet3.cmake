@@ -16,10 +16,10 @@ set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/8s1n399zxfkqr3e/libbullet
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/sr2kbf01a3yb22d/libbullet3_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/dqia9u0d6tfbjaj/libbullet3_ios_Release-iphonesimulator.tar.gz?dl=0")
 
-set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/iu53mkecdnzucg1/libbullet3_appletv_Debug-appletvos.tar.gz?dl=0")
-set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/pzqbmv9z1cwthcy/libbullet3_appletv_Debug-appletvsimulator.tar.gz?dl=0")
-set(APPLETV_DEVICE_RELEASE_URL "https://www.dropbox.com/s/ew7jwng9ho4v84v/libbullet3_appletv_Release-appletvos.tar.gz?dl=0")
-set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/dtb4iybtbic5afo/libbullet3_appletv_Release-appletvsimulator.tar.gz?dl=0")
+set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/pzogh82wils711t/libbullet3_appletv_Debug-appletvos.tar.gz?dl=0")
+set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/hc66vts08mi6zk9/libbullet3_appletv_Debug-appletvsimulator.tar.gz?dl=0")
+set(APPLETV_DEVICE_RELEASE_URL "https://www.dropbox.com/s/352x3l9t37tk4ee/libbullet3_appletv_Release-appletvos.tar.gz?dl=0")
+set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/honabu80a0byyfa/libbullet3_appletv_Release-appletvsimulator.tar.gz?dl=0")
 
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/uthinr4qer5k81p/libbullet3_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/olzpklmcosf5of4/libbullet3_macos_Release.tar.gz?dl=0")

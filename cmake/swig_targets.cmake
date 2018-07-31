@@ -87,6 +87,15 @@ macro(LUA_BULLET3_SWIG)
     )
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
+  if(APPLE)
+    if(IOS OR TVOS)
+      SET_TARGET_PROPERTIES (
+        ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PROPERTIES
+        XCODE_PRODUCT_TYPE "com.apple.product-type.library.static"
+        )
+    endif(IOS OR TVOS)
+  endif()
+
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static ${CMAKE_PROJECT_NAME}-static)
   foreach(EXTRA_LIB ${EXTRA_LIBS})
     target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static optimized ${EXTRA_LIB})
@@ -111,6 +120,14 @@ macro(LUA_BULLET3_SWIG)
       OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
       OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
       )
+    # if(APPLE)
+    #   if(IOS OR TVOS)
+    #     SET_TARGET_PROPERTIES (
+    #       ${CMAKE_PROJECT_NAME}-lua-swig-bullet3 PROPERTIES
+    #       XCODE_PRODUCT_TYPE "com.apple.product-type.library.dynamic"
+    #       )
+    #   endif(IOS OR TVOS)
+    # endif()
     target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
     target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 ${CMAKE_PROJECT_NAME}-static )
@@ -202,6 +219,16 @@ macro(LUA_NJLIC_SWIG)
     OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
+
+  if(APPLE)
+    if(IOS OR TVOS)
+      SET_TARGET_PROPERTIES (
+        ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static PROPERTIES
+        XCODE_PRODUCT_TYPE "com.apple.product-type.library.static"
+        )
+    endif(IOS OR TVOS)
+  endif()
+
   # target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
   target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static ${CMAKE_PROJECT_NAME}-static)
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
@@ -225,12 +252,13 @@ macro(LUA_NJLIC_SWIG)
 
     if(APPLE)
       set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES MACOSX_RPATH 1)
-      if(IOS OR TVOS)
-        SET_TARGET_PROPERTIES (
-          ${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES
-          XCODE_ATTRIBUTE_ENABLE_BITCODE "NO"
-          )
-      endif(IOS OR TVOS)
+      # if(IOS OR TVOS)
+      #   SET_TARGET_PROPERTIES (
+      #     ${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES
+      #     XCODE_ATTRIBUTE_ENABLE_BITCODE "NO"
+      #     XCODE_PRODUCT_TYPE "com.apple.product-type.library.dynamic"
+      #     )
+      # endif()
     elseif(UNIX AND NOT ANDROID)
       set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES
         VERSION ${LT_VERSION}
