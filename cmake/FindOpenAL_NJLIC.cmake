@@ -91,7 +91,7 @@ if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
     list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
 
     if (NOT TARGET ${LIB})
-      add_library(${LIB} STATIC IMPORTED)
+      add_library(${LIB} UNKNOWN IMPORTED)
 
       set_target_properties(${LIB} PROPERTIES 
         INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}"
@@ -138,7 +138,7 @@ else()
       list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
 
       if (NOT TARGET ${LIB})
-        add_library(${LIB} STATIC IMPORTED)
+        add_library(${LIB} UNKNOWN IMPORTED)
         set_target_properties(${LIB} PROPERTIES
           INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}")
 
