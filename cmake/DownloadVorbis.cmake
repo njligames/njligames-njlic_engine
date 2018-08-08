@@ -30,15 +30,15 @@ set(LINUX_RELEASE_URL "https://www.dropbox.com/s/ean2y0u1zclih04/libvorbis_linux
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")
 
-set(ANDROID_ARM64_DEBUG_URL "https://www.dropbox.com/s/517t4e6xh6w9g3t/libvorbis_android_Debug-arm64-v8a.tar.gz?dl=0")
-set(ANDROID_ARMEABI_DEBUG_URL "https://www.dropbox.com/s/e6lsp8m2r0ch05a/libvorbis_android_Debug-armeabi-v7a.tar.gz?dl=0")
-set(ANDROID_X86_64_DEBUG_URL "https://www.dropbox.com/s/ly31bz9rry70txo/libvorbis_android_Debug-x86_64.tar.gz?dl=0")
-set(ANDROID_X86_DEBUG_URL "https://www.dropbox.com/s/duegowvx9pytly5/libvorbis_android_Debug-x86.tar.gz?dl=0")
+set(ANDROID_ARM64_DEBUG_URL "https://www.dropbox.com/s/f7a3qxhuaop709s/libvorbis_android_Debug-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_ARMEABI_DEBUG_URL "https://www.dropbox.com/s/a6mf565k32udnk0/libvorbis_android_Debug-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_X86_64_DEBUG_URL "https://www.dropbox.com/s/g6j8cgg41tv8mrd/libvorbis_android_Debug-x86_64.tar.gz?dl=0")
+set(ANDROID_X86_DEBUG_URL "https://www.dropbox.com/s/6w94jjy9cum1f8x/libvorbis_android_Debug-x86.tar.gz?dl=0")
 
-set(ANDROID_ARM64_RELEASE_URL "https://www.dropbox.com/s/qvhzdi57wlchx3o/libvorbis_android_Release-arm64-v8a.tar.gz?dl=0")
-set(ANDROID_ARMEABI_RELEASE_URL "https://www.dropbox.com/s/7z432lgcruopbmy/libvorbis_android_Release-armeabi-v7a.tar.gz?dl=0")
-set(ANDROID_X86_64_RELEASE_URL "https://www.dropbox.com/s/rd52titmvr0h4n2/libvorbis_android_Release-x86_64.tar.gz?dl=0")
-set(ANDROID_X86_RELEASE_URL "https://www.dropbox.com/s/rdha69ifh2qefht/libvorbis_android_Release-x86.tar.gz?dl=0")
+set(ANDROID_ARM64_RELEASE_URL "https://www.dropbox.com/s/eiuc7adrg23a2lw/libvorbis_android_Release-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_ARMEABI_RELEASE_URL "https://www.dropbox.com/s/qvv7e5xo0qc8shs/libvorbis_android_Release-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_X86_64_RELEASE_URL "https://www.dropbox.com/s/ijqdl6gcil1x7zl/libvorbis_android_Release-x86_64.tar.gz?dl=0")
+set(ANDROID_X86_RELEASE_URL "https://www.dropbox.com/s/fjq6fcw9m276vo9/libvorbis_android_Release-x86.tar.gz?dl=0")
 
 ###########################################################################################################################
 

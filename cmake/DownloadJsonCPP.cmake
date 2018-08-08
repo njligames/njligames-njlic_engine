@@ -30,15 +30,15 @@ set(LINUX_RELEASE_URL "https://www.dropbox.com/s/mesfvmvrmz3hcqc/libjsoncpp_linu
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")
 
-set(ANDROID_ARM64_DEBUG_URL "https://www.dropbox.com/s/0c5yh4oy1z2kbp5/libjsoncpp_android_Debug-arm64-v8a.tar.gz?dl=0")
-set(ANDROID_ARMEABI_DEBUG_URL "https://www.dropbox.com/s/7os0zimpz65qrsa/libjsoncpp_android_Debug-armeabi-v7a.tar.gz?dl=0")
-set(ANDROID_X86_64_DEBUG_URL "https://www.dropbox.com/s/4p7f23oplky7d93/libjsoncpp_android_Debug-x86_64.tar.gz?dl=0")
-set(ANDROID_X86_DEBUG_URL "https://www.dropbox.com/s/3fyro5ftglalz09/libjsoncpp_android_Debug-x86.tar.gz?dl=0")
+set(ANDROID_ARM64_DEBUG_URL "https://www.dropbox.com/s/wcohdjkkj0zflp8/libjsoncpp_android_Debug-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_ARMEABI_DEBUG_URL "https://www.dropbox.com/s/1dld6ttli04qtlm/libjsoncpp_android_Debug-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_X86_64_DEBUG_URL "https://www.dropbox.com/s/emq385dchc4za4q/libjsoncpp_android_Debug-x86_64.tar.gz?dl=0")
+set(ANDROID_X86_DEBUG_URL "https://www.dropbox.com/s/yk6w4sp0qwbpv6p/libjsoncpp_android_Debug-x86.tar.gz?dl=0")
 
-set(ANDROID_ARM64_RELEASE_URL "https://www.dropbox.com/s/jb56edx5l5fj739/libjsoncpp_android_Release-arm64-v8a.tar.gz?dl=0")
-set(ANDROID_ARMEABI_RELEASE_URL "https://www.dropbox.com/s/5bk21y6mb690wwx/libjsoncpp_android_Release-armeabi-v7a.tar.gz?dl=0")
-set(ANDROID_X86_64_RELEASE_URL "https://www.dropbox.com/s/qy5ly3o7fcjuz5d/libjsoncpp_android_Release-x86_64.tar.gz?dl=0")
-set(ANDROID_X86_RELEASE_URL "https://www.dropbox.com/s/74fsh36wvm0ezyv/libjsoncpp_android_Release-x86.tar.gz?dl=0")
+set(ANDROID_ARM64_RELEASE_URL "https://www.dropbox.com/s/7vmgcezs6o1v80m/libjsoncpp_android_Release-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_ARMEABI_RELEASE_URL "https://www.dropbox.com/s/ysn0qz74fki0t7i/libjsoncpp_android_Release-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_X86_64_RELEASE_URL "https://www.dropbox.com/s/g8o1l7gu4qnionu/libjsoncpp_android_Release-x86_64.tar.gz?dl=0")
+set(ANDROID_X86_RELEASE_URL "https://www.dropbox.com/s/tezdiji1ol2jxnx/libjsoncpp_android_Release-x86.tar.gz?dl=0")
 
 ###########################################################################################################################
 

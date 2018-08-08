@@ -30,15 +30,15 @@ set(LINUX_RELEASE_URL "https://www.dropbox.com/s/mrqliccd90oitk6/libbullet3_linu
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")
 
-set(ANDROID_ARM64_DEBUG_URL "https://www.dropbox.com/s/6yhzv3y5k3hdxy9/libbullet3_android_Debug-arm64-v8a.tar.gz?dl=0")
-set(ANDROID_ARMEABI_DEBUG_URL "https://www.dropbox.com/s/v003fmfddszviox/libbullet3_android_Debug-armeabi-v7a.tar.gz?dl=0")
-set(ANDROID_X86_64_DEBUG_URL "https://www.dropbox.com/s/qh4b40zz24z426s/libbullet3_android_Debug-x86_64.tar.gz?dl=0")
-set(ANDROID_X86_DEBUG_URL "https://www.dropbox.com/s/y4y2zueswo1iusq/libbullet3_android_Debug-x86.tar.gz?dl=0")
+set(ANDROID_ARM64_DEBUG_URL "https://www.dropbox.com/s/2iz4y8pqyc4oh2w/libbullet3_android_Debug-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_ARMEABI_DEBUG_URL "https://www.dropbox.com/s/1miwsyyekaj97qm/libbullet3_android_Debug-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_X86_64_DEBUG_URL "https://www.dropbox.com/s/iwi1wkxuf1zutz5/libbullet3_android_Debug-x86_64.tar.gz?dl=0")
+set(ANDROID_X86_DEBUG_URL "https://www.dropbox.com/s/nckqilr37gom111/libbullet3_android_Debug-x86.tar.gz?dl=0")
 
-set(ANDROID_ARM64_RELEASE_URL "https://www.dropbox.com/s/oi0blfqxv2o9i1r/libbullet3_android_Release-arm64-v8a.tar.gz?dl=0")
-set(ANDROID_ARMEABI_RELEASE_URL "https://www.dropbox.com/s/0vrqvbflzoplwfv/libbullet3_android_Release-armeabi-v7a.tar.gz?dl=0")
-set(ANDROID_X86_64_RELEASE_URL "https://www.dropbox.com/s/gpxwjglsdcip4dt/libbullet3_android_Release-x86_64.tar.gz?dl=0")
-set(ANDROID_X86_RELEASE_URL "https://www.dropbox.com/s/ihvh4gdr0hz73gr/libbullet3_android_Release-x86.tar.gz?dl=0")
+set(ANDROID_ARM64_RELEASE_URL "https://www.dropbox.com/s/c8dzy40uyd5ri6l/libbullet3_android_Release-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_ARMEABI_RELEASE_URL "https://www.dropbox.com/s/k7edpnse8hpqhyd/libbullet3_android_Release-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_X86_64_RELEASE_URL "https://www.dropbox.com/s/tsncovqhur6zuy0/libbullet3_android_Release-x86_64.tar.gz?dl=0")
+set(ANDROID_X86_RELEASE_URL "https://www.dropbox.com/s/pj0acs27s4k3z97/libbullet3_android_Release-x86.tar.gz?dl=0")
 
 ###########################################################################################################################
 
