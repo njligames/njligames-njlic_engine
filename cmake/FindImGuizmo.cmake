@@ -72,16 +72,21 @@ if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
     set(DEBUG_SUFFIX "${ANDROID_ABI}/Debug")
   endif()
 
+  set(LIBRARY_EXTENSION "a")
+  if(ANDROID)
+    set(LIBRARY_EXTENSION "so")
+  endif()
+
   foreach(LIB ${SUB_LIBRARY_NAMES})
 
-    set(${LIB}_LIBRARY_RELEASE "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELEASE_SUFFIX}/lib${LIB}.a")
+    set(${LIB}_LIBRARY_RELEASE "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELEASE_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
     if(EMSCRIPTEN OR ANDROID)
       if(NOT EXISTS "${${LIB}_LIBRARY_RELEASE}")
         MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELEASE}")
       endif()
     endif()
 
-    set(${LIB}_LIBRARY_DEBUG "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${DEBUG_SUFFIX}/lib${LIB}.a")
+    set(${LIB}_LIBRARY_DEBUG "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${DEBUG_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
     if(EMSCRIPTEN OR ANDROID)
       if(NOT EXISTS "${${LIB}_LIBRARY_DEBUG}")
         MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_DEBUG}")
@@ -91,7 +96,7 @@ if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
     list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
 
     if (NOT TARGET ${LIB})
-      add_library(${LIB} STATIC IMPORTED)
+      add_library(${LIB} UNKNOWN IMPORTED)
 
       set_target_properties(${LIB} PROPERTIES 
         INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}"
@@ -140,7 +145,7 @@ else()
       list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
 
       if (NOT TARGET ${LIB})
-        add_library(${LIB} STATIC IMPORTED)
+        add_library(${LIB} UNKNOWN IMPORTED)
         set_target_properties(${LIB} PROPERTIES
           INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}")
 
