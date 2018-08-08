@@ -120,11 +120,13 @@ else()
         NAMES ${LIB}
         PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
         PATH_SUFFIXES Release
+        NO_DEFAULT_PATH
         )
       find_library(${LIB}_LIBRARY_DEBUG
         NAMES ${LIB}
         PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
         PATH_SUFFIXES Debug
+        NO_DEFAULT_PATH
         )
       select_library_configurations(${LIB})
     endif ()
