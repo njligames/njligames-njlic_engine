@@ -166,38 +166,6 @@ elseif(ANDROID)
       )
   endif()
 
-  #         if(ANDROID_ARMEABI_DEBUG_URL)
-  #           set(THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_DEBUG_URL ${ANDROID_ARMEABI_DEBUG_URL} CACHE STRING "The URL for Bullet3")
-  #           mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_DEBUG_URL})
-  #           DOWNLOAD_LIBRARY_TAR(
-  #             "${LIBRARY_NAME}"
-  #             "${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_DEBUG_URL}"
-  #             "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${ANDROID_ABI}/Debug"
-  #             )
-  #         endif()
-
-  #         if(ANDROID_X86_64_DEBUG_URL)
-  #           set(THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_DEBUG_URL ${ANDROID_X86_64_DEBUG_URL} CACHE STRING "The URL for Bullet3")
-  #           mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_DEBUG_URL})
-  #           DOWNLOAD_LIBRARY_TAR(
-  #             "${LIBRARY_NAME}"
-  #             "${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_DEBUG_URL}"
-  #             "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${ANDROID_ABI}/Debug"
-  #             )
-  #         endif()
-
-  #         if(ANDROID_X86_DEBUG_URL)
-  #           set(THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_DEBUG_URL ${ANDROID_X86_DEBUG_URL} CACHE STRING "The URL for Bullet3")
-  #           mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_DEBUG_URL})
-  #           DOWNLOAD_LIBRARY_TAR(
-  #             "${LIBRARY_NAME}"
-  #             "${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_DEBUG_URL}"
-  #             "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${ANDROID_ABI}/Debug"
-  #             )
-  #         endif()
-
-  # 
-
   if(ANDROID_${ANDROID_ABI}_RELEASE_URL)
     set(THIRDPARTY_${LIBRARY_NAME_UPPER}_${ANDROID_ABI}_RELEASE_URL ${ANDROID_${ANDROID_ABI}_RELEASE_URL} CACHE STRING "The URL for Bullet3")
     mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_${ANDROID_ABI}_RELEASE_URL})
@@ -207,36 +175,6 @@ elseif(ANDROID)
       "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${ANDROID_ABI}/Release"
       )
   endif()
-
-  #              if(ANDROID_ARMEABI_RELEASE_URL)
-  #                set(THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_RELEASE_URL ${ANDROID_ARMEABI_RELEASE_URL} CACHE STRING "The URL for Bullet3")
-  #                mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_RELEASE_URL})
-  #                DOWNLOAD_LIBRARY_TAR(
-  #                  "${LIBRARY_NAME}"
-  #                  "${THIRDPARTY_${LIBRARY_NAME_UPPER}_ARMEABI_RELEASE_URL}"
-  #                  "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${ANDROID_ABI}/Release"
-  #                  )
-  #              endif()
-
-  #              if(ANDROID_X86_64_RELEASE_URL)
-  #                set(THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_RELEASE_URL ${ANDROID_X86_64_RELEASE_URL} CACHE STRING "The URL for Bullet3")
-  #                mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_RELEASE_URL})
-  #                DOWNLOAD_LIBRARY_TAR(
-  #                  "${LIBRARY_NAME}"
-  #                  "${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_64_RELEASE_URL}"
-  #                  "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${ANDROID_ABI}/Release"
-  #                  )
-  #              endif()
-
-  #              if(ANDROID_X86_RELEASE_URL)
-  #                set(THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_RELEASE_URL ${ANDROID_X86_RELEASE_URL} CACHE STRING "The URL for Bullet3")
-  #                mark_as_advanced(${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_RELEASE_URL})
-  #                DOWNLOAD_LIBRARY_TAR(
-  #                  "${LIBRARY_NAME}"
-  #                  "${THIRDPARTY_${LIBRARY_NAME_UPPER}_X86_RELEASE_URL}"
-  #                  "${${LIBRARY_NAME_UPPER}_BASE_PATH}/${ANDROID_ABI}/Release"
-  #                  )
-  #              endif()
 
 endif()
 
