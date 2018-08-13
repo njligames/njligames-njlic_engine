@@ -8,8 +8,8 @@ set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/dl9c9kgesdg7zil/libjsoncpp
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/zllvsm3esdte1ej/libjsoncpp_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/bje4gfkt1av5lyc/libjsoncpp_windows32_Release.tar.gz?dl=0")
 
-set(WINDOWS64_DEBUG_URL "")
-set(WINDOWS64_RELEASE_URL "")
+set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/okhk20svjozc2y3/libjsoncpp_windows64_Debug.tar.gz?dl=0")
+set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/ce0iyr5133kkivz/libjsoncpp_windows64_Release.tar.gz?dl=0")
 
 set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/4ne9v1vew6yan2k/libjsoncpp_ios_Debug-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/n2rnwjazs8jh4um/libjsoncpp_ios_Debug-iphonesimulator.tar.gz?dl=0")
@@ -232,4 +232,3 @@ if(THIRDPARTY_${LIBRARY_NAME_UPPER}_INCLUDE_URL)
   SUBDIRLIST(SUBDIRS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include" ${LIBRARY_NAME_UPPER}_INCLUDE_DIRS)
   list(APPEND ${LIBRARY_NAME_UPPER}_INCLUDE_DIRS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include")
 endif()
-

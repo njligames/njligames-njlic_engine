@@ -140,8 +140,8 @@ namespace njli
       setTimeStampFrame(0);
       m_prev_xpos = m_xpos;
       m_prev_ypos = m_ypos;
-      m_xpos = x;
-      m_ypos = y;
+      m_xpos = (f32)x;
+      m_ypos = (f32)y;
       m_address = 0;
       m_pressure = 0;
     }

@@ -8,8 +8,8 @@ set(EMSCRIPTEN_RELEASE_URL "")
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/a9gj19jqrjc488p/libglew_windows32_Release.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/a9gj19jqrjc488p/libglew_windows32_Release.tar.gz?dl=0")
 
-set(WINDOWS64_DEBUG_URL "")
-set(WINDOWS64_RELEASE_URL "")
+set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/r5jadyd7tshw23f/libglew_windows64_Release.tar.gz?dl=0")
+set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/r5jadyd7tshw23f/libglew_windows64_Release.tar.gz?dl=0")
 
 set(IOS_DEVICE_DEBUG_URL "")
 set(IOS_SIMULATOR_DEBUG_URL "")
@@ -240,5 +240,3 @@ if(WINDOWS)
   set(${CMAKE_PROJECT_NAME}_DYNAMIC_LIBRARIES "${${CMAKE_PROJECT_NAME}_DYNAMIC_LIBRARIES} ${DYNAMIC_LIBRARIES}")
   set(${CMAKE_PROJECT_NAME}_LOCALDEBUGGERENVIRONMENT "${${CMAKE_PROJECT_NAME}_LOCALDEBUGGERENVIRONMENT} ${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${PLATFORM_PATH_SUFFIX_RELEASE}")
 endif()
-
-

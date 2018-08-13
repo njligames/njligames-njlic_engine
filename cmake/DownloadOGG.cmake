@@ -8,8 +8,8 @@ set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/rp5yob3wabc9vcn/libogg_ems
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/7h5jygomq7xcyc1/libogg_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/0p7srknrepbltiq/libogg_windows32_Release.tar.gz?dl=0")
 
-set(WINDOWS64_DEBUG_URL "")
-set(WINDOWS64_RELEASE_URL "")
+set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/x7ult88qm3g3cgv/libogg_windows64_Debug.tar.gz?dl=0")
+set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/8969b6opmrlam3f/libogg_windows64_Release.tar.gz?dl=0")
 
 set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/wn2w8itwe1v7sv4/libogg_ios_Debug-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/6qjv1hr0twiv7gx/libogg_ios_Debug-iphonesimulator.tar.gz?dl=0")
@@ -232,4 +232,3 @@ if(THIRDPARTY_${LIBRARY_NAME_UPPER}_INCLUDE_URL)
   SUBDIRLIST(SUBDIRS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include" ${LIBRARY_NAME_UPPER}_INCLUDE_DIRS)
   list(APPEND ${LIBRARY_NAME_UPPER}_INCLUDE_DIRS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include")
 endif()
-

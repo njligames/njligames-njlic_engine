@@ -171,7 +171,7 @@ namespace njli
               }
             else if (lua_isboolean(L, index))
               {
-                bool v = lua_toboolean(L, index);
+                int v = lua_toboolean(L, index);
                 printf("%s => %d\n", key, v);
               }
             else if (lua_isuserdata(L, index))
