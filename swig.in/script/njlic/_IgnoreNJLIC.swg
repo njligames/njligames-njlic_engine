@@ -37,3 +37,5 @@
 %ignore _debug_log_w;
 %ignore _debug_log_e;
 %ignore _debug_log_stderr;
+
+%ignore lua_load;

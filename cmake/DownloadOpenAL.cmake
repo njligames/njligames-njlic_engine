@@ -8,8 +8,8 @@ set(EMSCRIPTEN_RELEASE_URL "")
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/hrsjgmc7nxh0iaz/libopenal_windows32_Release.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/hrsjgmc7nxh0iaz/libopenal_windows32_Release.tar.gz?dl=0")
 
-set(WINDOWS64_DEBUG_URL "")
-set(WINDOWS64_RELEASE_URL "")
+set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/esl9ch6nw0v71uw/libopenal_windows64_Release.tar.gz?dl=0")
+set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/esl9ch6nw0v71uw/libopenal_windows64_Release.tar.gz?dl=0")
 
 set(IOS_DEVICE_DEBUG_URL "")
 set(IOS_SIMULATOR_DEBUG_URL "")
