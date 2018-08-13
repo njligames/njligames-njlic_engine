@@ -5,8 +5,8 @@ set(INCLUDE_URL "https://www.dropbox.com/s/ykhm0omt23ocevh/libopenal_include.tar
 set(EMSCRIPTEN_DEBUG_URL "")
 set(EMSCRIPTEN_RELEASE_URL "")
 
-set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/rcnf3j6nw3s9gjd/libopenal_win32.tar.gz?dl=0")
-set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/rcnf3j6nw3s9gjd/libopenal_win32.tar.gz?dl=0")
+set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/hrsjgmc7nxh0iaz/libopenal_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/hrsjgmc7nxh0iaz/libopenal_windows32_Release.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "")
 set(WINDOWS64_RELEASE_URL "")

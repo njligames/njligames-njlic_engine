@@ -18,9 +18,9 @@
 #undef min
 #undef max
 
-#define NOGDI
+//#define NOGDI
 
-#include <Windows.h>
+#include <windows.h>
 
 #include <GL/glew.h>
 #include <GL/GL.h>

@@ -144,7 +144,7 @@ else()
         NO_DEFAULT_PATH
         )
       find_library(${LIB}_LIBRARY_DEBUG
-        NAMES ${LIB}
+        NAMES ${LIB} ${LIB}_Debug
         PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
         PATH_SUFFIXES Debug
         NO_DEFAULT_PATH
