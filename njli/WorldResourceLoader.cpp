@@ -113,7 +113,7 @@ namespace njli
   bool WorldResourceLoader::FileData::load(const char *filePath)
   {
     // SDL_Log("filePath %s", ASSET_PATH(filePath));
-    FILE *file = mobile__fopen(ASSET_PATH(filePath), "r");
+    FILE *file = mobile__fopen(ASSET_PATH(filePath), "rb");
 
     if (file)
       {
@@ -123,10 +123,12 @@ namespace njli
 
         if (m_buffer)
           free(m_buffer);
-        m_buffer = malloc(m_fileSize);
+        m_buffer = malloc(m_fileSize + 1);
         SDL_assert(m_buffer);
 
         fread(m_buffer, 1, m_fileSize, file);
+        unsigned char *t = (unsigned char*)m_buffer;
+        t[m_fileSize] = 0;
 
         fclose(file);
 
