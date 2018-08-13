@@ -1280,6 +1280,7 @@ namespace njli
         return 1;
       }
 
+
     // Check for joysticks
     if (SDL_NumJoysticks() < 1)
       {
@@ -1321,7 +1322,7 @@ namespace njli
                              | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_ALWAYS_ON_TOP |
                              SDL_WINDOW_UTILITY
 #elif !defined(__EMSCRIPTEN__)
-                             | SDL_WINDOW_FULLSCREEN
+                             /*| SDL_WINDOW_FULLSCREEN*/
 #endif
                              | SDL_WINDOW_RESIZABLE
 #if !defined(__EMSCRIPTEN__)
@@ -1360,6 +1361,16 @@ namespace njli
 #endif
 
     gGlContext = SDL_GL_CreateContext(gWindow);
+
+#if defined(__WINDOWS32__)
+    glewExperimental = true;
+    GLenum e = GLEW_OK;
+    e = glewInit();
+    if (e != GLEW_OK) { // never fails
+        printf("glewInit initialization failed. GLEW error %s\n", glewGetErrorString(e));
+    }
+#endif
+
     if (!njli::NJLIGameEngine::create(
             DeviceUtil::hardwareDescription().c_str()))
       {
