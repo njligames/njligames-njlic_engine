@@ -130,6 +130,14 @@ macro(LUA_BULLET3_SWIG)
     # endif()
     target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
+    if(MSVC AND NOT LIBC)
+      list(APPEND EXTRA_LIBS "msvcrt.lib")
+      # Don't try to link with the default set of libraries.
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 PROPERTIES LINK_FLAGS_RELEASE "/NODEFAULTLIB:LIBCMT")
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT")
+      target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 ${EXTRA_LDFLAGS} debug "msvcrtd.lib")
+    endif()
+
     target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 ${CMAKE_PROJECT_NAME}-static )
     foreach(EXTRA_LIB ${EXTRA_LIBS})
       target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3 optimized ${EXTRA_LIB})
@@ -269,6 +277,13 @@ macro(LUA_NJLIC_SWIG)
       #   VERSION ${${CMAKE_PROJECT_NAME}-lua-swig-njlic_VERSION}
       #   SOVERSION ${LT_REVISION}
       #   OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic")
+    endif()
+    if(MSVC AND NOT LIBC)
+      list(APPEND EXTRA_LIBS "msvcrt.lib")
+      # Don't try to link with the default set of libraries.
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES LINK_FLAGS_RELEASE "/NODEFAULTLIB:LIBCMT")
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT")
+      target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic ${EXTRA_LDFLAGS} debug "msvcrtd.lib")
     endif()
     target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic ${CMAKE_PROJECT_NAME}-static)
 
