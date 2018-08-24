@@ -77,13 +77,28 @@ macro(LUA_BULLET3_SWIG)
 
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
 
+
+  #    ``CMAKE_SWIG_FLAGS``
+  #    Add flags to all swig calls.
+  #  
+  #  ``CMAKE_SWIG_OUTDIR``
+  #    Specify where to write the language specific files (swig ``-outdir`` option).
+  #  
+  #  ``SWIG_OUTFILE_DIR``
+  #    Specify an output directory name where the generated source file will be
+  #    placed.  If not specified, ``CMAKE_SWIG_OUTDIR`` is used.
+  #  
+  #  ``SWIG_MODULE_<name>_EXTRA_DEPS``
+  #    Specify extra dependencies for the generated module for ``<name>``.
+
+  set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
+  set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
+
   swig_add_library(
     ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static
     TYPE STATIC
     LANGUAGE lua
     SOURCES "${LUA_SWIG_SOURCE_FILES}"
-    OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
-    OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
@@ -112,13 +127,14 @@ macro(LUA_BULLET3_SWIG)
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
   if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS)
+    set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
+    set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
+
     swig_add_library(
       ${CMAKE_PROJECT_NAME}-lua-swig-bullet3
       TYPE MODULE
       LANGUAGE lua
       SOURCES "${LUA_SWIG_SOURCE_FILES}"
-      OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
-      OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
       )
     # if(APPLE)
     #   if(IOS OR TVOS)
@@ -219,13 +235,14 @@ macro(LUA_NJLIC_SWIG)
 
   # list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
 
+  set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
+  set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
+
   swig_add_library(
     ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
     TYPE STATIC
     LANGUAGE lua
     SOURCES "${LUA_SWIG_SOURCE_FILES}"
-    OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
-    OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
     )
 
   if(APPLE)
@@ -248,13 +265,13 @@ macro(LUA_NJLIC_SWIG)
     )
 
   if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS)
+    set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
+    set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
     swig_add_library(
       ${CMAKE_PROJECT_NAME}-lua-swig-njlic
       TYPE MODULE
       LANGUAGE lua
       SOURCES "${LUA_SWIG_SOURCE_FILES}"
-      OUTPUT_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
-      OUTFILE_DIR ${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua
       )
     # target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
