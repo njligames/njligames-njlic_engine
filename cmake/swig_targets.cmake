@@ -94,12 +94,21 @@ macro(LUA_BULLET3_SWIG)
   set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
   set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
 
-  swig_add_library(
-    ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static
-    TYPE STATIC
-    LANGUAGE lua
-    SOURCES "${LUA_SWIG_SOURCE_FILES}"
-    )
+  if(${CMAKE_VERSION} VERSION_LESS "3.8")
+    swig_add_module(
+      ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static
+      lua
+      "${LUA_SWIG_SOURCE_FILES}"
+      )
+  else()
+    swig_add_library(
+      ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static
+      TYPE STATIC
+      LANGUAGE lua
+      SOURCES "${LUA_SWIG_SOURCE_FILES}"
+      )
+  endif()
+
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   if(APPLE)
@@ -130,12 +139,21 @@ macro(LUA_BULLET3_SWIG)
     set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
     set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
 
-    swig_add_library(
-      ${CMAKE_PROJECT_NAME}-lua-swig-bullet3
-      TYPE MODULE
-      LANGUAGE lua
-      SOURCES "${LUA_SWIG_SOURCE_FILES}"
-      )
+    if(${CMAKE_VERSION} VERSION_LESS "3.8")
+      swig_add_module(
+        ${CMAKE_PROJECT_NAME}-lua-swig-bullet3
+        lua
+        "${LUA_SWIG_SOURCE_FILES}"
+        )
+    else()
+      swig_add_library(
+        ${CMAKE_PROJECT_NAME}-lua-swig-bullet3
+        TYPE MODULE
+        LANGUAGE lua
+        SOURCES "${LUA_SWIG_SOURCE_FILES}"
+        )
+    endif()
+
     # if(APPLE)
     #   if(IOS OR TVOS)
     #     SET_TARGET_PROPERTIES (
@@ -238,12 +256,20 @@ macro(LUA_NJLIC_SWIG)
   set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
   set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
 
-  swig_add_library(
-    ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
-    TYPE STATIC
-    LANGUAGE lua
-    SOURCES "${LUA_SWIG_SOURCE_FILES}"
-    )
+  if(${CMAKE_VERSION} VERSION_LESS "3.8")
+    swig_add_module(
+      ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
+      lua
+      "${LUA_SWIG_SOURCE_FILES}"
+      )
+  else()
+    swig_add_library(
+      ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
+      TYPE STATIC
+      LANGUAGE lua
+      SOURCES "${LUA_SWIG_SOURCE_FILES}"
+      )
+  endif()
 
   if(APPLE)
     if(IOS OR TVOS)
@@ -267,12 +293,21 @@ macro(LUA_NJLIC_SWIG)
   if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS)
     set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
     set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
-    swig_add_library(
-      ${CMAKE_PROJECT_NAME}-lua-swig-njlic
-      TYPE MODULE
-      LANGUAGE lua
-      SOURCES "${LUA_SWIG_SOURCE_FILES}"
-      )
+
+    if(${CMAKE_VERSION} VERSION_LESS "3.8")
+      swig_add_module(
+        ${CMAKE_PROJECT_NAME}-lua-swig-njlic
+        lua
+        "${LUA_SWIG_SOURCE_FILES}"
+        )
+    else()
+      swig_add_library(
+        ${CMAKE_PROJECT_NAME}-lua-swig-njlic
+        TYPE MODULE
+        LANGUAGE lua
+        SOURCES "${LUA_SWIG_SOURCE_FILES}"
+        )
+    endif()
     # target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
     if(APPLE)
@@ -313,8 +348,8 @@ macro(LUA_NJLIC_SWIG)
 endmacro()
 
 if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
-  if(${CMAKE_VERSION} VERSION_LESS "3.11")
-    message("Please consider to switch to CMake 3.11 in order to use SWIG")
+  if(${CMAKE_VERSION} VERSION_LESS "3.6")
+    message("Please consider to switch to CMake 3.6 in order to use SWIG")
   else()
     find_package(SWIG REQUIRED)
 
@@ -325,6 +360,21 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
       MESSAGE(STATUS "SWIG_VERSION ${SWIG_VERSION}")
 
       include(${SWIG_USE_FILE})
+
+      if(ANDROID)
+        if(${ANDROID_ABI} STREQUAL "armeabi-v7a" OR ${ANDROID_ABI} STREQUAL "x86")
+          include_directories(${ANDROID_SYSROOT}/usr/include/arm-linux-androideabi)
+        elseif(${ANDROID_ABI} STREQUAL "arm64-v8a" OR ${ANDROID_ABI} STREQUAL "x86_64")
+          include_directories(${ANDROID_SYSROOT}/usr/include/aarch64-linux-android)
+        elseif(${ANDROID_ABI} STREQUAL "x86")
+          include_directories(${ANDROID_SYSROOT}/usr/include/i686-linux-android)
+        elseif(${ANDROID_ABI} STREQUAL "x86_64")
+          include_directories(${ANDROID_SYSROOT}/usr/include/x86_64-linux-android)
+        endif()
+
+        include_directories(${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS})
+        include_directories(${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES})
+      endif()
 
       LUA_NJLIC_SWIG()
       LUA_BULLET3_SWIG()
