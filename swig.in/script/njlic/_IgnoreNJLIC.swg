@@ -39,3 +39,4 @@
 %ignore _debug_log_stderr;
 
 %ignore lua_load;
+%ignore DUMMY_ENUM_VALUE;

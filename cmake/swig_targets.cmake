@@ -109,6 +109,16 @@ macro(LUA_BULLET3_SWIG)
       )
   endif()
 
+  if(ANDROID)
+    if(TARGET main)
+      add_dependencies(main ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static)
+    endif()
+  else()
+    if(TARGET ${CMAKE_PROJECT_NAME}-exe)
+      add_dependencies(${CMAKE_PROJECT_NAME}-exe ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static)
+    endif()
+  endif()
+
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   if(APPLE)
@@ -135,7 +145,7 @@ macro(LUA_BULLET3_SWIG)
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
-  if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS)
+  if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
     set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
     set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
 
@@ -271,6 +281,16 @@ macro(LUA_NJLIC_SWIG)
       )
   endif()
 
+  if(ANDROID)
+    if(TARGET main)
+      add_dependencies(main ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
+    endif()
+  else()
+    if(TARGET ${CMAKE_PROJECT_NAME}-exe)
+      add_dependencies(${CMAKE_PROJECT_NAME}-exe ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
+    endif()
+  endif()
+
   if(APPLE)
     if(IOS OR TVOS)
       SET_TARGET_PROPERTIES (
@@ -290,7 +310,7 @@ macro(LUA_NJLIC_SWIG)
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
 
-  if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS)
+  if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
     set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
     set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua")
 
