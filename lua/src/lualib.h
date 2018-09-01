@@ -49,9 +49,9 @@ LUAMOD_API int (luaopen_package) (lua_State *L);
 LUAMOD_API int (luaopen_njlic) (lua_State *L);
 #endif
 
-#if defined(BULLET_SWIG)
+#if defined(BULLET3_SWIG)
 #define LUA_BULLETLIBNAME "bullet"
-LUAMOD_API int (luaopen_bullet) (lua_State *L);
+LUAMOD_API int (luaopen_bullet3) (lua_State *L);
 #endif
 
 #define LUA_BITLIBNAME	"bit"

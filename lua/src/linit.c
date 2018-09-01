@@ -54,8 +54,8 @@ static const luaL_Reg loadedlibs[] = {{"_G", luaopen_base},
                                       {LUA_NJLICLIBNAME, luaopen_njlic},
 #endif
 
-#if defined(BULLET_SWIG)
-                                      {LUA_BULLETLIBNAME, luaopen_bullet},
+#if defined(BULLET3_SWIG)
+                                      {LUA_BULLETLIBNAME, luaopen_bullet3},
 #endif
                                       {LUA_BITLIBNAME, luaopen_bit},
                                       {NULL, NULL}};
