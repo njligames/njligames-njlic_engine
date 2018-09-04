@@ -1,3 +1,4 @@
+
 OPTION(THIRDPARTY_BULLET3_ENABLED "Use bullet3 library" ON)
 mark_as_advanced(${THIRDPARTY_BULLET3_ENABLED})
 OPTION(USE_BULLET3_LIBRARY "fmod include" ${THIRDPARTY_BULLET3_ENABLED})
@@ -173,6 +174,17 @@ elseif( OPENAL )
 elseif( SDL_SOUND )
   message(STATUS "need to add sdl lib")
 endif()
+
+include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/DownloadSTBImages.cmake")
+list(APPEND ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS "${STBIMAGES_INCLUDE_DIRS}")
+# MESSAGE(FATAL_ERROR "STBIMAGES_INCLUDE_DIRS ${STBIMAGES_INCLUDE_DIRS}         ${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS ${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}")
+
+find_package(STBImages REQUIRED)
+list(APPEND EXTRA_LIBS ${STBIMAGES_TARGETS})
+add_definitions(-DSTB_IMAGE_IMPLEMENTATION=1)
+
+
+########################################################################################
 
 if(EMSCRIPTEN)
   include("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/emscripten_external_libraries.cmake")
