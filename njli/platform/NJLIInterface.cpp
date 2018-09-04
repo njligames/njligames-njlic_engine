@@ -163,3 +163,8 @@ const char *NJLI_HandleGetHint(const char *name) { return ""; }
 void NJLI_HandleCommitText(const char *text, int newCursorPosition) {}
 
 void NJLI_HandleSetComposingText(const char *text, int newCursorPosition) {}
+
+void NJLI_HandleVRCameraRotation(const glm::mat4 &transform)
+{
+    njli::NJLIGameEngine::setVRCameraRotation(transform);
+}

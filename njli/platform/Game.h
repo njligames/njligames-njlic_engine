@@ -1,6 +1,8 @@
 #ifndef __NJLIGameEngine__
 #define __NJLIGameEngine__
 
+#include "glm/glm.hpp"
+
 namespace njli
 {
   class NJLIGameEngine
@@ -88,6 +90,8 @@ namespace njli
     };
 
     static PlatformID platformID();
+      
+      static void setVRCameraRotation(const glm::mat4 &transform);
 
   protected:
   private:

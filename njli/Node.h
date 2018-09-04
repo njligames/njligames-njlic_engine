@@ -21,6 +21,12 @@
 #include "PhysicsBody.h"
 #include "btTransform.h"
 
+#include "glm/glm.hpp"
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/gtx/transform.hpp"
+#include "glm/gtx/quaternion.hpp"
+#include "glm/gtx/matrix_decompose.hpp"
+
 class btQuaternion;
 class btTransform;
 
@@ -357,6 +363,7 @@ namespace njli
          */
     void setTransform(const btTransform &transform);
 
+      void setTransform(const glm::mat4 &transform);
     /**
          *  @author James Folk, 16-02-10 21:02:39
          *
@@ -1665,6 +1672,28 @@ namespace njli
     SteeringBehaviorMachine *m_SteeringBehaviorMachine;
 
     Scene *m_CurrentScene;
+  public:
+      static inline glm::vec2 convert(const btVector2& vec) { return glm::vec2(vec.x(), vec.y()); }
+      static inline glm::vec3 convert(const btVector3& vec) { return glm::vec3(vec.x(), vec.y(), vec.z()); }
+      
+      static inline glm::quat convert(const btQuaternion& quat)     { return glm::quat(quat.w(), quat.x(), quat.y(), quat.z()); }
+      static inline glm::mat4 convert(const btTransform& transform) { return glm::mat4(glm::mat4_cast(convert(transform.getRotation())) * glm::translate(convert(transform.getOrigin()))); }
+      
+      static inline btVector2 convert(const glm::vec2& vec) { return btVector2(vec.x, vec.y); }
+      static inline btVector3 convert(const glm::vec3& vec) { return btVector3(vec.x, vec.y, vec.z); }
+      
+      static inline btQuaternion convert(const glm::quat& quat)      { return btQuaternion(quat.x, quat.y, quat.z, quat.w); }
+      static inline btTransform  convert(const glm::mat4& transform)
+      {
+          glm::vec3 scale;
+          glm::quat rot;
+          glm::vec3 pos;
+          glm::vec3 s;
+          glm::vec4 p;
+          glm::decompose(transform, scale, rot, pos, s, p);
+          
+          return btTransform(convert(rot), convert(pos));
+      }
   };
 }
 

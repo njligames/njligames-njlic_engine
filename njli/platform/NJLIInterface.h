@@ -12,6 +12,7 @@
 #include "SDL.h"
 #include <map>
 #include <vector>
+#include "glm/glm.hpp"
 
 extern std::vector<SDL_Joystick *> gGameJoysticks;
 typedef std::map<int, SDL_Joystick *> JoystickMap;
@@ -70,6 +71,8 @@ const char *NJLI_HandleGetHint(const char *name);
 
 void NJLI_HandleCommitText(const char *text, int newCursorPosition);
 void NJLI_HandleSetComposingText(const char *text, int newCursorPosition);
+    
+    void NJLI_HandleVRCameraRotation(const glm::mat4 &transform);
 
 #ifdef __cplusplus
 }

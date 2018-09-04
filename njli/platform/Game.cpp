@@ -385,4 +385,10 @@ namespace njli
     if (njli::World::getInstance()->getScene())
       njli::World::getInstance()->getScene()->receivedMemoryWarning();
   }
+    
+    void NJLIGameEngine::setVRCameraRotation(const glm::mat4 &transform)
+    {
+        if (njli::World::getInstance()->getScene())
+            njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
+    }
 } // namespace njli

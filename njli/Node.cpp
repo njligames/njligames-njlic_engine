@@ -346,6 +346,11 @@ namespace njli
     //            physicsBody->setWorldTransform(getTransform());
     //        }
   }
+    
+    void Node::setTransform(const glm::mat4 &transform)
+    {
+        setTransform(convert(transform));
+    }
 
   btVector3 Node::getOrigin() const { return getWorldTransform().getOrigin(); }
 

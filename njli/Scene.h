@@ -19,6 +19,8 @@
 #include <string>
 #include <vector>
 
+#include "glm/glm.hpp"
+
 class btTransform;
 class btVector2;
 
@@ -484,6 +486,8 @@ namespace njli
      *  @return <#return value description#>
      */
     const Camera *getTouchCamera() const;
+      
+      void setVRCameraRotation(const glm::mat4 &transform);
 
   protected:
     void addActiveCamera(Camera *camera = NULL);
@@ -526,6 +530,7 @@ namespace njli
     btAlignedObjectArray<Geometry *> *m_ActiveGeometry;
 
     Camera *m_TouchCamera;
+      glm::mat4 m_VRCameraRotation;
   };
 }
 

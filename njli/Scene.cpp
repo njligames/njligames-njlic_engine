@@ -1235,6 +1235,10 @@ namespace njli
 
   const Camera *Scene::getTouchCamera() const { return m_TouchCamera; }
 
+    void Scene::setVRCameraRotation(const glm::mat4 &transform)
+    {
+        m_VRCameraRotation = transform;
+    }
   //    void Scene::pause()
   //    {
   //        if(getPhysicsWorld())
