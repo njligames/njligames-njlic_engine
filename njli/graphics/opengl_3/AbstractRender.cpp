@@ -33,7 +33,7 @@ void initGL()
 //    glDisable(GL_DEPTH_TEST);
 }
 
-void renderGL()
+void renderGL(bool leftEye)
 {
 #if (defined(DEBUG) || defined (_DEBUG)) && defined(__APPLE__)
     glPushGroupMarkerEXT(0, "renderGL()");

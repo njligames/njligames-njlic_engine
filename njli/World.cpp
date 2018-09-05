@@ -885,97 +885,18 @@ namespace njli
 #if defined(USE_NANOVG_LIBRARY)
     getWorldHUD()->renderFBOs();
 #endif
-    renderGL();
-
-    Scene *scene = getScene();
-
-    if (scene)
-      scene->render();
-#if defined(USE_NANOVG_LIBRARY)
-    getWorldHUD()->render();
+      
+#if defined(VR)
+      renderGL(true);
+      renderInternal();
+      
+      renderGL(false);
+      renderInternal();
+#else
+      renderGL();
+      renderInternal();
 #endif
-
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIRender");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
-
-#if !defined(NDEBUG)
-
-    if (m_enableDebugDraw)
-      {
-        getDebugDrawer()->beginDraw();
-
-        if (scene)
-          {
-            PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-            if (physicsWorld)
-              {
-                physicsWorld->debugDrawWorld();
-              }
-            else
-              {
-                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                            "Debug draw is enabled without a physics World.");
-              }
-          }
-        else
-          {
-            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        "Debug draw is enabled without a scene.");
-          }
-
-        if (m_DebugDrawCamera)
-          {
-            getDebugDrawer()->draw(m_DebugDrawCamera);
-          }
-        else
-          {
-            //                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Debug draw is
-            //                enabled without a camera.");
-          }
-
-        //            // 1. Show a simple window
-        //            // Tip: if we don't call ImGui::Begin()/ImGui::End() the
-        //            widgets appears in a window automatically called "Debug"
-        //            {
-        //                static float f = 0.0f;
-        //                ImGui::Text("Hello, world!");
-        //                ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-        //                ImGui::ColorEdit3("clear color",
-        //                (float*)&clear_color);
-        //                if (ImGui::Button("Test Window")) show_test_window ^=
-        //                1;
-        //                if (ImGui::Button("Another Window"))
-        //                show_another_window ^= 1;
-        //                ImGui::Text("Application average %.3f ms/frame (%.1f
-        //                FPS)", 1000.0f / ImGui::GetIO().Framerate,
-        //                ImGui::GetIO().Framerate);
-        //            }
-        //
-        //            // 2. Show another simple window, this time using an
-        //            explicit Begin/End pair
-        //            if (show_another_window)
-        //            {
-        //                ImGui::SetNextWindowSize(ImVec2(200,100),
-        //                ImGuiSetCond_FirstUseEver);
-        //                ImGui::Begin("Another Window", &show_another_window);
-        //                ImGui::Text("Hello");
-        //                ImGui::End();
-        //            }
-        //
-        //            // 3. Show the ImGui test window. Most of the sample code
-        //            is in ImGui::ShowTestWindow()
-        //            if (show_test_window)
-        //            {
-        //                ImGui::SetNextWindowPos(ImVec2(650, 20),
-        //                ImGuiSetCond_FirstUseEver);
-        //                ImGui::ShowTestWindow(&show_test_window);
-        //            }
-
-        getDebugDrawer()->endDraw();
-      }
-#endif
-    m_WorldFactory->collectGarbage_GPU();
+    
   }
 
   void World::resize(s32 x, s32 y, s32 width, s32 height, s32 orientation)
@@ -1767,6 +1688,99 @@ namespace njli
           }
       }
   }
+    
+    void World::renderInternal()
+    {
+        Scene *scene = getScene();
+        
+        if (scene)
+            scene->render();
+#if defined(USE_NANOVG_LIBRARY)
+        getWorldHUD()->render();
+#endif
+        
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIRender");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
+        
+#if !defined(NDEBUG)
+        
+        if (m_enableDebugDraw)
+        {
+            getDebugDrawer()->beginDraw();
+            
+            if (scene)
+            {
+                PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                if (physicsWorld)
+                {
+                    physicsWorld->debugDrawWorld();
+                }
+                else
+                {
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "Debug draw is enabled without a physics World.");
+                }
+            }
+            else
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Debug draw is enabled without a scene.");
+            }
+            
+            if (m_DebugDrawCamera)
+            {
+                getDebugDrawer()->draw(m_DebugDrawCamera);
+            }
+            else
+            {
+                //                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Debug draw is
+                //                enabled without a camera.");
+            }
+            
+            //            // 1. Show a simple window
+            //            // Tip: if we don't call ImGui::Begin()/ImGui::End() the
+            //            widgets appears in a window automatically called "Debug"
+            //            {
+            //                static float f = 0.0f;
+            //                ImGui::Text("Hello, world!");
+            //                ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+            //                ImGui::ColorEdit3("clear color",
+            //                (float*)&clear_color);
+            //                if (ImGui::Button("Test Window")) show_test_window ^=
+            //                1;
+            //                if (ImGui::Button("Another Window"))
+            //                show_another_window ^= 1;
+            //                ImGui::Text("Application average %.3f ms/frame (%.1f
+            //                FPS)", 1000.0f / ImGui::GetIO().Framerate,
+            //                ImGui::GetIO().Framerate);
+            //            }
+            //
+            //            // 2. Show another simple window, this time using an
+            //            explicit Begin/End pair
+            //            if (show_another_window)
+            //            {
+            //                ImGui::SetNextWindowSize(ImVec2(200,100),
+            //                ImGuiSetCond_FirstUseEver);
+            //                ImGui::Begin("Another Window", &show_another_window);
+            //                ImGui::Text("Hello");
+            //                ImGui::End();
+            //            }
+            //
+            //            // 3. Show the ImGui test window. Most of the sample code
+            //            is in ImGui::ShowTestWindow()
+            //            if (show_test_window)
+            //            {
+            //                ImGui::SetNextWindowPos(ImVec2(650, 20),
+            //                ImGuiSetCond_FirstUseEver);
+            //                ImGui::ShowTestWindow(&show_test_window);
+            //            }
+            
+            getDebugDrawer()->endDraw();
+        }
+#endif
+        m_WorldFactory->collectGarbage_GPU();
+    }
   /*
    new (TestsWorldState)
    enter (TestsWorldState)

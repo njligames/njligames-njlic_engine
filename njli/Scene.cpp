@@ -342,6 +342,10 @@ namespace njli
     for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
       {
         Camera *camera = (*m_ActiveCameras).at(i);
+#if defined(VR)
+          if(camera->getParent())
+              camera->getParent()->setTransform(m_VRCameraRotation);
+#endif
         //            btVector3
         //            cameraOrigin(camera->getParent()->getWorldTransform().getOrigin());
 

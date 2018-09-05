@@ -33,13 +33,28 @@ void initGL()
 //    glDisable(GL_DEPTH_TEST);
 }
 
-void renderGL()
+void renderGL(bool isLeftEye)
 {
 #if !(defined(NDEBUG)) && defined(__APPLE__)
     glPushGroupMarkerEXT(0, "renderGL()");
 #endif
+    
+#if defined(VR)
+    if(isLeftEye)
+    {
+        glViewport(viewX, viewY, viewWidth / 2, viewHeight);
+    }
+    else
+    {
+        glViewport((viewX) + (viewWidth / 2), viewY, viewWidth / 2, viewHeight);
+    }
+#else
     glViewport(viewX, viewY, viewWidth, viewHeight);
     glClearColor(bgRed, bgGreen, bgBlue, bgAlpha);
+#endif
+    glClearColor(bgRed, bgGreen, bgBlue, bgAlpha);
+    
+    
 //    glClearColor(0.52, 0.86, 0.99, 1.0f);
     
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);

@@ -390,6 +390,8 @@ namespace njli
          *  @snippet Node.lua Node_calculateSerializeBufferSize_
          */
     void setOrigin(const btVector3 &origin);
+      
+      void setOrigin(float x, float y, float z);
 
     /**
          *  @author James Folk, 16-02-10 21:02:02

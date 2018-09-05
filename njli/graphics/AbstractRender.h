@@ -19,7 +19,7 @@ void initGL();
 /**
  *  <#Description#>
  */
-void renderGL();
+void renderGL(bool leftEye = true);
 
 /**
  *  <#Description#>

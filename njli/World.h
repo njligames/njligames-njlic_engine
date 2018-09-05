@@ -502,6 +502,7 @@ namespace njli
                            bool disableNodeTouched = false);
 
   private:
+      void renderInternal();
     btAlignedObjectArray<njli::PhysicsRayContact *> m_RayContacts;
 
     World(const World &);

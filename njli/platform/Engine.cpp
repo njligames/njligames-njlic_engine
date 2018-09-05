@@ -418,8 +418,8 @@ namespace njli
       {
           case SDL_JOYDEVICEMOTION:
           {
-              SDL_Log("Joystick device %d motion. [%f, %f, %f, %f, %f, %f, %f, %f, %f]\n", (int) event->jmotion.which, event->jmotion.m11, event->jmotion.m12, event->jmotion.m13, event->jmotion.m21, event->jmotion.m22, event->jmotion.m23, event->jmotion.m31, event->jmotion.m32, event->jmotion.m33);
-              SDL_Log("Yaw, Pitch, Roll (%f, %f, %f)\n", event->jmotion.yaw, event->jmotion.pitch, event->jmotion.roll);
+//              SDL_Log("Joystick device %d motion. [%f, %f, %f, %f, %f, %f, %f, %f, %f]\n", (int) event->jmotion.which, event->jmotion.m11, event->jmotion.m12, event->jmotion.m13, event->jmotion.m21, event->jmotion.m22, event->jmotion.m23, event->jmotion.m31, event->jmotion.m32, event->jmotion.m33);
+//              SDL_Log("Yaw, Pitch, Roll (%f, %f, %f)\n", event->jmotion.yaw, event->jmotion.pitch, event->jmotion.roll);
               
               float _transform[] = {static_cast<float>(event->jmotion.m11), static_cast<float>(event->jmotion.m12), static_cast<float>(event->jmotion.m13), static_cast<float>(event->jmotion.m21), static_cast<float>(event->jmotion.m22), static_cast<float>(event->jmotion.m23), static_cast<float>(event->jmotion.m31), static_cast<float>(event->jmotion.m32), static_cast<float>(event->jmotion.m33)};
               glm::mat4 transform = glm::make_mat4(_transform);
@@ -536,7 +536,7 @@ namespace njli
     while (SDL_PollEvent(&event))
       {
         njli::NJLIGameEngine::handleEvent(&event);
-        SDLTest_PrintEvent(&event);
+//        SDLTest_PrintEvent(&event);
         switch (event.type)
           {
 

@@ -360,6 +360,11 @@ namespace njli
     t.setOrigin(origin);
     setTransform(t);
   }
+    
+    void Node::setOrigin(float x, float y, float z)
+    {
+        setOrigin(btVector3(x, y, z));
+    }
 
   void Node::setOrigin(const btVector2 &origin)
   {
