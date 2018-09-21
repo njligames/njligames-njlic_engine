@@ -10,7 +10,7 @@
 #include "JLIFactoryTypes.h"
 
 #include <errno.h>
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
 #include <unistd.h>
 
 //#ifdef __ANDROID__
@@ -36,15 +36,15 @@
 namespace njli
 {
   WorldSocket::WorldSocket()
-      : m_sck(-1), 
-#if !defined(_WIN32)
+      : m_sck(-1),
+#if !defined(_WIN32) && !defined(__ANDROID__)
       m_sck_addr(), 
 #endif
       m_buffer(new s8[JLI_SOCKET_BUFFER_SIZE]),
       m_isConnected(false), 
       m_SocketData("")
   {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
     m_sck_addr.sin_family = AF_INET;
 #endif
 
@@ -72,7 +72,7 @@ namespace njli
   {
     disconnectJLI();
 
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
     int res;
     struct sockaddr_in addr;
     long arg;
@@ -265,7 +265,7 @@ namespace njli
 
   void WorldSocket::parseMessage(const std::string &delimeter)
   {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
     if (isConnected())
       {
         s64 len = 0;
@@ -324,7 +324,7 @@ namespace njli
 
   void WorldSocket::sendMessage(const std::string &message)
   {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
     if (isConnected())
       {
         size_t nbytes_sent = 0;
@@ -338,7 +338,7 @@ namespace njli
 
   void WorldSocket::disconnectJLI()
   {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
     if (m_sck > -1)
       {
         close(m_sck);
@@ -354,7 +354,7 @@ namespace njli
 
   void WorldSocket::socketSetOpt()
   {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
     int r = 0, v = 1;
 
     r = setsockopt(m_sck, SOL_SOCKET, SO_REUSEADDR, (char *)&v, sizeof(v));

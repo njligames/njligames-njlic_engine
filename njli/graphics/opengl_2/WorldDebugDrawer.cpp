@@ -1201,7 +1201,7 @@ namespace njli
 
   void WorldDebugDrawer::renderImgui() { ImGui::Render(); }
 
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
   static void GetPrimaryIp(char *buffer, size_t buflen)
   {
     setenv("LANG", "C", 1);
@@ -1233,7 +1233,7 @@ namespace njli
 
   void WorldDebugDrawer::newFrameImgui()
   {
-#if !defined(_WIN32)
+#if !defined(_WIN32) && !defined(__ANDROID__)
     static char buffer[256];
     GetPrimaryIp(buffer, 256);
 #endif

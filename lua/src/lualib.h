@@ -44,15 +44,15 @@ LUAMOD_API int (luaopen_debug) (lua_State *L);
 #define LUA_LOADLIBNAME	"package"
 LUAMOD_API int (luaopen_package) (lua_State *L);
 
-#if defined(NJLIC_SWIG)
+//#if defined(NJLIC_SWIG)
 #define LUA_NJLICLIBNAME	"njlic"
 LUAMOD_API int (luaopen_njlic) (lua_State *L);
-#endif
+//#endif
 
-#if defined(BULLET3_SWIG)
+//#if defined(BULLET3_SWIG)
 #define LUA_BULLETLIBNAME "bullet"
 LUAMOD_API int (luaopen_bullet3) (lua_State *L);
-#endif
+//#endif
 
 #define LUA_BITLIBNAME	"bit"
 LUAMOD_API int (luaopen_bit) (lua_State *L);
