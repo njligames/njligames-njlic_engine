@@ -119,6 +119,13 @@ macro(LUA_BULLET3_SWIG)
     endif()
   endif()
 
+  if(TARGET ${CMAKE_PROJECT_NAME}-static)
+    add_dependencies(${CMAKE_PROJECT_NAME}-static ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static)
+  endif()
+  if(TARGET ${CMAKE_PROJECT_NAME})
+    add_dependencies(${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static)
+  endif()
+
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   if(APPLE)
