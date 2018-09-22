@@ -321,13 +321,20 @@ macro(LUA_NJLIC_SWIG)
   endif()
 
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
-  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static ${CMAKE_PROJECT_NAME}-static)
+  # Had to comment this out for windows... 
+  # target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static ${CMAKE_PROJECT_NAME}-static)
   if(ANDROID)
     # target_link_libraries( main ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
     # target_compile_definitions(main PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
   endif()
   list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-njlic-static)
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
+
+
+
+
+
+
 
   target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
@@ -418,6 +425,10 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
 
         # include_directories(${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS})
         # include_directories(${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES})
+      endif()
+
+      if(MSVC AND NOT LIBC)
+        add_definitions(-DSTATIC_LINKED)
       endif()
 
       LUA_NJLIC_SWIG()
