@@ -49,6 +49,8 @@ if (DOXYGEN_FOUND)
   set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${LUA_DOXYGEN_GENERATED_FILES})
   set_source_files_properties( ${LUA_DOXYGEN_GENERATED_FILES} PROPERTIES GENERATED TRUE )
 
+  INSTALL(DIRECTORY ${CMAKE_BINARY_DIR}/doc/html DESTINATION doc)
+
 else (DOXYGEN_FOUND)
   message("Doxygen need to be installed to generate the doxygen documentation")
 endif (DOXYGEN_FOUND)
