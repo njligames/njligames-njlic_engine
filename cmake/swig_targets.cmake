@@ -159,6 +159,7 @@ macro(LUA_BULLET3_SWIG)
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
+
   if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
     set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
     set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
@@ -172,7 +173,7 @@ macro(LUA_BULLET3_SWIG)
     else()
       swig_add_library(
         ${CMAKE_PROJECT_NAME}-lua-swig-bullet3
-        TYPE MODULE
+        TYPE SHARED
         LANGUAGE lua
         SOURCES "${LUA_SWIG_SOURCE_FILES}"
         )
@@ -203,6 +204,43 @@ macro(LUA_BULLET3_SWIG)
     target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3 ${EXTRA_LDFLAGS})
     foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
       target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3 debug ${EXTRA_DEBUG_LIB})
+    endforeach()
+  endif()
+
+  if(NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
+    #So... non-mobile (WINDOWS, LINUX, MAC
+
+    set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
+    set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
+
+    if(${CMAKE_VERSION} VERSION_LESS "3.8")
+      MESSAGE(FATAL_ERROR "Cannot make a swig module with a version less than 3.8")
+    else()
+      swig_add_library(
+        ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module
+        TYPE MODULE
+        LANGUAGE lua
+        SOURCES "${LUA_SWIG_SOURCE_FILES}"
+        )
+    endif()
+
+    target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+
+    if(MSVC AND NOT LIBC)
+      list(APPEND EXTRA_LIBS "msvcrt.lib")
+      # Don't try to link with the default set of libraries.
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module PROPERTIES LINK_FLAGS_RELEASE "/NODEFAULTLIB:LIBCMT")
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT")
+      target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module ${EXTRA_LDFLAGS} debug "msvcrtd.lib")
+    endif()
+
+    target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module ${CMAKE_PROJECT_NAME}-static )
+    foreach(EXTRA_LIB ${EXTRA_LIBS})
+      target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module optimized ${EXTRA_LIB})
+    endforeach()
+    target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module ${EXTRA_LDFLAGS})
+    foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
+      target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-bullet3-module debug ${EXTRA_DEBUG_LIB})
     endforeach()
   endif()
 
@@ -394,6 +432,58 @@ macro(LUA_NJLIC_SWIG)
 
     set(_INSTALL_LIBS "${CMAKE_PROJECT_NAME}-lua-swig-njlic" ${_INSTALL_LIBS})
     target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-njlic
+      PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
+      PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
+      )
+  endif()
+
+  if(NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
+    set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
+    set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
+
+    if(${CMAKE_VERSION} VERSION_LESS "3.8")
+      MESSAGE(FATAL_ERROR "Cannot make a swig module with a version less than 3.8")
+    else()
+      swig_add_library(
+        ${CMAKE_PROJECT_NAME}-lua-swig-njlic-module
+        TYPE MODULE
+        LANGUAGE lua
+        SOURCES "${LUA_SWIG_SOURCE_FILES}"
+        )
+    endif()
+    target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+
+    if(APPLE)
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module PROPERTIES MACOSX_RPATH 1)
+      # if(IOS OR TVOS)
+      #   SET_TARGET_PROPERTIES (
+      #     ${CMAKE_PROJECT_NAME}-lua-swig-njlic-module PROPERTIES
+      #     XCODE_ATTRIBUTE_ENABLE_BITCODE "NO"
+      #     XCODE_PRODUCT_TYPE "com.apple.product-type.library.dynamic"
+      #     )
+      # endif()
+    elseif(UNIX AND NOT ANDROID)
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module PROPERTIES
+        VERSION ${LT_VERSION}
+        SOVERSION ${LT_REVISION}
+        OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic-module-${LT_RELEASE}")
+    else()
+      # set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module PROPERTIES
+      #   VERSION ${${CMAKE_PROJECT_NAME}-lua-swig-njlic_VERSION}
+      #   SOVERSION ${LT_REVISION}
+      #   OUTPUT_NAME "${CMAKE_PROJECT_NAME}-lua-swig-njlic-module")
+    endif()
+    if(MSVC AND NOT LIBC)
+      list(APPEND EXTRA_LIBS "msvcrt.lib")
+      # Don't try to link with the default set of libraries.
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module PROPERTIES LINK_FLAGS_RELEASE "/NODEFAULTLIB:LIBCMT")
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT")
+      target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module ${EXTRA_LDFLAGS} debug "msvcrtd.lib")
+    endif()
+    target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module ${CMAKE_PROJECT_NAME}-static)
+
+    set(_INSTALL_LIBS "${CMAKE_PROJECT_NAME}-lua-swig-njlic-module" ${_INSTALL_LIBS})
+    target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module
       PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
       PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
       )

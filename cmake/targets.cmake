@@ -61,3 +61,110 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
   target_link_libraries( ${CMAKE_PROJECT_NAME}Framework ${EXTRA_LDFLAGS} ${EXTRA_LIBS} )
 endif()
+
+if(${CMAKE_PROJECT_NAME}_EXE)
+  if(NOT IOS AND NOT TVOS AND NOT ANDROID)
+
+    # LUA
+
+    if(APPLE)
+      add_executable( lua 
+        MACOSX_BUNDLE 
+        ${SOURCE_FILES} ${LUA_MAIN_FILES} ${LUA_RESOURCE_FILES} ${INCLUDE_FILES}
+        )
+    elseif(LINUX OR MSVC)
+      add_executable( lua 
+        ${SOURCE_FILES} ${LUA_MAIN_FILES} ${INCLUDE_FILES}
+        )
+    endif()
+
+    if(NOT LINUX AND NOT MSVC)
+      SET_TARGET_PROPERTIES(
+          lua PROPERTIES
+          RESOURCE "${LUA_RESOURCE_FILES}"
+        )
+    endif()
+    
+    if(MSVC)
+      set_property(TARGET lua PROPERTY FOLDER "executables")
+      install (TARGETS lua RUNTIME DESTINATION bin)
+    elseif(NOT EMSCRIPTEN)
+      INSTALL(TARGETS lua
+        RUNTIME DESTINATION bin
+        BUNDLE DESTINATION bin
+        )
+    else()
+      file(GLOB_RECURSE EMSCRIPTEN_LUA_BINARY_FILES ${CMAKE_BINARY_DIR}/lua.*)
+      list(REMOVE_DUPLICATES EMSCRIPTEN_LUA_BINARY_FILES)
+      install(FILES ${EMSCRIPTEN_LUA_BINARY_FILES} DESTINATION bin)
+    endif()
+
+    if(MSVC AND NOT LIBC)
+
+      list(APPEND EXTRA_LIBS "msvcrt.lib")
+      # Don't try to link with the default set of libraries.
+      set_target_properties(lua PROPERTIES LINK_FLAGS_RELEASE "/NODEFAULTLIB:LIBCMT")
+      set_target_properties(lua PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT")
+      target_link_libraries(lua ${EXTRA_LDFLAGS} debug "msvcrtd.lib")
+    endif()
+
+    target_include_directories(lua
+      PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
+      PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
+      )
+
+    target_link_libraries(lua ${EXTRA_LDFLAGS} optimized ${EXTRA_LIBS})
+
+    # LUAC
+
+    if(APPLE)
+      add_executable( luac
+        MACOSX_BUNDLE 
+        ${SOURCE_FILES} ${LUAC_MAIN_FILES} ${LUAC_RESOURCE_FILES} ${INCLUDE_FILES}
+        )
+    elseif(LINUX OR MSVC)
+      add_executable( luac
+        ${SOURCE_FILES} ${LUAC_MAIN_FILES} ${INCLUDE_FILES}
+        )
+    endif()
+
+    if(NOT LINUX AND NOT MSVC)
+      SET_TARGET_PROPERTIES(
+          luac PROPERTIES
+          RESOURCE "${LUAC_RESOURCE_FILES}"
+        )
+    endif()
+
+    if(MSVC)
+      set_property(TARGET luac PROPERTY FOLDER "executables")
+      install (TARGETS luac RUNTIME DESTINATION bin)
+    elseif(NOT EMSCRIPTEN)
+      INSTALL(TARGETS luac
+        RUNTIME DESTINATION bin
+        BUNDLE DESTINATION bin
+        )
+    else()
+      file(GLOB_RECURSE EMSCRIPTEN_LUA_BINARY_FILES ${CMAKE_BINARY_DIR}/luac.*)
+      list(REMOVE_DUPLICATES EMSCRIPTEN_LUA_BINARY_FILES)
+      install(FILES ${EMSCRIPTEN_LUA_BINARY_FILES} DESTINATION bin)
+    endif()
+
+    if(MSVC AND NOT LIBC)
+
+      list(APPEND EXTRA_LIBS "msvcrt.lib")
+      # Don't try to link with the default set of libraries.
+      set_target_properties(luac PROPERTIES LINK_FLAGS_RELEASE "/NODEFAULTLIB:LIBCMT")
+      set_target_properties(luac PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT")
+      target_link_libraries(luac ${EXTRA_LDFLAGS} debug "msvcrtd.lib")
+    endif()
+
+    target_include_directories(luac
+      PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
+      PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
+      )
+
+    target_link_libraries(luac ${EXTRA_LDFLAGS} optimized ${EXTRA_LIBS})
+  endif()
+
+endif(${CMAKE_PROJECT_NAME}_EXE)
+
