@@ -10,7 +10,7 @@
 #define __JLIGameEngineTest__Cube__
 
 #include "AbstractBuilder.h"
-#include "Geometry.h"
+#include "MeshGeometry.h"
 
 #include "lua.hpp"
 
@@ -21,7 +21,7 @@ namespace njli
   /**
    *  <#Description#>
    */
-  ATTRIBUTE_ALIGNED16(class) Cube : public Geometry
+  ATTRIBUTE_ALIGNED16(class) Cube : public MeshGeometry
   {
     friend class WorldFactory;
 
@@ -135,179 +135,183 @@ namespace njli
      *  @return <#return value description#>
      */
     static u32 type();
-
   public:
-    /**
-     *  @author James Folk, 16-02-11 16:02:52
-     *
-     *  @brief <#Description#>
-     *
-     *  @param geometry <#geometry description#>
-     *  @param vertices <#vertices description#>
-     *  @param node     <#node description#>
-     */
-    virtual void getVertices(LevelOfDetail * geometry, btVector3 * *vertices,
-                             Node * node) const;
-
-    /**
-     *  @author James Folk, 16-02-11 16:02:00
-     *
-     *  @brief <#Description#>
-     *
-     *  @param geometry <#geometry description#>
-     *  @param node     <#node description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual u64 getNumberOfVertices(LevelOfDetail * geometry, Node * node)
-        const;
-
-    /**
-     *  @author James Folk, 16-02-11 16:02:53
-     *
-     *  @brief <#Description#>
-     *
-     *  @param geometry      <#geometry description#>
-     *  @param colorVertices <#colorVertices description#>
-     *  @param node          <#node description#>
-     */
-    virtual void getVertexColors(LevelOfDetail * geometry,
-                                 btVector4 * *colorVertices, Node * node) const;
-
-    /**
-     *  @author James Folk, 16-02-11 16:02:06
-     *
-     *  @brief <#Description#>
-     *
-     *  @param geometry <#geometry description#>
-     *  @param node     <#node description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual u64 getNumberOfVertexColors(LevelOfDetail * geometry, Node * node)
-        const;
-
-    /**
-     *  @author James Folk, 16-02-11 16:02:57
-     *
-     *  @brief <#Description#>
-     *
-     *  @param geometry           <#geometry description#>
-     *  @param textureCoordinates <#textureCoordinates description#>
-     *  @param node               <#node description#>
-     */
-    virtual void getTextureCoordinates(LevelOfDetail * geometry,
-                                       btVector2 * *textureCoordinates,
-                                       Node * node) const;
-
-    /**
-     *  @author James Folk, 16-02-11 17:02:23
-     *
-     *  @brief <#Description#>
-     *
-     *  @param geometry <#geometry description#>
-     *  @param node     <#node description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual u64 getNumberOfTextureCoordinates(LevelOfDetail * geometry,
-                                              Node * node) const;
-
-    /**
-     *  <#Description#>
-     *
-     *  @param node    <#node description#>
-     *  @param opacity <#opacity description#>
-     */
-    virtual void setOpacity(Node * node, f32 opacity);
-    /**
-     *  <#Description#>
-     *
-     *  @param node      <#node description#>
-     *  @param transfrom <#transfrom description#>
-     */
-
-    /**
-     *  <#Description#>
-     *
-     *  @param node    <#node description#>
-     *  @param opacity <#opacity description#>
-     */
-    virtual void setHidden(Node * node, bool hidden = true);
-
-    /**
-     *  <#Description#>
-     *
-     *  @param node    <#node description#>
-     *  @param opacity <#opacity description#>
-     */
-    virtual bool isHidden(Node * node) const;
-
-    virtual void transformVertices(Node * node, const btTransform &transfrom);
-    /**
-     *  <#Description#>
-     *
-     *  @param node      <#node description#>
-     *  @param transform <#transform description#>
-     */
-    virtual void transformVertexColors(Node * node,
-                                       const btTransform &transform);
-    /**
-     *  <#Description#>
-     *
-     *  @param node      <#node description#>
-     *  @param transform <#transform description#>
-     */
-    virtual void transformTextureCoordinates(Node * node,
-                                             const btTransform &transform);
-
-    /**
-     *  <#Description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual s32 numberOfVertices() const;
-    /**
-     *  <#Description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual s32 numberOfIndices() const;
-
-  public:
-    // TODO: fill in specific methods for Cube
-
-  protected:
-    virtual bool shouldApplyShape(Node * node) const
-    {
-      SDL_assert(true);
-      return true;
-    }
-    void swapVertexData(const size_t idx1, const size_t idx2);
-
-    ATTRIBUTE_ALIGNED16(struct) CubeVerts
-    {
-      TexturedColoredVertex vertices[24];
-    };
-    virtual void load();
-    virtual void unLoad();
-
-    virtual const void *getArrayBuffer() const;
-    virtual s64 getArrayBufferSize() const;
-
-    virtual const void *getElementArrayBuffer() const;
-    virtual s64 getElementArrayBufferSize() const;
-    virtual void setSize(Node * node, const btVector3 &position,
-                         const f32 halfSize);
-    virtual void setColor(Node * node, const btVector4 &color);
-
-    virtual void applyShape(Node * node, PhysicsShape * physicsShape);
-
-    void hideGeometry(Node *);
-
+      void load(ShaderProgram *shader, unsigned int numInstances =  1, unsigned int numSubDivisions = 1);
   private:
-    CubeVerts *m_CubeVerts;
-    u16 *m_Indexes;
+      void load(ShaderProgram *shader, const std::string &filecontent, unsigned int numInstances, unsigned int numSubDivisions){}
+
+//  public:
+//    /**
+//     *  @author James Folk, 16-02-11 16:02:52
+//     *
+//     *  @brief <#Description#>
+//     *
+//     *  @param geometry <#geometry description#>
+//     *  @param vertices <#vertices description#>
+//     *  @param node     <#node description#>
+//     */
+//    virtual void getVertices(LevelOfDetail * geometry, btVector3 * *vertices,
+//                             Node * node) const;
+//
+//    /**
+//     *  @author James Folk, 16-02-11 16:02:00
+//     *
+//     *  @brief <#Description#>
+//     *
+//     *  @param geometry <#geometry description#>
+//     *  @param node     <#node description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual u64 getNumberOfVertices(LevelOfDetail * geometry, Node * node)
+//        const;
+//
+//    /**
+//     *  @author James Folk, 16-02-11 16:02:53
+//     *
+//     *  @brief <#Description#>
+//     *
+//     *  @param geometry      <#geometry description#>
+//     *  @param colorVertices <#colorVertices description#>
+//     *  @param node          <#node description#>
+//     */
+//    virtual void getVertexColors(LevelOfDetail * geometry,
+//                                 btVector4 * *colorVertices, Node * node) const;
+//
+//    /**
+//     *  @author James Folk, 16-02-11 16:02:06
+//     *
+//     *  @brief <#Description#>
+//     *
+//     *  @param geometry <#geometry description#>
+//     *  @param node     <#node description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual u64 getNumberOfVertexColors(LevelOfDetail * geometry, Node * node)
+//        const;
+//
+//    /**
+//     *  @author James Folk, 16-02-11 16:02:57
+//     *
+//     *  @brief <#Description#>
+//     *
+//     *  @param geometry           <#geometry description#>
+//     *  @param textureCoordinates <#textureCoordinates description#>
+//     *  @param node               <#node description#>
+//     */
+//    virtual void getTextureCoordinates(LevelOfDetail * geometry,
+//                                       btVector2 * *textureCoordinates,
+//                                       Node * node) const;
+//
+//    /**
+//     *  @author James Folk, 16-02-11 17:02:23
+//     *
+//     *  @brief <#Description#>
+//     *
+//     *  @param geometry <#geometry description#>
+//     *  @param node     <#node description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual u64 getNumberOfTextureCoordinates(LevelOfDetail * geometry,
+//                                              Node * node) const;
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node    <#node description#>
+//     *  @param opacity <#opacity description#>
+//     */
+//    virtual void setOpacity(Node * node, f32 opacity);
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node      <#node description#>
+//     *  @param transfrom <#transfrom description#>
+//     */
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node    <#node description#>
+//     *  @param opacity <#opacity description#>
+//     */
+//    virtual void setHidden(Node * node, bool hidden = true);
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node    <#node description#>
+//     *  @param opacity <#opacity description#>
+//     */
+//    virtual bool isHidden(Node * node) const;
+//
+//    virtual void transformVertices(Node * node, const btTransform &transfrom);
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node      <#node description#>
+//     *  @param transform <#transform description#>
+//     */
+//    virtual void transformVertexColors(Node * node,
+//                                       const btTransform &transform);
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node      <#node description#>
+//     *  @param transform <#transform description#>
+//     */
+//    virtual void transformTextureCoordinates(Node * node,
+//                                             const btTransform &transform);
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual s32 numberOfVertices() const;
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual s32 numberOfIndices() const;
+//
+//  public:
+//    // TODO: fill in specific methods for Cube
+//
+//  protected:
+//    virtual bool shouldApplyShape(Node * node) const
+//    {
+//      SDL_assert(true);
+//      return true;
+//    }
+//    void swapVertexData(const size_t idx1, const size_t idx2);
+//
+//    ATTRIBUTE_ALIGNED16(struct) CubeVerts
+//    {
+//      TexturedColoredVertex vertices[24];
+//    };
+//    virtual void load();
+//    virtual void unLoad();
+//
+//    virtual const void *getArrayBuffer() const;
+//    virtual s64 getArrayBufferSize() const;
+//
+//    virtual const void *getElementArrayBuffer() const;
+//    virtual s64 getElementArrayBufferSize() const;
+//    virtual void setSize(Node * node, const btVector3 &position,
+//                         const f32 halfSize);
+//    virtual void setColor(Node * node, const btVector4 &color);
+//
+//    virtual void applyShape(Node * node, PhysicsShape * physicsShape);
+//
+//    void hideGeometry(Node *);
+//
+//  private:
+//    CubeVerts *m_CubeVerts;
+//    u16 *m_Indexes;
   };
 }
 

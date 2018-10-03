@@ -1428,6 +1428,7 @@ namespace njli
     //    SDL_GL_GetDrawableSize(gWindow, &w, &h);
     //#endif
     //#if defined(__EMSCRIPTEN__)
+      
     NJLI_HandleResize(drawableW, drawableH, gDisplayMode.format,
                       gDisplayMode.refresh_rate);
     //#endif

@@ -78,6 +78,8 @@ namespace njli
     friend class MaterialBuilder;
     friend class MaterialProperty;
     friend class MaterialPropertyBuilder;
+      friend class MeshGeometry;
+      friend class MeshGeometryBuilder;
     friend class Node;
     friend class NodeBuilder;
     friend class NodeState;

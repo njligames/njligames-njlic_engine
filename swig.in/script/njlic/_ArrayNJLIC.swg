@@ -41,6 +41,8 @@
 %njli_array_functions(njli::MaterialBuilder, MaterialBuilderArray);
 %njli_array_functions(njli::MaterialProperty, MaterialPropertyArray);
 %njli_array_functions(njli::MaterialPropertyBuilder, MaterialPropertyBuilderArray);
+%njli_array_functions(njli::MeshGeometry, MeshGeometryArray);
+%njli_array_functions(njli::MeshGeometryBuilder, MeshGeometryBuilderArray);
 %njli_array_functions(njli::Node, NodeArray);
 %njli_array_functions(njli::NodeBuilder, NodeBuilderArray);
 %njli_array_functions(njli::NodeState, NodeStateArray);

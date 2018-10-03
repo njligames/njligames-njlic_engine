@@ -1,7 +1,7 @@
 //Factory
 %newobject njli::Geometry::create;
 %delobject njli::Geometry::destroy;
-%factory(njli::Geometry *njli::Geometry::create, njli::Geometry, njli::Sprite2D, njli::Cube, njli::Plane /*Add the children to the njli::Geometry class*/);
+%factory(njli::Geometry *njli::Geometry::create, njli::Geometry, njli::Sprite2D, njli::Cube, njli::Plane, njli::MeshGeometry /*Add the children to the njli::Geometry class*/);
 %convert(njli::Material *njli::Geometry::getMaterial, njli::Material);
 %convert(njli::ShaderProgram *njli::Geometry::getShaderProgram, njli::ShaderProgram);
 %downcast(jli::Geometry,jli::Sprite2D,jli::Plane,jli::Geometry);

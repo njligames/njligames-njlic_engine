@@ -9,7 +9,9 @@
 #ifndef __JLIGameEngineTest__Plane__
 #define __JLIGameEngineTest__Plane__
 
-#include "Geometry.h"
+#include "AbstractBuilder.h"
+#include "MeshGeometry.h"
+
 #include "lua.hpp"
 
 namespace njli
@@ -19,7 +21,7 @@ namespace njli
   /**
    *  <#Description#>
    */
-  ATTRIBUTE_ALIGNED16(class) Plane : public Geometry
+  ATTRIBUTE_ALIGNED16(class) Plane : public MeshGeometry
   {
     friend class WorldFactory;
 
@@ -128,167 +130,171 @@ namespace njli
      *  @return <#return value description#>
      */
     static u32 type();
-
-    /**
-     *  <#Description#>
-     *
-     *  @param geometry <#geometry description#>
-     *  @param vertices <#vertices description#>
-     *  @param node     <#node description#>
-     */
-    virtual void getVertices(LevelOfDetail * geometry, btVector3 * *vertices,
-                             Node * node) const;
-    /**
-     *  <#Description#>
-     *
-     *  @param geometry <#geometry description#>
-     *  @param node     <#node description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual u64 getNumberOfVertices(LevelOfDetail * geometry, Node * node)
-        const;
-
-    /**
-     *  <#Description#>
-     *
-     *  @param geometry      <#geometry description#>
-     *  @param colorVertices <#colorVertices description#>
-     *  @param node          <#node description#>
-     */
-    virtual void getVertexColors(LevelOfDetail * geometry,
-                                 btVector4 * *colorVertices, Node * node) const;
-    /**
-     *  <#Description#>
-     *
-     *  @param geometry <#geometry description#>
-     *  @param node     <#node description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual u64 getNumberOfVertexColors(LevelOfDetail * geometry, Node * node)
-        const;
-
-    /**
-     *  <#Description#>
-     *
-     *  @param geometry           <#geometry description#>
-     *  @param textureCoordinates <#textureCoordinates description#>
-     *  @param node               <#node description#>
-     */
-    virtual void getTextureCoordinates(LevelOfDetail * geometry,
-                                       btVector2 * *textureCoordinates,
-                                       Node * node) const;
-    /**
-     *  <#Description#>
-     *
-     *  @param geometry <#geometry description#>
-     *  @param node     <#node description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual u64 getNumberOfTextureCoordinates(LevelOfDetail * geometry,
-                                              Node * node) const;
-
-    /**
-     *  <#Description#>
-     *
-     *  @param node    <#node description#>
-     *  @param opacity <#opacity description#>
-     */
-    virtual void setOpacity(Node * node, f32 opacity);
-
-    /**
-     *  <#Description#>
-     *
-     *  @param node    <#node description#>
-     *  @param opacity <#opacity description#>
-     */
-    virtual void setHidden(Node * node, bool hidden = true);
-
-    /**
-     *  <#Description#>
-     *
-     *  @param node    <#node description#>
-     *  @param opacity <#opacity description#>
-     */
-    virtual bool isHidden(Node * node) const;
-
-    /**
-     *  <#Description#>
-     *
-     *  @param node      <#node description#>
-     *  @param transfrom <#transfrom description#>
-     */
-    virtual void transformVertices(Node * node, const btTransform &transfrom);
-    /**
-     *  <#Description#>
-     *
-     *  @param node      <#node description#>
-     *  @param transform <#transform description#>
-     */
-    virtual void transformVertexColors(Node * node,
-                                       const btTransform &transform);
-    /**
-     *  <#Description#>
-     *
-     *  @param node      <#node description#>
-     *  @param transform <#transform description#>
-     */
-    virtual void transformTextureCoordinates(Node * node,
-                                             const btTransform &transform);
-    /**
-     *  <#Description#>
-     */
-    virtual void loadGPU();
-    /**
-     *  <#Description#>
-     */
-    virtual void unLoadGPU();
-    /**
-     *  <#Description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual bool isLoadedGPU() const;
-
-    /**
-     *  <#Description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual s32 numberOfVertices() const;
-    /**
-     *  <#Description#>
-     *
-     *  @return <#return value description#>
-     */
-    virtual s32 numberOfIndices() const;
-
   public:
-    // TODO: fill in specific methods for Plane
-  protected:
-    virtual bool shouldApplyShape(Node * node) const
-    {
-      SDL_assert(true);
-      return true;
-    }
-    void swapVertexData(const size_t idx1, const size_t idx2);
-
-    virtual const void *getArrayBuffer() const;
-    virtual s64 getArrayBufferSize() const;
-
-    virtual const void *getElementArrayBuffer() const;
-    virtual s64 getElementArrayBufferSize() const;
-    virtual void setSize(Node * node, const btVector3 &position,
-                         const f32 halfSize);
-    virtual void setColor(Node * node, const btVector4 &color);
-
-    virtual void applyShape(Node * node, PhysicsShape * physicsShape);
-
-    void hideGeometry(Node *);
-
+      void load(ShaderProgram *shader, unsigned int numInstances =  1, unsigned int numSubDivisions = 1);
   private:
+      void load(ShaderProgram *shader, const std::string &filecontent, unsigned int numInstances, unsigned int numSubDivisions){}
+      
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param geometry <#geometry description#>
+//     *  @param vertices <#vertices description#>
+//     *  @param node     <#node description#>
+//     */
+//    virtual void getVertices(LevelOfDetail * geometry, btVector3 * *vertices,
+//                             Node * node) const;
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param geometry <#geometry description#>
+//     *  @param node     <#node description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual u64 getNumberOfVertices(LevelOfDetail * geometry, Node * node)
+//        const;
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param geometry      <#geometry description#>
+//     *  @param colorVertices <#colorVertices description#>
+//     *  @param node          <#node description#>
+//     */
+//    virtual void getVertexColors(LevelOfDetail * geometry,
+//                                 btVector4 * *colorVertices, Node * node) const;
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param geometry <#geometry description#>
+//     *  @param node     <#node description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual u64 getNumberOfVertexColors(LevelOfDetail * geometry, Node * node)
+//        const;
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param geometry           <#geometry description#>
+//     *  @param textureCoordinates <#textureCoordinates description#>
+//     *  @param node               <#node description#>
+//     */
+//    virtual void getTextureCoordinates(LevelOfDetail * geometry,
+//                                       btVector2 * *textureCoordinates,
+//                                       Node * node) const;
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param geometry <#geometry description#>
+//     *  @param node     <#node description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual u64 getNumberOfTextureCoordinates(LevelOfDetail * geometry,
+//                                              Node * node) const;
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node    <#node description#>
+//     *  @param opacity <#opacity description#>
+//     */
+//    virtual void setOpacity(Node * node, f32 opacity);
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node    <#node description#>
+//     *  @param opacity <#opacity description#>
+//     */
+//    virtual void setHidden(Node * node, bool hidden = true);
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node    <#node description#>
+//     *  @param opacity <#opacity description#>
+//     */
+//    virtual bool isHidden(Node * node) const;
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node      <#node description#>
+//     *  @param transfrom <#transfrom description#>
+//     */
+//    virtual void transformVertices(Node * node, const btTransform &transfrom);
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node      <#node description#>
+//     *  @param transform <#transform description#>
+//     */
+//    virtual void transformVertexColors(Node * node,
+//                                       const btTransform &transform);
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @param node      <#node description#>
+//     *  @param transform <#transform description#>
+//     */
+//    virtual void transformTextureCoordinates(Node * node,
+//                                             const btTransform &transform);
+//    /**
+//     *  <#Description#>
+//     */
+//    virtual void loadGPU();
+//    /**
+//     *  <#Description#>
+//     */
+//    virtual void unLoadGPU();
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual bool isLoadedGPU() const;
+//
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual s32 numberOfVertices() const;
+//    /**
+//     *  <#Description#>
+//     *
+//     *  @return <#return value description#>
+//     */
+//    virtual s32 numberOfIndices() const;
+//
+//  public:
+//    // TODO: fill in specific methods for Plane
+//  protected:
+//    virtual bool shouldApplyShape(Node * node) const
+//    {
+//      SDL_assert(true);
+//      return true;
+//    }
+//    void swapVertexData(const size_t idx1, const size_t idx2);
+//
+//    virtual const void *getArrayBuffer() const;
+//    virtual s64 getArrayBufferSize() const;
+//
+//    virtual const void *getElementArrayBuffer() const;
+//    virtual s64 getElementArrayBufferSize() const;
+//    virtual void setSize(Node * node, const btVector3 &position,
+//                         const f32 halfSize);
+//    virtual void setColor(Node * node, const btVector4 &color);
+//
+//    virtual void applyShape(Node * node, PhysicsShape * physicsShape);
+//
+//    void hideGeometry(Node *);
+//
+//  private:
   };
 }
 

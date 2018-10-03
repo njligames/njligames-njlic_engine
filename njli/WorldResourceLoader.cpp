@@ -685,12 +685,11 @@ namespace njli
 
         if (vertexFileContent != NULL && fragmentFileContent != NULL)
           {
-            shader->saveSource((char *)vertexFileData->getBufferPtr(),
+            retVal = shader->load((char *)vertexFileData->getBufferPtr(),
                                (char *)fragmentFileData->getBufferPtr());
 
             removeFileData(vertexFile);
             removeFileData(fragmentFile);
-            retVal = true;
           }
         else
           {

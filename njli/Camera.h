@@ -29,7 +29,8 @@ namespace njli
   class SceneRenderer;
   class Node;
   class PhysicsRayContact;
-
+    class ShaderProgram;
+    
   /**
        *  <#Description#>
        */
@@ -379,6 +380,7 @@ namespace njli
 
     void render(const btDbvtNode *root1, const btDbvtNode *root2,
                 const btVector3 &sortaxis, const btVector3 *eye = NULL);
+      void render(ShaderProgram *const shader, bool shouldRedraw);
 
   private:
     f32 m_Near;
@@ -397,6 +399,8 @@ namespace njli
     s32 *m_ViewPort;
     btScalar *m_ModelMatrix;
     btScalar *m_ProjectionMatrix;
+      bool m_ModelViewDirty;
+      bool m_ProjectionDirty;
   };
 }
 

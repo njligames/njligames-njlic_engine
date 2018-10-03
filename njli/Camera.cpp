@@ -19,6 +19,7 @@
 #include "btDbvtBroadphase.h"
 #include "btVector2.h"
 #include "btVector3.h"
+#include "ShaderProgram.h"
 #include <map>
 
 #define FORMATSTRING "{\"njli::Camera\":[]}"
@@ -1063,7 +1064,9 @@ namespace njli
         //    m_PropertyChanged(true),
         m_ProjectionMatrixArray(new f32[16]),
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
-        m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16])
+    m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
+    m_ModelViewDirty(true),
+    m_ProjectionDirty(true)
   {
   }
 
@@ -1078,7 +1081,9 @@ namespace njli
         //    m_PropertyChanged(true),
         m_ProjectionMatrixArray(new f32[16]),
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
-        m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16])
+    m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
+    m_ModelViewDirty(true),
+    m_ProjectionDirty(true)
   {
   }
 
@@ -1093,7 +1098,9 @@ namespace njli
         //    m_PropertyChanged(true),
         m_ProjectionMatrixArray(new f32[16]),
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
-        m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16])
+    m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
+    m_ModelViewDirty(true),
+    m_ProjectionDirty(true)
   {
     // TODO: Implement...
   }
@@ -1814,6 +1821,21 @@ namespace njli
     //    s32 visiblecount=m_SceneRenderer->getNumObjectsDrawn();
     //    NSLog(@"%d visible\n", visiblecount);
   }
+    
+    void Camera::render(ShaderProgram *const shader, bool shouldRedraw)
+    {
+        if(m_ModelViewDirty || shouldRedraw)
+        {
+            assert(shader->setUniformValue("modelView", getModelView()));
+            m_ModelViewDirty = false;
+        }
+        
+        if(m_ProjectionDirty || shouldRedraw)
+        {
+            assert(shader->setUniformValue("projection", m_ProjectionMatrixArray));
+            m_ProjectionDirty = false;
+        }
+    }
 
   //    bool Camera::isPropertyChanged()const
   //    {

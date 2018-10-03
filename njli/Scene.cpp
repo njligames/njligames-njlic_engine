@@ -261,6 +261,33 @@ namespace njli
   void Scene::update(f32 timeStep, const u32 numSubSteps)
   {
     BT_PROFILE("Scene::update");
+      
+      m_ActiveGeometries.clear();
+      for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
+      {
+          Node *node = (*m_ActiveNodes).at(i);
+          
+          if(node)
+          {
+              node->update(timeStep);
+              
+              Geometry *geometry = node->getGeometry();
+              
+              if (geometry)
+              {
+                  node->render(geometry);
+                  
+                  if (m_ActiveGeometries.end() ==
+                      std::find(m_ActiveGeometries.begin(), m_ActiveGeometries.end(), geometry))
+                  {
+                      m_ActiveGeometries.push_back(geometry);
+                  }
+              }
+          }
+      }
+      
+      
+      /*
 
     if (getPhysicsWorld())
       getPhysicsWorld()->update(timeStep);
@@ -284,8 +311,8 @@ namespace njli
 
             geometry->setTransform(geometryIndex, node->getWorldTransform());
 
-            geometry->setColorTransform(geometryIndex,
-                                        node->getColorTransform());
+//            geometry->setColorTransform(geometryIndex,
+//                                        node->getColorTransform());
           }
       }
 
@@ -313,11 +340,28 @@ namespace njli
     SceneStateMachine *sm = getStateMachine();
     if (sm)
       sm->update(timeStep);
+      */
   }
 
   void Scene::render()
   {
 
+      for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
+      {
+          Camera *camera = (*m_ActiveCameras).at(i);
+#if defined(VR)
+          if(camera->getParent())
+          camera->getParent()->setTransform(m_VRCameraRotation);
+#endif
+          
+          for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
+          {
+              Geometry *geometry = m_ActiveGeometries.at(j);
+              geometry->render(camera);
+          }
+      }
+                  
+      /*
     //        for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
     //        {
     //            Geometry *geometry = m_ActiveGeometries.at(j);
@@ -354,12 +398,15 @@ namespace njli
         for (s32 k = 0; k < (*m_ActiveNodes).size(); ++k)
           {
             Node *node = (*m_ActiveNodes).at(k);
-
             Geometry *geometry = node->getGeometry();
+              
             if (geometry)
               {
+                  node->render(geometry);
+                  
                 //                geometry->setHidden(node, camera);
-                geometry->setHidden(node, node->isHidden(camera));
+//                geometry->setHidden(node, node->isHidden(camera));
+//                  geometry->setHidden(node);
                 if (m_ActiveGeometries.end() ==
                     std::find(m_ActiveGeometries.begin(),
                               m_ActiveGeometries.end(), geometry))
@@ -386,6 +433,8 @@ namespace njli
       }
 
     //        m_BackgroundMaterial->render();
+      
+      */
   }
 
   void Scene::setRootNode(Node *node)

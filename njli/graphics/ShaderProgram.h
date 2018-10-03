@@ -18,10 +18,12 @@
 #include <map>
 #include <vector>
 
-typedef void (*GLInfoFunction)(u32 program, s32 pname, s32 *params);
+#include "GraphicsPlatform.h"
 
-typedef void (*GLLogFunction)(u32 program, s32 bufsize, s32 *length,
-                              s8 *infolog);
+//typedef void (*GLInfoFunction)(u32 program, s32 pname, s32 *params);
+//
+//typedef void (*GLLogFunction)(u32 program, s32 bufsize, s32 *length,
+//                              s8 *infolog);
 
 namespace njli
 {
@@ -156,110 +158,156 @@ namespace njli
 
   public:
     // TODO: fill in specific methods for ShaderProgram
-
-    void saveSource(const std::string &vertexShaderSource,
-                    const std::string &fragmentShaderSource);
-
-    bool isLinked() const;
-
-    /**
-         *  <#Description#>
-         */
-    void unLoadGPU();
-
+      
+      bool load(const std::string &vertexSource,
+                const std::string &fragmentSource);
+      
+      void unLoad();
+      bool isLoaded()const;
+      
+      bool use()const;
+      
+      int getAttributeLocation(const std::string &attributeName)const;
+      
+      int getUniformLocation(const std::string &uniformName);
+      
+      bool setUniformValue(const std::string &uniformName, const btTransform &value, bool transpose = false);
+      bool setUniformValue(const std::string &uniformName, GLfloat *matrix4x4, bool transpose = false);
+      bool getUniformValue(const std::string &uniformName, btTransform &value);
+      
+      bool setUniformValue(const char *uniformName, GLuint value);
+      bool getUniformValue(const char *uniformName, GLuint &value);
+      
+      bool setUniformValue(const char *uniformName, const btVector3 &value);
+      bool getUniformValue(const char *uniformName, btVector3 &value);
+      
+      bool setUniformValue(const char *uniformName, float value);
+      bool getUniformValue(const char *uniformName, float &value);
+      
+      bool setUniformValue(const char *uniformName, const btVector4 &value);
+      bool getUniformValue(const char *uniformName, btVector4 &value);
   protected:
-    /**
-         *  <#Description#>
-         *
-         *  @return <#return value description#>
-         */
-    bool link();
-
-    /**
-         *  <#Description#>
-         *
-         *  @param attributeName <#attributeName description#>
-         */
-    bool bindAttribute(const char *attributeName);
-
-    /**
-         *  <#Description#>
-         *
-         *  @param attributeName <#attributeName description#>
-         *
-         *  @return <#return value description#>
-         */
-    u32 getAttributeLocation(const char *attributeName) const;
-
-  public:
-    bool setUniformValue(const char *uniformName, s32 value);
-    bool getUniformValue(const char *uniformName, s32 &value);
-
-    bool setUniformValue(const char *uniformName, const btTransform &value,
-                         bool transpose = false);
-    bool getUniformValue(const char *uniformName, btTransform &value);
-    /**
-         *  <#Description#>
-         *
-         *  @param uniformName <#uniformName description#>
-         *
-         *  @return <#return value description#>
-         */
-    u32 getUniformLocation(const char *uniformName);
-
-    /**
-         *  <#Description#>
-         *
-         *  @return <#return value description#>
-         */
-    const char *vertexShaderLog() const;
-    /**
-         *  <#Description#>
-         *
-         *  @return <#return value description#>
-         */
-    const char *fragmentShaderLog() const;
-    /**
-         *  <#Description#>
-         *
-         *  @return <#return value description#>
-         */
-    const char *programLog() const;
-
-    /**
-         *  <#Description#>
-         */
-    bool use();
-
-    /**
-         *  <#Description#>
-         *
-         *  @param fileContent <#fileContent description#>
-         *  @param type        <#type description#>
-         *
-         *  @return <#return value description#>
-         */
-    bool compile(const char *fileContent, njliShaderType type);
-
-    bool compileShader(s32 * shader, const u32 type, const char *source);
-    const char *logForOpenGLObject(u32 object, GLInfoFunction infoFunc,
-                                   GLLogFunction logFunc) const;
-
-    Geometry *getParent();
-    const Geometry *getParent() const;
-
+      GLuint compileShader(const std::string &source, GLenum type);
+      bool compileStatus(GLuint shader);
+      
+      bool linkProgram(GLuint program);
+      
   private:
-    s32 m_Program;
-    s32 m_vertShader;
-    s32 m_fragShader;
+      GLuint m_Program;
+      
+      GLfloat *m_mat4Buffer;
+      GLfloat *m_vec3Buffer;
+      GLfloat *m_vec4Buffer;
+      
+      typedef std::map<std::string, int> UniformMap;
+      typedef std::pair<std::string, int> UniformPair;
+      
+      UniformMap m_UniformMap;
+      
 
-    std::string m_VertexShaderSource;
-    std::string m_FragmentShaderSource;
-
-    typedef std::map<std::string, s32> UniformValueMap;
-    typedef std::pair<std::string, s32> UniformValuePair;
-    UniformValueMap m_uniformValueMap;
-    float *m_mat4Buffer;
+//    void saveSource(const std::string &vertexShaderSource,
+//                    const std::string &fragmentShaderSource);
+//
+//    bool isLinked() const;
+//
+//    /**
+//         *  <#Description#>
+//         */
+//    void unLoadGPU();
+//
+//  protected:
+//    /**
+//         *  <#Description#>
+//         *
+//         *  @return <#return value description#>
+//         */
+//    bool link();
+//
+//    /**
+//         *  <#Description#>
+//         *
+//         *  @param attributeName <#attributeName description#>
+//         */
+//    bool bindAttribute(const char *attributeName);
+//
+//    /**
+//         *  <#Description#>
+//         *
+//         *  @param attributeName <#attributeName description#>
+//         *
+//         *  @return <#return value description#>
+//         */
+//    u32 getAttributeLocation(const char *attributeName) const;
+//
+//  public:
+//    bool setUniformValue(const char *uniformName, s32 value);
+//    bool getUniformValue(const char *uniformName, s32 &value);
+//
+//    bool setUniformValue(const char *uniformName, const btTransform &value,
+//                         bool transpose = false);
+//    bool getUniformValue(const char *uniformName, btTransform &value);
+//    /**
+//         *  <#Description#>
+//         *
+//         *  @param uniformName <#uniformName description#>
+//         *
+//         *  @return <#return value description#>
+//         */
+//    u32 getUniformLocation(const char *uniformName);
+//
+//    /**
+//         *  <#Description#>
+//         *
+//         *  @return <#return value description#>
+//         */
+//    const char *vertexShaderLog() const;
+//    /**
+//         *  <#Description#>
+//         *
+//         *  @return <#return value description#>
+//         */
+//    const char *fragmentShaderLog() const;
+//    /**
+//         *  <#Description#>
+//         *
+//         *  @return <#return value description#>
+//         */
+//    const char *programLog() const;
+//
+//    /**
+//         *  <#Description#>
+//         */
+//    bool use();
+//
+//    /**
+//         *  <#Description#>
+//         *
+//         *  @param fileContent <#fileContent description#>
+//         *  @param type        <#type description#>
+//         *
+//         *  @return <#return value description#>
+//         */
+//    bool compile(const char *fileContent, njliShaderType type);
+//
+//    bool compileShader(s32 * shader, const u32 type, const char *source);
+//    const char *logForOpenGLObject(u32 object, GLInfoFunction infoFunc,
+//                                   GLLogFunction logFunc) const;
+//
+//    Geometry *getParent();
+//    const Geometry *getParent() const;
+//
+//  private:
+//    s32 m_Program;
+//    s32 m_vertShader;
+//    s32 m_fragShader;
+//
+//    std::string m_VertexShaderSource;
+//    std::string m_FragmentShaderSource;
+//
+//    typedef std::map<std::string, s32> UniformValueMap;
+//    typedef std::pair<std::string, s32> UniformValuePair;
+//    UniformValueMap m_uniformValueMap;
+//    float *m_mat4Buffer;
   };
 }
 

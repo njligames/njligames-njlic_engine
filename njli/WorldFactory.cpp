@@ -59,6 +59,8 @@
 #include "MaterialBuilder.h"
 #include "MaterialProperty.h"
 #include "MaterialPropertyBuilder.h"
+#include "MeshGeometry.h"
+#include "MeshGeometryBuilder.h"
 #include "Node.h"
 #include "NodeBuilder.h"
 #include "NodeState.h"
@@ -357,6 +359,7 @@ namespace njli
       //            case JLI_OBJECT_TYPE_LuaBuilder:
       case JLI_OBJECT_TYPE_MaterialBuilder:
       case JLI_OBJECT_TYPE_MaterialPropertyBuilder:
+      case JLI_OBJECT_TYPE_MeshGeometryBuilder:
       case JLI_OBJECT_TYPE_NodeBuilder:
       case JLI_OBJECT_TYPE_NodeStateBuilder:
       case JLI_OBJECT_TYPE_NodeStateMachineBuilder:
@@ -800,6 +803,28 @@ namespace njli
           obj = (AbstractFactoryObject **)_obj;
         }
         break;
+
+      case JLI_OBJECT_TYPE_MeshGeometry:
+        {
+          MeshGeometry **_obj = new MeshGeometry *[size];
+          for (s32 i = 0; i < size; ++i)
+            {
+              _obj[i] = MeshGeometry::create();
+            }
+          obj = (AbstractFactoryObject **)_obj;
+        }
+        break;
+      case JLI_OBJECT_TYPE_MeshGeometryBuilder:
+        {
+          MeshGeometryBuilder **_obj = new MeshGeometryBuilder *[size];
+          for (s32 i = 0; i < size; ++i)
+            {
+              _obj[i] = MeshGeometryBuilder::create();
+            }
+          obj = (AbstractFactoryObject **)_obj;
+        }
+        break;
+
       case JLI_OBJECT_TYPE_Node:
         {
           Node **_obj = new Node *[size];
@@ -2368,6 +2393,14 @@ namespace njli
       case JLI_OBJECT_TYPE_MaterialPropertyBuilder:
         obj = new MaterialPropertyBuilder();
         break;
+
+      case JLI_OBJECT_TYPE_MeshGeometry:
+        obj = new MeshGeometry();
+        break;
+      case JLI_OBJECT_TYPE_MeshGeometryBuilder:
+        obj = new MeshGeometryBuilder();
+        break;
+
       case JLI_OBJECT_TYPE_Node:
         obj = new Node();
         break;
@@ -2860,6 +2893,10 @@ namespace njli
       case JLI_OBJECT_TYPE_MaterialProperty:
         obj = new MaterialProperty(builder);
         break;
+      case JLI_OBJECT_TYPE_MeshGeometry:
+        obj = new MeshGeometry(builder);
+        break;
+
       case JLI_OBJECT_TYPE_Node:
         obj = new Node(builder);
         break;
@@ -3267,6 +3304,16 @@ namespace njli
         obj = new MaterialPropertyBuilder(
             *dynamic_cast<const MaterialPropertyBuilder *>(&object));
         break;
+
+      case JLI_OBJECT_TYPE_MeshGeometry:
+        obj = new MeshGeometry(
+            *dynamic_cast<const MeshGeometry *>(&object));
+        break;
+      case JLI_OBJECT_TYPE_MeshGeometryBuilder:
+        obj = new MeshGeometryBuilder(
+            *dynamic_cast<const MeshGeometryBuilder *>(&object));
+        break;
+
       case JLI_OBJECT_TYPE_Node:
         obj = new Node(*dynamic_cast<const Node *>(&object));
         break;

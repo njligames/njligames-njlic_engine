@@ -1099,6 +1099,15 @@ namespace njli
          *  @snippet Node.lua Node_calculateSerializeBufferSize_
          */
     bool hasOpacity() const;
+      
+      void setNormalMatrix(const btMatrix3x3 &mtx);
+      const btMatrix3x3 &getNormalMatrix()const;
+      
+      void setColorBase(const btVector4 &color);
+      const btVector4 &getColorBase()const;
+      
+      void enableHideGeometry(bool hidden = true);
+      bool isHiddenGeometry()const;
 
     /**
          *  @author James Folk, 16-02-10 21:02:17
@@ -1625,7 +1634,12 @@ namespace njli
     virtual bool canDelete() const;
 
     friend class SceneRenderer;
+      
+      bool isTransformDirty()const;
+      void resetTransformDirty();
+      
     void update(f32 timeStep);
+      void render(Geometry *const geometry);
     //        void render(Camera *camera);
     void applyPhysicsBodyTransform(const btTransform &transform);
 
@@ -1650,6 +1664,14 @@ namespace njli
     PhysicsField *m_PhysicsField;
 
     f32 m_Opacity;
+      btMatrix3x3 *m_NormalMatrix;
+      btVector4 *m_Colorbase;
+      bool m_NormalMatrixDirty;
+      bool m_ColorBaseDirty;
+      bool m_HideGeometry;
+      bool m_HiddenDirty;
+      bool m_OpacityDirty;
+      bool m_TransformDirty;
     njliBitCategories m_RenderCategory;
     NodeStateMachine *m_NodeStateMachine;
 

@@ -4,7 +4,7 @@
 %factory(njli::Node *njli::Node::create, njli::Node /*Add the children to the njli::Node class*/);
 %factory(njli::Node *njli::Node::clone, njli::Node /*Add the children to the njli::Node class*/);
 %factory(njli::Node *njli::Node::copy, njli::Node /*Add the children to the njli::Node class*/);
-%convert(njli::Geometry *njli::Node::getGeometry, njli::Sprite2D, njli::Cube, njli::Plane, njli::Geometry);
+%convert(njli::Geometry *njli::Node::getGeometry, njli::Sprite2D, njli::Cube, njli::Plane, njli::MeshGeometry, njli::Geometry);
 %convert(njli::NodeStateMachine *njli::Node::getStateMachine, njli::NodeStateMachine);
 %convert(njli::Camera *njli::Node::getCamera, njli::Camera);
 %convert(njli::Light *njli::Node::getLight, njli::Light);

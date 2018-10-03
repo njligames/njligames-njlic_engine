@@ -271,6 +271,9 @@ namespace njli
     JLI_OBJECT_TYPE_DeviceTouch,
 
     JLI_OBJECT_TYPE_Geometry,
+      
+      
+      
     JLI_OBJECT_TYPE_PhysicsShape,
 
     JLI_OBJECT_TYPE_Action,
@@ -307,6 +310,8 @@ namespace njli
     JLI_OBJECT_TYPE_MaterialBuilder,
     JLI_OBJECT_TYPE_MaterialProperty,
     JLI_OBJECT_TYPE_MaterialPropertyBuilder,
+      JLI_OBJECT_TYPE_MeshGeometry,
+      JLI_OBJECT_TYPE_MeshGeometryBuilder,
     JLI_OBJECT_TYPE_Node,
     JLI_OBJECT_TYPE_NodeBuilder,
     JLI_OBJECT_TYPE_NodeState,

@@ -94,7 +94,7 @@ namespace njli
   {
     if (object)
       {
-        Geometry::destroy(object);
+        MeshGeometry::destroy(object);
       }
   }
 
@@ -163,83 +163,89 @@ namespace njli
   }
 
   u32 Plane::type() { return JLI_OBJECT_TYPE_Plane; }
+    
+    void Plane::load(ShaderProgram *shader, unsigned int numInstances, unsigned int numSubDivisions)
+    {
+        //TODO: implement
+        assert(false && "need to implement: Just need to get the file content from an obj file.");
+    }
 
-  void Plane::getVertices(LevelOfDetail *geometry, btVector3 **vertices,
-                          Node *node) const
-  {
-  }
-
-  u64 Plane::getNumberOfVertices(LevelOfDetail *geometry, Node *node) const
-  {
-    return 0;
-  }
-
-  void Plane::getVertexColors(LevelOfDetail *geometry,
-                              btVector4 **colorVertices, Node *node) const
-  {
-  }
-
-  u64 Plane::getNumberOfVertexColors(LevelOfDetail *geometry, Node *node) const
-  {
-    return 0;
-  }
-
-  void Plane::getTextureCoordinates(LevelOfDetail *geometry,
-                                    btVector2 **textureCoordinates,
-                                    Node *node) const
-  {
-  }
-
-  u64 Plane::getNumberOfTextureCoordinates(LevelOfDetail *geometry,
-                                           Node *node) const
-  {
-    return 0;
-  }
-
-  void Plane::setOpacity(Node *node, f32 opacity) {}
-
-  void Plane::setHidden(Node *node, bool hidden) {}
-
-  bool Plane::isHidden(Node *node) const { return false; }
-
-  void Plane::transformVertices(Node *node, const btTransform &transfrom) {}
-
-  void Plane::transformVertexColors(Node *node, const btTransform &transform) {}
-
-  void Plane::transformTextureCoordinates(Node *node,
-                                          const btTransform &transform)
-  {
-  }
-
-  void Plane::applyShape(Node *node, PhysicsShape *physicsShape) {}
-
-  void Plane::hideGeometry(Node *) { SDL_assert(false); }
-
-  void Plane::loadGPU() {}
-
-  void Plane::unLoadGPU() {}
-
-  bool Plane::isLoadedGPU() const { return false; }
-
-  s32 Plane::numberOfVertices() const { return 0; }
-
-  s32 Plane::numberOfIndices() const { return 0; }
-
-  void Plane::swapVertexData(const size_t idx1, const size_t idx2) {}
-
-  const void *Plane::getArrayBuffer() const { return NULL; }
-  s64 Plane::getArrayBufferSize() const { return 0; }
-
-  const void *Plane::getElementArrayBuffer() const { return NULL; }
-  s64 Plane::getElementArrayBufferSize() const { return 0; }
-
-  void Plane::setSize(Node *node, const btVector3 &position, const f32 halfSize)
-  {
-    // TODO: implement
-  }
-
-  void Plane::setColor(Node *node, const btVector4 &color)
-  {
-    // TODO: implement
-  }
+//  void Plane::getVertices(LevelOfDetail *geometry, btVector3 **vertices,
+//                          Node *node) const
+//  {
+//  }
+//
+//  u64 Plane::getNumberOfVertices(LevelOfDetail *geometry, Node *node) const
+//  {
+//    return 0;
+//  }
+//
+//  void Plane::getVertexColors(LevelOfDetail *geometry,
+//                              btVector4 **colorVertices, Node *node) const
+//  {
+//  }
+//
+//  u64 Plane::getNumberOfVertexColors(LevelOfDetail *geometry, Node *node) const
+//  {
+//    return 0;
+//  }
+//
+//  void Plane::getTextureCoordinates(LevelOfDetail *geometry,
+//                                    btVector2 **textureCoordinates,
+//                                    Node *node) const
+//  {
+//  }
+//
+//  u64 Plane::getNumberOfTextureCoordinates(LevelOfDetail *geometry,
+//                                           Node *node) const
+//  {
+//    return 0;
+//  }
+//
+//  void Plane::setOpacity(Node *node, f32 opacity) {}
+//
+//  void Plane::setHidden(Node *node, bool hidden) {}
+//
+//  bool Plane::isHidden(Node *node) const { return false; }
+//
+//  void Plane::transformVertices(Node *node, const btTransform &transfrom) {}
+//
+//  void Plane::transformVertexColors(Node *node, const btTransform &transform) {}
+//
+//  void Plane::transformTextureCoordinates(Node *node,
+//                                          const btTransform &transform)
+//  {
+//  }
+//
+//  void Plane::applyShape(Node *node, PhysicsShape *physicsShape) {}
+//
+//  void Plane::hideGeometry(Node *) { SDL_assert(false); }
+//
+//  void Plane::loadGPU() {}
+//
+//  void Plane::unLoadGPU() {}
+//
+//  bool Plane::isLoadedGPU() const { return false; }
+//
+//  s32 Plane::numberOfVertices() const { return 0; }
+//
+//  s32 Plane::numberOfIndices() const { return 0; }
+//
+//  void Plane::swapVertexData(const size_t idx1, const size_t idx2) {}
+//
+//  const void *Plane::getArrayBuffer() const { return NULL; }
+//  s64 Plane::getArrayBufferSize() const { return 0; }
+//
+//  const void *Plane::getElementArrayBuffer() const { return NULL; }
+//  s64 Plane::getElementArrayBufferSize() const { return 0; }
+//
+//  void Plane::setSize(Node *node, const btVector3 &position, const f32 halfSize)
+//  {
+//    // TODO: implement
+//  }
+//
+//  void Plane::setColor(Node *node, const btVector4 &color)
+//  {
+//    // TODO: implement
+//  }
 } // namespace njli

@@ -44,7 +44,7 @@ macro(LUA_BULLET3_SWIG)
   SUBDIRLIST(SUBDIRS "${BULLET3_SWIG_DIRECTORY}" SWIGIN_SCRIPTS_INCLUDE_DIRS)
 
   set(${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-includeall")
-  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-fcompact")
+  # list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-fcompact")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-fvirtual")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-v")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w201")
@@ -53,6 +53,15 @@ macro(LUA_BULLET3_SWIG)
   # list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-cpperraswarn")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-DBT_INFINITY")
   list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-DSWIG_TYPE_TABLE=myprojectname")
+  if(GL_ES2)
+    list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-D__GL_ES2__")
+  elseif(GL_ES3)
+    list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-D__GL_ES3__")
+  elseif(GL_2)
+    list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-D__GL_2__")
+  elseif(GL_3)
+    list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-D__GL_3__")
+  endif()
 
   foreach(_SWIG_SOURCE_FILE ${LUA_SWIG_SOURCE_FILES})
     set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_FLAGS ${${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS})
@@ -78,21 +87,6 @@ macro(LUA_BULLET3_SWIG)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS BULLET3_SWIG=1 BT_INFINITY)
 
 
-  #    ``CMAKE_SWIG_FLAGS``
-  #    Add flags to all swig calls.
-  #  
-  #  ``CMAKE_SWIG_OUTDIR``
-  #    Specify where to write the language specific files (swig ``-outdir`` option).
-  #  
-  #  ``SWIG_OUTFILE_DIR``
-  #    Specify an output directory name where the generated source file will be
-  #    placed.  If not specified, ``CMAKE_SWIG_OUTDIR`` is used.
-  #  
-  #  ``SWIG_MODULE_<name>_EXTRA_DEPS``
-  #    Specify extra dependencies for the generated module for ``<name>``.
-
-  set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
-  set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
 
   if(${CMAKE_VERSION} VERSION_LESS "3.8")
     swig_add_module(
@@ -159,10 +153,9 @@ macro(LUA_BULLET3_SWIG)
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-bullet3-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
-    set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
-    set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
 
     if(${CMAKE_VERSION} VERSION_LESS "3.8")
       swig_add_module(
@@ -209,9 +202,6 @@ macro(LUA_BULLET3_SWIG)
 
   if(NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID AND NOT LINUX)
     #So... non-mobile (WINDOWS, LINUX, MAC
-
-    set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
-    set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
 
     if(${CMAKE_VERSION} VERSION_LESS "3.8")
       MESSAGE(FATAL_ERROR "Cannot make a swig module with a version less than 3.8")
@@ -286,13 +276,14 @@ macro(LUA_NJLIC_SWIG)
 
   list(APPEND LUA_SWIG_SOURCE_FILES
     "${NJLIC_SWIG_INCLUDE_DIR}/njlic.i" 
+    "${NJLIC_SWIG_INCLUDE_DIR}/_Defines.swg"
   )
 
   SUBDIRLIST(SUBDIRS "${NJLIC_SWIG_INCLUDE_DIR}" NJLIC_SWIG_INCLUDE_DIRS)
   list(APPEND NJLIC_SWIG_INCLUDE_DIRS ${NJLIC_INCLUDE_DIRS})
 
   set(CMAKE_SWIG_FLAGS "-includeall")
-  list(APPEND CMAKE_SWIG_FLAGS "-fcompact")
+  # list(APPEND CMAKE_SWIG_FLAGS "-fcompact")
   list(APPEND CMAKE_SWIG_FLAGS "-fvirtual")
   list(APPEND CMAKE_SWIG_FLAGS "-v")
   list(APPEND CMAKE_SWIG_FLAGS "-w201")
@@ -301,6 +292,16 @@ macro(LUA_NJLIC_SWIG)
   # list(APPEND CMAKE_SWIG_FLAGS "-cpperraswarn")
   list(APPEND CMAKE_SWIG_FLAGS "-DBT_INFINITY")
   list(APPEND CMAKE_SWIG_FLAGS "-DSWIG_TYPE_TABLE=myprojectname")
+  list(APPEND CMAKE_SWIG_FLAGS "-D__GL_2__")
+  if(GL_ES2)
+    list(APPEND CMAKE_SWIG_FLAGS "-D__GL_ES2__")
+  elseif(GL_ES3)
+    list(APPEND CMAKE_SWIG_FLAGS "-D__GL_ES3__")
+  elseif(GL_2)
+    list(APPEND CMAKE_SWIG_FLAGS "-D__GL_2__")
+  elseif(GL_3)
+    list(APPEND CMAKE_SWIG_FLAGS "-D__GL_3__")
+  endif()
 
   foreach(_SWIG_SOURCE_FILE ${LUA_SWIG_SOURCE_FILES})
     # set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_FLAGS ${${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS})
@@ -314,9 +315,6 @@ macro(LUA_NJLIC_SWIG)
     )
 
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS NJLIC_SWIG=1 BT_INFINITY)
-
-  set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
-  set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
 
   if(${CMAKE_VERSION} VERSION_LESS "3.8")
     swig_add_module(
@@ -380,10 +378,9 @@ macro(LUA_NJLIC_SWIG)
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
-    set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
-    set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
 
     if(${CMAKE_VERSION} VERSION_LESS "3.8")
       swig_add_module(
@@ -435,13 +432,11 @@ macro(LUA_NJLIC_SWIG)
       PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
       PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
       )
+    target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
   endif()
 
   if(NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID AND NOT LINUX)
     #So... non-mobile (WINDOWS, LINUX, MAC
-
-    set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
-    set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
 
     if(${CMAKE_VERSION} VERSION_LESS "3.8")
       MESSAGE(FATAL_ERROR "Cannot make a swig module with a version less than 3.8")
@@ -489,6 +484,7 @@ macro(LUA_NJLIC_SWIG)
       PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
       PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
       )
+    target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-njlic-module PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
   endif()
 
 endmacro()
@@ -506,6 +502,22 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
       MESSAGE(STATUS "SWIG_VERSION ${SWIG_VERSION}")
 
       include(${SWIG_USE_FILE})
+
+      #    ``CMAKE_SWIG_FLAGS``
+      #    Add flags to all swig calls.
+      #  
+      #  ``CMAKE_SWIG_OUTDIR``
+      #    Specify where to write the language specific files (swig ``-outdir`` option).
+      #  
+      #  ``SWIG_OUTFILE_DIR``
+      #    Specify an output directory name where the generated source file will be
+      #    placed.  If not specified, ``CMAKE_SWIG_OUTDIR`` is used.
+      #  
+      #  ``SWIG_MODULE_<name>_EXTRA_DEPS``
+      #    Specify extra dependencies for the generated module for ``<name>``.
+
+      set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
+      set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
 
       if(ANDROID)
         if(${ANDROID_ABI} STREQUAL "armeabi-v7a" OR ${ANDROID_ABI} STREQUAL "x86")
@@ -530,7 +542,7 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
       LUA_BULLET3_SWIG()
 
       file(GLOB_RECURSE LUA_SWIG_GENERATED_FILES
-        "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/*.c*"
+        "${SWIG_OUTFILE_DIR}/*.c*"
         )
 
       set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${LUA_SWIG_GENERATED_FILES})

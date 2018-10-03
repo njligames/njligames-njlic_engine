@@ -745,9 +745,12 @@ namespace njli
   {
     SDL_assert(shader);
 
-    if (getDiffuse()->bind(shader))
-      shader->setUniformValue("diffuseTexture2D",
-                              getDiffuse()->getTextureIndex());
+      assert(false && "setUniformValue changed when i introduced the new shader kcode");
+//    if (getDiffuse()->bind(shader))
+//      shader->setUniformValue("diffuseTexture2D",
+//                              getDiffuse()->getTextureIndex());
+      
+      
 
     //        getAmbient()->bind(shader, "Ambient");
     //        getSpecular()->bind(shader, "Specular");
