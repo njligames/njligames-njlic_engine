@@ -50,7 +50,6 @@ void renderGL(bool isLeftEye)
     }
 #else
     glViewport(viewX, viewY, viewWidth, viewHeight);
-    glClearColor(bgRed, bgGreen, bgBlue, bgAlpha);
 #endif
     glClearColor(bgRed, bgGreen, bgBlue, bgAlpha);
     

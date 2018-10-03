@@ -352,7 +352,9 @@ namespace njli
           Camera *camera = (*m_ActiveCameras).at(i);
 #if defined(VR)
           if(camera->getParent())
-          camera->getParent()->setTransform(m_VRCameraRotation);
+          {
+              camera->getParent()->setTransform(m_VRCameraRotation);
+          }
 #endif
           
           for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)

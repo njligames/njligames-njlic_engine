@@ -889,9 +889,9 @@ namespace njli
 #if defined(VR)
       renderGL(true);
       renderInternal();
-      
-      renderGL(false);
-      renderInternal();
+
+//      renderGL(false);
+//      renderInternal();
 #else
       renderGL();
       renderInternal();
