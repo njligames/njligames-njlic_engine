@@ -262,7 +262,7 @@ namespace njli
   {
     BT_PROFILE("Scene::update");
       
-      m_ActiveGeometries.clear();
+      
       for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
       {
           Node *node = (*m_ActiveNodes).at(i);
@@ -275,6 +275,7 @@ namespace njli
               
               if (geometry)
               {
+                  
                   node->render(geometry);
                   
                   if (m_ActiveGeometries.end() ==
@@ -359,6 +360,7 @@ namespace njli
               Geometry *geometry = m_ActiveGeometries.at(j);
               geometry->render(camera);
           }
+          m_ActiveGeometries.clear();
       }
                   
       /*

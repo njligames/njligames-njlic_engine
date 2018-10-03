@@ -64,6 +64,7 @@ void renderGL(bool isLeftEye)
     
     glEnable(GL_STENCIL_TEST);
     glEnable(GL_DEPTH_TEST);
+    glFrontFace(GL_CW);
 #if !(defined(NDEBUG)) && defined(__APPLE__)
     glPopGroupMarkerEXT();
 #endif

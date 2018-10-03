@@ -484,10 +484,17 @@ namespace njli
         m_Program = glCreateProgram();
         
         if(!(vertShader = compileShader(vertexSource, GL_VERTEX_SHADER)))
+        {
+            glDeleteProgram(m_Program);
             return false;
+        }
         
         if(!(fragShader = compileShader(fragmentSource, GL_FRAGMENT_SHADER)))
+        {
+            glDeleteProgram(m_Program);
+            glDeleteShader(vertShader);
             return false;
+        }
         
         glAttachShader(m_Program, vertShader);
         glAttachShader(m_Program, fragShader);
@@ -769,7 +776,7 @@ namespace njli
         glShaderSource(shader, 1, (const GLchar**)&(str[0]), NULL);
         glCompileShader(shader);
         
-#if defined(DEBUG)
+#if !defined(NDEBUG)
         GLint logLength;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0)

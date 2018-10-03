@@ -676,8 +676,7 @@ namespace njli
         {
             assert(shader->use());
             
-            assert(false && "TODO: do i check if the shader changed?");
-//            camera->render(shader, m_ShaderChanged);
+            camera->render(shader, m_ShaderChanged);
             
             struct LightSourceParameters
             {

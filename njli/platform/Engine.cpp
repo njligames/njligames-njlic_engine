@@ -1312,7 +1312,7 @@ namespace njli
 #if !defined(__ANDROID__)
     SDL_GetDesktopDisplayMode(0, &gDisplayMode);
 #endif
-
+      
 #if defined(__EMSCRIPTEN__)
     gDisplayMode.h = 725.0f;
     float div = gDisplayMode.h / 9.0;
@@ -1335,22 +1335,27 @@ namespace njli
     SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 #endif
 
+      Uint32 flags = SDL_WINDOW_OPENGL;
+      flags |= SDL_WINDOW_RESIZABLE;
+      
+#if defined(__MACOSX__)
+      flags |= SDL_WINDOW_MAXIMIZED;
+      flags |= SDL_WINDOW_ALWAYS_ON_TOP;
+      flags |= SDL_WINDOW_UTILITY;
+#endif
+
+#if !defined(__EMSCRIPTEN__)
+      flags |= SDL_WINDOW_FULLSCREEN;
+      flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+#endif
+      
+      
+      
     /* create window and renderer */
     gWindow =
         SDL_CreateWindow("NJLIGameEngine", SDL_WINDOWPOS_CENTERED,
                          SDL_WINDOWPOS_CENTERED, gDisplayMode.w, gDisplayMode.h,
-                         SDL_WINDOW_OPENGL
-#if defined(__MACOSX__)
-                             | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_ALWAYS_ON_TOP |
-                             SDL_WINDOW_UTILITY
-#elif !defined(__EMSCRIPTEN__)
-                             /*| SDL_WINDOW_FULLSCREEN*/
-#endif
-                             | SDL_WINDOW_RESIZABLE
-#if !defined(__EMSCRIPTEN__)
-                             | SDL_WINDOW_ALLOW_HIGHDPI
-#endif
-        );
+                         flags);
 
 #if defined(__MACOSX__)
     createRenderer();
@@ -1358,9 +1363,9 @@ namespace njli
 
     // SDL_SetWindowSize(gWindow, 100, 100);
 
-    int w, h;
-    SDL_GetWindowSize(gWindow, &w, &h);
-    SDL_Log("SDL_GetWindowSize #%d: current display mode is %dx%dpx", 0, w, h);
+//    int w, h;
+//    SDL_GetWindowSize(gWindow, &w, &h);
+//    SDL_Log("SDL_GetWindowSize #%d: current display mode is %dx%dpx", 0, w, h);
 
     //#if defined(__MACOSX__)
     //#if !(defined(NDEBUG))
@@ -1368,9 +1373,8 @@ namespace njli
     //#endif
     //#endif
 
-    SDL_GL_GetDrawableSize(gWindow, &w, &h);
-    SDL_Log("SDL_GL_GetDrawableSize #%d: current display mode is %dx%dpx", 0, w,
-            h);
+//    SDL_GL_GetDrawableSize(gWindow, &w, &h);
+//    SDL_Log("SDL_GL_GetDrawableSize #%d: current display mode is %dx%dpx", 0, w, h);
 
     if (!gWindow)
       {
@@ -1406,7 +1410,7 @@ namespace njli
     SDL_AddEventWatch(EventFilter, NULL);
 #endif
 
-    int drawableW, drawableH;
+//    int drawableW, drawableH;
     int screen_w, screen_h;
     float pointSizeScale;
 
@@ -1414,13 +1418,16 @@ namespace njli
      * enabled,
      * due to the increased pixel density of the drawable. */
     SDL_GetWindowSize(gWindow, &screen_w, &screen_h);
-    //    SDL_GL_GetDrawableSize(gWindow, &drawableW, &drawableH);
-    drawableW = gDisplayMode.w;
-    drawableH = gDisplayMode.h;
+      
+      
+//      SDL_GL_GetDrawableSize(gWindow, &w, &h);
+        SDL_GL_GetDrawableSize(gWindow, &gDisplayMode.w, &gDisplayMode.h);
+//      gDisplayMode.w = drawableW;
+//      gDisplayMode.h = drawableH;
 
     /* In OpenGL, point sizes are always in pixels. We don't want them looking
      * tiny on a retina screen. */
-    pointSizeScale = (float)drawableH / (float)screen_h;
+    pointSizeScale = (float)gDisplayMode.w / (float)screen_h;
 
     //#if defined(__MACOSX__)
     //    SDL_GetWindowSize(gWindow, &w, &h);
@@ -1429,7 +1436,8 @@ namespace njli
     //#endif
     //#if defined(__EMSCRIPTEN__)
       
-    NJLI_HandleResize(drawableW, drawableH, gDisplayMode.format,
+      
+    NJLI_HandleResize(gDisplayMode.w, gDisplayMode.h, gDisplayMode.format,
                       gDisplayMode.refresh_rate);
     //#endif
 

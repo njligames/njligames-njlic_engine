@@ -172,7 +172,8 @@ namespace njli
           return false;
         }
 
-        buf[nb_read_total] = '\0';
+//        buf[nb_read_total - 1] = '\0';
+          return true;
       }
 
       return false;
