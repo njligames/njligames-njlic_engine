@@ -161,13 +161,15 @@ namespace njli
 
         Sint64 nb_read_total = 0, nb_read = 1;
         char* buf = (char*)m_buffer;
-        while (nb_read_total < m_fileSize && nb_read != 0) {
+        while (nb_read_total < m_fileSize && nb_read != 0)
+        {
           nb_read = SDL_RWread(rw, buf, 1, (m_fileSize - nb_read_total));
           nb_read_total += nb_read;
           buf += nb_read;
         }
         SDL_RWclose(rw);
-        if (nb_read_total != m_fileSize) {
+        if (nb_read_total != m_fileSize)
+        {
           free(m_buffer);
           return false;
         }

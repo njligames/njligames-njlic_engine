@@ -1344,12 +1344,13 @@ namespace njli
       flags |= SDL_WINDOW_UTILITY;
 #endif
 
-#if !defined(__EMSCRIPTEN__)
+#if defined(__ANDROID__) || defined(__IPHONEOS__)
       flags |= SDL_WINDOW_FULLSCREEN;
-      flags |= SDL_WINDOW_ALLOW_HIGHDPI;
 #endif
       
-      
+#if defined(__ANDROID__) || defined(__IPHONEOS__) || defined(__MACOSX__)
+      flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+#endif
       
     /* create window and renderer */
     gWindow =

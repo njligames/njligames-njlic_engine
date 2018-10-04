@@ -158,7 +158,13 @@ namespace njli
             TexturedColoredVertex ret;
             
             ret.vertex = (a.vertex + b.vertex) / 2.0f;
-            ret.color = (a.color + b.color) / 2.0f;
+            
+            float x = (a.color.x() + b.color.x()) / 2.0f;
+            float y = (a.color.y() + b.color.y()) / 2.0f;
+            float z = (a.color.z() + b.color.z()) / 2.0f;
+            float w = (a.color.w() + b.color.w()) / 2.0f;
+            
+            ret.color = btVector4(x, y, z, w);
             ret.texture = (a.texture + b.texture) / 2.0f;
             ret.normal = (a.normal + b.normal) / 2.0f;
             ret.tangent = (a.tangent + b.tangent) / 2.0f;
