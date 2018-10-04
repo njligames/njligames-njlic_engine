@@ -1824,16 +1824,19 @@ namespace njli
     
     void Camera::render(ShaderProgram *const shader, bool shouldRedraw)
     {
-        if(m_ModelViewDirty || shouldRedraw)
+        if (shader)
         {
-            assert(shader->setUniformValue("modelView", getModelView()));
-            m_ModelViewDirty = false;
-        }
-        
-        if(m_ProjectionDirty || shouldRedraw)
-        {
-            assert(shader->setUniformValue("projection", m_ProjectionMatrixArray));
-            m_ProjectionDirty = false;
+            if (m_ModelViewDirty || shouldRedraw)
+            {
+                if(shader->setUniformValue("modelView", getModelView()))
+                    m_ModelViewDirty = false;
+            }
+
+            if (m_ProjectionDirty || shouldRedraw)
+            {
+                if(shader->setUniformValue("projection", m_ProjectionMatrixArray))
+                    m_ProjectionDirty = false;
+            }
         }
     }
 

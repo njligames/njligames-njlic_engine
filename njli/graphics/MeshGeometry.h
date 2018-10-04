@@ -141,9 +141,9 @@ namespace njli
         virtual GLsizei numberOfVertices()const;
         virtual GLsizei numberOfIndices()const;
     protected:
-        void subdivideTriangle(TexturedColoredVertex p0,
-                               TexturedColoredVertex p1,
-                               TexturedColoredVertex p2,
+        void subdivideTriangle(const TexturedColoredVertex &p0,
+            const TexturedColoredVertex &p1,
+            const TexturedColoredVertex &p2,
                                TexturedColoredVertex *triangleBuffer,
                                GLsizei newIndiceStart,
                                GLuint *indiceBuffer);

@@ -106,12 +106,12 @@ namespace njli
         , bitangent(0, 0, 0)
         {
         }
-        TexturedColoredVertex(const btVector3 vertex,
-                              const btVector4 color,
-                              const btVector2 texture,
-                              const btVector3 normal,
-                              const btVector3 tangent,
-                              const btVector3 bitangent
+        TexturedColoredVertex(const btVector3 &vertex,
+                              const btVector4 &color,
+                              const btVector2 &texture,
+                              const btVector3 &normal,
+                              const btVector3 &tangent,
+                              const btVector3 &bitangent
                               )
         : vertex(vertex)
         , color(color)
@@ -153,7 +153,7 @@ namespace njli
             return std::string(buffer);
         }
         
-        static TexturedColoredVertex average(TexturedColoredVertex a, TexturedColoredVertex b)
+        static TexturedColoredVertex average(const TexturedColoredVertex &a, const TexturedColoredVertex &b)
         {
             TexturedColoredVertex ret;
             
