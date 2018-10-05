@@ -518,8 +518,13 @@ namespace njli
         loadData();
         
         assert(m_VertexArray == 0);
+#if defined(__APPLE__)
         glGenVertexArraysAPPLE(1, &m_VertexArray);
         glBindVertexArrayAPPLE(m_VertexArray);
+#else
+        glGenVertexArrays(1, &m_VertexArray);
+        glBindVertexArray(m_VertexArray);
+#endif
         {
             {
                 assert(m_ModelViewBuffer == 0);
@@ -627,7 +632,11 @@ namespace njli
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
         }
+#if defined(__APPLE__)
         glBindVertexArrayAPPLE(0);
+#else
+        glBindVertexArray(0);
+#endif
     }
     
     void Geometry::unLoad()
@@ -649,7 +658,11 @@ namespace njli
         m_ModelViewBuffer = 0;
         
         if (m_VertexArray)
+#if defined(__APPLE__)
             glDeleteVertexArraysAPPLE(1, &m_VertexArray);
+#else
+            glDeleteVertexArrays(1, &m_VertexArray);
+#endif
         m_VertexArray = 0;
     }
     
@@ -751,7 +764,11 @@ namespace njli
             
             m_ShaderChanged = false;
             
+#if defined(__APPLE__)
             glBindVertexArrayAPPLE(m_VertexArray);
+#else
+            glBindVertexArray(m_VertexArray);
+#endif
             
             if(isModelViewBufferChanged())
             {
@@ -785,7 +802,11 @@ namespace njli
             //            glDrawElements(GL_LINE_LOOP, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             //            glDrawElements(GL_POINTS, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             
+#if defined(__APPLE__)
             glBindVertexArrayAPPLE(0);
+#else
+            glBindVertexArray(0);
+#endif
         }
     }
     

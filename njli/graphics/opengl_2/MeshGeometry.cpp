@@ -426,12 +426,12 @@ namespace njli
         return ret;
     }
     
-    void MeshGeometry::subdivideTriangle(TexturedColoredVertex p0,
-                                         TexturedColoredVertex p1,
-                                         TexturedColoredVertex p2,
-                                         TexturedColoredVertex *triangleBuffer,
-                                         GLsizei newIndiceStart,
-                                         GLuint *indiceBuffer)
+    void MeshGeometry::subdivideTriangle(const TexturedColoredVertex &p0,
+        const TexturedColoredVertex &p1,
+        const TexturedColoredVertex &p2,
+        TexturedColoredVertex *triangleBuffer,
+        GLsizei newIndiceStart,
+        GLuint *indiceBuffer)
     {
         TexturedColoredVertex p0p1 = TexturedColoredVertex::average(p0, p1);
         TexturedColoredVertex p1p2 = TexturedColoredVertex::average(p1, p2);

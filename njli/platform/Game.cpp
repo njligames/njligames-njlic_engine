@@ -50,7 +50,7 @@ namespace njli
     SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Platform Name = `%s`\n", platform);
     SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Device Name = `%s`\n", deviceName);
 
-    //    printGLInfo();
+        printGLInfo();
     initGL();
 
     njli::World::getInstance()->setDeviceName(deviceName);
