@@ -38,7 +38,7 @@ namespace njli
     m_Camera(NULL)
     {
         m_NVGContext = nvgCreateGLES3(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
-//        SDL_assert(m_NVGContext!=NULL);
+        SDL_assert(m_NVGContext!=NULL);
     }
 
     WorldHUD::~WorldHUD()
@@ -1131,7 +1131,7 @@ namespace njli
     {
         if (m_FBOvector.size() > 0)
         {
-#if (defined(DEBUG) || defined (_DEBUG)) && defined(__APPLE__)
+#if !(defined(NDEBUG)) && defined(__APPLE__)
             glPushGroupMarkerEXT(0, "WorldHUD::renderFBOs()");
 #endif
             glEnable(GL_BLEND);
@@ -1148,14 +1148,13 @@ namespace njli
                 }
             }
             glDisable(GL_BLEND);
-#if (defined(DEBUG) || defined (_DEBUG)) && defined(__APPLE__)
+#if !(defined(NDEBUG)) && defined(__APPLE__)
             glPopGroupMarkerEXT();
 #endif
         }
     }
     void WorldHUD::render()
     {
-        return;
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glBlendEquation(GL_FUNC_ADD);

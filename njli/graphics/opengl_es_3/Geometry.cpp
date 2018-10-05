@@ -518,8 +518,8 @@ namespace njli
         loadData();
         
         assert(m_VertexArray == 0);
-        glGenVertexArraysAPPLE(1, &m_VertexArray);
-        glBindVertexArrayAPPLE(m_VertexArray);
+        glGenVertexArrays(1, &m_VertexArray);
+        glBindVertexArray(m_VertexArray);
         {
             {
                 assert(m_ModelViewBuffer == 0);
@@ -627,7 +627,7 @@ namespace njli
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
         }
-        glBindVertexArrayAPPLE(0);
+        glBindVertexArray(0);
     }
     
     void Geometry::unLoad()
@@ -649,7 +649,7 @@ namespace njli
         m_ModelViewBuffer = 0;
         
         if (m_VertexArray)
-            glDeleteVertexArraysAPPLE(1, &m_VertexArray);
+            glDeleteVertexArrays(1, &m_VertexArray);
         m_VertexArray = 0;
     }
     
@@ -751,7 +751,7 @@ namespace njli
             
             m_ShaderChanged = false;
             
-            glBindVertexArrayAPPLE(m_VertexArray);
+            glBindVertexArray(m_VertexArray);
             
             if(isModelViewBufferChanged())
             {
@@ -785,7 +785,7 @@ namespace njli
             //            glDrawElements(GL_LINE_LOOP, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             //            glDrawElements(GL_POINTS, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             
-            glBindVertexArrayAPPLE(0);
+            glBindVertexArray(0);
         }
     }
     
@@ -2160,7 +2160,7 @@ namespace njli
 //      }
 //
 //#if defined(__APPLE__)
-//    glBindVertexArrayAPPLE(m_vertexArrayID);
+//    glBindVertexArrayOES(m_vertexArrayID);
 //#else
 //    glBindVertexArray(m_vertexArrayID);
 //#endif
@@ -2404,8 +2404,8 @@ namespace njli
 //
 //    SDL_assert(m_vertexArrayID == -1);
 //#if defined(__APPLE__)
-//    glGenVertexArraysAPPLE(1, &m_vertexArrayID);
-//    glBindVertexArrayAPPLE(m_vertexArrayID);
+//    glGenVertexArraysOES(1, &m_vertexArrayID);
+//    glBindVertexArrayOES(m_vertexArrayID);
 //#else
 //    glGenVertexArrays(1, &m_vertexArrayID);
 //    glBindVertexArray(m_vertexArrayID);
@@ -2453,7 +2453,7 @@ namespace njli
 //      }
 //    }
 //#if defined(__APPLE__)
-//    glBindVertexArrayAPPLE(0);
+//    glBindVertexArrayOES(0);
 //#else
 //    glBindVertexArray(0);
 //#endif
@@ -2523,7 +2523,7 @@ namespace njli
 //    if (m_vertexArrayID == -1)
 //      {
 //#if defined(__APPLE__)
-//        glDeleteVertexArraysAPPLE(1, &m_vertexArrayID);
+//        glDeleteVertexArraysOES(1, &m_vertexArrayID);
 //#else
 //        glDeleteVertexArrays(1, &m_vertexArrayID);
 //#endif

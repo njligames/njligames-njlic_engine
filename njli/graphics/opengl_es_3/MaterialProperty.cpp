@@ -805,7 +805,7 @@ namespace njli
 //        }
 //    }
     
-#if defined(DEBUG) || defined (_DEBUG)
+#if !(defined(NDEBUG))
     u64 MaterialProperty::s_MaxTextureUnits = 0;
     u64 MaterialProperty::s_MaxTextureSize = 0;
 #endif
@@ -813,7 +813,7 @@ namespace njli
     
     void MaterialProperty::initReferences()
     {
-#if defined(DEBUG) || defined (_DEBUG)
+#if !(defined(NDEBUG))
         GLint maxUnits[1];
         glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, maxUnits);
         s_MaxTextureUnits = maxUnits[0];
@@ -826,7 +826,7 @@ namespace njli
         s_TextureIDReferences.reset();
         
         u32 end = s_TextureIDReferences.size();
-#if defined(DEBUG) || defined (_DEBUG)
+#if !(defined(NDEBUG))
         end = s_MaxTextureUnits;
 #endif
 //        for (s32 i = 0; i < end; ++i)
@@ -842,7 +842,7 @@ namespace njli
     {
         bool added = false;
         u32 end = s_TextureIDReferences.size();
-#if defined(DEBUG) || defined (_DEBUG)
+#if !(defined(NDEBUG))
         end = s_MaxTextureUnits;
 #endif
         for (s32 i = 0; i < end && !added; ++i)

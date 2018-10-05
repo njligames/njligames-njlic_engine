@@ -14,8 +14,8 @@
 #include "AbstractRender.h"
 #include "Log.h"
 #include <string>
+#include <cstring>
 #include "Util.h"
-#include <imgui.h>
 
 static f32 bgRed = 0.0f;
 static f32 bgGreen = 0.0f;
@@ -29,19 +29,32 @@ static int viewHeight;
 
 void initGL()
 {
-    glEnable(GL_BLEND);
-    glDisable(GL_DEPTH_TEST);
+//    glEnable(GL_BLEND);
+//    glDisable(GL_DEPTH_TEST);
 }
 
-void renderGL(bool leftEye)
+void renderGL(bool isLeftEye)
 {
-#if (defined(DEBUG) || defined (_DEBUG)) && defined(__APPLE__)
+#if !(defined(NDEBUG)) && defined(__APPLE__)
     glPushGroupMarkerEXT(0, "renderGL()");
 #endif
-//    glViewport(viewX, viewY, viewWidth, viewHeight);
-    glViewport(viewX, viewY, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
-//    glClearColor(bgRed, bgGreen, bgBlue, bgAlpha);
-    glClearColor(0.52, 0.86, 0.99, 1.0f);
+    
+#if defined(VR)
+    if(isLeftEye)
+    {
+        glViewport(viewX, viewY, viewWidth / 2, viewHeight);
+    }
+    else
+    {
+        glViewport((viewX) + (viewWidth / 2), viewY, viewWidth / 2, viewHeight);
+    }
+#else
+    glViewport(viewX, viewY, viewWidth, viewHeight);
+#endif
+    glClearColor(bgRed, bgGreen, bgBlue, bgAlpha);
+    
+    
+//    glClearColor(0.52, 0.86, 0.99, 1.0f);
     
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 //    glEnable(GL_BLEND);
@@ -50,7 +63,8 @@ void renderGL(bool leftEye)
     
     glEnable(GL_STENCIL_TEST);
     glEnable(GL_DEPTH_TEST);
-#if (defined(DEBUG) || defined (_DEBUG)) && defined(__APPLE__)
+    glFrontFace(GL_CW);
+#if !(defined(NDEBUG)) && defined(__APPLE__)
     glPopGroupMarkerEXT();
 #endif
 }
