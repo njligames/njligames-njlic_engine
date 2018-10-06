@@ -582,6 +582,65 @@ namespace njli
     dd::xzSquareGrid(mins, maxs, y, step, _color, durationMillis, depthEnabled);
   }
 
+    void WorldDebugDrawer::editTransform(const Camera& camera, btTransform& matrix)
+    {
+        static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
+        static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
+        if (ImGui::IsKeyPressed(90))
+            mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+        if (ImGui::IsKeyPressed(69))
+            mCurrentGizmoOperation = ImGuizmo::ROTATE;
+        if (ImGui::IsKeyPressed(82)) // r Key
+            mCurrentGizmoOperation = ImGuizmo::SCALE;
+        if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
+            mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+        ImGui::SameLine();
+        if (ImGui::RadioButton("Rotate", mCurrentGizmoOperation == ImGuizmo::ROTATE))
+            mCurrentGizmoOperation = ImGuizmo::ROTATE;
+        ImGui::SameLine();
+        if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
+            mCurrentGizmoOperation = ImGuizmo::SCALE;
+        float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+//        ImGuizmo::DecomposeMatrixToComponents(matrix.m16, matrixTranslation, matrixRotation, matrixScale);
+        ImGui::InputFloat3("Tr", matrixTranslation, 3);
+        ImGui::InputFloat3("Rt", matrixRotation, 3);
+        ImGui::InputFloat3("Sc", matrixScale, 3);
+//        ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, matrix.m16);
+        
+        if (mCurrentGizmoOperation != ImGuizmo::SCALE)
+        {
+            if (ImGui::RadioButton("Local", mCurrentGizmoMode == ImGuizmo::LOCAL))
+                mCurrentGizmoMode = ImGuizmo::LOCAL;
+            ImGui::SameLine();
+            if (ImGui::RadioButton("World", mCurrentGizmoMode == ImGuizmo::WORLD))
+                mCurrentGizmoMode = ImGuizmo::WORLD;
+        }
+        static bool useSnap(false);
+        if (ImGui::IsKeyPressed(83))
+            useSnap = !useSnap;
+        ImGui::Checkbox("", &useSnap);
+        ImGui::SameLine();
+//        vec_t snap;
+//        switch (mCurrentGizmoOperation)
+//        {
+//            case ImGuizmo::TRANSLATE:
+//                snap = config.mSnapTranslation;
+//                ImGui::InputFloat3("Snap", &snap.x);
+//                break;
+//            case ImGuizmo::ROTATE:
+//                snap = config.mSnapRotation;
+//                ImGui::InputFloat("Angle Snap", &snap.x);
+//                break;
+//            case ImGuizmo::SCALE:
+//                snap = config.mSnapScale;
+//                ImGui::InputFloat("Scale Snap", &snap.x);
+//                break;
+//        }
+//        ImGuiIO& io = ImGui::GetIO();
+//        ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+//        ImGuizmo::Manipulate(camera.mView.m16, camera.mProjection.m16, mCurrentGizmoOperation, mCurrentGizmoMode, matrix.m16, NULL, useSnap ? &snap.x : NULL);
+    }
+    
   void WorldDebugDrawer::setupShaderPrograms()
   {
     // std::cout << "> DDRenderInterfaceCoreGL::setupShaderPrograms()" <<
@@ -1299,7 +1358,7 @@ namespace njli
       }
 
     ImGui::NewFrame();
-    //        ImGuizmo::BeginFrame();
+    ImGuizmo::BeginFrame();
   }
 
 #if defined(USE_USYNERGY_LIBRARY)
@@ -1431,12 +1490,30 @@ namespace njli
     glGetIntegerv(GL_CURRENT_PROGRAM, &last_program);
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
     glEnable(GL_BLEND);
+      
+    //      GL_BLEND_SRC, GL_BLEND_DST.
+    GLint blendEq, blendSrc, blendDst;
+    glGetIntegerv(GL_BLEND_EQUATION, &blendEq);
+    glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+      glGetIntegerv(GL_BLEND_DST, &blendDst);
+      
     glBlendEquation(GL_FUNC_ADD);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      
+      
+      
 
+      GLboolean cullFace = glIsEnabled(GL_CULL_FACE);
     glDisable(GL_CULL_FACE);
+      
+      GLboolean depthFace = glIsEnabled(GL_DEPTH_TEST);
     glDisable(GL_DEPTH_TEST);
+      
+      GLboolean scissorTest = glIsEnabled(GL_SCISSOR_TEST);
     glEnable(GL_SCISSOR_TEST);
+      
+      
+      
     glActiveTexture(GL_TEXTURE0);
 
     // Setup orthographic projection matrix
@@ -1526,11 +1603,19 @@ namespace njli
 #else
     glBindVertexArray(0);
 #endif
+      
+      
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
+      
+      glBlendEquation(blendEq);
+      glBlendFunc(blendSrc, blendDst);
+      
+      (GL_FALSE == cullFace)? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
+      (GL_FALSE == depthFace)? glDisable(GL_DEPTH_TEST) : glEnable(GL_DEPTH_TEST);
+      (GL_FALSE == scissorTest)? glDisable(GL_SCISSOR_TEST) : glEnable(GL_SCISSOR_TEST);
+    
     glUseProgram(last_program);
-    glDisable(GL_SCISSOR_TEST);
+      
     glBindTexture(GL_TEXTURE_2D, last_texture);
   }
 

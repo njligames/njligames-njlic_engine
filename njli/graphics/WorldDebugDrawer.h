@@ -344,6 +344,8 @@ namespace njli
 #if defined(USE_USYNERGY_LIBRARY)
     void connectSynergyServer(const std::string serverName);
 #endif
+      
+      void editTransform(const Camera& camera, btTransform& matrix);
 
   protected:
     void setupShaderPrograms();
