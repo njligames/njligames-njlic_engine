@@ -25,3 +25,43 @@
 #endif
 
 #define USE_FMOD
+
+//#if defined(__GL_ES2__)
+//    #include <OpenGLES/ES2/glext.h>
+//    #include <OpenGLES/ES2/gl.h>
+//
+//    #define glDeleteVertexArraysNJLIC glDeleteVertexArraysOES
+//    #define glBindVertexArrayNJLIC glBindVertexArrayOES
+//    #define glGenVertexArraysNJLIC glGenVertexArraysOES
+//
+//    #define NANOVG_GLES2_IMPLEMENTATION
+//#elif defined(__GL_ES3__)
+//    #include <OpenGLES/ES3/glext.h>
+//    #include <OpenGLES/ES3/gl.h>
+//
+//    #define glDeleteVertexArraysNJLIC glDeleteVertexArrays
+//    #define glBindVertexArrayNJLIC glBindVertexArray
+//    #define glGenVertexArraysNJLIC glGenVertexArrays
+//
+//
+//    #define NANOVG_GLES3_IMPLEMENTATION
+//#elif defined(__GL_2__)
+//
+//    #if defined(__APPLE__)
+//        #define glDeleteVertexArraysNJLIC glDeleteVertexArraysAPPLE
+//        #define glBindVertexArrayNJLIC glBindVertexArrayAPPLE
+//        #define glGenVertexArraysNJLIC glGenVertexArraysAPPLE
+//    #else
+//        #define glDeleteVertexArraysNJLIC glDeleteVertexArrays
+//        #define glBindVertexArrayNJLIC glBindVertexArray
+//        #define glGenVertexArraysNJLIC glGenVertexArrays
+//    #endif
+//
+//#elif defined(__GL_3__)
+//    #define glDeleteVertexArraysNJLIC glDeleteVertexArrays
+//    #define glBindVertexArrayNJLIC glBindVertexArray
+//    #define glGenVertexArraysNJLIC glGenVertexArrays
+//#else
+//    #error Unsupported choice setting
+//#endif
+//

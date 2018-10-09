@@ -518,6 +518,7 @@ namespace njli
         loadData();
         
         assert(m_VertexArray == 0);
+        
         glGenVertexArraysOES(1, &m_VertexArray);
         glBindVertexArrayOES(m_VertexArray);
         {
@@ -627,6 +628,7 @@ namespace njli
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
         }
+        
         glBindVertexArrayOES(0);
     }
     
@@ -750,7 +752,7 @@ namespace njli
             shader->setUniformValue("FogDensity", getFogDensity());
             
             m_ShaderChanged = false;
-            
+     
             glBindVertexArrayOES(m_VertexArray);
             
             if(isModelViewBufferChanged())
@@ -784,7 +786,7 @@ namespace njli
             glDrawElements(GL_TRIANGLES, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             //            glDrawElements(GL_LINE_LOOP, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             //            glDrawElements(GL_POINTS, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
-            
+     
             glBindVertexArrayOES(0);
         }
     }
@@ -2160,7 +2162,7 @@ namespace njli
 //      }
 //
 //#if defined(__APPLE__)
-//    glBindVertexArrayOES(m_vertexArrayID);
+//    glBindVertexArrayAPPLE(m_vertexArrayID);
 //#else
 //    glBindVertexArray(m_vertexArrayID);
 //#endif
@@ -2404,8 +2406,8 @@ namespace njli
 //
 //    SDL_assert(m_vertexArrayID == -1);
 //#if defined(__APPLE__)
-//    glGenVertexArraysOES(1, &m_vertexArrayID);
-//    glBindVertexArrayOES(m_vertexArrayID);
+//    glGenVertexArraysAPPLE(1, &m_vertexArrayID);
+//    glBindVertexArrayAPPLE(m_vertexArrayID);
 //#else
 //    glGenVertexArrays(1, &m_vertexArrayID);
 //    glBindVertexArray(m_vertexArrayID);
@@ -2453,7 +2455,7 @@ namespace njli
 //      }
 //    }
 //#if defined(__APPLE__)
-//    glBindVertexArrayOES(0);
+//    glBindVertexArrayAPPLE(0);
 //#else
 //    glBindVertexArray(0);
 //#endif
@@ -2523,7 +2525,7 @@ namespace njli
 //    if (m_vertexArrayID == -1)
 //      {
 //#if defined(__APPLE__)
-//        glDeleteVertexArraysOES(1, &m_vertexArrayID);
+//        glDeleteVertexArraysAPPLE(1, &m_vertexArrayID);
 //#else
 //        glDeleteVertexArrays(1, &m_vertexArrayID);
 //#endif
