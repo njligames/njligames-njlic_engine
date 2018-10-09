@@ -216,7 +216,7 @@ extern "C" {
 
 #include "SDL_log.h"
 
-// extern swig_type_info *swig_types[521];
+// extern swig_type_info *swig_types[483];
 
 
 //std::string njli::WorldLuaVirtualMachine::m_previousMessage = "";
@@ -899,8 +899,7 @@ LUALIB_API int luaopen_JLIM(lua_State *L)
 
 // static std::string printMethods(const char* name)
 //{
-//    std::string output = "-- Automatically generated tests for JLI game
-//    engine.\n\n";
+//    std::string output = "-- Automatically generated tests for JLI game engine.\n\n";
 //    char trigger_value[512];
 //    char completion_value[512];
 //
@@ -909,7 +908,7 @@ LUALIB_API int luaopen_JLIM(lua_State *L)
 //    std::string trigger2 = "\" },\n";
 //
 ////    std::string sublime_completions = "\n{\n\t\"scope\": \"source.lua -
-/// source - meta.tag, punctuation.definition.tag.begin\",\n";
+//// source - meta.tag, punctuation.definition.tag.begin\",\n";
 ////
 ////    sublime_completions += "\n\n\t\"completions\":\n\t[\n";
 //
@@ -944,8 +943,7 @@ LUALIB_API int luaopen_JLIM(lua_State *L)
 //
 //                for(int j = 0; ptr->cls_static->ns_methods[j].name; ++j)
 //                {
-//                    sprintf(trigger_value, "static
-//                    %s.%s",ptr->name,ptr->cls_static->ns_methods[j].name);
+//                    sprintf(trigger_value, "static %s.%s",ptr->name,ptr->cls_static->ns_methods[j].name);
 //                    sprintf(completion_value,
 //                    "JLI.%s.%s",ptr->name,ptr->cls_static->ns_methods[j].name);
 //
@@ -997,10 +995,10 @@ LUALIB_API int luaopen_JLIM(lua_State *L)
 ////                for(int j=0;ptr->methods[j].name;j++)
 ////                {
 ////                    sprintf(buffer,
-///"%s::%s()\n",ptr->name,ptr->methods[j].name);
+////"%s::%s()\n",ptr->name,ptr->methods[j].name);
 //////                    functions += buffer;
 //// SDL_LogVerbose(SDL_LOG_CATEGORY_TEST,
-///"%s::%s()\n",ptr->name,ptr->methods[j].name);
+////"%s::%s()\n",ptr->name,ptr->methods[j].name);
 ////                }
 //            }
 //        }
@@ -1011,13 +1009,37 @@ LUALIB_API int luaopen_JLIM(lua_State *L)
 ////    Log("%s", functions.c_str());
 //}
 
-// static void printWrappedClasses()
-//{
-//    std::string sublime_completions = "\n{\n\t\"scope\":\"source.lua\",\n";
-//    //std::string sublime_completions = "\n{\n\t\"scope\": \"source.lua -
+ static void printWrappedClasses(lua_State *L)
+{
+    std::string sublime_completions = "\n{\n\t\"scope\":\"source.lua\",\n";
+    //std::string sublime_completions = "\n{\n\t\"scope\": \"source.lua -
 //    source - meta.tag, punctuation.definition.tag.begin\",\n";
+
+    std::vector<std::string> vec_bases;
+    
+    sublime_completions += "\n\n\t\"completions\":\n\t[\n";
+
+    const char *name = "_p_njli__Node";
+    swig_module_info *module = SWIG_GetModule(L);
+    
+    swig_type_info *type = SWIG_TypeQueryModule(module, module, name);
+    int i = 0;
+//    printMethods(name);
 //
-//    sublime_completions += "\n\n\t\"completions\":\n\t[\n";
+//    size_t bases_count;
+//    swig_type_info * swig_type;
+//
+//    swig_module_info *module = SWIG_GetModule(L);
+//    swig_lua_class **bases = ((swig_lua_class *)(swig_type->clientdata))->bases;
+//    const char **base_names =
+//    ((swig_lua_class *)(swig_type->clientdata))->base_names;
+//    bases_count = 0;
+//    for (; base_names[bases_count]; bases_count++)
+//        vec_bases.push_back(std::string(base_names[bases_count]));
+//        ; /* get length of bases */
+//    SDL_Log("%d", bases_count);
+    
+    
 //
 //    //this touches the SWIG internals, please be careful:
 //    for (int i = 0; swig_types[i]; i++)
@@ -1028,13 +1050,13 @@ LUALIB_API int luaopen_JLIM(lua_State *L)
 //            sublime_completions += printMethods(ptr->name);
 //        }
 //    }
-//
-////    sublime_completions += buildSublimeCompletions();
-//
-//    sublime_completions += "\t]\n}";
-//
-//    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s",sublime_completions.c_str());
-//}
+
+//    sublime_completions += buildSublimeCompletions();
+
+    sublime_completions += "\t]\n}";
+
+    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s",sublime_completions.c_str());
+}
 
 namespace njli
 {
@@ -1251,7 +1273,7 @@ namespace njli
       }
 
 #if !(defined(NDEBUG))
-//        printWrappedClasses();
+        printWrappedClasses(m_lua_State);
 #endif
   }
 

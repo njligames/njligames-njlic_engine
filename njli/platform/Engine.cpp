@@ -1302,6 +1302,7 @@ namespace njli
         return 1;
       }
 
+      
 
     // Check for joysticks
     if (SDL_NumJoysticks() < 1)
@@ -1471,6 +1472,16 @@ namespace njli
                       gDisplayMode.refresh_rate);
     //#endif
 
+      bool vsynch = false;
+      if(vsynch)
+      {
+          SDL_GL_SetSwapInterval(1);
+      }
+      else
+      {
+          SDL_GL_SetSwapInterval(0);
+      }
+      
     gDone = (njli::NJLIGameEngine::start(argc, argv) == false) ? 1 : 0;
 
 #if defined(__EMSCRIPTEN__)

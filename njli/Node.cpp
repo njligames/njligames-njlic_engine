@@ -364,9 +364,17 @@ namespace njli
 
   void Node::setTransform(const btTransform &transform)
   {
-    *m_Transform = transform;
-
-    applyPhysicsBodyTransform(transform);
+      if(!(*m_Transform == transform))
+      {
+          m_TransformDirty = true;
+          
+          *m_Transform = transform;
+          
+          applyPhysicsBodyTransform(transform);
+      }
+    
+      
+      
 
     //        PhysicsBody *physicsBody = getPhysicsBody();
     //
@@ -982,12 +990,16 @@ namespace njli
 
   void Node::setOpacity(f32 opacity)
   {
-    m_Opacity = (opacity > 1.0f) ? 1.0f : ((opacity < 0.0f) ? 0.0f : opacity);
-
-    Geometry *g = getGeometry();
-    if (g)
+      if(m_Opacity != opacity)
       {
-        g->setOpacity(this);
+          m_Opacity = (opacity > 1.0f) ? 1.0f : ((opacity < 0.0f) ? 0.0f : opacity);
+          
+          Geometry *g = getGeometry();
+          if (g)
+          {
+              g->setOpacity(this);
+          }
+          m_OpacityDirty = true;
       }
   }
 
@@ -1040,8 +1052,11 @@ namespace njli
     
     void Node::setNormalMatrix(const btMatrix3x3 &mtx)
     {
-        *m_NormalMatrix = mtx;
-        m_NormalMatrixDirty = true;
+        if(!(mtx == *m_NormalMatrix))
+        {
+            *m_NormalMatrix = mtx;
+            m_NormalMatrixDirty = true;
+        }
     }
     
     const btMatrix3x3 &Node::getNormalMatrix()const

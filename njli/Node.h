@@ -309,10 +309,13 @@ namespace njli
           return (transform);
         }
 
-      btTransform transform(getTransform());
+//      btTransform transform(getTransform());
+        btTransform transform(btTransform::getIdentity());
+        
 
       transform.setBasis(transform.getBasis().scaled(getScale()));
-
+        transform *= getTransform();
+        
       if (getParentNode())
         {
           return (transform * getParentNode()->getWorldTransform());
