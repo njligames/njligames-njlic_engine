@@ -563,7 +563,7 @@ namespace njli
     {
         int location = glGetAttribLocation(m_Program, attributeName.c_str());
         
-#if defined(DEBUG)
+#if !defined(NDEBUG)
         if(location == -1)
         {
             std::cout << "The named attribute variable " << attributeName << " is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"" << std::endl;
@@ -768,16 +768,6 @@ namespace njli
         
         GLint status;
         shader = glCreateShader(type);
-        /*
-        GLchar**str = new GLchar*[1];
-        str[0] = new GLchar[source.length()];
-        strcpy(str[0], source.c_str());*/
-
-        /*GLchar *str = new GLchar[source.length() + 1];
-        strcpy(str, source.c_str());*/
-
-        /*GLchar *str = new GLchar[source.length()];
-        strcpy(str, source.c_str());*/
 
         GLchar *str = (GLchar *)source.c_str();
         
@@ -785,29 +775,23 @@ namespace njli
         glShaderSource(shader, 1, &str, NULL);
         glCompileShader(shader);
         
-#if !defined(NDEBUG)
-        GLint logLength;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
-        if (logLength > 0)
-        {
-            GLchar *log = (GLchar *)malloc(logLength);
-            glGetShaderInfoLog(shader, logLength, &logLength, log);
-            std::cout << "ShaderProgram compile log:" << std::endl << log;
-            free(log);
-        }
-#endif
-       /* delete[] *str;
-        delete str;*/
-        //delete[] str;
-        /*
-        delete [] str[0];str[0]=NULL;
-        delete [] str;str=NULL;*/
-        
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
         if (status == 0) {
             glDeleteShader(shader);
             shader = 0;
         }
+        
+#if !defined(NDEBUG)
+        GLint logLength;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
+        if (logLength > 0)
+        {
+            GLchar log_buffer[1024];
+            glGetShaderInfoLog(shader, logLength, NULL, log_buffer);
+            
+            SDL_assertPrint((status == GL_TRUE), "%s", log_buffer);
+        }
+#endif
         
         return shader;
     }
@@ -824,6 +808,8 @@ namespace njli
             GLchar log_buffer[1024];
             glGetShaderInfoLog(shader, log_length, NULL, log_buffer);
             std::cout << log_buffer << std::endl;
+            
+            SDL_assertPrint((compileStatus == GL_TRUE), "%s", log_buffer);
         }
         
         return (compileStatus == GL_TRUE);
@@ -834,18 +820,20 @@ namespace njli
         GLint status;
         glLinkProgram(program);
         
-#if defined(DEBUG)
+        glGetProgramiv(program, GL_LINK_STATUS, &status);
+        
+#if !defined(NDEBUG)
         GLint logLength;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
-        if (logLength > 0) {
-            GLchar *log = (GLchar *)malloc(logLength);
-            glGetProgramInfoLog(program, logLength, &logLength, log);
-            std::cout << "Program link log:\n" << log;
-            free(log);
+        if (logLength > 0)
+        {
+            GLchar log_buffer[1024];
+            glGetProgramInfoLog(program, logLength, NULL, log_buffer);
+            std::cout << "Program link log:\n" << log_buffer;
+            
+            SDL_assertPrint((status == GL_TRUE), "%s", log_buffer);
         }
 #endif
-        
-        glGetProgramiv(program, GL_LINK_STATUS, &status);
         return (status == GL_TRUE);
     }
     

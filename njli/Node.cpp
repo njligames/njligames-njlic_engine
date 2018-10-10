@@ -387,7 +387,7 @@ namespace njli
     
     void Node::setTransform(const glm::mat4 &transform)
     {
-        setTransform(convert(transform));
+        setTransform(glmToBullet(transform));
     }
 
   btVector3 Node::getOrigin() const { return getWorldTransform().getOrigin(); }

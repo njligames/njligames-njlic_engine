@@ -164,7 +164,16 @@ void NJLI_HandleCommitText(const char *text, int newCursorPosition) {}
 
 void NJLI_HandleSetComposingText(const char *text, int newCursorPosition) {}
 
-void NJLI_HandleVRCameraRotation(const glm::mat4 &transform)
+void NJLI_HandleVRCameraRotation(float m11, float m12, float m13,
+                                 float m21, float m22, float m23,
+                                 float m31, float m32, float m33)
 {
-    njli::NJLIGameEngine::setVRCameraRotation(transform);
+    njli::NJLIGameEngine::setVRCameraRotation(m11, m12, m13,
+                                              m21, m22, m23,
+                                              m31, m32, m33);
+}
+
+void NJLI_HandleVRCameraRotationYPR(float yaw, float pitch, float roll)
+{
+    njli::NJLIGameEngine::setVRCameraRotation(yaw, pitch, roll);
 }

@@ -26,6 +26,7 @@ using namespace std;
 #include "glm/glm.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+#include "btTransform.h"
 
 namespace njli
 {
@@ -421,10 +422,16 @@ namespace njli
 //              SDL_Log("Joystick device %d motion. [%f, %f, %f, %f, %f, %f, %f, %f, %f]\n", (int) event->jmotion.which, event->jmotion.m11, event->jmotion.m12, event->jmotion.m13, event->jmotion.m21, event->jmotion.m22, event->jmotion.m23, event->jmotion.m31, event->jmotion.m32, event->jmotion.m33);
 //              SDL_Log("Yaw, Pitch, Roll (%f, %f, %f)\n", event->jmotion.yaw, event->jmotion.pitch, event->jmotion.roll);
               
-              float _transform[] = {static_cast<float>(event->jmotion.m11), static_cast<float>(event->jmotion.m12), static_cast<float>(event->jmotion.m13), static_cast<float>(event->jmotion.m21), static_cast<float>(event->jmotion.m22), static_cast<float>(event->jmotion.m23), static_cast<float>(event->jmotion.m31), static_cast<float>(event->jmotion.m32), static_cast<float>(event->jmotion.m33)};
-              glm::mat4 transform = glm::make_mat4(_transform);
-              NJLI_HandleVRCameraRotation(transform);
+//              float _transform[] = {static_cast<float>(event->jmotion.m11), static_cast<float>(event->jmotion.m12), static_cast<float>(event->jmotion.m13), static_cast<float>(event->jmotion.m21), static_cast<float>(event->jmotion.m22), static_cast<float>(event->jmotion.m23), static_cast<float>(event->jmotion.m31), static_cast<float>(event->jmotion.m32), static_cast<float>(event->jmotion.m33)};
               
+              
+              
+//              glm::mat4 transform = glm::make_mat4(_transform);
+//              NJLI_HandleVRCameraRotation(static_cast<float>(event->jmotion.m11), static_cast<float>(event->jmotion.m12), static_cast<float>(event->jmotion.m13), static_cast<float>(event->jmotion.m21), static_cast<float>(event->jmotion.m22), static_cast<float>(event->jmotion.m23), static_cast<float>(event->jmotion.m31), static_cast<float>(event->jmotion.m32), static_cast<float>(event->jmotion.m33));
+              
+              NJLI_HandleVRCameraRotationYPR(static_cast<float>(event->jmotion.yaw),
+                                             static_cast<float>(event->jmotion.pitch),
+                                             static_cast<float>(event->jmotion.roll));
               // = glm::mat4(event->jmotion.m11, event->jmotion.m12, event->jmotion.m13, event->jmotion.m21, event->jmotion.m22, event->jmotion.m23, event->jmotion.m31, event->jmotion.m32, event->jmotion.m33);
               
           }
@@ -1295,6 +1302,8 @@ namespace njli
       }
 #endif
 
+      SDL_SetHint(SDL_HINT_ACCELEROMETER_AS_JOYSTICK, "0");
+      
     /* initialize SDL */
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0)
       {
@@ -1302,13 +1311,126 @@ namespace njli
         return 1;
       }
 
-      
+      const char *name, *type;
+      int i;
+      SDL_Joystick *joystick;
 
-    // Check for joysticks
-    if (SDL_NumJoysticks() < 1)
-      {
-        printf("Warning: No joysticks connected!\n");
+      /* Print information about the joysticks */
+      SDL_Log("There are %d joysticks attached\n", SDL_NumJoysticks());
+      for ( i = 0; i < SDL_NumJoysticks(); ++i) {
+          name = SDL_JoystickNameForIndex(i);
+          SDL_Log("Joystick %d: %s\n", i, name ? name : "Unknown Joystick");
+          joystick = SDL_JoystickOpen(i);
+          if (joystick == NULL) {
+              SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_JoystickOpen(%d) failed: %s\n", i,
+                           SDL_GetError());
+          } else {
+              char guid[64];
+              SDL_assert(SDL_JoystickFromInstanceID(SDL_JoystickInstanceID(joystick)) == joystick);
+              SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joystick),
+                                        guid, sizeof (guid));
+              switch (SDL_JoystickGetType(joystick)) {
+                  case SDL_JOYSTICK_TYPE_GAMECONTROLLER:
+                      type = "Game Controller";
+                      break;
+                  case SDL_JOYSTICK_TYPE_WHEEL:
+                      type = "Wheel";
+                      break;
+                  case SDL_JOYSTICK_TYPE_ARCADE_STICK:
+                      type = "Arcade Stick";
+                      break;
+                  case SDL_JOYSTICK_TYPE_FLIGHT_STICK:
+                      type = "Flight Stick";
+                      break;
+                  case SDL_JOYSTICK_TYPE_DANCE_PAD:
+                      type = "Dance Pad";
+                      break;
+                  case SDL_JOYSTICK_TYPE_GUITAR:
+                      type = "Guitar";
+                      break;
+                  case SDL_JOYSTICK_TYPE_DRUM_KIT:
+                      type = "Drum Kit";
+                      break;
+                  case SDL_JOYSTICK_TYPE_ARCADE_PAD:
+                      type = "Arcade Pad";
+                      break;
+                  case SDL_JOYSTICK_TYPE_THROTTLE:
+                      type = "Throttle";
+                      break;
+                  default:
+                      type = "Unknown";
+                      break;
+              }
+              SDL_Log("       type: %s\n", type);
+              SDL_Log("       axes: %d\n", SDL_JoystickNumAxes(joystick));
+              SDL_Log("      balls: %d\n", SDL_JoystickNumBalls(joystick));
+              SDL_Log("       hats: %d\n", SDL_JoystickNumHats(joystick));
+              SDL_Log("    buttons: %d\n", SDL_JoystickNumButtons(joystick));
+              SDL_Log("instance id: %d\n", SDL_JoystickInstanceID(joystick));
+              SDL_Log("       guid: %s\n", guid);
+              SDL_Log("    VID/PID: 0x%.4x/0x%.4x\n", SDL_JoystickGetVendor(joystick), SDL_JoystickGetProduct(joystick));
+              SDL_JoystickClose(joystick);
+          }
       }
+      
+      
+      
+#if defined(__ANDROID__) || defined(__IPHONEOS__ )
+      if (SDL_NumJoysticks() > 0) {
+#else
+          if (argv[1]) {
+#endif
+              SDL_bool reportederror = SDL_FALSE;
+              SDL_bool keepGoing = SDL_TRUE;
+              SDL_Event event;
+              int device;
+#if defined(__ANDROID__) || defined(__IPHONEOS__)
+              device = 0;
+#else
+              device = atoi(argv[1]);
+#endif
+              joystick = SDL_JoystickOpen(device);
+              if (joystick != NULL) {
+                  SDL_assert(SDL_JoystickFromInstanceID(SDL_JoystickInstanceID(joystick)) == joystick);
+              }
+              
+//              while ( keepGoing ) {
+//                  if (joystick == NULL) {
+//                      if ( !reportederror ) {
+//                          SDL_Log("Couldn't open joystick %d: %s\n", device, SDL_GetError());
+//                          keepGoing = SDL_FALSE;
+//                          reportederror = SDL_TRUE;
+//                      }
+//                  } else {
+//                      reportederror = SDL_FALSE;
+//                      keepGoing = WatchJoystick(joystick);
+//                      SDL_JoystickClose(joystick);
+//                  }
+//
+//                  joystick = NULL;
+//                  if (keepGoing) {
+//                      SDL_Log("Waiting for attach\n");
+//                  }
+//                  while (keepGoing) {
+//                      SDL_WaitEvent(&event);
+//                      if ((event.type == SDL_QUIT) || (event.type == SDL_FINGERDOWN)
+//                          || (event.type == SDL_MOUSEBUTTONDOWN)) {
+//                          keepGoing = SDL_FALSE;
+//                      } else if (event.type == SDL_JOYDEVICEADDED) {
+//                          device = event.jdevice.which;
+//                          joystick = SDL_JoystickOpen(device);
+//                          if (joystick != NULL) {
+//                              SDL_assert(SDL_JoystickFromInstanceID(SDL_JoystickInstanceID(joystick)) == joystick);
+//                          }
+//                          break;
+//                      }
+//                  }
+//              }
+          }
+      
+      
+      
+      
 
 #if !defined(__ANDROID__)
     SDL_GetDesktopDisplayMode(0, &gDisplayMode);
@@ -1366,7 +1488,7 @@ namespace njli
 #endif
 
       Uint32 flags = SDL_WINDOW_OPENGL;
-      flags |= SDL_WINDOW_RESIZABLE;
+//      flags |= SDL_WINDOW_RESIZABLE;
       
 #if defined(__MACOSX__)
       flags |= SDL_WINDOW_MAXIMIZED;
@@ -1472,15 +1594,15 @@ namespace njli
                       gDisplayMode.refresh_rate);
     //#endif
 
-      bool vsynch = false;
-      if(vsynch)
-      {
-          SDL_GL_SetSwapInterval(1);
-      }
-      else
-      {
-          SDL_GL_SetSwapInterval(0);
-      }
+//      bool vsynch = true;
+//      if(vsynch)
+//      {
+//          SDL_GL_SetSwapInterval(1);
+//      }
+//      else
+//      {
+//          SDL_GL_SetSwapInterval(0);
+//      }
       
     gDone = (njli::NJLIGameEngine::start(argc, argv) == false) ? 1 : 0;
 

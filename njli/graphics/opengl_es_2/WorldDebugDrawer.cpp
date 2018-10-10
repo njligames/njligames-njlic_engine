@@ -1282,6 +1282,7 @@ namespace njli
       }
     else
       {
+#if !defined(__ANDROID__) && !defined(__IPHONEOS__)
         int mx, my;
         Uint32 mouseMask = SDL_GetMouseState(&mx, &my);
         if (SDL_GetWindowFlags(gWindow) & SDL_WINDOW_MOUSE_FOCUS)
@@ -1292,6 +1293,7 @@ namespace njli
           {
             io.MousePos = ImVec2(-1, -1);
           }
+
         // If a mouse press event came, always pass it as "mouse held this
         // frame", so we don't miss click-release events that are
         // shorter than 1 frame.
@@ -1305,8 +1307,9 @@ namespace njli
 
         io.MouseWheel = g_MouseWheel;
         g_MouseWheel = 0.0f;
-
-        SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
+          SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
+#endif
+        
       }
 
     ImGui::NewFrame();
@@ -1375,6 +1378,36 @@ namespace njli
             g_MousePressed[2] = true;
           return true;
         }
+              /*
+               NJLI_HandleTouch((int)event.tfinger.touchId,
+               (int)event.tfinger.fingerId, event.type,
+               event.tfinger.x, event.tfinger.y, event.tfinger.dx,
+               event.tfinger.dy, event.tfinger.pressure);
+               */
+          case SDL_FINGERMOTION:
+          {
+              g_MousePressed[0] = true;
+              float x = event->tfinger.x * gDisplayMode.w;
+              float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+              io.MousePos = ImVec2(x, y);
+          }
+              return true;
+          case SDL_FINGERDOWN:
+          {
+              g_MousePressed[0] = true;
+              float x = event->tfinger.x * gDisplayMode.w;
+              float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+              io.MousePos = ImVec2(x, y);
+          }
+              return true;
+          case SDL_FINGERUP:
+          {
+              g_MousePressed[0] = false;
+              float x = event->tfinger.x * gDisplayMode.w;
+              float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+              io.MousePos = ImVec2(x, y);
+          }
+              return true;
       case SDL_TEXTINPUT:
         {
           ImGuiIO &io = ImGui::GetIO();

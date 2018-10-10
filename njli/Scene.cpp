@@ -53,7 +53,8 @@ namespace njli
         m_ActiveParticleEmitters(new btAlignedObjectArray<ParticleEmitter *>()),
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
-        m_TouchCamera(NULL)
+        m_TouchCamera(NULL),
+    m_VRCameraRotation(new btTransform())
   {
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
@@ -70,7 +71,8 @@ namespace njli
         m_ActiveParticleEmitters(new btAlignedObjectArray<ParticleEmitter *>()),
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
-        m_TouchCamera(NULL)
+    m_TouchCamera(NULL),
+    m_VRCameraRotation(new btTransform())
   {
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
@@ -87,7 +89,8 @@ namespace njli
         m_ActiveParticleEmitters(new btAlignedObjectArray<ParticleEmitter *>()),
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
-        m_TouchCamera(NULL)
+    m_TouchCamera(NULL),
+    m_VRCameraRotation(new btTransform())
   {
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
@@ -95,6 +98,8 @@ namespace njli
 
   Scene::~Scene()
   {
+      delete m_VRCameraRotation;
+      m_VRCameraRotation= NULL;
     delete m_ActiveGeometry;
     m_ActiveGeometry = NULL;
     delete m_ActiveClocks;
@@ -351,9 +356,18 @@ namespace njli
       {
           Camera *camera = (*m_ActiveCameras).at(i);
 #if defined(VR)
+          
           if(camera->getParent())
           {
-              camera->getParent()->setTransform(m_VRCameraRotation);
+              m_VRCameraRotation->setOrigin(camera->getParent()->getOrigin());
+              
+              btQuaternion rotX(btVector3(1.0, 0.0, 0.0), btRadians(90));
+              btQuaternion rotY(btVector3(0.0, 1.0, 0.0), btRadians(180));
+              btQuaternion rotZ(btVector3(0.0, 0.0, 1.0), btRadians(180));
+              
+              m_VRCameraRotation->setRotation(m_VRCameraRotation->getRotation());
+              
+              camera->getParent()->setTransform( (*m_VRCameraRotation));
           }
 #endif
           
@@ -1292,9 +1306,9 @@ namespace njli
 
   const Camera *Scene::getTouchCamera() const { return m_TouchCamera; }
 
-    void Scene::setVRCameraRotation(const glm::mat4 &transform)
+    void Scene::setVRCameraRotation(const btTransform &transform)
     {
-        m_VRCameraRotation = transform;
+        *m_VRCameraRotation = transform;
     }
   //    void Scene::pause()
   //    {

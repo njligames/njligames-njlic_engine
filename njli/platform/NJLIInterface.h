@@ -72,7 +72,16 @@ const char *NJLI_HandleGetHint(const char *name);
 void NJLI_HandleCommitText(const char *text, int newCursorPosition);
 void NJLI_HandleSetComposingText(const char *text, int newCursorPosition);
     
-    void NJLI_HandleVRCameraRotation(const glm::mat4 &transform);
+    
+    
+  
+    
+    
+    void NJLI_HandleVRCameraRotation(float m11, float m12, float m13,
+                                     float m21, float m22, float m23,
+                                     float m31, float m32, float m33);
+    
+    void NJLI_HandleVRCameraRotationYPR(float yaw, float pitch, float roll);
 
 #ifdef __cplusplus
 }

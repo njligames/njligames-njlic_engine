@@ -487,7 +487,7 @@ namespace njli
      */
     const Camera *getTouchCamera() const;
       
-      void setVRCameraRotation(const glm::mat4 &transform);
+      void setVRCameraRotation(const btTransform &transform);
 
   protected:
     void addActiveCamera(Camera *camera = NULL);
@@ -530,7 +530,7 @@ namespace njli
     btAlignedObjectArray<Geometry *> *m_ActiveGeometry;
 
     Camera *m_TouchCamera;
-      glm::mat4 m_VRCameraRotation;
+      btTransform *m_VRCameraRotation;
   };
 }
 

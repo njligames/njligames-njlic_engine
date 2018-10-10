@@ -386,8 +386,32 @@ namespace njli
       njli::World::getInstance()->getScene()->receivedMemoryWarning();
   }
     
-    void NJLIGameEngine::setVRCameraRotation(const glm::mat4 &transform)
+    void NJLIGameEngine::setVRCameraRotation(float m11, float m12, float m13,
+                                             float m21, float m22, float m23,
+                                             float m31, float m32, float m33)
     {
+        btMatrix3x3 m(m11, m12, m13,
+                      m21, m22, m23,
+                      m31, m32, m33);
+        btTransform transform(m);
+        
+        if (njli::World::getInstance()->getScene())
+            njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
+    }
+    
+    void NJLIGameEngine::setVRCameraRotation(float yaw, float pitch, float roll)
+    {
+        //pitch is left to right
+        // roll is up and down
+        // yaw is clockwise and counter-clockwise
+        yaw *= -1.0f;
+        roll *= -1.0f;
+//        SDL_Log("%f, %f, %f\n", yaw, pitch, roll);
+        
+        btMatrix3x3 m(btMatrix3x3::getIdentity());
+        m.setEulerYPR(yaw, pitch, roll);
+        btTransform transform(m);
+        
         if (njli::World::getInstance()->getScene())
             njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
     }
