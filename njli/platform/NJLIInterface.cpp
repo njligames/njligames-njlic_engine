@@ -47,7 +47,11 @@ void NJLI_HandleDropFile(const char *filename) { SDL_Log("%s", filename); }
 
 void NJLI_HandleResize(int width, int height, int sdlFormat, float refreshRate)
 {
-  gDisplayMode.w = width;
+#if defined(VR)
+    gDisplayMode.w = height;
+#else
+    gDisplayMode.w = width;
+#endif
   gDisplayMode.h = height;
   gDisplayMode.refresh_rate = refreshRate;
 

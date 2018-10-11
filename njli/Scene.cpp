@@ -361,12 +361,6 @@ namespace njli
           {
               m_VRCameraRotation->setOrigin(camera->getParent()->getOrigin());
               
-              btQuaternion rotX(btVector3(1.0, 0.0, 0.0), btRadians(90));
-              btQuaternion rotY(btVector3(0.0, 1.0, 0.0), btRadians(180));
-              btQuaternion rotZ(btVector3(0.0, 0.0, 1.0), btRadians(180));
-              
-              m_VRCameraRotation->setRotation(m_VRCameraRotation->getRotation());
-              
               camera->getParent()->setTransform( (*m_VRCameraRotation));
           }
 #endif

@@ -678,7 +678,9 @@ namespace njli
         {
             assert(shader->use());
             
-            camera->render(shader, m_ShaderChanged);
+            bool cameraChanged = !(camera->getModelView() == camera->getParent()->getWorldTransform());
+            
+            camera->render(shader, m_ShaderChanged || true);
             
             struct LightSourceParameters
             {
