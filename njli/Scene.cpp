@@ -54,7 +54,7 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
         m_TouchCamera(NULL),
-    m_VRCameraRotation(new btTransform())
+    m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
   {
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
@@ -72,7 +72,7 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
     m_TouchCamera(NULL),
-    m_VRCameraRotation(new btTransform())
+    m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
   {
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
@@ -90,7 +90,7 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
     m_TouchCamera(NULL),
-    m_VRCameraRotation(new btTransform())
+    m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
   {
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
@@ -349,7 +349,7 @@ namespace njli
       */
   }
 
-  void Scene::render()
+  void Scene::render(bool is_left)
   {
 
       for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
@@ -359,7 +359,36 @@ namespace njli
           
           if(camera->getParent())
           {
-              m_VRCameraRotation->setOrigin(camera->getParent()->getOrigin());
+              const float ipd = 0.0635; // inter-pupil distance [m]
+//              const float theta = 2.0f * M_PI * (static_cast<float>(x) / static_cast<float>(width)); // [0, 2 pi]
+              const float theta = 2.0f * M_PI * 0.5f; // [0, 2 pi]
+              const float theta_offset = theta + ( is_left ? 0.0f : M_PI );
+//              const float phi = (fmodf( 2.0f * ( 0.5f * screen_y + 0.5f ) , 1.0f ) - 0.5f ) * M_PI;
+              const float phi = (fmodf( 2.0f * ( 0.5f * 0.5f + 0.5f ) , 1.0f ) - 0.5f ) * M_PI;
+              
+              
+              
+//              nanort::Ray<float> ray;
+//              ray.org[0] = 0.5f * ipd * (-cosf(theta_offset));
+//              ray.org[1] = 0.0f;
+//              ray.org[2] = 0.5f * ipd * (sinf(theta_offset));
+//
+//              float3 dir;
+//              dir[0] = cosf(phi) * -sinf(theta);
+//              dir[1] = sinf(phi);
+//              dir[2] = cosf(phi) * -cosf(theta);
+//              dir.normalize();
+//              ray.dir[0] = dir[0];
+//              ray.dir[1] = dir[1];
+//              ray.dir[2] = dir[2];
+//
+//
+//
+              btVector3 origin(0.5f * ipd * (-cosf(theta_offset)), 0.0f, 0.5f * ipd * (sinf(theta_offset)));
+              btVector3 direction(cosf(phi) * -sinf(theta), sinf(phi), cosf(phi) * -cosf(theta));
+              direction = direction.normalize();
+              
+              m_VRCameraRotation->setOrigin(origin);
               
               camera->getParent()->setTransform( (*m_VRCameraRotation));
           }

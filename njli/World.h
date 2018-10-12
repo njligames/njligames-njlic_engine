@@ -502,7 +502,7 @@ namespace njli
                            bool disableNodeTouched = false);
 
   private:
-      void renderInternal();
+      void renderInternal(bool is_left = true);
     btAlignedObjectArray<njli::PhysicsRayContact *> m_RayContacts;
 
     World(const World &);

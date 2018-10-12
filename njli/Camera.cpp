@@ -1056,7 +1056,14 @@ namespace njli
   Camera::Camera()
       : AbstractFactoryObject(this),
         //    m_Name("MyCamera"),
-        m_Near(0.1f), m_Far(1000.0f), m_Fov(45.0f), m_Orthographic(false),
+    m_Near(0.001),
+    m_Far(1000.0f),
+#if defined(VR)
+    m_Fov(120.0f),
+#else
+    m_Fov(45.0f),
+#endif
+    m_Orthographic(false),
         m_RenderCategory(JLI_BIT_CATEGORY_NONE),
         m_OcclusionBuffer(new OcclusionBuffer()),
         m_SceneRenderer(new SceneRenderer(this)),
@@ -1073,7 +1080,14 @@ namespace njli
   Camera::Camera(const AbstractBuilder &builder)
       : AbstractFactoryObject(this),
         //    m_Name("MyCamera"),
-        m_Near(0.1f), m_Far(1000.0f), m_Fov(45.0f), m_Orthographic(false),
+    m_Near(0.001),
+    m_Far(1000.0f),
+#if defined(VR)
+    m_Fov(120.0f),
+#else
+    m_Fov(45.0f),
+#endif
+    m_Orthographic(false),
         m_RenderCategory(JLI_BIT_CATEGORY_NONE),
         m_OcclusionBuffer(new OcclusionBuffer()),
         m_SceneRenderer(new SceneRenderer(this)),

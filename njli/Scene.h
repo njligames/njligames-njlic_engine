@@ -172,7 +172,7 @@ namespace njli
     // TODO: fill in specific methods for Scene
 
     void update(f32 timeStep, const u32 numSubSteps = 2);
-    void render();
+    void render(bool is_left = true);
 
   public:
     /**

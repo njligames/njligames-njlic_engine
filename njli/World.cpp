@@ -1689,12 +1689,12 @@ namespace njli
       }
   }
     
-    void World::renderInternal()
+    void World::renderInternal(bool is_left)
     {
         Scene *scene = getScene();
         
         if (scene)
-            scene->render();
+            scene->render(is_left);
 #if defined(USE_NANOVG_LIBRARY)
         getWorldHUD()->render();
 #endif
