@@ -732,35 +732,119 @@ namespace njli
             //            glBindTexture(GL_TEXTURE_2D, m_SpecularTexture);
             //            shader->setUniformValue("tSpecularColor", m_SpecularTexture);
             
-            shader->setUniformValue("RimLightColor", getRimLightColor());
-            shader->setUniformValue("RimLightStart", getRimLightStart());
-            shader->setUniformValue("RimLightEnd", getRimLightEnd());
-            shader->setUniformValue("RimLightCoefficient", getRimLightCoefficient());
+            if(!shader->setUniformValue("RimLightColor", getRimLightColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightColor\n");
+            }
+            if(!shader->setUniformValue("RimLightStart", getRimLightStart()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightStart\n");
+            }
+            if(!shader->setUniformValue("RimLightEnd", getRimLightEnd()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightEnd\n");
+            }
+            if(!shader->setUniformValue("RimLightCoefficient", getRimLightCoefficient()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightCoefficient\n");
+            }
             
-            shader->setUniformValue("LightSourceAmbientColor", getLightSourceAmbientColor());
-            shader->setUniformValue("LightSourceDiffuseColor", getLightSourceDiffuseColor());
-            shader->setUniformValue("LightSourceSpecularColor", getLightSourceSpecularColor());
+            if(!shader->setUniformValue("LightSourceAmbientColor", getLightSourceAmbientColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceAmbientColor\n");
+            }
+            if(!shader->setUniformValue("LightSourceDiffuseColor", getLightSourceDiffuseColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceDiffuseColor\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpecularColor", getLightSourceSpecularColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpecularColor\n");
+            }
             
-            shader->setUniformValue("LightSourcePosition_worldspace", getLightSourcePosition());
+            if(!shader->setUniformValue("LightSourcePosition_worldspace", getLightSourcePosition()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourcePosition_worldspace\n");
+            }
             
-            shader->setUniformValue("LightSourceSpotDirection", getLightSourceSpotDirection());
-            shader->setUniformValue("LightSourceSpotExponent", getLightSourceSpotExponent());
+            if(!shader->setUniformValue("LightSourceSpotDirection", getLightSourceSpotDirection()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotDirection\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpotExponent", getLightSourceSpotExponent()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotExponent\n");
+            }
             
-            shader->setUniformValue("LightSourceSpotCutoff", getLightSourceSpotCutoff());
-            shader->setUniformValue("LightSourceSpotCosCutoff", getLightSourceSpotCosCutoff());
+            if(!shader->setUniformValue("LightSourceSpotCutoff", getLightSourceSpotCutoff()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotCutoff\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpotCosCutoff", getLightSourceSpotCosCutoff()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotCosCutoff\n");
+            }
             
-            shader->setUniformValue("LightSourceConstantAttenuation", getLightSourceConstantAttenuation());
-            shader->setUniformValue("LightSourceLinearAttenuation", getLightSourceLinearAttenuation());
-            shader->setUniformValue("LightSourceQuadraticAttenuation", getLightSourceQuadraticAttenuation());
+            if(!shader->setUniformValue("LightSourceConstantAttenuation", getLightSourceConstantAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceConstantAttenuation\n");
+            }
+            if(!shader->setUniformValue("LightSourceLinearAttenuation", getLightSourceLinearAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceLinearAttenuation\n");
+            }
+            if(!shader->setUniformValue("LightSourceQuadraticAttenuation", getLightSourceQuadraticAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceQuadraticAttenuation\n");
+            }
             
-            shader->setUniformValue("LightAmbientColor", getLightAmbientColor());
+            if(!shader->setUniformValue("LightAmbientColor", getLightAmbientColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightAmbientColor\n");
+            }
             
-            shader->setUniformValue("MaterialShininess", getMaterialShininess());
+            if(!shader->setUniformValue("MaterialShininess", getMaterialShininess()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set MaterialShininess\n");
+            }
             
-            shader->setUniformValue("FogMaxDistance", getFogMaxDistance());
-            shader->setUniformValue("FogMinDistance", getFogMinDistance());
-            shader->setUniformValue("FogColor", getFogColor());
-            shader->setUniformValue("FogDensity", getFogDensity());
+            if(!shader->setUniformValue("FogMaxDistance", getFogMaxDistance()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogMaxDistance\n");
+            }
+            if(!shader->setUniformValue("FogMinDistance", getFogMinDistance()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogMinDistance\n");
+            }
+            if(!shader->setUniformValue("FogColor", getFogColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogColor\n");
+            }
+            if(!shader->setUniformValue("FogDensity", getFogDensity()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogDensity\n");
+            }
             
             m_ShaderChanged = false;
             

@@ -1,29 +1,3 @@
-# 
-# set(LIBRARY_NAME "bullet3")
-# set(SUB_LIBRARY_NAMES
-#   "Bullet2FileLoader"
-#   "Bullet3Collision"
-#   "Bullet3Common"
-#   "Bullet3Dynamics"
-#   "Bullet3Geometry"
-#   "Bullet3OpenCL_clew"
-#   "BulletCollision"
-#   "BulletDynamics"
-#   "BulletFileLoader"
-#   "BulletInverseDynamics"
-#   "BulletInverseDynamicsUtils"
-#   "BulletSoftBody"
-#   "BulletWorldImporter"
-#   "BulletXmlWorldImporter"
-#   "ConvexDecomposition"
-#   "GIMPACTUtils"
-#   "HACD"
-#   "LinearMath"
-#   )
-# 
-# set(INCLUDE_FILE "btBulletCollisionCommon.h")
-# 
-# ###########################################################################################################################
 
 string(TOUPPER ${LIBRARY_NAME} LIBRARY_NAME_UPPER)
 
@@ -79,14 +53,21 @@ endif()
 
 if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
 
-  set(RELEASE_SUFFIX "Release")
   set(DEBUG_SUFFIX "Debug")
+  set(RELEASE_SUFFIX "Release")
+  set(RELEASE_SUFFIX "MinSizeRel")
+  set(RELEASE_SUFFIX "RelWithDebInfo")
+
   if(IOS OR TVOS)
-    set(RELEASE_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
     set(DEBUG_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+    set(RELEASE_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+    set(MINSIZEREL_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+    set(RELWITHDEBUGINFO_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
   elseif(ANDROID)
-    set(RELEASE_SUFFIX "${ANDROID_ABI}/Release")
     set(DEBUG_SUFFIX "${ANDROID_ABI}/Debug")
+    set(RELEASE_SUFFIX "${ANDROID_ABI}/Release")
+    set(MINSIZEREL_SUFFIX "${ANDROID_ABI}/MinSizeRel")
+    set(RELWITHDEBUGINFO_SUFFIX "${ANDROID_ABI}/RelWithDebInfo")
   endif()
 
   set(LIBRARY_EXTENSION "a")
@@ -96,17 +77,32 @@ if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
 
   foreach(LIB ${SUB_LIBRARY_NAMES})
 
+    set(${LIB}_LIBRARY_DEBUG "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${DEBUG_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
     set(${LIB}_LIBRARY_RELEASE "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELEASE_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
+    set(${LIB}_LIBRARY_MINSIZEREL "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${MINSIZEREL_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
+    set(${LIB}_LIBRARY_RELWITHDEBUGINFO "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELWITHDEBUGINFO_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
+
+    if(EMSCRIPTEN OR ANDROID)
+      if(NOT EXISTS "${${LIB}_LIBRARY_DEBUG}")
+        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_DEBUG}")
+      endif()
+    endif()
+
     if(EMSCRIPTEN OR ANDROID)
       if(NOT EXISTS "${${LIB}_LIBRARY_RELEASE}")
         MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELEASE}")
       endif()
     endif()
 
-    set(${LIB}_LIBRARY_DEBUG "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${DEBUG_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
     if(EMSCRIPTEN OR ANDROID)
-      if(NOT EXISTS "${${LIB}_LIBRARY_DEBUG}")
-        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_DEBUG}")
+      if(NOT EXISTS "${${LIB}_LIBRARY_MINSIZEREL}")
+        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_MINSIZEREL}")
+      endif()
+    endif()
+
+    if(EMSCRIPTEN OR ANDROID)
+      if(NOT EXISTS "${${LIB}_LIBRARY_RELWITHDEBUGINFO}")
+        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELWITHDEBUGINFO}")
       endif()
     endif()
 
@@ -119,11 +115,17 @@ if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
         INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}"
         )
 
+      set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+      set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_DEBUG "${${LIB}_LIBRARY_DEBUG}")
+
       set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
       set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELEASE "${${LIB}_LIBRARY_RELEASE}")
 
-      set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
-      set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_DEBUG "${${LIB}_LIBRARY_DEBUG}")
+      set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS MINSIZEREL)
+      set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_MINSIZEREL "${${LIB}_LIBRARY_MINSIZEREL}")
+
+      set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELWITHDEBUGINFO)
+      set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELWITHDEBUGINFO "${${LIB}_LIBRARY_RELWITHDEBUGINFO}")
 
       list(APPEND ${LIBRARY_NAME_UPPER}_TARGETS ${LIB})
     endif()
@@ -137,18 +139,35 @@ else()
   foreach(LIB ${SUB_LIBRARY_NAMES})
 
     if(NOT ${LIB}_LIBRARY)
-      find_library(${LIB}_LIBRARY_RELEASE
-        NAMES ${LIB}
-        PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
-        PATH_SUFFIXES Release
-        NO_DEFAULT_PATH
-        )
+
       find_library(${LIB}_LIBRARY_DEBUG
         NAMES ${LIB} ${LIB}_Debug
         PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
         PATH_SUFFIXES Debug
         NO_DEFAULT_PATH
         )
+
+      find_library(${LIB}_LIBRARY_RELEASE
+        NAMES ${LIB}
+        PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
+        PATH_SUFFIXES Release
+        NO_DEFAULT_PATH
+        )
+
+      find_library(${LIB}_LIBRARY_MINSIZEREL
+        NAMES ${LIB}
+        PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
+        PATH_SUFFIXES MinSizeRel
+        NO_DEFAULT_PATH
+        )
+
+      find_library(${LIB}_LIBRARY_RELWITHDEBUGINFO
+        NAMES ${LIB}
+        PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
+        PATH_SUFFIXES RelWithDebInfo
+        NO_DEFAULT_PATH
+        )
+
       select_library_configurations(${LIB})
     endif ()
 
@@ -166,17 +185,30 @@ else()
         set_target_properties(${LIB} PROPERTIES
           INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}")
 
-        if(${LIB}_LIBRARY_RELEASE)
-          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-          set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELEASE "${${LIB}_LIBRARY_RELEASE}")
-        endif()
-
         if(${LIB}_LIBRARY_DEBUG)
           set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
           set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_DEBUG "${${LIB}_LIBRARY_DEBUG}")
         endif()
 
-        if(NOT ${LIB}_LIBRARY_RELEASE AND NOT ${LIB}_LIBRARY_DEBUG)
+        if(${LIB}_LIBRARY_RELEASE)
+          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+          set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELEASE "${${LIB}_LIBRARY_RELEASE}")
+        endif()
+
+        if(${LIB}_LIBRARY_MINSIZEREL)
+          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS MINSIZEREL)
+          set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_MINSIZEREL "${${LIB}_LIBRARY_MINSIZEREL}")
+        endif()
+
+        if(${LIB}_LIBRARY_RELWITHDEBUGINFO)
+          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELWITHDEBUGINFO)
+          set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELWITHDEBUGINFO "${${LIB}_LIBRARY_RELWITHDEBUGINFO}")
+        endif()
+
+        if(NOT ${LIB}_LIBRARY_RELEASE AND 
+            NOT ${LIB}_LIBRARY_DEBUG AND
+            NOT ${LIB}_LIBRARY_MINSIZEREL AND 
+            NOT ${LIB}_LIBRARY_RELWITHDEBUGINFO)
           set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_LOCATION "${${LIB}_LIBRARY}")
         endif()
 
