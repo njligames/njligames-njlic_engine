@@ -1057,8 +1057,8 @@ namespace ImGuizmo
             circlePos[i] = worldToPos(pos + gContext.mModel.v.position,
                                       gContext.mViewProjection);
           }
-//        drawList->AddConvexPolyFilled(circlePos, halfCircleSegmentCount,
-//                                      0x801080FF, true);
+        drawList->AddConvexPolyFilled(circlePos, halfCircleSegmentCount,
+                                      0x801080FF, true);
         drawList->AddPolyline(circlePos, halfCircleSegmentCount, 0xFF1080FF,
                               true, 2, true);
 
@@ -1219,8 +1219,8 @@ namespace ImGuizmo
                                        gContext.mScreenFactor;
                 screenQuadPts[j] = worldToPos(cornerWorldPos, gContext.mMVP);
               }
-//            drawList->AddConvexPolyFilled(screenQuadPts, 4, colors[i + 4],
-//                                          true);
+            drawList->AddConvexPolyFilled(screenQuadPts, 4, colors[i + 4],
+                                          true);
           }
       }
 
@@ -1987,21 +1987,21 @@ namespace ImGuizmo
           }
       }
 
-//    if (localBounds && !gContext.mbUsing)
-//      HandleAndDrawLocalBounds(localBounds, (matrix_t *)matrix, boundsSnap);
+    if (localBounds && !gContext.mbUsing)
+      HandleAndDrawLocalBounds(localBounds, (matrix_t *)matrix, boundsSnap);
 
     if (!gContext.mbUsingBounds)
       {
         switch (operation)
           {
           case ROTATE:
-//            DrawRotationGizmo(type);
+            DrawRotationGizmo(type);
             break;
           case TRANSLATE:
-//            DrawTranslationGizmo(type);
+            DrawTranslationGizmo(type);
             break;
           case SCALE:
-//            DrawScaleGizmo(type);
+            DrawScaleGizmo(type);
             break;
           }
       }
@@ -2065,8 +2065,8 @@ namespace ImGuizmo
           continue;
 
         // draw face with lighter color
-//        gContext.mDrawList->AddConvexPolyFilled(
-//            faceCoordsScreen, 4, directionColor[normalIndex] | 0x808080, true);
+        gContext.mDrawList->AddConvexPolyFilled(
+            faceCoordsScreen, 4, directionColor[normalIndex] | 0x808080, true);
       }
   }
 }; // namespace ImGuizmo
