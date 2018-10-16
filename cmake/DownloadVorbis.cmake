@@ -15,6 +15,10 @@ set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/28kw75yxwih7t6t/libvorbis_io
 set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/ui62jcm7dhxa60t/libvorbis_ios_Debug-iphonesimulator.tar.gz?dl=0")
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/fwappwieile5yt6/libvorbis_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/37q8ns7jbo0k5yn/libvorbis_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/fwappwieile5yt6/libvorbis_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/37q8ns7jbo0k5yn/libvorbis_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/fwappwieile5yt6/libvorbis_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/37q8ns7jbo0k5yn/libvorbis_ios_Release-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/tyvufew5oo1vxm1/libvorbis_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/kbf62k5so9nydmz/libvorbis_appletv_Debug-appletvsimulator.tar.gz?dl=0")

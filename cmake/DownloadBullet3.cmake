@@ -15,6 +15,10 @@ set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/94ouw2id4xwp1pz/libbullet3_i
 set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/wtl6g4xqyy6c1o7/libbullet3_ios_Debug-iphonesimulator.tar.gz?dl=0")
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/0i1ygx8xsk6chlk/libbullet3_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/jzldw4m2ytk708s/libbullet3_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/0i1ygx8xsk6chlk/libbullet3_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/jzldw4m2ytk708s/libbullet3_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/0i1ygx8xsk6chlk/libbullet3_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/jzldw4m2ytk708s/libbullet3_ios_Release-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/pzogh82wils711t/libbullet3_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/hc66vts08mi6zk9/libbullet3_appletv_Debug-appletvsimulator.tar.gz?dl=0")

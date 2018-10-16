@@ -260,7 +260,7 @@ namespace njli
     
     ShaderProgram::ShaderProgram(const AbstractBuilder &builder):
     AbstractFactoryObject(this),
-    m_Program(0),
+    m_Program(-1),
     m_mat4Buffer(new GLfloat[16]),
     m_vec3Buffer(new GLfloat[3]),
     m_vec4Buffer(new GLfloat[4])
@@ -270,7 +270,7 @@ namespace njli
     
     ShaderProgram::ShaderProgram(const ShaderProgram &copy):
     AbstractFactoryObject(this),
-    m_Program(0),
+    m_Program(-1),
     m_mat4Buffer(new GLfloat[16]),
     m_vec3Buffer(new GLfloat[3]),
     m_vec4Buffer(new GLfloat[4])
@@ -519,17 +519,17 @@ namespace njli
             return false;
         }
         
-        if (vertShader)
-        {
-            glDetachShader(m_Program, vertShader);
-            glDeleteShader(vertShader);
-        }
-        
-        if (fragShader)
-        {
-            glDetachShader(m_Program, fragShader);
-            glDeleteShader(fragShader);
-        }
+//        if (vertShader)
+//        {
+//            glDetachShader(m_Program, vertShader);
+//            glDeleteShader(vertShader);
+//        }
+//
+//        if (fragShader)
+//        {
+//            glDetachShader(m_Program, fragShader);
+//            glDeleteShader(fragShader);
+//        }
         
         return true;
     }
@@ -609,11 +609,17 @@ namespace njli
         int location = getUniformLocation(uniformName);
         if(location != -1)
         {
-            glUniformMatrix4fv(location,
-                               1,
-                               (transpose)?GL_TRUE:GL_FALSE,
-                               matrix4x4);
-            return true;
+            GLint id;
+            glGetIntegerv(GL_CURRENT_PROGRAM,&id);
+            if(id == m_Program)
+            {
+                glUniformMatrix4fv(location,
+                                   1,
+                                   (transpose)?GL_TRUE:GL_FALSE,
+                                   matrix4x4);
+                return true;
+                
+            }
         }
         return false;
     }
@@ -642,8 +648,13 @@ namespace njli
                     return true;
             }
             
-            glUniform1i(location, value);
-            return true;
+            GLint id;
+            glGetIntegerv(GL_CURRENT_PROGRAM,&id);
+            if(id == m_Program)
+            {
+                glUniform1i(location, value);
+                return true;
+            }
         }
         return false;
     }
@@ -673,9 +684,13 @@ namespace njli
                     return true;
             }
             
-            glUniform3f(location, value.x(), value.y(), value.z());
-            
-            return true;
+            GLint id;
+            glGetIntegerv(GL_CURRENT_PROGRAM,&id);
+            if(id == m_Program)
+            {
+                glUniform3f(location, value.x(), value.y(), value.z());
+                return true;
+            }
         }
         return false;
     }
@@ -709,8 +724,13 @@ namespace njli
                     return true;
             }
             
-            glUniform1f(location, value);
-            return true;
+            GLint id;
+            glGetIntegerv(GL_CURRENT_PROGRAM,&id);
+            if(id == m_Program)
+            {
+                glUniform1f(location, value);
+                return true;
+            }
         }
         return false;
     }
@@ -738,9 +758,13 @@ namespace njli
                     return true;
             }
             
-            glUniform4f(location, value.x(), value.y(), value.z(), value.w());
-            
-            return true;
+            GLint id;
+            glGetIntegerv(GL_CURRENT_PROGRAM,&id);
+            if(id == m_Program)
+            {
+                glUniform4f(location, value.x(), value.y(), value.z(), value.w());
+                return true;
+            }
         }
         return false;
     }

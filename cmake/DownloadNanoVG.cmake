@@ -15,6 +15,10 @@ set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/s7wp11h2rfxrg04/libnanovg_io
 set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/5ajztcolrzut6uk/libnanovg_ios_Debug-iphonesimulator.tar.gz?dl=0")
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/wbt9dm4ass81384/libnanovg_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/qmw130ak9mgwefr/libnanovg_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/wbt9dm4ass81384/libnanovg_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/qmw130ak9mgwefr/libnanovg_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/wbt9dm4ass81384/libnanovg_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/qmw130ak9mgwefr/libnanovg_ios_Release-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/u5kfiel8ybv8a6m/libnanovg_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/2snys2dcgs4e2yn/libnanovg_appletv_Debug-appletvsimulator.tar.gz?dl=0")

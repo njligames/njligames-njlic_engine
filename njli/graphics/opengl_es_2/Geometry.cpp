@@ -676,7 +676,7 @@ namespace njli
         ShaderProgram *shader = getShader();
         if(shader && camera)
         {
-            assert(shader->use());
+            shader->use();
             
             bool cameraChanged = !(camera->getModelView() == camera->getParent()->getWorldTransform());
             
