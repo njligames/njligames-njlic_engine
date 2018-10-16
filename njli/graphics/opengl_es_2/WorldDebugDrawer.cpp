@@ -13,11 +13,11 @@
 #include "World.h"
 #include "glm/gtc/type_ptr.hpp"
 #define FORMATSTRING "{\"njli::WorldDebugDrawer\":[]}"
-#include "ImGuizmo.h"
+//#include "ImGuizmo.h"
 #include "JsonJLI.h"
 #include "NJLIInterface.h"
 #include "glm/glm.hpp"
-#include "imgui.h"
+//#include "imgui.h"
 //#include "uSynergy.h"
 
 glm::vec3 bulletToGlm(const btVector3 &v)
@@ -560,42 +560,42 @@ namespace njli
 
     void WorldDebugDrawer::editTransform(const Camera& camera, btTransform& matrix)
     {
-        static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
-        static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
-        if (ImGui::IsKeyPressed(90))
-            mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-        if (ImGui::IsKeyPressed(69))
-            mCurrentGizmoOperation = ImGuizmo::ROTATE;
-        if (ImGui::IsKeyPressed(82)) // r Key
-            mCurrentGizmoOperation = ImGuizmo::SCALE;
-        if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
-            mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
-        ImGui::SameLine();
-        if (ImGui::RadioButton("Rotate", mCurrentGizmoOperation == ImGuizmo::ROTATE))
-            mCurrentGizmoOperation = ImGuizmo::ROTATE;
-        ImGui::SameLine();
-        if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
-            mCurrentGizmoOperation = ImGuizmo::SCALE;
-        float matrixTranslation[3], matrixRotation[3], matrixScale[3];
-//        ImGuizmo::DecomposeMatrixToComponents(matrix.m16, matrixTranslation, matrixRotation, matrixScale);
-        ImGui::InputFloat3("Tr", matrixTranslation, 3);
-        ImGui::InputFloat3("Rt", matrixRotation, 3);
-        ImGui::InputFloat3("Sc", matrixScale, 3);
-//        ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, matrix.m16);
-        
-        if (mCurrentGizmoOperation != ImGuizmo::SCALE)
-        {
-            if (ImGui::RadioButton("Local", mCurrentGizmoMode == ImGuizmo::LOCAL))
-                mCurrentGizmoMode = ImGuizmo::LOCAL;
-            ImGui::SameLine();
-            if (ImGui::RadioButton("World", mCurrentGizmoMode == ImGuizmo::WORLD))
-                mCurrentGizmoMode = ImGuizmo::WORLD;
-        }
-        static bool useSnap(false);
-        if (ImGui::IsKeyPressed(83))
-            useSnap = !useSnap;
-        ImGui::Checkbox("", &useSnap);
-        ImGui::SameLine();
+//        static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
+//        static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
+//        if (ImGui::IsKeyPressed(90))
+//            mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+//        if (ImGui::IsKeyPressed(69))
+//            mCurrentGizmoOperation = ImGuizmo::ROTATE;
+//        if (ImGui::IsKeyPressed(82)) // r Key
+//            mCurrentGizmoOperation = ImGuizmo::SCALE;
+//        if (ImGui::RadioButton("Translate", mCurrentGizmoOperation == ImGuizmo::TRANSLATE))
+//            mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
+//        ImGui::SameLine();
+//        if (ImGui::RadioButton("Rotate", mCurrentGizmoOperation == ImGuizmo::ROTATE))
+//            mCurrentGizmoOperation = ImGuizmo::ROTATE;
+//        ImGui::SameLine();
+//        if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
+//            mCurrentGizmoOperation = ImGuizmo::SCALE;
+//        float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+////        ImGuizmo::DecomposeMatrixToComponents(matrix.m16, matrixTranslation, matrixRotation, matrixScale);
+//        ImGui::InputFloat3("Tr", matrixTranslation, 3);
+//        ImGui::InputFloat3("Rt", matrixRotation, 3);
+//        ImGui::InputFloat3("Sc", matrixScale, 3);
+////        ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, matrix.m16);
+//        
+//        if (mCurrentGizmoOperation != ImGuizmo::SCALE)
+//        {
+//            if (ImGui::RadioButton("Local", mCurrentGizmoMode == ImGuizmo::LOCAL))
+//                mCurrentGizmoMode = ImGuizmo::LOCAL;
+//            ImGui::SameLine();
+//            if (ImGui::RadioButton("World", mCurrentGizmoMode == ImGuizmo::WORLD))
+//                mCurrentGizmoMode = ImGuizmo::WORLD;
+//        }
+//        static bool useSnap(false);
+//        if (ImGui::IsKeyPressed(83))
+//            useSnap = !useSnap;
+//        ImGui::Checkbox("", &useSnap);
+//        ImGui::SameLine();
 //        vec_t snap;
 //        switch (mCurrentGizmoOperation)
 //        {
@@ -980,7 +980,7 @@ namespace njli
   static const char *ImGui_ImplGlfw_GetClipboardText(void *user_data);
   static void ImGui_ImplGlfw_SetClipboardText(void *user_data,
                                               const char *text);
-  static void ImGui_ImplIOS_RenderDrawLists(ImDrawData *draw_data);
+//  static void ImGui_ImplIOS_RenderDrawLists(ImDrawData *draw_data);
   bool ImGui_ImplIOS_CreateDeviceObjects();
 
   //    static NSString *g_serverName;
@@ -1132,69 +1132,69 @@ namespace njli
 
   void setupImGuiHooks()
   {
-    ImGuiIO &io = ImGui::GetIO();
-
-    //        setupKeymaps();
-
-    // Account for retina display for glScissor
-    g_displayScale = 1.0f; //[[UIScreen mainScreen] scale];
-
-    ImGuiStyle &style = ImGui::GetStyle();
-    style.TouchExtraPadding = ImVec2(4.0, 4.0);
-
-    io.RenderDrawListsFn = ImGui_ImplIOS_RenderDrawLists;
-    io.SetClipboardTextFn = ImGui_ImplGlfw_SetClipboardText;
-    io.GetClipboardTextFn = ImGui_ImplGlfw_GetClipboardText;
-
-    //        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer
-    //        alloc] initWithTarget:self action:@selector(viewDidPan:) ];
-    //        [self.view addGestureRecognizer:panRecognizer];
-    //
-    //        UITapGestureRecognizer *tapRecoginzer = [[UITapGestureRecognizer
-    //        alloc] initWithTarget:self action:@selector( viewDidTap:)];
-    //        [self.view addGestureRecognizer:tapRecoginzer];
-
-    // Fill out the Synergy key map
-    // (for some reason synergy scan codes are off by 1)
-    //        io.KeyMap[ImGuiKey_Tab] = kVK_Tab;//+1;
-    //        io.KeyMap[ImGuiKey_LeftArrow] = kVK_LeftArrow+1;
-    //        io.KeyMap[ImGuiKey_RightArrow] = kVK_RightArrow+1;
-    //        io.KeyMap[ImGuiKey_UpArrow] = kVK_UpArrow+1;
-    //        io.KeyMap[ImGuiKey_DownArrow] = kVK_DownArrow+1;
-    //        io.KeyMap[ImGuiKey_Home] = kVK_Home+1;
-    //        io.KeyMap[ImGuiKey_End] = kVK_End+1;
-    //        io.KeyMap[ImGuiKey_Delete] = kVK_ForwardDelete+1;
-    //        io.KeyMap[ImGuiKey_Backspace] = kVK_Delete+1;
-    //        io.KeyMap[ImGuiKey_Enter] = kVK_Return+1;
-    //        io.KeyMap[ImGuiKey_Escape] = kVK_Escape+1;
-    //        io.KeyMap[ImGuiKey_A] = kVK_ANSI_A+1;
-    //        io.KeyMap[ImGuiKey_C] = kVK_ANSI_C+1;
-    //        io.KeyMap[ImGuiKey_V] = kVK_ANSI_V+1;
-    //        io.KeyMap[ImGuiKey_X] = kVK_ANSI_X+1;
-    //        io.KeyMap[ImGuiKey_Y] = kVK_ANSI_Y+1;
-    //        io.KeyMap[ImGuiKey_Z] = kVK_ANSI_Z+1;
-
-    io.KeyMap[ImGuiKey_Tab] = SDLK_TAB; // Keyboard mapping. ImGui will use
-                                        // those indices to peek into the
-                                        // io.KeyDown[] array.
-    io.KeyMap[ImGuiKey_LeftArrow] = SDL_SCANCODE_LEFT;
-    io.KeyMap[ImGuiKey_RightArrow] = SDL_SCANCODE_RIGHT;
-    io.KeyMap[ImGuiKey_UpArrow] = SDL_SCANCODE_UP;
-    io.KeyMap[ImGuiKey_DownArrow] = SDL_SCANCODE_DOWN;
-    io.KeyMap[ImGuiKey_PageUp] = SDL_SCANCODE_PAGEUP;
-    io.KeyMap[ImGuiKey_PageDown] = SDL_SCANCODE_PAGEDOWN;
-    io.KeyMap[ImGuiKey_Home] = SDL_SCANCODE_HOME;
-    io.KeyMap[ImGuiKey_End] = SDL_SCANCODE_END;
-    io.KeyMap[ImGuiKey_Delete] = SDLK_DELETE;
-    io.KeyMap[ImGuiKey_Backspace] = SDLK_BACKSPACE;
-    io.KeyMap[ImGuiKey_Enter] = SDLK_RETURN;
-    io.KeyMap[ImGuiKey_Escape] = SDLK_ESCAPE;
-    io.KeyMap[ImGuiKey_A] = SDLK_a;
-    io.KeyMap[ImGuiKey_C] = SDLK_c;
-    io.KeyMap[ImGuiKey_V] = SDLK_v;
-    io.KeyMap[ImGuiKey_X] = SDLK_x;
-    io.KeyMap[ImGuiKey_Y] = SDLK_y;
-    io.KeyMap[ImGuiKey_Z] = SDLK_z;
+//    ImGuiIO &io = ImGui::GetIO();
+//
+//    //        setupKeymaps();
+//
+//    // Account for retina display for glScissor
+//    g_displayScale = 1.0f; //[[UIScreen mainScreen] scale];
+//
+//    ImGuiStyle &style = ImGui::GetStyle();
+//    style.TouchExtraPadding = ImVec2(4.0, 4.0);
+//
+//    io.RenderDrawListsFn = ImGui_ImplIOS_RenderDrawLists;
+//    io.SetClipboardTextFn = ImGui_ImplGlfw_SetClipboardText;
+//    io.GetClipboardTextFn = ImGui_ImplGlfw_GetClipboardText;
+//
+//    //        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer
+//    //        alloc] initWithTarget:self action:@selector(viewDidPan:) ];
+//    //        [self.view addGestureRecognizer:panRecognizer];
+//    //
+//    //        UITapGestureRecognizer *tapRecoginzer = [[UITapGestureRecognizer
+//    //        alloc] initWithTarget:self action:@selector( viewDidTap:)];
+//    //        [self.view addGestureRecognizer:tapRecoginzer];
+//
+//    // Fill out the Synergy key map
+//    // (for some reason synergy scan codes are off by 1)
+//    //        io.KeyMap[ImGuiKey_Tab] = kVK_Tab;//+1;
+//    //        io.KeyMap[ImGuiKey_LeftArrow] = kVK_LeftArrow+1;
+//    //        io.KeyMap[ImGuiKey_RightArrow] = kVK_RightArrow+1;
+//    //        io.KeyMap[ImGuiKey_UpArrow] = kVK_UpArrow+1;
+//    //        io.KeyMap[ImGuiKey_DownArrow] = kVK_DownArrow+1;
+//    //        io.KeyMap[ImGuiKey_Home] = kVK_Home+1;
+//    //        io.KeyMap[ImGuiKey_End] = kVK_End+1;
+//    //        io.KeyMap[ImGuiKey_Delete] = kVK_ForwardDelete+1;
+//    //        io.KeyMap[ImGuiKey_Backspace] = kVK_Delete+1;
+//    //        io.KeyMap[ImGuiKey_Enter] = kVK_Return+1;
+//    //        io.KeyMap[ImGuiKey_Escape] = kVK_Escape+1;
+//    //        io.KeyMap[ImGuiKey_A] = kVK_ANSI_A+1;
+//    //        io.KeyMap[ImGuiKey_C] = kVK_ANSI_C+1;
+//    //        io.KeyMap[ImGuiKey_V] = kVK_ANSI_V+1;
+//    //        io.KeyMap[ImGuiKey_X] = kVK_ANSI_X+1;
+//    //        io.KeyMap[ImGuiKey_Y] = kVK_ANSI_Y+1;
+//    //        io.KeyMap[ImGuiKey_Z] = kVK_ANSI_Z+1;
+//
+//    io.KeyMap[ImGuiKey_Tab] = SDLK_TAB; // Keyboard mapping. ImGui will use
+//                                        // those indices to peek into the
+//                                        // io.KeyDown[] array.
+//    io.KeyMap[ImGuiKey_LeftArrow] = SDL_SCANCODE_LEFT;
+//    io.KeyMap[ImGuiKey_RightArrow] = SDL_SCANCODE_RIGHT;
+//    io.KeyMap[ImGuiKey_UpArrow] = SDL_SCANCODE_UP;
+//    io.KeyMap[ImGuiKey_DownArrow] = SDL_SCANCODE_DOWN;
+//    io.KeyMap[ImGuiKey_PageUp] = SDL_SCANCODE_PAGEUP;
+//    io.KeyMap[ImGuiKey_PageDown] = SDL_SCANCODE_PAGEDOWN;
+//    io.KeyMap[ImGuiKey_Home] = SDL_SCANCODE_HOME;
+//    io.KeyMap[ImGuiKey_End] = SDL_SCANCODE_END;
+//    io.KeyMap[ImGuiKey_Delete] = SDLK_DELETE;
+//    io.KeyMap[ImGuiKey_Backspace] = SDLK_BACKSPACE;
+//    io.KeyMap[ImGuiKey_Enter] = SDLK_RETURN;
+//    io.KeyMap[ImGuiKey_Escape] = SDLK_ESCAPE;
+//    io.KeyMap[ImGuiKey_A] = SDLK_a;
+//    io.KeyMap[ImGuiKey_C] = SDLK_c;
+//    io.KeyMap[ImGuiKey_V] = SDLK_v;
+//    io.KeyMap[ImGuiKey_X] = SDLK_x;
+//    io.KeyMap[ImGuiKey_Y] = SDLK_y;
+//    io.KeyMap[ImGuiKey_Z] = SDLK_z;
   }
 
   void WorldDebugDrawer::initImgui() { setupImGuiHooks(); }
@@ -1204,13 +1204,15 @@ namespace njli
     if (g_FontTexture)
       {
         glDeleteTextures(1, &g_FontTexture);
-        ImGui::GetIO().Fonts->TexID = 0;
+//        ImGui::GetIO().Fonts->TexID = 0;
         g_FontTexture = 0;
       }
-    ImGui::Shutdown();
+//    ImGui::Shutdown();
   }
 
-  void WorldDebugDrawer::renderImgui() { ImGui::Render(); }
+  void WorldDebugDrawer::renderImgui() {
+//      ImGui::Render();
+  }
 
 #if !defined(_WIN32) && !defined(__ANDROID__)
   static void GetPrimaryIp(char *buffer, size_t buflen)
@@ -1244,76 +1246,76 @@ namespace njli
 
   void WorldDebugDrawer::newFrameImgui()
   {
-#if !defined(_WIN32) && !defined(__ANDROID__)
-    static char buffer[256];
-    GetPrimaryIp(buffer, 256);
-#endif
-
-    ImGuiIO &io = ImGui::GetIO();
-    ImGuiStyle &style = ImGui::GetStyle();
-
-    if (!g_FontTexture)
-      {
-        ImGui_ImplIOS_CreateDeviceObjects();
-      }
-
-    io.DisplaySize =
-        ImVec2(njli::World::getInstance()->getViewportDimensions().x(),
-               njli::World::getInstance()->getViewportDimensions().y());
-
-    // Setup time step
-    Uint32 time = SDL_GetTicks();
-    double current_time = time / 1000.0;
-    io.DeltaTime =
-        g_Time > 0.0 ? (float)(current_time - g_Time) : (float)(1.0f / 60.0f);
-    g_Time = current_time;
-
-    io.MouseDrawCursor = g_synergyPtrActive;
-    if (g_synergyPtrActive)
-      {
-        style.TouchExtraPadding = ImVec2(0.0, 0.0);
-        io.MousePos = ImVec2(g_mousePosX, g_mousePosY);
-        for (int i = 0; i < 3; i++)
-          {
-            io.MouseDown[i] = g_MousePressed[i];
-          }
-
-        io.MouseWheel = g_mouseWheelY / 500.0;
-      }
-    else
-      {
-#if !defined(__ANDROID__) && !defined(__IPHONEOS__)
-        int mx, my;
-        Uint32 mouseMask = SDL_GetMouseState(&mx, &my);
-        if (SDL_GetWindowFlags(gWindow) & SDL_WINDOW_MOUSE_FOCUS)
-          {
-            io.MousePos = ImVec2((float)mx, (float)my);
-          }
-        else
-          {
-            io.MousePos = ImVec2(-1, -1);
-          }
-
-        // If a mouse press event came, always pass it as "mouse held this
-        // frame", so we don't miss click-release events that are
-        // shorter than 1 frame.
-        io.MouseDown[0] =
-            g_MousePressed[0] || (mouseMask & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
-        io.MouseDown[1] = g_MousePressed[1] ||
-                          (mouseMask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
-        io.MouseDown[2] = g_MousePressed[2] ||
-                          (mouseMask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
-        g_MousePressed[0] = g_MousePressed[1] = g_MousePressed[2] = false;
-
-        io.MouseWheel = g_MouseWheel;
-        g_MouseWheel = 0.0f;
-          SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
-#endif
-        
-      }
-
-    ImGui::NewFrame();
-    ImGuizmo::BeginFrame();
+//#if !defined(_WIN32) && !defined(__ANDROID__)
+//    static char buffer[256];
+//    GetPrimaryIp(buffer, 256);
+//#endif
+//
+//    ImGuiIO &io = ImGui::GetIO();
+//    ImGuiStyle &style = ImGui::GetStyle();
+//
+//    if (!g_FontTexture)
+//      {
+//        ImGui_ImplIOS_CreateDeviceObjects();
+//      }
+//
+//    io.DisplaySize =
+//        ImVec2(njli::World::getInstance()->getViewportDimensions().x(),
+//               njli::World::getInstance()->getViewportDimensions().y());
+//
+//    // Setup time step
+//    Uint32 time = SDL_GetTicks();
+//    double current_time = time / 1000.0;
+//    io.DeltaTime =
+//        g_Time > 0.0 ? (float)(current_time - g_Time) : (float)(1.0f / 60.0f);
+//    g_Time = current_time;
+//
+//    io.MouseDrawCursor = g_synergyPtrActive;
+//    if (g_synergyPtrActive)
+//      {
+//        style.TouchExtraPadding = ImVec2(0.0, 0.0);
+//        io.MousePos = ImVec2(g_mousePosX, g_mousePosY);
+//        for (int i = 0; i < 3; i++)
+//          {
+//            io.MouseDown[i] = g_MousePressed[i];
+//          }
+//
+//        io.MouseWheel = g_mouseWheelY / 500.0;
+//      }
+//    else
+//      {
+//#if !defined(__ANDROID__) && !defined(__IPHONEOS__)
+//        int mx, my;
+//        Uint32 mouseMask = SDL_GetMouseState(&mx, &my);
+//        if (SDL_GetWindowFlags(gWindow) & SDL_WINDOW_MOUSE_FOCUS)
+//          {
+//            io.MousePos = ImVec2((float)mx, (float)my);
+//          }
+//        else
+//          {
+//            io.MousePos = ImVec2(-1, -1);
+//          }
+//
+//        // If a mouse press event came, always pass it as "mouse held this
+//        // frame", so we don't miss click-release events that are
+//        // shorter than 1 frame.
+//        io.MouseDown[0] =
+//            g_MousePressed[0] || (mouseMask & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
+//        io.MouseDown[1] = g_MousePressed[1] ||
+//                          (mouseMask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
+//        io.MouseDown[2] = g_MousePressed[2] ||
+//                          (mouseMask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
+//        g_MousePressed[0] = g_MousePressed[1] = g_MousePressed[2] = false;
+//
+//        io.MouseWheel = g_MouseWheel;
+//        g_MouseWheel = 0.0f;
+//          SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
+//#endif
+//        
+//      }
+//
+//    ImGui::NewFrame();
+//    ImGuizmo::BeginFrame();
   }
 
 #if defined(USE_USYNERGY_LIBRARY)
@@ -1357,7 +1359,7 @@ namespace njli
 
   bool WorldDebugDrawer::processSdlEvent(SDL_Event *event)
   {
-    ImGuiIO &io = ImGui::GetIO();
+//    ImGuiIO &io = ImGui::GetIO();
     switch (event->type)
       {
       case SDL_MOUSEWHEEL:
@@ -1389,7 +1391,7 @@ namespace njli
               g_MousePressed[0] = true;
               float x = event->tfinger.x * gDisplayMode.w;
               float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
-              io.MousePos = ImVec2(x, y);
+//              io.MousePos = ImVec2(x, y);
           }
               return true;
           case SDL_FINGERDOWN:
@@ -1397,7 +1399,7 @@ namespace njli
               g_MousePressed[0] = true;
               float x = event->tfinger.x * gDisplayMode.w;
               float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
-              io.MousePos = ImVec2(x, y);
+//              io.MousePos = ImVec2(x, y);
           }
               return true;
           case SDL_FINGERUP:
@@ -1405,23 +1407,23 @@ namespace njli
               g_MousePressed[0] = false;
               float x = event->tfinger.x * gDisplayMode.w;
               float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
-              io.MousePos = ImVec2(x, y);
+//              io.MousePos = ImVec2(x, y);
           }
               return true;
       case SDL_TEXTINPUT:
         {
-          ImGuiIO &io = ImGui::GetIO();
-          io.AddInputCharactersUTF8(event->text.text);
+//          ImGuiIO &io = ImGui::GetIO();
+//          io.AddInputCharactersUTF8(event->text.text);
           return true;
         }
       case SDL_KEYDOWN:
       case SDL_KEYUP:
         {
           int key = event->key.keysym.sym & ~SDLK_SCANCODE_MASK;
-          io.KeysDown[key] = (event->type == SDL_KEYDOWN);
-          io.KeyShift = ((SDL_GetModState() & KMOD_SHIFT) != 0);
-          io.KeyCtrl = ((SDL_GetModState() & KMOD_CTRL) != 0);
-          io.KeyAlt = ((SDL_GetModState() & KMOD_ALT) != 0);
+//          io.KeysDown[key] = (event->type == SDL_KEYDOWN);
+//          io.KeyShift = ((SDL_GetModState() & KMOD_SHIFT) != 0);
+//          io.KeyCtrl = ((SDL_GetModState() & KMOD_CTRL) != 0);
+//          io.KeyAlt = ((SDL_GetModState() & KMOD_ALT) != 0);
           return true;
         }
       }
@@ -1467,147 +1469,147 @@ namespace njli
   // (0.5f,0.5f) or (0.375f,0.375f)
   // NOTE: this is copied pretty much entirely from the opengl3_example, with
   // only minor changes for ES
-  static void ImGui_ImplIOS_RenderDrawLists(ImDrawData *draw_data)
-  {
-    // Setup render state: alpha-blending enabled, no face culling, no depth
-    // testing, scissor enabled
-    GLint last_program, last_texture;
-    glGetIntegerv(GL_CURRENT_PROGRAM, &last_program);
-    glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
-    glEnable(GL_BLEND);
-      
-    //      GL_BLEND_SRC, GL_BLEND_DST.
-      GLint blendEq, blendSrc, blendDst;
-    glGetIntegerv(GL_BLEND_EQUATION, &blendEq);
-    glGetIntegerv(GL_BLEND_SRC_ALPHA, &blendSrc);
-      glGetIntegerv(GL_BLEND_DST_ALPHA, &blendDst);
-      
-    glBlendEquation(GL_FUNC_ADD);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      
-      
-      
-
-      GLboolean cullFace = glIsEnabled(GL_CULL_FACE);
-    glDisable(GL_CULL_FACE);
-      
-      GLboolean depthFace = glIsEnabled(GL_DEPTH_TEST);
-    glDisable(GL_DEPTH_TEST);
-      
-      GLboolean scissorTest = glIsEnabled(GL_SCISSOR_TEST);
-    glEnable(GL_SCISSOR_TEST);
-      
-      
-      
-    glActiveTexture(GL_TEXTURE0);
-
-    // Setup orthographic projection matrix
-    const float width = ImGui::GetIO().DisplaySize.x;
-    const float height = ImGui::GetIO().DisplaySize.y;
-    const float ortho_projection[4][4] = {
-        {2.0f / width, 0.0f, 0.0f, 0.0f},
-        {0.0f, 2.0f / -height, 0.0f, 0.0f},
-        {0.0f, 0.0f, -1.0f, 0.0f},
-        {-1.0f, 1.0f, 0.0f, 1.0f},
-    };
-    glUseProgram(g_ShaderHandle);
-    glUniform1i(g_AttribLocationTex, 0);
-    glUniformMatrix4fv(g_AttribLocationProjMtx, 1, GL_FALSE,
-                       &ortho_projection[0][0]);
-      
-      glBindVertexArrayOES(g_VaoHandle);
-
-    for (int n = 0; n < draw_data->CmdListsCount; n++)
-      {
-        const ImDrawList *cmd_list = draw_data->CmdLists[n];
-        const ImDrawIdx *idx_buffer_offset = 0;
-
-        glBindBuffer(GL_ARRAY_BUFFER, g_VboHandle);
-        glBufferData(GL_ARRAY_BUFFER,
-                     (GLsizeiptr)cmd_list->VtxBuffer.size() *
-                         sizeof(ImDrawVert),
-                     (GLvoid *)&cmd_list->VtxBuffer.front(), GL_STREAM_DRAW);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_ElementsHandle);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     (GLsizeiptr)cmd_list->IdxBuffer.size() * sizeof(ImDrawIdx),
-                     (GLvoid *)&cmd_list->IdxBuffer.front(), GL_STREAM_DRAW);
-
-        glEnableVertexAttribArray(g_AttribLocationPosition);
-        glEnableVertexAttribArray(g_AttribLocationUV);
-        glEnableVertexAttribArray(g_AttribLocationColor);
-
-#define OFFSETOF(TYPE, ELEMENT) ((size_t) & (((TYPE *)0)->ELEMENT))
-        glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT, GL_FALSE,
-                              sizeof(ImDrawVert),
-                              (GLvoid *)OFFSETOF(ImDrawVert, pos));
-        glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE,
-                              sizeof(ImDrawVert),
-                              (GLvoid *)OFFSETOF(ImDrawVert, uv));
-        glVertexAttribPointer(g_AttribLocationColor, 4, GL_UNSIGNED_BYTE,
-                              GL_TRUE, sizeof(ImDrawVert),
-                              (GLvoid *)OFFSETOF(ImDrawVert, col));
-#undef OFFSETOF
-        for (const ImDrawCmd *pcmd = cmd_list->CmdBuffer.begin();
-             pcmd != cmd_list->CmdBuffer.end(); pcmd++)
-          {
-            if (pcmd->UserCallback)
-              {
-                pcmd->UserCallback(cmd_list, pcmd);
-              }
-            else
-              {
-                glBindTexture(GL_TEXTURE_2D, (GLuint)(intptr_t)pcmd->TextureId);
-                //                    glScissor((int)pcmd->ClipRect.x,
-                //                              (int)(fb_height -
-                //                              pcmd->ClipRect.w),
-                //                              (int)(pcmd->ClipRect.z -
-                //                              pcmd->ClipRect.x),
-                //                              (int)(pcmd->ClipRect.w -
-                //                              pcmd->ClipRect.y));
-
-                glScissor((int)(pcmd->ClipRect.x * g_displayScale),
-                          (int)((height - pcmd->ClipRect.w) * g_displayScale),
-                          (int)((pcmd->ClipRect.z - pcmd->ClipRect.x) *
-                                g_displayScale),
-                          (int)((pcmd->ClipRect.w - pcmd->ClipRect.y) *
-                                g_displayScale));
-                glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount,
-                               GL_UNSIGNED_SHORT, idx_buffer_offset);
-              }
-            idx_buffer_offset += pcmd->ElemCount;
-          }
-      }
-
-    // Restore modified state
-      
-    glBindVertexArrayOES(0);
-      
-      
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-      
-      glBlendEquation(blendEq);
-      glBlendFunc(blendSrc, blendDst);
-      
-      (GL_FALSE == cullFace)? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
-      (GL_FALSE == depthFace)? glDisable(GL_DEPTH_TEST) : glEnable(GL_DEPTH_TEST);
-      (GL_FALSE == scissorTest)? glDisable(GL_SCISSOR_TEST) : glEnable(GL_SCISSOR_TEST);
-    
-    glUseProgram(last_program);
-      
-    glBindTexture(GL_TEXTURE_2D, last_texture);
-  }
+//  static void ImGui_ImplIOS_RenderDrawLists(ImDrawData *draw_data)
+//  {
+//    // Setup render state: alpha-blending enabled, no face culling, no depth
+//    // testing, scissor enabled
+//    GLint last_program, last_texture;
+//    glGetIntegerv(GL_CURRENT_PROGRAM, &last_program);
+//    glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
+//    glEnable(GL_BLEND);
+//
+//    //      GL_BLEND_SRC, GL_BLEND_DST.
+//      GLint blendEq, blendSrc, blendDst;
+//    glGetIntegerv(GL_BLEND_EQUATION, &blendEq);
+//    glGetIntegerv(GL_BLEND_SRC_ALPHA, &blendSrc);
+//      glGetIntegerv(GL_BLEND_DST_ALPHA, &blendDst);
+//
+//    glBlendEquation(GL_FUNC_ADD);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//
+//
+//
+//
+//      GLboolean cullFace = glIsEnabled(GL_CULL_FACE);
+//    glDisable(GL_CULL_FACE);
+//
+//      GLboolean depthFace = glIsEnabled(GL_DEPTH_TEST);
+//    glDisable(GL_DEPTH_TEST);
+//
+//      GLboolean scissorTest = glIsEnabled(GL_SCISSOR_TEST);
+//    glEnable(GL_SCISSOR_TEST);
+//
+//
+//
+//    glActiveTexture(GL_TEXTURE0);
+//
+//    // Setup orthographic projection matrix
+//    const float width = ImGui::GetIO().DisplaySize.x;
+//    const float height = ImGui::GetIO().DisplaySize.y;
+//    const float ortho_projection[4][4] = {
+//        {2.0f / width, 0.0f, 0.0f, 0.0f},
+//        {0.0f, 2.0f / -height, 0.0f, 0.0f},
+//        {0.0f, 0.0f, -1.0f, 0.0f},
+//        {-1.0f, 1.0f, 0.0f, 1.0f},
+//    };
+//    glUseProgram(g_ShaderHandle);
+//    glUniform1i(g_AttribLocationTex, 0);
+//    glUniformMatrix4fv(g_AttribLocationProjMtx, 1, GL_FALSE,
+//                       &ortho_projection[0][0]);
+//
+//      glBindVertexArrayOES(g_VaoHandle);
+//
+//    for (int n = 0; n < draw_data->CmdListsCount; n++)
+//      {
+//        const ImDrawList *cmd_list = draw_data->CmdLists[n];
+//        const ImDrawIdx *idx_buffer_offset = 0;
+//
+//        glBindBuffer(GL_ARRAY_BUFFER, g_VboHandle);
+//        glBufferData(GL_ARRAY_BUFFER,
+//                     (GLsizeiptr)cmd_list->VtxBuffer.size() *
+//                         sizeof(ImDrawVert),
+//                     (GLvoid *)&cmd_list->VtxBuffer.front(), GL_STREAM_DRAW);
+//
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_ElementsHandle);
+//        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+//                     (GLsizeiptr)cmd_list->IdxBuffer.size() * sizeof(ImDrawIdx),
+//                     (GLvoid *)&cmd_list->IdxBuffer.front(), GL_STREAM_DRAW);
+//
+//        glEnableVertexAttribArray(g_AttribLocationPosition);
+//        glEnableVertexAttribArray(g_AttribLocationUV);
+//        glEnableVertexAttribArray(g_AttribLocationColor);
+//
+//#define OFFSETOF(TYPE, ELEMENT) ((size_t) & (((TYPE *)0)->ELEMENT))
+//        glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT, GL_FALSE,
+//                              sizeof(ImDrawVert),
+//                              (GLvoid *)OFFSETOF(ImDrawVert, pos));
+//        glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE,
+//                              sizeof(ImDrawVert),
+//                              (GLvoid *)OFFSETOF(ImDrawVert, uv));
+//        glVertexAttribPointer(g_AttribLocationColor, 4, GL_UNSIGNED_BYTE,
+//                              GL_TRUE, sizeof(ImDrawVert),
+//                              (GLvoid *)OFFSETOF(ImDrawVert, col));
+//#undef OFFSETOF
+//        for (const ImDrawCmd *pcmd = cmd_list->CmdBuffer.begin();
+//             pcmd != cmd_list->CmdBuffer.end(); pcmd++)
+//          {
+//            if (pcmd->UserCallback)
+//              {
+//                pcmd->UserCallback(cmd_list, pcmd);
+//              }
+//            else
+//              {
+//                glBindTexture(GL_TEXTURE_2D, (GLuint)(intptr_t)pcmd->TextureId);
+//                //                    glScissor((int)pcmd->ClipRect.x,
+//                //                              (int)(fb_height -
+//                //                              pcmd->ClipRect.w),
+//                //                              (int)(pcmd->ClipRect.z -
+//                //                              pcmd->ClipRect.x),
+//                //                              (int)(pcmd->ClipRect.w -
+//                //                              pcmd->ClipRect.y));
+//
+//                glScissor((int)(pcmd->ClipRect.x * g_displayScale),
+//                          (int)((height - pcmd->ClipRect.w) * g_displayScale),
+//                          (int)((pcmd->ClipRect.z - pcmd->ClipRect.x) *
+//                                g_displayScale),
+//                          (int)((pcmd->ClipRect.w - pcmd->ClipRect.y) *
+//                                g_displayScale));
+//                glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount,
+//                               GL_UNSIGNED_SHORT, idx_buffer_offset);
+//              }
+//            idx_buffer_offset += pcmd->ElemCount;
+//          }
+//      }
+//
+//    // Restore modified state
+//
+//    glBindVertexArrayOES(0);
+//
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//      glBlendEquation(blendEq);
+//      glBlendFunc(blendSrc, blendDst);
+//
+//      (GL_FALSE == cullFace)? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
+//      (GL_FALSE == depthFace)? glDisable(GL_DEPTH_TEST) : glEnable(GL_DEPTH_TEST);
+//      (GL_FALSE == scissorTest)? glDisable(GL_SCISSOR_TEST) : glEnable(GL_SCISSOR_TEST);
+//
+//    glUseProgram(last_program);
+//
+//    glBindTexture(GL_TEXTURE_2D, last_texture);
+//  }
 
   void ImGui_ImplIOS_CreateFontsTexture()
   {
     // Build texture atlas
-    ImGuiIO &io = ImGui::GetIO();
+//    ImGuiIO &io = ImGui::GetIO();
     unsigned char *pixels;
     int width, height;
-    io.Fonts->GetTexDataAsRGBA32(
-        &pixels, &width, &height); // Load as RGBA 32-bits for OpenGL3 demo
-                                   // because it is more likely to be compatible
-                                   // with user's existing shader.
+//    io.Fonts->GetTexDataAsRGBA32(
+//        &pixels, &width, &height); // Load as RGBA 32-bits for OpenGL3 demo
+//                                   // because it is more likely to be compatible
+//                                   // with user's existing shader.
 
     // Upload texture to graphics system
     GLint last_texture;
@@ -1620,7 +1622,7 @@ namespace njli
                  GL_UNSIGNED_BYTE, pixels);
 
     // Store our identifier
-    io.Fonts->TexID = (void *)(intptr_t)g_FontTexture;
+//    io.Fonts->TexID = (void *)(intptr_t)g_FontTexture;
 
     // Restore state
     glBindTexture(GL_TEXTURE_2D, last_texture);
@@ -1712,17 +1714,17 @@ namespace njli
     glEnableVertexAttribArray(g_AttribLocationUV);
     glEnableVertexAttribArray(g_AttribLocationColor);
 
-#define OFFSETOF(TYPE, ELEMENT) ((size_t) & (((TYPE *)0)->ELEMENT))
-    glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT, GL_FALSE,
-                          sizeof(ImDrawVert),
-                          (GLvoid *)OFFSETOF(ImDrawVert, pos));
-    glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE,
-                          sizeof(ImDrawVert),
-                          (GLvoid *)OFFSETOF(ImDrawVert, uv));
-    glVertexAttribPointer(g_AttribLocationColor, 4, GL_UNSIGNED_BYTE, GL_TRUE,
-                          sizeof(ImDrawVert),
-                          (GLvoid *)OFFSETOF(ImDrawVert, col));
-#undef OFFSETOF
+//#define OFFSETOF(TYPE, ELEMENT) ((size_t) & (((TYPE *)0)->ELEMENT))
+//    glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT, GL_FALSE,
+//                          sizeof(ImDrawVert),
+//                          (GLvoid *)OFFSETOF(ImDrawVert, pos));
+//    glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE,
+//                          sizeof(ImDrawVert),
+//                          (GLvoid *)OFFSETOF(ImDrawVert, uv));
+//    glVertexAttribPointer(g_AttribLocationColor, 4, GL_UNSIGNED_BYTE, GL_TRUE,
+//                          sizeof(ImDrawVert),
+//                          (GLvoid *)OFFSETOF(ImDrawVert, col));
+//#undef OFFSETOF
       
     glBindVertexArrayOES(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

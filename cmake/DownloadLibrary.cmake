@@ -1,8 +1,8 @@
 
 set(PLATFORM_PATH_SUFFIX_DEBUG "Debug")
 set(PLATFORM_PATH_SUFFIX_RELEASE "Release")
-set(PLATFORM_PATH_SUFFIX_MINSIZEREL "MinSizeRel")
-set(PLATFORM_PATH_SUFFIX_RELWITHDEBUGINFO "RelWithDebInfo")
+set(PLATFORM_PATH_SUFFIX_MINSIZEREL "MinsizeRel")
+set(PLATFORM_PATH_SUFFIX_RELWITHDEBINFO "RelWithDebInfo")
 
 ###########################################################################################################################
 

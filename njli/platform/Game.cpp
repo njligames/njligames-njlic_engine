@@ -206,8 +206,7 @@ namespace njli
 
   void NJLIGameEngine::handleEvent(void *event)
   {
-    njli::World::getInstance()->getDebugDrawer()->processSdlEvent(
-        (SDL_Event *)event);
+//    njli::World::getInstance()->getDebugDrawer()->processSdlEvent((SDL_Event *)event);
   }
 
   // void NJLIGameEngine::setTouch(const int x, const int y, const int index,
