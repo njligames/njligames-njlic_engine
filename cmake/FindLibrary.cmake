@@ -3,7 +3,6 @@ string(TOUPPER ${LIBRARY_NAME} LIBRARY_NAME_UPPER)
 
 set(${LIBRARY_NAME_UPPER}_BASE_PATH "thirdparty/${LIBRARY_NAME}")
 
-
 if(EMSCRIPTEN)
   set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/emscripten")
 elseif(WINDOWS)
@@ -55,8 +54,8 @@ if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
 
   set(DEBUG_SUFFIX "Debug")
   set(RELEASE_SUFFIX "Release")
-  set(RELEASE_SUFFIX "MinSizeRel")
-  set(RELEASE_SUFFIX "RelWithDebInfo")
+  set(MINSIZEREL_SUFFIX "MinSizeRel")
+  set(RELWITHDEBUGINFO_SUFFIX "RelWithDebugInfo")
 
   if(IOS OR TVOS)
     set(DEBUG_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
@@ -67,7 +66,7 @@ if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
     set(DEBUG_SUFFIX "${ANDROID_ABI}/Debug")
     set(RELEASE_SUFFIX "${ANDROID_ABI}/Release")
     set(MINSIZEREL_SUFFIX "${ANDROID_ABI}/MinSizeRel")
-    set(RELWITHDEBUGINFO_SUFFIX "${ANDROID_ABI}/RelWithDebInfo")
+    set(RELWITHDEBUGINFO_SUFFIX "${ANDROID_ABI}/RelWithDebugInfo")
   endif()
 
   set(LIBRARY_EXTENSION "a")
@@ -164,7 +163,7 @@ else()
       find_library(${LIB}_LIBRARY_RELWITHDEBUGINFO
         NAMES ${LIB}
         PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}"
-        PATH_SUFFIXES RelWithDebInfo
+        PATH_SUFFIXES RelWithDebugInfo
         NO_DEFAULT_PATH
         )
 
