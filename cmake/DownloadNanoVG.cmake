@@ -4,6 +4,8 @@ set(INCLUDE_URL "https://www.dropbox.com/s/bikbkbly3in24ng/libnanovg_includes.ta
 
 set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/6udoianp2cacyhr/libnanovg_emscripten_Debug.tar.gz?dl=0")
 set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/4fyie5sswkae0t9/libnanovg_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/kp0iu5ln7zbdz2i/libnanovg_emscripten_MinSizeRel.tar.gz?dl=0")
+set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ye6lepusekd8gad/libnanovg_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/sion6fqywf4yq6m/libnanovg_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/avi8ef7cdex495c/libnanovg_windows32_Release.tar.gz?dl=0")
@@ -17,8 +19,8 @@ set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/mic2d884r36img4/libnano
 set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/cndt2digwsor8o6/libnanovg_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/wbt9dm4ass81384/libnanovg_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/qmw130ak9mgwefr/libnanovg_ios_Release-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/3fym31bmyjsb370/libnanovg_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/q2nivr962suntdn/libnanovg_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/3fym31bmyjsb370/libnanovg_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/q2nivr962suntdn/libnanovg_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/u5kfiel8ybv8a6m/libnanovg_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/2snys2dcgs4e2yn/libnanovg_appletv_Debug-appletvsimulator.tar.gz?dl=0")
@@ -28,7 +30,7 @@ set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/35pr8mwbr39mnva/lib
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/z4zc33k8clvwnjz/libnanovg_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/bhgdudiktnw4k9q/libnanovg_macos_Release.tar.gz?dl=0")
 set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/5b8ybus77znmozo/libnanovg_macos_MinsizeRel.tar.gz?dl=0")
-set(MACOS_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/ngugpfrpostk73f/libnanovg_macos_RelWithDebugInfo.tar.gz?dl=0")
+set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ngugpfrpostk73f/libnanovg_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/gcpxqr09rb736yd/libnanovg_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/uopujyokr2ys50m/libnanovg_linux_Release.tar.gz?dl=0")

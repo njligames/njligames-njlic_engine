@@ -4,6 +4,8 @@ set(INCLUDE_URL "https://www.dropbox.com/s/erbp79zazwqsknv/libvorbis_includes.ta
 
 set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/q9wjv9hgcfs83rp/libvorbis_emscripten_Debug.tar.gz?dl=0")
 set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/i0kfmvo8xx5o25u/libvorbis_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/raf27szzr4nhfbt/libvorbis_emscripten_MinSizeRel.tar.gz?dl=0")
+set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/njsxgnag0dnl2pc/libvorbis_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/d4ksrmreonrwei9/libvorbis_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/sxh1v9z8sbcd15o/libvorbis_windows32_Release.tar.gz?dl=0")
@@ -17,8 +19,8 @@ set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/ou0y01k2eeuyr2h/libvorb
 set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/uo46c8cvpqr62ce/libvorbis_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/fwappwieile5yt6/libvorbis_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/37q8ns7jbo0k5yn/libvorbis_ios_Release-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/0002f5laqe4ap2m/libvorbis_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/a11ytiahp1uc1bk/libvorbis_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/0002f5laqe4ap2m/libvorbis_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/a11ytiahp1uc1bk/libvorbis_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/tyvufew5oo1vxm1/libvorbis_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/kbf62k5so9nydmz/libvorbis_appletv_Debug-appletvsimulator.tar.gz?dl=0")
@@ -28,7 +30,7 @@ set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/mnl3flvt4hb0xfk/lib
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/afav2q67eujxnpn/libvorbis_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/9bs3e8ibm4w5bh8/libvorbis_macos_Release.tar.gz?dl=0")
 set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/4g1l8j99ep9oe7e/libvorbis_macos_MinsizeRel.tar.gz?dl=0")
-set(MACOS_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/ej57zuqkxtvr1mr/libvorbis_macos_RelWithDebugInfo.tar.gz?dl=0")
+set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ej57zuqkxtvr1mr/libvorbis_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/9ph5xwk7ckrpnj6/libvorbis_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/ean2y0u1zclih04/libvorbis_linux_Release.tar.gz?dl=0")

@@ -4,6 +4,8 @@ set(INCLUDE_URL "https://www.dropbox.com/s/agc7zmqg9m64x9i/libogg_includes.tar.g
 
 set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/tqvf2039tjjqpb6/libogg_emscripten_Debug.tar.gz?dl=0")
 set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/rp5yob3wabc9vcn/libogg_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/kd1zsc1v73pvffc/libogg_emscripten_MinSizeRel.tar.gz?dl=0")
+set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/svq7011ccp6fe2j/libogg_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/7h5jygomq7xcyc1/libogg_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/0p7srknrepbltiq/libogg_windows32_Release.tar.gz?dl=0")
@@ -17,8 +19,8 @@ set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/aq3k1cpclm5ee4r/libogg_
 set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/u5yk6vhudhmbcds/libogg_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/vwtsoeodtzdwf62/libogg_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/kmr72e2uh1cdcn8/libogg_ios_Release-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/rheo2ueu8qy76rs/libogg_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/gmw07emc08vxtja/libogg_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/rheo2ueu8qy76rs/libogg_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/gmw07emc08vxtja/libogg_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/5ngl2398a7h3s8o/libogg_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/pvwpwxqj7zyct4j/libogg_appletv_Debug-appletvsimulator.tar.gz?dl=0")
@@ -28,7 +30,7 @@ set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/e00h59xm39fk761/lib
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/rrlq3la5v9yflyp/libogg_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/htqjt4tmws7r8y2/libogg_macos_Release.tar.gz?dl=0")
 set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/pfzqns1g1rvby29/libogg_macos_MinsizeRel.tar.gz?dl=0")
-set(MACOS_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/ndyode72ghyd606/libogg_macos_RelWithDebugInfo.tar.gz?dl=0")
+set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ndyode72ghyd606/libogg_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/jch02hzlxr00bs0/libogg_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/m0ikljr1gnm3lat/libogg_linux_Release.tar.gz?dl=0")

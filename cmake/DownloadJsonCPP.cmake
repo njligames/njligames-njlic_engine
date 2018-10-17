@@ -4,6 +4,8 @@ set(INCLUDE_URL "https://www.dropbox.com/s/7tqgfvuygusxlbd/libjsoncpp_includes.t
 
 set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/nketminya5lj7j3/libjsoncpp_emscripten_Debug.tar.gz?dl=0")
 set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/dl9c9kgesdg7zil/libjsoncpp_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/pzsq3rnvm8vu32q/libjsoncpp_emscripten_MinSizeRel.tar.gz?dl=0")
+set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/zdd18y8ki31nhqf/libjsoncpp_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/zllvsm3esdte1ej/libjsoncpp_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/bje4gfkt1av5lyc/libjsoncpp_windows32_Release.tar.gz?dl=0")
@@ -17,8 +19,8 @@ set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/3swbm9p9410e7rz/libjson
 set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/rawu5q5lwuy16od/libjsoncpp_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/7m9i9zp77zzuz4m/libjsoncpp_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/c5vu7gnrlw6spw7/libjsoncpp_ios_Release-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/2bouxdxucylqhtb/libjsoncpp_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/k4e3ow2lrru2ub3/libjsoncpp_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/2bouxdxucylqhtb/libjsoncpp_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/k4e3ow2lrru2ub3/libjsoncpp_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/rk8iszobjo7n9fb/libjsoncpp_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/3sd1unj8b4fd6wp/libjsoncpp_appletv_Debug-appletvsimulator.tar.gz?dl=0")
@@ -28,7 +30,7 @@ set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/xoiplxcr4my2yqn/lib
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/4ho6qfymeuxor2r/libjsoncpp_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/clvfj12666rtd7q/libjsoncpp_macos_Release.tar.gz?dl=0")
 set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/kvpksc6vw73ykvs/libjsoncpp_macos_MinsizeRel.tar.gz?dl=0")
-set(MACOS_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/j0hptwi67u2hqj5/libjsoncpp_macos_RelWithDebugInfo.tar.gz?dl=0")
+set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/j0hptwi67u2hqj5/libjsoncpp_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/57vn3yu9bx3acvm/libjsoncpp_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/mesfvmvrmz3hcqc/libjsoncpp_linux_Release.tar.gz?dl=0")

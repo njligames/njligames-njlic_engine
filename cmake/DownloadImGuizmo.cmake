@@ -4,6 +4,8 @@ set(INCLUDE_URL "https://www.dropbox.com/s/vi20so6cykm4zxx/libimguizmo_includes.
 
 set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/zv4ue76ursi1x3s/libimguizmo_emscripten_Debug.tar.gz?dl=0")
 set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/57faktvdv02yias/libimguizmo_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/4fauf9xxoc9wlzf/libimguizmo_emscripten_MinSizeRel.tar.gz?dl=0")
+set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/10sppxu9z4cmb19/libimguizmo_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/6cl359lyi6a2g08/libImGuizmo_windows32_Debug.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/tbkqhseagh0yd7r/libImGuizmo_windows32_Release.tar.gz?dl=0")
@@ -17,8 +19,8 @@ set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/t68zt0365s1cqnp/libimgu
 set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/qbz9t3190e9rcsd/libimguizmo_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
 set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/5lfqld0a24i3ex4/libimguizmo_ios_Release-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/z1hnra7s18zfb04/libimguizmo_ios_Release-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/j7anxocz6x39n31/libimguizmo_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/8ub3v28kf7mg0kb/libimguizmo_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/j7anxocz6x39n31/libimguizmo_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/8ub3v28kf7mg0kb/libimguizmo_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/nb6sxnhxj4c8h6t/libimguizmo_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/l30pt40upskog2k/libimguizmo_appletv_Debug-appletvsimulator.tar.gz?dl=0")
@@ -28,7 +30,7 @@ set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/xl69c0lgjpal8vw/lib
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/l1y75af78kafr1w/libimguizmo_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/0yon05cklycutiq/libimguizmo_macos_Release.tar.gz?dl=0")
 set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/j6wybgx7e0pd9u8/libimguizmo_macos_MisizeRel.tar.gz?dl=0")
-set(MACOS_RELWITHDEBUGINFO_URL "https://www.dropbox.com/s/8j2b5meqjz4ivx8/libimguizmo_macos_RelWithDebugInfo.tar.gz?dl=0")
+set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/8j2b5meqjz4ivx8/libimguizmo_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/yh8g0qls2d2hssl/libImGuizmo_linux_Debug.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/rfincechrbpa6gb/libImGuizmo_linux_Release.tar.gz?dl=0")
