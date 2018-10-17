@@ -687,7 +687,7 @@ namespace njli
         ShaderProgram *shader = getShader();
         if(shader && camera)
         {
-            assert(shader->use());
+            shader->use();
             
             camera->render(shader, m_ShaderChanged);
             
