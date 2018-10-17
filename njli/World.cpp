@@ -1165,7 +1165,7 @@ namespace njli
 
   bool World::isDebug() const
   {
-#if !(defined(NDEBUG))
+#if !(defined(MINSIZEREL))
     return true;
 #endif
     return false;
@@ -1703,7 +1703,7 @@ namespace njli
         sprintf(buffer, "%s", "__NJLIRender");
         njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
         
-#if !defined(NDEBUG)
+#if !defined(MINSIZEREL)
         
         if (m_enableDebugDraw)
         {
