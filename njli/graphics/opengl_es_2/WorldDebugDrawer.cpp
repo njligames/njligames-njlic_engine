@@ -980,7 +980,7 @@ namespace njli
   static const char *ImGui_ImplGlfw_GetClipboardText(void *user_data);
   static void ImGui_ImplGlfw_SetClipboardText(void *user_data,
                                               const char *text);
-//  static void ImGui_ImplIOS_RenderDrawLists(ImDrawData *draw_data);
+  static void ImGui_ImplIOS_RenderDrawLists(ImDrawData *draw_data);
   bool ImGui_ImplIOS_CreateDeviceObjects();
 
   //    static NSString *g_serverName;
@@ -1132,69 +1132,69 @@ namespace njli
 
   void setupImGuiHooks()
   {
-//    ImGuiIO &io = ImGui::GetIO();
-//
-//    //        setupKeymaps();
-//
-//    // Account for retina display for glScissor
-//    g_displayScale = 1.0f; //[[UIScreen mainScreen] scale];
-//
-//    ImGuiStyle &style = ImGui::GetStyle();
-//    style.TouchExtraPadding = ImVec2(4.0, 4.0);
-//
-//    io.RenderDrawListsFn = ImGui_ImplIOS_RenderDrawLists;
-//    io.SetClipboardTextFn = ImGui_ImplGlfw_SetClipboardText;
-//    io.GetClipboardTextFn = ImGui_ImplGlfw_GetClipboardText;
-//
-//    //        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer
-//    //        alloc] initWithTarget:self action:@selector(viewDidPan:) ];
-//    //        [self.view addGestureRecognizer:panRecognizer];
-//    //
-//    //        UITapGestureRecognizer *tapRecoginzer = [[UITapGestureRecognizer
-//    //        alloc] initWithTarget:self action:@selector( viewDidTap:)];
-//    //        [self.view addGestureRecognizer:tapRecoginzer];
-//
-//    // Fill out the Synergy key map
-//    // (for some reason synergy scan codes are off by 1)
-//    //        io.KeyMap[ImGuiKey_Tab] = kVK_Tab;//+1;
-//    //        io.KeyMap[ImGuiKey_LeftArrow] = kVK_LeftArrow+1;
-//    //        io.KeyMap[ImGuiKey_RightArrow] = kVK_RightArrow+1;
-//    //        io.KeyMap[ImGuiKey_UpArrow] = kVK_UpArrow+1;
-//    //        io.KeyMap[ImGuiKey_DownArrow] = kVK_DownArrow+1;
-//    //        io.KeyMap[ImGuiKey_Home] = kVK_Home+1;
-//    //        io.KeyMap[ImGuiKey_End] = kVK_End+1;
-//    //        io.KeyMap[ImGuiKey_Delete] = kVK_ForwardDelete+1;
-//    //        io.KeyMap[ImGuiKey_Backspace] = kVK_Delete+1;
-//    //        io.KeyMap[ImGuiKey_Enter] = kVK_Return+1;
-//    //        io.KeyMap[ImGuiKey_Escape] = kVK_Escape+1;
-//    //        io.KeyMap[ImGuiKey_A] = kVK_ANSI_A+1;
-//    //        io.KeyMap[ImGuiKey_C] = kVK_ANSI_C+1;
-//    //        io.KeyMap[ImGuiKey_V] = kVK_ANSI_V+1;
-//    //        io.KeyMap[ImGuiKey_X] = kVK_ANSI_X+1;
-//    //        io.KeyMap[ImGuiKey_Y] = kVK_ANSI_Y+1;
-//    //        io.KeyMap[ImGuiKey_Z] = kVK_ANSI_Z+1;
-//
-//    io.KeyMap[ImGuiKey_Tab] = SDLK_TAB; // Keyboard mapping. ImGui will use
-//                                        // those indices to peek into the
-//                                        // io.KeyDown[] array.
-//    io.KeyMap[ImGuiKey_LeftArrow] = SDL_SCANCODE_LEFT;
-//    io.KeyMap[ImGuiKey_RightArrow] = SDL_SCANCODE_RIGHT;
-//    io.KeyMap[ImGuiKey_UpArrow] = SDL_SCANCODE_UP;
-//    io.KeyMap[ImGuiKey_DownArrow] = SDL_SCANCODE_DOWN;
-//    io.KeyMap[ImGuiKey_PageUp] = SDL_SCANCODE_PAGEUP;
-//    io.KeyMap[ImGuiKey_PageDown] = SDL_SCANCODE_PAGEDOWN;
-//    io.KeyMap[ImGuiKey_Home] = SDL_SCANCODE_HOME;
-//    io.KeyMap[ImGuiKey_End] = SDL_SCANCODE_END;
-//    io.KeyMap[ImGuiKey_Delete] = SDLK_DELETE;
-//    io.KeyMap[ImGuiKey_Backspace] = SDLK_BACKSPACE;
-//    io.KeyMap[ImGuiKey_Enter] = SDLK_RETURN;
-//    io.KeyMap[ImGuiKey_Escape] = SDLK_ESCAPE;
-//    io.KeyMap[ImGuiKey_A] = SDLK_a;
-//    io.KeyMap[ImGuiKey_C] = SDLK_c;
-//    io.KeyMap[ImGuiKey_V] = SDLK_v;
-//    io.KeyMap[ImGuiKey_X] = SDLK_x;
-//    io.KeyMap[ImGuiKey_Y] = SDLK_y;
-//    io.KeyMap[ImGuiKey_Z] = SDLK_z;
+    ImGuiIO &io = ImGui::GetIO();
+
+    //        setupKeymaps();
+
+    // Account for retina display for glScissor
+    g_displayScale = 1.0f; //[[UIScreen mainScreen] scale];
+
+    ImGuiStyle &style = ImGui::GetStyle();
+    style.TouchExtraPadding = ImVec2(4.0, 4.0);
+
+    io.RenderDrawListsFn = ImGui_ImplIOS_RenderDrawLists;
+    io.SetClipboardTextFn = ImGui_ImplGlfw_SetClipboardText;
+    io.GetClipboardTextFn = ImGui_ImplGlfw_GetClipboardText;
+
+    //        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer
+    //        alloc] initWithTarget:self action:@selector(viewDidPan:) ];
+    //        [self.view addGestureRecognizer:panRecognizer];
+    //
+    //        UITapGestureRecognizer *tapRecoginzer = [[UITapGestureRecognizer
+    //        alloc] initWithTarget:self action:@selector( viewDidTap:)];
+    //        [self.view addGestureRecognizer:tapRecoginzer];
+
+    // Fill out the Synergy key map
+    // (for some reason synergy scan codes are off by 1)
+    //        io.KeyMap[ImGuiKey_Tab] = kVK_Tab;//+1;
+    //        io.KeyMap[ImGuiKey_LeftArrow] = kVK_LeftArrow+1;
+    //        io.KeyMap[ImGuiKey_RightArrow] = kVK_RightArrow+1;
+    //        io.KeyMap[ImGuiKey_UpArrow] = kVK_UpArrow+1;
+    //        io.KeyMap[ImGuiKey_DownArrow] = kVK_DownArrow+1;
+    //        io.KeyMap[ImGuiKey_Home] = kVK_Home+1;
+    //        io.KeyMap[ImGuiKey_End] = kVK_End+1;
+    //        io.KeyMap[ImGuiKey_Delete] = kVK_ForwardDelete+1;
+    //        io.KeyMap[ImGuiKey_Backspace] = kVK_Delete+1;
+    //        io.KeyMap[ImGuiKey_Enter] = kVK_Return+1;
+    //        io.KeyMap[ImGuiKey_Escape] = kVK_Escape+1;
+    //        io.KeyMap[ImGuiKey_A] = kVK_ANSI_A+1;
+    //        io.KeyMap[ImGuiKey_C] = kVK_ANSI_C+1;
+    //        io.KeyMap[ImGuiKey_V] = kVK_ANSI_V+1;
+    //        io.KeyMap[ImGuiKey_X] = kVK_ANSI_X+1;
+    //        io.KeyMap[ImGuiKey_Y] = kVK_ANSI_Y+1;
+    //        io.KeyMap[ImGuiKey_Z] = kVK_ANSI_Z+1;
+
+    io.KeyMap[ImGuiKey_Tab] = SDLK_TAB; // Keyboard mapping. ImGui will use
+                                        // those indices to peek into the
+                                        // io.KeyDown[] array.
+    io.KeyMap[ImGuiKey_LeftArrow] = SDL_SCANCODE_LEFT;
+    io.KeyMap[ImGuiKey_RightArrow] = SDL_SCANCODE_RIGHT;
+    io.KeyMap[ImGuiKey_UpArrow] = SDL_SCANCODE_UP;
+    io.KeyMap[ImGuiKey_DownArrow] = SDL_SCANCODE_DOWN;
+    io.KeyMap[ImGuiKey_PageUp] = SDL_SCANCODE_PAGEUP;
+    io.KeyMap[ImGuiKey_PageDown] = SDL_SCANCODE_PAGEDOWN;
+    io.KeyMap[ImGuiKey_Home] = SDL_SCANCODE_HOME;
+    io.KeyMap[ImGuiKey_End] = SDL_SCANCODE_END;
+    io.KeyMap[ImGuiKey_Delete] = SDLK_DELETE;
+    io.KeyMap[ImGuiKey_Backspace] = SDLK_BACKSPACE;
+    io.KeyMap[ImGuiKey_Enter] = SDLK_RETURN;
+    io.KeyMap[ImGuiKey_Escape] = SDLK_ESCAPE;
+    io.KeyMap[ImGuiKey_A] = SDLK_a;
+    io.KeyMap[ImGuiKey_C] = SDLK_c;
+    io.KeyMap[ImGuiKey_V] = SDLK_v;
+    io.KeyMap[ImGuiKey_X] = SDLK_x;
+    io.KeyMap[ImGuiKey_Y] = SDLK_y;
+    io.KeyMap[ImGuiKey_Z] = SDLK_z;
   }
 
   void WorldDebugDrawer::initImgui() { setupImGuiHooks(); }
