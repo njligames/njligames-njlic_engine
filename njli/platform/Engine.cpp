@@ -1594,7 +1594,7 @@ namespace njli
                       gDisplayMode.refresh_rate);
     //#endif
 
-      bool vsynch = false;
+      bool vsynch = true;
       if(vsynch)
       {
           SDL_GL_SetSwapInterval(1);
