@@ -1441,6 +1441,7 @@ namespace njli
     float div = gDisplayMode.h / 9.0;
     gDisplayMode.w = div * 16.0f;
 //      gDisplayMode.h = 600.0f;
+          gDisplayMode.refresh_rate = 60.0f;
 #endif
 
 #if defined(__EMSCRIPTEN__) || defined(__ANDROID__) || defined(__IPHONEOS__)
