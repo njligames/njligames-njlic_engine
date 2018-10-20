@@ -24,6 +24,17 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+extern void CheckOpenGLError(const char *stmt, const char *fname, int line);
+
+#ifndef GL_CHECK
+#define GL_CHECK(stmt) do { \
+stmt; \
+CheckOpenGLError(#stmt, __FILE__, __LINE__); \
+} while(0);
+//#else
+//    #define GL_CHECK(stmt) stmt
+#endif
+
 namespace njli
 {
     Geometry::Geometry()
@@ -519,48 +530,48 @@ namespace njli
         
         assert(m_VertexArray == 0);
         
-        glGenVertexArraysOES(1, &m_VertexArray);
-        glBindVertexArrayOES(m_VertexArray);
+        GL_CHECK(glGenVertexArraysOES(1, &m_VertexArray));
+        GL_CHECK(glBindVertexArrayOES(m_VertexArray));
         {
             {
                 assert(m_ModelViewBuffer == 0);
-                glGenBuffers(1, &m_ModelViewBuffer);
-                glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer);
-                glBufferData(GL_ARRAY_BUFFER, getModelViewTransformArrayBufferSize() * subdivisionBufferSize(), getModelViewTransformArrayBufferPtr(), GL_STREAM_DRAW);
+                GL_CHECK(glGenBuffers(1, &m_ModelViewBuffer));
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer));
+                GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getModelViewTransformArrayBufferSize() * subdivisionBufferSize(), getModelViewTransformArrayBufferPtr(), GL_STREAM_DRAW));
                 int inTransformAttrib = getShader()->getAttributeLocation("inTransform");
-                glEnableVertexAttribArray(inTransformAttrib + 0);
-                glEnableVertexAttribArray(inTransformAttrib + 1);
-                glEnableVertexAttribArray(inTransformAttrib + 2);
-                glEnableVertexAttribArray(inTransformAttrib + 3);
-                glVertexAttribPointer(inTransformAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0);
-                glVertexAttribPointer(inTransformAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16);
-                glVertexAttribPointer(inTransformAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32);
-                glVertexAttribPointer(inTransformAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48);
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
+                GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 0));
+                GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 1));
+                GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 2));
+                GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 3));
+                GL_CHECK(glVertexAttribPointer(inTransformAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0));
+                GL_CHECK(glVertexAttribPointer(inTransformAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16));
+                GL_CHECK(glVertexAttribPointer(inTransformAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32));
+                GL_CHECK(glVertexAttribPointer(inTransformAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48));
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
             }
             
             {
                 assert(m_NormalMatrixTransformBuffer == 0);
-                glGenBuffers(1, &m_NormalMatrixTransformBuffer);
-                glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer);
-                glBufferData(GL_ARRAY_BUFFER, getNormalMatrixTransformArrayBufferSize() * subdivisionBufferSize(), getNormalMatrixTransformArrayBufferPtr(), GL_STREAM_DRAW);
+                GL_CHECK(glGenBuffers(1, &m_NormalMatrixTransformBuffer));
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer));
+                GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getNormalMatrixTransformArrayBufferSize() * subdivisionBufferSize(), getNormalMatrixTransformArrayBufferPtr(), GL_STREAM_DRAW));
                 int inNormalMatrixAttrib = getShader()->getAttributeLocation("inNormalMatrix");
-                glEnableVertexAttribArray(inNormalMatrixAttrib + 0);
-                glEnableVertexAttribArray(inNormalMatrixAttrib + 1);
-                glEnableVertexAttribArray(inNormalMatrixAttrib + 2);
-                glEnableVertexAttribArray(inNormalMatrixAttrib + 3);
-                glVertexAttribPointer(inNormalMatrixAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0);
-                glVertexAttribPointer(inNormalMatrixAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16);
-                glVertexAttribPointer(inNormalMatrixAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32);
-                glVertexAttribPointer(inNormalMatrixAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48);
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
+                GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 0));
+                GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 1));
+                GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 2));
+                GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 3));
+                GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0));
+                GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16));
+                GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32));
+                GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48));
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
             }
             
             {
                 assert(m_VerticesBuffer == 0);
-                glGenBuffers(1, &m_VerticesBuffer);
-                glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer);
-                glBufferData(GL_ARRAY_BUFFER, getVertexArrayBufferSize() * subdivisionBufferSize(), getVertexArrayBufferPtr(), GL_STREAM_DRAW);
+                GL_CHECK(glGenBuffers(1, &m_VerticesBuffer));
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer));
+                GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getVertexArrayBufferSize() * subdivisionBufferSize(), getVertexArrayBufferPtr(), GL_STREAM_DRAW));
                 int inPositionAttrib = getShader()->getAttributeLocation("inPosition");
                 int inColorAttrib = getShader()->getAttributeLocation("inColor");
                 int inNormalAttrib = getShader()->getAttributeLocation("inNormal");
@@ -569,89 +580,99 @@ namespace njli
                 int inTangentAttrib = getShader()->getAttributeLocation("inTangent");
                 int inBiTangentAttrib = getShader()->getAttributeLocation("inBiTangent");
                 
-                glEnableVertexAttribArray(inPositionAttrib);
-                glVertexAttribPointer(inPositionAttrib,
-                                      3,
-                                      GL_FLOAT,
-                                      GL_FALSE,
-                                      sizeof(TexturedColoredVertex),
-                                      (const GLvoid*) offsetof(TexturedColoredVertex, vertex));
+                GL_CHECK(glEnableVertexAttribArray(inPositionAttrib));
+                GL_CHECK(glVertexAttribPointer(inPositionAttrib,
+                                               3,
+                                               GL_FLOAT,
+                                               GL_FALSE,
+                                               sizeof(TexturedColoredVertex),
+                                               (const GLvoid*) offsetof(TexturedColoredVertex, vertex)));
                 
                 
-                glEnableVertexAttribArray(inTexCoordAttrib);
-                glVertexAttribPointer(inTexCoordAttrib,
-                                      2,
-                                      GL_FLOAT,
-                                      GL_FALSE,
-                                      sizeof(TexturedColoredVertex),
-                                      (const GLvoid*) offsetof(TexturedColoredVertex, texture));
+                GL_CHECK(glEnableVertexAttribArray(inTexCoordAttrib));
+                GL_CHECK(glVertexAttribPointer(inTexCoordAttrib,
+                                               2,
+                                               GL_FLOAT,
+                                               GL_FALSE,
+                                               sizeof(TexturedColoredVertex),
+                                               (const GLvoid*) offsetof(TexturedColoredVertex, texture)));
                 
-                glEnableVertexAttribArray(inNormalAttrib);
-                glVertexAttribPointer(inNormalAttrib,
-                                      3,
-                                      GL_FLOAT,
-                                      GL_FALSE,
-                                      sizeof(TexturedColoredVertex),
-                                      (const GLvoid*) offsetof(TexturedColoredVertex, normal));
+                GL_CHECK(glEnableVertexAttribArray(inNormalAttrib));
+                GL_CHECK(glVertexAttribPointer(inNormalAttrib,
+                                               3,
+                                               GL_FLOAT,
+                                               GL_FALSE,
+                                               sizeof(TexturedColoredVertex),
+                                               (const GLvoid*) offsetof(TexturedColoredVertex, normal)));
                 
-                glEnableVertexAttribArray(inColorAttrib);
-                glVertexAttribPointer(inColorAttrib,
-                                      4,
-                                      GL_FLOAT,
-                                      GL_FALSE,
-                                      sizeof(TexturedColoredVertex),
-                                      (const GLvoid*) offsetof(TexturedColoredVertex, color));
+                GL_CHECK(glEnableVertexAttribArray(inColorAttrib));
+                GL_CHECK(glVertexAttribPointer(inColorAttrib,
+                                               4,
+                                               GL_FLOAT,
+                                               GL_FALSE,
+                                               sizeof(TexturedColoredVertex),
+                                               (const GLvoid*) offsetof(TexturedColoredVertex, color)));
                 
-                glEnableVertexAttribArray(inTangentAttrib);
-                glVertexAttribPointer(inTangentAttrib,
-                                      3,
-                                      GL_FLOAT,
-                                      GL_FALSE,
-                                      sizeof(TexturedColoredVertex),
-                                      (const GLvoid*) offsetof(TexturedColoredVertex, tangent));
+                GL_CHECK(glEnableVertexAttribArray(inTangentAttrib));
+                GL_CHECK(glVertexAttribPointer(inTangentAttrib,
+                                               3,
+                                               GL_FLOAT,
+                                               GL_FALSE,
+                                               sizeof(TexturedColoredVertex),
+                                               (const GLvoid*) offsetof(TexturedColoredVertex, tangent)));
                 
-                glEnableVertexAttribArray(inBiTangentAttrib);
-                glVertexAttribPointer(inBiTangentAttrib,
-                                      3,
-                                      GL_FLOAT,
-                                      GL_FALSE,
-                                      sizeof(TexturedColoredVertex),
-                                      (const GLvoid*) offsetof(TexturedColoredVertex, bitangent));
+                GL_CHECK(glEnableVertexAttribArray(inBiTangentAttrib));
+                GL_CHECK(glVertexAttribPointer(inBiTangentAttrib,
+                                               3,
+                                               GL_FLOAT,
+                                               GL_FALSE,
+                                               sizeof(TexturedColoredVertex),
+                                               (const GLvoid*) offsetof(TexturedColoredVertex, bitangent)));
                 
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
             }
             
             {
-                glGenBuffers(1, &m_IndexBuffer);
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
-                glBufferData(GL_ELEMENT_ARRAY_BUFFER, getElementArrayBufferSize() * subdivisionBufferSize(), getElementArrayBufferPtr(), GL_STREAM_DRAW);
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+                GL_CHECK(glGenBuffers(1, &m_IndexBuffer));
+                GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer));
+                GL_CHECK(glBufferData(GL_ELEMENT_ARRAY_BUFFER, getElementArrayBufferSize() * subdivisionBufferSize(), getElementArrayBufferPtr(), GL_STREAM_DRAW));
+                GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
             }
         }
         
-        glBindVertexArrayOES(0);
+        GL_CHECK(glBindVertexArrayOES(0));
     }
     
     void Geometry::unLoad()
     {
         if (m_IndexBuffer)
-            glDeleteBuffers(1, &m_IndexBuffer);
+        {
+            GL_CHECK(glDeleteBuffers(1, &m_IndexBuffer));
+        }
         m_IndexBuffer = 0;
         
         if (m_VerticesBuffer)
-            glDeleteBuffers(1, &m_VerticesBuffer);
+        {
+            GL_CHECK(glDeleteBuffers(1, &m_VerticesBuffer));
+        }
         m_VerticesBuffer = 0;
         
         if (m_NormalMatrixTransformBuffer)
-            glDeleteBuffers(1, &m_NormalMatrixTransformBuffer);
+        {
+            GL_CHECK(glDeleteBuffers(1, &m_NormalMatrixTransformBuffer));
+        }
         m_NormalMatrixTransformBuffer = 0;
         
         if (m_ModelViewBuffer)
-            glDeleteBuffers(1, &m_ModelViewBuffer);
+        {
+            GL_CHECK(glDeleteBuffers(1, &m_ModelViewBuffer));
+        }
         m_ModelViewBuffer = 0;
         
         if (m_VertexArray)
-            glDeleteVertexArraysOES(1, &m_VertexArray);
+        {
+            GL_CHECK(glDeleteVertexArraysOES(1, &m_VertexArray));
+        }
         m_VertexArray = 0;
     }
     
@@ -755,41 +776,41 @@ namespace njli
             
             m_ShaderChanged = false;
      
-            glBindVertexArrayOES(m_VertexArray);
+            GL_CHECK(glBindVertexArrayOES(m_VertexArray));
             
             if(isModelViewBufferChanged())
             {
-                glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer);
-                glBufferSubData(GL_ARRAY_BUFFER, 0, getModelViewTransformArrayBufferSize(), getModelViewTransformArrayBufferPtr());
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer));
+                GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, 0, getModelViewTransformArrayBufferSize(), getModelViewTransformArrayBufferPtr()));
                 enableModelViewBufferChanged(false);
             }
             
             if(isNormalMatrixBufferChanged())
             {
-                glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer);
-                glBufferSubData(GL_ARRAY_BUFFER, 0, getNormalMatrixTransformArrayBufferSize(), getNormalMatrixTransformArrayBufferPtr());
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer));
+                GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, 0, getNormalMatrixTransformArrayBufferSize(), getNormalMatrixTransformArrayBufferPtr()));
                 enableNormalMatrixBufferChanged(false);
             }
             
             if(isVertexArrayBufferChanged())
             {
-                glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer);
-                glBufferSubData(GL_ARRAY_BUFFER, 0, getVertexArrayBufferSize(), getVertexArrayBufferPtr());
+                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer));
+                GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, 0, getVertexArrayBufferSize(), getVertexArrayBufferPtr()));
                 enableVertexArrayBufferChanged(false);
             }
             
             if(isIndiceArrayBufferChanged())
             {
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
-                glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, getElementArrayBufferSize(), getElementArrayBufferPtr());
+                GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer));
+                GL_CHECK(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, getElementArrayBufferSize(), getElementArrayBufferPtr()));
                 enableIndiceArrayBufferChanged(false);
             }
             
-            glDrawElements(GL_TRIANGLES, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
+            GL_CHECK(glDrawElements(GL_TRIANGLES, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0));
             //            glDrawElements(GL_LINE_LOOP, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             //            glDrawElements(GL_POINTS, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
      
-            glBindVertexArrayOES(0);
+            GL_CHECK(glBindVertexArrayOES(0));
         }
     }
     
