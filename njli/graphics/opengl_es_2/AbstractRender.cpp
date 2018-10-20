@@ -72,7 +72,8 @@ void CheckOpenGLError(const char *stmt, const char *fname, int line)
     {
       SDL_LogError(SDL_LOG_CATEGORY_TEST, "glGetError = %d, (%s) at %s:%d - for %s", error,
                    GetOpenGLErrorString(error), fname, line, stmt);
-    }
+    	SDL_assert((error != GL_NO_ERROR));
+		}
 }
 
 void initGL()
