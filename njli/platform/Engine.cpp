@@ -1065,7 +1065,7 @@ namespace njli
 #if !(defined(__IPHONEOS__) && __IPHONEOS__)
   static void mainloop()
   {
-#if !defined(NDEBUG)
+#if !defined(NDEBUG) && 0
       // Declare display mode structure to be filled in.
       SDL_DisplayMode current;
       // Get current display mode of all displays.
