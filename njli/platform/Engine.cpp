@@ -1609,6 +1609,10 @@ namespace njli
     //#endif
     //#if defined(__EMSCRIPTEN__)
       
+#if defined(__EMSCRIPTEN__)
+          int fullScreen = 0;
+          emscripten_get_canvas_size(&gDisplayMode.w, &gDisplayMode.h, &fullScreen);
+#endif
       
     NJLI_HandleResize(gDisplayMode.w, gDisplayMode.h, gDisplayMode.format,
                       gDisplayMode.refresh_rate);
