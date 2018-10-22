@@ -136,6 +136,10 @@ void printGLInfo()
 
   int param;
 
+  GL_CHECK(glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &param));
+  SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s = %d\n", "GL_MAX_VERTEX_ATTRIBS",
+                 param);
+
   GL_CHECK(glGetIntegerv(GL_MAX_TEXTURE_SIZE, &param));
   SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s = %d\n", "The max texture size",
                  param);
