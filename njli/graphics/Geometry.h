@@ -527,6 +527,13 @@ namespace njli
         bool m_ModelViewBufferChanged;
         bool m_ShaderChanged;
         
+        bool m_HasPositionAttrib;
+        bool m_HasTexCoordAttrib;
+        bool m_HasNormalAttrib;
+        bool m_HasColorAttrib;
+        bool m_HasTangentAttrib;
+        bool m_HasBiTangentAttrib;
+        
         btVector3 m_RimLightColor;
         float m_RimLightStart;
         float m_RimLightEnd;
