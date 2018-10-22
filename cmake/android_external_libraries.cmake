@@ -32,3 +32,6 @@ list(APPEND EXTRA_LIBS "${stdc++-lib}")
 FIND_LIBRARY(android-lib android)
 list(APPEND EXTRA_LIBS "${android-lib}")
 
+FIND_LIBRARY(EGL-lib EGL)
+list(APPEND EXTRA_LIBS "${EGL-lib}")
+
