@@ -584,7 +584,7 @@ namespace njli
 #if !defined(NDEBUG)
         if(location == -1)
         {
-            std::cout << "The named attribute variable " << attributeName << " is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"" << std::endl;
+            SDL_LogError(SDL_LOG_CATEGORY_TEST, "The named attribute variable %s is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"\n", attributeName.c_str());
         }
 #endif
         
@@ -609,7 +609,7 @@ namespace njli
 #if !defined(NDEBUG)
         if(location == -1)
         {
-            std::cout << "The named attribute variable " << uniformName << " is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"" << std::endl;
+            SDL_LogError(SDL_LOG_CATEGORY_TEST, "The named attribute variable %s is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"\n", uniformName.c_str());
         }
 #endif
         

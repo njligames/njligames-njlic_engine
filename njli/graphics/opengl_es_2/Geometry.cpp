@@ -534,37 +534,44 @@ namespace njli
         GL_CHECK(glBindVertexArrayOES(m_VertexArray));
         {
             {
-                assert(m_ModelViewBuffer == 0);
-                GL_CHECK(glGenBuffers(1, &m_ModelViewBuffer));
-                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer));
-                GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getModelViewTransformArrayBufferSize() * subdivisionBufferSize(), getModelViewTransformArrayBufferPtr(), GL_STREAM_DRAW));
                 int inTransformAttrib = getShader()->getAttributeLocation("inTransform");
-                GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 0));
-                GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 1));
-                GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 2));
-                GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 3));
-                GL_CHECK(glVertexAttribPointer(inTransformAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0));
-                GL_CHECK(glVertexAttribPointer(inTransformAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16));
-                GL_CHECK(glVertexAttribPointer(inTransformAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32));
-                GL_CHECK(glVertexAttribPointer(inTransformAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48));
-                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+                if(inTransformAttrib != -1)
+                {
+                    assert(m_ModelViewBuffer == 0);
+                    GL_CHECK(glGenBuffers(1, &m_ModelViewBuffer));
+                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer));
+                    GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getModelViewTransformArrayBufferSize() * subdivisionBufferSize(), getModelViewTransformArrayBufferPtr(), GL_STREAM_DRAW));
+                    GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 0));
+                    GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 1));
+                    GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 2));
+                    GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 3));
+                    GL_CHECK(glVertexAttribPointer(inTransformAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0));
+                    GL_CHECK(glVertexAttribPointer(inTransformAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16));
+                    GL_CHECK(glVertexAttribPointer(inTransformAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32));
+                    GL_CHECK(glVertexAttribPointer(inTransformAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48));
+                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+                }
             }
             
             {
-                assert(m_NormalMatrixTransformBuffer == 0);
-                GL_CHECK(glGenBuffers(1, &m_NormalMatrixTransformBuffer));
-                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer));
-                GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getNormalMatrixTransformArrayBufferSize() * subdivisionBufferSize(), getNormalMatrixTransformArrayBufferPtr(), GL_STREAM_DRAW));
                 int inNormalMatrixAttrib = getShader()->getAttributeLocation("inNormalMatrix");
-                GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 0));
-                GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 1));
-                GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 2));
-                GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 3));
-                GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0));
-                GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16));
-                GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32));
-                GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48));
-                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+                if(inNormalMatrixAttrib != -1)
+                {
+                    assert(m_NormalMatrixTransformBuffer == 0);
+                    GL_CHECK(glGenBuffers(1, &m_NormalMatrixTransformBuffer));
+                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer));
+                    GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getNormalMatrixTransformArrayBufferSize() * subdivisionBufferSize(), getNormalMatrixTransformArrayBufferPtr(), GL_STREAM_DRAW));
+                    
+                    GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 0));
+                    GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 1));
+                    GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 2));
+                    GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 3));
+                    GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0));
+                    GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16));
+                    GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32));
+                    GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48));
+                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+                }
             }
             
             {
@@ -572,64 +579,82 @@ namespace njli
                 GL_CHECK(glGenBuffers(1, &m_VerticesBuffer));
                 GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer));
                 GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getVertexArrayBufferSize() * subdivisionBufferSize(), getVertexArrayBufferPtr(), GL_STREAM_DRAW));
-                int inPositionAttrib = getShader()->getAttributeLocation("inPosition");
-                int inColorAttrib = getShader()->getAttributeLocation("inColor");
-                int inNormalAttrib = getShader()->getAttributeLocation("inNormal");
-                int inTexCoordAttrib = getShader()->getAttributeLocation("inTexCoord");
                 
-                int inTangentAttrib = getShader()->getAttributeLocation("inTangent");
-                int inBiTangentAttrib = getShader()->getAttributeLocation("inBiTangent");
-                
-                GL_CHECK(glEnableVertexAttribArray(inPositionAttrib));
-                GL_CHECK(glVertexAttribPointer(inPositionAttrib,
-                                               3,
-                                               GL_FLOAT,
-                                               GL_FALSE,
-                                               sizeof(TexturedColoredVertex),
-                                               (const GLvoid*) offsetof(TexturedColoredVertex, vertex)));
-                
-                
-                GL_CHECK(glEnableVertexAttribArray(inTexCoordAttrib));
-                GL_CHECK(glVertexAttribPointer(inTexCoordAttrib,
-                                               2,
-                                               GL_FLOAT,
-                                               GL_FALSE,
-                                               sizeof(TexturedColoredVertex),
-                                               (const GLvoid*) offsetof(TexturedColoredVertex, texture)));
-                
-                GL_CHECK(glEnableVertexAttribArray(inNormalAttrib));
-                GL_CHECK(glVertexAttribPointer(inNormalAttrib,
-                                               3,
-                                               GL_FLOAT,
-                                               GL_FALSE,
-                                               sizeof(TexturedColoredVertex),
-                                               (const GLvoid*) offsetof(TexturedColoredVertex, normal)));
-                
-                GL_CHECK(glEnableVertexAttribArray(inColorAttrib));
-                GL_CHECK(glVertexAttribPointer(inColorAttrib,
-                                               4,
-                                               GL_FLOAT,
-                                               GL_FALSE,
-                                               sizeof(TexturedColoredVertex),
-                                               (const GLvoid*) offsetof(TexturedColoredVertex, color)));
-                
-                GL_CHECK(glEnableVertexAttribArray(inTangentAttrib));
-                GL_CHECK(glVertexAttribPointer(inTangentAttrib,
-                                               3,
-                                               GL_FLOAT,
-                                               GL_FALSE,
-                                               sizeof(TexturedColoredVertex),
-                                               (const GLvoid*) offsetof(TexturedColoredVertex, tangent)));
-                
-                GL_CHECK(glEnableVertexAttribArray(inBiTangentAttrib));
-                GL_CHECK(glVertexAttribPointer(inBiTangentAttrib,
-                                               3,
-                                               GL_FLOAT,
-                                               GL_FALSE,
-                                               sizeof(TexturedColoredVertex),
-                                               (const GLvoid*) offsetof(TexturedColoredVertex, bitangent)));
-                
-                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+                {
+                    int inPositionAttrib = getShader()->getAttributeLocation("inPosition");
+                    if(inPositionAttrib != -1)
+                    {
+                        GL_CHECK(glEnableVertexAttribArray(inPositionAttrib));
+                        GL_CHECK(glVertexAttribPointer(inPositionAttrib,
+                                                       3,
+                                                       GL_FLOAT,
+                                                       GL_FALSE,
+                                                       sizeof(TexturedColoredVertex),
+                                                       (const GLvoid*) offsetof(TexturedColoredVertex, vertex)));
+                    }
+                    
+                    int inTexCoordAttrib = getShader()->getAttributeLocation("inTexCoord");
+                    if(inTexCoordAttrib != -1)
+                    {
+                        GL_CHECK(glEnableVertexAttribArray(inTexCoordAttrib));
+                        GL_CHECK(glVertexAttribPointer(inTexCoordAttrib,
+                                                       2,
+                                                       GL_FLOAT,
+                                                       GL_FALSE,
+                                                       sizeof(TexturedColoredVertex),
+                                                       (const GLvoid*) offsetof(TexturedColoredVertex, texture)));
+                    }
+                    
+                    int inNormalAttrib = getShader()->getAttributeLocation("inNormal");
+                    if(inNormalAttrib != -1)
+                    {
+                        GL_CHECK(glEnableVertexAttribArray(inNormalAttrib));
+                        GL_CHECK(glVertexAttribPointer(inNormalAttrib,
+                                                       3,
+                                                       GL_FLOAT,
+                                                       GL_FALSE,
+                                                       sizeof(TexturedColoredVertex),
+                                                       (const GLvoid*) offsetof(TexturedColoredVertex, normal)));
+                    }
+                    
+                    int inColorAttrib = getShader()->getAttributeLocation("inColor");
+                    if(inColorAttrib != -1)
+                    {
+                        GL_CHECK(glEnableVertexAttribArray(inColorAttrib));
+                        GL_CHECK(glVertexAttribPointer(inColorAttrib,
+                                                       4,
+                                                       GL_FLOAT,
+                                                       GL_FALSE,
+                                                       sizeof(TexturedColoredVertex),
+                                                       (const GLvoid*) offsetof(TexturedColoredVertex, color)));
+                    }
+                    
+                    int inTangentAttrib = getShader()->getAttributeLocation("inTangent");
+                    if(inTangentAttrib != -1)
+                    {
+                        GL_CHECK(glEnableVertexAttribArray(inTangentAttrib));
+                        GL_CHECK(glVertexAttribPointer(inTangentAttrib,
+                                                       3,
+                                                       GL_FLOAT,
+                                                       GL_FALSE,
+                                                       sizeof(TexturedColoredVertex),
+                                                       (const GLvoid*) offsetof(TexturedColoredVertex, tangent)));
+                    }
+                    
+                    int inBiTangentAttrib = getShader()->getAttributeLocation("inBiTangent");
+                    if(inBiTangentAttrib != -1)
+                    {
+                        GL_CHECK(glEnableVertexAttribArray(inBiTangentAttrib));
+                        GL_CHECK(glVertexAttribPointer(inBiTangentAttrib,
+                                                       3,
+                                                       GL_FLOAT,
+                                                       GL_FALSE,
+                                                       sizeof(TexturedColoredVertex),
+                                                       (const GLvoid*) offsetof(TexturedColoredVertex, bitangent)));
+                    }
+                    
+                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+                }
             }
             
             {
