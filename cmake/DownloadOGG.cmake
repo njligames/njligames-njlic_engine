@@ -37,7 +37,9 @@ set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/pfzqns1g1rvby29/libogg_macos
 set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ndyode72ghyd606/libogg_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/jch02hzlxr00bs0/libogg_linux_Debug.tar.gz?dl=0")
+set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/m0ikljr1gnm3lat/libogg_linux_Release.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/m0ikljr1gnm3lat/libogg_linux_Release.tar.gz?dl=0")
+set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/jch02hzlxr00bs0/libogg_linux_Debug.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")

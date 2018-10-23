@@ -37,7 +37,9 @@ set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/vt266d0c4vh7gul/libimgui_mac
 set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/aanpjudfk73puwd/libimgui_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/1qi0ytr8f5nsbwf/libimgui_linux_Debug.tar.gz?dl=0")
+set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/x2y6hlq8mlpzlx5/libimgui_linux_Release.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/x2y6hlq8mlpzlx5/libimgui_linux_Release.tar.gz?dl=0")
+set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/1qi0ytr8f5nsbwf/libimgui_linux_Debug.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")

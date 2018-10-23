@@ -37,7 +37,9 @@ set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/4g1l8j99ep9oe7e/libvorbis_ma
 set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ej57zuqkxtvr1mr/libvorbis_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/9ph5xwk7ckrpnj6/libvorbis_linux_Debug.tar.gz?dl=0")
+set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/ean2y0u1zclih04/libvorbis_linux_Release.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/ean2y0u1zclih04/libvorbis_linux_Release.tar.gz?dl=0")
+set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/9ph5xwk7ckrpnj6/libvorbis_linux_Debug.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")

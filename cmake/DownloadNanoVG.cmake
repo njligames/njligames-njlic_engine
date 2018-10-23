@@ -37,7 +37,9 @@ set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/5b8ybus77znmozo/libnanovg_ma
 set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ngugpfrpostk73f/libnanovg_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/gcpxqr09rb736yd/libnanovg_linux_Debug.tar.gz?dl=0")
+set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/uopujyokr2ys50m/libnanovg_linux_Release.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/uopujyokr2ys50m/libnanovg_linux_Release.tar.gz?dl=0")
+set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/gcpxqr09rb736yd/libnanovg_linux_Debug.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")

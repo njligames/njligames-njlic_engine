@@ -37,7 +37,9 @@ set(MACOS_MINSIZEREL_URL "https://www.dropbox.com/s/j6wybgx7e0pd9u8/libimguizmo_
 set(MACOS_RELWITHDEBINFO_URL "https://www.dropbox.com/s/8j2b5meqjz4ivx8/libimguizmo_macos_RelWithDebugInfo.tar.gz?dl=0")
 
 set(LINUX_DEBUG_URL "https://www.dropbox.com/s/yh8g0qls2d2hssl/libImGuizmo_linux_Debug.tar.gz?dl=0")
+set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/rfincechrbpa6gb/libImGuizmo_linux_Release.tar.gz?dl=0")
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/rfincechrbpa6gb/libImGuizmo_linux_Release.tar.gz?dl=0")
+set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/yh8g0qls2d2hssl/libImGuizmo_linux_Debug.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")
