@@ -24,8 +24,12 @@ set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/a11ytiahp1uc1bk/
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/tyvufew5oo1vxm1/libvorbis_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/kbf62k5so9nydmz/libvorbis_appletv_Debug-appletvsimulator.tar.gz?dl=0")
+set(APPLETV_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/6e2aktv98qr1d7e/libvorbis_appletv_Release-appletvos.tar.gz?dl=0")
+set(APPLETV_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/mnl3flvt4hb0xfk/libvorbis_appletv_Release-appletvsimulator.tar.gz?dl=0")
 set(APPLETV_DEVICE_RELEASE_URL "https://www.dropbox.com/s/6e2aktv98qr1d7e/libvorbis_appletv_Release-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/mnl3flvt4hb0xfk/libvorbis_appletv_Release-appletvsimulator.tar.gz?dl=0")
+set(APPLETV_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/tyvufew5oo1vxm1/libvorbis_appletv_Debug-appletvos.tar.gz?dl=0")
+set(APPLETV_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/kbf62k5so9nydmz/libvorbis_appletv_Debug-appletvsimulator.tar.gz?dl=0")
 
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/afav2q67eujxnpn/libvorbis_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/9bs3e8ibm4w5bh8/libvorbis_macos_Release.tar.gz?dl=0")

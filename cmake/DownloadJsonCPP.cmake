@@ -24,8 +24,12 @@ set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/k4e3ow2lrru2ub3/
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/rk8iszobjo7n9fb/libjsoncpp_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/3sd1unj8b4fd6wp/libjsoncpp_appletv_Debug-appletvsimulator.tar.gz?dl=0")
+set(APPLETV_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/7bxo0j1cmxdz2pv/libjsoncpp_appletv_Release-appletvos.tar.gz?dl=0")
+set(APPLETV_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/xoiplxcr4my2yqn/libjsoncpp_appletv_Release-appletvsimulator.tar.gz?dl=0")
 set(APPLETV_DEVICE_RELEASE_URL "https://www.dropbox.com/s/7bxo0j1cmxdz2pv/libjsoncpp_appletv_Release-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/xoiplxcr4my2yqn/libjsoncpp_appletv_Release-appletvsimulator.tar.gz?dl=0")
+set(APPLETV_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/rk8iszobjo7n9fb/libjsoncpp_appletv_Debug-appletvos.tar.gz?dl=0")
+set(APPLETV_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/3sd1unj8b4fd6wp/libjsoncpp_appletv_Debug-appletvsimulator.tar.gz?dl=0")
 
 set(MACOS_DEBUG_URL "https://www.dropbox.com/s/4ho6qfymeuxor2r/libjsoncpp_macos_Debug.tar.gz?dl=0")
 set(MACOS_RELEASE_URL "https://www.dropbox.com/s/clvfj12666rtd7q/libjsoncpp_macos_Release.tar.gz?dl=0")
