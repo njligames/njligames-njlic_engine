@@ -8,7 +8,9 @@ set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/pzsq3rnvm8vu32q/libjson
 set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/zdd18y8ki31nhqf/libjsoncpp_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/zllvsm3esdte1ej/libjsoncpp_windows32_Debug.tar.gz?dl=0")
+set(WINDOWS32_MINSIZEREL_URL "https://www.dropbox.com/s/bje4gfkt1av5lyc/libjsoncpp_windows32_Release.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/bje4gfkt1av5lyc/libjsoncpp_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_RELWITHDEBINFO_URL "https://www.dropbox.com/s/zllvsm3esdte1ej/libjsoncpp_windows32_Debug.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/okhk20svjozc2y3/libjsoncpp_windows64_Debug.tar.gz?dl=0")
 set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/ce0iyr5133kkivz/libjsoncpp_windows64_Release.tar.gz?dl=0")
@@ -42,7 +44,9 @@ set(LINUX_RELEASE_URL "https://www.dropbox.com/s/mesfvmvrmz3hcqc/libjsoncpp_linu
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/57vn3yu9bx3acvm/libjsoncpp_linux_Debug.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
+set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")
+set(UNIX_RELWITHDEBINFO_URL "")
 
 set(ANDROID_arm64-v8a_DEBUG_URL     "https://www.dropbox.com/s/wcohdjkkj0zflp8/libjsoncpp_android_Debug-arm64-v8a.tar.gz?dl=0")
 set(ANDROID_armeabi-v7a_DEBUG_URL   "https://www.dropbox.com/s/1dld6ttli04qtlm/libjsoncpp_android_Debug-armeabi-v7a.tar.gz?dl=0")

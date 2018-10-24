@@ -8,10 +8,14 @@ set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/4fauf9xxoc9wlzf/libimgu
 set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/10sppxu9z4cmb19/libimguizmo_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/6cl359lyi6a2g08/libImGuizmo_windows32_Debug.tar.gz?dl=0")
+set(WINDOWS32_MINSIZEREL_URL "https://www.dropbox.com/s/tbkqhseagh0yd7r/libImGuizmo_windows32_Release.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/tbkqhseagh0yd7r/libImGuizmo_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_RELWITHDEBINFO_URL "https://www.dropbox.com/s/6cl359lyi6a2g08/libImGuizmo_windows32_Debug.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/vxnwmy7ag1wz774/libImGuizmo_windows64_Debug.tar.gz?dl=0")
+set(WINDOWS64_MINSIZEREL_URL "https://www.dropbox.com/s/ft5fgw13t14jzuz/libImGuizmo_windows64_Release.tar.gz?dl=0")
 set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/ft5fgw13t14jzuz/libImGuizmo_windows64_Release.tar.gz?dl=0")
+set(WINDOWS64_RELWITHDEBINFO_URL "https://www.dropbox.com/s/vxnwmy7ag1wz774/libImGuizmo_windows64_Debug.tar.gz?dl=0")
 
 set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/wjdyza4ftxrbwly/libimguizmo_ios_Debug-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/enkvlby04dkhjcn/libimguizmo_ios_Debug-iphonesimulator.tar.gz?dl=0")
@@ -42,7 +46,9 @@ set(LINUX_RELEASE_URL "https://www.dropbox.com/s/rfincechrbpa6gb/libImGuizmo_lin
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/yh8g0qls2d2hssl/libImGuizmo_linux_Debug.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
+set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")
+set(UNIX_RELWITHDEBINFO_URL "")
 
 set(ANDROID_arm64-v8a_DEBUG_URL     "https://www.dropbox.com/s/bsnpaquat6x9qax/libimguizmo_android_Debug-arm64-v8a.tar.gz?dl=0")
 set(ANDROID_armeabi-v7a_DEBUG_URL   "https://www.dropbox.com/s/ka7tj7e9q22hg08/libimguizmo_android_Debug-armeabi-v7a.tar.gz?dl=0")

@@ -8,10 +8,14 @@ set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/4dbbv73usjwr8ds/libbull
 set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/zoo7k57mookvzjh/libbullet3_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/b5vk1nlvrep7trz/libbullet3_windows32_Debug.tar.gz?dl=0")
+set(WINDOWS32_MINSIZEREL_URL "https://www.dropbox.com/s/c4czumv892vvyp0/libbullet3_windows32_Release.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/c4czumv892vvyp0/libbullet3_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_RELWITHDEBINFO_URL "https://www.dropbox.com/s/b5vk1nlvrep7trz/libbullet3_windows32_Debug.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/qjz523tgxwkrpdu/libbullet3_windows64_Debug.tar.gz?dl=0")
+set(WINDOWS64_MINSIZEREL_URL "https://www.dropbox.com/s/sogs5udmnef5mna/libbullet3_windows64_Release.tar.gz?dl=0")
 set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/sogs5udmnef5mna/libbullet3_windows64_Release.tar.gz?dl=0")
+set(WINDOWS64_RELWITHDEBINFO_URL "https://www.dropbox.com/s/qjz523tgxwkrpdu/libbullet3_windows64_Debug.tar.gz?dl=0")
 
 set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/94ouw2id4xwp1pz/libbullet3_ios_Debug-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/wtl6g4xqyy6c1o7/libbullet3_ios_Debug-iphonesimulator.tar.gz?dl=0")

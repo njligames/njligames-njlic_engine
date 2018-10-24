@@ -8,10 +8,14 @@ set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/kp0iu5ln7zbdz2i/libnano
 set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ye6lepusekd8gad/libnanovg_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/sion6fqywf4yq6m/libnanovg_windows32_Debug.tar.gz?dl=0")
+set(WINDOWS32_MINSIZEREL_URL "https://www.dropbox.com/s/avi8ef7cdex495c/libnanovg_windows32_Release.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/avi8ef7cdex495c/libnanovg_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_RELWITHDEBINFO_URL "https://www.dropbox.com/s/sion6fqywf4yq6m/libnanovg_windows32_Debug.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/vkos1qkpyqgl1x5/libnanovg_windows64_Debug.tar.gz?dl=0")
+set(WINDOWS64_MINSIZEREL_URL "https://www.dropbox.com/s/qb47gnxeiz9i0r5/libnanovg_windows64_Release.tar.gz?dl=0")
 set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/qb47gnxeiz9i0r5/libnanovg_windows64_Release.tar.gz?dl=0")
+set(WINDOWS64_RELWITHDEBINFO_URL "https://www.dropbox.com/s/vkos1qkpyqgl1x5/libnanovg_windows64_Debug.tar.gz?dl=0")
 
 set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/s7wp11h2rfxrg04/libnanovg_ios_Debug-iphoneos.tar.gz?dl=0")
 set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/5ajztcolrzut6uk/libnanovg_ios_Debug-iphonesimulator.tar.gz?dl=0")
@@ -42,7 +46,9 @@ set(LINUX_RELEASE_URL "https://www.dropbox.com/s/uopujyokr2ys50m/libnanovg_linux
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/gcpxqr09rb736yd/libnanovg_linux_Debug.tar.gz?dl=0")
 
 set(UNIX_DEBUG_URL "")
+set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")
+set(UNIX_RELWITHDEBINFO_URL "")
 
 set(ANDROID_arm64-v8a_DEBUG_URL     "https://www.dropbox.com/s/1dvwem95i9hbkrk/libnanovg_android_Debug-arm64-v8a.tar.gz?dl=0")
 set(ANDROID_armeabi-v7a_DEBUG_URL   "https://www.dropbox.com/s/ab89wbwbtoswnvc/libnanovg_android_Debug-armeabi-v7a.tar.gz?dl=0")

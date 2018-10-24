@@ -8,7 +8,9 @@ set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/kd1zsc1v73pvffc/libogg_
 set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/svq7011ccp6fe2j/libogg_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/7h5jygomq7xcyc1/libogg_windows32_Debug.tar.gz?dl=0")
+set(WINDOWS32_MINSIZEREL_URL "https://www.dropbox.com/s/0p7srknrepbltiq/libogg_windows32_Release.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/0p7srknrepbltiq/libogg_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_RELWITHDEBINFO_URL "https://www.dropbox.com/s/7h5jygomq7xcyc1/libogg_windows32_Debug.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/x7ult88qm3g3cgv/libogg_windows64_Debug.tar.gz?dl=0")
 set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/8969b6opmrlam3f/libogg_windows64_Release.tar.gz?dl=0")

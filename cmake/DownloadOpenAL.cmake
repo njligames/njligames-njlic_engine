@@ -8,10 +8,14 @@ set(EMSCRIPTEN_MINSIZEREL_URL "")
 set(EMSCRIPTEN_RELWITHDEBINFO_URL "")
 
 set(WINDOWS32_DEBUG_URL "https://www.dropbox.com/s/hrsjgmc7nxh0iaz/libopenal_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_MINSIZEREL_URL "https://www.dropbox.com/s/hrsjgmc7nxh0iaz/libopenal_windows32_Release.tar.gz?dl=0")
 set(WINDOWS32_RELEASE_URL "https://www.dropbox.com/s/hrsjgmc7nxh0iaz/libopenal_windows32_Release.tar.gz?dl=0")
+set(WINDOWS32_RELWITHDEBINFO_URL "https://www.dropbox.com/s/hrsjgmc7nxh0iaz/libopenal_windows32_Release.tar.gz?dl=0")
 
 set(WINDOWS64_DEBUG_URL "https://www.dropbox.com/s/esl9ch6nw0v71uw/libopenal_windows64_Release.tar.gz?dl=0")
+set(WINDOWS64_MINSIZEREL_URL "https://www.dropbox.com/s/esl9ch6nw0v71uw/libopenal_windows64_Release.tar.gz?dl=0")
 set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/esl9ch6nw0v71uw/libopenal_windows64_Release.tar.gz?dl=0")
+set(WINDOWS64_RELWITHDEBINFO_URL "https://www.dropbox.com/s/esl9ch6nw0v71uw/libopenal_windows64_Release.tar.gz?dl=0")
 
 set(IOS_DEVICE_DEBUG_URL "")
 set(IOS_SIMULATOR_DEBUG_URL "")
@@ -42,7 +46,9 @@ set(LINUX_RELEASE_URL "")
 set(LINUX_RELWITHDEBINFO_URL "")
 
 set(UNIX_DEBUG_URL "")
+set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")
+set(UNIX_RELWITHDEBINFO_URL "")
 
 set(ANDROID_arm64-v8a_DEBUG_URL     "https://www.dropbox.com/s/vhl9iay1611yf62/libopenal_android_Release-arm64-v8a.tar.gz?dl=0")
 set(ANDROID_armeabi-v7a_DEBUG_URL   "https://www.dropbox.com/s/kpemdgz24fyei9y/libopenal_android_Release-armeabi-v7a.tar.gz?dl=0")
