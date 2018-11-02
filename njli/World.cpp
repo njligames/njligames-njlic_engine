@@ -1718,8 +1718,8 @@ namespace njli
                 }
                 else
                 {
-                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                "Debug draw is enabled without a physics World.");
+//                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+//                                "Debug draw is enabled without a physics World.");
                 }
             }
             else

@@ -24,16 +24,8 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
-extern void CheckOpenGLError(const char *stmt, const char *fname, int line);
-
-#ifndef GL_CHECK
-#define GL_CHECK(stmt) do { \
-stmt; \
-CheckOpenGLError(#stmt, __FILE__, __LINE__); \
-} while(0);
-//#else
-//    #define GL_CHECK(stmt) stmt
-#endif
+#include "Image.h"
+#include "Material.h"
 
 namespace njli
 {
@@ -59,30 +51,13 @@ namespace njli
     m_ModelViewBufferChanged(true),
     m_ShaderChanged(true),
     
-    
-    
-    
-    
-    m_HasPositionAttrib(false),
-    m_HasTexCoordAttrib(false),
-    m_HasNormalAttrib(false),
-    m_HasColorAttrib(false),
-    m_HasTangentAttrib(false),
-    m_HasBiTangentAttrib(false),
-    
-    
-    
-    
-    
-    
-    
     m_RimLightColor(0.1f, 0.1f, 0.1f),
     m_RimLightStart(0.0f),
     m_RimLightEnd(1.0f),
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -96,12 +71,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -131,24 +108,13 @@ namespace njli
     m_ModelViewBufferChanged(true),
     m_ShaderChanged(true),
     
-    
-    
-    
-    
-    m_HasPositionAttrib(false),
-    m_HasTexCoordAttrib(false),
-    m_HasNormalAttrib(false),
-    m_HasColorAttrib(false),
-    m_HasTangentAttrib(false),
-    m_HasBiTangentAttrib(false),
-    
     m_RimLightColor(0.1f, 0.1f, 0.1f),
     m_RimLightStart(0.0f),
     m_RimLightEnd(1.0f),
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -162,12 +128,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -197,24 +165,13 @@ namespace njli
     m_ModelViewBufferChanged(true),
     m_ShaderChanged(true),
     
-    
-    
-    
-    
-    m_HasPositionAttrib(false),
-    m_HasTexCoordAttrib(false),
-    m_HasNormalAttrib(false),
-    m_HasColorAttrib(false),
-    m_HasTangentAttrib(false),
-    m_HasBiTangentAttrib(false),
-    
     m_RimLightColor(0.1f, 0.1f, 0.1f),
     m_RimLightStart(0.0f),
     m_RimLightEnd(1.0f),
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -228,12 +185,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -556,7 +515,7 @@ namespace njli
     {
         assert(shader);
         
-        setShader(shader);
+        setShaderProgram(shader);
         
         m_NumberInstances = numInstances;
         m_NumberSubDivisions = numSubDivisions;
@@ -568,187 +527,151 @@ namespace njli
         loadData();
         
         assert(m_VertexArray == 0);
-        
-        GL_CHECK(glGenVertexArraysOES(1, &m_VertexArray));
-        GL_CHECK(glBindVertexArrayOES(m_VertexArray));
+#if defined(__APPLE__)
+        glGenVertexArraysAPPLE(1, &m_VertexArray);
+        glBindVertexArrayAPPLE(m_VertexArray);
+#else
+        glGenVertexArrays(1, &m_VertexArray);
+        glBindVertexArray(m_VertexArray);
+#endif
         {
             {
+                assert(m_ModelViewBuffer == 0);
+                glGenBuffers(1, &m_ModelViewBuffer);
+                glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer);
+                glBufferData(GL_ARRAY_BUFFER, getModelViewTransformArrayBufferSize() * subdivisionBufferSize(), getModelViewTransformArrayBufferPtr(), GL_STREAM_DRAW);
                 int inTransformAttrib = getShader()->getAttributeLocation("inTransform");
-                if(inTransformAttrib != -1)
-                {
-                    assert(m_ModelViewBuffer == 0);
-                    GL_CHECK(glGenBuffers(1, &m_ModelViewBuffer));
-                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer));
-                    GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getModelViewTransformArrayBufferSize() * subdivisionBufferSize(), getModelViewTransformArrayBufferPtr(), GL_STREAM_DRAW));
-                    GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 0));
-                    GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 1));
-                    GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 2));
-                    GL_CHECK(glEnableVertexAttribArray(inTransformAttrib + 3));
-                    GL_CHECK(glVertexAttribPointer(inTransformAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0));
-                    GL_CHECK(glVertexAttribPointer(inTransformAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16));
-                    GL_CHECK(glVertexAttribPointer(inTransformAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32));
-                    GL_CHECK(glVertexAttribPointer(inTransformAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48));
-                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
-                }
+                glEnableVertexAttribArray(inTransformAttrib + 0);
+                glEnableVertexAttribArray(inTransformAttrib + 1);
+                glEnableVertexAttribArray(inTransformAttrib + 2);
+                glEnableVertexAttribArray(inTransformAttrib + 3);
+                glVertexAttribPointer(inTransformAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0);
+                glVertexAttribPointer(inTransformAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16);
+                glVertexAttribPointer(inTransformAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32);
+                glVertexAttribPointer(inTransformAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48);
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
             
             {
+                assert(m_NormalMatrixTransformBuffer == 0);
+                glGenBuffers(1, &m_NormalMatrixTransformBuffer);
+                glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer);
+                glBufferData(GL_ARRAY_BUFFER, getNormalMatrixTransformArrayBufferSize() * subdivisionBufferSize(), getNormalMatrixTransformArrayBufferPtr(), GL_STREAM_DRAW);
                 int inNormalMatrixAttrib = getShader()->getAttributeLocation("inNormalMatrix");
-                if(inNormalMatrixAttrib != -1)
-                {
-                    assert(m_NormalMatrixTransformBuffer == 0);
-                    GL_CHECK(glGenBuffers(1, &m_NormalMatrixTransformBuffer));
-                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer));
-                    GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getNormalMatrixTransformArrayBufferSize() * subdivisionBufferSize(), getNormalMatrixTransformArrayBufferPtr(), GL_STREAM_DRAW));
-                    
-                    GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 0));
-                    GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 1));
-                    GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 2));
-                    GL_CHECK(glEnableVertexAttribArray(inNormalMatrixAttrib + 3));
-                    GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0));
-                    GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16));
-                    GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32));
-                    GL_CHECK(glVertexAttribPointer(inNormalMatrixAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48));
-                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
-                }
+                glEnableVertexAttribArray(inNormalMatrixAttrib + 0);
+                glEnableVertexAttribArray(inNormalMatrixAttrib + 1);
+                glEnableVertexAttribArray(inNormalMatrixAttrib + 2);
+                glEnableVertexAttribArray(inNormalMatrixAttrib + 3);
+                glVertexAttribPointer(inNormalMatrixAttrib + 0, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)0);
+                glVertexAttribPointer(inNormalMatrixAttrib + 1, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)16);
+                glVertexAttribPointer(inNormalMatrixAttrib + 2, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)32);
+                glVertexAttribPointer(inNormalMatrixAttrib + 3, 4, GL_FLOAT, 0, sizeof(GLfloat) * 16, (GLvoid*)48);
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
             
             {
                 assert(m_VerticesBuffer == 0);
-                GL_CHECK(glGenBuffers(1, &m_VerticesBuffer));
-                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer));
-                GL_CHECK(glBufferData(GL_ARRAY_BUFFER, getVertexArrayBufferSize() * subdivisionBufferSize(), getVertexArrayBufferPtr(), GL_STREAM_DRAW));
+                glGenBuffers(1, &m_VerticesBuffer);
+                glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer);
+                glBufferData(GL_ARRAY_BUFFER, getVertexArrayBufferSize() * subdivisionBufferSize(), getVertexArrayBufferPtr(), GL_STREAM_DRAW);
+                int inPositionAttrib = getShader()->getAttributeLocation("inPosition");
+                int inColorAttrib = getShader()->getAttributeLocation("inColor");
+                int inNormalAttrib = getShader()->getAttributeLocation("inNormal");
+                int inTexCoordAttrib = getShader()->getAttributeLocation("inTexCoord");
                 
-                {
-                    int inPositionAttrib = getShader()->getAttributeLocation("inPosition");
-                    m_HasPositionAttrib = false;
-                    if(inPositionAttrib != -1)
-                    {
-                        GL_CHECK(glEnableVertexAttribArray(inPositionAttrib));
-                        GL_CHECK(glVertexAttribPointer(inPositionAttrib,
-                                                       3,
-                                                       GL_FLOAT,
-                                                       GL_FALSE,
-                                                       sizeof(TexturedColoredVertex),
-                                                       (const GLvoid*) offsetof(TexturedColoredVertex, vertex)));
-                        m_HasPositionAttrib = true;
-                    }
-                    
-                    int inTexCoordAttrib = getShader()->getAttributeLocation("inTexCoord");
-                    m_HasTexCoordAttrib = false;
-                    if(inTexCoordAttrib != -1)
-                    {
-                        GL_CHECK(glEnableVertexAttribArray(inTexCoordAttrib));
-                        GL_CHECK(glVertexAttribPointer(inTexCoordAttrib,
-                                                       2,
-                                                       GL_FLOAT,
-                                                       GL_FALSE,
-                                                       sizeof(TexturedColoredVertex),
-                                                       (const GLvoid*) offsetof(TexturedColoredVertex, texture)));
-                        m_HasTexCoordAttrib = true;
-                    }
-                    
-                    int inNormalAttrib = getShader()->getAttributeLocation("inNormal");
-                    m_HasNormalAttrib = false;
-                    if(inNormalAttrib != -1)
-                    {
-                        GL_CHECK(glEnableVertexAttribArray(inNormalAttrib));
-                        GL_CHECK(glVertexAttribPointer(inNormalAttrib,
-                                                       3,
-                                                       GL_FLOAT,
-                                                       GL_FALSE,
-                                                       sizeof(TexturedColoredVertex),
-                                                       (const GLvoid*) offsetof(TexturedColoredVertex, normal)));
-                        m_HasNormalAttrib = true;
-                    }
-                    
-                    int inColorAttrib = getShader()->getAttributeLocation("inColor");
-                    m_HasColorAttrib = false;
-                    if(inColorAttrib != -1)
-                    {
-                        GL_CHECK(glEnableVertexAttribArray(inColorAttrib));
-                        GL_CHECK(glVertexAttribPointer(inColorAttrib,
-                                                       4,
-                                                       GL_FLOAT,
-                                                       GL_FALSE,
-                                                       sizeof(TexturedColoredVertex),
-                                                       (const GLvoid*) offsetof(TexturedColoredVertex, color)));
-                        m_HasColorAttrib = true;
-                    }
-                    
-                    int inTangentAttrib = getShader()->getAttributeLocation("inTangent");
-                    m_HasTangentAttrib = false;
-                    if(inTangentAttrib != -1)
-                    {
-                        GL_CHECK(glEnableVertexAttribArray(inTangentAttrib));
-                        GL_CHECK(glVertexAttribPointer(inTangentAttrib,
-                                                       3,
-                                                       GL_FLOAT,
-                                                       GL_FALSE,
-                                                       sizeof(TexturedColoredVertex),
-                                                       (const GLvoid*) offsetof(TexturedColoredVertex, tangent)));
-                        m_HasTangentAttrib = true;
-                    }
-                    
-                    int inBiTangentAttrib = getShader()->getAttributeLocation("inBiTangent");
-                    m_HasBiTangentAttrib = false;
-                    if(inBiTangentAttrib != -1)
-                    {
-                        GL_CHECK(glEnableVertexAttribArray(inBiTangentAttrib));
-                        GL_CHECK(glVertexAttribPointer(inBiTangentAttrib,
-                                                       3,
-                                                       GL_FLOAT,
-                                                       GL_FALSE,
-                                                       sizeof(TexturedColoredVertex),
-                                                       (const GLvoid*) offsetof(TexturedColoredVertex, bitangent)));
-                        m_HasBiTangentAttrib = true;
-                    }
-                    
-                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
-                }
+                int inTangentAttrib = getShader()->getAttributeLocation("inTangent");
+                int inBiTangentAttrib = getShader()->getAttributeLocation("inBiTangent");
+                
+                glEnableVertexAttribArray(inPositionAttrib);
+                glVertexAttribPointer(inPositionAttrib,
+                                      3,
+                                      GL_FLOAT,
+                                      GL_FALSE,
+                                      sizeof(TexturedColoredVertex),
+                                      (const GLvoid*) offsetof(TexturedColoredVertex, vertex));
+                
+                
+                glEnableVertexAttribArray(inTexCoordAttrib);
+                glVertexAttribPointer(inTexCoordAttrib,
+                                      2,
+                                      GL_FLOAT,
+                                      GL_FALSE,
+                                      sizeof(TexturedColoredVertex),
+                                      (const GLvoid*) offsetof(TexturedColoredVertex, texture));
+                
+                glEnableVertexAttribArray(inNormalAttrib);
+                glVertexAttribPointer(inNormalAttrib,
+                                      3,
+                                      GL_FLOAT,
+                                      GL_FALSE,
+                                      sizeof(TexturedColoredVertex),
+                                      (const GLvoid*) offsetof(TexturedColoredVertex, normal));
+                
+                glEnableVertexAttribArray(inColorAttrib);
+                glVertexAttribPointer(inColorAttrib,
+                                      4,
+                                      GL_FLOAT,
+                                      GL_FALSE,
+                                      sizeof(TexturedColoredVertex),
+                                      (const GLvoid*) offsetof(TexturedColoredVertex, color));
+                
+                glEnableVertexAttribArray(inTangentAttrib);
+                glVertexAttribPointer(inTangentAttrib,
+                                      3,
+                                      GL_FLOAT,
+                                      GL_FALSE,
+                                      sizeof(TexturedColoredVertex),
+                                      (const GLvoid*) offsetof(TexturedColoredVertex, tangent));
+                
+                glEnableVertexAttribArray(inBiTangentAttrib);
+                glVertexAttribPointer(inBiTangentAttrib,
+                                      3,
+                                      GL_FLOAT,
+                                      GL_FALSE,
+                                      sizeof(TexturedColoredVertex),
+                                      (const GLvoid*) offsetof(TexturedColoredVertex, bitangent));
+                
+                glBindBuffer(GL_ARRAY_BUFFER, 0);
             }
             
             {
-                GL_CHECK(glGenBuffers(1, &m_IndexBuffer));
-                GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer));
-                GL_CHECK(glBufferData(GL_ELEMENT_ARRAY_BUFFER, getElementArrayBufferSize() * subdivisionBufferSize(), getElementArrayBufferPtr(), GL_STREAM_DRAW));
-                GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+                glGenBuffers(1, &m_IndexBuffer);
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, getElementArrayBufferSize() * subdivisionBufferSize(), getElementArrayBufferPtr(), GL_STREAM_DRAW);
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
         }
-        
-        GL_CHECK(glBindVertexArrayOES(0));
+#if defined(__APPLE__)
+        glBindVertexArrayAPPLE(0);
+#else
+        glBindVertexArray(0);
+#endif
     }
     
     void Geometry::unLoad()
     {
         if (m_IndexBuffer)
-        {
-            GL_CHECK(glDeleteBuffers(1, &m_IndexBuffer));
-        }
+            glDeleteBuffers(1, &m_IndexBuffer);
         m_IndexBuffer = 0;
         
         if (m_VerticesBuffer)
-        {
-            GL_CHECK(glDeleteBuffers(1, &m_VerticesBuffer));
-        }
+            glDeleteBuffers(1, &m_VerticesBuffer);
         m_VerticesBuffer = 0;
         
         if (m_NormalMatrixTransformBuffer)
-        {
-            GL_CHECK(glDeleteBuffers(1, &m_NormalMatrixTransformBuffer));
-        }
+            glDeleteBuffers(1, &m_NormalMatrixTransformBuffer);
         m_NormalMatrixTransformBuffer = 0;
         
         if (m_ModelViewBuffer)
-        {
-            GL_CHECK(glDeleteBuffers(1, &m_ModelViewBuffer));
-        }
+            glDeleteBuffers(1, &m_ModelViewBuffer);
         m_ModelViewBuffer = 0;
         
         if (m_VertexArray)
-        {
-            GL_CHECK(glDeleteVertexArraysOES(1, &m_VertexArray));
-        }
+#if defined(__APPLE__)
+            glDeleteVertexArraysAPPLE(1, &m_VertexArray);
+#else
+            glDeleteVertexArrays(1, &m_VertexArray);
+#endif
         m_VertexArray = 0;
     }
     
@@ -762,7 +685,7 @@ namespace njli
         return m_Shader;
     }
     
-    void Geometry::setShader(ShaderProgram *const shader)
+    void Geometry::setShaderProgram(ShaderProgram *const shader)
     {
         m_Shader = shader;
         m_ShaderChanged = true;
@@ -774,10 +697,8 @@ namespace njli
         if(shader && camera)
         {
             shader->use();
-            
-            bool cameraChanged = !(camera->getModelView() == camera->getParent()->getWorldTransform());
-            
-            camera->render(shader, m_ShaderChanged || true);
+            m_ShaderChanged = true;
+            camera->render(shader, m_ShaderChanged);
             
             struct LightSourceParameters
             {
@@ -804,6 +725,11 @@ namespace njli
                 float shininess;
             };
             
+            Material *material = getMaterial();
+            if(material)
+            {
+                material->bind(shader);
+            }
             //            glActiveTexture(GL_TEXTURE0 + 0);
             //            glBindTexture(GL_TEXTURE_2D, m_AmbientTexture);
             //            shader->setUniformValue("tAmbientColor", m_AmbientTexture);
@@ -820,80 +746,169 @@ namespace njli
             //            glBindTexture(GL_TEXTURE_2D, m_SpecularTexture);
             //            shader->setUniformValue("tSpecularColor", m_SpecularTexture);
             
-            shader->setUniformValue("RimLightColor", getRimLightColor());
-            shader->setUniformValue("RimLightStart", getRimLightStart());
-            shader->setUniformValue("RimLightEnd", getRimLightEnd());
-            shader->setUniformValue("RimLightCoefficient", getRimLightCoefficient());
+            if(!shader->setUniformValue("RimLightColor", getRimLightColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightColor\n");
+            }
+            if(!shader->setUniformValue("RimLightStart", getRimLightStart()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightStart\n");
+            }
+            if(!shader->setUniformValue("RimLightEnd", getRimLightEnd()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightEnd\n");
+            }
+            if(!shader->setUniformValue("RimLightCoefficient", getRimLightCoefficient()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightCoefficient\n");
+            }
             
-            shader->setUniformValue("LightSourceAmbientColor", getLightSourceAmbientColor());
-            shader->setUniformValue("LightSourceDiffuseColor", getLightSourceDiffuseColor());
-            shader->setUniformValue("LightSourceSpecularColor", getLightSourceSpecularColor());
+            if(!shader->setUniformValue("LightSourceAmbientColor", getLightSourceAmbientColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceAmbientColor\n");
+            }
+            if(!shader->setUniformValue("LightSourceDiffuseColor", getLightSourceDiffuseColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceDiffuseColor\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpecularColor", getLightSourceSpecularColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpecularColor\n");
+            }
             
-            shader->setUniformValue("LightSourcePosition_worldspace", getLightSourcePosition());
+            if(!shader->setUniformValue("LightSourcePosition_worldspace", getLightSourcePosition()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourcePosition_worldspace\n");
+            }
             
-            shader->setUniformValue("LightSourceSpotDirection", getLightSourceSpotDirection());
-            shader->setUniformValue("LightSourceSpotExponent", getLightSourceSpotExponent());
+            if(!shader->setUniformValue("LightSourceSpotDirection", getLightSourceSpotDirection()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotDirection\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpotExponent", getLightSourceSpotExponent()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotExponent\n");
+            }
             
-            shader->setUniformValue("LightSourceSpotCutoff", getLightSourceSpotCutoff());
-            shader->setUniformValue("LightSourceSpotCosCutoff", getLightSourceSpotCosCutoff());
+            if(!shader->setUniformValue("LightSourceSpotCutoff", getLightSourceSpotCutoff()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotCutoff\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpotCosCutoff", getLightSourceSpotCosCutoff()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotCosCutoff\n");
+            }
             
-            shader->setUniformValue("LightSourceConstantAttenuation", getLightSourceConstantAttenuation());
-            shader->setUniformValue("LightSourceLinearAttenuation", getLightSourceLinearAttenuation());
-            shader->setUniformValue("LightSourceQuadraticAttenuation", getLightSourceQuadraticAttenuation());
+            if(!shader->setUniformValue("LightSourceConstantAttenuation", getLightSourceConstantAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceConstantAttenuation\n");
+            }
+            if(!shader->setUniformValue("LightSourceLinearAttenuation", getLightSourceLinearAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceLinearAttenuation\n");
+            }
+            if(!shader->setUniformValue("LightSourceQuadraticAttenuation", getLightSourceQuadraticAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceQuadraticAttenuation\n");
+            }
             
-            shader->setUniformValue("LightAmbientColor", getLightAmbientColor());
+            if(!shader->setUniformValue("LightAmbientColor", getLightAmbientColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightAmbientColor\n");
+            }
             
-            shader->setUniformValue("MaterialShininess", getMaterialShininess());
+            if(!shader->setUniformValue("MaterialShininess", getMaterialShininess()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set MaterialShininess\n");
+            }
             
-            shader->setUniformValue("FogMaxDistance", getFogMaxDistance());
-            shader->setUniformValue("FogMinDistance", getFogMinDistance());
-            shader->setUniformValue("FogColor", getFogColor());
-            shader->setUniformValue("FogDensity", getFogDensity());
+            if(!shader->setUniformValue("FogMaxDistance", getFogMaxDistance()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogMaxDistance\n");
+            }
+            if(!shader->setUniformValue("FogMinDistance", getFogMinDistance()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogMinDistance\n");
+            }
+            if(!shader->setUniformValue("FogColor", getFogColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogColor\n");
+            }
+            if(!shader->setUniformValue("FogDensity", getFogDensity()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogDensity\n");
+            }
             
             m_ShaderChanged = false;
-     
-            GL_CHECK(glBindVertexArrayOES(m_VertexArray));
+            
+#if defined(__APPLE__)
+            glBindVertexArrayAPPLE(m_VertexArray);
+#else
+            glBindVertexArray(m_VertexArray);
+#endif
             
             if(isModelViewBufferChanged())
             {
-                GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer));
-                GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, 0, getModelViewTransformArrayBufferSize(), getModelViewTransformArrayBufferPtr()));
+                glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, getModelViewTransformArrayBufferSize(), getModelViewTransformArrayBufferPtr());
                 enableModelViewBufferChanged(false);
             }
             
             if(isNormalMatrixBufferChanged())
             {
-                if(m_HasNormalAttrib)
-                {
-                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer));
-                    GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, 0, getNormalMatrixTransformArrayBufferSize(), getNormalMatrixTransformArrayBufferPtr()));
-                }
+                glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, getNormalMatrixTransformArrayBufferSize(), getNormalMatrixTransformArrayBufferPtr());
                 enableNormalMatrixBufferChanged(false);
             }
             
             if(isVertexArrayBufferChanged())
             {
-                if(m_HasPositionAttrib)
-                {
-                    GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer));
-                    GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, 0, getVertexArrayBufferSize(), getVertexArrayBufferPtr()));
-                }
-                
+                glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, getVertexArrayBufferSize(), getVertexArrayBufferPtr());
                 enableVertexArrayBufferChanged(false);
             }
             
             if(isIndiceArrayBufferChanged())
             {
-                GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer));
-                GL_CHECK(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, getElementArrayBufferSize(), getElementArrayBufferPtr()));
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+                glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, getElementArrayBufferSize(), getElementArrayBufferPtr());
                 enableIndiceArrayBufferChanged(false);
             }
             
-            GL_CHECK(glDrawElements(GL_TRIANGLES, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0));
+            glDrawElements(GL_TRIANGLES, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             //            glDrawElements(GL_LINE_LOOP, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             //            glDrawElements(GL_POINTS, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
-     
-            GL_CHECK(glBindVertexArrayOES(0));
+            
+#if defined(__APPLE__)
+            glBindVertexArrayAPPLE(0);
+#else
+            glBindVertexArray(0);
+#endif
+            if (material)
+            {
+                material->unBind();
+            }
         }
     }
     
@@ -1220,6 +1235,41 @@ namespace njli
     }
     
     
+    void Geometry::hide(Camera *camera)
+    {
+    //        SDL_assert(camera);
+        if (camera)
+        {
+            m_RenderCategory = (njliBitCategories)Off(m_RenderCategory, camera->getRenderCategory());
+        }
+        else
+        {
+            SDL_Log("Hiding geometry with a NULL camera");
+        }
+    }
+
+    void Geometry::show(Camera *camera)
+    {
+        SDL_assert(camera);
+        
+        if (camera)
+        {
+            m_RenderCategory = (njliBitCategories)On(m_RenderCategory, camera->getRenderCategory());
+        }
+        else
+        {
+            SDL_Log("Hiding geometry with a NULL camera");
+        }
+
+        
+    }
+
+    bool Geometry::isHidden(Camera *camera) const
+    {
+        return camera->hasRenderCategory(m_RenderCategory);
+    }
+    
+    
     
     const void *Geometry::getModelViewTransformArrayBufferPtr()const
     {
@@ -1503,6 +1553,65 @@ namespace njli
             
         }
         return transform;
+    }
+    
+    void Geometry::setMaterial(Material *material, Image *img)
+    {
+        SDL_assert(material != NULL);
+        
+        removeMaterial();
+        
+        m_Material = material;
+        
+        addChild(m_Material);
+        
+        if (img)
+        {
+            bool hasAlpha = img->getNumberOfComponents() == 4 ||
+            img->getNumberOfComponents() == 2;
+            bool premultiplied = img->getNumberOfComponents() != 1 && hasAlpha;
+            
+            m_OpacityModifyRGB = false;
+            if (m_blendFuncSource == GL_ONE &&
+                m_blendFuncDestination == GL_ONE_MINUS_SRC_ALPHA)
+            {
+                if (premultiplied)
+                m_OpacityModifyRGB = true;
+                else
+                {
+                    m_blendFuncSource = GL_SRC_ALPHA;
+                    m_blendFuncDestination = GL_ONE_MINUS_SRC_ALPHA;
+                }
+            }
+            
+            if (premultiplied)
+            img->preMultiplyAlpha();
+        }
+    }
+    
+    void Geometry::removeMaterial()
+    {
+        if (getMaterial())
+        {
+            removeChild(getMaterial());
+        }
+        
+        m_Material = NULL;
+    }
+    
+    Material *Geometry::getMaterial()
+    {
+        s32 idx = getChildIndex(m_Material);
+        if (idx != -1)
+        return dynamic_cast<Material *>(getChild(idx));
+        return NULL;
+    }
+    const Material *Geometry::getMaterial() const
+    {
+        s32 idx = getChildIndex(m_Material);
+        if (idx != -1)
+        return dynamic_cast<const Material *>(getChild(idx));
+        return NULL;
     }
 }
 

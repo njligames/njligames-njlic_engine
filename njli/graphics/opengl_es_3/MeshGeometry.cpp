@@ -426,12 +426,163 @@ namespace njli
         return ret;
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    void MeshGeometry::setVertexPosition(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx)
+    {
+        if(instanceIdx < maxNumberOfInstances() &&
+           verticeIdx < numberOfVertices())
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].vertex = v;
+        }
+        
+//        for (unsigned long vertexIndex = 0;
+//             vertexIndex < numberOfVertices();
+//             vertexIndex++)
+//        {
+//            m_VertexData[offset + verticeIdx].color = c;
+//        }
+
+        
+//        long index = getGeometryIndex(node);
+//
+//        if(index >= 0 && m_VertexData)
+//        {
+//            bool hidden = node->isHiddenGeometry();
+//
+//            btVector4 c(node->getColorBase());
+//
+//            if(hidden)
+//            c.setW(0.0f);
+//
+//            unsigned long offset = index * numberOfVertices();
+//            for (unsigned long vertexIndex = 0;
+//                 vertexIndex < numberOfVertices();
+//                 vertexIndex++)
+//            {
+//                m_VertexData[offset + vertexIndex].color = c;
+//            }
+//            enableVertexArrayBufferChanged(true);
+//        }
+//
+//
+//
+//        btVector3 ret(0,0,0);
+//
+//        if(instanceIdx < maxNumberOfInstances() &&
+//           verticeIdx < numberOfVertices())
+//        {
+//            GLsizei idx = (instanceIdx * numberOfVertices());
+//            idx += (verticeIdx * 1);
+//
+//            memcpy(m_triangleBuffer,
+//                   m_VertexData + idx,
+//                   sizeof(TexturedColoredVertex) * 12);
+//
+//            ret = m_triangleBuffer[0].vertex;
+//        }
+//
+//        return ret;
+    }
+    
+    void MeshGeometry::setVertexColor(const btVector4 &v, const GLsizei instanceIdx, const GLsizei verticeIdx)
+    {
+        if(instanceIdx < maxNumberOfInstances() &&
+           verticeIdx < numberOfVertices())
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].color = v;
+        }
+    }
+    
+    void MeshGeometry::setVertexTexture(const btVector2 &v, const GLsizei instanceIdx, const GLsizei verticeIdx)
+    {
+        if(instanceIdx < maxNumberOfInstances() &&
+           verticeIdx < numberOfVertices())
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].texture = v;
+        }
+    }
+    
+    void MeshGeometry::setVertexNormal(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx)
+    {
+        if(instanceIdx < maxNumberOfInstances() &&
+           verticeIdx < numberOfVertices())
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].normal = v;
+        }
+    }
+    
+    void MeshGeometry::setVertexTangent(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx)
+    {
+        if(instanceIdx < maxNumberOfInstances() &&
+           verticeIdx < numberOfVertices())
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].tangent = v;
+        }
+    }
+    
+    void MeshGeometry::setVertexBitangent(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx)
+    {
+        if(instanceIdx < maxNumberOfInstances() &&
+           verticeIdx < numberOfVertices())
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].bitangent = v;
+        }
+    }
+    
+    TexturedColoredVertex MeshGeometry::getVertex(const GLsizei instanceIdx, const GLsizei verticeIdx)const
+    {
+        TexturedColoredVertex ret;
+        
+        if(instanceIdx < maxNumberOfInstances() &&
+           verticeIdx < numberOfVertices())
+        {
+            GLsizei idx = (instanceIdx * numberOfVertices());
+            idx += (verticeIdx * 1);
+            
+            memcpy(m_triangleBuffer,
+                   m_VertexData + idx,
+                   sizeof(TexturedColoredVertex) * 12);
+            
+            ret = m_triangleBuffer[0];
+        }
+        
+        return ret;
+    }
+    
+    void MeshGeometry::setVertex(const TexturedColoredVertex &tcv, const GLsizei instanceIdx, const GLsizei verticeIdx)
+    {
+        if(instanceIdx < maxNumberOfInstances() &&
+           verticeIdx < numberOfVertices())
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx] = tcv;
+        }
+    }
+    
+    
+    
+    
+    
+    
     void MeshGeometry::subdivideTriangle(const TexturedColoredVertex &p0,
-                                         const TexturedColoredVertex &p1,
-                                         const TexturedColoredVertex &p2,
-                                         TexturedColoredVertex *triangleBuffer,
-                                         GLsizei newIndiceStart,
-                                         GLuint *indiceBuffer)
+        const TexturedColoredVertex &p1,
+        const TexturedColoredVertex &p2,
+        TexturedColoredVertex *triangleBuffer,
+        GLsizei newIndiceStart,
+        GLuint *indiceBuffer)
     {
         TexturedColoredVertex p0p1 = TexturedColoredVertex::average(p0, p1);
         TexturedColoredVertex p1p2 = TexturedColoredVertex::average(p1, p2);

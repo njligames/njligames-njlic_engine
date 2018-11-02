@@ -745,10 +745,27 @@ namespace njli
   {
     SDL_assert(shader);
 
-      assert(false && "setUniformValue changed when i introduced the new shader kcode");
-//    if (getDiffuse()->bind(shader))
-//      shader->setUniformValue("diffuseTexture2D",
-//                              getDiffuse()->getTextureIndex());
+//      assert(false && "setUniformValue changed when i introduced the new shader kcode");
+    if (getDiffuse()->bind(shader))
+      {
+          if(!shader->setUniformValue("tDiffuseColor",
+                                  (GLuint)getDiffuse()->getTextureIndex()))
+          {
+              SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                          "Couldn't set tDiffuseColor\n");
+          }
+      }
+      
+      if (getTransparent()->bind(shader))
+      {
+          if(!shader->setUniformValue("tAlpha",
+                                      (GLuint)getTransparent()->getTextureIndex()))
+          {
+              SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                          "Couldn't set tAlpha\n");
+          }
+      }
+      
       
       
 

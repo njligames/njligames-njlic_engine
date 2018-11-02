@@ -768,12 +768,21 @@ namespace njli
         
         GLint status;
         shader = glCreateShader(type);
-        
+        /*
         GLchar**str = new GLchar*[1];
         str[0] = new GLchar[source.length()];
-        strcpy(str[0], source.c_str());
+        strcpy(str[0], source.c_str());*/
+
+        /*GLchar *str = new GLchar[source.length() + 1];
+        strcpy(str, source.c_str());*/
+
+        /*GLchar *str = new GLchar[source.length()];
+        strcpy(str, source.c_str());*/
+
+        GLchar *str = (GLchar *)source.c_str();
         
-        glShaderSource(shader, 1, (const GLchar**)&(str[0]), NULL);
+        //glShaderSource(shader, 1, (const GLchar**)&(str[0]), NULL);
+        glShaderSource(shader, 1, &str, NULL);
         glCompileShader(shader);
         
 #if !defined(NDEBUG)
@@ -787,9 +796,12 @@ namespace njli
             free(log);
         }
 #endif
-        
+       /* delete[] *str;
+        delete str;*/
+        //delete[] str;
+        /*
         delete [] str[0];str[0]=NULL;
-        delete [] str;str=NULL;
+        delete [] str;str=NULL;*/
         
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
         if (status == 0) {
@@ -809,7 +821,7 @@ namespace njli
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
         if(log_length > 0)
         {
-            GLchar log_buffer[log_length];
+            GLchar log_buffer[1024];
             glGetShaderInfoLog(shader, log_length, NULL, log_buffer);
             std::cout << log_buffer << std::endl;
         }

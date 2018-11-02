@@ -246,19 +246,6 @@
 //  return GL_TRUE;
 //}
 
-
-extern void CheckOpenGLError(const char *stmt, const char *fname, int line);
-
-#ifndef GL_CHECK
-#define GL_CHECK(stmt) do { \
-stmt; \
-CheckOpenGLError(#stmt, __FILE__, __LINE__); \
-} while(0);
-//#else
-//    #define GL_CHECK(stmt) stmt
-#endif
-
-
 namespace njli
 {
     ShaderProgram::ShaderProgram():
@@ -273,7 +260,7 @@ namespace njli
     
     ShaderProgram::ShaderProgram(const AbstractBuilder &builder):
     AbstractFactoryObject(this),
-    m_Program(-1),
+    m_Program(0),
     m_mat4Buffer(new GLfloat[16]),
     m_vec3Buffer(new GLfloat[3]),
     m_vec4Buffer(new GLfloat[4])
@@ -283,7 +270,7 @@ namespace njli
     
     ShaderProgram::ShaderProgram(const ShaderProgram &copy):
     AbstractFactoryObject(this),
-    m_Program(-1),
+    m_Program(0),
     m_mat4Buffer(new GLfloat[16]),
     m_vec3Buffer(new GLfloat[3]),
     m_vec4Buffer(new GLfloat[4])
@@ -494,55 +481,55 @@ namespace njli
     {
         GLuint vertShader, fragShader;
         
-        GL_CHECK(m_Program = glCreateProgram());
+        m_Program = glCreateProgram();
         
         if(!(vertShader = compileShader(vertexSource, GL_VERTEX_SHADER)))
         {
-            GL_CHECK(glDeleteProgram(m_Program));
+            glDeleteProgram(m_Program);
             return false;
         }
         
         if(!(fragShader = compileShader(fragmentSource, GL_FRAGMENT_SHADER)))
         {
-            GL_CHECK(glDeleteProgram(m_Program));
-            GL_CHECK(glDeleteShader(vertShader));
+            glDeleteProgram(m_Program);
+            glDeleteShader(vertShader);
             return false;
         }
         
-        GL_CHECK(glAttachShader(m_Program, vertShader));
-        GL_CHECK(glAttachShader(m_Program, fragShader));
+        glAttachShader(m_Program, vertShader);
+        glAttachShader(m_Program, fragShader);
         
         if(!linkProgram(m_Program))
         {
             if (vertShader)
             {
-                GL_CHECK(glDeleteShader(vertShader));
+                glDeleteShader(vertShader);
                 vertShader = 0;
             }
             if (fragShader)
             {
-                GL_CHECK(glDeleteShader(fragShader));
+                glDeleteShader(fragShader);
                 fragShader = 0;
             }
             if (m_Program)
             {
-                GL_CHECK(glDeleteProgram(m_Program));
+                glDeleteProgram(m_Program);
                 m_Program = 0;
             }
             return false;
         }
         
-//        if (vertShader)
-//        {
-//            glDetachShader(m_Program, vertShader);
-//            glDeleteShader(vertShader);
-//        }
-//
-//        if (fragShader)
-//        {
-//            glDetachShader(m_Program, fragShader);
-//            glDeleteShader(fragShader);
-//        }
+        if (vertShader)
+        {
+            glDetachShader(m_Program, vertShader);
+            glDeleteShader(vertShader);
+        }
+        
+        if (fragShader)
+        {
+            glDetachShader(m_Program, fragShader);
+            glDeleteShader(fragShader);
+        }
         
         return true;
     }
@@ -550,9 +537,7 @@ namespace njli
     void ShaderProgram::unLoad()
     {
         if(m_Program)
-        {
-            GL_CHECK(glDeleteProgram(m_Program));
-        }
+            glDeleteProgram(m_Program);
         m_Program = 0;
     }
     
@@ -566,11 +551,9 @@ namespace njli
         if(m_Program)
         {
             GLint id;
-            GL_CHECK(glGetIntegerv(GL_CURRENT_PROGRAM,&id));
+            glGetIntegerv(GL_CURRENT_PROGRAM,&id);
             if(id != m_Program)
-            {
-                GL_CHECK(glUseProgram(m_Program));
-            }
+                glUseProgram(m_Program);
             return true;
         }
         return false;
@@ -578,13 +561,12 @@ namespace njli
     
     int ShaderProgram::getAttributeLocation(const std::string &attributeName)const
     {
-        int location = -1;
-        GL_CHECK(location = glGetAttribLocation(m_Program, attributeName.c_str()));
+        int location = glGetAttribLocation(m_Program, attributeName.c_str());
         
-#if !defined(NDEBUG)
+#if defined(DEBUG)
         if(location == -1)
         {
-            SDL_LogError(SDL_LOG_CATEGORY_TEST, "The named attribute variable %s is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"\n", attributeName.c_str());
+            std::cout << "The named attribute variable " << attributeName << " is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"" << std::endl;
         }
 #endif
         
@@ -602,14 +584,14 @@ namespace njli
         }
         else
         {
-            GL_CHECK(location = glGetUniformLocation(m_Program, uniformName.c_str()));
+            location = glGetUniformLocation(m_Program, uniformName.c_str());
             m_UniformMap.insert(UniformPair(uniformName, location));
         }
         
-#if !defined(NDEBUG)
+#if defined(DEBUG)
         if(location == -1)
         {
-            SDL_LogError(SDL_LOG_CATEGORY_TEST, "The named attribute variable %s is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"\n", uniformName.c_str());
+            std::cout << "The named attribute variable " << uniformName << " is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"" << std::endl;
         }
 #endif
         
@@ -627,17 +609,11 @@ namespace njli
         int location = getUniformLocation(uniformName);
         if(location != -1)
         {
-            GLint id;
-            GL_CHECK(glGetIntegerv(GL_CURRENT_PROGRAM,&id));
-            if(id == m_Program)
-            {
-                GL_CHECK(glUniformMatrix4fv(location,
-                                            1,
-                                            (transpose)?GL_TRUE:GL_FALSE,
-                                            matrix4x4));
-                return true;
-                
-            }
+            glUniformMatrix4fv(location,
+                               1,
+                               (transpose)?GL_TRUE:GL_FALSE,
+                               matrix4x4);
+            return true;
         }
         return false;
     }
@@ -647,7 +623,7 @@ namespace njli
         int location = getUniformLocation(uniformName);
         if(location != -1)
         {
-            GL_CHECK(glGetUniformfv(m_Program, location, m_mat4Buffer));
+            glGetUniformfv(m_Program, location, m_mat4Buffer);
             value.setFromOpenGLMatrix(m_mat4Buffer);
             return true;
         }
@@ -666,13 +642,8 @@ namespace njli
                     return true;
             }
             
-            GLint id;
-            GL_CHECK(glGetIntegerv(GL_CURRENT_PROGRAM,&id));
-            if(id == m_Program)
-            {
-                GL_CHECK(glUniform1i(location, value));
-                return true;
-            }
+            glUniform1i(location, value);
+            return true;
         }
         return false;
     }
@@ -683,7 +654,7 @@ namespace njli
         if(location != -1)
         {
             GLint t;
-            GL_CHECK(glGetUniformiv(m_Program, location, &t));
+            glGetUniformiv(m_Program, location, &t);
             value = t;
             return true;
         }
@@ -702,13 +673,9 @@ namespace njli
                     return true;
             }
             
-            GLint id;
-            GL_CHECK(glGetIntegerv(GL_CURRENT_PROGRAM,&id));
-            if(id == m_Program)
-            {
-                GL_CHECK(glUniform3f(location, value.x(), value.y(), value.z()));
-                return true;
-            }
+            glUniform3f(location, value.x(), value.y(), value.z());
+            
+            return true;
         }
         return false;
     }
@@ -718,7 +685,7 @@ namespace njli
         int location = getUniformLocation(uniformName);
         if(location != -1)
         {
-            GL_CHECK(glGetUniformfv(m_Program, location, m_vec3Buffer));
+            glGetUniformfv(m_Program, location, m_vec3Buffer);
             
             value.setX(m_vec3Buffer[0]);
             value.setY(m_vec3Buffer[1]);
@@ -742,13 +709,8 @@ namespace njli
                     return true;
             }
             
-            GLint id;
-            GL_CHECK(glGetIntegerv(GL_CURRENT_PROGRAM,&id));
-            if(id == m_Program)
-            {
-                GL_CHECK(glUniform1f(location, value));
-                return true;
-            }
+            glUniform1f(location, value);
+            return true;
         }
         return false;
     }
@@ -758,7 +720,7 @@ namespace njli
         int location = getUniformLocation(uniformName);
         if(location != -1)
         {
-            GL_CHECK(glGetUniformfv(m_Program, location, &value));
+            glGetUniformfv(m_Program, location, &value);
             return true;
         }
         return false;
@@ -776,13 +738,9 @@ namespace njli
                     return true;
             }
             
-            GLint id;
-            GL_CHECK(glGetIntegerv(GL_CURRENT_PROGRAM,&id));
-            if(id == m_Program)
-            {
-                GL_CHECK(glUniform4f(location, value.x(), value.y(), value.z(), value.w()));
-                return true;
-            }
+            glUniform4f(location, value.x(), value.y(), value.z(), value.w());
+            
+            return true;
         }
         return false;
     }
@@ -792,7 +750,7 @@ namespace njli
         int location = getUniformLocation(uniformName);
         if(location != -1)
         {
-            GL_CHECK(glGetUniformfv(m_Program, location, m_vec4Buffer));
+            glGetUniformfv(m_Program, location, m_vec4Buffer);
             
             value.setX(m_vec4Buffer[0]);
             value.setY(m_vec4Buffer[1]);
@@ -809,31 +767,47 @@ namespace njli
         GLuint shader;
         
         GLint status;
-        GL_CHECK(shader = glCreateShader(type));
+        shader = glCreateShader(type);
+        /*
+        GLchar**str = new GLchar*[1];
+        str[0] = new GLchar[source.length()];
+        strcpy(str[0], source.c_str());*/
+
+        /*GLchar *str = new GLchar[source.length() + 1];
+        strcpy(str, source.c_str());*/
+
+        /*GLchar *str = new GLchar[source.length()];
+        strcpy(str, source.c_str());*/
 
         GLchar *str = (GLchar *)source.c_str();
         
         //glShaderSource(shader, 1, (const GLchar**)&(str[0]), NULL);
-        GL_CHECK(glShaderSource(shader, 1, &str, NULL));
-        GL_CHECK(glCompileShader(shader));
-        
-        GL_CHECK(glGetShaderiv(shader, GL_COMPILE_STATUS, &status));
-        if (status == 0) {
-            GL_CHECK(glDeleteShader(shader));
-            shader = 0;
-        }
+        glShaderSource(shader, 1, &str, NULL);
+        glCompileShader(shader);
         
 #if !defined(NDEBUG)
         GLint logLength;
-        GL_CHECK(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength));
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0)
         {
-            GLchar log_buffer[1024];
-            GL_CHECK(glGetShaderInfoLog(shader, logLength, NULL, log_buffer));
-            
-            SDL_assertPrint((status == GL_TRUE), "%s", log_buffer);
+            GLchar *log = (GLchar *)malloc(logLength);
+            glGetShaderInfoLog(shader, logLength, &logLength, log);
+            std::cout << "ShaderProgram compile log:" << std::endl << log;
+            free(log);
         }
 #endif
+       /* delete[] *str;
+        delete str;*/
+        //delete[] str;
+        /*
+        delete [] str[0];str[0]=NULL;
+        delete [] str;str=NULL;*/
+        
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+        if (status == 0) {
+            glDeleteShader(shader);
+            shader = 0;
+        }
         
         return shader;
     }
@@ -841,17 +815,15 @@ namespace njli
     bool ShaderProgram::compileStatus(GLuint shader)
     {
         GLint compileStatus = 0;
-        GL_CHECK(glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus));
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus);
         
         GLint log_length = 0;
-        GL_CHECK(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length));
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
         if(log_length > 0)
         {
             GLchar log_buffer[1024];
-            GL_CHECK(glGetShaderInfoLog(shader, log_length, NULL, log_buffer));
+            glGetShaderInfoLog(shader, log_length, NULL, log_buffer);
             std::cout << log_buffer << std::endl;
-            
-            SDL_assertPrint((compileStatus == GL_TRUE), "%s", log_buffer);
         }
         
         return (compileStatus == GL_TRUE);
@@ -860,22 +832,20 @@ namespace njli
     bool ShaderProgram::linkProgram(GLuint program)
     {
         GLint status;
-        GL_CHECK(glLinkProgram(program));
+        glLinkProgram(program);
         
-        GL_CHECK(glGetProgramiv(program, GL_LINK_STATUS, &status));
-        
-#if !defined(NDEBUG)
+#if defined(DEBUG)
         GLint logLength;
-        GL_CHECK(glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength));
-        if (logLength > 0)
-        {
-            GLchar log_buffer[1024];
-            GL_CHECK(glGetProgramInfoLog(program, logLength, NULL, log_buffer));
-            std::cout << "Program link log:\n" << log_buffer;
-            
-            SDL_assertPrint((status == GL_TRUE), "%s", log_buffer);
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+        if (logLength > 0) {
+            GLchar *log = (GLchar *)malloc(logLength);
+            glGetProgramInfoLog(program, logLength, &logLength, log);
+            std::cout << "Program link log:\n" << log;
+            free(log);
         }
 #endif
+        
+        glGetProgramiv(program, GL_LINK_STATUS, &status);
         return (status == GL_TRUE);
     }
     

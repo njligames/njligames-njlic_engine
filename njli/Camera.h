@@ -210,7 +210,7 @@ namespace njli
     /**
          *  <#Description#>
          *
-         *  @param enable <#enable description#>
+         *  @param enable
          */
     void enableOrthographic(const bool enable = true, const f32 near = 1000.0f,
                             const f32 far = -1000.0f);
@@ -401,6 +401,7 @@ namespace njli
     btScalar *m_ProjectionMatrix;
       bool m_ModelViewDirty;
       bool m_ProjectionDirty;
+      bool m_OrthographicDirty;
   };
 }
 

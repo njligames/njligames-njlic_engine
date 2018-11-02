@@ -24,6 +24,9 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#include "Image.h"
+#include "Material.h"
+
 namespace njli
 {
     Geometry::Geometry()
@@ -54,7 +57,7 @@ namespace njli
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -68,12 +71,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -109,7 +114,7 @@ namespace njli
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -123,12 +128,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -164,7 +171,7 @@ namespace njli
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -178,12 +185,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -506,7 +515,7 @@ namespace njli
     {
         assert(shader);
         
-        setShader(shader);
+        setShaderProgram(shader);
         
         m_NumberInstances = numInstances;
         m_NumberSubDivisions = numSubDivisions;
@@ -676,7 +685,7 @@ namespace njli
         return m_Shader;
     }
     
-    void Geometry::setShader(ShaderProgram *const shader)
+    void Geometry::setShaderProgram(ShaderProgram *const shader)
     {
         m_Shader = shader;
         m_ShaderChanged = true;
@@ -688,7 +697,7 @@ namespace njli
         if(shader && camera)
         {
             shader->use();
-            
+            m_ShaderChanged = true;
             camera->render(shader, m_ShaderChanged);
             
             struct LightSourceParameters
@@ -716,6 +725,11 @@ namespace njli
                 float shininess;
             };
             
+            Material *material = getMaterial();
+            if(material)
+            {
+                material->bind(shader);
+            }
             //            glActiveTexture(GL_TEXTURE0 + 0);
             //            glBindTexture(GL_TEXTURE_2D, m_AmbientTexture);
             //            shader->setUniformValue("tAmbientColor", m_AmbientTexture);
@@ -891,6 +905,10 @@ namespace njli
 #else
             glBindVertexArray(0);
 #endif
+            if (material)
+            {
+                material->unBind();
+            }
         }
     }
     
@@ -1217,6 +1235,41 @@ namespace njli
     }
     
     
+    void Geometry::hide(Camera *camera)
+    {
+    //        SDL_assert(camera);
+        if (camera)
+        {
+            m_RenderCategory = (njliBitCategories)Off(m_RenderCategory, camera->getRenderCategory());
+        }
+        else
+        {
+            SDL_Log("Hiding geometry with a NULL camera");
+        }
+    }
+
+    void Geometry::show(Camera *camera)
+    {
+        SDL_assert(camera);
+        
+        if (camera)
+        {
+            m_RenderCategory = (njliBitCategories)On(m_RenderCategory, camera->getRenderCategory());
+        }
+        else
+        {
+            SDL_Log("Hiding geometry with a NULL camera");
+        }
+
+        
+    }
+
+    bool Geometry::isHidden(Camera *camera) const
+    {
+        return camera->hasRenderCategory(m_RenderCategory);
+    }
+    
+    
     
     const void *Geometry::getModelViewTransformArrayBufferPtr()const
     {
@@ -1500,6 +1553,65 @@ namespace njli
             
         }
         return transform;
+    }
+    
+    void Geometry::setMaterial(Material *material, Image *img)
+    {
+        SDL_assert(material != NULL);
+        
+        removeMaterial();
+        
+        m_Material = material;
+        
+        addChild(m_Material);
+        
+        if (img)
+        {
+            bool hasAlpha = img->getNumberOfComponents() == 4 ||
+            img->getNumberOfComponents() == 2;
+            bool premultiplied = img->getNumberOfComponents() != 1 && hasAlpha;
+            
+            m_OpacityModifyRGB = false;
+            if (m_blendFuncSource == GL_ONE &&
+                m_blendFuncDestination == GL_ONE_MINUS_SRC_ALPHA)
+            {
+                if (premultiplied)
+                m_OpacityModifyRGB = true;
+                else
+                {
+                    m_blendFuncSource = GL_SRC_ALPHA;
+                    m_blendFuncDestination = GL_ONE_MINUS_SRC_ALPHA;
+                }
+            }
+            
+            if (premultiplied)
+            img->preMultiplyAlpha();
+        }
+    }
+    
+    void Geometry::removeMaterial()
+    {
+        if (getMaterial())
+        {
+            removeChild(getMaterial());
+        }
+        
+        m_Material = NULL;
+    }
+    
+    Material *Geometry::getMaterial()
+    {
+        s32 idx = getChildIndex(m_Material);
+        if (idx != -1)
+        return dynamic_cast<Material *>(getChild(idx));
+        return NULL;
+    }
+    const Material *Geometry::getMaterial() const
+    {
+        s32 idx = getChildIndex(m_Material);
+        if (idx != -1)
+        return dynamic_cast<const Material *>(getChild(idx));
+        return NULL;
     }
 }
 

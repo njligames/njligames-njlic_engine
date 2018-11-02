@@ -24,6 +24,9 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#include "Image.h"
+#include "Material.h"
+
 namespace njli
 {
     Geometry::Geometry()
@@ -54,7 +57,7 @@ namespace njli
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -68,12 +71,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -109,7 +114,7 @@ namespace njli
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -123,12 +128,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -164,7 +171,7 @@ namespace njli
     m_RimLightCoefficient(0.6f),
     m_LightSourceAmbientColor(1.0f, 1.0f, 1.0f),
     m_LightSourceDiffuseColor(1.0f, 1.0f, 1.0f),
-    m_LightSourceSpecularColor(0.0f, 0.0f, 1.0f),
+    m_LightSourceSpecularColor(0.0f, 0.0f, 0.0f),
     m_LightSourcePosition_worldspace(0.0f, 0.0f, -1.0f, 1.0f),
     m_LightSourceSpotDirection(0.0f, 0.0f, 1.0f),
     m_LightSourceSpotExponent(100.0f),
@@ -178,12 +185,14 @@ namespace njli
     m_FogMaxDistance(11.0f),
     m_FogMinDistance(5.0f),
     m_FogColor(1.0f, 1.0f, 1.0f),
-    m_FogDensity(0.1f),
+    m_FogDensity(std::numeric_limits<float>::denorm_min()),
     m_blendFuncSource(GL_SRC_ALPHA),
     m_blendFuncDestination(GL_ONE_MINUS_SRC_ALPHA),
     m_enableBlend(true),
     m_enableDepthTest(true),
-    m_enableStencilTest(false)
+    m_enableStencilTest(false),
+    m_Material(NULL),
+    m_RenderCategory(JLI_BIT_CATEGORY_NONE)
     {
         assert(m_MatrixBuffer);
         assert(m_MatrixBufferFullSize);
@@ -506,7 +515,7 @@ namespace njli
     {
         assert(shader);
         
-        setShader(shader);
+        setShaderProgram(shader);
         
         m_NumberInstances = numInstances;
         m_NumberSubDivisions = numSubDivisions;
@@ -518,8 +527,13 @@ namespace njli
         loadData();
         
         assert(m_VertexArray == 0);
+#if defined(__APPLE__)
+        glGenVertexArraysAPPLE(1, &m_VertexArray);
+        glBindVertexArrayAPPLE(m_VertexArray);
+#else
         glGenVertexArrays(1, &m_VertexArray);
         glBindVertexArray(m_VertexArray);
+#endif
         {
             {
                 assert(m_ModelViewBuffer == 0);
@@ -627,7 +641,11 @@ namespace njli
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
         }
+#if defined(__APPLE__)
+        glBindVertexArrayAPPLE(0);
+#else
         glBindVertexArray(0);
+#endif
     }
     
     void Geometry::unLoad()
@@ -649,7 +667,11 @@ namespace njli
         m_ModelViewBuffer = 0;
         
         if (m_VertexArray)
+#if defined(__APPLE__)
+            glDeleteVertexArraysAPPLE(1, &m_VertexArray);
+#else
             glDeleteVertexArrays(1, &m_VertexArray);
+#endif
         m_VertexArray = 0;
     }
     
@@ -663,7 +685,7 @@ namespace njli
         return m_Shader;
     }
     
-    void Geometry::setShader(ShaderProgram *const shader)
+    void Geometry::setShaderProgram(ShaderProgram *const shader)
     {
         m_Shader = shader;
         m_ShaderChanged = true;
@@ -674,8 +696,8 @@ namespace njli
         ShaderProgram *shader = getShader();
         if(shader && camera)
         {
-            assert(shader->use());
-            
+            shader->use();
+            m_ShaderChanged = true;
             camera->render(shader, m_ShaderChanged);
             
             struct LightSourceParameters
@@ -703,6 +725,11 @@ namespace njli
                 float shininess;
             };
             
+            Material *material = getMaterial();
+            if(material)
+            {
+                material->bind(shader);
+            }
             //            glActiveTexture(GL_TEXTURE0 + 0);
             //            glBindTexture(GL_TEXTURE_2D, m_AmbientTexture);
             //            shader->setUniformValue("tAmbientColor", m_AmbientTexture);
@@ -719,39 +746,127 @@ namespace njli
             //            glBindTexture(GL_TEXTURE_2D, m_SpecularTexture);
             //            shader->setUniformValue("tSpecularColor", m_SpecularTexture);
             
-            shader->setUniformValue("RimLightColor", getRimLightColor());
-            shader->setUniformValue("RimLightStart", getRimLightStart());
-            shader->setUniformValue("RimLightEnd", getRimLightEnd());
-            shader->setUniformValue("RimLightCoefficient", getRimLightCoefficient());
+            if(!shader->setUniformValue("RimLightColor", getRimLightColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightColor\n");
+            }
+            if(!shader->setUniformValue("RimLightStart", getRimLightStart()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightStart\n");
+            }
+            if(!shader->setUniformValue("RimLightEnd", getRimLightEnd()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightEnd\n");
+            }
+            if(!shader->setUniformValue("RimLightCoefficient", getRimLightCoefficient()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightCoefficient\n");
+            }
             
-            shader->setUniformValue("LightSourceAmbientColor", getLightSourceAmbientColor());
-            shader->setUniformValue("LightSourceDiffuseColor", getLightSourceDiffuseColor());
-            shader->setUniformValue("LightSourceSpecularColor", getLightSourceSpecularColor());
+            if(!shader->setUniformValue("LightSourceAmbientColor", getLightSourceAmbientColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceAmbientColor\n");
+            }
+            if(!shader->setUniformValue("LightSourceDiffuseColor", getLightSourceDiffuseColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceDiffuseColor\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpecularColor", getLightSourceSpecularColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpecularColor\n");
+            }
             
-            shader->setUniformValue("LightSourcePosition_worldspace", getLightSourcePosition());
+            if(!shader->setUniformValue("LightSourcePosition_worldspace", getLightSourcePosition()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourcePosition_worldspace\n");
+            }
             
-            shader->setUniformValue("LightSourceSpotDirection", getLightSourceSpotDirection());
-            shader->setUniformValue("LightSourceSpotExponent", getLightSourceSpotExponent());
+            if(!shader->setUniformValue("LightSourceSpotDirection", getLightSourceSpotDirection()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotDirection\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpotExponent", getLightSourceSpotExponent()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotExponent\n");
+            }
             
-            shader->setUniformValue("LightSourceSpotCutoff", getLightSourceSpotCutoff());
-            shader->setUniformValue("LightSourceSpotCosCutoff", getLightSourceSpotCosCutoff());
+            if(!shader->setUniformValue("LightSourceSpotCutoff", getLightSourceSpotCutoff()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotCutoff\n");
+            }
+            if(!shader->setUniformValue("LightSourceSpotCosCutoff", getLightSourceSpotCosCutoff()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotCosCutoff\n");
+            }
             
-            shader->setUniformValue("LightSourceConstantAttenuation", getLightSourceConstantAttenuation());
-            shader->setUniformValue("LightSourceLinearAttenuation", getLightSourceLinearAttenuation());
-            shader->setUniformValue("LightSourceQuadraticAttenuation", getLightSourceQuadraticAttenuation());
+            if(!shader->setUniformValue("LightSourceConstantAttenuation", getLightSourceConstantAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceConstantAttenuation\n");
+            }
+            if(!shader->setUniformValue("LightSourceLinearAttenuation", getLightSourceLinearAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceLinearAttenuation\n");
+            }
+            if(!shader->setUniformValue("LightSourceQuadraticAttenuation", getLightSourceQuadraticAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceQuadraticAttenuation\n");
+            }
             
-            shader->setUniformValue("LightAmbientColor", getLightAmbientColor());
+            if(!shader->setUniformValue("LightAmbientColor", getLightAmbientColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightAmbientColor\n");
+            }
             
-            shader->setUniformValue("MaterialShininess", getMaterialShininess());
+            if(!shader->setUniformValue("MaterialShininess", getMaterialShininess()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set MaterialShininess\n");
+            }
             
-            shader->setUniformValue("FogMaxDistance", getFogMaxDistance());
-            shader->setUniformValue("FogMinDistance", getFogMinDistance());
-            shader->setUniformValue("FogColor", getFogColor());
-            shader->setUniformValue("FogDensity", getFogDensity());
+            if(!shader->setUniformValue("FogMaxDistance", getFogMaxDistance()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogMaxDistance\n");
+            }
+            if(!shader->setUniformValue("FogMinDistance", getFogMinDistance()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogMinDistance\n");
+            }
+            if(!shader->setUniformValue("FogColor", getFogColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogColor\n");
+            }
+            if(!shader->setUniformValue("FogDensity", getFogDensity()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogDensity\n");
+            }
             
             m_ShaderChanged = false;
             
+#if defined(__APPLE__)
+            glBindVertexArrayAPPLE(m_VertexArray);
+#else
             glBindVertexArray(m_VertexArray);
+#endif
             
             if(isModelViewBufferChanged())
             {
@@ -785,7 +900,15 @@ namespace njli
             //            glDrawElements(GL_LINE_LOOP, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             //            glDrawElements(GL_POINTS, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             
+#if defined(__APPLE__)
+            glBindVertexArrayAPPLE(0);
+#else
             glBindVertexArray(0);
+#endif
+            if (material)
+            {
+                material->unBind();
+            }
         }
     }
     
@@ -1112,6 +1235,41 @@ namespace njli
     }
     
     
+    void Geometry::hide(Camera *camera)
+    {
+    //        SDL_assert(camera);
+        if (camera)
+        {
+            m_RenderCategory = (njliBitCategories)Off(m_RenderCategory, camera->getRenderCategory());
+        }
+        else
+        {
+            SDL_Log("Hiding geometry with a NULL camera");
+        }
+    }
+
+    void Geometry::show(Camera *camera)
+    {
+        SDL_assert(camera);
+        
+        if (camera)
+        {
+            m_RenderCategory = (njliBitCategories)On(m_RenderCategory, camera->getRenderCategory());
+        }
+        else
+        {
+            SDL_Log("Hiding geometry with a NULL camera");
+        }
+
+        
+    }
+
+    bool Geometry::isHidden(Camera *camera) const
+    {
+        return camera->hasRenderCategory(m_RenderCategory);
+    }
+    
+    
     
     const void *Geometry::getModelViewTransformArrayBufferPtr()const
     {
@@ -1395,6 +1553,65 @@ namespace njli
             
         }
         return transform;
+    }
+    
+    void Geometry::setMaterial(Material *material, Image *img)
+    {
+        SDL_assert(material != NULL);
+        
+        removeMaterial();
+        
+        m_Material = material;
+        
+        addChild(m_Material);
+        
+        if (img)
+        {
+            bool hasAlpha = img->getNumberOfComponents() == 4 ||
+            img->getNumberOfComponents() == 2;
+            bool premultiplied = img->getNumberOfComponents() != 1 && hasAlpha;
+            
+            m_OpacityModifyRGB = false;
+            if (m_blendFuncSource == GL_ONE &&
+                m_blendFuncDestination == GL_ONE_MINUS_SRC_ALPHA)
+            {
+                if (premultiplied)
+                m_OpacityModifyRGB = true;
+                else
+                {
+                    m_blendFuncSource = GL_SRC_ALPHA;
+                    m_blendFuncDestination = GL_ONE_MINUS_SRC_ALPHA;
+                }
+            }
+            
+            if (premultiplied)
+            img->preMultiplyAlpha();
+        }
+    }
+    
+    void Geometry::removeMaterial()
+    {
+        if (getMaterial())
+        {
+            removeChild(getMaterial());
+        }
+        
+        m_Material = NULL;
+    }
+    
+    Material *Geometry::getMaterial()
+    {
+        s32 idx = getChildIndex(m_Material);
+        if (idx != -1)
+        return dynamic_cast<Material *>(getChild(idx));
+        return NULL;
+    }
+    const Material *Geometry::getMaterial() const
+    {
+        s32 idx = getChildIndex(m_Material);
+        if (idx != -1)
+        return dynamic_cast<const Material *>(getChild(idx));
+        return NULL;
     }
 }
 

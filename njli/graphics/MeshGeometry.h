@@ -138,6 +138,16 @@ namespace njli
         btVector3 getVertexTangent(const GLsizei instanceIdx, const GLsizei verticeIdx)const;
         btVector3 getVertexBitangent(const GLsizei instanceIdx, const GLsizei verticeIdx)const;
         
+        void setVertexPosition(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx);
+        void setVertexColor(const btVector4 &v, const GLsizei instanceIdx, const GLsizei verticeIdx);
+        void setVertexTexture(const btVector2 &v, const GLsizei instanceIdx, const GLsizei verticeIdx);
+        void setVertexNormal(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx);
+        void setVertexTangent(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx);
+        void setVertexBitangent(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx);
+        
+        virtual TexturedColoredVertex getVertex(const GLsizei instanceIdx, const GLsizei verticeIdx)const;
+        virtual void setVertex(const TexturedColoredVertex &tcv, const GLsizei instanceIdx, const GLsizei verticeIdx);
+        
         virtual GLsizei numberOfVertices()const;
         virtual GLsizei numberOfIndices()const;
     protected:

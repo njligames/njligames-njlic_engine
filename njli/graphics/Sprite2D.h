@@ -12,6 +12,7 @@
 #include "AbstractBuilder.h"
 #include "MeshGeometry.h"
 
+#include "SpriteFrameAtlas.h"
 #include "lua.hpp"
 
 /*
@@ -136,8 +137,92 @@ namespace njli
     static u32 type();
   public:
       void load(ShaderProgram *shader, unsigned int numInstances =  1, unsigned int numSubDivisions = 1);
+//  private:
+      void load(ShaderProgram *shader, const std::string &filecontent, unsigned int numInstances, unsigned int numSubDivisions){MeshGeometry::load(shader, filecontent, numInstances, numSubDivisions);}
+  public:
+    //        void applyBillboard(Camera *camera);
+
+    void setSpriteAtlasFrame(Node * node, const f32 &xoffset,
+                             const f32 &yoffset, const f32 &xdim,
+                             const f32 &ydim);
+
+    void setSpriteAtlasFrame(Node * node, const btVector2 &offset,
+                             const btVector2 &dimension);
+
+    void setSpriteAtlasFrame(Node * node, const Rect &dimension);
+
+    void setSpriteAtlasFrame(Node * node, SpriteFrameAtlas * atlas,
+                             const char *frameName, bool matchDimension = true);
+
+    void setSpriteAtlasFrame(Node * node, SpriteFrameAtlas * atlas,
+                             int frameIndex, bool matchDimension = true);
+
+    void setDimensions(Node * node, const btVector2 &dimensions,
+                       const btVector2 &spritePivotPoint =
+                           btVector2(0.5f, 0.5f));
+//    virtual bool shouldApplyShape(Node * node) const;
+
+    btVector2 getDimensions(Node * node) const;
+    virtual void getAabb(Node * node, btVector3 & aabbMin, btVector3 & aabbMax)
+        const;
+
+    btVector2 getPivotPoint(Node * node) const;
+
+    void setTextureOffsets(Node * node, const btVector2 &textureCoordOffset,
+                           const btVector2 &textureCoordDimensions);
+
+    btVector2 getTextureCoordinateOffsets(Node * node) const;
+    btVector2 getTextureCoordinateDimensions(Node * node) const;
+
+    void setColors(Node * node, const btVector4 &bottomLeft,
+                   const btVector4 &bottomRight, const btVector4 &topLeft,
+                   const btVector4 &topRight);
+
+    void setColors(Node * node, const btVector4 &color);
+
+    btVector4 getColorBottomLeft(Node * node) const;
+    btVector4 getColorBottomRight(Node * node) const;
+    btVector4 getColorTopLeft(Node * node) const;
+    btVector4 getColorTopRight(Node * node) const;
+
+//    virtual inline s32 numberOfVertices() const { return 4; }
+//    virtual inline s32 numberOfIndices() const { return 6; }
+
+    void setVertexPositions(
+        Node * node, const btVector2 &bottomLeft, const btVector2 &bottomRight,
+        const btVector2 &topLeft, const btVector2 &topRight);
+
+  protected:
+    void setVertexPositions(const u64 spriteIndex, const btVector2 &bottomLeft,
+                            const btVector2 &bottomRight,
+                            const btVector2 &topLeft,
+                            const btVector2 &topRight);
+
+    void getVertexPositions(const u64 spriteIndex, btVector2 &bottomLeft,
+                            btVector2 &bottomRight, btVector2 &topLeft,
+                            btVector2 &topRight) const;
+
+    void setVertexTextureCoordinates(
+        const u64 spriteIndex, const btVector2 &bottomLeft,
+        const btVector2 &bottomRight, const btVector2 &topLeft,
+        const btVector2 &topRight);
+
+    void getVertexTextureCoordinates(
+        const u64 spriteIndex, btVector2 &bottomLeft, btVector2 &bottomRight,
+        btVector2 &topLeft, btVector2 &topRight) const;
+
+    void setVertexColors(const u64 spriteIndex, const btVector4 &bottomLeft,
+                         const btVector4 &bottomRight, const btVector4 &topLeft,
+                         const btVector4 &topRight);
+
+    void getVertexColors(const u64 spriteIndex, btVector4 &bottomLeft,
+                         btVector4 &bottomRight, btVector4 &topLeft,
+                         btVector4 &topRight) const;
   private:
-      void load(ShaderProgram *shader, const std::string &filecontent, unsigned int numInstances, unsigned int numSubDivisions){}
+    btVector2 *m_SpritePivots;
+    bool *m_changedDimensionArray;
+      
+      
       
 //  public:
 //    /**

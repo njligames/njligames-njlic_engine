@@ -397,10 +397,15 @@ namespace njli
           for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
           {
               Geometry *geometry = m_ActiveGeometries.at(j);
-              geometry->render(camera);
+              
+              if (geometry && !geometry->isHidden(camera))
+              {
+                  geometry->render(camera);
+              }
           }
-          m_ActiveGeometries.clear();
+          
       }
+      m_ActiveGeometries.clear();
                   
       /*
     //        for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)

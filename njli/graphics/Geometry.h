@@ -21,6 +21,7 @@
 #include "btVector2.h"
 
 #include "lua.hpp"
+#include "JLIFactoryTypes.h"
 
 namespace njli
 {
@@ -190,6 +191,8 @@ namespace njli
     class Node;
     class LevelOfDetail;
     class PhysicsShape;
+    class Image;
+    class Material;
     
     ATTRIBUTE_ALIGNED16(class)
     Geometry : public AbstractFactoryObject
@@ -314,7 +317,7 @@ namespace njli
         
         ShaderProgram *const getShader();
         
-        void setShader(ShaderProgram *const shader);
+        void setShaderProgram(ShaderProgram *const shader);
         
         void render(Camera *camera);
         
@@ -372,6 +375,16 @@ namespace njli
         virtual btVector3 getVertexNormal(const GLsizei instanceIdx, const GLsizei verticeIdx)const = 0;
         virtual btVector3 getVertexTangent(const GLsizei instanceIdx, const GLsizei verticeIdx)const = 0;
         virtual btVector3 getVertexBitangent(const GLsizei instanceIdx, const GLsizei verticeIdx)const = 0;
+        
+        virtual void setVertexPosition(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx) = 0;
+        virtual void setVertexColor(const btVector4 &v, const GLsizei instanceIdx, const GLsizei verticeIdx) = 0;
+        virtual void setVertexTexture(const btVector2 &v, const GLsizei instanceIdx, const GLsizei verticeIdx) = 0;
+        virtual void setVertexNormal(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx) = 0;
+        virtual void setVertexTangent(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx) = 0;
+        virtual void setVertexBitangent(const btVector3 &v, const GLsizei instanceIdx, const GLsizei verticeIdx) = 0;
+        
+        virtual TexturedColoredVertex getVertex(const GLsizei instanceIdx, const GLsizei verticeIdx)const = 0;
+        virtual void setVertex(const TexturedColoredVertex &tcv, const GLsizei instanceIdx, const GLsizei verticeIdx) = 0;
         
         virtual GLsizei numberOfVertices()const = 0;
         virtual GLsizei numberOfIndices()const = 0;
@@ -447,6 +460,10 @@ namespace njli
         virtual void setOpacity(Node *node) = 0;
         virtual void setHidden(Node *node) = 0;
         virtual void setColorBase(Node *node) = 0;
+        
+        void hide(Camera * camera);
+        void show(Camera * camera);
+        bool isHidden(Camera * camera) const;
         
     protected:
         
@@ -567,8 +584,15 @@ namespace njli
         bool m_enableBlend;
         bool m_enableDepthTest;
         bool m_enableStencilTest;
-    public:
         
+        Material *m_Material;
+        njliBitCategories m_RenderCategory;
+    public:
+        void setMaterial(Material * material, Image *image = NULL);
+        
+        void removeMaterial();
+        Material *getMaterial();
+        const Material *getMaterial() const;
     };
 }
 

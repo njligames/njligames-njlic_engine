@@ -24,10 +24,31 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
-static const btVector3 BL_VERTEX = {-0.5f, -0.5f, 0.0f};
-static const btVector3 BR_VERTEX = {0.5f, -0.5f, 0.0f};
-static const btVector3 TL_VERTEX = {-0.5f, 0.5f, 0.0f};
-static const btVector3 TR_VERTEX = {0.5f, 0.5f, 0.0f};
+/*
+ // bottom-left
+ TexturedColoredVertex a = getVertex(spriteIndex, 0);//-0.5, 0.5
+ // top-right
+ TexturedColoredVertex b = getVertex(spriteIndex, 1);//0.5, -0.5
+ // top-left
+ TexturedColoredVertex c = getVertex(spriteIndex, 2);//-0.5, -0.5
+ // bottom-left
+ TexturedColoredVertex d = getVertex(spriteIndex, 3);//-0.5, 0.5
+ // bottom-right
+ TexturedColoredVertex e = getVertex(spriteIndex, 4);//0.5, 0.5
+ //top-right
+ TexturedColoredVertex f = getVertex(spriteIndex, 5);//0.5, -0.5
+ */
+static const btVector3 BL_VERTEX = {-0.5f, 0.5f, 0.0f};
+static const btVector3 TR_VERTEX = {0.5f, -0.5f, 0.0f};
+static const btVector3 TL_VERTEX = {-0.5f, -0.5f, 0.0f};
+static const btVector3 BR_VERTEX = {0.5f, 0.5f, 0.0f};
+
+
+
+//static const btVector3 BL_VERTEX = {-0.5f, -0.5f, 0.0f};
+//static const btVector3 BR_VERTEX = {0.5f, -0.5f, 0.0f};
+//static const btVector3 TL_VERTEX = {-0.5f, 0.5f, 0.0f};
+//static const btVector3 TR_VERTEX = {0.5f, 0.5f, 0.0f};
 
 static const btVector2 BL_TEXTURECOORD = {0.0f, 0.0f};
 static const btVector2 BR_TEXTURECOORD = {1.0f, 0.0f};
@@ -40,24 +61,36 @@ static const btVector2 DEFAULTPIVOT = btVector2(0.5f, 0.5f);
 
 namespace njli
 {
-    Sprite2D::Sprite2D()
+    Sprite2D::Sprite2D():
+    m_SpritePivots(NULL),
+    m_changedDimensionArray(NULL)
     {
         
     }
     
-    Sprite2D::Sprite2D(const AbstractBuilder &)
+    Sprite2D::Sprite2D(const AbstractBuilder &):
+    m_SpritePivots(NULL),
+    m_changedDimensionArray(NULL)
     {
         
     }
     
-    Sprite2D::Sprite2D(const Sprite2D &)
+    Sprite2D::Sprite2D(const Sprite2D &):
+    m_SpritePivots(NULL),
+    m_changedDimensionArray(NULL)
     {
         
     }
     
     Sprite2D::~Sprite2D()
     {
-        
+        if (m_changedDimensionArray)
+          delete[] m_changedDimensionArray;
+        m_changedDimensionArray = NULL;
+
+        if (m_SpritePivots)
+          delete[] m_SpritePivots;
+        m_SpritePivots = NULL;
     }
     
     Sprite2D &Sprite2D::operator=(const Sprite2D &)
@@ -265,9 +298,105 @@ namespace njli
     
     void Sprite2D::load(ShaderProgram *shader, unsigned int numInstances, unsigned int numSubDivisions)
     {
-        //TODO: implement
-        assert(false && "need to implement: Just need to get the file content from an obj file.");
+        if (m_changedDimensionArray)
+        delete[] m_changedDimensionArray;
+        m_changedDimensionArray = NULL;
+        
+        if (m_SpritePivots)
+        delete[] m_SpritePivots;
+        m_SpritePivots = NULL;
+        
+        
+        m_SpritePivots = new btVector2[numInstances];
+        m_changedDimensionArray = new bool[numInstances];
+        for (int i = 0; i < numInstances; i++)
+          {
+            m_SpritePivots[i] = DEFAULTPIVOT;
+            m_changedDimensionArray[i] = true;
+          }
+        
+        /*
+         (0, 1)                                   (1, 1)
+         ___________________________________
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |___________________________________|
+         (0, 0)                                   (1, 0)
+         */
+        
+        std::string f = R"(
+# Blender v2.79 (sub 0) OBJ File: 'plane.blend'
+# www.blender.org
+# mtllib plane.mtl
+o Plane
+        
+# bottom-left
+v -0.500000 -0.500000 -0.000000
+        
+# top-left
+v -0.500000 0.500000 -0.000000
+
+# bottom-right
+v 0.500000 -0.500000 0.000000
+
+# top-right
+v 0.500000 0.500000 0.000000
+        
+###################
+        
+# bottom-left
+vt 0.000000 0.000000
+        
+# top-right
+vt 1.000000 1.000000
+# vt 0.500000 1.000000
+        
+# top-left
+vt 0.000000 1.000000
+        
+# bottom-right
+vt 1.000000 0.000000
+# vt 0.500000 0.000000
+        
+###################
+        
+vn 0.0000 0.0000 -1.0000
+# usemtl Material.001
+# s off
+f 2/1/1 3/2/1 1/3/1
+f 2/1/1 4/4/1 3/2/1
+        
+        )";
+        
+        MeshGeometry::load(shader, f, numInstances, numSubDivisions);
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 //  void Sprite2D::getVertices(LevelOfDetail *geometry, btVector3 **vertices,
 //                             Node *node) const
@@ -427,86 +556,127 @@ namespace njli
 //    m_changedDimensionArray[spriteIndex] = false;
 //  }
 //
-//  void Sprite2D::setSpriteAtlasFrame(Node *node, const f32 &xoffset,
-//                                     const f32 &yoffset, const f32 &xdim,
-//                                     const f32 &ydim)
-//  {
-//    setTextureOffsets(node, btVector2(xoffset, yoffset), btVector2(xdim, ydim));
-//  }
-//
-//  void Sprite2D::setSpriteAtlasFrame(Node *node, const btVector2 &offset,
-//                                     const btVector2 &dimension)
-//  {
-//    //        setSpriteAtlasFrame(node, offset.x() + 1, offset.y() + 1,
-//    //        dimension.x() - 2, dimension.y() - 2);
-//    setSpriteAtlasFrame(node, offset.x(), offset.y(), dimension.x(),
-//                        dimension.y());
-//  }
-//
-//  void Sprite2D::setSpriteAtlasFrame(Node *node, const Rect &rect)
-//  {
-//    //        setSpriteAtlasFrame(node, rect.getOffset() - rect.getSource(),
-//    //        rect.getDimension());
-//    setSpriteAtlasFrame(node, rect.getOffset(), rect.getDimension());
-//  }
-//
-//  void Sprite2D::setSpriteAtlasFrame(Node *node, SpriteFrameAtlas *atlas,
-//                                     const char *frameName, bool matchDimension)
-//  {
-//    SDL_assert(atlas);
-//    SDL_assert(frameName);
-//
-//    setSpriteAtlasFrame(node, atlas->getFrame(frameName));
-//
-//    Rect rect = atlas->getFrame(frameName);
-//    if (matchDimension)
-//      setDimensions(node, rect.getDimension());
-//    setSpriteAtlasFrame(node, rect);
-//  }
-//
-//  void Sprite2D::setSpriteAtlasFrame(Node *node, SpriteFrameAtlas *atlas,
-//                                     int frameIndex, bool matchDimension)
-//  {
-//    SDL_assert(atlas);
-//
-//    Rect rect = atlas->getFrame(frameIndex);
-//    if (matchDimension)
-//      setDimensions(node, rect.getDimension());
-//    setSpriteAtlasFrame(node, rect);
-//  }
-//
-//  void Sprite2D::setDimensions(Node *node, const btVector2 &dimensions,
-//                               const btVector2 &spritePivotPoint)
-//  {
-//    SDL_assert(spritePivotPoint.x() >= 0 && spritePivotPoint.x() <= 1);
-//    SDL_assert(spritePivotPoint.y() >= 0 && spritePivotPoint.y() <= 1);
-//
-//    s64 spriteIndex = node->getGeometryIndex();
-//
-//    if (spriteIndex >= 0)
-//      {
-//        f32 left_half_width = (dimensions.x() * spritePivotPoint.x());
-//        f32 right_half_width = (dimensions.x() * (1.0f - spritePivotPoint.x()));
-//
-//        f32 bottom_half_height = (dimensions.y() * spritePivotPoint.y());
-//        f32 top_half_height = (dimensions.y() * (1.0f - spritePivotPoint.y()));
-//
-//        btVector2 bottomLeft(BL_VERTEX.x() * left_half_width,
-//                             BL_VERTEX.y() * bottom_half_height);
-//        btVector2 bottomRight(BR_VERTEX.x() * right_half_width,
-//                              BR_VERTEX.y() * bottom_half_height);
-//        btVector2 topLeft(TL_VERTEX.x() * left_half_width,
-//                          TL_VERTEX.y() * top_half_height);
-//        btVector2 topRight(TR_VERTEX.x() * right_half_width,
-//                           TR_VERTEX.y() * top_half_height);
-//
-//        setVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft,
-//                           topRight);
-//        m_SpritePivots[spriteIndex] = spritePivotPoint;
-//        m_changedDimensionArray[spriteIndex] = true;
-//      }
-//  }
-//
+  void Sprite2D::setSpriteAtlasFrame(Node *node, const f32 &xoffset,
+                                     const f32 &yoffset, const f32 &xdim,
+                                     const f32 &ydim)
+  {
+    setTextureOffsets(node, btVector2(xoffset, yoffset), btVector2(xdim, ydim));
+  }
+
+  void Sprite2D::setSpriteAtlasFrame(Node *node, const btVector2 &offset,
+                                     const btVector2 &dimension)
+  {
+    //        setSpriteAtlasFrame(node, offset.x() + 1, offset.y() + 1,
+    //        dimension.x() - 2, dimension.y() - 2);
+    setSpriteAtlasFrame(node, offset.x(), offset.y(), dimension.x(),
+                        dimension.y());
+  }
+
+  void Sprite2D::setSpriteAtlasFrame(Node *node, const Rect &rect)
+  {
+    //        setSpriteAtlasFrame(node, rect.getOffset() - rect.getSource(),
+    //        rect.getDimension());
+    setSpriteAtlasFrame(node, rect.getOffset(), rect.getDimension());
+  }
+
+  void Sprite2D::setSpriteAtlasFrame(Node *node, SpriteFrameAtlas *atlas,
+                                     const char *frameName, bool matchDimension)
+  {
+    SDL_assert(atlas);
+    SDL_assert(frameName);
+
+    setSpriteAtlasFrame(node, atlas->getFrame(frameName));
+
+    Rect rect = atlas->getFrame(frameName);
+    if (matchDimension)
+      setDimensions(node, rect.getDimension());
+    setSpriteAtlasFrame(node, rect);
+  }
+
+  void Sprite2D::setSpriteAtlasFrame(Node *node, SpriteFrameAtlas *atlas,
+                                     int frameIndex, bool matchDimension)
+  {
+    SDL_assert(atlas);
+
+    Rect rect = atlas->getFrame(frameIndex);
+    if (matchDimension)
+      setDimensions(node, rect.getDimension());
+    setSpriteAtlasFrame(node, rect);
+  }
+
+  void Sprite2D::setDimensions(Node *node, const btVector2 &dimensions,
+                               const btVector2 &spritePivotPoint)
+  {
+    SDL_assert(spritePivotPoint.x() >= 0 && spritePivotPoint.x() <= 1);
+    SDL_assert(spritePivotPoint.y() >= 0 && spritePivotPoint.y() <= 1);
+
+    s64 spriteIndex = node->getGeometryIndex();
+
+    if (spriteIndex >= 0)
+      {
+          
+          
+          /*
+           // bottom-left
+           TexturedColoredVertex a = getVertex(spriteIndex, 0);//-0.5, 0.5
+           // top-right
+           TexturedColoredVertex b = getVertex(spriteIndex, 1);//0.5, -0.5
+           // top-left
+           TexturedColoredVertex c = getVertex(spriteIndex, 2);//-0.5, -0.5
+           // bottom-left
+           TexturedColoredVertex d = getVertex(spriteIndex, 3);//-0.5, 0.5
+           // bottom-right
+           TexturedColoredVertex e = getVertex(spriteIndex, 4);//0.5, 0.5
+           //top-right
+           TexturedColoredVertex f = getVertex(spriteIndex, 5);//0.5, -0.5
+           
+           
+           ### should be top-left
+           Printing description of bottomLeft:
+           (const btVector2 &) bottomLeft = 0x00007ffeefbfcc70: {
+           xy_ = ([0] = -37.5, [1] = -37.5)
+           }
+           ### should be bottom-right
+           Printing description of topRight:
+           (const btVector2 &) topRight = 0x00007ffeefbfcc40: {
+           xy_ = ([0] = 37.5, [1] = 37.5)
+           }
+           ### bottom-left
+           Printing description of topLeft:
+           (const btVector2 &) topLeft = 0x00007ffeefbfcc50: {
+           xy_ = ([0] = -37.5, [1] = 37.5)
+           }
+           ### top-right
+           Printing description of bottomRight:
+           (const btVector2 &) bottomRight = 0x00007ffeefbfcc60: {
+           xy_ = ([0] = 37.5, [1] = -37.5)
+           }
+           
+           */
+          
+          
+          f32 left_half_width = (dimensions.x() * spritePivotPoint.x());
+        f32 right_half_width = (dimensions.x() * (1.0f - spritePivotPoint.x()));
+
+        f32 bottom_half_height = (dimensions.y() * spritePivotPoint.y());
+        f32 top_half_height = (dimensions.y() * (1.0f - spritePivotPoint.y()));
+
+        btVector2 bottomLeft(BL_VERTEX.x() * left_half_width,
+                             BL_VERTEX.y() * bottom_half_height);
+        btVector2 bottomRight(BR_VERTEX.x() * right_half_width,
+                              BR_VERTEX.y() * bottom_half_height);
+        btVector2 topLeft(TL_VERTEX.x() * left_half_width,
+                          TL_VERTEX.y() * top_half_height);
+        btVector2 topRight(TR_VERTEX.x() * right_half_width,
+                           TR_VERTEX.y() * top_half_height);
+
+        setVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft, topRight);
+          
+        m_SpritePivots[spriteIndex] = spritePivotPoint;
+        m_changedDimensionArray[spriteIndex] = true;
+      }
+  }
+
 //  bool Sprite2D::shouldApplyShape(Node *node) const
 //  {
 //    s64 spriteIndex = node->getGeometryIndex();
@@ -516,223 +686,320 @@ namespace njli
 //      }
 //    return false;
 //  }
+
+  btVector2 Sprite2D::getDimensions(Node *node) const
+  {
+    btVector2 dimensions(0, 0);
+
+    s64 spriteIndex = node->getGeometryIndex();
+
+    if (spriteIndex >= 0)
+      {
+        btVector2 bottomLeft;
+        btVector2 bottomRight;
+        btVector2 topLeft;
+        btVector2 topRight;
+
+        getVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft,
+                           topRight);
+
+        f32 left = btMax<btScalar>(bottomLeft.x(), topLeft.x());
+        f32 right = btMax<btScalar>(bottomRight.x(), topRight.x());
+        f32 top = btMax<btScalar>(topLeft.y(), topRight.y());
+        f32 bottom = btMax<btScalar>(bottomLeft.y(), bottomRight.y());
+
+        dimensions.setX((right - left));
+        dimensions.setY((top - bottom));
+      }
+
+    return dimensions;
+  }
+
+  void Sprite2D::getAabb(Node *node, btVector3 &aabbMin,
+                         btVector3 &aabbMax) const
+  {
+    btVector2 d(getDimensions(node) * 0.5f);
+    aabbMin = btVector3(d.x(), d.y(), 0) * -1.f;
+    aabbMax = btVector3(d.x(), d.y(), 0);
+  }
+
+  btVector2 Sprite2D::getPivotPoint(Node *node) const
+  {
+    btVector2 spritePivotPoint(0, 0);
+
+    s64 spriteIndex = node->getGeometryIndex();
+
+    if (spriteIndex >= 0)
+      {
+        spritePivotPoint = m_SpritePivots[spriteIndex];
+      }
+    return spritePivotPoint;
+  }
+
+  void Sprite2D::setTextureOffsets(Node *node,
+                                   const btVector2 &textureCoordOffset,
+                                   const btVector2 &textureCoordDimensions)
+  {
+    s64 spriteIndex = node->getGeometryIndex();
+
+    if (spriteIndex >= 0)
+      {
+        f32 width = getMaterial()->getDiffuse()->getWidth();
+        f32 height = getMaterial()->getDiffuse()->getHeight();
+
+        f32 left = textureCoordOffset.x() / width;
+        f32 right =
+            (textureCoordOffset.x() + textureCoordDimensions.x()) / width;
+          
+          f32 bottom = (textureCoordOffset.y()) / height;
+          f32 top = (((textureCoordOffset.y()) + textureCoordDimensions.y()) / height);
+          
+        btVector2 bottomLeft(left, bottom);
+        btVector2 bottomRight(right, bottom);
+        btVector2 topLeft(left, top);
+        btVector2 topRight(right, top);
+
+        /*
+         static const btVector2 BL_TEXTURECOORD = { 0, 0 };
+         static const btVector2 BR_TEXTURECOORD = { 1, 0 };
+         static const btVector2 TL_TEXTURECOORD = { 0, 1 };
+         static const btVector2 TR_TEXTURECOORD = { 1, 1 };
+
+         (0, 1)                                   (1, 1)
+         ___________________________________
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+         |___________________________________|
+         (0, 0)                                   (1, 0)
+         */
+
+        setVertexTextureCoordinates(spriteIndex, bottomLeft, bottomRight,
+                                    topLeft, topRight);
+      }
+  }
+
+  btVector2 Sprite2D::getTextureCoordinateOffsets(Node *node) const
+  {
+    return btVector2(0, 0);
+  }
+  btVector2 Sprite2D::getTextureCoordinateDimensions(Node *node) const
+  {
+    return btVector2(0, 0);
+  }
+
+  void Sprite2D::setColors(Node *node, const btVector4 &bottomLeft,
+                           const btVector4 &bottomRight,
+                           const btVector4 &topLeft, const btVector4 &topRight)
+  {
+    s64 spriteIndex = node->getGeometryIndex();
+
+    if (spriteIndex >= 0)
+      {
+        setVertexColors(spriteIndex, bottomLeft, bottomRight, topLeft,
+                        topRight);
+      }
+  }
+
+  void Sprite2D::setColors(Node *node, const btVector4 &color)
+  {
+    setColors(node, color, color, color, color);
+  }
+
+  btVector4 Sprite2D::getColorBottomLeft(Node *node) const
+  {
+    s64 spriteIndex = node->getGeometryIndex();
+    btVector4 ret(0, 0, 0, 0);
+
+    if (spriteIndex >= 0)
+      {
+        btVector4 dummy;
+        getVertexColors(spriteIndex, ret, dummy, dummy, dummy);
+      }
+
+    return ret;
+  }
+  btVector4 Sprite2D::getColorBottomRight(Node *node) const
+  {
+    s64 spriteIndex = node->getGeometryIndex();
+    btVector4 ret(0, 0, 0, 0);
+
+    if (spriteIndex >= 0)
+      {
+        btVector4 dummy;
+        getVertexColors(spriteIndex, dummy, ret, dummy, dummy);
+      }
+
+    return ret;
+  }
+  btVector4 Sprite2D::getColorTopLeft(Node *node) const
+  {
+    s64 spriteIndex = node->getGeometryIndex();
+    btVector4 ret(0, 0, 0, 0);
+
+    if (spriteIndex >= 0)
+      {
+        btVector4 dummy;
+        getVertexColors(spriteIndex, dummy, dummy, ret, dummy);
+      }
+
+    return ret;
+  }
+  btVector4 Sprite2D::getColorTopRight(Node *node) const
+  {
+    s64 spriteIndex = node->getGeometryIndex();
+    btVector4 ret(0, 0, 0, 0);
+
+    if (spriteIndex >= 0)
+      {
+        btVector4 dummy;
+        getVertexColors(spriteIndex, dummy, dummy, dummy, ret);
+      }
+
+    return ret;
+  }
+
+  //    s32 Sprite2D::numberOfVertices()const
+  //    {
+  //        return 4;
+  //    }
+  //    s32 Sprite2D::numberOfIndices()const
+  //    {
+  //        return 6;
+  //    }
+
+  void Sprite2D::setVertexPositions(Node *node, const btVector2 &bottomLeft,
+                                    const btVector2 &bottomRight,
+                                    const btVector2 &topLeft,
+                                    const btVector2 &topRight)
+  {
+    s64 spriteIndex = node->getGeometryIndex();
+
+    if (spriteIndex >= 0)
+      {
+        setVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft,
+                           topRight);
+      }
+  }
+
+  void Sprite2D::setVertexPositions(const u64 spriteIndex,
+                                    const btVector2 &bottomLeft,
+                                    const btVector2 &bottomRight,
+                                    const btVector2 &topLeft,
+                                    const btVector2 &topRight)
+  {
+    SDL_assert(spriteIndex < maxNumberOfInstances());
+      
+      
+      
+      
+      
+      // bottom-left
+      TexturedColoredVertex a = getVertex(spriteIndex, 0);//-0.5, 0.5
+      // top-right
+      TexturedColoredVertex b = getVertex(spriteIndex, 1);//0.5, -0.5
+      // top-left
+      TexturedColoredVertex c = getVertex(spriteIndex, 2);//-0.5, -0.5
+      // bottom-left
+      TexturedColoredVertex d = getVertex(spriteIndex, 3);//-0.5, 0.5
+      // bottom-right
+      TexturedColoredVertex e = getVertex(spriteIndex, 4);//0.5, 0.5
+      //top-right
+      TexturedColoredVertex f = getVertex(spriteIndex, 5);//0.5, -0.5
+      
+      /*
+       ### should be top-left
+       Printing description of bottomLeft:
+       (const btVector2 &) bottomLeft = 0x00007ffeefbfcc70: {
+       xy_ = ([0] = -37.5, [1] = -37.5)
+       }
+       ### should be bottom-right
+       Printing description of topRight:
+       (const btVector2 &) topRight = 0x00007ffeefbfcc40: {
+       xy_ = ([0] = 37.5, [1] = 37.5)
+       }
+       ### bottom-left
+       Printing description of topLeft:
+       (const btVector2 &) topLeft = 0x00007ffeefbfcc50: {
+       xy_ = ([0] = -37.5, [1] = 37.5)
+       }
+       ### top-right
+       Printing description of bottomRight:
+       (const btVector2 &) bottomRight = 0x00007ffeefbfcc60: {
+       xy_ = ([0] = 37.5, [1] = -37.5)
+       }
+       */
+      setVertexPosition(bottomLeft, spriteIndex, 0);
+      setVertexPosition(topRight, spriteIndex, 1);
+      setVertexPosition(topLeft, spriteIndex, 2);
+      setVertexPosition(bottomLeft, spriteIndex, 3);
+      setVertexPosition(bottomRight, spriteIndex, 4);
+      setVertexPosition(topRight, spriteIndex, 5);
+      
+      
+      
+      
+      
+      
+      
+//      /*
+//       # bottom-left
+//       v -0.500000 -0.500000 -0.000000
 //
-//  btVector2 Sprite2D::getDimensions(Node *node) const
-//  {
-//    btVector2 dimensions(0, 0);
+//       # top-left
+//       v -0.500000 0.500000 -0.000000
 //
-//    s64 spriteIndex = node->getGeometryIndex();
+//       # bottom-right
+//       v 0.500000 -0.500000 0.000000
 //
-//    if (spriteIndex >= 0)
+//       # top-right
+//       v 0.500000 0.500000 0.000000
+//
+//       vt 0.000000 0.000000
+//       vt 1.000000 1.000000
+//       vt 0.000000 1.000000
+//       vt 1.000000 0.000000
+//       */
+//
+//      if(getVertex(spriteIndex, 0).vertex.x() != bottomLeft.x() &&
+//         getVertex(spriteIndex, 0).vertex.y() != bottomLeft.y())
 //      {
-//        btVector2 bottomLeft;
-//        btVector2 bottomRight;
-//        btVector2 topLeft;
-//        btVector2 topRight;
-//
-//        getVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft,
-//                           topRight);
-//
-//        f32 left = btMax<btScalar>(bottomLeft.x(), topLeft.x());
-//        f32 right = btMax<btScalar>(bottomRight.x(), topRight.x());
-//        f32 top = btMax<btScalar>(topLeft.y(), topRight.y());
-//        f32 bottom = btMax<btScalar>(bottomLeft.y(), bottomRight.y());
-//
-//        dimensions.setX((right - left));
-//        dimensions.setY((top - bottom));
+//          setVertexPosition(bottomLeft, spriteIndex, 0);
 //      }
 //
-//    return dimensions;
-//  }
-//
-//  void Sprite2D::getAabb(Node *node, btVector3 &aabbMin,
-//                         btVector3 &aabbMax) const
-//  {
-//    btVector2 d(getDimensions(node) * 0.5f);
-//    aabbMin = btVector3(d.x(), d.y(), 0) * -1.f;
-//    aabbMax = btVector3(d.x(), d.y(), 0);
-//  }
-//
-//  btVector2 Sprite2D::getPivotPoint(Node *node) const
-//  {
-//    btVector2 spritePivotPoint(0, 0);
-//
-//    s64 spriteIndex = node->getGeometryIndex();
-//
-//    if (spriteIndex >= 0)
+//      if(getVertex(spriteIndex, 1).vertex.x() != topLeft.x() &&
+//         getVertex(spriteIndex, 1).vertex.y() != topLeft.y())
 //      {
-//        spritePivotPoint = m_SpritePivots[spriteIndex];
-//      }
-//    return spritePivotPoint;
-//  }
-//
-//  void Sprite2D::setTextureOffsets(Node *node,
-//                                   const btVector2 &textureCoordOffset,
-//                                   const btVector2 &textureCoordDimensions)
-//  {
-//    s64 spriteIndex = node->getGeometryIndex();
-//
-//    if (spriteIndex >= 0)
-//      {
-//        f32 width = getMaterial()->getDiffuse()->getWidth();
-//        f32 height = getMaterial()->getDiffuse()->getHeight();
-//
-//        f32 left = textureCoordOffset.x() / width;
-//        f32 right =
-//            (textureCoordOffset.x() + textureCoordDimensions.x()) / width;
-//        f32 top = (height - textureCoordOffset.y()) / height;
-//        f32 bottom =
-//            1.0f -
-//            (((textureCoordOffset.y()) + textureCoordDimensions.y()) / height);
-//
-//        btVector2 bottomLeft(left, bottom);
-//        btVector2 bottomRight(right, bottom);
-//        btVector2 topLeft(left, top);
-//        btVector2 topRight(right, top);
-//
-//        /*
-//         static const btVector2 BL_TEXTURECOORD = { 0, 0 };
-//         static const btVector2 BR_TEXTURECOORD = { 1, 0 };
-//         static const btVector2 TL_TEXTURECOORD = { 0, 1 };
-//         static const btVector2 TR_TEXTURECOORD = { 1, 1 };
-//
-//         (0, 1)                                   (1, 1)
-//         ___________________________________
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-//         |___________________________________|
-//         (0, 0)                                   (1, 0)
-//         */
-//
-//        setVertexTextureCoordinates(spriteIndex, bottomLeft, bottomRight,
-//                                    topLeft, topRight);
-//      }
-//  }
-//
-//  btVector2 Sprite2D::getTextureCoordinateOffsets(Node *node) const
-//  {
-//    return btVector2(0, 0);
-//  }
-//  btVector2 Sprite2D::getTextureCoordinateDimensions(Node *node) const
-//  {
-//    return btVector2(0, 0);
-//  }
-//
-//  void Sprite2D::setColors(Node *node, const btVector4 &bottomLeft,
-//                           const btVector4 &bottomRight,
-//                           const btVector4 &topLeft, const btVector4 &topRight)
-//  {
-//    s64 spriteIndex = node->getGeometryIndex();
-//
-//    if (spriteIndex >= 0)
-//      {
-//        setVertexColors(spriteIndex, bottomLeft, bottomRight, topLeft,
-//                        topRight);
-//      }
-//  }
-//
-//  void Sprite2D::setColors(Node *node, const btVector4 &color)
-//  {
-//    setColors(node, color, color, color, color);
-//  }
-//
-//  btVector4 Sprite2D::getColorBottomLeft(Node *node) const
-//  {
-//    s64 spriteIndex = node->getGeometryIndex();
-//    btVector4 ret(0, 0, 0, 0);
-//
-//    if (spriteIndex >= 0)
-//      {
-//        btVector4 dummy;
-//        getVertexColors(spriteIndex, ret, dummy, dummy, dummy);
+//          setVertexPosition(topLeft, spriteIndex, 1);
 //      }
 //
-//    return ret;
-//  }
-//  btVector4 Sprite2D::getColorBottomRight(Node *node) const
-//  {
-//    s64 spriteIndex = node->getGeometryIndex();
-//    btVector4 ret(0, 0, 0, 0);
-//
-//    if (spriteIndex >= 0)
+//      if(getVertex(spriteIndex, 2).vertex.x() != bottomRight.x() &&
+//         getVertex(spriteIndex, 2).vertex.y() != bottomRight.y())
 //      {
-//        btVector4 dummy;
-//        getVertexColors(spriteIndex, dummy, ret, dummy, dummy);
+//          setVertexPosition(bottomRight, spriteIndex, 2);
 //      }
 //
-//    return ret;
-//  }
-//  btVector4 Sprite2D::getColorTopLeft(Node *node) const
-//  {
-//    s64 spriteIndex = node->getGeometryIndex();
-//    btVector4 ret(0, 0, 0, 0);
-//
-//    if (spriteIndex >= 0)
+//      if(getVertex(spriteIndex, 3).vertex.x() != topRight.x() &&
+//         getVertex(spriteIndex, 3).vertex.y() != topRight.y())
 //      {
-//        btVector4 dummy;
-//        getVertexColors(spriteIndex, dummy, dummy, ret, dummy);
+//          setVertexPosition(topRight, spriteIndex, 3);
 //      }
-//
-//    return ret;
-//  }
-//  btVector4 Sprite2D::getColorTopRight(Node *node) const
-//  {
-//    s64 spriteIndex = node->getGeometryIndex();
-//    btVector4 ret(0, 0, 0, 0);
-//
-//    if (spriteIndex >= 0)
-//      {
-//        btVector4 dummy;
-//        getVertexColors(spriteIndex, dummy, dummy, dummy, ret);
-//      }
-//
-//    return ret;
-//  }
-//
-//  //    s32 Sprite2D::numberOfVertices()const
-//  //    {
-//  //        return 4;
-//  //    }
-//  //    s32 Sprite2D::numberOfIndices()const
-//  //    {
-//  //        return 6;
-//  //    }
-//
-//  void Sprite2D::setVertexPositions(Node *node, const btVector2 &bottomLeft,
-//                                    const btVector2 &bottomRight,
-//                                    const btVector2 &topLeft,
-//                                    const btVector2 &topRight)
-//  {
-//    s64 spriteIndex = node->getGeometryIndex();
-//
-//    if (spriteIndex >= 0)
-//      {
-//        setVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft,
-//                           topRight);
-//      }
-//  }
-//
-//  void Sprite2D::setVertexPositions(const u64 spriteIndex,
-//                                    const btVector2 &bottomLeft,
-//                                    const btVector2 &bottomRight,
-//                                    const btVector2 &topLeft,
-//                                    const btVector2 &topRight)
-//  {
-//    SDL_assert(spriteIndex < getMaxMeshes());
-//
+      
+      
+      
+
 //    if (m_Sprite2D[spriteIndex].bl.vertex.x() != bottomLeft.x() &&
 //        m_Sprite2D[spriteIndex].bl.vertex.y() != bottomLeft.y())
 //      {
@@ -760,87 +1027,174 @@ namespace njli
 //        m_Sprite2D[spriteIndex].tr.vertex = topRight;
 //        enableBufferModified();
 //      }
-//
-//    //        m_Sprite2D[spriteIndex].br.vertex = bottomRight;
-//    //        m_Sprite2D[spriteIndex].tl.vertex = topLeft;
-//    //        m_Sprite2D[spriteIndex].tr.vertex = topRight;
-//
-//    //        Node *node = getParent();
-//    //        if(node)
-//    ////            node->m_ApplyPhysicsShape = true;
-//    //            node->applyPhysicsShape();
-//  }
-//
-//  void Sprite2D::getVertexPositions(const u64 spriteIndex,
-//                                    btVector2 &bottomLeft,
-//                                    btVector2 &bottomRight, btVector2 &topLeft,
-//                                    btVector2 &topRight) const
-//  {
-//    SDL_assert(spriteIndex < getMaxMeshes());
-//
-//    bottomLeft = m_Sprite2D[spriteIndex].bl.vertex;
-//    bottomRight = m_Sprite2D[spriteIndex].br.vertex;
-//    topLeft = m_Sprite2D[spriteIndex].tl.vertex;
-//    topRight = m_Sprite2D[spriteIndex].tr.vertex;
-//  }
-//
-//  void Sprite2D::setVertexTextureCoordinates(const u64 spriteIndex,
-//                                             const btVector2 &bottomLeft,
-//                                             const btVector2 &bottomRight,
-//                                             const btVector2 &topLeft,
-//                                             const btVector2 &topRight)
-//  {
-//    SDL_assert(spriteIndex < getMaxMeshes());
-//
-//    m_Sprite2D[spriteIndex].bl.texture = bottomLeft;
-//    m_Sprite2D[spriteIndex].br.texture = bottomRight;
-//    m_Sprite2D[spriteIndex].tl.texture = topLeft;
-//    m_Sprite2D[spriteIndex].tr.texture = topRight;
-//
-//    enableBufferModified();
-//  }
-//
-//  void Sprite2D::getVertexTextureCoordinates(const u64 spriteIndex,
-//                                             btVector2 &bottomLeft,
-//                                             btVector2 &bottomRight,
-//                                             btVector2 &topLeft,
-//                                             btVector2 &topRight) const
-//  {
-//    SDL_assert(spriteIndex < getMaxMeshes());
-//
-//    bottomLeft = m_Sprite2D[spriteIndex].bl.texture;
-//    bottomRight = m_Sprite2D[spriteIndex].br.texture;
-//    topLeft = m_Sprite2D[spriteIndex].tl.texture;
-//    topRight = m_Sprite2D[spriteIndex].tr.texture;
-//  }
-//
-//  void Sprite2D::setVertexColors(const u64 spriteIndex,
-//                                 const btVector4 &bottomLeft,
-//                                 const btVector4 &bottomRight,
-//                                 const btVector4 &topLeft,
-//                                 const btVector4 &topRight)
-//  {
-//    SDL_assert(spriteIndex < getMaxMeshes());
-//
+
+    //        m_Sprite2D[spriteIndex].br.vertex = bottomRight;
+    //        m_Sprite2D[spriteIndex].tl.vertex = topLeft;
+    //        m_Sprite2D[spriteIndex].tr.vertex = topRight;
+
+    //        Node *node = getParent();
+    //        if(node)
+    ////            node->m_ApplyPhysicsShape = true;
+    //            node->applyPhysicsShape();
+  }
+
+  void Sprite2D::getVertexPositions(const u64 spriteIndex,
+                                    btVector2 &bottomLeft,
+                                    btVector2 &bottomRight,
+                                    btVector2 &topLeft,
+                                    btVector2 &topRight) const
+  {
+    SDL_assert(spriteIndex < maxNumberOfInstances());
+      
+//      // bottom-left
+//      TexturedColoredVertex a = getVertex(spriteIndex, 0);//0,0
+//      // top-right
+//      TexturedColoredVertex b = getVertex(spriteIndex, 1);//1,1
+//      // top-left
+//      TexturedColoredVertex c = getVertex(spriteIndex, 2);//0,1
+//      // bottom-left
+//      TexturedColoredVertex d = getVertex(spriteIndex, 3);//0,0
+//      // bottom-right
+//      TexturedColoredVertex e = getVertex(spriteIndex, 4);//1,0
+//      //top-right
+//      TexturedColoredVertex f = getVertex(spriteIndex, 5);//1,1
+      
+      bottomLeft = getVertexPosition(spriteIndex, 0);
+      topRight = getVertexPosition(spriteIndex, 1);
+      topLeft = getVertexPosition(spriteIndex, 2);
+      bottomLeft = getVertexPosition(spriteIndex, 3);
+      bottomRight = getVertexPosition(spriteIndex, 4);
+      topRight = getVertexPosition(spriteIndex, 5);
+      
+  }
+
+  void Sprite2D::setVertexTextureCoordinates(const u64 spriteIndex,
+                                             const btVector2 &bottomLeft,
+                                             const btVector2 &bottomRight,
+                                             const btVector2 &topLeft,
+                                             const btVector2 &topRight)
+  {
+    SDL_assert(spriteIndex < maxNumberOfInstances());
+      
+      
+      /*
+       # bottom-left
+       vt 0.000000 0.000000
+       
+       # top-right
+       vt 1.000000 1.000000
+       
+       # top-left
+       vt 0.000000 1.000000
+       
+       # bottom-right
+       vt 1.000000 0.000000
+       */
+      
+      
+      // bottom-left
+      TexturedColoredVertex a = getVertex(spriteIndex, 0);//0,0
+      // top-right
+      TexturedColoredVertex b = getVertex(spriteIndex, 1);//1,1
+      // top-left
+      TexturedColoredVertex c = getVertex(spriteIndex, 2);//0,1
+      // bottom-left
+      TexturedColoredVertex d = getVertex(spriteIndex, 3);//0,0
+      // bottom-right
+      TexturedColoredVertex e = getVertex(spriteIndex, 4);//1,0
+      //top-right
+      TexturedColoredVertex f = getVertex(spriteIndex, 5);//1,1
+      
+      setVertexTexture(bottomLeft, spriteIndex, 0);
+      setVertexTexture(topRight, spriteIndex, 1);
+      setVertexTexture(topLeft, spriteIndex, 2);
+      setVertexTexture(bottomLeft, spriteIndex, 3);
+      setVertexTexture(bottomRight, spriteIndex, 4);
+      setVertexTexture(topRight, spriteIndex, 5);
+  }
+
+  void Sprite2D::getVertexTextureCoordinates(const u64 spriteIndex,
+                                             btVector2 &bottomLeft,
+                                             btVector2 &bottomRight,
+                                             btVector2 &topLeft,
+                                             btVector2 &topRight) const
+  {
+    SDL_assert(spriteIndex < maxNumberOfInstances());
+      
+      // bottom-left
+      TexturedColoredVertex a = getVertex(spriteIndex, 0);//0,0
+      // top-right
+      TexturedColoredVertex b = getVertex(spriteIndex, 1);//1,1
+      // top-left
+      TexturedColoredVertex c = getVertex(spriteIndex, 2);//0,1
+      // bottom-left
+      TexturedColoredVertex d = getVertex(spriteIndex, 3);//0,0
+      // bottom-right
+      TexturedColoredVertex e = getVertex(spriteIndex, 4);//1,0
+      //top-right
+      TexturedColoredVertex f = getVertex(spriteIndex, 5);//1,1
+      
+      
+      bottomLeft = getVertexTexture(spriteIndex, 0);
+      topRight = getVertexTexture(spriteIndex, 1);
+      topLeft = getVertexTexture(spriteIndex, 2);
+      bottomRight = getVertexTexture(spriteIndex, 4);
+  }
+
+  void Sprite2D::setVertexColors(const u64 spriteIndex,
+                                 const btVector4 &bottomLeft,
+                                 const btVector4 &bottomRight,
+                                 const btVector4 &topLeft,
+                                 const btVector4 &topRight)
+  {
+      SDL_assert(spriteIndex < maxNumberOfInstances());
+      SDL_assert(false);
+      
+      /*
+       # bottom-left
+       v -0.500000 -0.500000 -0.000000
+       
+       # top-left
+       v -0.500000 0.500000 -0.000000
+       
+       # bottom-right
+       v 0.500000 -0.500000 0.000000
+       
+       # top-right
+       v 0.500000 0.500000 0.000000
+       
+       vt 0.000000 0.000000
+       vt 1.000000 1.000000
+       vt 0.000000 1.000000
+       vt 1.000000 0.000000
+       */
+//      bottomLeft = getVertex(spriteIndex, 0).color;
+//      topLeft = getVertex(spriteIndex, 1).color;
+//      bottomRight = getVertex(spriteIndex, 2).color;
+//      topRight = getVertex(spriteIndex, 3).color;
+      
+
 //    m_Sprite2D[spriteIndex].bl.color = bottomLeft;
 //    m_Sprite2D[spriteIndex].br.color = bottomRight;
 //    m_Sprite2D[spriteIndex].tl.color = topLeft;
 //    m_Sprite2D[spriteIndex].tr.color = topRight;
 //
 //    enableBufferModified();
-//  }
-//
-//  void Sprite2D::getVertexColors(const u64 spriteIndex, btVector4 &bottomLeft,
-//                                 btVector4 &bottomRight, btVector4 &topLeft,
-//                                 btVector4 &topRight) const
-//  {
-//    SDL_assert(spriteIndex < getMaxMeshes());
-//
+  }
+
+  void Sprite2D::getVertexColors(const u64 spriteIndex, btVector4 &bottomLeft,
+                                 btVector4 &bottomRight, btVector4 &topLeft,
+                                 btVector4 &topRight) const
+  {
+      SDL_assert(spriteIndex < maxNumberOfInstances());
+      
+      SDL_assert(false && "TODO");
+
 //    bottomLeft = m_Sprite2D[spriteIndex].bl.color;
 //    bottomRight = m_Sprite2D[spriteIndex].br.color;
 //    topLeft = m_Sprite2D[spriteIndex].tl.color;
 //    topRight = m_Sprite2D[spriteIndex].tr.color;
-//  }
+  }
 //
 //  void Sprite2D::load()
 //  {

@@ -1,4 +1,4 @@
-//
+ //
 //  Engine.cpp
 //
 //  Created by James Folk on 9/7/17.
@@ -1613,7 +1613,9 @@ namespace njli
           int fullScreen = 0;
           emscripten_get_canvas_size(&gDisplayMode.w, &gDisplayMode.h, &fullScreen);
 #endif
-      
+          gDisplayMode.w *= pointSizeScale;
+          gDisplayMode.h *= pointSizeScale;
+          
     NJLI_HandleResize(gDisplayMode.w, gDisplayMode.h, gDisplayMode.format,
                       gDisplayMode.refresh_rate);
     //#endif

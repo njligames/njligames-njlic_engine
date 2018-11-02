@@ -1073,6 +1073,7 @@ namespace njli
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
     m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
     m_ModelViewDirty(true),
+    m_OrthographicDirty(true),
     m_ProjectionDirty(true)
   {
   }
@@ -1097,6 +1098,7 @@ namespace njli
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
     m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
     m_ModelViewDirty(true),
+    m_OrthographicDirty(true),
     m_ProjectionDirty(true)
   {
   }
@@ -1114,6 +1116,7 @@ namespace njli
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
     m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
     m_ModelViewDirty(true),
+    m_OrthographicDirty(true),
     m_ProjectionDirty(true)
   {
     // TODO: Implement...
@@ -1840,16 +1843,29 @@ namespace njli
     {
         if (shader)
         {
+            if(m_OrthographicDirty || shouldRedraw)
+            {
+                GLuint orthographic = (m_Orthographic == true)?1:0;
+                if(shader->setUniformValue("orthographicCamera", orthographic))
+                {
+                    m_OrthographicDirty = false;
+                }
+            }
+            
             if (m_ModelViewDirty || shouldRedraw)
             {
                 if(shader->setUniformValue("modelView", getModelView()))
+                {
                     m_ModelViewDirty = false;
+                }
             }
 
             if (m_ProjectionDirty || shouldRedraw)
             {
                 if(shader->setUniformValue("projection", m_ProjectionMatrixArray))
+                {
                     m_ProjectionDirty = false;
+                }
             }
         }
     }
