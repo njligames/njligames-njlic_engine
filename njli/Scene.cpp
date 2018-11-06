@@ -263,225 +263,329 @@ namespace njli
 
   u32 Scene::type() { return JLI_OBJECT_TYPE_Scene; }
 
-  void Scene::update(f32 timeStep, const u32 numSubSteps)
-  {
-    BT_PROFILE("Scene::update");
-      
-      
-      for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
-      {
-          Node *node = (*m_ActiveNodes).at(i);
-          
-          if(node)
-          {
-              node->update(timeStep);
-              
-              Geometry *geometry = node->getGeometry();
-              
-              if (geometry)
-              {
-                  
-                  node->render(geometry);
-                  
-                  if (m_ActiveGeometries.end() ==
-                      std::find(m_ActiveGeometries.begin(), m_ActiveGeometries.end(), geometry))
-                  {
-                      m_ActiveGeometries.push_back(geometry);
-                  }
-              }
-          }
-      }
-      
-      
-      /*
-
-    if (getPhysicsWorld())
-      getPhysicsWorld()->update(timeStep);
-
-    m_ActiveGeometries.clear();
-
-    for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
-      {
-        Node *node = (*m_ActiveNodes).at(i);
-        const u64 geometryIndex = node->getGeometryIndex();
-
-        node->update(timeStep);
-
-        Geometry *geometry = node->getGeometry();
-        if (geometry)
-          {
-            PhysicsBody *physicsBody = node->getPhysicsBody();
-
-            if (physicsBody && geometry->shouldApplyShape(node))
-              geometry->applyShape(node, physicsBody->getPhysicsShape());
-
-            geometry->setTransform(geometryIndex, node->getWorldTransform());
-
-//            geometry->setColorTransform(geometryIndex,
-//                                        node->getColorTransform());
-          }
-      }
-
-    for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
-      {
-        s32 idx = i % (*m_ActiveNodes).size();
-
-        Node *node = (*m_ActiveNodes).at(idx);
-        Geometry *geometry = node->getGeometry();
-        if (geometry)
-          geometry->setTransform(node->getGeometryIndex(),
-                                 node->getWorldTransform());
-      }
-
-    for (s32 i = 0; i < (*m_ActiveParticleEmitters).size(); ++i)
-      {
-        (*m_ActiveParticleEmitters).at(i)->update(timeStep);
-      }
-
-    for (s32 i = 0; i < (*m_ActiveClocks).size(); ++i)
-      {
-        (*m_ActiveClocks).at(i)->update(timeStep);
-      }
-
-    SceneStateMachine *sm = getStateMachine();
-    if (sm)
-      sm->update(timeStep);
-      */
-  }
-
-  void Scene::render(bool is_left)
-  {
-
-      for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
-      {
-          Camera *camera = (*m_ActiveCameras).at(i);
-#if defined(VR)
-          
-          if(camera->getParent())
-          {
-              const float ipd = 0.0635; // inter-pupil distance [m]
-//              const float theta = 2.0f * M_PI * (static_cast<float>(x) / static_cast<float>(width)); // [0, 2 pi]
-              const float theta = 2.0f * M_PI * 0.5f; // [0, 2 pi]
-              const float theta_offset = theta + ( is_left ? 0.0f : M_PI );
-//              const float phi = (fmodf( 2.0f * ( 0.5f * screen_y + 0.5f ) , 1.0f ) - 0.5f ) * M_PI;
-              const float phi = (fmodf( 2.0f * ( 0.5f * 0.5f + 0.5f ) , 1.0f ) - 0.5f ) * M_PI;
-              
-              
-              
-//              nanort::Ray<float> ray;
-//              ray.org[0] = 0.5f * ipd * (-cosf(theta_offset));
-//              ray.org[1] = 0.0f;
-//              ray.org[2] = 0.5f * ipd * (sinf(theta_offset));
-//
-//              float3 dir;
-//              dir[0] = cosf(phi) * -sinf(theta);
-//              dir[1] = sinf(phi);
-//              dir[2] = cosf(phi) * -cosf(theta);
-//              dir.normalize();
-//              ray.dir[0] = dir[0];
-//              ray.dir[1] = dir[1];
-//              ray.dir[2] = dir[2];
-//
-//
-//
-              btVector3 origin(0.5f * ipd * (-cosf(theta_offset)), 0.0f, 0.5f * ipd * (sinf(theta_offset)));
-              btVector3 direction(cosf(phi) * -sinf(theta), sinf(phi), cosf(phi) * -cosf(theta));
-              direction = direction.normalize();
-              
-              m_VRCameraRotation->setOrigin(origin);
-              
-              camera->getParent()->setTransform( (*m_VRCameraRotation));
-          }
-#endif
-          
-          for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
-          {
-              Geometry *geometry = m_ActiveGeometries.at(j);
-              
-              if (geometry && !geometry->isHidden(camera))
-              {
-                  geometry->render(camera);
-              }
-          }
-          
-      }
-      m_ActiveGeometries.clear();
-                  
-      /*
-    //        for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
-    //        {
-    //            Geometry *geometry = m_ActiveGeometries.at(j);
-    //            geometry->getMaterial()->render();
-    //        }
-    //        struct myclass {
-    //            Camera *camera;
-    //            bool operator() (Geometry *i,Geometry *j)
-    //            {
-    //                Node *i_node = i->getParent();
-    //                Node *j_node = j->getParent();
-    //
-    //                btScalar distance_i =
-    //                i_node->getOrigin().distance(camera->getParent()->getOrigin());
-    //                btScalar distance_j =
-    //                j_node->getOrigin().distance(camera->getParent()->getOrigin());
-    //
-    //                return (distance_i > distance_j);
-    //            }
-    //        } myobject;
-
-    for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
-      {
-        Camera *camera = (*m_ActiveCameras).at(i);
-#if defined(VR)
-          if(camera->getParent())
-              camera->getParent()->setTransform(m_VRCameraRotation);
-#endif
-        //            btVector3
-        //            cameraOrigin(camera->getParent()->getWorldTransform().getOrigin());
-
+    void Scene::update(f32 timeStep, const u32 numSubSteps)
+    {
+        BT_PROFILE("Scene::update");
+        
+        if (getPhysicsWorld())
+            getPhysicsWorld()->update(timeStep);
+        
         m_ActiveGeometries.clear();
-
-        for (s32 k = 0; k < (*m_ActiveNodes).size(); ++k)
-          {
-            Node *node = (*m_ActiveNodes).at(k);
+        
+        for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
+        {
+            Node *node = (*m_ActiveNodes).at(i);
+            
+            node->update(timeStep);
+            
             Geometry *geometry = node->getGeometry();
-              
             if (geometry)
-              {
-                  node->render(geometry);
-                  
-                //                geometry->setHidden(node, camera);
-//                geometry->setHidden(node, node->isHidden(camera));
-//                  geometry->setHidden(node);
-                if (m_ActiveGeometries.end() ==
-                    std::find(m_ActiveGeometries.begin(),
-                              m_ActiveGeometries.end(), geometry))
-                  m_ActiveGeometries.push_back(geometry);
-              }
-          }
+            {
+                PhysicsBody *physicsBody = node->getPhysicsBody();
+                if (physicsBody && geometry->shouldApplyShape(node))
+                    geometry->applyShape(node, physicsBody->getPhysicsShape());
 
-        for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
-          {
-            Geometry *geometry = m_ActiveGeometries.at(j);
-
-            if (geometry) // && !geometry->isHidden(camera))
-              {
-                //                    geometry->sort(cameraOrigin);
-                geometry->render(camera);
-              }
-          }
-
-        //            for (s32 j = 0; j < (*m_ActiveParticleEmitters).size();
-        //            ++j)
-        //            {
-        //                (*m_ActiveParticleEmitters).at(j)->render((*m_ActiveCameras).at(i));
-        //            }
-      }
-
-    //        m_BackgroundMaterial->render();
-      
-      */
-  }
+//                node->updateGeometry(geometry);
+            }
+        }
+        
+//        for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
+//        {
+//            s32 idx = i % (*m_ActiveNodes).size();
+//
+//            Node *node = (*m_ActiveNodes).at(idx);
+//
+//            Geometry *geometry = node->getGeometry();
+//            node->updateGeometry(geometry);
+//
+////            Geometry *geometry = node->getGeometry();
+////            if (geometry)
+////                geometry->setTransform(node->getGeometryIndex(),
+////                                       node->getWorldTransform());
+//        }
+        
+        for (s32 i = 0; i < (*m_ActiveParticleEmitters).size(); ++i)
+        {
+            (*m_ActiveParticleEmitters).at(i)->update(timeStep);
+        }
+        
+        for (s32 i = 0; i < (*m_ActiveClocks).size(); ++i)
+        {
+            (*m_ActiveClocks).at(i)->update(timeStep);
+        }
+        
+        SceneStateMachine *sm = getStateMachine();
+        if (sm)
+            sm->update(timeStep);
+    }
+    
+    void Scene::render(bool is_left)
+    {
+        for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
+        {
+            Camera *camera = (*m_ActiveCameras).at(i);
+            //            btVector3
+            //            cameraOrigin(camera->getParent()->getWorldTransform().getOrigin());
+            
+            m_ActiveGeometries.clear();
+            
+            for (s32 k = 0; k < (*m_ActiveNodes).size(); ++k)
+            {
+                Node *node = (*m_ActiveNodes).at(k);
+                
+                Geometry *geometry = node->getGeometry();
+                if (geometry)
+                {
+                    
+                    node->updateGeometry(geometry, node->isHidden(camera));
+                    
+                    //                geometry->setHidden(node, camera);
+//                    geometry->setHidden(node, node->isHidden(camera));
+                    if (m_ActiveGeometries.end() ==
+                        std::find(m_ActiveGeometries.begin(),
+                                  m_ActiveGeometries.end(), geometry))
+                        m_ActiveGeometries.push_back(geometry);
+                }
+            }
+            
+            for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
+            {
+                Geometry *geometry = m_ActiveGeometries.at(j);
+                
+                if (geometry) // && !geometry->isHidden(camera))
+                {
+                    //                    geometry->sort(cameraOrigin);
+                    geometry->render(camera);
+                }
+            }
+            
+            //            for (s32 j = 0; j < (*m_ActiveParticleEmitters).size();
+            //            ++j)
+            //            {
+            //                (*m_ActiveParticleEmitters).at(j)->render((*m_ActiveCameras).at(i));
+            //            }
+        }
+    }
+    
+//  void Scene::update(f32 timeStep, const u32 numSubSteps)
+//  {
+//    BT_PROFILE("Scene::update");
+//
+//
+//      for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
+//      {
+//          Node *node = (*m_ActiveNodes).at(i);
+//
+//          if(node)
+//          {
+//              node->update(timeStep);
+//
+//              Geometry *geometry = node->getGeometry();
+//
+//              if (geometry)
+//              {
+//
+//                  node->render(geometry);
+//
+//                  if (m_ActiveGeometries.end() ==
+//                      std::find(m_ActiveGeometries.begin(), m_ActiveGeometries.end(), geometry))
+//                  {
+//                      m_ActiveGeometries.push_back(geometry);
+//                  }
+//              }
+//          }
+//      }
+//
+//
+//      /*
+//
+//    if (getPhysicsWorld())
+//      getPhysicsWorld()->update(timeStep);
+//
+//    m_ActiveGeometries.clear();
+//
+//    for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
+//      {
+//        Node *node = (*m_ActiveNodes).at(i);
+//        const u64 geometryIndex = node->getGeometryIndex();
+//
+//        node->update(timeStep);
+//
+//        Geometry *geometry = node->getGeometry();
+//        if (geometry)
+//          {
+//            PhysicsBody *physicsBody = node->getPhysicsBody();
+//
+//            if (physicsBody && geometry->shouldApplyShape(node))
+//              geometry->applyShape(node, physicsBody->getPhysicsShape());
+//
+//            geometry->setTransform(geometryIndex, node->getWorldTransform());
+//
+////            geometry->setColorTransform(geometryIndex,
+////                                        node->getColorTransform());
+//          }
+//      }
+//
+//    for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
+//      {
+//        s32 idx = i % (*m_ActiveNodes).size();
+//
+//        Node *node = (*m_ActiveNodes).at(idx);
+//        Geometry *geometry = node->getGeometry();
+//        if (geometry)
+//          geometry->setTransform(node->getGeometryIndex(),
+//                                 node->getWorldTransform());
+//      }
+//
+//    for (s32 i = 0; i < (*m_ActiveParticleEmitters).size(); ++i)
+//      {
+//        (*m_ActiveParticleEmitters).at(i)->update(timeStep);
+//      }
+//
+//    for (s32 i = 0; i < (*m_ActiveClocks).size(); ++i)
+//      {
+//        (*m_ActiveClocks).at(i)->update(timeStep);
+//      }
+//
+//    SceneStateMachine *sm = getStateMachine();
+//    if (sm)
+//      sm->update(timeStep);
+//      */
+//  }
+//
+//  void Scene::render(bool is_left)
+//  {
+//
+//      for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
+//      {
+//          Camera *camera = (*m_ActiveCameras).at(i);
+//#if defined(VR)
+//
+//          if(camera->getParent())
+//          {
+//              const float ipd = 0.0635; // inter-pupil distance [m]
+////              const float theta = 2.0f * M_PI * (static_cast<float>(x) / static_cast<float>(width)); // [0, 2 pi]
+//              const float theta = 2.0f * M_PI * 0.5f; // [0, 2 pi]
+//              const float theta_offset = theta + ( is_left ? 0.0f : M_PI );
+////              const float phi = (fmodf( 2.0f * ( 0.5f * screen_y + 0.5f ) , 1.0f ) - 0.5f ) * M_PI;
+//              const float phi = (fmodf( 2.0f * ( 0.5f * 0.5f + 0.5f ) , 1.0f ) - 0.5f ) * M_PI;
+//
+//
+//
+////              nanort::Ray<float> ray;
+////              ray.org[0] = 0.5f * ipd * (-cosf(theta_offset));
+////              ray.org[1] = 0.0f;
+////              ray.org[2] = 0.5f * ipd * (sinf(theta_offset));
+////
+////              float3 dir;
+////              dir[0] = cosf(phi) * -sinf(theta);
+////              dir[1] = sinf(phi);
+////              dir[2] = cosf(phi) * -cosf(theta);
+////              dir.normalize();
+////              ray.dir[0] = dir[0];
+////              ray.dir[1] = dir[1];
+////              ray.dir[2] = dir[2];
+////
+////
+////
+//              btVector3 origin(0.5f * ipd * (-cosf(theta_offset)), 0.0f, 0.5f * ipd * (sinf(theta_offset)));
+//              btVector3 direction(cosf(phi) * -sinf(theta), sinf(phi), cosf(phi) * -cosf(theta));
+//              direction = direction.normalize();
+//
+//              m_VRCameraRotation->setOrigin(origin);
+//
+//              camera->getParent()->setTransform( (*m_VRCameraRotation));
+//          }
+//#endif
+//
+//          for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
+//          {
+//              Geometry *geometry = m_ActiveGeometries.at(j);
+//
+//              if (geometry && !geometry->isHidden(camera))
+//              {
+//                  geometry->render(camera);
+//              }
+//          }
+//
+//      }
+//      m_ActiveGeometries.clear();
+//
+//      /*
+//    //        for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
+//    //        {
+//    //            Geometry *geometry = m_ActiveGeometries.at(j);
+//    //            geometry->getMaterial()->render();
+//    //        }
+//    //        struct myclass {
+//    //            Camera *camera;
+//    //            bool operator() (Geometry *i,Geometry *j)
+//    //            {
+//    //                Node *i_node = i->getParent();
+//    //                Node *j_node = j->getParent();
+//    //
+//    //                btScalar distance_i =
+//    //                i_node->getOrigin().distance(camera->getParent()->getOrigin());
+//    //                btScalar distance_j =
+//    //                j_node->getOrigin().distance(camera->getParent()->getOrigin());
+//    //
+//    //                return (distance_i > distance_j);
+//    //            }
+//    //        } myobject;
+//
+//    for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
+//      {
+//        Camera *camera = (*m_ActiveCameras).at(i);
+//#if defined(VR)
+//          if(camera->getParent())
+//              camera->getParent()->setTransform(m_VRCameraRotation);
+//#endif
+//        //            btVector3
+//        //            cameraOrigin(camera->getParent()->getWorldTransform().getOrigin());
+//
+//        m_ActiveGeometries.clear();
+//
+//        for (s32 k = 0; k < (*m_ActiveNodes).size(); ++k)
+//          {
+//            Node *node = (*m_ActiveNodes).at(k);
+//            Geometry *geometry = node->getGeometry();
+//
+//            if (geometry)
+//              {
+//                  node->render(geometry);
+//
+//                //                geometry->setHidden(node, camera);
+////                geometry->setHidden(node, node->isHidden(camera));
+////                  geometry->setHidden(node);
+//                if (m_ActiveGeometries.end() ==
+//                    std::find(m_ActiveGeometries.begin(),
+//                              m_ActiveGeometries.end(), geometry))
+//                  m_ActiveGeometries.push_back(geometry);
+//              }
+//          }
+//
+//        for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
+//          {
+//            Geometry *geometry = m_ActiveGeometries.at(j);
+//
+//            if (geometry) // && !geometry->isHidden(camera))
+//              {
+//                //                    geometry->sort(cameraOrigin);
+//                geometry->render(camera);
+//              }
+//          }
+//
+//        //            for (s32 j = 0; j < (*m_ActiveParticleEmitters).size();
+//        //            ++j)
+//        //            {
+//        //                (*m_ActiveParticleEmitters).at(j)->render((*m_ActiveCameras).at(i));
+//        //            }
+//      }
+//
+//    //        m_BackgroundMaterial->render();
+//
+//      */
+//  }
 
   void Scene::setRootNode(Node *node)
   {

@@ -170,7 +170,7 @@ namespace njli
         virtual GLenum getElementIndexType()const;
         
         virtual void setOpacity(Node *node);
-        virtual void setHidden(Node *node);
+        virtual void setHidden(Node *node, bool hidden = true);
         virtual void setColorBase(Node *node);
         
         virtual void applyShape(Node * node, PhysicsShape * physicsShape);

@@ -20,6 +20,7 @@
 #include "NodeStateMachine.h"
 #include "ParticleEmitter.h"
 #include "PhysicsBody.h"
+#include "PhysicsShape.h"
 #include "PhysicsField.h"
 #include "PhysicsWorld.h"
 #include "Scene.h"
@@ -999,7 +1000,7 @@ namespace njli
           {
               g->setOpacity(this);
           }
-          m_OpacityDirty = true;
+//          m_OpacityDirty = true;
       }
   }
 
@@ -1055,7 +1056,7 @@ namespace njli
         if(!(mtx == *m_NormalMatrix))
         {
             *m_NormalMatrix = mtx;
-            m_NormalMatrixDirty = true;
+//            m_NormalMatrixDirty = true;
         }
     }
     
@@ -1066,8 +1067,8 @@ namespace njli
     
     void Node::setColorBase(const btVector4 &color)
     {
-        if(*m_Colorbase != color)
-            m_ColorBaseDirty = true;
+//        if(*m_Colorbase != color)
+//            m_ColorBaseDirty = true;
         *m_Colorbase = color;
     }
     
@@ -1078,8 +1079,8 @@ namespace njli
     
     void Node::enableHideGeometry(bool hidden)
     {
-        if(hidden != m_HideGeometry)
-            m_HiddenDirty = true;
+//        if(hidden != m_HideGeometry)
+//            m_HiddenDirty = true;
         m_HideGeometry = hidden;
         
     }
@@ -1591,7 +1592,13 @@ namespace njli
 
     NodeStateMachine *sm = getStateMachine();
     if (sm != NULL)
+    {
       sm->update(timeStep);
+    }
+      
+
+      
+      
 
     //        Node *parent = getParentNode();
     //        //        if(m_ApplyPhysicsShape || (parent &&
@@ -1602,16 +1609,16 @@ namespace njli
     //        }
   }
     
-    void Node::render(Geometry *const geometry)
+    void Node::updateGeometry(Geometry *const geometry, bool hiddenFromCamera)
     {
         if(geometry)
         {
             const unsigned long geometryIndex = getGeometryIndex();
             
-            if(isTransformDirty())
+//            if(isTransformDirty())
             {
                 geometry->setTransform(geometryIndex, getWorldTransform());
-                resetTransformDirty();
+//                resetTransformDirty();
             }
             
             //            if(m_ColorTransformDirty)
@@ -1620,29 +1627,29 @@ namespace njli
             //                m_ColorTransformDirty = false;
             //            }
             
-            if(m_NormalMatrixDirty)
+//            if(m_NormalMatrixDirty)
             {
                 geometry->setNormalMatrixTransform(geometryIndex, btTransform(getNormalMatrix()));
-                m_NormalMatrixDirty = false;
+//                m_NormalMatrixDirty = false;
             }
             
-            if(m_ColorBaseDirty)
+//            if(m_ColorBaseDirty)
             {
                 geometry->setColorBase(this);
-                m_ColorBaseDirty = false;
+//                m_ColorBaseDirty = false;
             }
             
-            if(m_OpacityDirty)
+//            if(m_OpacityDirty)
             {
                 geometry->setOpacity(this);
-                m_OpacityDirty = false;
+//                m_OpacityDirty = false;
             }
             
-            if(m_HiddenDirty)
-            {
-                geometry->setHidden(this);
-                m_HiddenDirty = false;
-            }
+//            if(m_HiddenDirty)
+//            {
+                geometry->setHidden(this, hiddenFromCamera);
+//                m_HiddenDirty = false;
+//            }
         }
     }
 

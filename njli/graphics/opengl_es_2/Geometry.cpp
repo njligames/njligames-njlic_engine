@@ -527,10 +527,9 @@ namespace njli
         loadData();
         
         assert(m_VertexArray == 0);
-        
+
         glGenVertexArrays_NJLIC(1, &m_VertexArray);
         glBindVertexArray_NJLIC(m_VertexArray);
-        
         {
             {
                 assert(m_ModelViewBuffer == 0);
@@ -638,6 +637,7 @@ namespace njli
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             }
         }
+
         glBindVertexArray_NJLIC(0);
     }
     
@@ -660,10 +660,10 @@ namespace njli
         m_ModelViewBuffer = 0;
         
         if (m_VertexArray)
-        {
-            glDeleteVertexArrays_NJLIC(1, &m_VertexArray);
-        }
-        
+{
+
+        glDeleteVertexArrays_NJLIC(1, &m_VertexArray);
+}
         m_VertexArray = 0;
     }
     
@@ -854,6 +854,7 @@ namespace njli
             
             m_ShaderChanged = false;
             
+
             glBindVertexArray_NJLIC(m_VertexArray);
             
             if(isModelViewBufferChanged())
@@ -889,7 +890,7 @@ namespace njli
             //            glDrawElements(GL_POINTS, maxNumberOfInstances() * numberOfIndices(), getElementIndexType(), (const GLvoid*)0);
             
             glBindVertexArray_NJLIC(0);
-            
+
             if (material)
             {
                 material->unBind();

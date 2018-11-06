@@ -530,31 +530,31 @@ f 2/1/1 4/4/1 3/2/1
 //  {
 //  }
 //
-//  void Sprite2D::applyShape(Node *node, PhysicsShape *physicsShape)
-//  {
-//    btVector2 halfExtends(getDimensions(node) * 0.5f);
-//
-//    //        if(NULL != (shape2d  =
-//    //        dynamic_cast<PhysicsShapeBox2D*>(physicsShape)))
-//    if (strcmp(physicsShape->getClassName(), "PhysicsShapeBox2D") == 0)
-//      {
-//        PhysicsShapeBox2D *shape2d =
-//            reinterpret_cast<PhysicsShapeBox2D *>(physicsShape);
-//        shape2d->setHalfExtends(halfExtends);
-//      }
-//    //        else if(NULL != (shape3d  =
-//    //        dynamic_cast<PhysicsShapeBox*>(physicsShape)))
-//    else if (strcmp(physicsShape->getClassName(), "PhysicsShapeBox") == 0)
-//      {
-//        PhysicsShapeBox *shape3d =
-//            reinterpret_cast<PhysicsShapeBox *>(physicsShape);
-//        btVector3 halfExtends3d(halfExtends.x(), halfExtends.y(), 1.0f);
-//        shape3d->setHalfExtends(halfExtends3d);
-//      }
-//
-//    s64 spriteIndex = node->getGeometryIndex();
-//    m_changedDimensionArray[spriteIndex] = false;
-//  }
+  void Sprite2D::applyShape(Node *node, PhysicsShape *physicsShape)
+  {
+    btVector2 halfExtends(getDimensions(node) * 0.5f);
+
+    //        if(NULL != (shape2d  =
+    //        dynamic_cast<PhysicsShapeBox2D*>(physicsShape)))
+    if (strcmp(physicsShape->getClassName(), "PhysicsShapeBox2D") == 0)
+      {
+        PhysicsShapeBox2D *shape2d =
+            reinterpret_cast<PhysicsShapeBox2D *>(physicsShape);
+        shape2d->setHalfExtends(halfExtends);
+      }
+    //        else if(NULL != (shape3d  =
+    //        dynamic_cast<PhysicsShapeBox*>(physicsShape)))
+    else if (strcmp(physicsShape->getClassName(), "PhysicsShapeBox") == 0)
+      {
+        PhysicsShapeBox *shape3d =
+            reinterpret_cast<PhysicsShapeBox *>(physicsShape);
+        btVector3 halfExtends3d(halfExtends.x(), halfExtends.y(), 1.0f);
+        shape3d->setHalfExtends(halfExtends3d);
+      }
+
+    s64 spriteIndex = node->getGeometryIndex();
+    m_changedDimensionArray[spriteIndex] = false;
+  }
 //
   void Sprite2D::setSpriteAtlasFrame(Node *node, const f32 &xoffset,
                                      const f32 &yoffset, const f32 &xdim,
@@ -677,15 +677,15 @@ f 2/1/1 4/4/1 3/2/1
       }
   }
 
-//  bool Sprite2D::shouldApplyShape(Node *node) const
-//  {
-//    s64 spriteIndex = node->getGeometryIndex();
-//    if (spriteIndex >= 0)
-//      {
-//        return m_changedDimensionArray[spriteIndex];
-//      }
-//    return false;
-//  }
+  bool Sprite2D::shouldApplyShape(Node *node) const
+  {
+    s64 spriteIndex = node->getGeometryIndex();
+    if (spriteIndex >= 0)
+      {
+        return m_changedDimensionArray[spriteIndex];
+      }
+    return false;
+  }
 
   btVector2 Sprite2D::getDimensions(Node *node) const
   {
@@ -709,7 +709,7 @@ f 2/1/1 4/4/1 3/2/1
         f32 bottom = btMax<btScalar>(bottomLeft.y(), bottomRight.y());
 
         dimensions.setX((right - left));
-        dimensions.setY((top - bottom));
+        dimensions.setY((bottom - top));
       }
 
     return dimensions;

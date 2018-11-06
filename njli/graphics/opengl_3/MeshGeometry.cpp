@@ -889,21 +889,21 @@ namespace njli
         }
     }
     
-    void MeshGeometry::setHidden(Node *node)
+    void MeshGeometry::setHidden(Node *node, bool hiddenFromCamera)
     {
         long index = getGeometryIndex(node);
         
         if(index >= 0 && m_VertexData)
         {
-            bool hidden = node->isHiddenGeometry();
+            bool hidden = node->isHiddenGeometry() || hiddenFromCamera;
             
-            float h = (hidden)?1.0f:0.0f;
+            float alpha = (hidden)?0.0f:1.0f;
             
             unsigned long offset = index * numberOfVertices();
             for (unsigned long vertexIndex = 0; vertexIndex < numberOfVertices(); vertexIndex++)
             {
                 btVector4 color(m_VertexData[vertexIndex + offset].color);
-                color.setW(h);
+                color.setW(alpha);
                 
                 m_VertexData[vertexIndex + offset].color = color;
             }

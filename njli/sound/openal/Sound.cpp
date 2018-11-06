@@ -120,6 +120,7 @@ namespace njli
 
     mSpinLock = false;
     mLoaded = false;
+      mLooping = false;
   }
 
   Sound::Sound(const AbstractBuilder &builder) : AbstractFactoryObject(this)
@@ -296,6 +297,11 @@ namespace njli
       Stop();
   }
 
+    void Sound::enableLooping(bool loop)
+    {
+        mLooping = loop;
+    }
+    
   bool Sound::isPaused() { return (mState == PAUSED); }
 
   void Sound::pause() { Pause(); }
@@ -889,6 +895,10 @@ namespace njli
     if (mRemainBuffers <= 0)
       {
         this->Stop();
+          if(mLooping)
+          {
+              this->Play();
+          }
       }
   }
 

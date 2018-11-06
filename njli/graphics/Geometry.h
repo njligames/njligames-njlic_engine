@@ -458,7 +458,7 @@ namespace njli
         void setSpecularTexture(const GLuint t);
         
         virtual void setOpacity(Node *node) = 0;
-        virtual void setHidden(Node *node) = 0;
+        virtual void setHidden(Node *node, bool hidden = true) = 0;
         virtual void setColorBase(Node *node) = 0;
         
         void hide(Camera * camera);

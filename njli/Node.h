@@ -1642,7 +1642,7 @@ namespace njli
       void resetTransformDirty();
       
     void update(f32 timeStep);
-      void render(Geometry *const geometry);
+      void updateGeometry(Geometry *const geometry, bool hiddenFromCamera);
     //        void render(Camera *camera);
     void applyPhysicsBodyTransform(const btTransform &transform);
 
