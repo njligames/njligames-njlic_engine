@@ -1609,10 +1609,10 @@ namespace njli
     //#endif
     //#if defined(__EMSCRIPTEN__)
       
-#if defined(__EMSCRIPTEN__)
-          int fullScreen = 0;
-          emscripten_get_canvas_size(&gDisplayMode.w, &gDisplayMode.h, &fullScreen);
-#endif
+//#if defined(__EMSCRIPTEN__)
+//          int fullScreen = 0;
+//          emscripten_get_canvas_size(&gDisplayMode.w, &gDisplayMode.h, &fullScreen);
+//#endif
           gDisplayMode.w *= pointSizeScale;
           gDisplayMode.h *= pointSizeScale;
           
