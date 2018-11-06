@@ -2,34 +2,8 @@
 #include <signal.h>
 #include <stdio.h>
 
-static void (*pf[100])(void) ;
-
-void signal ( int sig, void (*func)(void) )
-{
-    pf[sig] = func ;
-}
-int raise ( int s  )
-{
-    (*pf[s])() ;
-    return 0 ;
-}
-
-void f1 ( void )
-{
-    puts ( "f1");
-}
-void f2 ( void )
-{
-    puts ( "f2");
-}
-
 int main(int argc, char *argv[])
 {
-     signal ( SIGABRT , f1 ) ;
-     signal ( SIGINT , f2 ) ;
-
-     raise  ( SIGINT  ) ;
-
    return njli::run_main(argc, argv);
 }
 
