@@ -47,13 +47,23 @@ void NJLI_HandleDropFile(const char *filename) { SDL_Log("%s", filename); }
 
 void NJLI_HandleResize(int width, int height, int sdlFormat, float refreshRate)
 {
-#if defined(VR)
-    gDisplayMode.w = height;
+#if defined(__EMSCRIPTEN__)
+     gDisplayMode.h = 725.0f;
+     float div = gDisplayMode.h / 9.0;
+     gDisplayMode.w = div * 16.0f;
+     //      gDisplayMode.h = 600.0f;
+     gDisplayMode.refresh_rate = 60.0f;
 #else
-    gDisplayMode.w = width;
+    #if defined(VR)
+        gDisplayMode.w = height;
+    #else
+        gDisplayMode.w = width;
+    #endif
+    gDisplayMode.h = height;
+    gDisplayMode.refresh_rate = refreshRate;
 #endif
-  gDisplayMode.h = height;
-  gDisplayMode.refresh_rate = refreshRate;
+
+
 
   njli::NJLIGameEngine::resize(gXOffset, gYOffset, gDisplayMode.w,
                                gDisplayMode.h, 0);

@@ -914,8 +914,7 @@ namespace njli
     njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
         buffer, width, height, orientation);
 
-    //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Screen Dimensions:
-    //        `%dx%d`", width, height);
+            // SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Screen Dimensions:`%dx%d`", width, height);
   }
 
   const btVector2 &World::getViewportDimensions() const

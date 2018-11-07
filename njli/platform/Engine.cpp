@@ -1096,8 +1096,10 @@ namespace njli
 
 #if defined(__EMSCRIPTEN__) || defined(__ANDROID__)
 
+    
     NJLI_HandleResize(gDisplayMode.w, gDisplayMode.h, gDisplayMode.format,
                       gDisplayMode.refresh_rate);
+                      
 
 #endif
 
@@ -1594,7 +1596,9 @@ namespace njli
       
       
 //      SDL_GL_GetDrawableSize(gWindow, &w, &h);
+#if !defined(__EMSCRIPTEN__)
         SDL_GL_GetDrawableSize(gWindow, &gDisplayMode.w, &gDisplayMode.h);
+#endif
 //      gDisplayMode.w = drawableW;
 //      gDisplayMode.h = drawableH;
 
@@ -1609,10 +1613,18 @@ namespace njli
     //#endif
     //#if defined(__EMSCRIPTEN__)
       
-//#if defined(__EMSCRIPTEN__)
-//          int fullScreen = 0;
-//          emscripten_get_canvas_size(&gDisplayMode.w, &gDisplayMode.h, &fullScreen);
-//#endif
+    #if defined(__EMSCRIPTEN__)
+//           int fullScreen = 0;
+//           emscripten_get_canvas_size(&gDisplayMode.w, &gDisplayMode.h, &fullScreen);
+
+//           EMSCRIPTEN_RESULT r = emscripten_get_canvas_element_size("#gameCanvas", &gDisplayMode.w, &gDisplayMode.h);
+//           if (r != EMSCRIPTEN_RESULT_SUCCESS) /* handle error */
+//               EmscriptenFullscreenChangeEvent e;
+//           r = emscripten_get_fullscreen_status(&e);
+//           if (r != EMSCRIPTEN_RESULT_SUCCESS) /* handle error */
+//               fullScreen = e.isFullscreen;
+
+#endif
           gDisplayMode.w *= pointSizeScale;
           gDisplayMode.h *= pointSizeScale;
           
