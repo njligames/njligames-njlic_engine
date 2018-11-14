@@ -25,7 +25,7 @@
 
 #if defined(__OPENAL__)
 
-#define PRELOAD_BUFFERS_COUNT 3
+#define PRELOAD_BUFFERS_COUNT 6
 
 #include "btVector3.h"
 struct SoundSource;
