@@ -986,7 +986,7 @@ namespace njli
                   gDone = 1;
                   break;
                 case SDLK_SPACE:
-                  {
+                  {/* 
                     char message[256];
                     SDL_Window *window =
                         SDL_GetWindowFromID(event.key.windowID);
@@ -997,7 +997,7 @@ namespace njli
                                  gLastEvent.yrel);
                     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
                                              "Last mouse position", message,
-                                             window);
+                                             window);*/
                     break;
                   }
                 default:

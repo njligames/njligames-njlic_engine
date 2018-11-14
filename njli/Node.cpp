@@ -1429,16 +1429,20 @@ namespace njli
 
   Node *Node::getChildNode(const u32 index)
   {
-    SDL_assertPrint(index < numberOfChildrenNodes(),
-                    "index must be smaller than the size of the array");
-    return m_Children.at(index);
+      if(index < numberOfChildrenNodes())
+      {
+          return m_Children.at(index);
+      }
+      return NULL;
   }
 
   const Node *Node::getChildNode(const u32 index) const
   {
-    SDL_assertPrint(index < numberOfChildrenNodes(),
-                    "index must be smaller than the size of the array");
-    return m_Children.at(index);
+      if(index < numberOfChildrenNodes())
+      {
+          return m_Children.at(index);
+      }
+      return NULL;
   }
 
   void Node::getChildrenNodes(std::vector<Node *> &children) const
@@ -1532,7 +1536,10 @@ namespace njli
     m_Children.clear();
   }
 
-  u32 Node::numberOfChildrenNodes() const { return m_Children.size(); }
+  u32 Node::numberOfChildrenNodes() const {
+      return m_Children.size();
+      
+  }
 
   void Node::replaceChildNode(Node *oldChild, Node *newChild)
   {
