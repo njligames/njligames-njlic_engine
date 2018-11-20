@@ -1406,7 +1406,7 @@ namespace njli
           }
         else
           {
-            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Unable to load script file");
+            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Unable to load script file (%s)", filePath);
           }
       }
     return false;

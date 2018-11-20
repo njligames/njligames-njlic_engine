@@ -1489,8 +1489,8 @@ namespace njli
           }
         else
           {
-            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        "setTouchCamera() must be called on the scene\n");
+//            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+//                        "setTouchCamera() must be called on the scene\n");
           }
       }
   }
@@ -1575,8 +1575,8 @@ namespace njli
           }
         else
           {
-            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        "setTouchCamera() must be called on the scene\n");
+//            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+//                        "setTouchCamera() must be called on the scene\n");
           }
       }
   }
@@ -1682,8 +1682,8 @@ namespace njli
           }
         else
           {
-            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        "setTouchCamera() must be called on the scene\n");
+//            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+//                        "setTouchCamera() must be called on the scene\n");
           }
       }
   }

@@ -83,6 +83,25 @@ namespace njli
 
   bool NJLIGameEngine::start(int argc, char **argv)
   {
+      std::string main_file("scripts/main.lua");
+      bool found_project_file = false;
+      for(int i = 0; i < argc; ++i)
+      {
+          SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "arg # %d `%s`", i, argv[i]);
+
+          std::string s(argv[i]);
+          if(found_project_file)
+          {
+              main_file = std::string(argv[i]);
+              found_project_file = false;
+          }
+          if(s == "-project")
+          {
+              found_project_file = true;
+          }
+
+      }
+      
     njli::World::getInstance()->getWorldClock()->reset();
 
     //    std::string source = R"(
@@ -100,7 +119,7 @@ namespace njli
     //      }
     //    return ret;
     bool ret = World::getInstance()->getWorldLuaVirtualMachine()->compileFile(
-        "scripts/main.lua");
+        main_file.c_str());
     if (!ret)
       {
       }

@@ -117,10 +117,17 @@ const char *ASSET_PATH(const char *file)
             }
         }
 
-      strcpy(tempBuffer, data_path);
-      if (!HAS_RUNNING_PATH)
-        strcat(tempBuffer, "assets/");
-      strcat(tempBuffer, file);
+        if(file[0] == '/')
+        {
+            strcpy(tempBuffer, file);
+        }
+        else
+        {
+            strcpy(tempBuffer, data_path);
+            if (!HAS_RUNNING_PATH)
+                strcat(tempBuffer, "assets/");
+            strcat(tempBuffer, file);
+        }
     }
 
   return tempBuffer;
