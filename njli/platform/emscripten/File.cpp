@@ -75,6 +75,10 @@ void setRunningPath(const char *file) {}
 
 void setScriptDir(const char *path){}
 
+void setAssetPath(const char *path)
+{
+}
+
 void sleepThread(float milliseconds)
 {
     usleep(milliseconds);

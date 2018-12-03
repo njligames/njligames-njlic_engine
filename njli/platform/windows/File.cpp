@@ -62,6 +62,10 @@ void sleepThread(float milliseconds)
 void setRunningPath(const char *file){}
 void setScriptDir(const char *path) {}
 
+void setAssetPath(const char *path)
+{
+}
+
 const char* DOCUMENT_BASEPATH()
 {
     static char tempBuffer[512];

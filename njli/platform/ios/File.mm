@@ -44,6 +44,10 @@ void setRunningPath(const char *file){}
 
 void setScriptDir(const char *path){}
 
+void setAssetPath(const char *path)
+{
+}
+
 const char *DOCUMENT_BASEPATH()
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
