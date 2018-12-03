@@ -23,6 +23,7 @@ if(NOT ANDROID AND NOT EMSCRIPTEN)
     SOURCES
     "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/.clang-format"
   )
+
 endif()
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -34,6 +35,8 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     configure_file("${CMAKEIN_REPO_DIRECTORY}/platform.in/appletv/FrameworkInfo.plist.in"
       "${CMAKE_BINARY_DIR}/Info.plist")
   else()
+    include(${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/ZerobraneAPI.cmake)
+
     configure_file("${CMAKEIN_REPO_DIRECTORY}/platform.in/macOS/FrameworkInfo.plist.in"
       "${CMAKE_BINARY_DIR}/Info.plist")
   endif()

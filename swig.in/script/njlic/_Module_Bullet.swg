@@ -1,6 +1,6 @@
 %import(module="bullet") "btPrint.h"
 %import(module="bullet") "btVector2.h"
-%import(module="bullet") "btClock.h"
+// %import(module="bullet") "btClock.h"
 //%import(module="bullet") "BulletCollision/BroadphaseCollision/btAxisSweep3.h"
 %import(module="bullet") "BulletCollision/BroadphaseCollision/btBroadphaseInterface.h"
 %import(module="bullet") "BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"

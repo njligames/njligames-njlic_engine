@@ -1123,6 +1123,7 @@ namespace njli
   {
     m_RenderCategory =
         (njliBitCategories)On(m_RenderCategory, camera->getRenderCategory());
+      
     for (std::vector<Node *>::const_iterator iter = m_Children.begin();
          iter != m_Children.end(); ++iter)
       {

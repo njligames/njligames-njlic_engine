@@ -18,6 +18,9 @@
 %{ temp = *(($*1_ltype*)((swig_lua_userdata*)lua_touserdata(L,$input))->ptr);
     $1 = &temp; %}
 %enddef
+#else
+%define SWIG_USERDATA_TYPEMAP(TYPE)
+%enddef
 #endif
 
 
