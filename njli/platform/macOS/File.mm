@@ -18,6 +18,8 @@ bool HAS_RUNNING_PATH = false;
 char SCRIPT_DIR[4096] = "";
 bool HAS_SCRIPT_DIR = false;
 
+char WORKING_DIRECTORY[4096] = "";
+
 // static int emscripten_read(void* cookie, char* buf, int size) {
 //   return AAsset_read((AAsset*)cookie, buf, size);
 // }
@@ -145,6 +147,10 @@ const char *BUNDLE_PATH()
   else
     {
       char *base_path = SDL_GetBasePath();
+        if(strcmp(WORKING_DIRECTORY, "")!=0)
+        {
+            base_path = WORKING_DIRECTORY;
+        }
       if (base_path)
         {
           data_path = base_path;
@@ -200,4 +206,11 @@ void setScriptDir(const char *path)
   SDL_Log("setting the script dir to: %s", SCRIPT_DIR);
 
   HAS_SCRIPT_DIR = true;
+}
+
+void setAssetPath(const char *path)
+{
+    SDL_assert(path != NULL);
+    
+    strcpy(WORKING_DIRECTORY, path);
 }

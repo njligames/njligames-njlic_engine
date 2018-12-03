@@ -90,6 +90,7 @@ namespace njli
           SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "arg # %d `%s`", i, argv[i]);
 
           std::string s(argv[i]);
+          
           if(found_project_file)
           {
               main_file = std::string(argv[i]);

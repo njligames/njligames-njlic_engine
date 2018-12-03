@@ -21,6 +21,9 @@ void setupFileSystem() SIMPLE_FUNCTION;
 
 void setRunningPath(const char *file);
 void setScriptDir(const char *path);
+    
+    
+    void setAssetPath(const char *path);
 
 #ifdef __cplusplus
 }

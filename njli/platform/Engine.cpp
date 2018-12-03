@@ -1315,11 +1315,38 @@ namespace njli
 
   int run_main(int argc, char **argv)
   {
+      
+      
+      
+      
+      
+      std::string working_directory("");
+      bool found_working_dir = false;
+      for(int i = 0; i < argc; ++i)
+      {
+          std::string s(argv[i]);
+          
+          if(found_working_dir)
+          {
+              working_directory = std::string(argv[i]);
+              working_directory += "/";
+              found_working_dir = false;
+              
+              setAssetPath(working_directory.c_str());
+          }
+          if(s == "-working_dir")
+          {
+              found_working_dir = true;
+          }
+          
+      }
+      
+      
 #if (defined(__MACOSX__) && __MACOSX__)
     if (argc > 1)
       {
         //        setRunningPath(argv[1]);
-        setScriptDir(argv[1]);
+//        setScriptDir(argv[1]);
       }
 #endif
 
