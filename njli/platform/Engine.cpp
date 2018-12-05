@@ -1537,10 +1537,11 @@ namespace njli
 #endif
 
       Uint32 flags = SDL_WINDOW_OPENGL;
-//      flags |= SDL_WINDOW_RESIZABLE;
+      
       
 #if defined(__MACOSX__)
-      flags |= SDL_WINDOW_MAXIMIZED;
+      flags |= SDL_WINDOW_RESIZABLE;
+//      flags |= SDL_WINDOW_MAXIMIZED;
       flags |= SDL_WINDOW_ALWAYS_ON_TOP;
       flags |= SDL_WINDOW_UTILITY;
 #endif
@@ -1563,7 +1564,7 @@ namespace njli
     createRenderer();
 #endif
 
-    // SDL_SetWindowSize(gWindow, 100, 100);
+     SDL_SetWindowSize(gWindow, 800, 600);
 
 //    int w, h;
 //    SDL_GetWindowSize(gWindow, &w, &h);
