@@ -953,7 +953,10 @@ namespace njli
             removeChild(currentScene);
 
             SceneStateMachine *sm = currentScene->getStateMachine();
-            sm->clear();
+            if(sm)
+            {
+                sm->clear();
+            }
           }
 
         m_Scene = scene;

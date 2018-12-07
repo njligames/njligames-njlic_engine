@@ -684,7 +684,6 @@ for k, v in pairs(Runtime.TouchCancelled) do v(touch) end
 end
 
 function __NJLIMouseDown(mouse)
-print("__NJLIMouseDown")
 for k, v in pairs(Runtime.MouseDown) do v(mouse) end
 end
 
