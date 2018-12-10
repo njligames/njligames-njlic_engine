@@ -45,6 +45,8 @@ namespace njli
     static void destroyInstance();
     static World *getInstance();
     static bool hasInstance();
+      
+      static bool usingZeroBrane;
 
   private:
     World();
@@ -541,6 +543,8 @@ namespace njli
 
     bool m_AnimationPaused;
     bool m_GamePaused;
+      
+      
   };
 
   inline btVector2 SCREEN()
@@ -549,6 +553,7 @@ namespace njli
       return njli::World::getInstance()->getViewportDimensions();
     return btVector2(0, 0);
   }
+    
 }
 
 #endif /* defined(__JLIGameEngineTest__World__) */

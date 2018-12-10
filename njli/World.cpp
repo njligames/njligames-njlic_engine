@@ -83,6 +83,9 @@ namespace njli
   }
 
   bool World::hasInstance() { return (NULL != s_Instance); }
+    
+    
+    bool World::usingZeroBrane = false;
 
   World::World()
       : m_WorldFactory(new WorldFactory()),

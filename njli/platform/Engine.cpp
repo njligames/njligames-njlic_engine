@@ -27,6 +27,7 @@ using namespace std;
 #include <glm/gtc/type_ptr.hpp>
 
 #include "btTransform.h"
+#include "World.h"
 
 namespace njli
 {
@@ -1333,6 +1334,8 @@ namespace njli
               found_working_dir = false;
               
               setAssetPath(working_directory.c_str());
+              
+              World::usingZeroBrane = true;
           }
           if(s == "-working_dir")
           {
@@ -1564,7 +1567,14 @@ namespace njli
     createRenderer();
 #endif
 
-     SDL_SetWindowSize(gWindow, 800, 600);
+          //4:3
+//     SDL_SetWindowSize(gWindow, 800, 600);
+          //16:9
+          SDL_SetWindowSize(gWindow, 800, 450);
+          //8:5
+//          SDL_SetWindowSize(gWindow, 800, 500);
+          //3:2
+//          SDL_SetWindowSize(gWindow, 800, 533.333333333333333F);
 
 //    int w, h;
 //    SDL_GetWindowSize(gWindow, &w, &h);

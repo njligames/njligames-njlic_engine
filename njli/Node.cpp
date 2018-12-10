@@ -1121,8 +1121,12 @@ namespace njli
 
   void Node::show(Camera *camera)
   {
-    m_RenderCategory =
-        (njliBitCategories)On(m_RenderCategory, camera->getRenderCategory());
+      if(camera)
+      {
+          m_RenderCategory =
+          (njliBitCategories)On(m_RenderCategory, camera->getRenderCategory());
+      }
+    
       
     for (std::vector<Node *>::const_iterator iter = m_Children.begin();
          iter != m_Children.end(); ++iter)
