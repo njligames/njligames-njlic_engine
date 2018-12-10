@@ -620,7 +620,7 @@ namespace njli
     return NULL;
   }
 
-  void Node::setPhysicsBody(PhysicsBody *body)
+  void Node::setPhysicsBody(PhysicsBody *body, bool clearForces)
   {
     SDL_assert(body != NULL);
 
@@ -630,7 +630,7 @@ namespace njli
 
     addChild(m_PhysicsBody);
 
-    getPhysicsBody()->setTransform(getTransform());
+    getPhysicsBody()->setTransform(getTransform(), clearForces);
 
     //        m_ApplyPhysicsShape = true;
   }
@@ -1298,7 +1298,8 @@ namespace njli
   void Node::runAction(Action *action, bool callCompletionFunction)
   {
     addChild(action);
-    AbstractActionable::runAction(action, callCompletionFunction);
+//    AbstractActionable::runAction(action, callCompletionFunction);
+      AbstractActionable::runAction(action, getName(), callCompletionFunction);
   }
 
   void Node::runAction(Action *action, const char *key,

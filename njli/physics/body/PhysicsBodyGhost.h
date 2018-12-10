@@ -173,7 +173,7 @@ namespace njli
                                     PhysicsShape *shape);
 
     virtual bool setTransform(const btTransform &transform =
-                                  btTransform::getIdentity());
+                                  btTransform::getIdentity(), bool clearForces = true);
     virtual bool removePhysicsBody();
 
     virtual const btPairCachingGhostObject *getBody() const;

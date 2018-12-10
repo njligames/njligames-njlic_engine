@@ -320,7 +320,7 @@ namespace njli
     virtual void applyFinalAngularForce();
 
     virtual bool setTransform(const btTransform &transform =
-                                  btTransform::getIdentity());
+                                  btTransform::getIdentity(), bool clearForces = true);
     virtual bool removePhysicsBody();
 
   private:

@@ -1565,16 +1565,27 @@ namespace njli
 
 #if defined(__MACOSX__)
     createRenderer();
+          
+          SDL_DisplayMode DM;
+          SDL_GetCurrentDisplayMode(0, &DM);
+          auto Width = DM.w;
+          auto Height = (DM.w / 16) * 9;
+          
+          
+          
+          //4:3
+          //     SDL_SetWindowSize(gWindow, 800, 600);
+          //16:9
+//          SDL_SetWindowSize(gWindow, 800, 450);
+          SDL_SetWindowSize(gWindow, Width, Height);
+          //8:5
+          //          SDL_SetWindowSize(gWindow, 800, 500);
+          //3:2
+          //          SDL_SetWindowSize(gWindow, 800, 533.333333333333333F);
+          
 #endif
 
-          //4:3
-//     SDL_SetWindowSize(gWindow, 800, 600);
-          //16:9
-          SDL_SetWindowSize(gWindow, 800, 450);
-          //8:5
-//          SDL_SetWindowSize(gWindow, 800, 500);
-          //3:2
-//          SDL_SetWindowSize(gWindow, 800, 533.333333333333333F);
+          
 
 //    int w, h;
 //    SDL_GetWindowSize(gWindow, &w, &h);
