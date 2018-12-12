@@ -18,6 +18,9 @@
 #include "lua.hpp"
 
 #include <map>
+#include "Path.h"
+#include "btMatrix3x3.h"
+#include "btTransform.h"
 
 namespace njli
 {
@@ -243,6 +246,163 @@ namespace njli
     f32 getMaxForce() const;
 
     const btVector3 &getHeadingVector() const;
+      const btVector3 &getCurrentVelocity() const;
+      const btVector3 &getCurrentForce() const;
+   
+      void enable(bool enable=true){m_Enable=enable;}
+      bool isEnabled()const{return m_Enable;}
+      
+  public:
+      static inline btVector3 seek(const btVector3 &targetPos,
+                                   const btVector3 &vehiclePos,
+                                   const btVector3 &vehicleVelocity,
+                                   const float vehicleMaxSpeed = 1.0)
+      {
+          const btVector3 diffPosition(targetPos - vehiclePos);
+          const btVector3 desiredVelocity(diffPosition.normalized() * vehicleMaxSpeed);
+          const btVector3 seek(desiredVelocity - vehicleVelocity);
+          return seek;
+      }
+      
+      static inline btVector3 flee(const btVector3 &targetPos,
+                                       const btVector3 &vehiclePos,
+                                       const btVector3 &vehicleVelocity,
+                                       const float vehicleMaxSpeed = 1.0)
+      {
+          const btVector3 diffPosition(vehiclePos - targetPos);
+          const btVector3 desiredVelocity(diffPosition.normalized() * vehicleMaxSpeed);
+          const btVector3 flee(desiredVelocity - vehicleVelocity);
+          return flee;
+      }
+      
+      
+      
+      
+      
+      static inline btVector3 arrive(const btVector3 &targetPos,
+                                     const btVector3 &vehiclePos,
+                                     const btVector3 &vehicleVelocity,
+                                     const float vehicleMaxSpeed = 1.0,
+                                     float deceleration = 0.3,
+                                     float decelerationTweaker = 1.0)
+      {
+          if(decelerationTweaker > 0 ||
+             deceleration > 0)
+          {
+              btVector3 toTarget(targetPos - vehiclePos);
+              btScalar dist(toTarget.length());
+              
+              if(dist > 0)
+              {
+                  const btScalar decelerationDenominator(deceleration * decelerationTweaker);
+                  assert(decelerationDenominator != 0);
+                  
+                  btScalar speed(dist / decelerationDenominator);
+                  speed = fmin(speed, vehicleMaxSpeed);
+                  
+                  const btVector3 desiredVelocity(toTarget * speed / dist);
+                  
+                  return (desiredVelocity - vehicleVelocity);
+              }
+          }
+          return btVector3(0.0, 0.0, 0.0);
+      }
+      
+      static inline btVector3 pursuit(const btVector3 &evaderPos,
+                                      const btVector3 &evaderHeading,
+                                      const btVector3 &evaderVelocity,
+                                      const float evaderSpeed,
+                                      
+                                      const btVector3 &vehiclePos,
+                                      const btVector3 &vehicleHeading,
+                                      const btVector3 &vehicleVelocity,
+                                      const float vehicleMaxSpeed = 1.0)
+      {
+          //if the evader is ahead and facing the agent then we can just seek
+          //for the evader's current position.
+          const btVector3 toEvader(evaderPos - vehiclePos);
+          const btScalar relativeHeading(vehicleHeading.dot(evaderHeading));
+          
+          if( (toEvader.dot(vehicleHeading) > 0 ) &&
+             (relativeHeading < -0.95)) //acos(0.95)=18 degs
+          {
+              return seek(evaderPos, vehiclePos, vehicleVelocity, vehicleMaxSpeed);
+          }
+          
+          //Not considered ahead so we predict where the evader will be.
+          
+          //the lookahead time is propotional to the distance between the evader
+          //and the pursuer; and is inversely proportional to the sum of the
+          //agent's velocities
+          btScalar lookAheadTime(toEvader.length() / (vehicleMaxSpeed + evaderSpeed));
+          return seek(evaderPos + evaderVelocity * lookAheadTime, vehiclePos, vehicleVelocity, vehicleMaxSpeed);
+      }
+      
+      static inline btVector3 evade(const btVector3 &pursuerPos,
+                                    const btVector3 &pursuerVelocity,
+                                    const float pursuerSpeed,
+                                    
+                                    const btVector3 &vehiclePos,
+                                    const btVector3 &vehicleVelocity,
+                                    const float vehicleMaxSpeed = 1.0)
+      {
+          const btVector3 toPursuer(pursuerPos - vehiclePos);
+          const btScalar lookAheadTime(toPursuer.length() / (vehicleMaxSpeed + pursuerSpeed));
+          
+          return flee(pursuerPos + pursuerVelocity * lookAheadTime, vehiclePos, vehicleVelocity, vehicleMaxSpeed);
+      }
+      
+      static inline btVector3 followPath(const btVector3 &vehiclePos,
+                                         const btVector3 &vehicleVelocity,
+                                         Path &path,
+                                         const btScalar waypointSeekDist,
+                                         const float vehicleMaxSpeed = 1.0,
+                                         float deceleration = 0.3,
+                                         float decelerationTweaker = 1.0)
+      {
+          assert(waypointSeekDist >= 0);
+          
+          if(path.size() > 0)
+          {
+              const btScalar waypointSeekDistSq(waypointSeekDist*waypointSeekDist);
+              
+              if(path.currentWaypoint().distance(vehiclePos) < waypointSeekDistSq)
+              {
+                  path.setNextWaypoint();
+              }
+              
+              if(!path.finished())
+              {
+                  seek(path.currentWaypoint(), vehiclePos, vehicleVelocity, vehicleMaxSpeed);
+              }
+              return arrive(path.currentWaypoint(), vehiclePos, vehicleVelocity, vehicleMaxSpeed, deceleration, decelerationTweaker);
+          }
+          
+          return btVector3(0,0,0);
+      }
+      
+      static inline btVector3 offsetPursuit(const btVector3 &offsetTargetPos,
+                                            const btVector3 &leaderPos,
+                                            const btVector3 &leaderVelocity,
+                                            const btVector3 &leaderSide,
+                                            const float leaderSpeed,
+                                            const btVector3 &vehiclePos,
+                                            const btVector3 &vehicleVelocity,
+                                            const float vehicleMaxSpeed = 1.0,
+                                            float deceleration = 0.3)
+      {
+          const btMatrix3x3 matTransform(btMatrix3x3::getIdentity());
+          
+          btTransform transform(matTransform, leaderPos);
+          
+          const btVector3 worldOffsetPost(transform * offsetTargetPos);
+          const btVector3 toOffset(worldOffsetPost - vehiclePos);
+          
+          const btScalar lookAheadTime = toOffset.length() / (vehicleMaxSpeed + leaderSpeed);
+          
+          return arrive(worldOffsetPost + leaderVelocity * lookAheadTime, vehiclePos, vehicleVelocity, deceleration, 3.0);
+      }
+      
 
   protected:
     f32 getMaxForce2() const;
@@ -264,6 +424,7 @@ namespace njli
     f32 m_MaxSpeed;
     f32 m_MaxForce;
     f32 m_MaxForce2;
+      bool m_Enable;
   };
 }
 

@@ -16,6 +16,7 @@
 #include "Log.h"
 #include "btVector3.h"
 #include "lua.hpp"
+#include <functional>
 
 namespace njli
 {
@@ -340,6 +341,7 @@ namespace njli
     virtual const Node *getTarget(const u32 index) const;
 
   protected:
+      
     /**
      *  <#Description#>
      *
@@ -360,8 +362,7 @@ namespace njli
 
     btVector3 getAverageTargetPosition() const;
 
-    typedef std::vector<Node *> TargetVector;
-    TargetVector m_TargetList;
+    std::vector<Node *> m_TargetList;
 
   private:
     btVector3 *m_CurrentForce;

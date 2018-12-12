@@ -15,7 +15,7 @@
 
 #define TAG "SteeringBehaviorSeparation.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorSeparation\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorSeparation\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -72,15 +72,8 @@ namespace njli
 
   SteeringBehaviorSeparation::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+      std::string temp(string_format(FORMATSTRING, getName()));
+      return temp;
   }
 
   SteeringBehaviorSeparation **

@@ -15,29 +15,31 @@
 
 #define TAG "SteeringBehaviorFollowPath.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorFollowPath\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorFollowPath\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#include "SteeringBehaviorMachine.h"
+
 namespace njli
 {
-  SteeringBehaviorFollowPath::SteeringBehaviorFollowPath() : SteeringBehavior()
+  SteeringBehaviorFollowPath::SteeringBehaviorFollowPath() : SteeringBehavior(),m_CurrentForce(new btVector3(0,0,0)),m_Path(new Path()),m_waypointSeekDist(1.0)
   {
   }
 
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath(
       const AbstractBuilder &builder)
-      : SteeringBehavior(builder)
+    : SteeringBehavior(builder), m_CurrentForce(new btVector3(0,0,0)),m_Path(new Path()),m_waypointSeekDist(1.0)
   {
   }
 
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath(
       const SteeringBehaviorFollowPath &copy)
-      : SteeringBehavior(copy)
+      : SteeringBehavior(copy), m_CurrentForce(new btVector3(0,0,0)),m_Path(new Path(*copy.m_Path)),m_waypointSeekDist(copy.m_waypointSeekDist)
   {
   }
 
-  SteeringBehaviorFollowPath::~SteeringBehaviorFollowPath() {}
+    SteeringBehaviorFollowPath::~SteeringBehaviorFollowPath() {delete m_CurrentForce;delete m_Path;}
 
   SteeringBehaviorFollowPath &SteeringBehaviorFollowPath::
   operator=(const SteeringBehaviorFollowPath &rhs)
@@ -70,18 +72,12 @@ namespace njli
     return SteeringBehaviorFollowPath::type();
   }
 
-  SteeringBehaviorFollowPath::operator std::string() const
-  {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
-  }
+    SteeringBehaviorFollowPath::operator std::string() const
+    {
+        std::string temp(string_format(FORMATSTRING, getName()));
+        return temp;
+//        return njli::JsonJLI::parse(temp.c_str());
+    }
 
   SteeringBehaviorFollowPath **
   SteeringBehaviorFollowPath::createArray(const u32 size)
@@ -206,7 +202,27 @@ namespace njli
 
   const btVector3 &SteeringBehaviorFollowPath::calculateForce()
   {
-    SDL_assertPrint(false, "TODO");
+      if(m_TargetList.size() > 0)
+      {
+          SteeringBehaviorMachine *machine = getParent();
+          assert(machine);
+          
+          const Node *vehicleNode = m_TargetList.at(0);
+          
+          *m_CurrentForce = SteeringBehaviorMachine::followPath(vehicleNode->getOrigin(), machine->getCurrentVelocity(), *m_Path, m_waypointSeekDist, machine->getMaxSpeed());
+      }
+      else
+      {
+          *m_CurrentForce = btVector3(0,0,0);
+      }
+      
     return *m_CurrentForce;
   }
+    
+    void SteeringBehaviorFollowPath::setPath(const Path &path)
+    {
+        *m_Path = path;
+        
+    }
+    const Path &SteeringBehaviorFollowPath::getPath()const{return *m_Path;}
 } // namespace njli

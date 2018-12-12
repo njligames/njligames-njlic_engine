@@ -15,7 +15,7 @@
 
 #define TAG "SteeringBehaviorEvade.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorEvade\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorEvade\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -69,15 +69,8 @@ namespace njli
 
   SteeringBehaviorEvade::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+      std::string temp(string_format(FORMATSTRING, getName()));
+      return temp;
   }
 
   SteeringBehaviorEvade **SteeringBehaviorEvade::createArray(const u32 size)

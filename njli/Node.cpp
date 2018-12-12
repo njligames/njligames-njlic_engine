@@ -40,6 +40,8 @@
 
 #include <algorithm>
 
+#include "SteeringBehavior.h"
+
 namespace njli
 {
   void Node::updateActions(void *_ptr)
@@ -184,7 +186,10 @@ namespace njli
 
   Node::operator std::string() const
   {
-    return njli::JsonJLI::parse(string_format(FORMATSTRING, getName()));
+      std::string temp(string_format(FORMATSTRING, getName()));
+      return temp;
+//      const char *temp = string_format(FORMATSTRING, getName());
+//    return njli::JsonJLI::parse(temp);
   }
 
   Node **Node::createArray(const u32 size)
@@ -472,7 +477,13 @@ namespace njli
     removeSteeringBehaviorMachine();
 
     m_SteeringBehaviorMachine = steeringBehaviorMachine;
+      
+      std::vector<SteeringBehavior*> steeringBehaviors;
+      m_SteeringBehaviorMachine->getSteeringBehaviors(steeringBehaviors);
 
+      Node *node = this;
+      std::for_each(steeringBehaviors.begin(), steeringBehaviors.end(), [node](SteeringBehavior *sb) { sb->addTarget(node); });
+      
     addChild(m_SteeringBehaviorMachine);
   }
 
@@ -480,6 +491,10 @@ namespace njli
   {
     if (getSteeringBehaviorMachine())
       {
+          std::vector<SteeringBehavior*> steeringBehaviors;
+          m_SteeringBehaviorMachine->getSteeringBehaviors(steeringBehaviors);
+          Node *node = this;
+          std::for_each(steeringBehaviors.begin(), steeringBehaviors.end(), [node](SteeringBehavior *sb) { sb->removeTarget(node); });
         removeChild(getSteeringBehaviorMachine());
       }
 
@@ -1590,7 +1605,7 @@ namespace njli
       setNormalMatrix(getWorldTransform().getBasis().inverse().transpose());
 
     SteeringBehaviorMachine *steeringMachine = getSteeringBehaviorMachine();
-    if (steeringMachine)
+    if (steeringMachine && steeringMachine->isEnabled())
       {
         steeringMachine->calculate(timeStep);
       }

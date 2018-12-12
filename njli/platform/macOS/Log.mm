@@ -128,25 +128,33 @@ void njliSleep(unsigned int _ms)
   ////    select( 0, NULL, NULL, NULL, &tv );
 }
 
+static char sBuffer[2048] = "";
 const char *string_format(const char *fmt, ...)
 {
-  std::vector<char> str(100, '\0');
-  va_list ap;
-  while (1)
-    {
-      va_start(ap, fmt);
-      auto n = vsnprintf(str.data(), str.size(), fmt, ap);
-      va_end(ap);
-      if ((n > -1) && (size_t(n) < str.size()))
-        {
-          return str.data();
-        }
-      if (n > -1)
-        str.resize(n + 1);
-      else
-        str.resize(str.size() * 2);
-    }
-  return str.data();
+    va_list args;
+    va_start (args, fmt);
+    vsnprintf (sBuffer,2048,fmt, args);
+//    perror (sBuffer);
+    va_end (args);
+    return sBuffer;
+    
+//  std::vector<char> str(100, '\0');
+//  va_list ap;
+//  while (1)
+//    {
+//      va_start(ap, fmt);
+//      auto n = vsnprintf(str.data(), str.size(), fmt, ap);
+//      va_end(ap);
+//      if ((n > -1) && (size_t(n) < str.size()))
+//        {
+//          return str.data();
+//        }
+//      if (n > -1)
+//        str.resize(n + 1);
+//      else
+//        str.resize(str.size() * 2);
+//    }
+//  return str.data();
 }
 
 // const char* createJsonKeyValue(const char* key, const char* value)

@@ -15,7 +15,7 @@
 
 #define TAG "SteeringBehaviorInterpose.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorInterpose\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorInterpose\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -70,15 +70,8 @@ namespace njli
 
   SteeringBehaviorInterpose::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+      std::string temp(string_format(FORMATSTRING, getName()));
+      return temp;
   }
 
   SteeringBehaviorInterpose **

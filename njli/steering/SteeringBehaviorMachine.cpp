@@ -14,7 +14,7 @@
 #include "World.h"
 #define TAG "SteeringBehaviorMachine.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorMachine\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorMachine\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -29,7 +29,8 @@ namespace njli
         m_HeadingVector(new btVector3(0, 0, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
-        m_MaxForce2(std::numeric_limits<f32>::max())
+        m_MaxForce2(std::numeric_limits<f32>::max()),
+    m_Enable(false)
   {
   }
 
@@ -40,7 +41,8 @@ namespace njli
         m_HeadingVector(new btVector3(0, 0, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
-        m_MaxForce2(std::numeric_limits<f32>::max())
+    m_MaxForce2(std::numeric_limits<f32>::max()),
+    m_Enable(false)
   {
   }
 
@@ -51,7 +53,8 @@ namespace njli
         m_CurrentVelocity(new btVector3(*(copy.m_CurrentVelocity))),
         m_HeadingVector(new btVector3(*(copy.m_HeadingVector))),
         m_MaxSpeed(copy.m_MaxSpeed), m_MaxForce(copy.m_MaxForce),
-        m_MaxForce2(copy.m_MaxForce2)
+    m_MaxForce2(copy.m_MaxForce2),
+    m_Enable(false)
   {
   }
 
@@ -107,15 +110,8 @@ namespace njli
 
   SteeringBehaviorMachine::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+      std::string temp(string_format(FORMATSTRING, getName()));
+      return temp;
   }
 
   SteeringBehaviorMachine **SteeringBehaviorMachine::createArray(const u32 size)
@@ -285,7 +281,7 @@ namespace njli
     SteeringMap::const_iterator iter =
         m_SteeringBehaviorMap.find(steeringBehavior);
 
-    if (iter != m_SteeringBehaviorMap.end())
+    if (iter == m_SteeringBehaviorMap.end())
       {
         m_SteeringBehaviorMap.insert(SteeringPair(steeringBehavior, heuristic));
         addChild(steeringBehavior);
@@ -361,6 +357,16 @@ namespace njli
   {
     return *m_HeadingVector;
   }
+    
+    const btVector3 &SteeringBehaviorMachine::getCurrentVelocity() const
+    {
+        return *m_CurrentVelocity;
+    }
+    
+    const btVector3 &SteeringBehaviorMachine::getCurrentForce() const
+    {
+        return *m_CurrentForce;
+    }
 
   f32 SteeringBehaviorMachine::getMaxForce2() const { return m_MaxForce2; }
 
