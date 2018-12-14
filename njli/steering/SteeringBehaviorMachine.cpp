@@ -29,8 +29,7 @@ namespace njli
         m_HeadingVector(new btVector3(0, 0, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
-        m_MaxForce2(std::numeric_limits<f32>::max()),
-    m_Enable(false)
+        m_MaxForce2(std::numeric_limits<f32>::max()), m_Enable(false)
   {
   }
 
@@ -41,8 +40,7 @@ namespace njli
         m_HeadingVector(new btVector3(0, 0, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
-    m_MaxForce2(std::numeric_limits<f32>::max()),
-    m_Enable(false)
+        m_MaxForce2(std::numeric_limits<f32>::max()), m_Enable(false)
   {
   }
 
@@ -53,8 +51,7 @@ namespace njli
         m_CurrentVelocity(new btVector3(*(copy.m_CurrentVelocity))),
         m_HeadingVector(new btVector3(*(copy.m_HeadingVector))),
         m_MaxSpeed(copy.m_MaxSpeed), m_MaxForce(copy.m_MaxForce),
-    m_MaxForce2(copy.m_MaxForce2),
-    m_Enable(false)
+        m_MaxForce2(copy.m_MaxForce2), m_Enable(false)
   {
   }
 
@@ -110,8 +107,8 @@ namespace njli
 
   SteeringBehaviorMachine::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorMachine **SteeringBehaviorMachine::createArray(const u32 size)
@@ -357,16 +354,16 @@ namespace njli
   {
     return *m_HeadingVector;
   }
-    
-    const btVector3 &SteeringBehaviorMachine::getCurrentVelocity() const
-    {
-        return *m_CurrentVelocity;
-    }
-    
-    const btVector3 &SteeringBehaviorMachine::getCurrentForce() const
-    {
-        return *m_CurrentForce;
-    }
+
+  const btVector3 &SteeringBehaviorMachine::getCurrentVelocity() const
+  {
+    return *m_CurrentVelocity;
+  }
+
+  const btVector3 &SteeringBehaviorMachine::getCurrentForce() const
+  {
+    return *m_CurrentForce;
+  }
 
   f32 SteeringBehaviorMachine::getMaxForce2() const { return m_MaxForce2; }
 

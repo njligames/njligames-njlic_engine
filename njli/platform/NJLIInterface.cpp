@@ -48,22 +48,20 @@ void NJLI_HandleDropFile(const char *filename) { SDL_Log("%s", filename); }
 void NJLI_HandleResize(int width, int height, int sdlFormat, float refreshRate)
 {
 #if defined(__EMSCRIPTEN__)
-     gDisplayMode.h = 725.0f;
-     float div = gDisplayMode.h / 9.0;
-     gDisplayMode.w = div * 16.0f;
-     //      gDisplayMode.h = 600.0f;
-     gDisplayMode.refresh_rate = 60.0f;
+  gDisplayMode.h = 725.0f;
+  float div = gDisplayMode.h / 9.0;
+  gDisplayMode.w = div * 16.0f;
+  //      gDisplayMode.h = 600.0f;
+  gDisplayMode.refresh_rate = 60.0f;
 #else
-    #if defined(VR)
-        gDisplayMode.w = height;
-    #else
-        gDisplayMode.w = width;
-    #endif
-    gDisplayMode.h = height;
-    gDisplayMode.refresh_rate = refreshRate;
+#if defined(VR)
+  gDisplayMode.w = height;
+#else
+  gDisplayMode.w = width;
 #endif
-
-
+  gDisplayMode.h = height;
+  gDisplayMode.refresh_rate = refreshRate;
+#endif
 
   njli::NJLIGameEngine::resize(gXOffset, gYOffset, gDisplayMode.w,
                                gDisplayMode.h, 0);
@@ -178,16 +176,15 @@ void NJLI_HandleCommitText(const char *text, int newCursorPosition) {}
 
 void NJLI_HandleSetComposingText(const char *text, int newCursorPosition) {}
 
-void NJLI_HandleVRCameraRotation(float m11, float m12, float m13,
-                                 float m21, float m22, float m23,
-                                 float m31, float m32, float m33)
+void NJLI_HandleVRCameraRotation(float m11, float m12, float m13, float m21,
+                                 float m22, float m23, float m31, float m32,
+                                 float m33)
 {
-    njli::NJLIGameEngine::setVRCameraRotation(m11, m12, m13,
-                                              m21, m22, m23,
-                                              m31, m32, m33);
+  njli::NJLIGameEngine::setVRCameraRotation(m11, m12, m13, m21, m22, m23, m31,
+                                            m32, m33);
 }
 
 void NJLI_HandleVRCameraRotationYPR(float yaw, float pitch, float roll)
 {
-    njli::NJLIGameEngine::setVRCameraRotation(yaw, pitch, roll);
+  njli::NJLIGameEngine::setVRCameraRotation(yaw, pitch, roll);
 }

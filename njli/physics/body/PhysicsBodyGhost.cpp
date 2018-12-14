@@ -233,7 +233,8 @@ namespace njli
     // TODO: Implement....
   }
 
-  bool PhysicsBodyGhost::setTransform(const btTransform &transform, bool clearForces)
+  bool PhysicsBodyGhost::setTransform(const btTransform &transform,
+                                      bool clearForces)
   {
     // TODO: Implement....
     return false;

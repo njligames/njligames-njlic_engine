@@ -15,7 +15,8 @@
 
 #define TAG "SteeringBehaviorSeparation.cpp"
 
-#define FORMATSTRING "{\"njli::SteeringBehaviorSeparation\":[{\"name\":\"%s\"}]}"
+#define FORMATSTRING                                                           \
+  "{\"njli::SteeringBehaviorSeparation\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -72,8 +73,8 @@ namespace njli
 
   SteeringBehaviorSeparation::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorSeparation **

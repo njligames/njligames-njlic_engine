@@ -68,8 +68,8 @@ namespace njli
 
   SteeringBehaviorSeek::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorSeek **SteeringBehaviorSeek::createArray(const u32 size)

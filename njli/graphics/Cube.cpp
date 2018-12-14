@@ -78,79 +78,71 @@
 
 namespace njli
 {
-//  static const btVector4 DEFAULTCOLOR(1.0, 1.0, 1.0, 1.0);
-//  static const btVector4 REDCOLOR(1.0, 0.0, 0.0, 1.0);
-//  static const btVector4 GREENCOLOR(0.0, 1.0, 0.0, 1.0);
-//  static const btVector4 BLUECOLOR(0.0, 0.0, 1.0, 1.0);
-//
-//  /*
-//   // Back
-//   {{-1, 1, -1}, DEFAULTCOLOR, {1, 0}},
-//   {{-1, -1, -1}, DEFAULTCOLOR, {1, 1}},
-//   {{1, -1, -1}, DEFAULTCOLOR, {0, 1}},
-//   {{1, 1, -1}, DEFAULTCOLOR, {0, 0}},
-//   */
-//  const Geometry::TexturedColoredVertex CubeVertices[] = {
-//      // Front
-//      {{1, -1, 1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
-//      {{1, 1, 1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
-//      {{-1, 1, 1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
-//      {{-1, -1, 1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
-//      // Back
-//      {{1, -1, -1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
-//      {{-1, -1, -1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
-//      {{-1, 1, -1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
-//      {{1, 1, -1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
-//      // Left
-//      {{-1, -1, 1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
-//      {{-1, 1, 1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
-//      {{-1, 1, -1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
-//      {{-1, -1, -1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
-//      // Right
-//      {{1, -1, -1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
-//      {{1, 1, -1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
-//      {{1, 1, 1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
-//      {{1, -1, 1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
-//      // Top
-//      {{1, 1, 1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
-//      {{1, 1, -1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
-//      {{-1, 1, -1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
-//      {{-1, 1, 1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
-//      // Bottom
-//      {{1, -1, -1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
-//      {{1, -1, 1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
-//      {{-1, -1, 1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
-//      {{-1, -1, -1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f}};
-//
-//  const GLubyte Indices[] = {
-//      // Front
-//      0, 1, 2, 2, 3, 0,
-//      // Back
-//      4, 5, 6, 6, 7, 4,
-//      // Left
-//      8, 9, 10, 10, 11, 8,
-//      // Right
-//      12, 13, 14, 14, 15, 12,
-//      // Top
-//      16, 17, 18, 18, 19, 16,
-//      // Bottom
-//      20, 21, 22, 22, 23, 20};
+  //  static const btVector4 DEFAULTCOLOR(1.0, 1.0, 1.0, 1.0);
+  //  static const btVector4 REDCOLOR(1.0, 0.0, 0.0, 1.0);
+  //  static const btVector4 GREENCOLOR(0.0, 1.0, 0.0, 1.0);
+  //  static const btVector4 BLUECOLOR(0.0, 0.0, 1.0, 1.0);
+  //
+  //  /*
+  //   // Back
+  //   {{-1, 1, -1}, DEFAULTCOLOR, {1, 0}},
+  //   {{-1, -1, -1}, DEFAULTCOLOR, {1, 1}},
+  //   {{1, -1, -1}, DEFAULTCOLOR, {0, 1}},
+  //   {{1, 1, -1}, DEFAULTCOLOR, {0, 0}},
+  //   */
+  //  const Geometry::TexturedColoredVertex CubeVertices[] = {
+  //      // Front
+  //      {{1, -1, 1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
+  //      {{1, 1, 1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
+  //      {{-1, 1, 1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
+  //      {{-1, -1, 1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
+  //      // Back
+  //      {{1, -1, -1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
+  //      {{-1, -1, -1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
+  //      {{-1, 1, -1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
+  //      {{1, 1, -1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
+  //      // Left
+  //      {{-1, -1, 1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
+  //      {{-1, 1, 1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
+  //      {{-1, 1, -1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
+  //      {{-1, -1, -1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
+  //      // Right
+  //      {{1, -1, -1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
+  //      {{1, 1, -1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
+  //      {{1, 1, 1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
+  //      {{1, -1, 1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
+  //      // Top
+  //      {{1, 1, 1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
+  //      {{1, 1, -1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
+  //      {{-1, 1, -1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
+  //      {{-1, 1, 1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f},
+  //      // Bottom
+  //      {{1, -1, -1}, DEFAULTCOLOR, {1, 0}, 1.0f, 0.0f},
+  //      {{1, -1, 1}, DEFAULTCOLOR, {1, 1}, 1.0f, 0.0f},
+  //      {{-1, -1, 1}, DEFAULTCOLOR, {0, 1}, 1.0f, 0.0f},
+  //      {{-1, -1, -1}, DEFAULTCOLOR, {0, 0}, 1.0f, 0.0f}};
+  //
+  //  const GLubyte Indices[] = {
+  //      // Front
+  //      0, 1, 2, 2, 3, 0,
+  //      // Back
+  //      4, 5, 6, 6, 7, 4,
+  //      // Left
+  //      8, 9, 10, 10, 11, 8,
+  //      // Right
+  //      12, 13, 14, 14, 15, 12,
+  //      // Top
+  //      16, 17, 18, 18, 19, 16,
+  //      // Bottom
+  //      20, 21, 22, 22, 23, 20};
 
-  Cube::Cube() : MeshGeometry() {  }
+  Cube::Cube() : MeshGeometry() {}
 
-  Cube::Cube(const AbstractBuilder &builder)
-      : MeshGeometry(builder)
-    {
-    }
+  Cube::Cube(const AbstractBuilder &builder) : MeshGeometry(builder) {}
 
-  Cube::Cube(const Cube &copy)
-      : MeshGeometry(copy)
-  {
-  }
+  Cube::Cube(const Cube &copy) : MeshGeometry(copy) {}
 
-  Cube::~Cube()
-  {
-  }
+  Cube::~Cube() {}
 
   Cube &Cube::operator=(const Cube &rhs)
   {
@@ -293,140 +285,143 @@ namespace njli
 
   u32 Cube::type() { return JLI_OBJECT_TYPE_Cube; }
 
-    void Cube::load(ShaderProgram *shader, unsigned int numInstances, unsigned int numSubDivisions)
-    {
-        //TODO: implement
-        assert(false && "need to implement");
-    }
-    
-    
-    
-    
-    
-//  void Cube::getVertices(LevelOfDetail *geometry, btVector3 **vertices,
-//                         Node *node) const
-//  {
-//  }
-//
-//  u64 Cube::getNumberOfVertices(LevelOfDetail *geometry, Node *node) const
-//  {
-//    return 0;
-//  }
-//
-//  void Cube::getVertexColors(LevelOfDetail *geometry, btVector4 **colorVertices,
-//                             Node *node) const
-//  {
-//  }
-//
-//  u64 Cube::getNumberOfVertexColors(LevelOfDetail *geometry, Node *node) const
-//  {
-//    return 0;
-//  }
-//
-//  void Cube::getTextureCoordinates(LevelOfDetail *geometry,
-//                                   btVector2 **textureCoordinates,
-//                                   Node *node) const
-//  {
-//  }
-//
-//  u64 Cube::getNumberOfTextureCoordinates(LevelOfDetail *geometry,
-//                                          Node *node) const
-//  {
-//    return 0;
-//  }
-//
-//  void Cube::setOpacity(Node *node, f32 opacity) {}
-//
-//  void Cube::setHidden(Node *node, bool hidden) {}
-//
-//  bool Cube::isHidden(Node *node) const { return false; }
-//
-//  void Cube::transformVertices(Node *node, const btTransform &transfrom) {}
-//
-//  void Cube::transformVertexColors(Node *node, const btTransform &transform) {}
-//
-//  void Cube::transformTextureCoordinates(Node *node,
-//                                         const btTransform &transform)
-//  {
-//  }
-//
-//  void Cube::applyShape(Node *node, PhysicsShape *physicsShape) {}
-//
-//  void Cube::hideGeometry(Node *) { SDL_assert(false); }
-//
-//  s32 Cube::numberOfVertices() const { return 24; }
-//  s32 Cube::numberOfIndices() const { return 36; }
-//
-//  void Cube::swapVertexData(const size_t idx1, const size_t idx2) {}
-//
-//  void Cube::load()
-//  {
-//    Geometry::load();
-//
-//    m_CubeVerts = new CubeVerts[getMaxMeshes()];
-//
-//    for (int i = 0; i < getMaxMeshes(); i++)
-//      {
-//        for (int j = 0; j < numberOfVertices(); ++j)
-//          {
-//            m_CubeVerts[(i * numberOfVertices())].vertices[j].vertex =
-//                CubeVertices[j].vertex;
-//            m_CubeVerts[(i * numberOfVertices())].vertices[j].texture =
-//                CubeVertices[j].texture;
-//            m_CubeVerts[(i * numberOfVertices())].vertices[j].color =
-//                DEFAULTCOLOR;
-//            m_CubeVerts[(i * numberOfVertices())].vertices[j].opacity = 1.0f;
-//            m_CubeVerts[(i * numberOfVertices())].vertices[j].hidden = 0.0f;
-//          }
-//      }
-//
-//    m_Indexes = new GLushort[getMaxMeshes() * numberOfIndices()];
-//    for (int i = 0; i < getMaxMeshes(); i++)
-//      {
-//        for (int j = 0; j < numberOfIndices(); ++j)
-//          {
-//            m_Indexes[(i * numberOfIndices()) + j] = Indices[j];
-//          }
-//      }
-//  }
-//
-//  void Cube::unLoad()
-//  {
-//    if (m_Indexes)
-//      delete[] m_Indexes;
-//    m_Indexes = NULL;
-//
-//    if (m_CubeVerts)
-//      delete[] m_CubeVerts;
-//    m_CubeVerts = NULL;
-//
-//    Geometry::unLoad();
-//  }
-//
-//  const void *Cube::getArrayBuffer() const { return (const void *)m_CubeVerts; }
-//
-//  s64 Cube::getArrayBufferSize() const
-//  {
-//    return sizeof(CubeVerts) * getMaxMeshes();
-//  }
-//
-//  const void *Cube::getElementArrayBuffer() const
-//  {
-//    return (const void *)m_Indexes;
-//  }
-//
-//  s64 Cube::getElementArrayBufferSize() const
-//  {
-//    return sizeof(GLushort) * getMaxMeshes() * numberOfIndices();
-//  }
-//
-//  void Cube::setSize(Node *node, const btVector3 &position, const f32 halfSize)
-//  {
-//    // TODO: implement
-//  }
-//
-//  void Cube::setColor(Node *node, const btVector4 &color)
-//  {
-//    // TODO: implement
-//  }
+  void Cube::load(ShaderProgram *shader, unsigned int numInstances,
+                  unsigned int numSubDivisions)
+  {
+    // TODO: implement
+    assert(false && "need to implement");
+  }
+
+  //  void Cube::getVertices(LevelOfDetail *geometry, btVector3 **vertices,
+  //                         Node *node) const
+  //  {
+  //  }
+  //
+  //  u64 Cube::getNumberOfVertices(LevelOfDetail *geometry, Node *node) const
+  //  {
+  //    return 0;
+  //  }
+  //
+  //  void Cube::getVertexColors(LevelOfDetail *geometry, btVector4
+  //  **colorVertices,
+  //                             Node *node) const
+  //  {
+  //  }
+  //
+  //  u64 Cube::getNumberOfVertexColors(LevelOfDetail *geometry, Node *node)
+  //  const
+  //  {
+  //    return 0;
+  //  }
+  //
+  //  void Cube::getTextureCoordinates(LevelOfDetail *geometry,
+  //                                   btVector2 **textureCoordinates,
+  //                                   Node *node) const
+  //  {
+  //  }
+  //
+  //  u64 Cube::getNumberOfTextureCoordinates(LevelOfDetail *geometry,
+  //                                          Node *node) const
+  //  {
+  //    return 0;
+  //  }
+  //
+  //  void Cube::setOpacity(Node *node, f32 opacity) {}
+  //
+  //  void Cube::setHidden(Node *node, bool hidden) {}
+  //
+  //  bool Cube::isHidden(Node *node) const { return false; }
+  //
+  //  void Cube::transformVertices(Node *node, const btTransform &transfrom) {}
+  //
+  //  void Cube::transformVertexColors(Node *node, const btTransform &transform)
+  //  {}
+  //
+  //  void Cube::transformTextureCoordinates(Node *node,
+  //                                         const btTransform &transform)
+  //  {
+  //  }
+  //
+  //  void Cube::applyShape(Node *node, PhysicsShape *physicsShape) {}
+  //
+  //  void Cube::hideGeometry(Node *) { SDL_assert(false); }
+  //
+  //  s32 Cube::numberOfVertices() const { return 24; }
+  //  s32 Cube::numberOfIndices() const { return 36; }
+  //
+  //  void Cube::swapVertexData(const size_t idx1, const size_t idx2) {}
+  //
+  //  void Cube::load()
+  //  {
+  //    Geometry::load();
+  //
+  //    m_CubeVerts = new CubeVerts[getMaxMeshes()];
+  //
+  //    for (int i = 0; i < getMaxMeshes(); i++)
+  //      {
+  //        for (int j = 0; j < numberOfVertices(); ++j)
+  //          {
+  //            m_CubeVerts[(i * numberOfVertices())].vertices[j].vertex =
+  //                CubeVertices[j].vertex;
+  //            m_CubeVerts[(i * numberOfVertices())].vertices[j].texture =
+  //                CubeVertices[j].texture;
+  //            m_CubeVerts[(i * numberOfVertices())].vertices[j].color =
+  //                DEFAULTCOLOR;
+  //            m_CubeVerts[(i * numberOfVertices())].vertices[j].opacity
+  //            = 1.0f; m_CubeVerts[(i * numberOfVertices())].vertices[j].hidden
+  //            = 0.0f;
+  //          }
+  //      }
+  //
+  //    m_Indexes = new GLushort[getMaxMeshes() * numberOfIndices()];
+  //    for (int i = 0; i < getMaxMeshes(); i++)
+  //      {
+  //        for (int j = 0; j < numberOfIndices(); ++j)
+  //          {
+  //            m_Indexes[(i * numberOfIndices()) + j] = Indices[j];
+  //          }
+  //      }
+  //  }
+  //
+  //  void Cube::unLoad()
+  //  {
+  //    if (m_Indexes)
+  //      delete[] m_Indexes;
+  //    m_Indexes = NULL;
+  //
+  //    if (m_CubeVerts)
+  //      delete[] m_CubeVerts;
+  //    m_CubeVerts = NULL;
+  //
+  //    Geometry::unLoad();
+  //  }
+  //
+  //  const void *Cube::getArrayBuffer() const { return (const void
+  //  *)m_CubeVerts; }
+  //
+  //  s64 Cube::getArrayBufferSize() const
+  //  {
+  //    return sizeof(CubeVerts) * getMaxMeshes();
+  //  }
+  //
+  //  const void *Cube::getElementArrayBuffer() const
+  //  {
+  //    return (const void *)m_Indexes;
+  //  }
+  //
+  //  s64 Cube::getElementArrayBufferSize() const
+  //  {
+  //    return sizeof(GLushort) * getMaxMeshes() * numberOfIndices();
+  //  }
+  //
+  //  void Cube::setSize(Node *node, const btVector3 &position, const f32
+  //  halfSize)
+  //  {
+  //    // TODO: implement
+  //  }
+  //
+  //  void Cube::setColor(Node *node, const btVector4 &color)
+  //  {
+  //    // TODO: implement
+  //  }
 } // namespace njli

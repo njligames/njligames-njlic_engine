@@ -243,7 +243,7 @@ namespace njli
       void setPath(const Path &path);
       const Path &getPath()const;
       
-      void setWaypointSeekDist(btScalar distance){m_waypointSeekDist = distance;}
+      void setWaypointSeekDist(btScalar distance);
 
   protected:
   private:

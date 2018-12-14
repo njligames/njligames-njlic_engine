@@ -69,8 +69,8 @@ namespace njli
 
   SteeringBehaviorArrive::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorArrive **SteeringBehaviorArrive::createArray(const u32 size)

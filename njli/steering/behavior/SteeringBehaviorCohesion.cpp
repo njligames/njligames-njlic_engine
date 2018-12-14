@@ -70,8 +70,8 @@ namespace njli
 
   SteeringBehaviorCohesion::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorCohesion **

@@ -69,8 +69,8 @@ namespace njli
 
   SteeringBehaviorEvade::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorEvade **SteeringBehaviorEvade::createArray(const u32 size)

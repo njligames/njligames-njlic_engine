@@ -98,6 +98,8 @@ public:
     void debugDraw()const;
     
     operator std::string() const;
+    
+    btScalar averageDistanceBetweenPoints()const;
 };
 
 

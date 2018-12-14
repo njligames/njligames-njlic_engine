@@ -12,6 +12,7 @@
 #include "JLIFactoryTypes.h"
 #include "Material.h"
 #include "Node.h"
+#include "ShaderProgram.h"
 #include "World.h"
 #include "btCollisionObject.h"
 #include "btCollisionShape.h"
@@ -19,7 +20,6 @@
 #include "btDbvtBroadphase.h"
 #include "btVector2.h"
 #include "btVector3.h"
-#include "ShaderProgram.h"
 #include <map>
 
 #define FORMATSTRING "{\"njli::Camera\":[]}"
@@ -1056,50 +1056,44 @@ namespace njli
   Camera::Camera()
       : AbstractFactoryObject(this),
         //    m_Name("MyCamera"),
-    m_Near(0.001),
-    m_Far(1000.0f),
+        m_Near(0.001), m_Far(1000.0f),
 #if defined(VR)
-    m_Fov(120.0f),
+        m_Fov(120.0f),
 #else
-    m_Fov(45.0f),
+        m_Fov(45.0f),
 #endif
-    m_Orthographic(false),
-        m_RenderCategory(JLI_BIT_CATEGORY_NONE),
+        m_Orthographic(false), m_RenderCategory(JLI_BIT_CATEGORY_NONE),
         m_OcclusionBuffer(new OcclusionBuffer()),
         m_SceneRenderer(new SceneRenderer(this)),
         m_projectionMatrix(new btTransform(btTransform::getIdentity())),
         //    m_PropertyChanged(true),
         m_ProjectionMatrixArray(new f32[16]),
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
-    m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
-    m_ModelViewDirty(true),
-    m_OrthographicDirty(true),
-    m_ProjectionDirty(true)
+        m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
+        m_ModelViewDirty(true), m_OrthographicDirty(true),
+        m_ProjectionDirty(true)
   {
   }
 
   Camera::Camera(const AbstractBuilder &builder)
       : AbstractFactoryObject(this),
         //    m_Name("MyCamera"),
-    m_Near(0.001),
-    m_Far(1000.0f),
+        m_Near(0.001), m_Far(1000.0f),
 #if defined(VR)
-    m_Fov(120.0f),
+        m_Fov(120.0f),
 #else
-    m_Fov(45.0f),
+        m_Fov(45.0f),
 #endif
-    m_Orthographic(false),
-        m_RenderCategory(JLI_BIT_CATEGORY_NONE),
+        m_Orthographic(false), m_RenderCategory(JLI_BIT_CATEGORY_NONE),
         m_OcclusionBuffer(new OcclusionBuffer()),
         m_SceneRenderer(new SceneRenderer(this)),
         m_projectionMatrix(new btTransform(btTransform::getIdentity())),
         //    m_PropertyChanged(true),
         m_ProjectionMatrixArray(new f32[16]),
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
-    m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
-    m_ModelViewDirty(true),
-    m_OrthographicDirty(true),
-    m_ProjectionDirty(true)
+        m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
+        m_ModelViewDirty(true), m_OrthographicDirty(true),
+        m_ProjectionDirty(true)
   {
   }
 
@@ -1114,10 +1108,9 @@ namespace njli
         //    m_PropertyChanged(true),
         m_ProjectionMatrixArray(new f32[16]),
         m_ModelViewMatrixArray(new f32[16]), m_ViewPort(new s32[4]),
-    m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
-    m_ModelViewDirty(true),
-    m_OrthographicDirty(true),
-    m_ProjectionDirty(true)
+        m_ModelMatrix(new btScalar[16]), m_ProjectionMatrix(new btScalar[16]),
+        m_ModelViewDirty(true), m_OrthographicDirty(true),
+        m_ProjectionDirty(true)
   {
     // TODO: Implement...
   }
@@ -1838,37 +1831,37 @@ namespace njli
     //    s32 visiblecount=m_SceneRenderer->getNumObjectsDrawn();
     //    NSLog(@"%d visible\n", visiblecount);
   }
-    
-    void Camera::render(ShaderProgram *const shader, bool shouldRedraw)
-    {
-        if (shader)
-        {
-            if(m_OrthographicDirty || shouldRedraw)
-            {
-                GLuint orthographic = (m_Orthographic == true)?1:0;
-                if(shader->setUniformValue("orthographicCamera", orthographic))
-                {
-                    m_OrthographicDirty = false;
-                }
-            }
-            
-            if (m_ModelViewDirty || shouldRedraw)
-            {
-                if(shader->setUniformValue("modelView", getModelView()))
-                {
-                    m_ModelViewDirty = false;
-                }
-            }
 
-            if (m_ProjectionDirty || shouldRedraw)
-            {
-                if(shader->setUniformValue("projection", m_ProjectionMatrixArray))
-                {
-                    m_ProjectionDirty = false;
-                }
-            }
-        }
-    }
+  void Camera::render(ShaderProgram *const shader, bool shouldRedraw)
+  {
+    if (shader)
+      {
+        if (m_OrthographicDirty || shouldRedraw)
+          {
+            GLuint orthographic = (m_Orthographic == true) ? 1 : 0;
+            if (shader->setUniformValue("orthographicCamera", orthographic))
+              {
+                m_OrthographicDirty = false;
+              }
+          }
+
+        if (m_ModelViewDirty || shouldRedraw)
+          {
+            if (shader->setUniformValue("modelView", getModelView()))
+              {
+                m_ModelViewDirty = false;
+              }
+          }
+
+        if (m_ProjectionDirty || shouldRedraw)
+          {
+            if (shader->setUniformValue("projection", m_ProjectionMatrixArray))
+              {
+                m_ProjectionDirty = false;
+              }
+          }
+      }
+  }
 
   //    bool Camera::isPropertyChanged()const
   //    {

@@ -15,7 +15,8 @@
 
 #define TAG "SteeringBehaviorOffsetPursuit.cpp"
 
-#define FORMATSTRING "{\"njli::SteeringBehaviorOffsetPursuit\":[{\"name\":\"%s\"}]}"
+#define FORMATSTRING                                                           \
+  "{\"njli::SteeringBehaviorOffsetPursuit\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -73,8 +74,8 @@ namespace njli
 
   SteeringBehaviorOffsetPursuit::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorOffsetPursuit **

@@ -21,7 +21,8 @@ namespace njli
 
   MeshGeometryBuilder::~MeshGeometryBuilder() {}
 
-  MeshGeometryBuilder &MeshGeometryBuilder::operator=(const MeshGeometryBuilder &rhs)
+  MeshGeometryBuilder &MeshGeometryBuilder::
+  operator=(const MeshGeometryBuilder &rhs)
   {
     if (this != &rhs)
       {
@@ -31,15 +32,25 @@ namespace njli
 
   s32 MeshGeometryBuilder::calculateSerializeBufferSize() const { return 0; }
 
-  void MeshGeometryBuilder::serialize(void *dataBuffer, btSerializer *serializer) const
+  void MeshGeometryBuilder::serialize(void *dataBuffer,
+                                      btSerializer *serializer) const
   {
   }
 
-  u32 MeshGeometryBuilder::getObjectType() const { return JLI_OBJECT_TYPE_MeshGeometry; }
+  u32 MeshGeometryBuilder::getObjectType() const
+  {
+    return JLI_OBJECT_TYPE_MeshGeometry;
+  }
 
-  const char *MeshGeometryBuilder::getClassName() const { return "MeshGeometryBuilder"; }
+  const char *MeshGeometryBuilder::getClassName() const
+  {
+    return "MeshGeometryBuilder";
+  }
 
-  s32 MeshGeometryBuilder::getType() const { return MeshGeometryBuilder::type(); }
+  s32 MeshGeometryBuilder::getType() const
+  {
+    return MeshGeometryBuilder::type();
+  }
 
   MeshGeometryBuilder::operator std::string() const
   {
@@ -48,11 +59,13 @@ namespace njli
 
   MeshGeometryBuilder **MeshGeometryBuilder::createArray(const u32 size)
   {
-    return (MeshGeometryBuilder **)World::getInstance()->getWorldFactory()->createArray(
-        MeshGeometryBuilder::type(), size);
+    return (MeshGeometryBuilder **)World::getInstance()
+        ->getWorldFactory()
+        ->createArray(MeshGeometryBuilder::type(), size);
   }
 
-  void MeshGeometryBuilder::destroyArray(MeshGeometryBuilder **array, const u32 size)
+  void MeshGeometryBuilder::destroyArray(MeshGeometryBuilder **array,
+                                         const u32 size)
   {
     World::getInstance()->getWorldFactory()->destroyArray(
         (AbstractFactoryObject **)array, size);
@@ -61,10 +74,12 @@ namespace njli
   MeshGeometryBuilder *MeshGeometryBuilder::create()
   {
     return dynamic_cast<MeshGeometryBuilder *>(
-        World::getInstance()->getWorldFactory()->create(MeshGeometryBuilder::type()));
+        World::getInstance()->getWorldFactory()->create(
+            MeshGeometryBuilder::type()));
   }
 
-  MeshGeometryBuilder *MeshGeometryBuilder::clone(const MeshGeometryBuilder &object)
+  MeshGeometryBuilder *
+  MeshGeometryBuilder::clone(const MeshGeometryBuilder &object)
   {
     return dynamic_cast<MeshGeometryBuilder *>(
         World::getInstance()->getWorldFactory()->clone(object, false));
@@ -78,7 +93,8 @@ namespace njli
       }
   }
 
-  void MeshGeometryBuilder::load(MeshGeometryBuilder &object, lua_State *L, int index)
+  void MeshGeometryBuilder::load(MeshGeometryBuilder &object, lua_State *L,
+                                 int index)
   {
     // Push another reference to the table on top of the stack (so we know
     // where it is, and this function can work for negative, positive and
@@ -142,5 +158,8 @@ namespace njli
     // Stack is now the same as it was on entry to this function
   }
 
-  u32 MeshGeometryBuilder::type() { return JLI_OBJECT_TYPE_MeshGeometryBuilder; }
+  u32 MeshGeometryBuilder::type()
+  {
+    return JLI_OBJECT_TYPE_MeshGeometryBuilder;
+  }
 } // namespace njli

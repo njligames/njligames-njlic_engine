@@ -15,7 +15,8 @@
 
 #define TAG "SteeringBehaviorObstacleAvoidance.cpp"
 
-#define FORMATSTRING "{\"njli::SteeringBehaviorObstacleAvoidance\":[{\"name\":\"%s\"}]}"
+#define FORMATSTRING                                                           \
+  "{\"njli::SteeringBehaviorObstacleAvoidance\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -74,8 +75,8 @@ namespace njli
 
   SteeringBehaviorObstacleAvoidance::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorObstacleAvoidance **

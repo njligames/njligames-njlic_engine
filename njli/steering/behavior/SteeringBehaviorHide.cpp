@@ -68,8 +68,8 @@ namespace njli
 
   SteeringBehaviorHide::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorHide **SteeringBehaviorHide::createArray(const u32 size)

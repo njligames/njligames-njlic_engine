@@ -26,20 +26,20 @@ namespace njli
   SteeringBehavior::SteeringBehavior()
       : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0))
   {
-      m_TargetList.reserve(100);
+    m_TargetList.reserve(100);
   }
 
   SteeringBehavior::SteeringBehavior(const AbstractBuilder &builder)
       : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0))
   {
-      m_TargetList.reserve(100);
+    m_TargetList.reserve(100);
   }
 
   SteeringBehavior::SteeringBehavior(const SteeringBehavior &copy)
       : AbstractFactoryObject(this),
         m_CurrentForce(new btVector3(*copy.m_CurrentForce))
   {
-      m_TargetList.reserve(100);
+    m_TargetList.reserve(100);
   }
 
   SteeringBehavior::~SteeringBehavior() { delete m_CurrentForce; }
@@ -74,8 +74,8 @@ namespace njli
 
   SteeringBehavior::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehavior **SteeringBehavior::createArray(const u32 size)
@@ -201,11 +201,11 @@ namespace njli
 
     std::vector<Node *>::const_iterator iter =
         std::find(m_TargetList.begin(), m_TargetList.end(), target);
-      
+
     if (iter == m_TargetList.end())
       {
         m_TargetList.push_back(target);
-          size_t size = m_TargetList.size();
+        size_t size = m_TargetList.size();
 
         addChild(target);
       }
@@ -239,11 +239,7 @@ namespace njli
     m_TargetList.clear();
   }
 
-  s32 SteeringBehavior::numberOfTargets() const
-    {
-      return m_TargetList.size();
-      
-  }
+  s32 SteeringBehavior::numberOfTargets() const { return m_TargetList.size(); }
 
   void SteeringBehavior::getTargets(std::vector<Node *> &targets) const
   {
@@ -288,7 +284,6 @@ namespace njli
       }
     return NULL;
   }
-    
 
   void SteeringBehavior::setCurrentForce(const btVector3 &force)
   {

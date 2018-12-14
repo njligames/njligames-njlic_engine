@@ -38,11 +38,10 @@ namespace njli
   WorldSocket::WorldSocket()
       : m_sck(-1),
 #if !defined(_WIN32) && !defined(__ANDROID__)
-      m_sck_addr(), 
+        m_sck_addr(),
 #endif
-      m_buffer(new s8[JLI_SOCKET_BUFFER_SIZE]),
-      m_isConnected(false), 
-      m_SocketData("")
+        m_buffer(new s8[JLI_SOCKET_BUFFER_SIZE]), m_isConnected(false),
+        m_SocketData("")
   {
 #if !defined(_WIN32) && !defined(__ANDROID__)
     m_sck_addr.sin_family = AF_INET;
@@ -224,7 +223,6 @@ namespace njli
     //        }
     //
     //        return isConnected();
-
   }
 
   //#include <algorithm>
@@ -304,7 +302,6 @@ namespace njli
         //            if(len!=-1)
         //                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Received a
         //                message of %lld length", len);
-
       }
 #endif
   }

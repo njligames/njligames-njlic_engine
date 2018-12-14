@@ -14,7 +14,8 @@
 #include "World.h"
 #define TAG "SteeringBehaviorMachineDithered.cpp"
 
-#define FORMATSTRING "{\"njli::SteeringBehaviorMachineDithered\":[{\"name\":\"%s\"}]}"
+#define FORMATSTRING                                                           \
+  "{\"njli::SteeringBehaviorMachineDithered\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -77,8 +78,8 @@ namespace njli
 
   SteeringBehaviorMachineDithered::operator std::string() const
   {
-      std::string temp(string_format(FORMATSTRING, getName()));
-      return temp;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorMachineDithered **
