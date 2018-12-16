@@ -237,12 +237,20 @@ namespace njli
 
   public:
     // TODO: fill in specific methods for SteeringBehaviorOffsetPursuit
+      
+      void setOffsetPosition(const btVector3 &offsetPosition);
+      const btVector3 &getOffsetPosition()const;
 
     virtual const btVector3 &calculateForce();
+      
+      void setDecelerationFactor(float factor){m_VehichleDeceleration=factor;}
+      float getDecelerationFactor()const{return m_VehichleDeceleration;}
 
   protected:
   private:
     btVector3 *m_CurrentForce;
+      btVector3 m_OffsetPosition;
+      float m_VehichleDeceleration;
   };
 }
 

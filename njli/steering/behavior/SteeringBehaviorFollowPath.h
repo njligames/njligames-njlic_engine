@@ -244,12 +244,18 @@ namespace njli
       const Path &getPath()const;
       
       void setWaypointSeekDist(btScalar distance);
+      
+      
+      
+      void setDecelerationFactor(float factor){m_VehichleDeceleration=factor;}
+      float getDecelerationFactor()const{return m_VehichleDeceleration;}
 
   protected:
   private:
     btVector3 *m_CurrentForce;
       Path *m_Path;
       btScalar m_waypointSeekDist;
+      float m_VehichleDeceleration;
   };
 }
 

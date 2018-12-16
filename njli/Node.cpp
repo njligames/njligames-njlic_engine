@@ -466,9 +466,6 @@ namespace njli
     std::vector<SteeringBehavior *> steeringBehaviors;
     m_SteeringBehaviorMachine->getSteeringBehaviors(steeringBehaviors);
 
-    Node *node = this;
-    std::for_each(steeringBehaviors.begin(), steeringBehaviors.end(),
-                  [node](SteeringBehavior *sb) { sb->addTarget(node); });
 
     addChild(m_SteeringBehaviorMachine);
   }
@@ -477,11 +474,6 @@ namespace njli
   {
     if (getSteeringBehaviorMachine())
       {
-        std::vector<SteeringBehavior *> steeringBehaviors;
-        m_SteeringBehaviorMachine->getSteeringBehaviors(steeringBehaviors);
-        Node *node = this;
-        std::for_each(steeringBehaviors.begin(), steeringBehaviors.end(),
-                      [node](SteeringBehavior *sb) { sb->removeTarget(node); });
         removeChild(getSteeringBehaviorMachine());
       }
 

@@ -26,14 +26,14 @@ namespace njli
 {
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath()
       : SteeringBehavior(), m_CurrentForce(new btVector3(0, 0, 0)),
-        m_Path(new Path()), m_waypointSeekDist(1.0)
+        m_Path(new Path()), m_waypointSeekDist(1.0), m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath(
       const AbstractBuilder &builder)
       : SteeringBehavior(builder), m_CurrentForce(new btVector3(0, 0, 0)),
-        m_Path(new Path()), m_waypointSeekDist(1.0)
+        m_Path(new Path()), m_waypointSeekDist(1.0), m_VehichleDeceleration(0.3f)
   {
   }
 
@@ -41,7 +41,7 @@ namespace njli
       const SteeringBehaviorFollowPath &copy)
       : SteeringBehavior(copy), m_CurrentForce(new btVector3(0, 0, 0)),
         m_Path(new Path(*copy.m_Path)),
-        m_waypointSeekDist(copy.m_waypointSeekDist)
+        m_waypointSeekDist(copy.m_waypointSeekDist), m_VehichleDeceleration(0.3f)
   {
   }
 
@@ -212,22 +212,13 @@ namespace njli
 
   const btVector3 &SteeringBehaviorFollowPath::calculateForce()
   {
-    if (m_TargetList.size() > 0)
-      {
-        SteeringBehaviorMachine *machine = getParent();
-        assert(machine);
-
-        const Node *vehicleNode = m_TargetList.at(0);
-
-        *m_CurrentForce = SteeringBehaviorMachine::followPath(
-            vehicleNode->getOrigin(), machine->getCurrentVelocity(), *m_Path,
-            m_waypointSeekDist, machine->getMaxSpeed());
-      }
-    else
-      {
-        *m_CurrentForce = btVector3(0, 0, 0);
-      }
-
+      SteeringBehaviorMachine *machine = getParent();
+      const Node *vehicleNode = machine->getParent();
+      
+      *m_CurrentForce = SteeringBehaviorMachine::followPath(
+                                                            vehicleNode->getOrigin(), machine->getCurrentVelocity(), *m_Path,
+                                                            m_waypointSeekDist, machine->getMaxSpeed(), m_VehichleDeceleration);
+      
     return *m_CurrentForce;
   }
 

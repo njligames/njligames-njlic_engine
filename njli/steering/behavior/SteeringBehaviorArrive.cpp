@@ -19,22 +19,24 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#include "SteeringBehaviorMachine.h"
+
 namespace njli
 {
-  SteeringBehaviorArrive::SteeringBehaviorArrive() : SteeringBehavior() {}
+  SteeringBehaviorArrive::SteeringBehaviorArrive() : SteeringBehavior(), m_CurrentForce(new btVector3(0, 0, 0)), m_VehichleDeceleration(0.3f) {}
 
   SteeringBehaviorArrive::SteeringBehaviorArrive(const AbstractBuilder &builder)
-      : SteeringBehavior(builder)
+      : SteeringBehavior(builder), m_CurrentForce(new btVector3(0, 0, 0)), m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorArrive::SteeringBehaviorArrive(
       const SteeringBehaviorArrive &copy)
-      : SteeringBehavior(copy)
+      : SteeringBehavior(copy), m_CurrentForce(new btVector3(0, 0, 0)), m_VehichleDeceleration(0.3f)
   {
   }
 
-  SteeringBehaviorArrive::~SteeringBehaviorArrive() {}
+    SteeringBehaviorArrive::~SteeringBehaviorArrive() {delete m_CurrentForce;}
 
   SteeringBehaviorArrive &SteeringBehaviorArrive::
   operator=(const SteeringBehaviorArrive &rhs)
@@ -194,7 +196,17 @@ namespace njli
 
   const btVector3 &SteeringBehaviorArrive::calculateForce()
   {
-    SDL_assertPrint(false, "TODO");
-    return *m_CurrentForce;
+      SteeringBehaviorMachine *machine = getParent();
+      const Node *vehicleNode = machine->getParent();
+      const btVector3 vehiclePos(vehicleNode->getOrigin());
+      const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
+      const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
+      
+      for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
+      {
+          *m_CurrentForce += SteeringBehaviorMachine::arrive((*i)->getOrigin(), vehiclePos, vehicleVelocity, vehicleMaxSpeed, m_VehichleDeceleration);
+      }
+      
+      return *m_CurrentForce;
   }
 } // namespace njli

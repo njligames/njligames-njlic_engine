@@ -248,7 +248,7 @@ namespace njli
      *  @section ex1 Lua example
      *  @snippet SteeringBehavior.lua SteeringBehavior_addTarget_
      */
-    s32 addTarget(Node * emitter);
+    s32 addTarget(Node * target);
 
     /**
      *  @author James Folk, 16-02-10 21:02:05

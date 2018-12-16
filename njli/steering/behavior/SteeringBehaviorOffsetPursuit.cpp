@@ -20,26 +20,28 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#include "SteeringBehaviorMachine.h"
+
 namespace njli
 {
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit()
-      : SteeringBehavior()
+      : SteeringBehavior(), m_CurrentForce(new btVector3(0, 0, 0)),m_OffsetPosition(0,0,0), m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit(
       const AbstractBuilder &builder)
-      : SteeringBehavior(builder)
+      : SteeringBehavior(builder), m_CurrentForce(new btVector3(0, 0, 0)),m_OffsetPosition(0,0,0), m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit(
       const SteeringBehaviorOffsetPursuit &copy)
-      : SteeringBehavior(copy)
+      : SteeringBehavior(copy), m_CurrentForce(new btVector3(0, 0, 0)),m_OffsetPosition(copy.m_OffsetPosition), m_VehichleDeceleration(0.3f)
   {
   }
 
-  SteeringBehaviorOffsetPursuit::~SteeringBehaviorOffsetPursuit() {}
+    SteeringBehaviorOffsetPursuit::~SteeringBehaviorOffsetPursuit() {delete m_CurrentForce;}
 
   SteeringBehaviorOffsetPursuit &SteeringBehaviorOffsetPursuit::
   operator=(const SteeringBehaviorOffsetPursuit &rhs)
@@ -200,9 +202,42 @@ namespace njli
     return JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuit;
   }
 
+    void SteeringBehaviorOffsetPursuit::setOffsetPosition(const btVector3 &offsetPosition)
+    {
+        m_OffsetPosition = offsetPosition;
+    }
+    const btVector3 &SteeringBehaviorOffsetPursuit::getOffsetPosition()const
+    {
+        return m_OffsetPosition;
+    }
   const btVector3 &SteeringBehaviorOffsetPursuit::calculateForce()
   {
-    SDL_assertPrint(false, "TODO");
-    return *m_CurrentForce;
+      SteeringBehaviorMachine *machine = getParent();
+      const Node *vehicleNode = machine->getParent();
+      const btVector3 vehiclePos(vehicleNode->getOrigin());
+      const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
+      const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
+      
+      for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
+      {
+          const Node *leader = *i;
+          
+          const btVector3 leaderPos(leader->getOrigin());
+          
+          btVector3 leaderVelocity(0,0,0);
+          btVector3 leaderSide(1.0, 0.0, 0.0);
+          float leaderSpeed(0);
+          
+          if(leader->getSteeringBehaviorMachine() != NULL)
+          {
+              leaderVelocity = leader->getSteeringBehaviorMachine()->getCurrentVelocity();
+              leaderSide = leader->getSteeringBehaviorMachine()->getSideVector();
+              leaderSpeed = leader->getSteeringBehaviorMachine()->getCurrentVelocity().length();
+          }
+          
+          *m_CurrentForce += SteeringBehaviorMachine::offsetPursuit(m_OffsetPosition, leaderPos, leaderVelocity, leaderSide, leaderSpeed, vehiclePos, vehicleVelocity, vehicleMaxSpeed, m_VehichleDeceleration);
+      }
+      
+      return *m_CurrentForce;
   }
 } // namespace njli

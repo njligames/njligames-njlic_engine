@@ -246,6 +246,10 @@ namespace njli
     f32 getMaxForce() const;
 
     const btVector3 &getHeadingVector() const;
+      void setUpVector(const btVector3 &vec);
+      const btVector3 &getUpVector() const;
+    btVector3 getSideVector() const;
+      
       const btVector3 &getCurrentVelocity() const;
       const btVector3 &getCurrentForce() const;
    
@@ -282,19 +286,17 @@ namespace njli
       static inline btVector3 arrive(const btVector3 &targetPos,
                                      const btVector3 &vehiclePos,
                                      const btVector3 &vehicleVelocity,
-                                     const float vehicleMaxSpeed = 1.0,
-                                     float deceleration = 0.3,
-                                     float decelerationTweaker = 1.0)
+                                     const float vehicleMaxSpeed,
+                                     float deceleration)
       {
-          if(decelerationTweaker > 0 ||
-             deceleration > 0)
+          if(deceleration > 0)
           {
               btVector3 toTarget(targetPos - vehiclePos);
               btScalar dist(toTarget.length());
               
               if(dist > 0)
               {
-                  const btScalar decelerationDenominator(deceleration * decelerationTweaker);
+                  const btScalar decelerationDenominator(deceleration);
                   assert(decelerationDenominator != 0);
                   
                   btScalar speed(dist / decelerationDenominator);
@@ -356,9 +358,8 @@ namespace njli
                                          const btVector3 &vehicleVelocity,
                                          Path &path,
                                          const btScalar waypointSeekDist,
-                                         const float vehicleMaxSpeed = 1.0,
-                                         float deceleration = 0.3,
-                                         float decelerationTweaker = 1.0)
+                                         const float vehicleMaxSpeed,
+                                         float deceleration)
       {
           assert(waypointSeekDist >= 0);
           
@@ -375,7 +376,7 @@ namespace njli
               {
                   seek(path.currentWaypoint(), vehiclePos, vehicleVelocity, vehicleMaxSpeed);
               }
-              return arrive(path.currentWaypoint(), vehiclePos, vehicleVelocity, vehicleMaxSpeed, deceleration, decelerationTweaker);
+              return arrive(path.currentWaypoint(), vehiclePos, vehicleVelocity, vehicleMaxSpeed, deceleration);
           }
           
           return btVector3(0,0,0);
@@ -388,8 +389,8 @@ namespace njli
                                             const float leaderSpeed,
                                             const btVector3 &vehiclePos,
                                             const btVector3 &vehicleVelocity,
-                                            const float vehicleMaxSpeed = 1.0,
-                                            float deceleration = 0.3)
+                                            const float vehicleMaxSpeed,
+                                            float deceleration)
       {
           const btMatrix3x3 matTransform(btMatrix3x3::getIdentity());
           
@@ -400,7 +401,8 @@ namespace njli
           
           const btScalar lookAheadTime = toOffset.length() / (vehicleMaxSpeed + leaderSpeed);
           
-          return arrive(worldOffsetPost + leaderVelocity * lookAheadTime, vehiclePos, vehicleVelocity, deceleration, 3.0);
+//          return arrive(worldOffsetPost + leaderVelocity * lookAheadTime, vehiclePos, vehicleVelocity, deceleration, 3.0);
+          return arrive(worldOffsetPost + leaderVelocity * lookAheadTime, vehiclePos, vehicleVelocity, vehicleMaxSpeed, deceleration);
       }
       
 
@@ -421,6 +423,7 @@ namespace njli
     //        std::vector<SteeringPair> m_SteeringBehaviorList;
     btVector3 *m_CurrentVelocity;
     btVector3 *m_HeadingVector;
+      btVector3 *m_UpVector;
     f32 m_MaxSpeed;
     f32 m_MaxForce;
     f32 m_MaxForce2;

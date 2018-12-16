@@ -205,8 +205,7 @@ namespace njli
     if (iter == m_TargetList.end())
       {
         m_TargetList.push_back(target);
-        size_t size = m_TargetList.size();
-
+          
         addChild(target);
       }
 

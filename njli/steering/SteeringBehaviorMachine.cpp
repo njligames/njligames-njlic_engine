@@ -27,6 +27,7 @@ namespace njli
       : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0)),
         m_CurrentVelocity(new btVector3(0, 0, 0)),
         m_HeadingVector(new btVector3(0, 0, 0)),
+    m_UpVector(new btVector3(0, 1, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
         m_MaxForce2(std::numeric_limits<f32>::max()), m_Enable(false)
@@ -38,6 +39,7 @@ namespace njli
       : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0)),
         m_CurrentVelocity(new btVector3(0, 0, 0)),
         m_HeadingVector(new btVector3(0, 0, 0)),
+    m_UpVector(new btVector3(0, 1, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
         m_MaxForce2(std::numeric_limits<f32>::max()), m_Enable(false)
@@ -50,6 +52,7 @@ namespace njli
         m_CurrentForce(new btVector3(*(copy.m_CurrentForce))),
         m_CurrentVelocity(new btVector3(*(copy.m_CurrentVelocity))),
         m_HeadingVector(new btVector3(*(copy.m_HeadingVector))),
+    m_UpVector(new btVector3(0, 1, 0)),
         m_MaxSpeed(copy.m_MaxSpeed), m_MaxForce(copy.m_MaxForce),
         m_MaxForce2(copy.m_MaxForce2), m_Enable(false)
   {
@@ -57,6 +60,9 @@ namespace njli
 
   SteeringBehaviorMachine::~SteeringBehaviorMachine()
   {
+      delete m_UpVector;
+      m_UpVector = NULL;
+      
     delete m_HeadingVector;
     m_HeadingVector = NULL;
 
@@ -72,6 +78,7 @@ namespace njli
   {
     if (this != &rhs)
       {
+          *m_UpVector = *rhs.m_UpVector;
         m_MaxSpeed = rhs.m_MaxSpeed;
         m_MaxForce = rhs.m_MaxForce;
         m_MaxForce2 = rhs.m_MaxForce2;
@@ -354,6 +361,20 @@ namespace njli
   {
     return *m_HeadingVector;
   }
+    void SteeringBehaviorMachine::setUpVector(const btVector3 &vec)
+    {
+        *m_UpVector = vec;
+    }
+    
+    const btVector3 &SteeringBehaviorMachine::getUpVector() const
+    {
+        return *m_UpVector;
+    }
+    
+    btVector3 SteeringBehaviorMachine::getSideVector() const
+    {
+        return getHeadingVector().cross(*m_UpVector);
+    }
 
   const btVector3 &SteeringBehaviorMachine::getCurrentVelocity() const
   {
