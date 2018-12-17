@@ -252,7 +252,6 @@ namespace njli
 
   protected:
   private:
-    btVector3 *m_CurrentForce;
       Path *m_Path;
       btScalar m_waypointSeekDist;
       float m_VehichleDeceleration;

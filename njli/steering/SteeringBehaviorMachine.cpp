@@ -251,91 +251,80 @@ namespace njli
     return *m_CurrentForce;
   }
 
-  bool SteeringBehaviorMachine::setHeuristic(SteeringBehavior *steeringBehavior,
-                                             f32 heuristic)
-  {
-    bool retVal = false;
-
-    removeSteeringBehavior(steeringBehavior);
-    retVal = addSteeringBehavior(steeringBehavior, heuristic);
-
-    return retVal;
-  }
-
-  f32 SteeringBehaviorMachine::getHeuristic(
-      SteeringBehavior *steeringBehavior) const
-  {
-    f32 heuristic = 0;
-    SteeringMap::const_iterator iter =
-        m_SteeringBehaviorMap.find(steeringBehavior);
-
-    if (iter != m_SteeringBehaviorMap.end())
-      {
-        heuristic = iter->second;
-      }
-
-    return heuristic;
-  }
-
   bool SteeringBehaviorMachine::addSteeringBehavior(
-      SteeringBehavior *steeringBehavior, f32 heuristic)
+      SteeringBehavior *steeringBehavior)
   {
     SDL_assert(NULL != steeringBehavior);
-
-    SteeringMap::const_iterator iter =
-        m_SteeringBehaviorMap.find(steeringBehavior);
-
-    if (iter == m_SteeringBehaviorMap.end())
+      
+      std::vector<SteeringBehavior *>::const_iterator iter =
+      std::find(m_SteeringBehaviorVector.begin(), m_SteeringBehaviorVector.end(), steeringBehavior);
+      
+      if (iter == m_SteeringBehaviorVector.end())
       {
-        m_SteeringBehaviorMap.insert(SteeringPair(steeringBehavior, heuristic));
-        addChild(steeringBehavior);
-        return true;
+          m_SteeringBehaviorVector.push_back(steeringBehavior);
+          
+          addChild(steeringBehavior);
+          return true;
       }
-
-    return false;
+      return false;
+      
+//    SteeringMap::const_iterator iter =
+//        m_SteeringBehaviorMap.find(steeringBehavior);
+//
+//    if (iter == m_SteeringBehaviorMap.end())
+//      {
+//        m_SteeringBehaviorMap.insert(SteeringPair(steeringBehavior, heuristic));
+//        addChild(steeringBehavior);
+//        return true;
+//      }
+//
+//    return false;
   }
 
   bool SteeringBehaviorMachine::removeSteeringBehavior(
       SteeringBehavior *steeringBehavior)
   {
     SDL_assert(NULL != steeringBehavior);
-
-    SteeringMap::const_iterator iter =
-        m_SteeringBehaviorMap.find(steeringBehavior);
-
-    if (iter != m_SteeringBehaviorMap.end())
+      
+      std::vector<SteeringBehavior *>::const_iterator iter =
+      std::find(m_SteeringBehaviorVector.begin(), m_SteeringBehaviorVector.end(), steeringBehavior);
+      
+      if (iter != m_SteeringBehaviorVector.end())
       {
-        m_SteeringBehaviorMap.erase(iter);
-        removeChild(iter->first);
-        return true;
+          m_SteeringBehaviorVector.erase(iter);
+          
+          removeChild(*iter);
+          
+          return true;
       }
-
-    return false;
+      return false;
   }
 
   void SteeringBehaviorMachine::removeAllSteeringBehaviors()
   {
-    for (SteeringMap::iterator iter = m_SteeringBehaviorMap.begin();
-         iter != m_SteeringBehaviorMap.end(); ++iter)
+      for (std::vector<SteeringBehavior*>::iterator iter = m_SteeringBehaviorVector.begin();
+         iter != m_SteeringBehaviorVector.end(); ++iter)
       {
-        removeChild(iter->first);
+        removeChild(*iter);
       }
-    m_SteeringBehaviorMap.clear();
+    m_SteeringBehaviorVector.clear();
   }
 
   u64 SteeringBehaviorMachine::numberOfSteeringBehaviors() const
   {
-    return m_SteeringBehaviorMap.size();
+    return m_SteeringBehaviorVector.size();
   }
 
   void SteeringBehaviorMachine::getSteeringBehaviors(
       std::vector<SteeringBehavior *> &steeringBehaviors) const
   {
-    for (SteeringMap::const_iterator iter = m_SteeringBehaviorMap.begin();
-         iter != m_SteeringBehaviorMap.end(); ++iter)
-      {
-        steeringBehaviors.push_back(iter->first);
-      }
+//    for (SteeringMap::const_iterator iter = m_SteeringBehaviorMap.begin();
+//         iter != m_SteeringBehaviorMap.end(); ++iter)
+//      {
+//        steeringBehaviors.push_back(iter->first);
+//      }
+      steeringBehaviors.reserve(m_SteeringBehaviorVector.size());
+      std::copy(m_SteeringBehaviorVector.begin(), m_SteeringBehaviorVector.end(), steeringBehaviors.begin());
   }
 
   void SteeringBehaviorMachine::setMaxSpeed(const f32 speed)

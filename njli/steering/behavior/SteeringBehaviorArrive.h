@@ -241,7 +241,6 @@ namespace njli
       
   protected:
   private:
-    btVector3 *m_CurrentForce;
       float m_VehichleDeceleration;
   };
 }

@@ -248,7 +248,6 @@ namespace njli
 
   protected:
   private:
-    btVector3 *m_CurrentForce;
       btVector3 m_OffsetPosition;
       float m_VehichleDeceleration;
   };

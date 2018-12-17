@@ -25,29 +25,33 @@
 namespace njli
 {
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath()
-      : SteeringBehavior(), m_CurrentForce(new btVector3(0, 0, 0)),
-        m_Path(new Path()), m_waypointSeekDist(1.0), m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(),
+    m_Path(new Path()),
+    m_waypointSeekDist(1.0),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath(
       const AbstractBuilder &builder)
-      : SteeringBehavior(builder), m_CurrentForce(new btVector3(0, 0, 0)),
-        m_Path(new Path()), m_waypointSeekDist(1.0), m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(builder),
+        m_Path(new Path()),
+    m_waypointSeekDist(1.0),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath(
       const SteeringBehaviorFollowPath &copy)
-      : SteeringBehavior(copy), m_CurrentForce(new btVector3(0, 0, 0)),
+      : SteeringBehavior(copy),
         m_Path(new Path(*copy.m_Path)),
-        m_waypointSeekDist(copy.m_waypointSeekDist), m_VehichleDeceleration(0.3f)
+        m_waypointSeekDist(copy.m_waypointSeekDist),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorFollowPath::~SteeringBehaviorFollowPath()
   {
-    delete m_CurrentForce;
     delete m_Path;
   }
 

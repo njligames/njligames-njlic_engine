@@ -23,20 +23,24 @@
 
 namespace njli
 {
-  SteeringBehaviorArrive::SteeringBehaviorArrive() : SteeringBehavior(), m_CurrentForce(new btVector3(0, 0, 0)), m_VehichleDeceleration(0.3f) {}
+  SteeringBehaviorArrive::SteeringBehaviorArrive() :
+    SteeringBehavior(),
+    m_VehichleDeceleration(0.3f) {}
 
   SteeringBehaviorArrive::SteeringBehaviorArrive(const AbstractBuilder &builder)
-      : SteeringBehavior(builder), m_CurrentForce(new btVector3(0, 0, 0)), m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(builder),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorArrive::SteeringBehaviorArrive(
       const SteeringBehaviorArrive &copy)
-      : SteeringBehavior(copy), m_CurrentForce(new btVector3(0, 0, 0)), m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(copy),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
-    SteeringBehaviorArrive::~SteeringBehaviorArrive() {delete m_CurrentForce;}
+    SteeringBehaviorArrive::~SteeringBehaviorArrive() {}
 
   SteeringBehaviorArrive &SteeringBehaviorArrive::
   operator=(const SteeringBehaviorArrive &rhs)

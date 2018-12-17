@@ -25,23 +25,29 @@
 namespace njli
 {
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit()
-      : SteeringBehavior(), m_CurrentForce(new btVector3(0, 0, 0)),m_OffsetPosition(0,0,0), m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(),
+    m_OffsetPosition(0,0,0),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit(
       const AbstractBuilder &builder)
-      : SteeringBehavior(builder), m_CurrentForce(new btVector3(0, 0, 0)),m_OffsetPosition(0,0,0), m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(builder),
+    m_OffsetPosition(0,0,0),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit(
       const SteeringBehaviorOffsetPursuit &copy)
-      : SteeringBehavior(copy), m_CurrentForce(new btVector3(0, 0, 0)),m_OffsetPosition(copy.m_OffsetPosition), m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(copy),
+    m_OffsetPosition(copy.m_OffsetPosition),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
-    SteeringBehaviorOffsetPursuit::~SteeringBehaviorOffsetPursuit() {delete m_CurrentForce;}
+    SteeringBehaviorOffsetPursuit::~SteeringBehaviorOffsetPursuit() {}
 
   SteeringBehaviorOffsetPursuit &SteeringBehaviorOffsetPursuit::
   operator=(const SteeringBehaviorOffsetPursuit &rhs)
@@ -218,6 +224,7 @@ namespace njli
       const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
       const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
       
+      *m_CurrentForce = btVector3(0,0,0);
       for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
       {
           const Node *leader = *i;

@@ -21,6 +21,8 @@
 #include "Path.h"
 #include "btMatrix3x3.h"
 #include "btTransform.h"
+#include "btVector3.h"
+#include "btQuaternion.h"
 
 namespace njli
 {
@@ -167,8 +169,8 @@ namespace njli
 
     const btVector3 &getCalculatedForce() const;
 
-    bool setHeuristic(SteeringBehavior * steeringBehavior, f32 heuristic);
-    f32 getHeuristic(SteeringBehavior * steeringBehavior) const;
+//    bool setHeuristic(SteeringBehavior * steeringBehavior, f32 heuristic);
+//    f32 getHeuristic(SteeringBehavior * steeringBehavior) const;
 
     /**
      *  @author James Folk, 16-02-10 21:02:01
@@ -183,8 +185,7 @@ namespace njli
      *  @snippet SteeringBehaviorMachine.lua
      * SteeringBehaviorMachine_addSteeringBehavior_
      */
-    bool addSteeringBehavior(SteeringBehavior * steeringBehavior,
-                             f32 heuristic);
+    bool addSteeringBehavior(SteeringBehavior * steeringBehavior);
 
     /**
      *  @author James Folk, 16-02-10 21:02:05
@@ -405,15 +406,95 @@ namespace njli
           return arrive(worldOffsetPost + leaderVelocity * lookAheadTime, vehiclePos, vehicleVelocity, vehicleMaxSpeed, deceleration);
       }
       
+      static inline btVector3 pointToWorldSpace(const btVector3 &point,
+                                                const btVector3 &agentHeading,
+                                                const btVector3 &agentSide,
+                                                const btVector3 &agentUp,
+                                                const btVector3 &agentPosition)
+      {
+          const float upAngle(btAngle(agentUp, btVector3(0,1,0)));
+          const float sideAngle(btAngle(agentSide, btVector3(1,0,0)));
+          const float headingAngle(btAngle(agentHeading, btVector3(0,0,1)));
+          
+          btQuaternion upRot(btVector3(0,1,0), upAngle);
+          btQuaternion sideRot(btVector3(1,0,0), sideAngle);
+          btQuaternion headingRot(btVector3(0,0,1), headingAngle);
+          
+          
+          btTransform pointTransform(btMatrix3x3(upRot * sideRot * headingRot), point);
+          
+          return pointTransform * agentPosition;
+          
+//          const btMatrix3x3 matTransform(btMatrix3x3::getIdentity());
+//
+//          btTransform transform(matTransform, point);
+//
+//          return transform * offsetTargetPos;
+      }
+      
+      static inline float RandFloat()      {return ((rand())/(RAND_MAX+1.0));}
+      static inline float RandomClamped()    {return RandFloat() - RandFloat();}
+      
+      static inline btVector3 wander(const btVector3 &vehiclePosition,
+                                     btVector3 &wanderTarget,
+                                     float wanderJitter,
+                                     float wanderRadius,
+                                     float wanderDistance,
+                                     const btVector3 &sbClamp = btVector3(1,1,1))
+      {
+          
+//          this behavior is dependent on the update rate, so this line must
+//          be included when using time independent framerate.
+//          double JitterThisTimeSlice = m_dWanderJitter * m_pVehicle->TimeElapsed();
+          const float jitterThisTimeSlice = wanderJitter;
+          wanderTarget += btVector3(RandomClamped() * jitterThisTimeSlice,
+                                      RandomClamped() * jitterThisTimeSlice,
+                                      RandomClamped() * jitterThisTimeSlice);
+          wanderTarget.normalize();
+          wanderTarget *= wanderRadius;
+          const btVector3 target(wanderTarget + (sbClamp * btVector3(wanderDistance, wanderDistance, wanderDistance)));
+          
+          btTransform targetTransform(btMatrix3x3(btMatrix3x3::getIdentity()), target);
+          
+          const btVector3 transformedTarget(targetTransform * target);
+          
+          return (transformedTarget - vehiclePosition) * sbClamp;
+          
+//          //this behavior is dependent on the update rate, so this line must
+//          //be included when using time independent framerate.
+//          double JitterThisTimeSlice = m_dWanderJitter * m_pVehicle->TimeElapsed();
+//          
+//          //first, add a small random vector to the target's position
+//          m_vWanderTarget += Vector2D(RandomClamped() * JitterThisTimeSlice,
+//                                      RandomClamped() * JitterThisTimeSlice);
+//          
+//          //reproject this new vector back on to a unit circle
+//          m_vWanderTarget.Normalize();
+//          
+//          //increase the length of the vector to the same as the radius
+//          //of the wander circle
+//          m_vWanderTarget *= m_dWanderRadius;
+//          
+//          //move the target into a position WanderDist in front of the agent
+//          Vector2D target = m_vWanderTarget + Vector2D(m_dWanderDistance, 0);
+//          
+//          //project the target into world space
+//          Vector2D Target = PointToWorldSpace(target,
+//                                              m_pVehicle->Heading(),
+//                                              m_pVehicle->Side(),
+//                                              m_pVehicle->Pos());
+//          
+//          //and steer towards it
+//          return Target - m_pVehicle->Pos();
+      }
+      
 
   protected:
     f32 getMaxForce2() const;
 
     void setCalculatedForce(const btVector3 &force);
-    typedef std::pair<SteeringBehavior *, f32> SteeringPair;
-    typedef std::map<SteeringBehavior *, f32> SteeringMap;
-
-    SteeringMap m_SteeringBehaviorMap;
+      
+      std::vector<SteeringBehavior*> m_SteeringBehaviorVector;
 
   private:
     virtual const btVector3 &calculate(f32 timestep);

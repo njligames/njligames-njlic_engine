@@ -24,20 +24,28 @@
 namespace njli
 {
   SteeringBehavior::SteeringBehavior()
-      : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0))
+    : AbstractFactoryObject(this),
+    m_CurrentForce(new btVector3(0, 0, 0)),
+    m_Probability(1.0f),
+    m_Weight(1.0f)
   {
     m_TargetList.reserve(100);
   }
 
   SteeringBehavior::SteeringBehavior(const AbstractBuilder &builder)
-      : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0))
+      : AbstractFactoryObject(this),
+    m_CurrentForce(new btVector3(0, 0, 0)),
+    m_Probability(1.0f),
+    m_Weight(1.0f)
   {
     m_TargetList.reserve(100);
   }
 
   SteeringBehavior::SteeringBehavior(const SteeringBehavior &copy)
       : AbstractFactoryObject(this),
-        m_CurrentForce(new btVector3(*copy.m_CurrentForce))
+        m_CurrentForce(new btVector3(*copy.m_CurrentForce)),
+    m_Probability(1.0f),
+    m_Weight(1.0f)
   {
     m_TargetList.reserve(100);
   }

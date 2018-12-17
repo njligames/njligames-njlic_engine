@@ -21,6 +21,8 @@
 #include "SteeringBehavior.h"
 #include "btVector3.h"
 
+#include "SteeringBehaviorMachine.h"
+
 namespace njli
 {
   SteeringBehaviorMachinePrioritized::SteeringBehaviorMachinePrioritized()
@@ -206,9 +208,20 @@ namespace njli
 
   const btVector3 &SteeringBehaviorMachinePrioritized::calculateSteeringForce()
   {
-    btVector3 force(0, 0, 0);
-
-    this->setCalculatedForce(force);
-    return getCalculatedForce();
+      btVector3 force(0, 0, 0);
+      
+      for (std::vector<SteeringBehavior*>::iterator iter = m_SteeringBehaviorVector.begin();
+           iter != m_SteeringBehaviorVector.end(); ++iter)
+      {
+          SteeringBehavior *sb = *iter;
+          if(!accumulateForce(force, sb->calculateForce(), sb->getParent()->getMaxForce()))
+          {
+              this->setCalculatedForce(force);
+              return getCalculatedForce();
+          }
+      }
+      
+      this->setCalculatedForce(force);
+      return getCalculatedForce();
   }
 } // namespace njli

@@ -340,7 +340,12 @@ namespace njli
      */
     virtual const Node *getTarget(const u32 index) const;
 
-  protected:
+      void setProbability(float probability){m_Probability = probability;}
+      float getProbability()const{return m_Probability;}
+      
+      void setWeight(float weight){m_Weight=weight;}
+      float getWeight()const{return m_Weight;}
+  
       
     /**
      *  <#Description#>
@@ -354,7 +359,7 @@ namespace njli
      *  @return <#return value description#>
      */
     const SteeringBehaviorMachine *getParent() const;
-
+protected:
     void setCurrentForce(const btVector3 &force);
 
     bool hasOwner() const;
@@ -364,8 +369,11 @@ namespace njli
 
     std::vector<Node *> m_TargetList;
 
-  private:
+  
     btVector3 *m_CurrentForce;
+  private:
+      float m_Probability;
+      float m_Weight;
   };
 }
 
