@@ -19,6 +19,8 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#include "SteeringBehaviorMachine.h"
+
 namespace njli
 {
   SteeringBehaviorPursuit::SteeringBehaviorPursuit() : SteeringBehavior() {}
@@ -194,8 +196,35 @@ namespace njli
   }
 
   const btVector3 &SteeringBehaviorPursuit::calculateForce()
-  {
-    SDL_assertPrint(false, "TODO");
-    return *m_CurrentForce;
-  }
+    {
+        SteeringBehaviorMachine *machine = getParent();
+        const Node *vehicleNode = machine->getParent();
+        const btVector3 vehiclePos(vehicleNode->getOrigin());
+        const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
+        const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
+        const btVector3 vehicleHeading(vehicleNode->getSteeringBehaviorMachine()->getHeadingVector());
+        
+        *m_CurrentForce = btVector3(0,0,0);
+        for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
+        {
+            const Node *leader = *i;
+            
+            const btVector3 leaderPos(leader->getOrigin());
+            
+            btVector3 leaderVelocity(0,0,0);
+            btVector3 leaderHeading(0.0, 0.0, 1.0);
+            float leaderSpeed(0);
+            
+            if(leader->getSteeringBehaviorMachine() != NULL)
+            {
+                leaderVelocity = leader->getSteeringBehaviorMachine()->getCurrentVelocity();
+                leaderHeading = leader->getSteeringBehaviorMachine()->getHeadingVector();
+                leaderSpeed = leader->getSteeringBehaviorMachine()->getCurrentVelocity().length();
+            }
+            
+            *m_CurrentForce += SteeringBehaviorMachine::pursuit(leaderPos, leaderHeading, leaderVelocity, leaderSpeed, vehiclePos, vehicleHeading, vehicleVelocity, vehicleMaxSpeed);
+        }
+        
+        return *m_CurrentForce;
+    }
 } // namespace njli

@@ -23,10 +23,11 @@
 
 namespace njli
 {
+    
   SteeringBehaviorMachine::SteeringBehaviorMachine()
       : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0)),
         m_CurrentVelocity(new btVector3(0, 0, 0)),
-        m_HeadingVector(new btVector3(0, 0, 0)),
+        m_HeadingVector(new btVector3(0, 0, 1)),
     m_UpVector(new btVector3(0, 1, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
@@ -38,7 +39,7 @@ namespace njli
       const AbstractBuilder &builder)
       : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0)),
         m_CurrentVelocity(new btVector3(0, 0, 0)),
-        m_HeadingVector(new btVector3(0, 0, 0)),
+        m_HeadingVector(new btVector3(0, 0, 1)),
     m_UpVector(new btVector3(0, 1, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
@@ -418,7 +419,13 @@ namespace njli
 
         if (m_CurrentVelocity->length() > 0.00000001)
           {
-            *m_HeadingVector = m_CurrentVelocity->normalized();
+              const btVector3 newHeading(m_CurrentVelocity->normalized());
+              const float angle(btAngle(newHeading, *m_HeadingVector));
+              const btVector3 axis(btCross(newHeading, *m_HeadingVector));
+//              *m_UpVector = quatRotate(btQuaternion(axis, angle), getUpVector()).normalize();
+              
+              *m_HeadingVector = newHeading;
+              
           }
       }
 

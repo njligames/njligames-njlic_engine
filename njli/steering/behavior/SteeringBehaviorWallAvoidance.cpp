@@ -20,6 +20,8 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#include "SteeringBehaviorMachine.h"
+
 namespace njli
 {
   SteeringBehaviorWallAvoidance::SteeringBehaviorWallAvoidance()

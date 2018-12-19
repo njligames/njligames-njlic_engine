@@ -359,6 +359,8 @@ namespace njli
      *  @return <#return value description#>
      */
     const SteeringBehaviorMachine *getParent() const;
+      
+      
 protected:
     void setCurrentForce(const btVector3 &force);
 

@@ -88,6 +88,8 @@ namespace njli
   public:
     using AbstractDecorator::setName;
     using AbstractDecorator::getName;
+      using AbstractDecorator::enableTagged;
+      using AbstractDecorator::isTagged;
 
     using AbstractFactoryObject::create;
     //    using AbstractFactoryObject::clone;

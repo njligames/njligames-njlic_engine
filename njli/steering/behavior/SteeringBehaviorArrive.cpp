@@ -206,6 +206,7 @@ namespace njli
       const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
       const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
       
+      *m_CurrentForce = btVector3(0,0,0);
       for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
       {
           *m_CurrentForce += SteeringBehaviorMachine::arrive((*i)->getOrigin(), vehiclePos, vehicleVelocity, vehicleMaxSpeed, m_VehichleDeceleration);
