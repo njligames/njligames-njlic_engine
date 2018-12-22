@@ -21,6 +21,7 @@
 //------------------------------------------------------------------------
 #include <list>
 #include <cassert>
+#include <string>
 
 #include "btVector3.h"
 
