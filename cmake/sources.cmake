@@ -376,6 +376,78 @@ file(GLOB LUAC_MAIN_FILES
   "${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/luac.c"
   )
 
+
+
+
+
+
+
+
+
+
+
+## CONFIGURATION
+# Default configuration (we assume POSIX by default)
+set ( LUA_PATH "LUA_PATH" CACHE STRING "Environment variable to use as package.path." )
+set ( LUA_CPATH "LUA_CPATH" CACHE STRING "Environment variable to use as package.cpath." )
+set ( LUA_INIT "LUA_INIT" CACHE STRING "Environment variable for initial script." )
+
+option ( LUA_BUILD_LUA "Build lua interpretter." ON )
+option ( LUA_BUILD_LUAC "Build luac compiler." ON )
+
+option ( LUA_USE_C89 "Use only C89 features." ON )
+option ( LUA_USE_RELATIVE_LOADLIB "Use modified loadlib.c with support for relative paths on posix systems." ON )
+
+option ( LUA_COMPAT_5_1 "Enable backwards compatibility options with lua-5.1." ON )
+option ( LUA_COMPAT_5_2 "Enable backwards compatibility options with lua-5.2." ON )
+
+#2DO: LUAI_* and LUAL_* settings, for now defaults are used.
+set ( LUA_DIRSEP "/" )
+set ( LUA_MODULE_SUFFIX ${CMAKE_SHARED_MODULE_SUFFIX} )
+set ( LUA_LDIR ${INSTALL_LMOD} )
+set ( LUA_CDIR ${INSTALL_CMOD} )
+
+if ( LUA_USE_RELATIVE_LOADLIB )
+  # This will set up relative paths to lib
+  string ( REGEX REPLACE "[^!/]+" ".." LUA_DIR "!/${INSTALL_BIN}/" )
+else ( )
+  # Direct path to installation
+  set ( LUA_DIR ${CMAKE_INSTALL_PREFIX} CACHE STRING "Destination from which modules will be resolved. See INSTALL_LMOD and INSTALL_CMOD." )
+endif ( )
+
+set ( LUA_PATH_DEFAULT "./?.lua;${LUA_DIR}${LUA_LDIR}/?.lua;${LUA_DIR}${LUA_LDIR}/?/init.lua" )
+set ( LUA_CPATH_DEFAULT "./?${LUA_MODULE_SUFFIX};${LUA_DIR}${LUA_CDIR}/?${LUA_MODULE_SUFFIX};${LUA_DIR}${LUA_CDIR}/loadall${LUA_MODULE_SUFFIX}" )
+
+if ( WIN32 AND NOT CYGWIN )
+  # Windows systems
+  option ( LUA_USE_WINDOWS "Windows specific build." ON )
+  option ( LUA_BUILD_WLUA "Build wLua interpretter without console output." ON )
+  option ( LUA_BUILD_AS_DLL "Build Lua library as Dll." ${BUILD_SHARED_LIBS} )
+
+  # Paths (Double escapes needed)
+  set ( LUA_DIRSEP "\\\\" )
+  string ( REPLACE " /" ${LUA_DIRSEP} LUA_DIR "${LUA_DIR}" )
+  string ( REPLACE "/" ${LUA_DIRSEP} LUA_LDIR "${LUA_LDIR}" )
+  string ( REPLACE "/" ${LUA_DIRSEP} LUA_CDIR "${LUA_CDIR}" )
+  string ( REPLACE "/" ${LUA_DIRSEP} LUA_PATH_DEFAULT "${LUA_PATH_DEFAULT}" )
+  string ( REPLACE "/" ${LUA_DIRSEP} LUA_CPATH_DEFAULT "${LUA_CPATH_DEFAULT}" )
+else ( )
+  # Posix systems (incl. Cygwin)
+  option ( LUA_USE_POSIX "Use POSIX features." ON )
+  option ( LUA_USE_DLOPEN "Use dynamic linker to load modules." ON )
+  # Apple and Linux specific
+  if ( LINUX OR APPLE )
+    option ( LUA_USE_AFORMAT "Assume 'printf' handles 'aA' specifiers" ON )
+  endif ( )
+endif ( )
+
+configure_file("${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/luaconf.h.in"
+  "${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/${CMAKE_SYSTEM_NAME}/luaconf.h")
+
+list(APPEND ${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES ${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/${CMAKE_SYSTEM_NAME})
+
+# list(APPEND ${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES ${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/${CMAKE_SYSTEM_NAME})
+
 list(APPEND ${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/include")
 
 list(APPEND ${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES "${NJLIC_INCLUDE_DIRECTORIES}")

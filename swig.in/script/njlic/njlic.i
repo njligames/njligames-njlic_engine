@@ -2,7 +2,7 @@
 
 %module njlic
 
-#define LLONG_MAX
+// #define LLONG_MAX
 //MARK: Tested Ignore, successfully
 %include "_IgnoreNJLIC.swg"
 %include "_IgnorePlatform.swg"

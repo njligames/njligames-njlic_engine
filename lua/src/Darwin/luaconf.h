@@ -33,7 +33,7 @@
 ** ensure that all software connected to Lua will be compiled with the
 ** same configuration.
 */
-/* #define LUA_32BITS */
+/* #undef LUA_32BITS */
 
 
 /*
@@ -41,36 +41,18 @@
 ** Define it if you want Lua to avoid the use of a few C99 features
 ** or Windows-specific features on Windows.
 */
-/* #define LUA_USE_C89 */
+/* #undef LUA_USE_C89 */
 
 
 /*
 ** By default, Lua on Windows use (some) specific Windows features
 */
-#if !defined(LUA_USE_C89) && defined(_WIN32) && !defined(_WIN32_WCE)
-#define LUA_USE_WINDOWS  /* enable goodies for regular Windows */
-#endif
+/* #undef LUA_USE_WINDOWS */
 
-
-#if defined(LUA_USE_WINDOWS)
-#define LUA_DL_DLL	/* enable support for DLL */
-#define LUA_USE_C89	/* broadly, Windows is C89 */
-#endif
-
-
-#if defined(LUA_USE_LINUX)
+/* #undef LUA_DL_DLL */
 #define LUA_USE_POSIX
 #define LUA_USE_DLOPEN		/* needs an extra library: -ldl */
-#define LUA_USE_READLINE	/* needs some extra libraries */
-#endif
-
-
-#if defined(LUA_USE_MACOSX)
-#define LUA_USE_POSIX
-#define LUA_USE_DLOPEN		/* MacOS does not need -ldl */
-#define LUA_USE_READLINE	/* needs an extra library: -lreadline */
-#endif
-
+/* #undef LUA_USE_READLINE */
 
 /*
 @@ LUA_C89_NUMBERS ensures that Lua uses the largest types available for
@@ -167,49 +149,20 @@
 ** hierarchy or if you want to install your libraries in
 ** non-conventional directories.
 */
-#define LUA_VDIR	LUA_VERSION_MAJOR "." LUA_VERSION_MINOR
-#if defined(_WIN32)	/* { */
-/*
-** In Windows, any exclamation mark ('!') in the path is replaced by the
-** path of the directory of the executable file of the current process.
-*/
-#define LUA_LDIR	"!\\lua\\"
-#define LUA_CDIR	"!\\"
-#define LUA_SHRDIR	"!\\..\\share\\lua\\" LUA_VDIR "\\"
-#define LUA_PATH_DEFAULT  \
-		LUA_LDIR"?.lua;"  LUA_LDIR"?\\init.lua;" \
-		LUA_CDIR"?.lua;"  LUA_CDIR"?\\init.lua;" \
-		LUA_SHRDIR"?.lua;" LUA_SHRDIR"?\\init.lua;" \
-		".\\?.lua;" ".\\?\\init.lua"
-#define LUA_CPATH_DEFAULT \
-		LUA_CDIR"?.dll;" \
-		LUA_CDIR"..\\lib\\lua\\" LUA_VDIR "\\?.dll;" \
-		LUA_CDIR"loadall.dll;" ".\\?.dll"
+#define LUA_MODULE_SUFFIX ".so"
+#define LUA_DIR	"!//"
+/* #undef LUA_LDIR */
+/* #undef LUA_CDIR */
 
-#else			/* }{ */
-
-#define LUA_ROOT	"/usr/local/"
-#define LUA_LDIR	LUA_ROOT "share/lua/" LUA_VDIR "/"
-#define LUA_CDIR	LUA_ROOT "lib/lua/" LUA_VDIR "/"
-#define LUA_PATH_DEFAULT  \
-		LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
-		LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua;" \
-		"./?.lua;" "./?/init.lua"
-#define LUA_CPATH_DEFAULT \
-		LUA_CDIR"?.so;" LUA_CDIR"loadall.so;" "./?.so"
-#endif			/* } */
-
+#define LUA_PATH_DEFAULT "./?.lua;!///?.lua;!///?/init.lua"
+#define LUA_CPATH_DEFAULT "./?.so;!///?.so;!///loadall.so"
 
 /*
 @@ LUA_DIRSEP is the directory separator (for submodules).
 ** CHANGE it if your machine does not use "/" as the directory separator
 ** and is not Windows. (On Windows Lua automatically uses "\".)
 */
-#if defined(_WIN32)
-#define LUA_DIRSEP	"\\"
-#else
 #define LUA_DIRSEP	"/"
-#endif
 
 /* }================================================================== */
 
@@ -288,6 +241,9 @@
 ** You can define it to get all options, or change specific options
 ** to fit your specific needs.
 */
+#define LUA_COMPAT_5_2
+#define LUA_COMPAT_5_1
+
 #if defined(LUA_COMPAT_5_2)	/* { */
 
 /*
@@ -606,7 +562,7 @@
 
 
 /*
-@@ lua_number2strx converts a float to an hexadecimal numeric string. 
+@@ lua_number2strx converts a float to an hexadecimal numeric string.
 ** In C99, 'sprintf' (with format specifiers '%a'/'%A') does that.
 ** Otherwise, you can leave 'lua_number2strx' undefined and Lua will
 ** provide its own implementation.
@@ -654,8 +610,7 @@
 ** macro must include header 'locale.h'.)
 */
 #if !defined(lua_getlocaledecpoint)
-//#define lua_getlocaledecpoint()		(localeconv()->decimal_point[0])
-#define lua_getlocaledecpoint()		'.'
+#define lua_getlocaledecpoint()		(localeconv()->decimal_point[0])
 #endif
 
 /* }================================================================== */
@@ -683,8 +638,7 @@
 */
 #if defined(LUA_USE_APICHECK)
 #include <assert.h>
-//#define luai_apicheck(l,e)	assert(e)
-#define luai_apicheck(l,e)	SDL_assert(e)
+#define luai_apicheck(l,e)	assert(e)
 #endif
 
 /* }================================================================== */
