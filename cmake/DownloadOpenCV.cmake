@@ -1,4 +1,4 @@
-set(LIBRARY_NAME "vorbis")
+set(LIBRARY_NAME "opencv")
 
 set(INCLUDE_URL "https://www.dropbox.com/s/6jh55j66yizhawo/libopencv_includes.tar.gz?dl=0")
 
