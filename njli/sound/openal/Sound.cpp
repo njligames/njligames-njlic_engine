@@ -283,7 +283,10 @@ namespace njli
 
   f32 Sound::getTimeLength() { return mSoundFileWrapper->GetTotalTime(); }
 
-  bool Sound::isPlaying() { return IsPlaying(); }
+  bool Sound::isPlaying() {
+      return IsPlaying();
+      
+  }
 
   void Sound::play(bool isPaused)
   {
@@ -823,7 +826,7 @@ namespace njli
     return true;
   }
 
-  float lastTimeTmp = 0;
+//  float lastTimeTmp = 0;
   void Sound::Update()
   {
     if (mState != PLAYING)
