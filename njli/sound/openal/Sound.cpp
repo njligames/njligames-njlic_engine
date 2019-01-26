@@ -120,7 +120,7 @@ namespace njli
 
     mSpinLock = false;
     mLoaded = false;
-      mLooping = false;
+    mLooping = false;
   }
 
   Sound::Sound(const AbstractBuilder &builder) : AbstractFactoryObject(this)
@@ -283,10 +283,7 @@ namespace njli
 
   f32 Sound::getTimeLength() { return mSoundFileWrapper->GetTotalTime(); }
 
-  bool Sound::isPlaying() {
-      return IsPlaying();
-      
-  }
+  bool Sound::isPlaying() { return IsPlaying(); }
 
   void Sound::play(bool isPaused)
   {
@@ -300,11 +297,8 @@ namespace njli
       Stop();
   }
 
-    void Sound::enableLooping(bool loop)
-    {
-        mLooping = loop;
-    }
-    
+  void Sound::enableLooping(bool loop) { mLooping = loop; }
+
   bool Sound::isPaused() { return (mState == PAUSED); }
 
   void Sound::pause() { Pause(); }
@@ -826,7 +820,7 @@ namespace njli
     return true;
   }
 
-//  float lastTimeTmp = 0;
+  //  float lastTimeTmp = 0;
   void Sound::Update()
   {
     if (mState != PLAYING)
@@ -898,9 +892,9 @@ namespace njli
     if (mRemainBuffers <= 0)
       {
         this->Stop();
-          if(mLooping)
+        if (mLooping)
           {
-              this->Play();
+            this->Play();
           }
       }
   }

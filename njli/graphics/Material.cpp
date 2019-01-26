@@ -745,29 +745,25 @@ namespace njli
   {
     SDL_assert(shader);
 
-//      assert(false && "setUniformValue changed when i introduced the new shader kcode");
+    //      assert(false && "setUniformValue changed when i introduced the new
+    //      shader kcode");
     if (getDiffuse()->bind(shader))
       {
-          if(!shader->setUniformValue("tDiffuseColor",
-                                  (GLuint)getDiffuse()->getTextureIndex()))
+        if (!shader->setUniformValue("tDiffuseColor",
+                                     (GLuint)getDiffuse()->getTextureIndex()))
           {
-              SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                          "Couldn't set tDiffuseColor\n");
+            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Couldn't set tDiffuseColor\n");
           }
       }
-      
-      if (getTransparent()->bind(shader))
+
+    if (getTransparent()->bind(shader))
       {
-          if(!shader->setUniformValue("tAlpha",
-                                      (GLuint)getTransparent()->getTextureIndex()))
+        if (!shader->setUniformValue(
+                "tAlpha", (GLuint)getTransparent()->getTextureIndex()))
           {
-              SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                          "Couldn't set tAlpha\n");
+            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Couldn't set tAlpha\n");
           }
       }
-      
-      
-      
 
     //        getAmbient()->bind(shader, "Ambient");
     //        getSpecular()->bind(shader, "Specular");

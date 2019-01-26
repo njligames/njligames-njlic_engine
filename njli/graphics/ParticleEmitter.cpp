@@ -1160,12 +1160,15 @@ namespace njli
                 // vertices for the quad that will hold the particle
                 // and load those into the quads array.
 
-                  currentNode->setColorBase(*(currentParticle->color));
+                currentNode->setColorBase(*(currentParticle->color));
                 currentNode->getGeometry()->setColorBase(currentNode);
 
-                  assert(false && "need to set the size of the geometry somehow. maybe specifically specify that the geometry is sprite2d?");
-//                currentNode->getGeometry()->setSize(
-//                    currentNode, *(currentParticle->position), halfSize);
+                assert(false &&
+                       "need to set the size of the geometry somehow. maybe "
+                       "specifically specify that the geometry is sprite2d?");
+                //                currentNode->getGeometry()->setSize(
+                //                    currentNode, *(currentParticle->position),
+                //                    halfSize);
               }
             ++i;
           }
@@ -1173,7 +1176,7 @@ namespace njli
           {
             --particleCount;
             currentParticle->used = false;
-              currentNode->setOpacity(0.0f);
+            currentNode->setOpacity(0.0f);
             currentNode->getGeometry()->setOpacity(currentNode);
             i = m_ActiveParticles.erase(i);
           }
@@ -1192,7 +1195,7 @@ namespace njli
           {
             m_ParticleArray[particleIndex].used = true;
             Node *currentNode = m_ParticleArray[particleIndex].node;
-              currentNode->setOpacity(1.0f);
+            currentNode->setOpacity(1.0f);
             currentNode->getGeometry()->setOpacity(currentNode);
             return &m_ParticleArray[particleIndex];
           }

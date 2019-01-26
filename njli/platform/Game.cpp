@@ -7,7 +7,7 @@
 #include "World.h"
 #include <string>
 
-#if defined( __ANDROID__) || defined(_WIN32)
+#if defined(__ANDROID__) || defined(_WIN32)
 #else
 #include <sys/sysctl.h>
 #include <sys/types.h>
@@ -50,7 +50,7 @@ namespace njli
     SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Platform Name = `%s`\n", platform);
     SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Device Name = `%s`\n", deviceName);
 
-        printGLInfo();
+    printGLInfo();
     initGL();
 
     njli::World::getInstance()->setDeviceName(deviceName);
@@ -206,7 +206,8 @@ namespace njli
 
   void NJLIGameEngine::handleEvent(void *event)
   {
-//    njli::World::getInstance()->getDebugDrawer()->processSdlEvent((SDL_Event *)event);
+    //    njli::World::getInstance()->getDebugDrawer()->processSdlEvent((SDL_Event
+    //    *)event);
   }
 
   // void NJLIGameEngine::setTouch(const int x, const int y, const int index,
@@ -384,34 +385,32 @@ namespace njli
     if (njli::World::getInstance()->getScene())
       njli::World::getInstance()->getScene()->receivedMemoryWarning();
   }
-    
-    void NJLIGameEngine::setVRCameraRotation(float m11, float m12, float m13,
-                                             float m21, float m22, float m23,
-                                             float m31, float m32, float m33)
-    {
-        btMatrix3x3 m(m11, m12, m13,
-                      m21, m22, m23,
-                      m31, m32, m33);
-        btTransform transform(m);
-        
-        if (njli::World::getInstance()->getScene())
-            njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
-    }
-    
-    void NJLIGameEngine::setVRCameraRotation(float yaw, float pitch, float roll)
-    {
-        //pitch is left to right
-        // roll is up and down
-        // yaw is clockwise and counter-clockwise
-        yaw *= -1.0f;
-        roll *= -1.0f;
-//        SDL_Log("%f, %f, %f\n", yaw, pitch, roll);
-        
-        btMatrix3x3 m(btMatrix3x3::getIdentity());
-        m.setEulerYPR(yaw, pitch, roll);
-        btTransform transform(m);
-        
-        if (njli::World::getInstance()->getScene())
-            njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
-    }
+
+  void NJLIGameEngine::setVRCameraRotation(float m11, float m12, float m13,
+                                           float m21, float m22, float m23,
+                                           float m31, float m32, float m33)
+  {
+    btMatrix3x3 m(m11, m12, m13, m21, m22, m23, m31, m32, m33);
+    btTransform transform(m);
+
+    if (njli::World::getInstance()->getScene())
+      njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
+  }
+
+  void NJLIGameEngine::setVRCameraRotation(float yaw, float pitch, float roll)
+  {
+    // pitch is left to right
+    // roll is up and down
+    // yaw is clockwise and counter-clockwise
+    yaw *= -1.0f;
+    roll *= -1.0f;
+    //        SDL_Log("%f, %f, %f\n", yaw, pitch, roll);
+
+    btMatrix3x3 m(btMatrix3x3::getIdentity());
+    m.setEulerYPR(yaw, pitch, roll);
+    btTransform transform(m);
+
+    if (njli::World::getInstance()->getScene())
+      njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
+  }
 } // namespace njli
