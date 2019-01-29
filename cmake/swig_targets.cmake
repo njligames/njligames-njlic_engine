@@ -525,8 +525,13 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
       #  ``SWIG_MODULE_<name>_EXTRA_DEPS``
       #    Specify extra dependencies for the generated module for ``<name>``.
 
-      set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
-      set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
+      if(RASPBERRYPI)
+	      set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/raspberrypi")
+	      set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/raspberrypi")
+      else()
+	      set(CMAKE_SWIG_OUTDIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
+	      set(SWIG_OUTFILE_DIR "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig/lua/${CMAKE_SYSTEM_NAME}")
+      endif()
 
       if(ANDROID)
         if(${ANDROID_ABI} STREQUAL "armeabi-v7a" OR ${ANDROID_ABI} STREQUAL "x86")

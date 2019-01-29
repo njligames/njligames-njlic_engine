@@ -45,6 +45,11 @@ set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/ean2y0u1zclih04/libvorbis_li
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/ean2y0u1zclih04/libvorbis_linux_Release.tar.gz?dl=0")
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/9ph5xwk7ckrpnj6/libvorbis_linux_Debug.tar.gz?dl=0")
 
+set(RASPBERRY_DEBUG_URL "https://www.dropbox.com/s/qhtrtf5yq7d781h/libvorbis_raspberry_Debug.tar.gz?dl=0")
+set(RASPBERRY_MINSIZEREL_URL "https://www.dropbox.com/s/rvep23emjkw8az8/libvorbis_raspberry_Release.tar.gz?dl=0")
+set(RASPBERRY_RELEASE_URL "https://www.dropbox.com/s/rvep23emjkw8az8/libvorbis_raspberry_Release.tar.gz?dl=0")
+set(RASPBERRY_RELWITHDEBINFO_URL "https://www.dropbox.com/s/qhtrtf5yq7d781h/libvorbis_raspberry_Debug.tar.gz?dl=0")
+
 set(UNIX_DEBUG_URL "")
 set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")

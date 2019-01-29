@@ -45,6 +45,11 @@ set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/5qf7vpqqpbzcn3e/libopencv_li
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/5qf7vpqqpbzcn3e/libopencv_linux_Release.tar.gz?dl=0")
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/c2qe0wrengcjqnk/libopencv_linux_Debug.tar.gz?dl=0")
 
+set(RASPBERRY_DEBUG_URL "")
+set(RASPBERRY_MINSIZEREL_URL "")
+set(RASPBERRY_RELEASE_URL "")
+set(RASPBERRY_RELWITHDEBINFO_URL "")
+
 set(UNIX_DEBUG_URL "")
 set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")

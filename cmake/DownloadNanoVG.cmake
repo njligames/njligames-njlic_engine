@@ -45,6 +45,11 @@ set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/uopujyokr2ys50m/libnanovg_li
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/uopujyokr2ys50m/libnanovg_linux_Release.tar.gz?dl=0")
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/gcpxqr09rb736yd/libnanovg_linux_Debug.tar.gz?dl=0")
 
+set(RASPBERRY_DEBUG_URL "")
+set(RASPBERRY_MINSIZEREL_URL "")
+set(RASPBERRY_RELEASE_URL "")
+set(RASPBERRY_RELWITHDEBINFO_URL "")
+
 set(UNIX_DEBUG_URL "")
 set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")
