@@ -395,7 +395,7 @@ set ( LUA_INIT "LUA_INIT" CACHE STRING "Environment variable for initial script.
 option ( LUA_BUILD_LUA "Build lua interpretter." ON )
 option ( LUA_BUILD_LUAC "Build luac compiler." ON )
 
-option ( LUA_USE_C89 "Use only C89 features." ON )
+option ( LUA_USE_C89 "Use only C89 features." OFF )
 option ( LUA_USE_RELATIVE_LOADLIB "Use modified loadlib.c with support for relative paths on posix systems." ON )
 
 option ( LUA_COMPAT_5_1 "Enable backwards compatibility options with lua-5.1." ON )

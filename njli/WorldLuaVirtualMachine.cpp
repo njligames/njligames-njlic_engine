@@ -1362,13 +1362,12 @@ namespace njli
 
         theerrordescription += "\n\t</DESCRIPTION>\n";
 
-        std::string thecode = "\t<CODE>\n\t";
-        thecode += code;
-        thecode += "\n\t</CODE>\n";
+//        std::string thecode = "\t<CODE>\n\t";
+//        thecode += code;
+//        thecode += "\n\t</CODE>\n";
 
-        SDL_LogError(SDL_LOG_CATEGORY_TEST, "\n<LUA>%s%s%s</LUA>\n",
-                     theerror.c_str(), theerrordescription.c_str(),
-                     thecode.c_str());
+        SDL_LogError(SDL_LOG_CATEGORY_TEST, "\n<LUA>%s%s</LUA>\n",
+                     theerror.c_str(), theerrordescription.c_str());
         lua_pop(m_lua_State, 1); /* remove message */
       }
   }
