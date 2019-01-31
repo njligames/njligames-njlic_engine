@@ -395,7 +395,7 @@ set ( LUA_INIT "LUA_INIT" CACHE STRING "Environment variable for initial script.
 option ( LUA_BUILD_LUA "Build lua interpretter." ON )
 option ( LUA_BUILD_LUAC "Build luac compiler." ON )
 
-option ( LUA_USE_C89 "Use only C89 features." OFF )
+option ( LUA_USE_C89 "Use only C89 features." ON )
 option ( LUA_USE_RELATIVE_LOADLIB "Use modified loadlib.c with support for relative paths on posix systems." ON )
 
 option ( LUA_COMPAT_5_1 "Enable backwards compatibility options with lua-5.1." ON )
@@ -442,11 +442,8 @@ else ( )
 endif ( )
 
 configure_file("${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/luaconf.h.in"
-  "${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/${CMAKE_SYSTEM_NAME}/luaconf.h")
+  "${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/luaconf.h")
 
-list(APPEND ${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES "${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/${CMAKE_SYSTEM_NAME}")
-
-# list(APPEND ${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES ${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/${CMAKE_SYSTEM_NAME})
 
 list(APPEND ${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/include")
 
