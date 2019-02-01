@@ -2,8 +2,13 @@ set( GAME_RESOURCES "${GAMEPROJECT_REPO_DIRECTORY}/assets" )
 list(APPEND RESOURCE_FILES ${GAME_RESOURCES})
 
 if(EMSCRIPTEN)
-  list(APPEND EXTRA_LDFLAGS "--memory-init-file 1")
-  list(APPEND EXTRA_LDFLAGS "--embed-file ${GAME_RESOURCES}@/")
+    # list(APPEND EXTRA_LDFLAGS "--memory-init-file 1")
+
+  if(EMBED_ASSETS)
+    list(APPEND EXTRA_LDFLAGS "--embed-file ${GAME_RESOURCES}@/")
+  else()
+    list(APPEND EXTRA_LDFLAGS "--preload-file ${GAME_RESOURCES}@/")
+  endif()
 endif()
 
 set(LUA_RESOURCE_FILES "${LUA_ETC_LOCAL_INCLUDE_DIRECTORIES}/lua.ico" "${LUA_SRC_LOCAL_INCLUDE_DIRECTORIES}/lua.rc")
