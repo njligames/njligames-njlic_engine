@@ -82,7 +82,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void line(const btVector3 &from, const btVector3 &to,
-              const btVector3 &color, int durationMillis = 0,
+              const btVector3 &color = btVector3(1.0, 0.0, 0.0), int durationMillis = 0,
               bool depthEnabled = true);
 
     /**

@@ -156,7 +156,7 @@ namespace njli
 
   WorldDebugDrawer::operator std::string() const
   {
-    return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
+    return string_format("%s", FORMATSTRING);
   }
 
   void WorldDebugDrawer::beginDraw() { newFrameImgui(); }

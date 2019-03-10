@@ -753,12 +753,14 @@ namespace njli
   {
     if (getCamera())
       {
-        Scene *scene = this->getCurrentScene();
-        SDL_assert(NULL != scene);
+//        Scene *scene = this->getCurrentScene();
+//        SDL_assert(NULL != scene);
 
         Camera *camera = getCamera();
         removeChild(camera);
-        scene->removeActiveCamera(camera);
+          Scene *scene = this->getCurrentScene();
+          if(scene)
+              scene->removeActiveCamera(camera);
       }
 
     m_Camera = NULL;

@@ -138,7 +138,7 @@ namespace njli
 
   Scene::operator std::string() const
   {
-    return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
+    return string_format("%s", FORMATSTRING);
   }
 
   Scene **Scene::createArray(const u32 size)

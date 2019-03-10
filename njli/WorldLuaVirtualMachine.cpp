@@ -1391,11 +1391,7 @@ namespace njli
   {
     if (loadString(code))
       {
-        int status = doString(code);
-
-        if (LUA_OK == status)
-          return true;
-        getError(code, status);
+        return doString(code);
       }
     return false;
   }
