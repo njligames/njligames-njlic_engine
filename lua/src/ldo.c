@@ -83,7 +83,9 @@
   if (setjmp((c)->b) == 0)                                                     \
     {                                                                          \
       a                                                                        \
-    }
+    } \
+else \
+{printf("%s\n", lua_tostring(L, -1));}
 #define luai_jmpbuf jmp_buf
 
 //#endif /* } */

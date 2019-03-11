@@ -277,7 +277,7 @@ static int report(lua_State *L, int status)
 /*
  ** Message handler used to run all chunks
  */
-static int msghandler(lua_State *L)
+static int _msghandler(lua_State *L)
 {
   const char *msg = lua_tostring(L, 1);
   if (msg == NULL)
@@ -300,17 +300,19 @@ static int msghandler(lua_State *L)
 static int s_docall(lua_State *L, int narg, int nres)
 {
   int status;
-  int base = lua_gettop(L) - narg;  /* function index */
-  lua_pushcfunction(L, msghandler); /* push message handler */
+    int top = lua_gettop(L);
+  int base = top - (narg);  /* function index */
+  lua_pushcfunction(L, _msghandler); /* push message handler */
   lua_insert(L, base);              /* put it under function and args */
   globalL = L;                      /* to be available to 'laction' */
-#if !defined(__EMSCRIPTEN__)
-  signal(SIGINT, laction); /* set C-signal handler */
-#endif
-  status = lua_pcall(L, narg, nres, base);
-#if !defined(__EMSCRIPTEN__)
-  signal(SIGINT, SIG_DFL); /* reset C-signal handler */
-#endif
+//#if !defined(__EMSCRIPTEN__)
+//  signal(SIGINT, laction); /* set C-signal handler */
+//#endif
+//  status = lua_pcall(L, narg, nres, base);
+    status = lua_pcall(L, narg, nres, base);
+//#if !defined(__EMSCRIPTEN__)
+//  signal(SIGINT, SIG_DFL); /* reset C-signal handler */
+//#endif
   lua_remove(L, base); /* remove message handler from the stack */
   return status;
 }
@@ -2038,11 +2040,19 @@ namespace njli
   {
     if (m_lua_State)
       {
+          int top = lua_gettop(m_lua_State);
+          
         lua_getglobal(m_lua_State, code);
+          top = lua_gettop(m_lua_State);
 
-        lua_pushnumber(m_lua_State, width);
-        lua_pushnumber(m_lua_State, height);
-        lua_pushnumber(m_lua_State, orientation);
+        lua_pushinteger(m_lua_State, width);
+          top = lua_gettop(m_lua_State);
+          
+        lua_pushinteger(m_lua_State, height);
+          top = lua_gettop(m_lua_State);
+          
+        lua_pushinteger(m_lua_State, orientation);
+          top = lua_gettop(m_lua_State);
 
         /* do the call (2 arguments, 0 result) */
         //            int error_code = lua_pcall(m_lua_State, 3, 0, 0);
