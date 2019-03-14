@@ -12,6 +12,7 @@
 #include <setjmp.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "lua.h"
 
@@ -85,7 +86,9 @@
       a                                                                        \
     } \
 else \
-{printf("%s\n", lua_tostring(L, -1));}
+{\
+fwrite(lua_tostring(L, -1), sizeof(char), strlen(lua_tostring(L, -1)), stdout);\
+}
 #define luai_jmpbuf jmp_buf
 
 //#endif /* } */
