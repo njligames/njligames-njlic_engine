@@ -13,7 +13,7 @@
 #include "Util.h"
 #include "btIDebugDraw.h"
 #include "debug_draw.hpp"
-//#include "glm/glm.hpp"
+#include "glm/glm.hpp"
 #if defined(USE_USYNERGY_LIBRARY)
 #include "uSynergy.h"
 #endif
@@ -23,7 +23,8 @@
 namespace njli
 {
   class Camera;
-
+    class ShaderProgram;
+    
   class WorldDebugDrawer : public dd::RenderInterface, public btIDebugDraw
   {
   public:
@@ -51,6 +52,7 @@ namespace njli
     virtual void setDebugMode(int debugMode);
     virtual int getDebugMode() const;
 
+      bool isInitialized()const;
     void init();
     void unInit();
     void draw(Camera *camera);
@@ -132,10 +134,10 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-    //        void axisTriad(ddMat4x4Param transform,
-    //                       float size, float length,
-    //                       int durationMillis = 0,
-    //                       bool depthEnabled = true);
+      void axisTriad(const glm::mat4 &transform,
+                   float size, float length,
+                   int durationMillis = 10000,
+                   bool depthEnabled = true);
 
     /**
      Add a 3D line with an arrow-like end to the debug draw queue.
@@ -239,10 +241,11 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-    //        void box(const ddVec3 points[8],
-    //                 const btVector3 &color,
-    //                 int durationMillis = 0,
-    //                 bool depthEnabled = true);
+      void box(const glm::vec3 &p0, const glm::vec3 &p1, const glm::vec3 &p2, const glm::vec3 &p3,
+               const glm::vec3 &p4, const glm::vec3 &p5, const glm::vec3 &p6, const glm::vec3 &p7,
+             const glm::vec3 &color,
+             int durationMillis = 10000,
+             bool depthEnabled = true);
 
     /**
      Add a wireframe box to the debug draw queue.
@@ -283,10 +286,10 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-    //        void frustum(ddMat4x4Param invClipMatrix,
-    //                     const btVector3 &color,
-    //                     int durationMillis = 0,
-    //                     bool depthEnabled = true);
+      void frustum(const glm::mat4 &invClipMatrix,
+                 const btVector3 &color,
+                 int durationMillis = 10000,
+                 bool depthEnabled = true);
 
     /**
      Add a vertex normal for debug visualization.
@@ -347,10 +350,7 @@ namespace njli
       
 
   protected:
-    void setupShaderPrograms();
     void setupVertexBuffers();
-    void compileShader(const GLuint shader);
-    void linkProgram(const GLuint program);
 
     void initImgui();
     void unInitImgui();
@@ -360,19 +360,14 @@ namespace njli
   private:
     int m_DebugMode;
 
-//    glm::mat4 m_mvpMatrix;
+      bool m_Initialized;
+      
       Camera *m_Camera;
+      ShaderProgram *m_LinePointShaderProgram;
+      ShaderProgram *m_TextShaderProgram;
 
-    GLuint linePointProgram;
-    GLint linePointProgram_MvpMatrixLocation;
-      
-      GLint linePointProgram_ModelMatrixLocation;
-      GLint linePointProgram_ProjectionMatrixLocation;
-GLfloat *m_mat4Buffer;
-      
-    GLuint textProgram;
-    GLint textProgram_GlyphTextureLocation;
-    GLint textProgram_ScreenDimensions;
+      GLfloat *m_mat4Buffer;
+      GLfloat *m_textMat4Buffer;
 
     GLuint linePointVAO;
     GLuint linePointVBO;

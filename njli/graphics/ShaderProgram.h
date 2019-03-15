@@ -186,6 +186,9 @@ namespace njli
       
       bool setUniformValue(const char *uniformName, const btVector4 &value);
       bool getUniformValue(const char *uniformName, btVector4 &value);
+      
+      bool setUniformValue(const char *uniformName, float f1, float f2);
+      bool getUniformValue(const char *uniformName, float &f1, float &f2);
   protected:
       GLuint compileShader(const std::string &source, GLenum type);
       bool compileStatus(GLuint shader);
