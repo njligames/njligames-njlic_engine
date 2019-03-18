@@ -83,7 +83,7 @@ namespace njli
     
     
     static const std::string textVertShaderSrc = R"(
-    #version 100
+    #version 120
     
     attribute vec2 in_Position;
     attribute vec2 in_TexCoords;
@@ -108,7 +108,7 @@ namespace njli
     )";
 
     static const std::string textFragShaderSrc = R"(
-    #version 100
+    #version 120
     
 #ifdef GL_ES
     precision mediump float;
@@ -128,6 +128,7 @@ namespace njli
     )";
     
     static const std::string linePointVertShaderSource = R"(
+    #version 120
     
     attribute vec3 in_Position;
     attribute vec4 in_ColorPointSize;
@@ -147,6 +148,7 @@ namespace njli
     )";
     
     static const std::string linePointFragShaderSource = R"(
+    #version 120
     
 #ifdef GL_ES
     precision mediump float;
@@ -1576,7 +1578,7 @@ case SDL_FINGERMOTION:
     bool ImGui_ImplIOS_CreateDeviceObjects()
     {
         const GLchar *vertex_shader =
-        "#version 100\n"
+        "#version 120\n"
         "uniform mat4 ProjMtx;\n"
         "attribute vec2 Position;\n"
         "attribute vec2 UV;\n"
@@ -1591,7 +1593,7 @@ case SDL_FINGERMOTION:
         "}\n";
         
         const GLchar *fragment_shader =
-        "#version 100\n"
+        "#version 120\n"
 #if defined(__GL_ES2__) || defined(__GL_ES2__)
         
         "#ifdef GL_ES\n"
