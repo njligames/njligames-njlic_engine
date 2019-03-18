@@ -9,6 +9,7 @@
 #define DEBUG_DRAW_IMPLEMENTATION
 #include "WorldDebugDrawer.h"
 #include "Camera.h"
+#include "ShaderProgram.h"
 #include "SDL.h"
 #include "World.h"
 #include "glm/gtc/type_ptr.hpp"
@@ -79,18 +80,66 @@ glm::mat4 bulletToGlm(const btTransform &t)
 
 namespace njli
 {
+    
+    
+    static const std::string textVertShaderSrc = R"(
+    #version 100
+    
+    attribute vec2 in_Position;
+    attribute vec2 in_TexCoords;
+    attribute vec3 in_Color;
+    
+    uniform vec2 u_screenDimensions;
+    
+    varying vec2 v_TexCoords;
+    varying vec4 v_Color;
+    
+    void main()
+    {
+        // Map to normalized clip coordinates:
+        float x = ((2.0 * (in_Position.x - 0.5)) / u_screenDimensions.x) - 1.0;
+        float y = 1.0 - ((2.0 * (in_Position.y - 0.5)) / u_screenDimensions.y);
+    
+        gl_Position = vec4(x, y, 0.0, 1.0);
+        v_TexCoords = in_TexCoords;
+        v_Color     = vec4(in_Color, 1.0);
+    }
+    
+    )";
+
+    static const std::string textFragShaderSrc = R"(
+    #version 100
+    
+#ifdef GL_ES
+    precision mediump float;
+#endif
+    
+    varying vec2 v_TexCoords;
+    varying vec4 v_Color;
+    
+    uniform sampler2D u_glyphTexture;
+    
+    void main()
+    {
+        vec4 out_FragColor = texture2D(u_glyphTexture, v_TexCoords) * v_Color;
+        gl_FragColor = vec4(1.0, 0, 0, 1.0);
+    }
+    
+    )";
+    
     static const std::string linePointVertShaderSource = R"(
     
     attribute vec3 in_Position;
     attribute vec4 in_ColorPointSize;
     
-    uniform mat4 u_MvpMatrix;
+    uniform mat4 modelView;
+    uniform mat4 projection;
     
     varying vec4 v_Color;
     
     void main()
     {
-        gl_Position  = u_MvpMatrix * vec4(in_Position, 1.0);
+        gl_Position  = (modelView * projection) * vec4(in_Position, 1.0);
         gl_PointSize = in_ColorPointSize.w;
         v_Color      = vec4(in_ColorPointSize.xyz, 1.0);
     }
@@ -107,31 +156,34 @@ namespace njli
     
     void main()
     {
-        gl_FragColor = v_Color;
+        vec4 color = v_Color;
+        gl_FragColor = color;
     }
     
     )";
     
     WorldDebugDrawer::WorldDebugDrawer()
     : m_DebugMode(btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE),
-    //        m_mvpMatrix(glm::mat4(1.0f)),
-    linePointProgram(0), linePointProgram_MvpMatrixLocation(-1),
-    textProgram(0), textProgram_GlyphTextureLocation(-1),
-    textProgram_ScreenDimensions(-1), linePointVAO(0), linePointVBO(0),
+    m_Initialized(false),
+    m_LinePointShaderProgram(NULL),
+    m_TextShaderProgram(NULL),
+    m_mat4Buffer(new float[16]),
+    m_textMat4Buffer(new float[16]),
+    linePointVAO(0), linePointVBO(0),
     textVAO(0), textVBO(0)
     {
     }
     
     WorldDebugDrawer::~WorldDebugDrawer()
     {
-        glDeleteProgram(linePointProgram);
-        glDeleteProgram(textProgram);
+        delete [] m_textMat4Buffer;
+        delete [] m_mat4Buffer;
         
-        glDeleteVertexArrays(1, &linePointVAO);
+        glDeleteVertexArrays_NJLIC(1, &linePointVAO);
         
         glDeleteBuffers(1, &linePointVBO);
         
-        glDeleteVertexArrays(1, &textVAO);
+        glDeleteVertexArrays_NJLIC(1, &textVAO);
         
         glDeleteBuffers(1, &textVBO);
     }
@@ -161,16 +213,13 @@ namespace njli
         SDL_assert(points != nullptr);
         SDL_assert(count > 0 && count <= DEBUG_DRAW_VERTEX_BUFFER_SIZE);
         
-        glBindVertexArray(linePointVAO);
-        glUseProgram(linePointProgram);
+        glBindVertexArray_NJLIC(linePointVAO);
         
-        glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
-        glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
+        m_LinePointShaderProgram->use();
         
-        glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
+        m_Camera->render(m_LinePointShaderProgram, true);
         
-        glUniformMatrix4fv(linePointProgram_MvpMatrixLocation, 1, GL_FALSE,
-                           glm::value_ptr(mvpMatrix));
+        GLboolean _depthEnabled = glIsEnabled(GL_DEPTH_TEST);
         
         if (depthEnabled)
         {
@@ -191,7 +240,16 @@ namespace njli
         
         glUseProgram(0);
         
-        glBindVertexArray(0);
+        glBindVertexArray_NJLIC(0);
+        
+        if (_depthEnabled)
+        {
+            glEnable(GL_DEPTH_TEST);
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
         
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -202,17 +260,13 @@ namespace njli
         assert(lines != nullptr);
         assert(count > 0 && count <= DEBUG_DRAW_VERTEX_BUFFER_SIZE);
         
-        glBindVertexArray(linePointVAO);
+        glBindVertexArray_NJLIC(linePointVAO);
         
-        glUseProgram(linePointProgram);
+        m_LinePointShaderProgram->use();
         
-        glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
-        glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
+        m_Camera->render(m_LinePointShaderProgram, true);
         
-        glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
-        
-        glUniformMatrix4fv(linePointProgram_MvpMatrixLocation, 1, GL_FALSE,
-                           glm::value_ptr(mvpMatrix));
+        GLboolean _depthEnabled = glIsEnabled(GL_DEPTH_TEST);
         
         if (depthEnabled)
         {
@@ -233,19 +287,89 @@ namespace njli
         
         glUseProgram(0);
         
-        glBindVertexArray(0);
+        glBindVertexArray_NJLIC(0);
+        
+        if (_depthEnabled)
+        {
+            glEnable(GL_DEPTH_TEST);
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
         
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
-    void WorldDebugDrawer::drawGlyphList(const dd::DrawVertex *, int,
-                                         dd::GlyphTextureHandle)
+    void WorldDebugDrawer::drawGlyphList(const dd::DrawVertex *glyphs, int count,
+                                         dd::GlyphTextureHandle glyphTex)
     {
+        assert(glyphs != nullptr);
+        assert(count > 0 && count <= DEBUG_DRAW_VERTEX_BUFFER_SIZE);
+        
+        glBindVertexArray_NJLIC(textVAO);
+        
+        m_TextShaderProgram->use();
+        GLfloat width = njli::World::getInstance()->getViewportDimensions().x();
+        GLfloat height = njli::World::getInstance()->getViewportDimensions().y();
+        m_TextShaderProgram->setUniformValue("u_glyphTexture", (GLuint)0);
+        m_TextShaderProgram->setUniformValue("u_screenDimensions", width, height);
+        
+        if (glyphTex != nullptr)
+        {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(reinterpret_cast<std::size_t>(glyphTex)));
+        }
+        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glDisable(GL_DEPTH_TEST);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, count * sizeof(dd::DrawVertex), glyphs);
+        
+        glDrawArrays(GL_TRIANGLES, 0, count); // Issue the draw call
+        
+        glDisable(GL_BLEND);
+        glUseProgram(0);
+        glBindVertexArray_NJLIC(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindTexture(GL_TEXTURE_2D,  0);
     }
-    void WorldDebugDrawer::destroyGlyphTexture(dd::GlyphTextureHandle) {}
-    dd::GlyphTextureHandle WorldDebugDrawer::createGlyphTexture(int, int,
-                                                                const void *)
+    
+    void WorldDebugDrawer::destroyGlyphTexture(dd::GlyphTextureHandle glyphTex)
     {
-        return NULL;
+        if (glyphTex == nullptr)
+        {
+            return;
+        }
+        
+        const GLuint textureId = static_cast<GLuint>(reinterpret_cast<std::size_t>(glyphTex));
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDeleteTextures(1, &textureId);
+    }
+    
+    dd::GlyphTextureHandle WorldDebugDrawer::createGlyphTexture(int width, int height, const void * pixels)
+    {
+        assert(width > 0 && height > 0);
+        assert(pixels != nullptr);
+        
+        GLuint textureId = 0;
+        glGenTextures(1, &textureId);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        
+        glPixelStorei(GL_PACK_ALIGNMENT,   1);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, pixels);
+        
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        
+        glBindTexture(GL_TEXTURE_2D, 0);;
+        
+        return reinterpret_cast<dd::GlyphTextureHandle>(static_cast<std::size_t>(textureId));
     }
     
     void WorldDebugDrawer::drawLine(const btVector3 &from, const btVector3 &to,
@@ -288,13 +412,7 @@ namespace njli
         const float _pos[] = {location.x(), location.y(), location.z()};
         const float _color[] = {color.x(), color.y(), color.z()};
         
-        glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
-        glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
-        
-        glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
-        
-        dd::projectedText(std::string(textString), _pos, _color,
-                          glm::value_ptr(mvpMatrix), 0, 0,
+        dd::projectedText(std::string(textString), _pos, _color, m_textMat4Buffer, 0, 0,
                           njli::World::getInstance()->getViewportDimensions().x(),
                           njli::World::getInstance()->getViewportDimensions().y());
     }
@@ -308,38 +426,57 @@ namespace njli
     
     void WorldDebugDrawer::init()
     {
-        dd::initialize(this);
+        if(!m_Initialized)
+        {
+            m_Initialized = true;
+            
+            dd::initialize(this);
+            
+            glEnable(GL_CULL_FACE);
+            glEnable(GL_DEPTH_TEST);
+            glDisable(GL_BLEND);
+            
+            // This has to be enabled since the point drawing shader will use
+            // gl_PointSize.
+            
+            //        glEnable(GL_PROGRAM_POINT_SIZE);
+            
+            m_LinePointShaderProgram = njli::ShaderProgram::create();
+            m_TextShaderProgram = njli::ShaderProgram::create();
+            
+            m_LinePointShaderProgram->load(linePointVertShaderSource, linePointFragShaderSource);
+            m_TextShaderProgram->load(textVertShaderSrc, textFragShaderSrc);
+            
+            setupVertexBuffers();
+            
+            initImgui();
+        }
         
-        glEnable(GL_CULL_FACE);
-        glEnable(GL_DEPTH_TEST);
-        glDisable(GL_BLEND);
-        
-        // This has to be enabled since the point drawing shader will use
-        // gl_PointSize.
-        
-        //        glEnable(GL_PROGRAM_POINT_SIZE);
-        
-        setupShaderPrograms();
-        setupVertexBuffers();
-        
-        initImgui();
     }
     
     void WorldDebugDrawer::unInit()
     {
-        unInitImgui();
-        
-        dd::shutdown();
+        if(m_Initialized)
+        {
+            m_Initialized = false;
+            
+            njli::ShaderProgram::destroy(m_TextShaderProgram);
+            njli::ShaderProgram::destroy(m_LinePointShaderProgram);
+            
+            unInitImgui();
+            
+            dd::shutdown();
+        }
     }
     
     void WorldDebugDrawer::draw(Camera *camera)
     {
-        
         m_Camera = camera;
-        //    glm::mat4 viewMatrix = bulletToGlm(camera->getModelView());
-        //    glm::mat4 perspectiveMatrix = bulletToGlm(camera->getProjection());
-        //
-        //    m_mvpMatrix = perspectiveMatrix * viewMatrix;
+        
+        if(m_Camera && m_Camera->hasParent())
+        {
+            (m_Camera->getProjection() * m_Camera->getModelView()).getOpenGLMatrix(m_textMat4Buffer);
+        }
         
         if (dd::hasPendingDraws())
         {
@@ -375,7 +512,7 @@ namespace njli
         const float _pos[] = {pos.x(), pos.y(), pos.z()};
         const float _color[] = {color.x(), color.y(), color.z()};
         
-        dd::screenText(str, _pos, _color);
+        dd::screenText(str, _pos, _color, scaling, durationMillis);
     }
     
     void WorldDebugDrawer::projectedText(const std::string &str, const btVector3 &pos,
@@ -385,25 +522,23 @@ namespace njli
         const float _pos[] = {pos.x(), pos.y(), pos.z()};
         const float _color[] = {color.x(), color.y(), color.z()};
         
-        glm::mat4 viewMatrix = bulletToGlm(m_Camera->getModelView());
-        glm::mat4 perspectiveMatrix = bulletToGlm(m_Camera->getProjection());
         
-        glm::mat4 mvpMatrix = perspectiveMatrix * viewMatrix;
-        
-        dd::projectedText(str, _pos, _color, glm::value_ptr(mvpMatrix), 0, 0,
+        dd::projectedText(str, _pos, _color, m_textMat4Buffer, 0, 0,
                           njli::World::getInstance()->getViewportDimensions().x(),
                           njli::World::getInstance()->getViewportDimensions().y());
+        
     }
     
-    //    void WorldDebugDrawer::axisTriad(ddMat4x4Param transform,
-    //                   float size, float length,
-    //                   int durationMillis,
-    //                   bool depthEnabled)
-    //    {
-    //        const float _from[] = {from.x(), from.y(), from.z()};
-    //        const float _to[] = {to.x(), to.y(), to.z()};
-    //        const float _color[] = {color.x(), color.y(), color.z()};
-    //    }
+    void WorldDebugDrawer::axisTriad(const glm::mat4 &transform,
+                   float size, float length,
+                   int durationMillis,
+                   bool depthEnabled)
+    {
+        
+        glmToBullet(transform).getOpenGLMatrix(m_mat4Buffer);
+        
+        dd::axisTriad(m_mat4Buffer, size, length, durationMillis, depthEnabled);
+    }
     
     void WorldDebugDrawer::arrow(const btVector3 &from, const btVector3 &to,
                                  const btVector3 &color, float size,
@@ -481,15 +616,31 @@ namespace njli
                  depthEnabled);
     }
     
-    //    void WorldDebugDrawer::box(const ddVec3 points[8],
-    //             const btVector3 &color,
-    //             int durationMillis,
-    //             bool depthEnabled)
-    //    {
-    //        const float _from[] = {from.x(), from.y(), from.z()};
-    //        const float _to[] = {to.x(), to.y(), to.z()};
-    //        const float _color[] = {color.x(), color.y(), color.z()};
-    //    }
+    void WorldDebugDrawer::box(const glm::vec3 &p0, const glm::vec3 &p1, const glm::vec3 &p2, const glm::vec3 &p3,
+             const glm::vec3 &p4, const glm::vec3 &p5, const glm::vec3 &p6, const glm::vec3 &p7,
+             const glm::vec3 &color,
+             int durationMillis,
+             bool depthEnabled)
+        {
+//            const float _from[] = {from.x(), from.y(), from.z()};
+//            const float _to[] = {to.x(), to.y(), to.z()};
+//            const float _color[] = {color.x(), color.y(), color.z()};
+            
+            const float _points[] = {
+                p0.x, p0.y, p0.z,
+                p1.x, p1.y, p1.z,
+                p2.x, p2.y, p2.z,
+                p3.x, p3.y, p3.z,
+                p4.x, p4.y, p4.z,
+                p5.x, p5.y, p5.z,
+                p6.x, p6.y, p6.z,
+                p7.x, p7.y, p7.z
+            };
+            const float _color[] = {color.x, color.y, color.z};
+            
+//            dd::box(_points, _color, durationMillis, depthEnabled);
+            
+        }
     
     void WorldDebugDrawer::box(const btVector3 &center, const btVector3 &color,
                                float width, float height, float depth,
@@ -513,15 +664,16 @@ namespace njli
         dd::aabb(_mins, _maxs, _color, durationMillis, depthEnabled);
     }
     
-    //    void WorldDebugDrawer::frustum(ddMat4x4Param invClipMatrix,
-    //                 const btVector3 &color,
-    //                 int durationMillis,
-    //                 bool depthEnabled)
-    //    {
-    //        const float _mins[] = {mins.x(), mins.y(), mins.z()};
-    //        const float _maxs[] = {maxs.x(), maxs.y(), maxs.z()};
-    //        const float _color[] = {color.x(), color.y(), color.z()};
-    //    }
+    void WorldDebugDrawer::frustum(const glm::mat4 &invClipMatrix,
+                 const btVector3 &color,
+                 int durationMillis,
+                 bool depthEnabled)
+    {
+        glmToBullet(invClipMatrix).getOpenGLMatrix(m_mat4Buffer);
+        const float _color[] = {color.x(), color.y(), color.z()};
+        
+        dd::frustum(m_mat4Buffer, _color);
+    }
     
     void WorldDebugDrawer::vertexNormal(const btVector3 &origin,
                                         const btVector3 &normal, float length,
@@ -557,80 +709,6 @@ namespace njli
         dd::xzSquareGrid(mins, maxs, y, step, _color, durationMillis, depthEnabled);
     }
     
-    void WorldDebugDrawer::setupShaderPrograms()
-    {
-        // std::cout << "> DDRenderInterfaceCoreGL::setupShaderPrograms()" <<
-        // std::endl;
-        
-        const char *_linePointVertShaderSource = linePointVertShaderSource.c_str();
-        const char *_linePointFragShaderSource = linePointFragShaderSource.c_str();
-        
-        GLuint linePointVS = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(linePointVS, 1, &_linePointVertShaderSource, nullptr);
-        compileShader(linePointVS);
-        
-        GLint linePointFS = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(linePointFS, 1, &_linePointFragShaderSource, nullptr);
-        compileShader(linePointFS);
-        
-        linePointProgram = glCreateProgram();
-        glAttachShader(linePointProgram, linePointVS);
-        glAttachShader(linePointProgram, linePointFS);
-        
-        glBindAttribLocation(linePointProgram, 0, "in_Position");
-        glBindAttribLocation(linePointProgram, 1, "in_ColorPointSize");
-        linkProgram(linePointProgram);
-        
-        linePointProgram_MvpMatrixLocation =
-        glGetUniformLocation(linePointProgram, "u_MvpMatrix");
-        if (linePointProgram_MvpMatrixLocation < 0)
-        {
-            std::cerr << "Unable to get u_MvpMatrix uniform location!" << std::endl;
-        }
-        
-        ////
-        //// Text rendering shader:
-        ////
-        //{
-        //    GLuint textVS = glCreateShader(GL_VERTEX_SHADER);
-        //    glShaderSource(textVS, 1, &textVertShaderSrc, nullptr);
-        //    compileShader(textVS);
-        
-        //    GLint textFS = glCreateShader(GL_FRAGMENT_SHADER);
-        //    glShaderSource(textFS, 1, &textFragShaderSrc, nullptr);
-        //    compileShader(textFS);
-        
-        //    textProgram = glCreateProgram();
-        //    glAttachShader(textProgram, textVS);
-        //    glAttachShader(textProgram, textFS);
-        
-        //    glBindAttribLocation(textProgram, 0, "in_Position");
-        //    glBindAttribLocation(textProgram, 1, "in_TexCoords");
-        //    glBindAttribLocation(textProgram, 2, "in_Color");
-        //    linkProgram(textProgram);
-        
-        //    textProgram_GlyphTextureLocation = glGetUniformLocation(textProgram,
-        //"u_glyphTexture");
-        //    if (textProgram_GlyphTextureLocation < 0)
-        //    {
-        //        std::cerr << "Unable to get u_glyphTexture uniform location!" <<
-        // std::endl;
-        //    }
-        
-        //    textProgram_ScreenDimensions = glGetUniformLocation(textProgram,
-        //"u_screenDimensions");
-        //    if (textProgram_ScreenDimensions < 0)
-        //    {
-        //        std::cerr << "Unable to get u_screenDimensions uniform
-        // location!"
-        //<<
-        // std::endl;
-        //    }
-        
-        //    checkGLError(__FILE__, __LINE__);
-        //}
-    }
-    
     void WorldDebugDrawer::setupVertexBuffers()
     {
         // std::cout << "> DDRenderInterfaceCoreGL::setupVertexBuffers()" <<
@@ -639,15 +717,11 @@ namespace njli
         //
         // Lines/points vertex buffer:
         //
+        glGenVertexArrays_NJLIC(1, &linePointVAO);
+        glBindVertexArray_NJLIC(linePointVAO);
         {
-            glGenVertexArrays(1, &linePointVAO);
-            
             glGenBuffers(1, &linePointVBO);
-            
-            glBindVertexArray(linePointVAO);
-            
             glBindBuffer(GL_ARRAY_BUFFER, linePointVBO);
-            
             // RenderInterface will never be called with a batch larger than
             // DEBUG_DRAW_VERTEX_BUFFER_SIZE vertexes, so we can allocate the same
             // amount here.
@@ -656,119 +730,85 @@ namespace njli
                          nullptr, GL_STREAM_DRAW);
             
             // Set the vertex format expected by 3D points and lines:
-            std::size_t offset = 0;
+            int inPositionAttrib = m_LinePointShaderProgram->getAttributeLocation("in_Position");
+            int inColorPointSize = m_LinePointShaderProgram->getAttributeLocation("in_ColorPointSize");
             
-            glEnableVertexAttribArray(0); // in_Position (vec3)
+            glEnableVertexAttribArray(inPositionAttrib); // in_Position (vec3)
             glVertexAttribPointer(
-                                  /* index     = */ 0,
+                                  /* index     = */ inPositionAttrib,
                                   /* size      = */ 3,
                                   /* type      = */ GL_FLOAT,
                                   /* normalize = */ GL_FALSE,
                                   /* stride    = */ sizeof(dd::DrawVertex),
-                                  /* offset    = */ reinterpret_cast<void *>(offset));
-            offset += sizeof(float) * 3;
+                                  /* offset    = */ (const GLvoid*) offsetof(dd::DrawVertex, line.x));
             
-            glEnableVertexAttribArray(1); // in_ColorPointSize (vec4)
+            glEnableVertexAttribArray(inColorPointSize); // in_ColorPointSize (vec4)
             glVertexAttribPointer(
-                                  /* index     = */ 1,
+                                  /* index     = */ inColorPointSize,
                                   /* size      = */ 4,
                                   /* type      = */ GL_FLOAT,
                                   /* normalize = */ GL_FALSE,
                                   /* stride    = */ sizeof(dd::DrawVertex),
-                                  /* offset    = */ reinterpret_cast<void *>(offset));
-            
-            glBindVertexArray(0);
+                                  /* offset    = */ (const GLvoid*) offsetof(dd::DrawVertex, line.r));
             
             glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
+        glBindVertexArray_NJLIC(0);
         
         //
         // Text rendering vertex buffer:
         //
+        glGenVertexArrays_NJLIC(1, &textVAO);
+        glBindVertexArray_NJLIC(textVAO);
         {
-            glGenVertexArrays(1, &textVAO);
-            
             glGenBuffers(1, &textVBO);
-            
-            glBindVertexArray(textVAO);
-            
             glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-            
+
             // NOTE: A more optimized implementation might consider combining
             // both the lines/points and text buffers to save some memory!
             glBufferData(GL_ARRAY_BUFFER,
                          DEBUG_DRAW_VERTEX_BUFFER_SIZE * sizeof(dd::DrawVertex),
                          nullptr, GL_STREAM_DRAW);
-            
+
             // Set the vertex format expected by the 2D text:
             std::size_t offset = 0;
             
-            glEnableVertexAttribArray(0); // in_Position (vec2)
+            int in_Position = m_TextShaderProgram->getAttributeLocation("in_Position");
+            int in_TexCoords = m_TextShaderProgram->getAttributeLocation("in_TexCoords");
+            int in_Color = m_TextShaderProgram->getAttributeLocation("in_Color");
+
+            glEnableVertexAttribArray(in_Position); // in_Position (vec2)
             glVertexAttribPointer(
-                                  /* index     = */ 0,
+                                  /* index     = */ in_Position,
                                   /* size      = */ 2,
                                   /* type      = */ GL_FLOAT,
                                   /* normalize = */ GL_FALSE,
                                   /* stride    = */ sizeof(dd::DrawVertex),
-                                  /* offset    = */ reinterpret_cast<void *>(offset));
+                                  /* offset    = */ (const GLvoid*) offset);
             offset += sizeof(float) * 2;
-            
-            glEnableVertexAttribArray(1); // in_TexCoords (vec2)
+
+            glEnableVertexAttribArray(in_TexCoords); // in_TexCoords (vec2)
             glVertexAttribPointer(
-                                  /* index     = */ 1,
+                                  /* index     = */ in_TexCoords,
                                   /* size      = */ 2,
                                   /* type      = */ GL_FLOAT,
                                   /* normalize = */ GL_FALSE,
                                   /* stride    = */ sizeof(dd::DrawVertex),
-                                  /* offset    = */ reinterpret_cast<void *>(offset));
+                                  /* offset    = */ (const GLvoid*) offset);
             offset += sizeof(float) * 2;
-            
-            glEnableVertexAttribArray(2); // in_Color (vec4)
+
+            glEnableVertexAttribArray(in_Color); // in_Color (vec4)
             glVertexAttribPointer(
-                                  /* index     = */ 2,
-                                  /* size      = */ 4,
+                                  /* index     = */ in_Color,
+                                  /* size      = */ 3,
                                   /* type      = */ GL_FLOAT,
                                   /* normalize = */ GL_FALSE,
                                   /* stride    = */ sizeof(dd::DrawVertex),
-                                  /* offset    = */ reinterpret_cast<void *>(offset));
-            
-            glBindVertexArray(0);
-            
+                                  /* offset    = */ (const GLvoid*) offset);
+
             glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
-    }
-    
-    void WorldDebugDrawer::compileShader(const GLuint shader)
-    {
-        glCompileShader(shader);
-        
-        GLint status;
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-        
-        if (status == GL_FALSE)
-        {
-            GLchar strInfoLog[1024] = {0};
-            glGetShaderInfoLog(shader, sizeof(strInfoLog) - 1, nullptr, strInfoLog);
-            std::cerr << "\n>>> Shader compiler errors: \n"
-            << strInfoLog << std::endl;
-        }
-    }
-    
-    void WorldDebugDrawer::linkProgram(const GLuint program)
-    {
-        glLinkProgram(program);
-        
-        GLint status;
-        glGetProgramiv(program, GL_LINK_STATUS, &status);
-        
-        if (status == GL_FALSE)
-        {
-            GLchar strInfoLog[1024] = {0};
-            glGetProgramInfoLog(program, sizeof(strInfoLog) - 1, nullptr,
-                                strInfoLog);
-            std::cerr << "\n>>> Program linker errors: \n"
-            << strInfoLog << std::endl;
-        }
+        glBindVertexArray_NJLIC(0);
     }
     
     // From Carbon HIToolbox/Events.h
@@ -1152,41 +1192,41 @@ namespace njli
     
     void WorldDebugDrawer::renderImgui() { ImGui::Render(); }
 
-#if !defined(_WIN32) && !defined(__ANDROID__)
-    static void GetPrimaryIp(char *buffer, size_t buflen)
-    {
-        setenv("LANG", "C", 1);
-        FILE *fp = popen("ifconfig", "r");
-        if (fp)
-        {
-            char *p = NULL, *e;
-            size_t n;
-            while ((getline(&p, &n, fp) > 0) && p)
-            {
-                if ((p = strstr(p, "inet ")))
-                {
-                    p += 5;
-                    if ((p = strchr(p, ':')))
-                    {
-                        ++p;
-                        if ((e = strchr(p, ' ')))
-                        {
-                            *e = '\0';
-                            printf("%s\n", p);
-                        }
-                    }
-                }
-            }
-        }
-        pclose(fp);
-    }
+#if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+  static void GetPrimaryIp(char *buffer, size_t buflen)
+  {
+    setenv("LANG", "C", 1);
+    FILE *fp = popen("ifconfig", "r");
+    if (fp)
+      {
+        char *p = NULL, *e;
+        size_t n;
+        while ((getline(&p, &n, fp) > 0) && p)
+          {
+            if ((p = strstr(p, "inet ")))
+              {
+                p += 5;
+                if ((p = strchr(p, ':')))
+                  {
+                    ++p;
+                    if ((e = strchr(p, ' ')))
+                      {
+                        *e = '\0';
+                        printf("%s\n", p);
+                      }
+                  }
+              }
+          }
+      }
+    pclose(fp);
+  }
 #endif
 
-    void WorldDebugDrawer::newFrameImgui()
-    {
-#if !defined(_WIN32) && !defined(__ANDROID__)
-        static char buffer[256];
-        GetPrimaryIp(buffer, 256);
+  void WorldDebugDrawer::newFrameImgui()
+  {
+#if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+    static char buffer[256];
+    GetPrimaryIp(buffer, 256);
 #endif
 
         ImGuiIO &io = ImGui::GetIO();
@@ -1206,53 +1246,56 @@ namespace njli
         double current_time = time / 1000.0;
         io.DeltaTime =
         g_Time > 0.0 ? (float)(current_time - g_Time) : (float)(1.0f / 60.0f);
-        g_Time = current_time;
-        
-        io.MouseDrawCursor = g_synergyPtrActive;
-        if (g_synergyPtrActive)
-        {
-            style.TouchExtraPadding = ImVec2(0.0, 0.0);
-            io.MousePos = ImVec2(g_mousePosX, g_mousePosY);
-            for (int i = 0; i < 3; i++)
-            {
-                io.MouseDown[i] = g_MousePressed[i];
-            }
-            
-            io.MouseWheel = g_mouseWheelY / 500.0;
-        }
+    g_Time = current_time;
+
+    io.MouseDrawCursor = g_synergyPtrActive;
+    if (g_synergyPtrActive)
+      {
+        style.TouchExtraPadding = ImVec2(0.0, 0.0);
+        io.MousePos = ImVec2(g_mousePosX, g_mousePosY);
+        for (int i = 0; i < 3; i++)
+          {
+            io.MouseDown[i] = g_MousePressed[i];
+          }
+
+        io.MouseWheel = g_mouseWheelY / 500.0;
+      }
+    else
+      {
+#if !defined(__ANDROID__) && !defined(__IPHONEOS__)
+        int mx, my;
+        Uint32 mouseMask = SDL_GetMouseState(&mx, &my);
+        if (SDL_GetWindowFlags(gWindow) & SDL_WINDOW_MOUSE_FOCUS)
+          {
+            io.MousePos = ImVec2((float)mx, (float)my);
+          }
         else
-        {
-            int mx, my;
-            Uint32 mouseMask = SDL_GetMouseState(&mx, &my);
-            if (SDL_GetWindowFlags(gWindow) & SDL_WINDOW_MOUSE_FOCUS)
-            {
-                io.MousePos = ImVec2((float)mx, (float)my);
-            }
-            else
-            {
-                io.MousePos = ImVec2(-1, -1);
-            }
-            // If a mouse press event came, always pass it as "mouse held this
-            // frame", so we don't miss click-release events that are
-            // shorter than 1 frame.
-            io.MouseDown[0] =
+          {
+            io.MousePos = ImVec2(-1, -1);
+          }
+
+        // If a mouse press event came, always pass it as "mouse held this
+        // frame", so we don't miss click-release events that are
+        // shorter than 1 frame.
+        io.MouseDown[0] =
             g_MousePressed[0] || (mouseMask & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
-            io.MouseDown[1] = g_MousePressed[1] ||
-            (mouseMask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
-            io.MouseDown[2] = g_MousePressed[2] ||
-            (mouseMask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
-            g_MousePressed[0] = g_MousePressed[1] = g_MousePressed[2] = false;
-            
-            io.MouseWheel = g_MouseWheel;
-            g_MouseWheel = 0.0f;
-            
-            SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
-        }
+        io.MouseDown[1] = g_MousePressed[1] ||
+                          (mouseMask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
+        io.MouseDown[2] = g_MousePressed[2] ||
+                          (mouseMask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
+        g_MousePressed[0] = g_MousePressed[1] = g_MousePressed[2] = false;
+
+        io.MouseWheel = g_MouseWheel;
+        g_MouseWheel = 0.0f;
+          SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
+#endif
         
-        ImGui::NewFrame();
-        //        ImGuizmo::BeginFrame();
-    }
-    
+      }
+
+    ImGui::NewFrame();
+    ImGuizmo::BeginFrame();
+  }
+
 #if defined(USE_USYNERGY_LIBRARY)
     void WorldDebugDrawer::connectSynergyServer(const std::string serverName)
     {
@@ -1315,6 +1358,31 @@ namespace njli
                     g_MousePressed[2] = true;
                 return true;
             }
+
+case SDL_FINGERMOTION:
+          {
+              g_MousePressed[0] = true;
+              float x = event->tfinger.x * gDisplayMode.w;
+              float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+              io.MousePos = ImVec2(x, y);
+          }
+              return true;
+          case SDL_FINGERDOWN:
+          {
+              g_MousePressed[0] = true;
+              float x = event->tfinger.x * gDisplayMode.w;
+              float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+              io.MousePos = ImVec2(x, y);
+          }
+              return true;
+          case SDL_FINGERUP:
+          {
+              g_MousePressed[0] = false;
+              float x = event->tfinger.x * gDisplayMode.w;
+              float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+              io.MousePos = ImVec2(x, y);
+          }
+              return true;
             case SDL_TEXTINPUT:
             {
                 ImGuiIO &io = ImGui::GetIO();
@@ -1403,7 +1471,7 @@ namespace njli
         glUniform1i(g_AttribLocationTex, 0);
         glUniformMatrix4fv(g_AttribLocationProjMtx, 1, GL_FALSE,
                            &ortho_projection[0][0]);
-        glBindVertexArray(g_VaoHandle);
+        glBindVertexArray_NJLIC(g_VaoHandle);
         
         for (int n = 0; n < draw_data->CmdListsCount; n++)
         {
@@ -1468,7 +1536,7 @@ namespace njli
         }
         
         // Restore modified state
-        glBindVertexArray(0);
+        glBindVertexArray_NJLIC(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glEnable(GL_CULL_FACE);
         glEnable(GL_DEPTH_TEST);
@@ -1508,7 +1576,7 @@ namespace njli
     bool ImGui_ImplIOS_CreateDeviceObjects()
     {
         const GLchar *vertex_shader =
-        "#version 120\n"
+        "#version 100\n"
         "uniform mat4 ProjMtx;\n"
         "attribute vec2 Position;\n"
         "attribute vec2 UV;\n"
@@ -1523,7 +1591,13 @@ namespace njli
         "}\n";
         
         const GLchar *fragment_shader =
-        "#version 120\n"
+        "#version 100\n"
+#if defined(__GL_ES2__) || defined(__GL_ES2__)
+        
+        "#ifdef GL_ES\n"
+        "      precision highp float;\n"
+        "#endif\n"
+#endif
         "uniform sampler2D Texture;\n"
         "varying vec2 Frag_UV;\n"
         "varying vec4 Frag_Color;\n"
@@ -1577,8 +1651,8 @@ namespace njli
         glGenBuffers(1, &g_VboHandle);
         glGenBuffers(1, &g_ElementsHandle);
         
-        glGenVertexArrays(1, &g_VaoHandle);
-        glBindVertexArray(g_VaoHandle);
+        glGenVertexArrays_NJLIC(1, &g_VaoHandle);
+        glBindVertexArray_NJLIC(g_VaoHandle);
         glBindBuffer(GL_ARRAY_BUFFER, g_VboHandle);
         glEnableVertexAttribArray(g_AttribLocationPosition);
         glEnableVertexAttribArray(g_AttribLocationUV);
@@ -1595,7 +1669,7 @@ namespace njli
                               sizeof(ImDrawVert),
                               (GLvoid *)OFFSETOF(ImDrawVert, col));
 #undef OFFSETOF
-        glBindVertexArray(0);
+        glBindVertexArray_NJLIC(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
         ImGui_ImplIOS_CreateFontsTexture();

@@ -110,7 +110,7 @@ namespace njli
         m_SocketPort(2223), m_BackgroundColor(new btVector4(.5, .5, .5, .5)),
         m_DeviceName("NOT - SET"), m_AnimationPaused(false), m_GamePaused(false)
   {
-    m_WorldDebugDrawer->init();
+//    m_WorldDebugDrawer->init();
 
     addChild(m_WorldSound);
     addChild(m_WorldInput);
@@ -382,10 +382,15 @@ namespace njli
     return NULL;
   }
 
-  WorldDebugDrawer *World::getDebugDrawer() { return m_WorldDebugDrawer; }
+  WorldDebugDrawer *World::getDebugDrawer() {
+      m_WorldDebugDrawer->init();
+      return m_WorldDebugDrawer;
+      
+  }
 
   const WorldDebugDrawer *World::getDebugDrawer() const
   {
+      m_WorldDebugDrawer->init();
     return m_WorldDebugDrawer;
   }
 

@@ -13,7 +13,7 @@
 #include "Util.h"
 #include "btIDebugDraw.h"
 #include "debug_draw.hpp"
-//#include "glm/glm.hpp"
+#include "glm/glm.hpp"
 #if defined(USE_USYNERGY_LIBRARY)
 #include "uSynergy.h"
 #endif
@@ -23,7 +23,8 @@
 namespace njli
 {
   class Camera;
-
+    class ShaderProgram;
+    
   class WorldDebugDrawer : public dd::RenderInterface, public btIDebugDraw
   {
   public:
@@ -51,6 +52,7 @@ namespace njli
     virtual void setDebugMode(int debugMode);
     virtual int getDebugMode() const;
 
+      bool isInitialized()const;
     void init();
     void unInit();
     void draw(Camera *camera);
@@ -68,7 +70,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void point(const btVector3 &pos, const btVector3 &color, float size = 1.0f,
-               int durationMillis = 0, bool depthEnabled = true);
+               int durationMillis = 10000, bool depthEnabled = true);
 
     /**
      Add a 3D line to the debug draw queue. Note that
@@ -82,7 +84,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void line(const btVector3 &from, const btVector3 &to,
-              const btVector3 &color = btVector3(1.0, 0.0, 0.0), int durationMillis = 0,
+              const btVector3 &color = btVector3(1.0, 0.0, 0.0), int durationMillis = 10000,
               bool depthEnabled = true);
 
     /**
@@ -101,7 +103,7 @@ namespace njli
      */
     void screenText(const std::string &str, const btVector3 &pos,
                     const btVector3 &color, float scaling = 1.0f,
-                    int durationMillis = 0);
+                    int durationMillis = 10000);
 
     /**
      Add a 3D text label centered at the given world position that
@@ -118,7 +120,7 @@ namespace njli
      */
     void projectedText(const std::string &str, const btVector3 &pos,
                        const btVector3 &color, float scaling = 1.0f,
-                       int durationMillis = 0);
+                       int durationMillis = 10000);
 
     /**
      Add a set of three coordinate axis depicting the position and orientation
@@ -132,10 +134,10 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-    //        void axisTriad(ddMat4x4Param transform,
-    //                       float size, float length,
-    //                       int durationMillis = 0,
-    //                       bool depthEnabled = true);
+      void axisTriad(const glm::mat4 &transform,
+                   float size, float length,
+                   int durationMillis = 10000,
+                   bool depthEnabled = true);
 
     /**
      Add a 3D line with an arrow-like end to the debug draw queue.
@@ -150,7 +152,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void arrow(const btVector3 &from, const btVector3 &to,
-               const btVector3 &color, float size, int durationMillis = 0,
+               const btVector3 &color, float size, int durationMillis = 10000,
                bool depthEnabled = true);
 
     /**
@@ -164,7 +166,7 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-    void cross(const btVector3 &center, float length, int durationMillis = 0,
+    void cross(const btVector3 &center, float length, int durationMillis = 10000,
                bool depthEnabled = true);
 
     /**
@@ -180,7 +182,7 @@ namespace njli
      */
     void circle(const btVector3 &center, const btVector3 &planeNormal,
                 const btVector3 &color, float radius, float numSteps,
-                int durationMillis = 0, bool depthEnabled = true);
+                int durationMillis = 10000, bool depthEnabled = true);
 
     /**
      Add a wireframe plane in 3D space to the debug draw queue.
@@ -198,7 +200,7 @@ namespace njli
      */
     void plane(const btVector3 &center, const btVector3 &planeNormal,
                const btVector3 &planeColor, const btVector3 &normalVecColor,
-               float planeScale, float normalVecScale, int durationMillis = 0,
+               float planeScale, float normalVecScale, int durationMillis = 10000,
                bool depthEnabled = true);
 
     /**
@@ -211,7 +213,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void sphere(const btVector3 &center, const btVector3 &color, float radius,
-                int durationMillis = 0, bool depthEnabled = true);
+                int durationMillis = 10000, bool depthEnabled = true);
 
     /**
      Add a wireframe cone to the debug draw queue.
@@ -229,7 +231,7 @@ namespace njli
      */
     void cone(const btVector3 &apex, const btVector3 &dir,
               const btVector3 &color, float baseRadius, float apexRadius,
-              int durationMillis = 0, bool depthEnabled = true);
+              int durationMillis = 10000, bool depthEnabled = true);
 
     /**
      Wireframe box from the eight points that define it.
@@ -239,10 +241,11 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-    //        void box(const ddVec3 points[8],
-    //                 const btVector3 &color,
-    //                 int durationMillis = 0,
-    //                 bool depthEnabled = true);
+      void box(const glm::vec3 &p0, const glm::vec3 &p1, const glm::vec3 &p2, const glm::vec3 &p3,
+               const glm::vec3 &p4, const glm::vec3 &p5, const glm::vec3 &p6, const glm::vec3 &p7,
+             const glm::vec3 &color,
+             int durationMillis = 10000,
+             bool depthEnabled = true);
 
     /**
      Add a wireframe box to the debug draw queue.
@@ -256,7 +259,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void box(const btVector3 &center, const btVector3 &color, float width,
-             float height, float depth, int durationMillis = 0,
+             float height, float depth, int durationMillis = 10000,
              bool depthEnabled = true);
 
     /**
@@ -269,7 +272,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void aabb(const btVector3 &mins, const btVector3 &maxs,
-              const btVector3 &color, int durationMillis = 0,
+              const btVector3 &color, int durationMillis = 10000,
               bool depthEnabled = true);
 
     /**
@@ -283,10 +286,10 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-    //        void frustum(ddMat4x4Param invClipMatrix,
-    //                     const btVector3 &color,
-    //                     int durationMillis = 0,
-    //                     bool depthEnabled = true);
+      void frustum(const glm::mat4 &invClipMatrix,
+                 const btVector3 &color,
+                 int durationMillis = 10000,
+                 bool depthEnabled = true);
 
     /**
      Add a vertex normal for debug visualization.
@@ -299,7 +302,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void vertexNormal(const btVector3 &origin, const btVector3 &normal,
-                      float length, int durationMillis = 0,
+                      float length, int durationMillis = 10000,
                       bool depthEnabled = true);
 
     /**
@@ -318,7 +321,7 @@ namespace njli
      */
     void tangentBasis(const btVector3 &origin, const btVector3 &normal,
                       const btVector3 &tangent, const btVector3 &bitangent,
-                      float lengths, int durationMillis = 0,
+                      float lengths, int durationMillis = 10000,
                       bool depthEnabled = true);
 
     /**
@@ -336,7 +339,7 @@ namespace njli
      @param depthEnabled <#depthEnabled description#>
      */
     void xzSquareGrid(float mins, float maxs, float y, float step,
-                      const btVector3 &color, int durationMillis = 0,
+                      const btVector3 &color, int durationMillis = 10000,
                       bool depthEnabled = true);
 
     bool processSdlEvent(SDL_Event *event);
@@ -345,13 +348,9 @@ namespace njli
     void connectSynergyServer(const std::string serverName);
 #endif
       
-      void editTransform(const Camera& camera, btTransform& matrix);
 
   protected:
-    void setupShaderPrograms();
     void setupVertexBuffers();
-    void compileShader(const GLuint shader);
-    void linkProgram(const GLuint program);
 
     void initImgui();
     void unInitImgui();
@@ -361,15 +360,14 @@ namespace njli
   private:
     int m_DebugMode;
 
-//    glm::mat4 m_mvpMatrix;
+      bool m_Initialized;
+      
       Camera *m_Camera;
+      ShaderProgram *m_LinePointShaderProgram;
+      ShaderProgram *m_TextShaderProgram;
 
-    GLuint linePointProgram;
-    GLint linePointProgram_MvpMatrixLocation;
-
-    GLuint textProgram;
-    GLint textProgram_GlyphTextureLocation;
-    GLint textProgram_ScreenDimensions;
+      GLfloat *m_mat4Buffer;
+      GLfloat *m_textMat4Buffer;
 
     GLuint linePointVAO;
     GLuint linePointVBO;
