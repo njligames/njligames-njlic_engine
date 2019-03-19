@@ -470,13 +470,13 @@ namespace njli
         break;
       //#if ((defined(__MACOSX__) && __MACOSX__) || (defined(__EMSCRIPTEN__) &&
       //__EMSCRIPTEN__))
-      case SDL_MOUSEMOTION:
-      case SDL_MOUSEBUTTONDOWN:
-      case SDL_MOUSEBUTTONUP:
-
-        NJLI_HandleMouse(event->button.button, event->type, event->button.x,
-                         event->button.y, event->button.clicks);
-        break;
+//      case SDL_MOUSEMOTION:
+//      case SDL_MOUSEBUTTONDOWN:
+//      case SDL_MOUSEBUTTONUP:
+//
+//        NJLI_HandleMouse(event->button.button, event->type, event->button.x,
+//                         event->button.y, event->button.clicks);
+//        break;
       //#endif
 
       //#if ((defined(__IPHONEOS__) && __IPHONEOS__) || (defined(__ANDROID__) &&
@@ -1327,25 +1327,28 @@ namespace njli
       }
   }
 
-  static void createRenderer()
-  {
-    int n = SDL_GetNumRenderDrivers();
-    SDL_RendererInfo info;
-
-    for (int j = 0; j < n; ++j)
-      {
-        SDL_GetRenderDriverInfo(j, &info);
-        SDLTest_PrintRenderer(&info);
-        SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "%s", info.name);
-        if (SDL_strcasecmp(info.name, "opengl") == 0)
-          {
-            gRenderer = SDL_CreateRenderer(gWindow, j, 0);
-            return;
-          }
-      }
-  }
+  
 #endif
 
+    static void createRenderer()
+    {
+        int n = SDL_GetNumRenderDrivers();
+        SDL_RendererInfo info;
+        
+        for (int j = 0; j < n; ++j)
+        {
+            SDL_GetRenderDriverInfo(j, &info);
+//            SDLTest_PrintRenderer(&info);
+            SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "%s", info.name);
+            if (SDL_strcasecmp(info.name, "opengl") == 0 ||
+                SDL_strcasecmp(info.name, "opengles2") == 0)
+            {
+                gRenderer = SDL_CreateRenderer(gWindow, j, 0);
+                return;
+            }
+        }
+    }
+    
   int run_main(int argc, char **argv)
   {
 
@@ -1596,8 +1599,9 @@ namespace njli
                                SDL_WINDOWPOS_CENTERED, gDisplayMode.w,
                                gDisplayMode.h, flags);
 
+          createRenderer();
 #if defined(__MACOSX__)
-    createRenderer();
+    
 
     SDL_DisplayMode DM;
     SDL_GetCurrentDisplayMode(0, &DM);
@@ -1668,13 +1672,13 @@ namespace njli
 #endif
 
     //    int drawableW, drawableH;
-    int screen_w, screen_h;
-    float pointSizeScale;
+//    int screen_w, screen_h;
+//    float pointSizeScale;
 
     /* The window size and drawable size may be different when highdpi is
      * enabled,
      * due to the increased pixel density of the drawable. */
-    SDL_GetWindowSize(gWindow, &screen_w, &screen_h);
+    SDL_GetWindowSize(gWindow, &gDisplayMode.w, &gDisplayMode.h);
 
 //      SDL_GL_GetDrawableSize(gWindow, &w, &h);
 #if !defined(__EMSCRIPTEN__)
@@ -1685,7 +1689,7 @@ namespace njli
 
     /* In OpenGL, point sizes are always in pixels. We don't want them looking
      * tiny on a retina screen. */
-    pointSizeScale = (float)gDisplayMode.w / (float)screen_h;
+//    pointSizeScale = (float)gDisplayMode.w / (float)screen_h;
 
     //#if defined(__MACOSX__)
     //    SDL_GetWindowSize(gWindow, &w, &h);
@@ -1709,8 +1713,8 @@ namespace njli
     //               fullScreen = e.isFullscreen;
 
 #endif
-    gDisplayMode.w *= pointSizeScale;
-    gDisplayMode.h *= pointSizeScale;
+//    gDisplayMode.w *= pointSizeScale;
+//    gDisplayMode.h *= pointSizeScale;
 
     NJLI_HandleResize(gDisplayMode.w, gDisplayMode.h, gDisplayMode.format,
                       gDisplayMode.refresh_rate);
