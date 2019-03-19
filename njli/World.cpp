@@ -415,7 +415,7 @@ namespace njli
       }
     else
       {
-        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Down";
@@ -442,7 +442,7 @@ namespace njli
       }
     else
       {
-        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Up";
@@ -469,7 +469,7 @@ namespace njli
       }
     else
       {
-        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Move";
@@ -496,7 +496,7 @@ namespace njli
       }
     else
       {
-        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Cancelled";
@@ -524,7 +524,7 @@ namespace njli
       }
     else
       {
-        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Down";
@@ -551,7 +551,7 @@ namespace njli
       }
     else
       {
-        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Up";
@@ -578,7 +578,7 @@ namespace njli
       }
     else
       {
-        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Move";

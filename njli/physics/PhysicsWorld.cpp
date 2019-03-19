@@ -98,6 +98,8 @@ namespace njli
             // TODO: (error: too few arguments to function call, expected 4,
             // have 2) collisionPair.m_algorithm =
             // dispatcher.findAlgorithm(&obj0Wrap,&obj1Wrap);
+              
+              collisionPair.m_algorithm = dispatcher.findAlgorithm(&obj0Wrap,&obj1Wrap,0, BT_CONTACT_POINT_ALGORITHMS);
           }
 
         if (collisionPair.m_algorithm)
