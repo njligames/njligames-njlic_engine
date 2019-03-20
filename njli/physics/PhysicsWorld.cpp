@@ -99,6 +99,7 @@ namespace njli
             // have 2) collisionPair.m_algorithm =
             // dispatcher.findAlgorithm(&obj0Wrap,&obj1Wrap);
               
+              //This link helped: https://andysomogyi.github.io/mechanica/bullet.html
               collisionPair.m_algorithm = dispatcher.findAlgorithm(&obj0Wrap,&obj1Wrap,0, BT_CONTACT_POINT_ALGORITHMS);
           }
 
