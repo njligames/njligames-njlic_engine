@@ -352,6 +352,10 @@ namespace njli
     s32 m_AngularForceAndPositionArrayIndex;
     btTransform *m_btTransform;
     f32 m_Charge;
+      btVector3 *m_AngularFactor;
+      btVector3 *m_LinearFactor;
+      float m_AngularDamping;
+      float m_Damping;
   };
 }
 

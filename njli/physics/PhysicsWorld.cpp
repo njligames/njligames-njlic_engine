@@ -801,6 +801,11 @@ namespace njli
       }
     return false;
   }
+    
+    int PhysicsWorld::getVersion()const
+    {
+        return btGetVersion();
+    }
 
   void PhysicsWorld::ghostObjectCollisionTest()
   {

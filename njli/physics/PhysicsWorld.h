@@ -354,6 +354,8 @@ namespace njli
          *  @return <#return value description#>
          */
     bool removeConstraint(PhysicsConstraint * constraint);
+      
+      int getVersion()const;
 
   private:
     void ghostObjectCollisionTest();

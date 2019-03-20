@@ -52,7 +52,7 @@ namespace njli
     virtual void setDebugMode(int debugMode);
     virtual int getDebugMode() const;
 
-      bool isInitialized()const;
+     inline bool isInitialized()const{return m_Initialized;}
     void init();
     void unInit();
     void draw(Camera *camera);
