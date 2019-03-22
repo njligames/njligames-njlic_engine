@@ -254,7 +254,9 @@ namespace njli
       
       const btVector3 &getCurrentVelocity() const;
       const btVector3 &getCurrentForce() const;
-   
+      
+      void clearSteering();
+      
       void enable(bool enable=true){m_Enable=enable;}
       bool isEnabled()const{return m_Enable;}
       

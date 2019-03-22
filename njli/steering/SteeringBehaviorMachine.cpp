@@ -375,6 +375,12 @@ namespace njli
   {
     return *m_CurrentForce;
   }
+    
+    void SteeringBehaviorMachine::clearSteering()
+    {
+        *m_CurrentForce = btVector3Zero;
+         *m_CurrentVelocity = btVector3Zero;
+    }
 
   f32 SteeringBehaviorMachine::getMaxForce2() const { return m_MaxForce2; }
 

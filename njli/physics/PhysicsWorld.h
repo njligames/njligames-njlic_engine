@@ -356,6 +356,8 @@ namespace njli
     bool removeConstraint(PhysicsConstraint * constraint);
       
       int getVersion()const;
+      
+      void applyFinalForces();
 
   private:
     void ghostObjectCollisionTest();
@@ -384,6 +386,8 @@ namespace njli
 
     btVoronoiSimplexSolver *m_simplexSolver;
     btMinkowskiPenetrationDepthSolver *m_pdSolver;
+      
+      std::vector<PhysicsBodyRigid*> m_RigidBodyVector;
   };
 }
 

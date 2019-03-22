@@ -39,13 +39,13 @@ namespace njli
     m_AngularDamping(0),
     m_Damping(0)
     {
-    //        for(s32 i = 0; i < 20; ++i)
-    //        {
-    //            m_LinearForceAndPositionArray.push_back(new
-    //            ForceAndPosition());
-    //            m_AngularForceAndPositionArray.push_back(new
-    //            ForceAndPosition());
-    //        }
+            for(s32 i = 0; i < 20; ++i)
+            {
+                m_LinearForceAndPositionArray.push_back(new
+                ForceAndPosition());
+                m_AngularForceAndPositionArray.push_back(new
+                ForceAndPosition());
+            }
     //        enableHandleCollideCallback();
     //        setDynamicPhysics();
   }
@@ -62,13 +62,13 @@ namespace njli
     m_AngularDamping(0),
     m_Damping(0)
   {
-    //        for(s32 i = 0; i < 20; ++i)
-    //        {
-    //            m_LinearForceAndPositionArray.push_back(new
-    //            ForceAndPosition());
-    //            m_AngularForceAndPositionArray.push_back(new
-    //            ForceAndPosition());
-    //        }
+            for(s32 i = 0; i < 20; ++i)
+            {
+                m_LinearForceAndPositionArray.push_back(new
+                ForceAndPosition());
+                m_AngularForceAndPositionArray.push_back(new
+                ForceAndPosition());
+            }
     //        enableHandleCollideCallback();
     //        setDynamicPhysics();
   }
@@ -85,13 +85,13 @@ namespace njli
     m_AngularDamping(0),
     m_Damping(0)
   {
-    //        for(s32 i = 0; i < 20; ++i)
-    //        {
-    //            m_LinearForceAndPositionArray.push_back(new
-    //            ForceAndPosition());
-    //            m_AngularForceAndPositionArray.push_back(new
-    //            ForceAndPosition());
-    //        }
+            for(s32 i = 0; i < 20; ++i)
+            {
+                m_LinearForceAndPositionArray.push_back(new
+                ForceAndPosition());
+                m_AngularForceAndPositionArray.push_back(new
+                ForceAndPosition());
+            }
   }
 
   PhysicsBodyRigid::~PhysicsBodyRigid()
@@ -101,16 +101,16 @@ namespace njli
       
     removePhysicsBody();
 
-    //        ForceAndPosition *p = NULL;
+            ForceAndPosition *p = NULL;
 
-    //        for (s32 i = 0; i < 20; ++i)
-    //        {
-    //            p = m_LinearForceAndPositionArray.at(i);
-    //            delete p;
-    //
-    //            p = m_AngularForceAndPositionArray.at(i);
-    //            delete p;
-    //        }
+            for (s32 i = 0; i < 20; ++i)
+            {
+                p = m_LinearForceAndPositionArray.at(i);
+                delete p;
+    
+                p = m_AngularForceAndPositionArray.at(i);
+                delete p;
+            }
 
     //        delete m_btTransform;
     //        m_btTransform=NULL;

@@ -59,6 +59,12 @@ namespace njli
 
   void DefaultCustomPostTickCallback(btDynamicsWorld *world, btScalar timeStep)
   {
+      if(world->getWorldUserInfo() != NULL)
+      {
+          PhysicsWorld *pw = static_cast<PhysicsWorld*>(world->getWorldUserInfo());
+          pw->applyFinalForces();
+      }
+      
   }
 
   //    void MyNearCallback(btBroadphasePair& collisionPair,
@@ -307,6 +313,8 @@ namespace njli
     //        m_dynamicsWorld ->getSolverInfo().m_splitImpulse = true;
 
     m_dynamicsWorld->setGravity(btVector3(0, 0, 0));
+      
+      
 
     m_dispatcher->setNearCallback(CustomNearCallback);
     m_dynamicsWorld->getPairCache()->setOverlapFilterCallback(
@@ -608,6 +616,7 @@ namespace njli
     gContactAddedCallback = CustomContactAddedCallback;
     gContactProcessedCallback = CustomContactProcessedCallback;
     gContactDestroyedCallback = CustomContactDestroyedCallback;
+      m_dynamicsWorld->setWorldUserInfo(this);
 
     m_TimeStep = timeStep;
 
@@ -760,6 +769,8 @@ namespace njli
                                           (int)body->getCollisionMask());
 
             body->getCollisionObject()->setUserPointer(body->getParent());
+              
+              m_RigidBodyVector.push_back(body);
           }
         return true;
       }
@@ -773,6 +784,10 @@ namespace njli
           {
             m_dynamicsWorld->removeRigidBody(body->getBody());
             body->getCollisionObject()->setUserPointer(NULL);
+              
+              auto iter = std::find(m_RigidBodyVector.begin(), m_RigidBodyVector.end(), body);
+              if(iter != m_RigidBodyVector.end())
+                  m_RigidBodyVector.erase(iter);
 
             return true;
           }
@@ -805,6 +820,12 @@ namespace njli
     int PhysicsWorld::getVersion()const
     {
         return btGetVersion();
+    }
+    
+    void PhysicsWorld::applyFinalForces()
+    {
+        for(auto i = 0; i < m_RigidBodyVector.size(); i++)
+            m_RigidBodyVector.at(i)->applyFinalForce();
     }
 
   void PhysicsWorld::ghostObjectCollisionTest()
