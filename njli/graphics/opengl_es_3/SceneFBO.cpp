@@ -24,15 +24,21 @@ namespace njli
 {
   SceneFBO::SceneFBO() : AbstractFactoryObject(this)
   {
+    //        m_FBO = njli::World::getInstance()->getWorldHUD()->createFBO(512,
+    //        512, NVG_IMAGE_REPEATX | NVG_IMAGE_REPEATY);
   }
 
   SceneFBO::SceneFBO(const AbstractBuilder &builder)
       : AbstractFactoryObject(this)
   {
+    //        m_FBO = njli::World::getInstance()->getWorldHUD()->createFBO(512,
+    //        512, NVG_IMAGE_REPEATX | NVG_IMAGE_REPEATY);
   }
 
   SceneFBO::SceneFBO(const SceneFBO &copy) : AbstractFactoryObject(this)
   {
+    //        m_FBO = njli::World::getInstance()->getWorldHUD()->createFBO(512,
+    //        512, NVG_IMAGE_REPEATX | NVG_IMAGE_REPEATY);
   }
 
   SceneFBO::~SceneFBO() {}
