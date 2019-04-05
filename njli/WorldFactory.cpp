@@ -132,6 +132,8 @@
 #include "PlaneBuilder.h"
 #include "Scene.h"
 #include "SceneBuilder.h"
+#include "SceneFBO.h"
+#include "SceneFBOBuilder.h"
 #include "SceneState.h"
 #include "SceneStateBuilder.h"
 #include "SceneStateMachine.h"
@@ -396,6 +398,9 @@ namespace njli
       case JLI_OBJECT_TYPE_PhysicsWorldBuilder:
       case JLI_OBJECT_TYPE_PlaneBuilder:
       case JLI_OBJECT_TYPE_SceneBuilder:
+
+      case JLI_OBJECT_TYPE_SceneFBOBuilder:
+
       case JLI_OBJECT_TYPE_SceneStateBuilder:
       case JLI_OBJECT_TYPE_SceneStateMachineBuilder:
       case JLI_OBJECT_TYPE_ShaderProgramBuilder:
@@ -1533,6 +1538,28 @@ namespace njli
           obj = (AbstractFactoryObject **)_obj;
         }
         break;
+
+      case JLI_OBJECT_TYPE_SceneFBO:
+        {
+          SceneFBO **_obj = new SceneFBO *[size];
+          for (s32 i = 0; i < size; ++i)
+            {
+              _obj[i] = SceneFBO::create();
+            }
+          obj = (AbstractFactoryObject **)_obj;
+        }
+        break;
+      case JLI_OBJECT_TYPE_SceneFBOBuilder:
+        {
+          SceneFBOBuilder **_obj = new SceneFBOBuilder *[size];
+          for (s32 i = 0; i < size; ++i)
+            {
+              _obj[i] = SceneFBOBuilder::create();
+            }
+          obj = (AbstractFactoryObject **)_obj;
+        }
+        break;
+
       case JLI_OBJECT_TYPE_SceneState:
         {
           SceneState **_obj = new SceneState *[size];
@@ -2609,6 +2636,14 @@ namespace njli
       case JLI_OBJECT_TYPE_SceneBuilder:
         obj = new SceneBuilder();
         break;
+
+      case JLI_OBJECT_TYPE_SceneFBO:
+        obj = new SceneFBO();
+        break;
+      case JLI_OBJECT_TYPE_SceneFBOBuilder:
+        obj = new SceneFBOBuilder();
+        break;
+
       case JLI_OBJECT_TYPE_SceneState:
         obj = new SceneState();
         break;
@@ -3002,6 +3037,9 @@ namespace njli
         break;
       case JLI_OBJECT_TYPE_Scene:
         obj = new Scene(builder);
+        break;
+      case JLI_OBJECT_TYPE_SceneFBO:
+        obj = new SceneFBO(builder);
         break;
       case JLI_OBJECT_TYPE_SceneState:
         obj = new SceneState(builder);
@@ -3585,6 +3623,15 @@ namespace njli
       case JLI_OBJECT_TYPE_SceneBuilder:
         obj = new SceneBuilder(*dynamic_cast<const SceneBuilder *>(&object));
         break;
+
+      case JLI_OBJECT_TYPE_SceneFBO:
+        obj = new SceneFBO(*dynamic_cast<const SceneFBO *>(&object));
+        break;
+      case JLI_OBJECT_TYPE_SceneFBOBuilder:
+        obj = new SceneFBOBuilder(
+            *dynamic_cast<const SceneFBOBuilder *>(&object));
+        break;
+
       case JLI_OBJECT_TYPE_SceneState:
         obj = new SceneState(*dynamic_cast<const SceneState *>(&object));
         break;

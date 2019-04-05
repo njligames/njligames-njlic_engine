@@ -23,24 +23,23 @@
 
 namespace njli
 {
-  SteeringBehaviorArrive::SteeringBehaviorArrive() :
-    SteeringBehavior(),
-    m_VehichleDeceleration(0.3f) {}
+  SteeringBehaviorArrive::SteeringBehaviorArrive()
+      : SteeringBehavior(), m_VehichleDeceleration(0.3f)
+  {
+  }
 
   SteeringBehaviorArrive::SteeringBehaviorArrive(const AbstractBuilder &builder)
-      : SteeringBehavior(builder),
-    m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(builder), m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorArrive::SteeringBehaviorArrive(
       const SteeringBehaviorArrive &copy)
-      : SteeringBehavior(copy),
-    m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(copy), m_VehichleDeceleration(0.3f)
   {
   }
 
-    SteeringBehaviorArrive::~SteeringBehaviorArrive() {}
+  SteeringBehaviorArrive::~SteeringBehaviorArrive() {}
 
   SteeringBehaviorArrive &SteeringBehaviorArrive::
   operator=(const SteeringBehaviorArrive &rhs)
@@ -200,18 +199,23 @@ namespace njli
 
   const btVector3 &SteeringBehaviorArrive::calculateForce()
   {
-      SteeringBehaviorMachine *machine = getParent();
-      const Node *vehicleNode = machine->getParent();
-      const btVector3 vehiclePos(vehicleNode->getOrigin());
-      const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
-      const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
-      
-      *m_CurrentForce = btVector3(0,0,0);
-      for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
+    SteeringBehaviorMachine *machine = getParent();
+    const Node *vehicleNode = machine->getParent();
+    const btVector3 vehiclePos(vehicleNode->getOrigin());
+    const btVector3 vehicleVelocity(
+        vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
+    const float vehicleMaxSpeed(
+        vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
+
+    *m_CurrentForce = btVector3(0, 0, 0);
+    for (std::vector<Node *>::const_iterator i = m_TargetList.begin();
+         i != m_TargetList.end(); i++)
       {
-          *m_CurrentForce += SteeringBehaviorMachine::arrive((*i)->getOrigin(), vehiclePos, vehicleVelocity, vehicleMaxSpeed, m_VehichleDeceleration);
+        *m_CurrentForce += SteeringBehaviorMachine::arrive(
+            (*i)->getOrigin(), vehiclePos, vehicleVelocity, vehicleMaxSpeed,
+            m_VehichleDeceleration);
       }
-      
-      return *m_CurrentForce;
+
+    return *m_CurrentForce;
   }
 } // namespace njli

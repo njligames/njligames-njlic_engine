@@ -154,6 +154,8 @@ namespace njli
     friend class PlaneBuilder;
     friend class Scene;
     friend class SceneBuilder;
+      friend class SceneFBO;
+      friend class SceneFBOBuilder;
     friend class SceneState;
     friend class SceneStateBuilder;
     friend class SceneStateMachine;

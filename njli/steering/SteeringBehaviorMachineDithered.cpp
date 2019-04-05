@@ -206,32 +206,33 @@ namespace njli
 
   const btVector3 &SteeringBehaviorMachineDithered::calculateSteeringForce()
   {
-      btVector3 force(0, 0, 0);
-      
-      for (std::vector<SteeringBehavior*>::iterator iter = m_SteeringBehaviorVector.begin();
-           iter != m_SteeringBehaviorVector.end(); ++iter)
+    btVector3 force(0, 0, 0);
+
+    for (std::vector<SteeringBehavior *>::iterator iter =
+             m_SteeringBehaviorVector.begin();
+         iter != m_SteeringBehaviorVector.end(); ++iter)
       {
-          SteeringBehavior *sb = *iter;
-          
-          const float probability(sb->getProbability());
-          if(RandFloat() < probability)
+        SteeringBehavior *sb = *iter;
+
+        const float probability(sb->getProbability());
+        if (RandFloat() < probability)
           {
-              force += (sb->calculateForce() * (sb->getWeight() / probability));
-              
-              if(!force.isZero())
+            force += (sb->calculateForce() * (sb->getWeight() / probability));
+
+            if (!force.isZero())
               {
-                  if(force.length() > sb->getParent()->getMaxForce())
+                if (force.length() > sb->getParent()->getMaxForce())
                   {
-                      force = force.normalized() * sb->getParent()->getMaxForce();
+                    force = force.normalized() * sb->getParent()->getMaxForce();
                   }
-                  
-                  this->setCalculatedForce(force);
-                  return getCalculatedForce();
+
+                this->setCalculatedForce(force);
+                return getCalculatedForce();
               }
           }
       }
-      
-      this->setCalculatedForce(force);
-      return getCalculatedForce();
+
+    this->setCalculatedForce(force);
+    return getCalculatedForce();
   }
 } // namespace njli

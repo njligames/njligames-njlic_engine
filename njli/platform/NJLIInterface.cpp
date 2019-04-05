@@ -108,18 +108,18 @@ void NJLI_HandleKeyboardFinish(const unsigned char *state, int numStates)
 
 void NJLI_HandleMouse(int button, int eventType, float x, float y, int clicks)
 {
-    int w,h;
-    SDL_GetWindowSize(gWindow, &w, &h);
-    int dw,dh;
-    SDL_GL_GetDrawableSize(gWindow, &dw, &dh);
-    
-    float sw, sh;
-    SDL_RenderGetScale(gRenderer, &sw, &sh);
-    
-    float pointSizeScale = (float)dw / (float)w;
-    
-    
-  njli::NJLIGameEngine::mouse(button, eventType, x*pointSizeScale, gDisplayMode.h - (y*pointSizeScale), clicks);
+  int w, h;
+  SDL_GetWindowSize(gWindow, &w, &h);
+  int dw, dh;
+  SDL_GL_GetDrawableSize(gWindow, &dw, &dh);
+
+  float sw, sh;
+  SDL_RenderGetScale(gRenderer, &sw, &sh);
+
+  float pointSizeScale = (float)dw / (float)w;
+
+  njli::NJLIGameEngine::mouse(button, eventType, x * pointSizeScale,
+                              gDisplayMode.h - (y * pointSizeScale), clicks);
 }
 
 void NJLI_HandleTouch(int touchDevId, int pointerFingerId, int eventType,
@@ -140,22 +140,20 @@ void NJLI_HandleTouch(int touchDevId, int pointerFingerId, int eventType,
     default:
       break;
     }
-    
-    int w,h;
-    SDL_GetWindowSize(gWindow, &w, &h);
-    
-    int dw,dh;
-    SDL_GL_GetDrawableSize(gWindow, &dw, &dh);
-    
-    float _x = x * dw;
-    float _y = (1.0 - y) * dh;
-    
-    float _dx = dx * dw;
-    float _dy = (1.0 - dy) * dh;
-    njli::NJLIGameEngine::handleFinger(
-                                       touchDevId, pointerFingerId, action, _x,
-                                       _y, _dx,
-                                       _dy, pressure);
+
+  int w, h;
+  SDL_GetWindowSize(gWindow, &w, &h);
+
+  int dw, dh;
+  SDL_GL_GetDrawableSize(gWindow, &dw, &dh);
+
+  float _x = x * dw;
+  float _y = (1.0 - y) * dh;
+
+  float _dx = dx * dw;
+  float _dy = (1.0 - dy) * dh;
+  njli::NJLIGameEngine::handleFinger(touchDevId, pointerFingerId, action, _x,
+                                     _y, _dx, _dy, pressure);
 }
 
 void NJLI_HandleFinishTouches() { njli::NJLIGameEngine::handleFingers(); }

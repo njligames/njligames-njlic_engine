@@ -21,7 +21,7 @@
 #include "Geometry.h"
 #include "JsonJLI.h"
 
-//enum njliGLSLVarType
+// enum njliGLSLVarType
 //{
 //  JLI_GL_FLOAT = GL_FLOAT,
 //  JLI_GL_FLOAT_VEC2 = GL_FLOAT_VEC2,
@@ -42,7 +42,7 @@
 //  JLI_GL_SAMPLER_CUBE = GL_SAMPLER_CUBE
 //};
 //
-//static const char *getGLSLVarTypeName(njliGLSLVarType var)
+// static const char *getGLSLVarTypeName(njliGLSLVarType var)
 //{
 //  switch (var)
 //    {
@@ -96,8 +96,8 @@
 //////    }
 ////}
 //
-//static GLchar *s_shader_log_buffer = NULL;
-//static void log_shader_info_log(GLuint shader_object_id)
+// static GLchar *s_shader_log_buffer = NULL;
+// static void log_shader_info_log(GLuint shader_object_id)
 //{
 //  //    if (LOGGING_ON) {
 //  SDL_assertPrint(glIsShader(shader_object_id), "%s:%d", "Is a shader",
@@ -111,8 +111,8 @@
 //  if (log_length > 0)
 //    {
 //      //GLchar log_buffer[log_length];
-//      glGetShaderInfoLog(shader_object_id, log_length, NULL, s_shader_log_buffer);
-//      DEBUG_GL_ERROR_WRITE("glGetShaderInfoLog");
+//      glGetShaderInfoLog(shader_object_id, log_length, NULL,
+//      s_shader_log_buffer); DEBUG_GL_ERROR_WRITE("glGetShaderInfoLog");
 //
 //      SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "The glGetShaderiv log = `%s`",
 //          s_shader_log_buffer);
@@ -120,7 +120,7 @@
 //  //    }
 //}
 //
-//static void log_program_info_log(GLuint program_object_id)
+// static void log_program_info_log(GLuint program_object_id)
 //{
 //  //    if (LOGGING_ON) {
 //  SDL_assertPrint(glIsProgram(program_object_id), "%s:%d", "Is a shader",
@@ -132,15 +132,15 @@
 //  if (log_length > 1)
 //    {
 //      //GLchar log_buffer[log_length];
-//      glGetProgramInfoLog(program_object_id, log_length, NULL, s_shader_log_buffer);
-//      DEBUG_GL_ERROR_WRITE("glGetProgramInfoLog");
+//      glGetProgramInfoLog(program_object_id, log_length, NULL,
+//      s_shader_log_buffer); DEBUG_GL_ERROR_WRITE("glGetProgramInfoLog");
 //      SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "The glGetProgramiv log = `%s`",
 //          s_shader_log_buffer);
 //    }
 //  //    }
 //}
 //
-//static GLuint compile_shader(const GLenum type, const GLchar *source,
+// static GLuint compile_shader(const GLenum type, const GLchar *source,
 //                             const GLint length)
 //{
 //  SDL_assert(source != NULL);
@@ -205,7 +205,7 @@
 //  return shader_object_id;
 //}
 //
-//static GLuint link_program(const GLuint vertex_shader,
+// static GLuint link_program(const GLuint vertex_shader,
 //                           const GLuint fragment_shader)
 //{
 //  GLuint program_object_id = glCreateProgram();
@@ -225,7 +225,7 @@
 //  return program_object_id;
 //}
 //
-//static GLint validate_program(const GLuint program)
+// static GLint validate_program(const GLuint program)
 //{
 //  int validate_status;
 //
@@ -234,7 +234,8 @@
 //
 //  glGetProgramiv(program, GL_VALIDATE_STATUS, &validate_status);
 //  DEBUG_GL_ERROR_WRITE("glGetProgramiv");
-//  // SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "Results of validating program = %s\n",
+//  // SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "Results of validating program =
+//  %s\n",
 //  // (validate_status==GL_TRUE)?"true":"false");
 //
 //  if (validate_status == GL_FALSE)
@@ -248,92 +249,83 @@
 
 namespace njli
 {
-    ShaderProgram::ShaderProgram():
-    AbstractFactoryObject(this),
-    m_Program(0),
-    m_mat4Buffer(new GLfloat[16]),
-    m_vec3Buffer(new GLfloat[3]),
-    m_vec4Buffer(new GLfloat[4])
-    {
-        
-    }
-    
-    ShaderProgram::ShaderProgram(const AbstractBuilder &builder):
-    AbstractFactoryObject(this),
-    m_Program(0),
-    m_mat4Buffer(new GLfloat[16]),
-    m_vec3Buffer(new GLfloat[3]),
-    m_vec4Buffer(new GLfloat[4])
-    {
-        
-    }
-    
-    ShaderProgram::ShaderProgram(const ShaderProgram &copy):
-    AbstractFactoryObject(this),
-    m_Program(0),
-    m_mat4Buffer(new GLfloat[16]),
-    m_vec3Buffer(new GLfloat[3]),
-    m_vec4Buffer(new GLfloat[4])
-    {
-        
-    }
-    
-    ShaderProgram::~ShaderProgram()
-    {
-        delete [] m_vec4Buffer;
-        m_vec4Buffer = NULL;
-        
-        delete [] m_vec3Buffer;
-        m_vec3Buffer = NULL;
-        
-        delete [] m_mat4Buffer;
-        m_mat4Buffer = NULL;
-        
-        unLoad();
-    }
-    
-//  ShaderProgram::ShaderProgram()
-//      : AbstractFactoryObject(this), m_Program(-1), // glCreateProgram()),
-//        m_vertShader(-1), m_fragShader(-1), m_VertexShaderSource(""),
-//        m_FragmentShaderSource(""), m_mat4Buffer(new float[16])
-//  {
-//    enableRenderObject();
-//    m_uniformValueMap.clear();
-//  }
-//
-//  ShaderProgram::ShaderProgram(const AbstractBuilder &builder)
-//      : AbstractFactoryObject(this), m_Program(-1), // glCreateProgram()),
-//        m_vertShader(-1), m_fragShader(-1), m_VertexShaderSource(""),
-//        m_FragmentShaderSource(""), m_mat4Buffer(new float[16])
-//  {
-//    enableRenderObject();
-//    m_uniformValueMap.clear();
-//  }
-//
-//  ShaderProgram::ShaderProgram(const ShaderProgram &copy)
-//      : AbstractFactoryObject(this), m_Program(-1), // glCreateProgram()),
-//        m_vertShader(-1), m_fragShader(-1), m_VertexShaderSource(""),
-//        m_FragmentShaderSource(""), m_mat4Buffer(new float[16])
-//  {
-//    enableRenderObject();
-//    m_uniformValueMap.clear();
-//  }
-//
-//  ShaderProgram::~ShaderProgram()
-//  {
-//    delete[] m_mat4Buffer;
-//    m_mat4Buffer = NULL;
-//
-//    unLoadGPU();
-//  }
-//
-//  ShaderProgram &ShaderProgram::operator=(const ShaderProgram &rhs)
-//  {
-//    if (this != &rhs)
-//      {
-//      }
-//    return *this;
-//  }
+  ShaderProgram::ShaderProgram()
+      : AbstractFactoryObject(this), m_Program(0),
+        m_mat4Buffer(new GLfloat[16]), m_vec3Buffer(new GLfloat[3]),
+        m_vec4Buffer(new GLfloat[4])
+  {
+  }
+
+  ShaderProgram::ShaderProgram(const AbstractBuilder &builder)
+      : AbstractFactoryObject(this), m_Program(0),
+        m_mat4Buffer(new GLfloat[16]), m_vec3Buffer(new GLfloat[3]),
+        m_vec4Buffer(new GLfloat[4])
+  {
+  }
+
+  ShaderProgram::ShaderProgram(const ShaderProgram &copy)
+      : AbstractFactoryObject(this), m_Program(0),
+        m_mat4Buffer(new GLfloat[16]), m_vec3Buffer(new GLfloat[3]),
+        m_vec4Buffer(new GLfloat[4])
+  {
+  }
+
+  ShaderProgram::~ShaderProgram()
+  {
+    delete[] m_vec4Buffer;
+    m_vec4Buffer = NULL;
+
+    delete[] m_vec3Buffer;
+    m_vec3Buffer = NULL;
+
+    delete[] m_mat4Buffer;
+    m_mat4Buffer = NULL;
+
+    unLoad();
+  }
+
+  //  ShaderProgram::ShaderProgram()
+  //      : AbstractFactoryObject(this), m_Program(-1), // glCreateProgram()),
+  //        m_vertShader(-1), m_fragShader(-1), m_VertexShaderSource(""),
+  //        m_FragmentShaderSource(""), m_mat4Buffer(new float[16])
+  //  {
+  //    enableRenderObject();
+  //    m_uniformValueMap.clear();
+  //  }
+  //
+  //  ShaderProgram::ShaderProgram(const AbstractBuilder &builder)
+  //      : AbstractFactoryObject(this), m_Program(-1), // glCreateProgram()),
+  //        m_vertShader(-1), m_fragShader(-1), m_VertexShaderSource(""),
+  //        m_FragmentShaderSource(""), m_mat4Buffer(new float[16])
+  //  {
+  //    enableRenderObject();
+  //    m_uniformValueMap.clear();
+  //  }
+  //
+  //  ShaderProgram::ShaderProgram(const ShaderProgram &copy)
+  //      : AbstractFactoryObject(this), m_Program(-1), // glCreateProgram()),
+  //        m_vertShader(-1), m_fragShader(-1), m_VertexShaderSource(""),
+  //        m_FragmentShaderSource(""), m_mat4Buffer(new float[16])
+  //  {
+  //    enableRenderObject();
+  //    m_uniformValueMap.clear();
+  //  }
+  //
+  //  ShaderProgram::~ShaderProgram()
+  //  {
+  //    delete[] m_mat4Buffer;
+  //    m_mat4Buffer = NULL;
+  //
+  //    unLoadGPU();
+  //  }
+  //
+  //  ShaderProgram &ShaderProgram::operator=(const ShaderProgram &rhs)
+  //  {
+  //    if (this != &rhs)
+  //      {
+  //      }
+  //    return *this;
+  //  }
 
   s32 ShaderProgram::calculateSerializeBufferSize() const
   {
@@ -469,901 +461,916 @@ namespace njli
 
   u32 ShaderProgram::type() { return JLI_OBJECT_TYPE_ShaderProgram; }
 
-    
-    
-    
-    
-    
-    
-    bool ShaderProgram::load(const std::string &vertexSource,
-                      const std::string &fragmentSource)//,
-    //              const std::vector<std::string> &attributes)
-    {
-        GLuint vertShader, fragShader;
-        
-        m_Program = glCreateProgram();
-        
-        if(!(vertShader = compileShader(vertexSource, GL_VERTEX_SHADER)))
-        {
-            glDeleteProgram(m_Program);
-            return false;
-        }
-        
-        if(!(fragShader = compileShader(fragmentSource, GL_FRAGMENT_SHADER)))
-        {
-            glDeleteProgram(m_Program);
-            glDeleteShader(vertShader);
-            return false;
-        }
-        
-        glAttachShader(m_Program, vertShader);
-        glAttachShader(m_Program, fragShader);
-        
-        if(!linkProgram(m_Program))
-        {
-            if (vertShader)
-            {
-                glDeleteShader(vertShader);
-                vertShader = 0;
-            }
-            if (fragShader)
-            {
-                glDeleteShader(fragShader);
-                fragShader = 0;
-            }
-            if (m_Program)
-            {
-                glDeleteProgram(m_Program);
-                m_Program = 0;
-            }
-            return false;
-        }
-        
+  bool ShaderProgram::load(const std::string &vertexSource,
+                           const std::string &fragmentSource) //,
+  //              const std::vector<std::string> &attributes)
+  {
+    GLuint vertShader, fragShader;
+
+    m_Program = glCreateProgram();
+
+    if (!(vertShader = compileShader(vertexSource, GL_VERTEX_SHADER)))
+      {
+        glDeleteProgram(m_Program);
+        return false;
+      }
+
+    if (!(fragShader = compileShader(fragmentSource, GL_FRAGMENT_SHADER)))
+      {
+        glDeleteProgram(m_Program);
+        glDeleteShader(vertShader);
+        return false;
+      }
+
+    glAttachShader(m_Program, vertShader);
+    glAttachShader(m_Program, fragShader);
+
+    if (!linkProgram(m_Program))
+      {
         if (vertShader)
-        {
-            glDetachShader(m_Program, vertShader);
+          {
             glDeleteShader(vertShader);
-        }
-        
+            vertShader = 0;
+          }
         if (fragShader)
-        {
-            glDetachShader(m_Program, fragShader);
+          {
             glDeleteShader(fragShader);
-        }
-        
-        return true;
-    }
-    
-    void ShaderProgram::unLoad()
-    {
-        if(m_Program)
+            fragShader = 0;
+          }
+        if (m_Program)
+          {
             glDeleteProgram(m_Program);
-        m_Program = 0;
-    }
-    
-    bool ShaderProgram::isLoaded()const
-    {
-        return (m_Program != 0);
-    }
-    
-    bool ShaderProgram::use()const
-    {
-        if(m_Program)
-        {
-            GLint id;
-            glGetIntegerv(GL_CURRENT_PROGRAM,&id);
-            if(id != m_Program)
-                glUseProgram(m_Program);
-            return true;
-        }
+            m_Program = 0;
+          }
         return false;
-    }
-    
-    int ShaderProgram::getAttributeLocation(const std::string &attributeName)const
-    {
-        int location = glGetAttribLocation(m_Program, attributeName.c_str());
-        
+      }
+
+    if (vertShader)
+      {
+        glDetachShader(m_Program, vertShader);
+        glDeleteShader(vertShader);
+      }
+
+    if (fragShader)
+      {
+        glDetachShader(m_Program, fragShader);
+        glDeleteShader(fragShader);
+      }
+
+    return true;
+  }
+
+  void ShaderProgram::unLoad()
+  {
+    if (m_Program)
+      glDeleteProgram(m_Program);
+    m_Program = 0;
+  }
+
+  bool ShaderProgram::isLoaded() const { return (m_Program != 0); }
+
+  bool ShaderProgram::use() const
+  {
+    if (m_Program)
+      {
+        GLint id;
+        glGetIntegerv(GL_CURRENT_PROGRAM, &id);
+        if (id != m_Program)
+          glUseProgram(m_Program);
+        return true;
+      }
+    return false;
+  }
+
+  int ShaderProgram::getAttributeLocation(
+      const std::string &attributeName) const
+  {
+    int location = glGetAttribLocation(m_Program, attributeName.c_str());
+
 #if defined(DEBUG)
-        if(location == -1)
-        {
-            std::cout << "The named attribute variable " << attributeName << " is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"" << std::endl;
-        }
+    if (location == -1)
+      {
+        std::cout << "The named attribute variable " << attributeName
+                  << " is not an active attribute in the specified program "
+                     "object or if name starts with the reserved prefix \"gl_\""
+                  << std::endl;
+      }
 #endif
-        
-        return location;
-    }
-    
-    int ShaderProgram::getUniformLocation(const std::string &uniformName)
-    {
-        int location = -1;
-        
-        UniformMap::iterator iter = m_UniformMap.find(uniformName);
-        if(iter != m_UniformMap.end())
-        {
-            location = iter->second;
-        }
-        else
-        {
-            location = glGetUniformLocation(m_Program, uniformName.c_str());
-            m_UniformMap.insert(UniformPair(uniformName, location));
-        }
-        
+
+    return location;
+  }
+
+  int ShaderProgram::getUniformLocation(const std::string &uniformName)
+  {
+    int location = -1;
+
+    UniformMap::iterator iter = m_UniformMap.find(uniformName);
+    if (iter != m_UniformMap.end())
+      {
+        location = iter->second;
+      }
+    else
+      {
+        location = glGetUniformLocation(m_Program, uniformName.c_str());
+        m_UniformMap.insert(UniformPair(uniformName, location));
+      }
+
 #if defined(DEBUG)
-        if(location == -1)
-        {
-            std::cout << "The named attribute variable " << uniformName << " is not an active attribute in the specified program object or if name starts with the reserved prefix \"gl_\"" << std::endl;
-        }
+    if (location == -1)
+      {
+        std::cout << "The named attribute variable " << uniformName
+                  << " is not an active attribute in the specified program "
+                     "object or if name starts with the reserved prefix \"gl_\""
+                  << std::endl;
+      }
 #endif
-        
-        return location;
-    }
-    
-    bool ShaderProgram::setUniformValue(const std::string &uniformName, const btTransform &value, bool transpose)
-    {
-        value.getOpenGLMatrix(m_mat4Buffer);
-        return setUniformValue(uniformName, m_mat4Buffer, transpose);
-    }
-    
-    bool ShaderProgram::setUniformValue(const std::string &uniformName, GLfloat *matrix4x4, bool transpose)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            glUniformMatrix4fv(location,
-                               1,
-                               (transpose)?GL_TRUE:GL_FALSE,
-                               matrix4x4);
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::getUniformValue(const std::string &uniformName, btTransform &value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            glGetUniformfv(m_Program, location, m_mat4Buffer);
-            value.setFromOpenGLMatrix(m_mat4Buffer);
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::setUniformValue(const char *uniformName, GLuint value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            GLuint oldValue;
-            if(getUniformValue(uniformName, oldValue))
-            {
-                if(oldValue == value)
-                    return true;
-            }
-            
-            glUniform1i(location, value);
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::getUniformValue(const char *uniformName, GLuint &value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            GLint t;
-            glGetUniformiv(m_Program, location, &t);
-            value = t;
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::setUniformValue(const char *uniformName, const btVector3 &value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            btVector3 oldValue;
-            if(getUniformValue(uniformName, oldValue))
-            {
-                if(oldValue == value)
-                    return true;
-            }
-            
-            glUniform3f(location, value.x(), value.y(), value.z());
-            
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::getUniformValue(const char *uniformName, btVector3 &value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            glGetUniformfv(m_Program, location, m_vec3Buffer);
-            
-            value.setX(m_vec3Buffer[0]);
-            value.setY(m_vec3Buffer[1]);
-            value.setZ(m_vec3Buffer[2]);
-            value.setW(0.0);
-            
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::setUniformValue(const char *uniformName, float value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            float oldValue;
-            if(getUniformValue(uniformName, oldValue))
-            {
-                if(oldValue == value)
-                    return true;
-            }
-            
-            glUniform1f(location, value);
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::getUniformValue(const char *uniformName, float &value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            glGetUniformfv(m_Program, location, &value);
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::setUniformValue(const char *uniformName, const btVector4 &value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            btVector4 oldValue;
-            if(getUniformValue(uniformName, oldValue))
-            {
-                if(oldValue == value)
-                    return true;
-            }
-            
-            glUniform4f(location, value.x(), value.y(), value.z(), value.w());
-            
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::getUniformValue(const char *uniformName, btVector4 &value)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            glGetUniformfv(m_Program, location, m_vec4Buffer);
-            
-            value.setX(m_vec4Buffer[0]);
-            value.setY(m_vec4Buffer[1]);
-            value.setZ(m_vec4Buffer[2]);
-            value.setW(m_vec4Buffer[3]);
-            
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::setUniformValue(const char *uniformName, float f1, float f2)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            float oldValue1, oldValue2;
-            if(getUniformValue(uniformName, oldValue1, oldValue2))
-            {
-                if(oldValue1 == f1)
-                    return true;
-                if(oldValue2 == f2)
-                    return true;
-            }
-            
-            glUniform2f(location, f1, f2);
-            
-            return true;
-        }
-        return false;
-    }
-    
-    bool ShaderProgram::getUniformValue(const char *uniformName, float &f1, float &f2)
-    {
-        int location = getUniformLocation(uniformName);
-        if(location != -1)
-        {
-            glGetUniformfv(m_Program, location, m_vec4Buffer);
-            
-            f1 = m_vec4Buffer[0];
-            f2 = m_vec4Buffer[1];
-            
-            return true;
-        }
-        return false;
-    }
-    
-    GLuint ShaderProgram::compileShader(const std::string &source, GLenum type)
-    {
-        GLuint shader;
-        
-        GLint status;
-        shader = glCreateShader(type);
-        /*
-        GLchar**str = new GLchar*[1];
-        str[0] = new GLchar[source.length()];
-        strcpy(str[0], source.c_str());*/
 
-        /*GLchar *str = new GLchar[source.length() + 1];
-        strcpy(str, source.c_str());*/
+    return location;
+  }
 
-        /*GLchar *str = new GLchar[source.length()];
-        strcpy(str, source.c_str());*/
+  bool ShaderProgram::setUniformValue(const std::string &uniformName,
+                                      const btTransform &value, bool transpose)
+  {
+    value.getOpenGLMatrix(m_mat4Buffer);
+    return setUniformValue(uniformName, m_mat4Buffer, transpose);
+  }
 
-        GLchar *str = (GLchar *)source.c_str();
-        
-        //glShaderSource(shader, 1, (const GLchar**)&(str[0]), NULL);
-        glShaderSource(shader, 1, &str, NULL);
-        glCompileShader(shader);
-        
+  bool ShaderProgram::setUniformValue(const std::string &uniformName,
+                                      GLfloat *matrix4x4, bool transpose)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        glUniformMatrix4fv(location, 1, (transpose) ? GL_TRUE : GL_FALSE,
+                           matrix4x4);
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::getUniformValue(const std::string &uniformName,
+                                      btTransform &value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        glGetUniformfv(m_Program, location, m_mat4Buffer);
+        value.setFromOpenGLMatrix(m_mat4Buffer);
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::setUniformValue(const char *uniformName, GLuint value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        GLuint oldValue;
+        if (getUniformValue(uniformName, oldValue))
+          {
+            if (oldValue == value)
+              return true;
+          }
+
+        glUniform1i(location, value);
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::getUniformValue(const char *uniformName, GLuint &value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        GLint t;
+        glGetUniformiv(m_Program, location, &t);
+        value = t;
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::setUniformValue(const char *uniformName,
+                                      const btVector3 &value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        btVector3 oldValue;
+        if (getUniformValue(uniformName, oldValue))
+          {
+            if (oldValue == value)
+              return true;
+          }
+
+        glUniform3f(location, value.x(), value.y(), value.z());
+
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::getUniformValue(const char *uniformName, btVector3 &value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        glGetUniformfv(m_Program, location, m_vec3Buffer);
+
+        value.setX(m_vec3Buffer[0]);
+        value.setY(m_vec3Buffer[1]);
+        value.setZ(m_vec3Buffer[2]);
+        value.setW(0.0);
+
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::setUniformValue(const char *uniformName, float value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        float oldValue;
+        if (getUniformValue(uniformName, oldValue))
+          {
+            if (oldValue == value)
+              return true;
+          }
+
+        glUniform1f(location, value);
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::getUniformValue(const char *uniformName, float &value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        glGetUniformfv(m_Program, location, &value);
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::setUniformValue(const char *uniformName,
+                                      const btVector4 &value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        btVector4 oldValue;
+        if (getUniformValue(uniformName, oldValue))
+          {
+            if (oldValue == value)
+              return true;
+          }
+
+        glUniform4f(location, value.x(), value.y(), value.z(), value.w());
+
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::getUniformValue(const char *uniformName, btVector4 &value)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        glGetUniformfv(m_Program, location, m_vec4Buffer);
+
+        value.setX(m_vec4Buffer[0]);
+        value.setY(m_vec4Buffer[1]);
+        value.setZ(m_vec4Buffer[2]);
+        value.setW(m_vec4Buffer[3]);
+
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::setUniformValue(const char *uniformName, float f1,
+                                      float f2)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        float oldValue1, oldValue2;
+        if (getUniformValue(uniformName, oldValue1, oldValue2))
+          {
+            if (oldValue1 == f1)
+              return true;
+            if (oldValue2 == f2)
+              return true;
+          }
+
+        glUniform2f(location, f1, f2);
+
+        return true;
+      }
+    return false;
+  }
+
+  bool ShaderProgram::getUniformValue(const char *uniformName, float &f1,
+                                      float &f2)
+  {
+    int location = getUniformLocation(uniformName);
+    if (location != -1)
+      {
+        glGetUniformfv(m_Program, location, m_vec4Buffer);
+
+        f1 = m_vec4Buffer[0];
+        f2 = m_vec4Buffer[1];
+
+        return true;
+      }
+    return false;
+  }
+
+  GLuint ShaderProgram::compileShader(const std::string &source, GLenum type)
+  {
+    GLuint shader;
+
+    GLint status;
+    shader = glCreateShader(type);
+    /*
+    GLchar**str = new GLchar*[1];
+    str[0] = new GLchar[source.length()];
+    strcpy(str[0], source.c_str());*/
+
+    /*GLchar *str = new GLchar[source.length() + 1];
+    strcpy(str, source.c_str());*/
+
+    /*GLchar *str = new GLchar[source.length()];
+    strcpy(str, source.c_str());*/
+
+    GLchar *str = (GLchar *)source.c_str();
+
+    // glShaderSource(shader, 1, (const GLchar**)&(str[0]), NULL);
+    glShaderSource(shader, 1, &str, NULL);
+    glCompileShader(shader);
+
 #if !defined(NDEBUG)
-        GLint logLength;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
-        if (logLength > 0)
-        {
-            GLchar *log = (GLchar *)malloc(logLength);
-            glGetShaderInfoLog(shader, logLength, &logLength, log);
-            std::cout << "ShaderProgram compile log:" << std::endl << log;
-            free(log);
-        }
+    GLint logLength;
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0)
+      {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetShaderInfoLog(shader, logLength, &logLength, log);
+        std::cout << "ShaderProgram compile log:" << std::endl << log;
+        free(log);
+      }
 #endif
-       /* delete[] *str;
-        delete str;*/
-        //delete[] str;
-        /*
-        delete [] str[0];str[0]=NULL;
-        delete [] str;str=NULL;*/
-        
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-        if (status == 0) {
-            glDeleteShader(shader);
-            shader = 0;
-        }
-        
-        return shader;
-    }
-    
-    bool ShaderProgram::compileStatus(GLuint shader)
-    {
-        GLint compileStatus = 0;
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus);
-        
-        GLint log_length = 0;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
-        if(log_length > 0)
-        {
-            GLchar log_buffer[1024];
-            glGetShaderInfoLog(shader, log_length, NULL, log_buffer);
-            std::cout << log_buffer << std::endl;
-        }
-        
-        return (compileStatus == GL_TRUE);
-    }
-    
-    bool ShaderProgram::linkProgram(GLuint program)
-    {
-        GLint status;
-        glLinkProgram(program);
-        
+    /* delete[] *str;
+     delete str;*/
+    // delete[] str;
+    /*
+    delete [] str[0];str[0]=NULL;
+    delete [] str;str=NULL;*/
+
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+    if (status == 0)
+      {
+        glDeleteShader(shader);
+        shader = 0;
+      }
+
+    return shader;
+  }
+
+  bool ShaderProgram::compileStatus(GLuint shader)
+  {
+    GLint compileStatus = 0;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus);
+
+    GLint log_length = 0;
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
+    if (log_length > 0)
+      {
+        GLchar log_buffer[1024];
+        glGetShaderInfoLog(shader, log_length, NULL, log_buffer);
+        std::cout << log_buffer << std::endl;
+      }
+
+    return (compileStatus == GL_TRUE);
+  }
+
+  bool ShaderProgram::linkProgram(GLuint program)
+  {
+    GLint status;
+    glLinkProgram(program);
+
 #if defined(DEBUG)
-        GLint logLength;
-        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
-        if (logLength > 0) {
-            GLchar *log = (GLchar *)malloc(logLength);
-            glGetProgramInfoLog(program, logLength, &logLength, log);
-            std::cout << "Program link log:\n" << log;
-            free(log);
-        }
+    GLint logLength;
+    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0)
+      {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetProgramInfoLog(program, logLength, &logLength, log);
+        std::cout << "Program link log:\n" << log;
+        free(log);
+      }
 #endif
-        
-        glGetProgramiv(program, GL_LINK_STATUS, &status);
-        return (status == GL_TRUE);
-    }
-    
-//  bool ShaderProgram::compile(const char *source, njliShaderType type)
-//  {
-//    bool ret = false;
-//
-//    switch (type)
-//      {
-//      case JLI_SHADER_TYPE_FRAGMENT:
-//        {
-//          if (-1 != m_fragShader)
-//            {
-//              glDeleteShader(m_fragShader);
-//              DEBUG_GL_ERROR_WRITE("glDeleteShader");
-//            }
-//
-//          if (strlen(source) > 0)
-//            {
-//              ret = compileShader(&m_fragShader, GL_FRAGMENT_SHADER, source);
-//              SDL_assert(glIsShader(m_fragShader));
-//            }
-//        }
-//        break;
-//      case JLI_SHADER_TYPE_VERTEX:
-//        {
-//          if (-1 != m_vertShader)
-//            {
-//              glDeleteShader(m_vertShader);
-//              DEBUG_GL_ERROR_WRITE("glDeleteShader");
-//            }
-//
-//          if (strlen(source) > 0)
-//            {
-//              ret = compileShader(&m_vertShader, GL_VERTEX_SHADER, source);
-//              SDL_assert(glIsShader(m_vertShader));
-//            }
-//        }
-//        break;
-//      default:
-//        break;
-//      }
-//    return ret;
-//  }
-//
-//  bool ShaderProgram::bindAttribute(const char *attributeName)
-//  {
-//    s32 location = getAttributeLocation(attributeName);
-//    GLint currentProgram = 0;
-//
-//    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-//    SDL_assert(currentProgram != 0);
-//
-//    SDL_assert(m_Program == currentProgram);
-//    SDL_assert(glIsProgram(m_Program));
-//
-//    SDL_assertPrint(-1 != location,
-//                    "The named attribute variable (%s) is not "
-//                    "an active attribute in the specified "
-//                    "program object or if name starts with the "
-//                    "reserved prefix \"gl_\"",
-//                    attributeName);
-//
-//    glBindAttribLocation(m_Program, location, attributeName);
-//    DEBUG_GL_ERROR_PRINT("glBindAttribLocation",
-//                         "glBindAttribLocation(%d, %d, %s)", currentProgram,
-//                         location, attributeName);
-//
-//    return true;
-//  }
-//
-//  u32 ShaderProgram::getAttributeLocation(const char *attributeName) const
-//  {
-//    GLint currentProgram = 0;
-//
-//    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-//
-//    SDL_assert(m_Program == currentProgram);
-//    SDL_assert(currentProgram != 0);
-//
-//    s32 location = glGetAttribLocation(m_Program, attributeName);
-//    DEBUG_GL_ERROR_WRITE("glGetAttribLocation\n");
-//
-//    SDL_assertPrint(-1 != location,
-//                    "The named attribute variable (%s) is not "
-//                    "an active attribute in the specified "
-//                    "program object or if name starts with the "
-//                    "reserved prefix \"gl_\"",
-//                    attributeName);
-//
-//    return location;
-//  }
-//
-//  bool ShaderProgram::setUniformValue(const char *uniformName, s32 value)
-//  {
-//    s32 location = getUniformLocation(uniformName);
-//    GLint currentProgram = 0;
-//
-//    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-//    SDL_assert(currentProgram != 0);
-//
-//    SDL_assert(m_Program == currentProgram);
-//    SDL_assert(glIsProgram(m_Program));
-//
-//    if (location != -1)
-//      {
-//        s32 tvalue = value;
-//        if (getUniformValue(uniformName, tvalue))
-//          {
-//            if (tvalue != value)
-//              {
-//                glUniform1i(location, value);
-//                DEBUG_GL_ERROR_PRINT("glUniform1i", "glUniform1i(%s, %d)",
-//                                     uniformName, value);
-//              }
-//
-//            return true;
-//          }
-//      }
-//    return false;
-//  }
-//
-//  bool ShaderProgram::getUniformValue(const char *uniformName, s32 &value)
-//  {
-//    s32 location = getUniformLocation(uniformName);
-//    GLint currentProgram = 0;
-//
-//    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-//    SDL_assert(currentProgram != 0);
-//
-//    SDL_assert(m_Program == currentProgram);
-//    SDL_assert(glIsProgram(m_Program));
-//
-//    if (location != -1)
-//      {
-//        glGetUniformiv(currentProgram, location, &value);
-//        DEBUG_GL_ERROR_PRINT("glGetUniformiv", "glGetUniformiv(%d, %s)",
-//                             currentProgram, uniformName);
-//
-//        return true;
-//      }
-//    return false;
-//  }
-//
-//  bool ShaderProgram::setUniformValue(const char *uniformName,
-//                                      const btTransform &value, bool transpose)
-//  {
-//    s32 location = getUniformLocation(uniformName);
-//    GLint currentProgram = 0;
-//
-//    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-//    SDL_assert(currentProgram != 0);
-//
-//    SDL_assert(m_Program == currentProgram);
-//    SDL_assert(glIsProgram(m_Program));
-//
-//    if (location != -1)
-//      {
-//        btTransform tvalue = value;
-//        if (getUniformValue(uniformName, tvalue))
-//          {
-//            // if(tvalue != value)
-//            {
-//              value.getOpenGLMatrix(m_mat4Buffer);
-//              glUniformMatrix4fv(location, 1, (transpose) ? GL_TRUE : GL_FALSE,
-//                                 m_mat4Buffer);
-//              //                    DEBUG_GL_ERROR_PRINT("glUniformMatrix4fv",
-//              //                    "glUniformMatrix4fv(%s, %d, %s)",
-//              //                                         uniformName,
-//              //                                         transpose,
-//              //                                         toJsonString(value).c_str());
-//            }
-//
-//            return true;
-//          }
-//      }
-//    return false;
-//  }
-//
-//  bool ShaderProgram::getUniformValue(const char *uniformName,
-//                                      btTransform &value)
-//  {
-//    s32 location = getUniformLocation(uniformName);
-//    GLint currentProgram = 0;
-//
-//    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-//    SDL_assert(currentProgram != 0);
-//
-//    SDL_assert(m_Program == currentProgram);
-//    SDL_assert(glIsProgram(m_Program));
-//
-//    if (location != -1)
-//      {
-//        glGetUniformfv(currentProgram, location, m_mat4Buffer);
-//        //            DEBUG_GL_ERROR_PRINT("glGetUniformfv", "glGetUniformfv(%s,
-//        //            %s)",
-//        //                                 uniformName,
-//        //                                 toJsonString(value).c_str());
-//        value.setFromOpenGLMatrix(m_mat4Buffer);
-//
-//        return true;
-//      }
-//    return false;
-//  }
-//
-//  u32 ShaderProgram::getUniformLocation(const char *uniformName)
-//  {
-//    GLint currentProgram = 0;
-//
-//    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-//    DEBUG_GL_ERROR_WRITE("glGetIntegerv");
-//
-//    //        SDL_assert(m_Program == currentProgram);
-//
-//    s32 location = -1;
-//
-//    if (m_Program == currentProgram)
-//      {
-//        UniformValueMap::iterator iter =
-//            m_uniformValueMap.find(std::string(uniformName));
-//        if (iter != m_uniformValueMap.end())
-//          {
-//            location = iter->second;
-//          }
-//        else
-//          {
-//            SDL_assert(glIsProgram(m_Program));
-//
-//            location = glGetUniformLocation(currentProgram, uniformName);
-//            DEBUG_GL_ERROR_PRINT("glGetUniformLocation\n", "%d, %s", m_Program,
-//                                 uniformName);
-//
-//            m_uniformValueMap.insert(
-//                UniformValuePair(std::string(uniformName), location));
-//          }
-//
-//        SDL_assertPrint(-1 != location,
-//                        "The named uniform variable (%s) is not an active "
-//                        "uniform in the specified program object or if name "
-//                        "starts with the reserved prefix \"gl_\"",
-//                        uniformName);
-//      }
-//
-//    return location;
-//  }
-//
-//  bool ShaderProgram::link()
-//  {
-//    SDL_assert(!isLinked());
-//
-//    if (!compile(m_VertexShaderSource.c_str(), JLI_SHADER_TYPE_VERTEX))
-//      {
-//        if (-1 != m_vertShader)
-//          glDeleteShader(m_vertShader);
-//        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//        m_vertShader = -1;
-//
-//        if (-1 != m_fragShader)
-//          glDeleteShader(m_fragShader);
-//        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//        m_fragShader = -1;
-//
-//        const char *log = vertexShaderLog();
-//        if (log && strcmp(log, "(null)") != 0)
-//          SDL_LogError(SDL_LOG_CATEGORY_TEST, "Vertex log: `%s`\n", log);
-//        return false;
-//      }
-//
-//    if (!compile(m_FragmentShaderSource.c_str(), JLI_SHADER_TYPE_FRAGMENT))
-//      {
-//        //            SDL_LogError(SDL_LOG_CATEGORY_TEST, "Vertex log: `%s`\n",
-//        //            fragmentShaderLog());
-//
-//        if (-1 != m_vertShader)
-//          glDeleteShader(m_vertShader);
-//        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//        m_vertShader = -1;
-//
-//        if (-1 != m_fragShader)
-//          glDeleteShader(m_fragShader);
-//        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//        m_fragShader = -1;
-//
-//        const char *log = fragmentShaderLog();
-//        if (log && strcmp(log, "(null)") != 0)
-//          SDL_LogError(SDL_LOG_CATEGORY_TEST, "Vertex log: `%s`\n", log);
-//
-//        return false;
-//      }
-//
-//    SDL_assert(glIsShader(m_vertShader));
-//    SDL_assert(glIsShader(m_fragShader));
-//
-//    m_Program = link_program(m_vertShader, m_fragShader);
-//    SDL_assert(glIsProgram(m_Program));
-//
-//    GLint link_status;
-//    glGetProgramiv(m_Program, GL_LINK_STATUS, &link_status);
-//    DEBUG_GL_ERROR_WRITE("glGetProgramiv");
-//
-//    if (GL_FALSE == link_status)
-//      {
-//        SDL_LogError(SDL_LOG_CATEGORY_TEST, "Results of linking program = %s\n",
-//                     (link_status == GL_TRUE) ? "true" : "false");
-//        log_program_info_log(m_Program);
-//
-//        if (-1 != m_vertShader)
-//          glDeleteShader(m_vertShader);
-//        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//        m_vertShader = -1;
-//
-//        if (-1 != m_fragShader)
-//          glDeleteShader(m_fragShader);
-//        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//        m_fragShader = -1;
-//
-//        if (-1 != m_Program)
-//          glDeleteProgram(m_Program);
-//        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//        m_Program = -1;
-//
-//        return false;
-//      }
-//
-//    GLint status = validate_program(m_Program);
-//
-//    if (GL_TRUE == status)
-//      {
-//        GLint active = 0;
-//        GLsizei length = 0;
-//        GLsizei size = 0;
-//        GLenum type = 0;
-//        GLint nameMaxLength = 0;
-//        GLchar *variableName = NULL;
-//
-//        glGetProgramiv(m_Program, GL_ACTIVE_UNIFORMS, &active);
-//        DEBUG_GL_ERROR_WRITE("glGetProgramiv\n");
-//        glGetProgramiv(m_Program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &nameMaxLength);
-//        DEBUG_GL_ERROR_WRITE("glGetProgramiv\n");
-//
-//        variableName = new GLchar[nameMaxLength];
-//        for (GLuint index = 0; index < active; ++index)
-//          {
-//            glGetActiveUniform(m_Program, index, nameMaxLength, &length, &size,
-//                               &type, variableName);
-//            DEBUG_GL_ERROR_WRITE("glGetActiveUniform\n");
-//            // SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Uniform Variable Loaded:
-//            // %s %s (size=%d)", getGLSLVarTypeName((njliGLSLVarType)type),
-//            // variableName, size);
-//          }
-//        delete[] variableName;
-//        variableName = NULL;
-//
-//        glGetProgramiv(m_Program, GL_ACTIVE_ATTRIBUTES, &active);
-//        DEBUG_GL_ERROR_WRITE("glGetProgramiv\n");
-//        glGetProgramiv(m_Program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH,
-//                       &nameMaxLength);
-//        DEBUG_GL_ERROR_WRITE("glGetProgramiv\n");
-//
-//        variableName = new GLchar[nameMaxLength];
-//        for (GLuint index = 0; index < active; ++index)
-//          {
-//            glGetActiveAttrib(m_Program, index, nameMaxLength, &length, &size,
-//                              &type, variableName);
-//            DEBUG_GL_ERROR_WRITE("glGetActiveAttrib\n");
-//            // SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Attribute Variable Loaded:
-//            // %s %s (size=%d)", getGLSLVarTypeName((njliGLSLVarType)type),
-//            // variableName, size);
-//          }
-//        delete[] variableName;
-//        variableName = NULL;
-//      }
-//
-//    if (status == GL_FALSE)
-//      return false;
-//
-//    return true;
-//  }
-//
-//  void ShaderProgram::saveSource(const std::string &vertexShaderSource,
-//                                 const std::string &fragmentShaderSource)
-//  {
-//    m_VertexShaderSource = vertexShaderSource;
-//    m_FragmentShaderSource = fragmentShaderSource;
-//
-//    Geometry *geometry = getParent();
-//    if (NULL != geometry)
-//      {
-//        geometry->setupShader();
-//      }
-//  }
-//
-//  bool ShaderProgram::isLinked() const { return (m_Program != -1); }
-//
-//  bool ShaderProgram::use()
-//  {
-//    if (glIsProgram(m_Program))
-//      {
-//        glUseProgram(m_Program);
-//        return true;
-//      }
-//    return false;
-//  }
-//
-//  //    void ShaderProgram::unUse()
-//  //    {
-//  ////        glUseProgram(0);DEBUG_GL_ERROR_WRITE("glUseProgram");
-//  //    }
-//
-//  const char *ShaderProgram::vertexShaderLog() const
-//  {
-//    return logForOpenGLObject(m_vertShader, (GLInfoFunction)&glGetProgramiv,
-//                              (GLLogFunction)&glGetProgramInfoLog);
-//  }
-//
-//  const char *ShaderProgram::fragmentShaderLog() const
-//  {
-//    return logForOpenGLObject(m_fragShader, (GLInfoFunction)&glGetProgramiv,
-//                              (GLLogFunction)&glGetProgramInfoLog);
-//  }
-//
-//  const char *ShaderProgram::programLog() const
-//  {
-//    return logForOpenGLObject(m_Program, (GLInfoFunction)&glGetProgramiv,
-//                              (GLLogFunction)&glGetProgramInfoLog);
-//  }
-//
-//  void ShaderProgram::unLoadGPU()
-//  {
-//    if (-1 != m_vertShader)
-//      glDeleteShader(m_vertShader);
-//    DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//    m_vertShader = -1;
-//
-//    if (-1 != m_fragShader)
-//      glDeleteShader(m_fragShader);
-//    DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//    m_fragShader = -1;
-//
-//    if (-1 != m_Program)
-//      glDeleteProgram(m_Program);
-//    DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
-//    m_Program = -1;
-//    m_uniformValueMap.clear();
-//  }
-//
-//  bool ShaderProgram::compileShader(s32 *shader, const GLenum type,
-//                                    const char *source)
-//  {
-//    *shader = compile_shader(type, source, (int)strlen(source) + 1);
-//
-//    return (*shader != 0 && *shader != GL_INVALID_ENUM);
-//  }
-//
-//  const char *ShaderProgram::logForOpenGLObject(u32 object,
-//                                                GLInfoFunction infoFunc,
-//                                                GLLogFunction logFunc) const
-//  {
-//    GLint logLength = 0, charsWritten = 0;
-//
-//    infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
-//    DEBUG_GL_ERROR_WRITE("GLInfoFunction\n");
-//    if (logLength < 1)
-//      return NULL;
-//
-//    static char logBytes[2048];
-//    //        char *logBytes = new char[logLength];
-//    logFunc(object, logLength, &charsWritten, logBytes);
-//    DEBUG_GL_ERROR_WRITE("GLLogFunction\n");
-//    return logBytes;
-//    //        std::string s(logBytes);
-//    ////        delete [] logBytes;logBytes=NULL;
-//    //        return s.c_str();
-//  }
-//
-//  Geometry *ShaderProgram::getParent()
-//  {
-//    return dynamic_cast<Geometry *>(AbstractDecorator::getParent());
-//  }
-//
-//  const Geometry *ShaderProgram::getParent() const
-//  {
-//    return dynamic_cast<const Geometry *>(AbstractDecorator::getParent());
-//  }
+
+    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    return (status == GL_TRUE);
+  }
+
+  //  bool ShaderProgram::compile(const char *source, njliShaderType type)
+  //  {
+  //    bool ret = false;
+  //
+  //    switch (type)
+  //      {
+  //      case JLI_SHADER_TYPE_FRAGMENT:
+  //        {
+  //          if (-1 != m_fragShader)
+  //            {
+  //              glDeleteShader(m_fragShader);
+  //              DEBUG_GL_ERROR_WRITE("glDeleteShader");
+  //            }
+  //
+  //          if (strlen(source) > 0)
+  //            {
+  //              ret = compileShader(&m_fragShader, GL_FRAGMENT_SHADER,
+  //              source); SDL_assert(glIsShader(m_fragShader));
+  //            }
+  //        }
+  //        break;
+  //      case JLI_SHADER_TYPE_VERTEX:
+  //        {
+  //          if (-1 != m_vertShader)
+  //            {
+  //              glDeleteShader(m_vertShader);
+  //              DEBUG_GL_ERROR_WRITE("glDeleteShader");
+  //            }
+  //
+  //          if (strlen(source) > 0)
+  //            {
+  //              ret = compileShader(&m_vertShader, GL_VERTEX_SHADER, source);
+  //              SDL_assert(glIsShader(m_vertShader));
+  //            }
+  //        }
+  //        break;
+  //      default:
+  //        break;
+  //      }
+  //    return ret;
+  //  }
+  //
+  //  bool ShaderProgram::bindAttribute(const char *attributeName)
+  //  {
+  //    s32 location = getAttributeLocation(attributeName);
+  //    GLint currentProgram = 0;
+  //
+  //    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+  //    SDL_assert(currentProgram != 0);
+  //
+  //    SDL_assert(m_Program == currentProgram);
+  //    SDL_assert(glIsProgram(m_Program));
+  //
+  //    SDL_assertPrint(-1 != location,
+  //                    "The named attribute variable (%s) is not "
+  //                    "an active attribute in the specified "
+  //                    "program object or if name starts with the "
+  //                    "reserved prefix \"gl_\"",
+  //                    attributeName);
+  //
+  //    glBindAttribLocation(m_Program, location, attributeName);
+  //    DEBUG_GL_ERROR_PRINT("glBindAttribLocation",
+  //                         "glBindAttribLocation(%d, %d, %s)", currentProgram,
+  //                         location, attributeName);
+  //
+  //    return true;
+  //  }
+  //
+  //  u32 ShaderProgram::getAttributeLocation(const char *attributeName) const
+  //  {
+  //    GLint currentProgram = 0;
+  //
+  //    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+  //
+  //    SDL_assert(m_Program == currentProgram);
+  //    SDL_assert(currentProgram != 0);
+  //
+  //    s32 location = glGetAttribLocation(m_Program, attributeName);
+  //    DEBUG_GL_ERROR_WRITE("glGetAttribLocation\n");
+  //
+  //    SDL_assertPrint(-1 != location,
+  //                    "The named attribute variable (%s) is not "
+  //                    "an active attribute in the specified "
+  //                    "program object or if name starts with the "
+  //                    "reserved prefix \"gl_\"",
+  //                    attributeName);
+  //
+  //    return location;
+  //  }
+  //
+  //  bool ShaderProgram::setUniformValue(const char *uniformName, s32 value)
+  //  {
+  //    s32 location = getUniformLocation(uniformName);
+  //    GLint currentProgram = 0;
+  //
+  //    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+  //    SDL_assert(currentProgram != 0);
+  //
+  //    SDL_assert(m_Program == currentProgram);
+  //    SDL_assert(glIsProgram(m_Program));
+  //
+  //    if (location != -1)
+  //      {
+  //        s32 tvalue = value;
+  //        if (getUniformValue(uniformName, tvalue))
+  //          {
+  //            if (tvalue != value)
+  //              {
+  //                glUniform1i(location, value);
+  //                DEBUG_GL_ERROR_PRINT("glUniform1i", "glUniform1i(%s, %d)",
+  //                                     uniformName, value);
+  //              }
+  //
+  //            return true;
+  //          }
+  //      }
+  //    return false;
+  //  }
+  //
+  //  bool ShaderProgram::getUniformValue(const char *uniformName, s32 &value)
+  //  {
+  //    s32 location = getUniformLocation(uniformName);
+  //    GLint currentProgram = 0;
+  //
+  //    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+  //    SDL_assert(currentProgram != 0);
+  //
+  //    SDL_assert(m_Program == currentProgram);
+  //    SDL_assert(glIsProgram(m_Program));
+  //
+  //    if (location != -1)
+  //      {
+  //        glGetUniformiv(currentProgram, location, &value);
+  //        DEBUG_GL_ERROR_PRINT("glGetUniformiv", "glGetUniformiv(%d, %s)",
+  //                             currentProgram, uniformName);
+  //
+  //        return true;
+  //      }
+  //    return false;
+  //  }
+  //
+  //  bool ShaderProgram::setUniformValue(const char *uniformName,
+  //                                      const btTransform &value, bool
+  //                                      transpose)
+  //  {
+  //    s32 location = getUniformLocation(uniformName);
+  //    GLint currentProgram = 0;
+  //
+  //    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+  //    SDL_assert(currentProgram != 0);
+  //
+  //    SDL_assert(m_Program == currentProgram);
+  //    SDL_assert(glIsProgram(m_Program));
+  //
+  //    if (location != -1)
+  //      {
+  //        btTransform tvalue = value;
+  //        if (getUniformValue(uniformName, tvalue))
+  //          {
+  //            // if(tvalue != value)
+  //            {
+  //              value.getOpenGLMatrix(m_mat4Buffer);
+  //              glUniformMatrix4fv(location, 1, (transpose) ? GL_TRUE :
+  //              GL_FALSE,
+  //                                 m_mat4Buffer);
+  //              // DEBUG_GL_ERROR_PRINT("glUniformMatrix4fv",
+  //              //                    "glUniformMatrix4fv(%s, %d, %s)",
+  //              //                                         uniformName,
+  //              //                                         transpose,
+  //              // toJsonString(value).c_str());
+  //            }
+  //
+  //            return true;
+  //          }
+  //      }
+  //    return false;
+  //  }
+  //
+  //  bool ShaderProgram::getUniformValue(const char *uniformName,
+  //                                      btTransform &value)
+  //  {
+  //    s32 location = getUniformLocation(uniformName);
+  //    GLint currentProgram = 0;
+  //
+  //    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+  //    SDL_assert(currentProgram != 0);
+  //
+  //    SDL_assert(m_Program == currentProgram);
+  //    SDL_assert(glIsProgram(m_Program));
+  //
+  //    if (location != -1)
+  //      {
+  //        glGetUniformfv(currentProgram, location, m_mat4Buffer);
+  //        //            DEBUG_GL_ERROR_PRINT("glGetUniformfv",
+  //        "glGetUniformfv(%s,
+  //        //            %s)",
+  //        //                                 uniformName,
+  //        //                                 toJsonString(value).c_str());
+  //        value.setFromOpenGLMatrix(m_mat4Buffer);
+  //
+  //        return true;
+  //      }
+  //    return false;
+  //  }
+  //
+  //  u32 ShaderProgram::getUniformLocation(const char *uniformName)
+  //  {
+  //    GLint currentProgram = 0;
+  //
+  //    glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+  //    DEBUG_GL_ERROR_WRITE("glGetIntegerv");
+  //
+  //    //        SDL_assert(m_Program == currentProgram);
+  //
+  //    s32 location = -1;
+  //
+  //    if (m_Program == currentProgram)
+  //      {
+  //        UniformValueMap::iterator iter =
+  //            m_uniformValueMap.find(std::string(uniformName));
+  //        if (iter != m_uniformValueMap.end())
+  //          {
+  //            location = iter->second;
+  //          }
+  //        else
+  //          {
+  //            SDL_assert(glIsProgram(m_Program));
+  //
+  //            location = glGetUniformLocation(currentProgram, uniformName);
+  //            DEBUG_GL_ERROR_PRINT("glGetUniformLocation\n", "%d, %s",
+  //            m_Program,
+  //                                 uniformName);
+  //
+  //            m_uniformValueMap.insert(
+  //                UniformValuePair(std::string(uniformName), location));
+  //          }
+  //
+  //        SDL_assertPrint(-1 != location,
+  //                        "The named uniform variable (%s) is not an active "
+  //                        "uniform in the specified program object or if name
+  //                        " "starts with the reserved prefix \"gl_\"",
+  //                        uniformName);
+  //      }
+  //
+  //    return location;
+  //  }
+  //
+  //  bool ShaderProgram::link()
+  //  {
+  //    SDL_assert(!isLinked());
+  //
+  //    if (!compile(m_VertexShaderSource.c_str(), JLI_SHADER_TYPE_VERTEX))
+  //      {
+  //        if (-1 != m_vertShader)
+  //          glDeleteShader(m_vertShader);
+  //        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //        m_vertShader = -1;
+  //
+  //        if (-1 != m_fragShader)
+  //          glDeleteShader(m_fragShader);
+  //        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //        m_fragShader = -1;
+  //
+  //        const char *log = vertexShaderLog();
+  //        if (log && strcmp(log, "(null)") != 0)
+  //          SDL_LogError(SDL_LOG_CATEGORY_TEST, "Vertex log: `%s`\n", log);
+  //        return false;
+  //      }
+  //
+  //    if (!compile(m_FragmentShaderSource.c_str(), JLI_SHADER_TYPE_FRAGMENT))
+  //      {
+  //        //            SDL_LogError(SDL_LOG_CATEGORY_TEST, "Vertex log:
+  //        `%s`\n",
+  //        //            fragmentShaderLog());
+  //
+  //        if (-1 != m_vertShader)
+  //          glDeleteShader(m_vertShader);
+  //        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //        m_vertShader = -1;
+  //
+  //        if (-1 != m_fragShader)
+  //          glDeleteShader(m_fragShader);
+  //        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //        m_fragShader = -1;
+  //
+  //        const char *log = fragmentShaderLog();
+  //        if (log && strcmp(log, "(null)") != 0)
+  //          SDL_LogError(SDL_LOG_CATEGORY_TEST, "Vertex log: `%s`\n", log);
+  //
+  //        return false;
+  //      }
+  //
+  //    SDL_assert(glIsShader(m_vertShader));
+  //    SDL_assert(glIsShader(m_fragShader));
+  //
+  //    m_Program = link_program(m_vertShader, m_fragShader);
+  //    SDL_assert(glIsProgram(m_Program));
+  //
+  //    GLint link_status;
+  //    glGetProgramiv(m_Program, GL_LINK_STATUS, &link_status);
+  //    DEBUG_GL_ERROR_WRITE("glGetProgramiv");
+  //
+  //    if (GL_FALSE == link_status)
+  //      {
+  //        SDL_LogError(SDL_LOG_CATEGORY_TEST, "Results of linking program =
+  //        %s\n",
+  //                     (link_status == GL_TRUE) ? "true" : "false");
+  //        log_program_info_log(m_Program);
+  //
+  //        if (-1 != m_vertShader)
+  //          glDeleteShader(m_vertShader);
+  //        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //        m_vertShader = -1;
+  //
+  //        if (-1 != m_fragShader)
+  //          glDeleteShader(m_fragShader);
+  //        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //        m_fragShader = -1;
+  //
+  //        if (-1 != m_Program)
+  //          glDeleteProgram(m_Program);
+  //        DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //        m_Program = -1;
+  //
+  //        return false;
+  //      }
+  //
+  //    GLint status = validate_program(m_Program);
+  //
+  //    if (GL_TRUE == status)
+  //      {
+  //        GLint active = 0;
+  //        GLsizei length = 0;
+  //        GLsizei size = 0;
+  //        GLenum type = 0;
+  //        GLint nameMaxLength = 0;
+  //        GLchar *variableName = NULL;
+  //
+  //        glGetProgramiv(m_Program, GL_ACTIVE_UNIFORMS, &active);
+  //        DEBUG_GL_ERROR_WRITE("glGetProgramiv\n");
+  //        glGetProgramiv(m_Program, GL_ACTIVE_UNIFORM_MAX_LENGTH,
+  //        &nameMaxLength); DEBUG_GL_ERROR_WRITE("glGetProgramiv\n");
+  //
+  //        variableName = new GLchar[nameMaxLength];
+  //        for (GLuint index = 0; index < active; ++index)
+  //          {
+  //            glGetActiveUniform(m_Program, index, nameMaxLength, &length,
+  //            &size,
+  //                               &type, variableName);
+  //            DEBUG_GL_ERROR_WRITE("glGetActiveUniform\n");
+  //            // SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Uniform Variable
+  //            Loaded:
+  //            // %s %s (size=%d)", getGLSLVarTypeName((njliGLSLVarType)type),
+  //            // variableName, size);
+  //          }
+  //        delete[] variableName;
+  //        variableName = NULL;
+  //
+  //        glGetProgramiv(m_Program, GL_ACTIVE_ATTRIBUTES, &active);
+  //        DEBUG_GL_ERROR_WRITE("glGetProgramiv\n");
+  //        glGetProgramiv(m_Program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH,
+  //                       &nameMaxLength);
+  //        DEBUG_GL_ERROR_WRITE("glGetProgramiv\n");
+  //
+  //        variableName = new GLchar[nameMaxLength];
+  //        for (GLuint index = 0; index < active; ++index)
+  //          {
+  //            glGetActiveAttrib(m_Program, index, nameMaxLength, &length,
+  //            &size,
+  //                              &type, variableName);
+  //            DEBUG_GL_ERROR_WRITE("glGetActiveAttrib\n");
+  //            // SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Attribute Variable
+  //            Loaded:
+  //            // %s %s (size=%d)", getGLSLVarTypeName((njliGLSLVarType)type),
+  //            // variableName, size);
+  //          }
+  //        delete[] variableName;
+  //        variableName = NULL;
+  //      }
+  //
+  //    if (status == GL_FALSE)
+  //      return false;
+  //
+  //    return true;
+  //  }
+  //
+  //  void ShaderProgram::saveSource(const std::string &vertexShaderSource,
+  //                                 const std::string &fragmentShaderSource)
+  //  {
+  //    m_VertexShaderSource = vertexShaderSource;
+  //    m_FragmentShaderSource = fragmentShaderSource;
+  //
+  //    Geometry *geometry = getParent();
+  //    if (NULL != geometry)
+  //      {
+  //        geometry->setupShader();
+  //      }
+  //  }
+  //
+  //  bool ShaderProgram::isLinked() const { return (m_Program != -1); }
+  //
+  //  bool ShaderProgram::use()
+  //  {
+  //    if (glIsProgram(m_Program))
+  //      {
+  //        glUseProgram(m_Program);
+  //        return true;
+  //      }
+  //    return false;
+  //  }
+  //
+  //  //    void ShaderProgram::unUse()
+  //  //    {
+  //  ////        glUseProgram(0);DEBUG_GL_ERROR_WRITE("glUseProgram");
+  //  //    }
+  //
+  //  const char *ShaderProgram::vertexShaderLog() const
+  //  {
+  //    return logForOpenGLObject(m_vertShader, (GLInfoFunction)&glGetProgramiv,
+  //                              (GLLogFunction)&glGetProgramInfoLog);
+  //  }
+  //
+  //  const char *ShaderProgram::fragmentShaderLog() const
+  //  {
+  //    return logForOpenGLObject(m_fragShader, (GLInfoFunction)&glGetProgramiv,
+  //                              (GLLogFunction)&glGetProgramInfoLog);
+  //  }
+  //
+  //  const char *ShaderProgram::programLog() const
+  //  {
+  //    return logForOpenGLObject(m_Program, (GLInfoFunction)&glGetProgramiv,
+  //                              (GLLogFunction)&glGetProgramInfoLog);
+  //  }
+  //
+  //  void ShaderProgram::unLoadGPU()
+  //  {
+  //    if (-1 != m_vertShader)
+  //      glDeleteShader(m_vertShader);
+  //    DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //    m_vertShader = -1;
+  //
+  //    if (-1 != m_fragShader)
+  //      glDeleteShader(m_fragShader);
+  //    DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //    m_fragShader = -1;
+  //
+  //    if (-1 != m_Program)
+  //      glDeleteProgram(m_Program);
+  //    DEBUG_GL_ERROR_WRITE("glDeleteProgram\n");
+  //    m_Program = -1;
+  //    m_uniformValueMap.clear();
+  //  }
+  //
+  //  bool ShaderProgram::compileShader(s32 *shader, const GLenum type,
+  //                                    const char *source)
+  //  {
+  //    *shader = compile_shader(type, source, (int)strlen(source) + 1);
+  //
+  //    return (*shader != 0 && *shader != GL_INVALID_ENUM);
+  //  }
+  //
+  //  const char *ShaderProgram::logForOpenGLObject(u32 object,
+  //                                                GLInfoFunction infoFunc,
+  //                                                GLLogFunction logFunc) const
+  //  {
+  //    GLint logLength = 0, charsWritten = 0;
+  //
+  //    infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
+  //    DEBUG_GL_ERROR_WRITE("GLInfoFunction\n");
+  //    if (logLength < 1)
+  //      return NULL;
+  //
+  //    static char logBytes[2048];
+  //    //        char *logBytes = new char[logLength];
+  //    logFunc(object, logLength, &charsWritten, logBytes);
+  //    DEBUG_GL_ERROR_WRITE("GLLogFunction\n");
+  //    return logBytes;
+  //    //        std::string s(logBytes);
+  //    ////        delete [] logBytes;logBytes=NULL;
+  //    //        return s.c_str();
+  //  }
+  //
+  //  Geometry *ShaderProgram::getParent()
+  //  {
+  //    return dynamic_cast<Geometry *>(AbstractDecorator::getParent());
+  //  }
+  //
+  //  const Geometry *ShaderProgram::getParent() const
+  //  {
+  //    return dynamic_cast<const Geometry *>(AbstractDecorator::getParent());
+  //  }
 } // namespace njli

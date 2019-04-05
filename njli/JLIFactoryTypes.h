@@ -383,8 +383,13 @@ namespace njli
     JLI_OBJECT_TYPE_PhysicsWorldBuilder,
     JLI_OBJECT_TYPE_Plane,
     JLI_OBJECT_TYPE_PlaneBuilder,
+      
     JLI_OBJECT_TYPE_Scene,
     JLI_OBJECT_TYPE_SceneBuilder,
+      
+      JLI_OBJECT_TYPE_SceneFBO,
+      JLI_OBJECT_TYPE_SceneFBOBuilder,
+      
     JLI_OBJECT_TYPE_SceneState,
     JLI_OBJECT_TYPE_SceneStateBuilder,
     JLI_OBJECT_TYPE_SceneStateMachine,

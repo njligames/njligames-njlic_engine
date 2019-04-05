@@ -25,35 +25,27 @@
 namespace njli
 {
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath()
-      : SteeringBehavior(),
-    m_Path(new Path()),
-    m_waypointSeekDist(1.0),
-    m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(), m_Path(new Path()), m_waypointSeekDist(1.0),
+        m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath(
       const AbstractBuilder &builder)
-      : SteeringBehavior(builder),
-        m_Path(new Path()),
-    m_waypointSeekDist(1.0),
-    m_VehichleDeceleration(0.3f)
+      : SteeringBehavior(builder), m_Path(new Path()), m_waypointSeekDist(1.0),
+        m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorFollowPath::SteeringBehaviorFollowPath(
       const SteeringBehaviorFollowPath &copy)
-      : SteeringBehavior(copy),
-        m_Path(new Path(*copy.m_Path)),
+      : SteeringBehavior(copy), m_Path(new Path(*copy.m_Path)),
         m_waypointSeekDist(copy.m_waypointSeekDist),
-    m_VehichleDeceleration(0.3f)
+        m_VehichleDeceleration(0.3f)
   {
   }
 
-  SteeringBehaviorFollowPath::~SteeringBehaviorFollowPath()
-  {
-    delete m_Path;
-  }
+  SteeringBehaviorFollowPath::~SteeringBehaviorFollowPath() { delete m_Path; }
 
   SteeringBehaviorFollowPath &SteeringBehaviorFollowPath::
   operator=(const SteeringBehaviorFollowPath &rhs)
@@ -216,13 +208,13 @@ namespace njli
 
   const btVector3 &SteeringBehaviorFollowPath::calculateForce()
   {
-      SteeringBehaviorMachine *machine = getParent();
-      const Node *vehicleNode = machine->getParent();
-      
-      *m_CurrentForce = SteeringBehaviorMachine::followPath(
-                                                            vehicleNode->getOrigin(), machine->getCurrentVelocity(), *m_Path,
-                                                            m_waypointSeekDist, machine->getMaxSpeed(), m_VehichleDeceleration);
-      
+    SteeringBehaviorMachine *machine = getParent();
+    const Node *vehicleNode = machine->getParent();
+
+    *m_CurrentForce = SteeringBehaviorMachine::followPath(
+        vehicleNode->getOrigin(), machine->getCurrentVelocity(), *m_Path,
+        m_waypointSeekDist, machine->getMaxSpeed(), m_VehichleDeceleration);
+
     return *m_CurrentForce;
   }
 

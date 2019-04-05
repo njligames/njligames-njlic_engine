@@ -15,11 +15,12 @@ if(NOT ANDROID AND NOT EMSCRIPTEN)
     --template="{file},{line},{message},{callstack},{severity},{id}"
     --verbose
     ${SOURCE_FILES}
+    ${LUA_SWIG_GENERATED_FILES}
   )
 
   add_custom_target(
     clang-format
-    COMMAND ${CLANG_FORMAT_BIN} -style=file -i ${SOURCE_FILES} -verbose
+    COMMAND ${CLANG_FORMAT_BIN} -style=file -i ${SOURCE_FILES} ${LUA_SWIG_GENERATED_FILES} -verbose
     SOURCES
     "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/.clang-format"
   )

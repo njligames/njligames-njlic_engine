@@ -1124,7 +1124,7 @@ newframe: /* reentry point when frame changes (call/return) */
           lua_Integer ic;
           if (tointeger(rb, &ib) && tointeger(rc, &ic))
             {
-              setivalue(ra, intop (^, ib, ic));
+              setivalue(ra, intop(^, ib, ic));
             }
           else
             {
@@ -1251,7 +1251,7 @@ newframe: /* reentry point when frame changes (call/return) */
           lua_Integer ib;
           if (tointeger(rb, &ib))
             {
-              setivalue(ra, intop (^, ~l_castS2U(0), ib));
+              setivalue(ra, intop(^, ~l_castS2U(0), ib));
             }
           else
             {
