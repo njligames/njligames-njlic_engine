@@ -904,8 +904,8 @@ namespace njli
     renderGL(true);
     renderInternal();
 
-//      renderGL(false);
-//      renderInternal();
+    renderGL(false);
+    renderInternal();
 #else
     renderGL();
     renderInternal();
