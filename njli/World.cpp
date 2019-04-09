@@ -1194,6 +1194,15 @@ namespace njli
 #endif
     return false;
   }
+  
+  bool World::isVR()
+  {
+#if defined(VR)
+    return true;
+#else
+    return false;
+#endif
+  }
 
   //    void World::addNode(Node *node)
   //    {

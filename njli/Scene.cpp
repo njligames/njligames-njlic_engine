@@ -54,8 +54,9 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
         m_TouchCamera(NULL),
-        m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
+        m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
+    
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
@@ -64,6 +65,7 @@ namespace njli
       : AbstractFactoryObject(this),
         //    m_Name("MyScene"),
         m_RootNode(NULL), m_SceneStateMachine(SceneStateMachine::create()),
+  
         m_BackgroundMaterial(Material::create()), m_PhysicsWorld(NULL),
         //    m_isPaused(false),
         m_ActiveCameras(new btAlignedObjectArray<Camera *>()),
@@ -72,8 +74,9 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
         m_TouchCamera(NULL),
-        m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
+        m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
+    
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
@@ -82,6 +85,7 @@ namespace njli
       : AbstractFactoryObject(this),
         //    m_Name("MyScene"),
         m_RootNode(NULL), m_SceneStateMachine(SceneStateMachine::create()),
+  
         m_BackgroundMaterial(Material::create()), m_PhysicsWorld(NULL),
         //    m_isPaused(false),
         m_ActiveCameras(new btAlignedObjectArray<Camera *>()),
@@ -90,16 +94,17 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
         m_TouchCamera(NULL),
-        m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
+        m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
+    
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
 
   Scene::~Scene()
   {
-    delete m_VRCameraRotation;
-    m_VRCameraRotation = NULL;
+    delete m_VRCameraTransform;
+    m_VRCameraTransform = NULL;
     delete m_ActiveGeometry;
     m_ActiveGeometry = NULL;
     delete m_ActiveClocks;
@@ -266,7 +271,7 @@ namespace njli
   void Scene::update(f32 timeStep, const u32 numSubSteps)
   {
     BT_PROFILE("Scene::update");
-
+    
     if (getPhysicsWorld())
       getPhysicsWorld()->update(timeStep);
 
@@ -499,9 +504,9 @@ namespace njli
   //              direction(cosf(phi) * -sinf(theta), sinf(phi), cosf(phi) *
   //              -cosf(theta)); direction = direction.normalize();
   //
-  //              m_VRCameraRotation->setOrigin(origin);
+  //              m_VRCameraTransform->setOrigin(origin);
   //
-  //              camera->getParent()->setTransform( (*m_VRCameraRotation));
+  //              camera->getParent()->setTransform( (*m_VRCameraTransform));
   //          }
   //#endif
   //
@@ -545,7 +550,7 @@ namespace njli
   //        Camera *camera = (*m_ActiveCameras).at(i);
   //#if defined(VR)
   //          if(camera->getParent())
-  //              camera->getParent()->setTransform(m_VRCameraRotation);
+  //              camera->getParent()->setTransform(m_VRCameraTransform);
   //#endif
   //        //            btVector3
   //        //
@@ -1448,10 +1453,20 @@ namespace njli
 
   const Camera *Scene::getTouchCamera() const { return m_TouchCamera; }
 
-  void Scene::setVRCameraRotation(const btTransform &transform)
+  void Scene::setVRCameraRotation(const btMatrix3x3 &rotation)
   {
-    *m_VRCameraRotation = transform;
+    m_VRCameraTransform->setBasis(rotation);
   }
+  void Scene::setVRCameraLocation(const btVector3 &loc)
+  {
+    m_VRCameraTransform->setOrigin(loc);
+  }
+  
+  const btTransform &Scene::getVRCameraTransform()const
+  {
+    return *m_VRCameraTransform;
+  }
+  
   //    void Scene::pause()
   //    {
   //        if(getPhysicsWorld())

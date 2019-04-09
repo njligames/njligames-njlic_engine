@@ -95,6 +95,8 @@ namespace njli
                                       float m21, float m22, float m23,
                                       float m31, float m32, float m33);
       static void setVRCameraRotation(float yaw, float pitch, float roll);
+      
+      static void setVRCameraLocation(float x, float y, float z);
 
   protected:
   private:

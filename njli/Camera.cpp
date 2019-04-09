@@ -27,6 +27,8 @@
 #include "btPrint.h"
 #include <cmath>
 
+#include <glm/gtc/type_ptr.hpp>
+
 static inline btTransform setFrom4x4Matrix(const btScalar *m)
 {
   btMatrix3x3 basis;
@@ -1636,6 +1638,21 @@ namespace njli
                         njli::World::getInstance()->getAspectRatio(),
                         getZNear(), getZFar());
       }
+  }
+  
+  void Camera::setProjection(const glm::mat4 &projection)
+  {
+    memcpy(m_projectionMatrix, (const float*)glm::value_ptr(projection), sizeof(float) * 16);
+    getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
+    
+    float t(getProjection().getBasis().getRow(1).y());
+    const float Rad2Deg = 180 / PI;
+    m_Fov = atan(1.0f / t ) * 2.0 * Rad2Deg;
+    
+    double m22(-m_ProjectionMatrixArray[(2 * 4) + 2]);
+    double m32(-m_ProjectionMatrixArray[(3 * 4) + 2]);
+    m_Near = ( 2.0 * m32 ) / ( 2.0 * m22 - 2.0);
+    m_Far = ( (m22 - 1.0) * m_Near) / ( m22 + 1.0 );
   }
 
   const btTransform &Camera::getProjection() const

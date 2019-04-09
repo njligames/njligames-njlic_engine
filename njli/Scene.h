@@ -23,6 +23,7 @@
 
 class btTransform;
 class btVector2;
+class btMatrix3x3;
 
 namespace njli
 {
@@ -486,8 +487,10 @@ namespace njli
      *  @return <#return value description#>
      */
     const Camera *getTouchCamera() const;
-      
-      void setVRCameraRotation(const btTransform &transform);
+    
+    void setVRCameraRotation(const btMatrix3x3 &transform);
+    void setVRCameraLocation(const btVector3 &loc);
+    const btTransform &getVRCameraTransform()const;
 
   protected:
     void addActiveCamera(Camera *camera = NULL);
@@ -530,7 +533,7 @@ namespace njli
     btAlignedObjectArray<Geometry *> *m_ActiveGeometry;
 
     Camera *m_TouchCamera;
-      btTransform *m_VRCameraRotation;
+      btTransform *m_VRCameraTransform;
   };
 }
 

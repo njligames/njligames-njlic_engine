@@ -54,11 +54,8 @@ void NJLI_HandleResize(int width, int height, int sdlFormat, float refreshRate)
   //      gDisplayMode.h = 600.0f;
   gDisplayMode.refresh_rate = 60.0f;
 #else
-#if defined(VR)
-  gDisplayMode.w = height;
-#else
+  
   gDisplayMode.w = width;
-#endif
   gDisplayMode.h = height;
   gDisplayMode.refresh_rate = refreshRate;
 #endif
@@ -206,4 +203,9 @@ void NJLI_HandleVRCameraRotation(float m11, float m12, float m13, float m21,
 void NJLI_HandleVRCameraRotationYPR(float yaw, float pitch, float roll)
 {
   njli::NJLIGameEngine::setVRCameraRotation(yaw, pitch, roll);
+}
+
+void NJLI_HandleVRCameraLocation(float x, float y, float z)
+{
+  njli::NJLIGameEngine::setVRCameraLocation(x, y, z);
 }
