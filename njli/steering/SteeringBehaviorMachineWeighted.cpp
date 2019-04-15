@@ -207,11 +207,12 @@ namespace njli
   {
     btVector3 force(0, 0, 0);
 
-    for (std::vector<SteeringBehavior*>::iterator iter = m_SteeringBehaviorVector.begin();
+    for (std::vector<SteeringBehavior *>::iterator iter =
+             m_SteeringBehaviorVector.begin();
          iter != m_SteeringBehaviorVector.end(); ++iter)
       {
-          SteeringBehavior *sb = *iter;
-          force += (sb->calculateForce() * sb->getWeight());
+        SteeringBehavior *sb = *iter;
+        force += (sb->calculateForce() * sb->getWeight());
       }
 
     if (force.length2() > getMaxForce2())

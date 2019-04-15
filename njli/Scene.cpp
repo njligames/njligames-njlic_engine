@@ -54,8 +54,9 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
         m_TouchCamera(NULL),
-        m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
+        m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
+    
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
@@ -64,6 +65,7 @@ namespace njli
       : AbstractFactoryObject(this),
         //    m_Name("MyScene"),
         m_RootNode(NULL), m_SceneStateMachine(SceneStateMachine::create()),
+  
         m_BackgroundMaterial(Material::create()), m_PhysicsWorld(NULL),
         //    m_isPaused(false),
         m_ActiveCameras(new btAlignedObjectArray<Camera *>()),
@@ -72,8 +74,9 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
         m_TouchCamera(NULL),
-        m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
+        m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
+    
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
@@ -82,6 +85,7 @@ namespace njli
       : AbstractFactoryObject(this),
         //    m_Name("MyScene"),
         m_RootNode(NULL), m_SceneStateMachine(SceneStateMachine::create()),
+  
         m_BackgroundMaterial(Material::create()), m_PhysicsWorld(NULL),
         //    m_isPaused(false),
         m_ActiveCameras(new btAlignedObjectArray<Camera *>()),
@@ -90,16 +94,17 @@ namespace njli
         m_ActiveClocks(new btAlignedObjectArray<Clock *>()),
         m_ActiveGeometry(new btAlignedObjectArray<Geometry *>()),
         m_TouchCamera(NULL),
-        m_VRCameraRotation(new btTransform(btTransform::getIdentity()))
+        m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
+    
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
 
   Scene::~Scene()
   {
-    delete m_VRCameraRotation;
-    m_VRCameraRotation = NULL;
+    delete m_VRCameraTransform;
+    m_VRCameraTransform = NULL;
     delete m_ActiveGeometry;
     m_ActiveGeometry = NULL;
     delete m_ActiveClocks;
@@ -266,7 +271,7 @@ namespace njli
   void Scene::update(f32 timeStep, const u32 numSubSteps)
   {
     BT_PROFILE("Scene::update");
-
+    
     if (getPhysicsWorld())
       getPhysicsWorld()->update(timeStep);
 
@@ -499,9 +504,9 @@ namespace njli
   //              direction(cosf(phi) * -sinf(theta), sinf(phi), cosf(phi) *
   //              -cosf(theta)); direction = direction.normalize();
   //
-  //              m_VRCameraRotation->setOrigin(origin);
+  //              m_VRCameraTransform->setOrigin(origin);
   //
-  //              camera->getParent()->setTransform( (*m_VRCameraRotation));
+  //              camera->getParent()->setTransform( (*m_VRCameraTransform));
   //          }
   //#endif
   //
@@ -545,7 +550,7 @@ namespace njli
   //        Camera *camera = (*m_ActiveCameras).at(i);
   //#if defined(VR)
   //          if(camera->getParent())
-  //              camera->getParent()->setTransform(m_VRCameraRotation);
+  //              camera->getParent()->setTransform(m_VRCameraTransform);
   //#endif
   //        //            btVector3
   //        //
@@ -975,7 +980,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in touchDown\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        touchDown\n");
       }
   }
 
@@ -990,7 +996,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in touchUp\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        touchUp\n");
       }
   }
 
@@ -1005,7 +1012,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in touchMove\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        touchMove\n");
       }
   }
 
@@ -1020,7 +1028,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in touchCancelled\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        touchCancelled\n");
       }
   }
 
@@ -1035,7 +1044,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in touchDown\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        touchDown\n");
       }
   }
 
@@ -1050,7 +1060,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in touchUp\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        touchUp\n");
       }
   }
 
@@ -1065,7 +1076,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in touchMove\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        touchMove\n");
       }
   }
 
@@ -1166,7 +1178,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in touchCancelled\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        touchCancelled\n");
       }
   }
 
@@ -1181,7 +1194,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in keyboardShow\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        keyboardShow\n");
       }
   }
 
@@ -1196,7 +1210,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in keyboardCancel\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        keyboardCancel\n");
       }
   }
 
@@ -1211,7 +1226,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in keyboardReturn\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        keyboardReturn\n");
       }
   }
 
@@ -1242,7 +1258,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in pauseGame\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        pauseGame\n");
       }
   }
 
@@ -1257,7 +1274,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in unPauseGame\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        unPauseGame\n");
       }
   }
 
@@ -1272,7 +1290,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in willResignActive\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        willResignActive\n");
       }
   }
 
@@ -1287,7 +1306,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in didBecomeActive\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        didBecomeActive\n");
       }
   }
 
@@ -1302,7 +1322,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in didEnterBackground\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        didEnterBackground\n");
       }
   }
 
@@ -1317,7 +1338,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in willEnterForeground\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        willEnterForeground\n");
       }
   }
 
@@ -1332,7 +1354,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in willTerminate\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        willTerminate\n");
       }
   }
 
@@ -1347,7 +1370,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in interrupt\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        interrupt\n");
       }
   }
 
@@ -1362,7 +1386,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in resumeInterrupt\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        resumeInterrupt\n");
       }
   }
 
@@ -1377,7 +1402,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in receivedMemoryWarning\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState in
+        //        receivedMemoryWarning\n");
       }
   }
 
@@ -1427,10 +1453,20 @@ namespace njli
 
   const Camera *Scene::getTouchCamera() const { return m_TouchCamera; }
 
-  void Scene::setVRCameraRotation(const btTransform &transform)
+  void Scene::setVRCameraRotation(const btMatrix3x3 &rotation)
   {
-    *m_VRCameraRotation = transform;
+    m_VRCameraTransform->setBasis(rotation);
   }
+  void Scene::setVRCameraLocation(const btVector3 &loc)
+  {
+    m_VRCameraTransform->setOrigin(loc);
+  }
+  
+  const btTransform &Scene::getVRCameraTransform()const
+  {
+    return *m_VRCameraTransform;
+  }
+  
   //    void Scene::pause()
   //    {
   //        if(getPhysicsWorld())

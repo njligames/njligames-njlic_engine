@@ -110,7 +110,7 @@ namespace njli
         m_SocketPort(2223), m_BackgroundColor(new btVector4(.5, .5, .5, .5)),
         m_DeviceName("NOT - SET"), m_AnimationPaused(false), m_GamePaused(false)
   {
-//    m_WorldDebugDrawer->init();
+    //    m_WorldDebugDrawer->init();
 
     addChild(m_WorldSound);
     addChild(m_WorldInput);
@@ -382,15 +382,15 @@ namespace njli
     return NULL;
   }
 
-  WorldDebugDrawer *World::getDebugDrawer() {
-      m_WorldDebugDrawer->init();
-      return m_WorldDebugDrawer;
-      
+  WorldDebugDrawer *World::getDebugDrawer()
+  {
+    m_WorldDebugDrawer->init();
+    return m_WorldDebugDrawer;
   }
 
   const WorldDebugDrawer *World::getDebugDrawer() const
   {
-      m_WorldDebugDrawer->init();
+    m_WorldDebugDrawer->init();
     return m_WorldDebugDrawer;
   }
 
@@ -415,7 +415,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+        //        WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Down";
@@ -442,7 +443,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+        //        WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Up";
@@ -469,7 +471,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+        //        WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Move";
@@ -496,7 +499,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+        //        WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Cancelled";
@@ -524,7 +528,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+        //        WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Down";
@@ -551,7 +556,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+        //        WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Up";
@@ -578,7 +584,8 @@ namespace njli
       }
     else
       {
-//        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
+        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+        //        WorldState\n");
       }
 
     char action[BUFFER_SIZE] = "Move";
@@ -897,8 +904,8 @@ namespace njli
     renderGL(true);
     renderInternal();
 
-//      renderGL(false);
-//      renderInternal();
+    renderGL(false);
+    renderInternal();
 #else
     renderGL();
     renderInternal();
@@ -1186,6 +1193,15 @@ namespace njli
     return true;
 #endif
     return false;
+  }
+  
+  bool World::isVR()
+  {
+#if defined(VR)
+    return true;
+#else
+    return false;
+#endif
   }
 
   //    void World::addNode(Node *node)

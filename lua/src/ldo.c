@@ -10,9 +10,9 @@
 #include "lprefix.h"
 
 #include <setjmp.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 #include "lua.h"
 
@@ -53,15 +53,15 @@
 //
 ///* C++ exceptions */
 //#define LUAI_THROW(L, c) throw(c)
-//#define LUAI_TRY(L, c, a)                                                      \
-//  try                                                                          \
-//    {                                                                          \
-//      a                                                                        \
-//    }                                                                          \
-//  catch (...)                                                                  \
-//    {                                                                          \
-//      if ((c)->status == 0)                                                    \
-//        (c)->status = -1;                                                      \
+//#define LUAI_TRY(L, c, a) \
+//  try \
+//    { \
+//      a \
+//    } \
+//  catch (...) \
+//    { \
+//      if ((c)->status == 0) \
+//        (c)->status = -1; \
 //    }
 //#define luai_jmpbuf int /* dummy variable */
 //
@@ -69,10 +69,10 @@
 //
 ///* in POSIX, try _longjmp/_setjmp (more efficient) */
 //#define LUAI_THROW(L, c) _longjmp((c)->b, 1)
-//#define LUAI_TRY(L, c, a)                                                      \
-//  if (_setjmp((c)->b) == 0)                                                    \
-//    {                                                                          \
-//      a                                                                        \
+//#define LUAI_TRY(L, c, a) \
+//  if (_setjmp((c)->b) == 0) \
+//    { \
+//      a \
 //    }
 //#define luai_jmpbuf jmp_buf
 //
@@ -84,11 +84,12 @@
   if (setjmp((c)->b) == 0)                                                     \
     {                                                                          \
       a                                                                        \
-    } \
-else \
-{\
-fwrite(lua_tostring(L, -1), sizeof(char), strlen(lua_tostring(L, -1)), stdout);\
-}
+    }                                                                          \
+  else                                                                         \
+    {                                                                          \
+      fwrite(lua_tostring(L, -1), sizeof(char), strlen(lua_tostring(L, -1)),   \
+             stdout);                                                          \
+    }
 #define luai_jmpbuf jmp_buf
 
 //#endif /* } */

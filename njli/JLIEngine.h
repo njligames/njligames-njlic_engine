@@ -138,6 +138,8 @@
 #include "PlaneBuilder.h"
 #include "Scene.h"
 #include "SceneBuilder.h"
+#include "SceneFBO.h"
+#include "SceneFBOBuilder.h"
 #include "SceneState.h"
 #include "SceneStateBuilder.h"
 #include "SceneStateMachine.h"

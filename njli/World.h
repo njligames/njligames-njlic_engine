@@ -489,6 +489,8 @@ namespace njli
     bool isDebug() const;
 
     bool runJavascript(const char *script);
+    
+    bool isVR();
 
   protected:
     //        void parseSocketMessage(const char *msg);

@@ -194,23 +194,27 @@ namespace njli
   }
 
   const btVector3 &SteeringBehaviorSeek::calculateForce()
-    {
-        SteeringBehaviorMachine *machine = getParent();
-        const Node *vehicleNode = machine->getParent();
-        const btVector3 vehiclePos(vehicleNode->getOrigin());
-        const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
-        const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
-        
-        *m_CurrentForce = btVector3(0,0,0);
-        for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
-        {
-            const Node *leader = *i;
-            
-            const btVector3 leaderPos(leader->getOrigin());
-            
-            *m_CurrentForce += SteeringBehaviorMachine::seek(leaderPos, vehiclePos, vehicleVelocity, vehicleMaxSpeed);
-        }
-        
-        return *m_CurrentForce;
-    }
+  {
+    SteeringBehaviorMachine *machine = getParent();
+    const Node *vehicleNode = machine->getParent();
+    const btVector3 vehiclePos(vehicleNode->getOrigin());
+    const btVector3 vehicleVelocity(
+        vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
+    const float vehicleMaxSpeed(
+        vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
+
+    *m_CurrentForce = btVector3(0, 0, 0);
+    for (std::vector<Node *>::const_iterator i = m_TargetList.begin();
+         i != m_TargetList.end(); i++)
+      {
+        const Node *leader = *i;
+
+        const btVector3 leaderPos(leader->getOrigin());
+
+        *m_CurrentForce += SteeringBehaviorMachine::seek(
+            leaderPos, vehiclePos, vehicleVelocity, vehicleMaxSpeed);
+      }
+
+    return *m_CurrentForce;
+  }
 } // namespace njli

@@ -4,6 +4,7 @@ include(${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/swig_targets.cmake)
 if(NOT ANDROID AND NOT EMSCRIPTEN)
   include(${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake/doxygen.cmake)
   set(CPPCHECK_FORMAT_BIN "/usr/local/bin/cppcheck" CACHE STRING "use: `brew install cppcheck` to install")
+  # http://releases.llvm.org/3.8.0/tools/clang/docs/ClangFormatStyleOptions.html
   set(CLANG_FORMAT_BIN "/usr/local/bin/clang-format" CACHE STRING "use: `brew install clang-format` to install")
 
   add_custom_target(
@@ -15,11 +16,13 @@ if(NOT ANDROID AND NOT EMSCRIPTEN)
     --template="{file},{line},{message},{callstack},{severity},{id}"
     --verbose
     ${SOURCE_FILES}
+    ${LUA_SWIG_GENERATED_FILES}
+    "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic/njlic.i"
   )
 
   add_custom_target(
     clang-format
-    COMMAND ${CLANG_FORMAT_BIN} -style=file -i ${SOURCE_FILES} -verbose
+    COMMAND ${CLANG_FORMAT_BIN} -style=file -i ${SOURCE_FILES} ${LUA_SWIG_GENERATED_FILES} "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic/njlic.i" -verbose
     SOURCES
     "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/.clang-format"
   )

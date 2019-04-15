@@ -23,33 +23,29 @@
 
 namespace njli
 {
-    SteeringBehaviorWander::SteeringBehaviorWander() : SteeringBehavior(),
-    m_WanderTarget(new btVector3(0, 0, 0)),
-    m_WanderJitter(1.333333333333333),
-    m_WanderRadius(1.2f),
-    m_WanderDistance(2.0f)
-    {}
+  SteeringBehaviorWander::SteeringBehaviorWander()
+      : SteeringBehavior(), m_WanderTarget(new btVector3(0, 0, 0)),
+        m_WanderJitter(1.333333333333333), m_WanderRadius(1.2f),
+        m_WanderDistance(2.0f)
+  {
+  }
 
   SteeringBehaviorWander::SteeringBehaviorWander(const AbstractBuilder &builder)
-    : SteeringBehavior(builder),
-    m_WanderTarget(new btVector3(0, 0, 0)),
-    m_WanderJitter(1.333333333333333),
-    m_WanderRadius(1.2f),
-    m_WanderDistance(2.0f)
+      : SteeringBehavior(builder), m_WanderTarget(new btVector3(0, 0, 0)),
+        m_WanderJitter(1.333333333333333), m_WanderRadius(1.2f),
+        m_WanderDistance(2.0f)
   {
   }
 
   SteeringBehaviorWander::SteeringBehaviorWander(
       const SteeringBehaviorWander &copy)
-    : SteeringBehavior(copy),
-    m_WanderTarget(new btVector3(0, 0, 0)),
-    m_WanderJitter(1.333333333333333),
-    m_WanderRadius(1.2f),
-    m_WanderDistance(2.0f)
+      : SteeringBehavior(copy), m_WanderTarget(new btVector3(0, 0, 0)),
+        m_WanderJitter(1.333333333333333), m_WanderRadius(1.2f),
+        m_WanderDistance(2.0f)
   {
   }
 
-    SteeringBehaviorWander::~SteeringBehaviorWander() {delete m_WanderTarget; }
+  SteeringBehaviorWander::~SteeringBehaviorWander() { delete m_WanderTarget; }
 
   SteeringBehaviorWander &SteeringBehaviorWander::
   operator=(const SteeringBehaviorWander &rhs)
@@ -209,11 +205,13 @@ namespace njli
 
   const btVector3 &SteeringBehaviorWander::calculateForce()
   {
-      SteeringBehaviorMachine *machine = getParent();
-      const Node *vehicleNode = machine->getParent();
-      
-      *m_CurrentForce = SteeringBehaviorMachine::wander(vehicleNode->getOrigin(), *m_WanderTarget, m_WanderJitter, m_WanderRadius, m_WanderDistance);
-      
-      return *m_CurrentForce;
+    SteeringBehaviorMachine *machine = getParent();
+    const Node *vehicleNode = machine->getParent();
+
+    *m_CurrentForce = SteeringBehaviorMachine::wander(
+        vehicleNode->getOrigin(), *m_WanderTarget, m_WanderJitter,
+        m_WanderRadius, m_WanderDistance);
+
+    return *m_CurrentForce;
   }
 } // namespace njli

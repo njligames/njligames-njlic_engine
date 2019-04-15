@@ -15,6 +15,7 @@
 #include "btVector3.h"
 //#include "AbstractTransform.h"
 #include "lua.hpp"
+#include "glm/glm.hpp"
 
 struct btDbvtBroadphase;
 struct btDbvtNode;
@@ -168,6 +169,7 @@ namespace njli
     static u32 type();
 
   public:
+    
     /**
          *  <#Description#>
          *
@@ -361,6 +363,7 @@ namespace njli
      */
     void updateViewSize();
 
+    void setProjection(const glm::mat4 &projection);
   protected:
     void cull(btDbvtBroadphase * pbp);
 

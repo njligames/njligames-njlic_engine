@@ -55,8 +55,48 @@ namespace njli
 
     njli::World::getInstance()->setDeviceName(deviceName);
 
-    //    njli::World::getInstance()->createScript();
-
+//#if defined(VR)
+//    Scene *scene = njli::Scene::create();
+//    
+//    Node *rootNode = njli::Node::create();
+//    rootNode->setName("rootNode");
+//    rootNode->setOrigin(0, 0, 0);
+//    
+//    scene->setRootNode(rootNode);
+//    njli::World::getInstance()->setScene(scene);
+//
+//    {
+//      Node *leftCameraNode = njli::Node::create();
+//      leftCameraNode->setOrigin(0, 0, 0);
+//      leftCameraNode->setName("leftCameraNode");
+//      
+//      Camera *leftCamera = njli::Camera::create();
+//      leftCamera->enableOrthographic(false);
+//      leftCamera->setName("leftCamera");
+//      
+//      leftCameraNode->setCamera(leftCamera);
+//      
+//      rootNode->addChildNode(leftCameraNode);
+//    }
+//    
+//    {
+//      Node *rightCameraNode = njli::Node::create();
+//      rightCameraNode->setOrigin(0, 0, 0);
+//      rightCameraNode->setName("rightCameraNode");
+//      
+//      Camera *rightCamera = njli::Camera::create();
+//      rightCamera->enableOrthographic(false);
+//      rightCamera->setName("rightCamera");
+//      
+//      
+//      
+//      rightCameraNode->setCamera(rightCamera);
+//      
+//      rootNode->addChildNode(rightCameraNode);
+//    }
+//    
+//#endif
+    
     return true;
   }
 
@@ -410,10 +450,9 @@ namespace njli
                                            float m31, float m32, float m33)
   {
     btMatrix3x3 m(m11, m12, m13, m21, m22, m23, m31, m32, m33);
-    btTransform transform(m);
 
     if (njli::World::getInstance()->getScene())
-      njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
+      njli::World::getInstance()->getScene()->setVRCameraRotation(m);
   }
 
   void NJLIGameEngine::setVRCameraRotation(float yaw, float pitch, float roll)
@@ -427,9 +466,17 @@ namespace njli
 
     btMatrix3x3 m(btMatrix3x3::getIdentity());
     m.setEulerYPR(yaw, pitch, roll);
-    btTransform transform(m);
 
     if (njli::World::getInstance()->getScene())
-      njli::World::getInstance()->getScene()->setVRCameraRotation(transform);
+      njli::World::getInstance()->getScene()->setVRCameraRotation(m);
   }
+  
+  void NJLIGameEngine::setVRCameraLocation(float x, float y, float z)
+  {
+    btVector3 v(x, y, z);
+    
+    if (njli::World::getInstance()->getScene())
+      njli::World::getInstance()->getScene()->setVRCameraLocation(v);
+  }
+  
 } // namespace njli

@@ -33,19 +33,15 @@ namespace njli
         m_LinearForceAndPositionArrayIndex(0),
         m_AngularForceAndPositionArrayIndex(0),
         //    m_btTransform(new btTransform(btTransform::getIdentity())),
-        m_Charge(0),
-    m_AngularFactor(new btVector3(1,1,1)),
-    m_LinearFactor(new btVector3(1,1,1)),
-    m_AngularDamping(0),
-    m_Damping(0)
-    {
-            for(s32 i = 0; i < 20; ++i)
-            {
-                m_LinearForceAndPositionArray.push_back(new
-                ForceAndPosition());
-                m_AngularForceAndPositionArray.push_back(new
-                ForceAndPosition());
-            }
+        m_Charge(0), m_AngularFactor(new btVector3(1, 1, 1)),
+        m_LinearFactor(new btVector3(1, 1, 1)), m_AngularDamping(0),
+        m_Damping(0)
+  {
+    for (s32 i = 0; i < 20; ++i)
+      {
+        m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
+        m_AngularForceAndPositionArray.push_back(new ForceAndPosition());
+      }
     //        enableHandleCollideCallback();
     //        setDynamicPhysics();
   }
@@ -56,19 +52,15 @@ namespace njli
         m_LinearForceAndPositionArrayIndex(0),
         m_AngularForceAndPositionArrayIndex(0),
         //    m_btTransform(new btTransform(btTransform::getIdentity())),
-    m_Charge(0),
-    m_AngularFactor(new btVector3(1,1,1)),
-    m_LinearFactor(new btVector3(1,1,1)),
-    m_AngularDamping(0),
-    m_Damping(0)
+        m_Charge(0), m_AngularFactor(new btVector3(1, 1, 1)),
+        m_LinearFactor(new btVector3(1, 1, 1)), m_AngularDamping(0),
+        m_Damping(0)
   {
-            for(s32 i = 0; i < 20; ++i)
-            {
-                m_LinearForceAndPositionArray.push_back(new
-                ForceAndPosition());
-                m_AngularForceAndPositionArray.push_back(new
-                ForceAndPosition());
-            }
+    for (s32 i = 0; i < 20; ++i)
+      {
+        m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
+        m_AngularForceAndPositionArray.push_back(new ForceAndPosition());
+      }
     //        enableHandleCollideCallback();
     //        setDynamicPhysics();
   }
@@ -79,38 +71,34 @@ namespace njli
         m_LinearForceAndPositionArrayIndex(0),
         m_AngularForceAndPositionArrayIndex(0),
         //    m_btTransform(new btTransform(btTransform::getIdentity())),
-    m_Charge(0),
-    m_AngularFactor(new btVector3(1,1,1)),
-    m_LinearFactor(new btVector3(1,1,1)),
-    m_AngularDamping(0),
-    m_Damping(0)
+        m_Charge(0), m_AngularFactor(new btVector3(1, 1, 1)),
+        m_LinearFactor(new btVector3(1, 1, 1)), m_AngularDamping(0),
+        m_Damping(0)
   {
-            for(s32 i = 0; i < 20; ++i)
-            {
-                m_LinearForceAndPositionArray.push_back(new
-                ForceAndPosition());
-                m_AngularForceAndPositionArray.push_back(new
-                ForceAndPosition());
-            }
+    for (s32 i = 0; i < 20; ++i)
+      {
+        m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
+        m_AngularForceAndPositionArray.push_back(new ForceAndPosition());
+      }
   }
 
   PhysicsBodyRigid::~PhysicsBodyRigid()
   {
-      delete m_LinearFactor;
-      delete m_AngularFactor;
-      
+    delete m_LinearFactor;
+    delete m_AngularFactor;
+
     removePhysicsBody();
 
-            ForceAndPosition *p = NULL;
+    ForceAndPosition *p = NULL;
 
-            for (s32 i = 0; i < 20; ++i)
-            {
-                p = m_LinearForceAndPositionArray.at(i);
-                delete p;
-    
-                p = m_AngularForceAndPositionArray.at(i);
-                delete p;
-            }
+    for (s32 i = 0; i < 20; ++i)
+      {
+        p = m_LinearForceAndPositionArray.at(i);
+        delete p;
+
+        p = m_AngularForceAndPositionArray.at(i);
+        delete p;
+      }
 
     //        delete m_btTransform;
     //        m_btTransform=NULL;
@@ -304,12 +292,12 @@ namespace njli
 
   void PhysicsBodyRigid::setLinearFactor(const btVector3 &factor)
   {
-      *m_LinearFactor = factor;
-    
-      if (PhysicsBody::getParent() && getPhysicsShape())
+    *m_LinearFactor = factor;
+
+    if (PhysicsBody::getParent() && getPhysicsShape())
       {
-          btTransform t = getWorldTransform();
-          setTransform(t);
+        btTransform t = getWorldTransform();
+        setTransform(t);
       }
   }
 
@@ -320,12 +308,12 @@ namespace njli
 
   void PhysicsBodyRigid::setAngularFactor(const btVector3 &factor)
   {
-      *m_AngularFactor = factor;
-      
-      if (PhysicsBody::getParent() && getPhysicsShape())
+    *m_AngularFactor = factor;
+
+    if (PhysicsBody::getParent() && getPhysicsShape())
       {
-          btTransform t = getWorldTransform();
-          setTransform(t);
+        btTransform t = getWorldTransform();
+        setTransform(t);
       }
   }
 
@@ -358,42 +346,36 @@ namespace njli
 
   void PhysicsBodyRigid::setDamping(f32 damping)
   {
-      m_Damping = damping;
-      
-      if (PhysicsBody::getParent() && getPhysicsShape())
+    m_Damping = damping;
+
+    if (PhysicsBody::getParent() && getPhysicsShape())
       {
-          btTransform t = getWorldTransform();
-          setTransform(t);
+        btTransform t = getWorldTransform();
+        setTransform(t);
       }
   }
 
-  f32 PhysicsBodyRigid::getDamping() const
-  {
-      return m_Damping;
-  }
+  f32 PhysicsBodyRigid::getDamping() const { return m_Damping; }
 
   void PhysicsBodyRigid::setAngularDamping(f32 damping)
   {
-      m_AngularDamping = damping;
-      
-      if (PhysicsBody::getParent() && getPhysicsShape())
+    m_AngularDamping = damping;
+
+    if (PhysicsBody::getParent() && getPhysicsShape())
       {
-          btTransform t = getWorldTransform();
-          setTransform(t);
+        btTransform t = getWorldTransform();
+        setTransform(t);
       }
   }
 
-  f32 PhysicsBodyRigid::getAngularDamping() const
-  {
-      return m_AngularDamping;
-  }
+  f32 PhysicsBodyRigid::getAngularDamping() const { return m_AngularDamping; }
 
   void PhysicsBodyRigid::applyForce(const btVector3 &direction, bool impulse)
   {
     if (impulse)
       {
-        if(getBody())
-            getBody()->applyCentralImpulse(direction);
+        if (getBody())
+          getBody()->applyCentralImpulse(direction);
       }
     else
       {
@@ -411,8 +393,8 @@ namespace njli
   {
     if (impulse)
       {
-        if(getBody())
-            getBody()->applyImpulse(direction, position);
+        if (getBody())
+          getBody()->applyImpulse(direction, position);
       }
     else
       {
@@ -428,10 +410,10 @@ namespace njli
   void PhysicsBodyRigid::applyAngularForce(const btVector3 &direction,
                                            bool impulse)
   {
-    if ( impulse)
+    if (impulse)
       {
-        if(getBody())
-            getBody()->applyTorqueImpulse(direction);
+        if (getBody())
+          getBody()->applyTorqueImpulse(direction);
       }
     else
       {
@@ -446,36 +428,36 @@ namespace njli
 
   void PhysicsBodyRigid::clearAllForces()
   {
-    if(getBody())
-        getBody()->clearForces();
+    if (getBody())
+      getBody()->clearForces();
     m_LinearForceAndPositionArrayIndex = 0;
     m_AngularForceAndPositionArrayIndex = 0;
   }
 
   void PhysicsBodyRigid::setVelocity(const btVector3 &velocity)
   {
-    if(getBody())
-        getBody()->setLinearVelocity(velocity);
+    if (getBody())
+      getBody()->setLinearVelocity(velocity);
   }
 
   const btVector3 &PhysicsBodyRigid::getVelocity() const
   {
-    if(getBody())
-        return getBody()->getLinearVelocity();
-      return btVector3Zero;
+    if (getBody())
+      return getBody()->getLinearVelocity();
+    return btVector3Zero;
   }
 
   void PhysicsBodyRigid::setAngularVelocity(const btVector3 &velocity)
   {
-    if(getBody())
-        getBody()->setAngularVelocity(velocity);
+    if (getBody())
+      getBody()->setAngularVelocity(velocity);
   }
 
   const btVector3 &PhysicsBodyRigid::getAngularVelocity() const
   {
-    if(getBody())
-        return getBody()->getAngularVelocity();
-      return btVector3Zero;
+    if (getBody())
+      return getBody()->getAngularVelocity();
+    return btVector3Zero;
   }
 
   const btCollisionObject *PhysicsBodyRigid::getCollisionObject() const
@@ -622,9 +604,9 @@ namespace njli
 
             m_btRigidBody->setCollisionFlags(getCollisionFlags());
             m_btRigidBody->setActivationState(getActivationState());
-              m_btRigidBody->setAngularFactor(*m_AngularFactor);
-              m_btRigidBody->setLinearFactor(*m_LinearFactor);
-              m_btRigidBody->setDamping(m_Damping, m_AngularDamping);
+            m_btRigidBody->setAngularFactor(*m_AngularFactor);
+            m_btRigidBody->setLinearFactor(*m_LinearFactor);
+            m_btRigidBody->setDamping(m_Damping, m_AngularDamping);
 
             return physicsWorld->addRigidBody(this);
           }

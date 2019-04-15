@@ -208,20 +208,22 @@ namespace njli
 
   const btVector3 &SteeringBehaviorMachinePrioritized::calculateSteeringForce()
   {
-      btVector3 force(0, 0, 0);
-      
-      for (std::vector<SteeringBehavior*>::iterator iter = m_SteeringBehaviorVector.begin();
-           iter != m_SteeringBehaviorVector.end(); ++iter)
+    btVector3 force(0, 0, 0);
+
+    for (std::vector<SteeringBehavior *>::iterator iter =
+             m_SteeringBehaviorVector.begin();
+         iter != m_SteeringBehaviorVector.end(); ++iter)
       {
-          SteeringBehavior *sb = *iter;
-          if(!accumulateForce(force, sb->calculateForce(), sb->getParent()->getMaxForce()))
+        SteeringBehavior *sb = *iter;
+        if (!accumulateForce(force, sb->calculateForce(),
+                             sb->getParent()->getMaxForce()))
           {
-              this->setCalculatedForce(force);
-              return getCalculatedForce();
+            this->setCalculatedForce(force);
+            return getCalculatedForce();
           }
       }
-      
-      this->setCalculatedForce(force);
-      return getCalculatedForce();
+
+    this->setCalculatedForce(force);
+    return getCalculatedForce();
   }
 } // namespace njli
