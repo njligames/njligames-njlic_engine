@@ -530,13 +530,13 @@ namespace njli
     Scene *scene = getParent()->getCurrentScene();
     SDL_assert(NULL != scene);
 
-    if (getParent() && getParent()->getParentNode())
-      {
-        SDL_LogWarn(
-            SDL_LOG_CATEGORY_TEST, "%s - %s->%s",
-            "**ADDING A CONSTRAINT TO A CHILD NODE OTHER THAN THE ROOT**",
-            getParent()->getName(), getParent()->getParentNode()->getName());
-      }
+//    if (getParent() && getParent()->getParentNode())
+//      {
+//        SDL_LogWarn(
+//            SDL_LOG_CATEGORY_TEST, "%s - %s->%s",
+//            "**ADDING A CONSTRAINT TO A CHILD NODE OTHER THAN THE ROOT**",
+//            getParent()->getName(), getParent()->getParentNode()->getName());
+//      }
 
     //        SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "%s", (getParent() &&
     //        getParent()->getParentNode())?"**ADDING A CONSTRAINT TO A CHILD

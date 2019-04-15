@@ -259,9 +259,11 @@ namespace njli
     if (rigidBodyB)
       getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
 
-    //        Scene *scene = njli::World::getInstance()->getScene();
-    Scene *scene = getParent()->getParent()->getCurrentScene();
-    scene->getPhysicsWorld()->addConstraint(this);
+    if(nullptr != rigidBodyA ||
+       nullptr != rigidBodyB)
+    {
+      addConstraint();
+    }
   }
 
   void PhysicsConstraintGeneric6DofSpring::setNodes(
@@ -335,12 +337,12 @@ namespace njli
     return m_btGeneric6DofSpringConstraint;
   }
 
-  void PhysicsConstraintGeneric6DofSpring::removeConstraint()
+  bool PhysicsConstraintGeneric6DofSpring::removeConstraint()
   {
-    PhysicsConstraint::removeConstraint();
-
     if (m_btGeneric6DofSpringConstraint)
       delete m_btGeneric6DofSpringConstraint;
     m_btGeneric6DofSpringConstraint = NULL;
+    
+    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli

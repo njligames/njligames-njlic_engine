@@ -236,9 +236,11 @@ namespace njli
     if (rigidBodyB)
       getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
 
-    //        Scene *scene = njli::World::getInstance()->getScene();
-    Scene *scene = getParent()->getParent()->getCurrentScene();
-    scene->getPhysicsWorld()->addConstraint(this);
+    if(nullptr != rigidBodyA ||
+       nullptr != rigidBodyB)
+    {
+      addConstraint();
+    }
   }
 
   btTypedConstraint *PhysicsConstraintFixed::getConstraint()
@@ -251,12 +253,12 @@ namespace njli
     return m_btFixedConstraint;
   }
 
-  void PhysicsConstraintFixed::removeConstraint()
+  bool PhysicsConstraintFixed::removeConstraint()
   {
-    PhysicsConstraint::removeConstraint();
-
     if (m_btFixedConstraint)
       delete m_btFixedConstraint;
     m_btFixedConstraint = NULL;
+    
+    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli

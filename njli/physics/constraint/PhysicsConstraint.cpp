@@ -300,7 +300,26 @@ namespace njli
     return dynamic_cast<const PhysicsBody *>(AbstractDecorator::getParent());
   }
 
-  void PhysicsConstraint::removeConstraint()
+  bool PhysicsConstraint::addConstraint()
+  {
+    PhysicsBody *physicsBody = getParent();
+    if(nullptr != physicsBody)
+    {
+      Node *node = physicsBody->getParent();
+      if(nullptr != node)
+      {
+        Scene *scene = node->getCurrentScene();
+        if(nullptr != scene)
+        {
+          PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+          return physicsWorld->addConstraint(this);
+        }
+      }
+    }
+    return false;
+  }
+  
+  bool PhysicsConstraint::removeConstraint()
   {
     Node *_nodeA = getNodeA();
     if (_nodeA)
@@ -322,8 +341,28 @@ namespace njli
           }
       }
 
-    Scene *scene = getParent()->getParent()->getCurrentScene();
-    scene->getPhysicsWorld()->removeConstraint(this);
+    if(nullptr != _nodeA ||
+       nullptr != _nodeB)
+    {
+      PhysicsBody *physicsBody = getParent();
+      if(nullptr != physicsBody)
+      {
+        Node *node = physicsBody->getParent();
+        if(nullptr != node)
+        {
+          Scene *scene = node->getCurrentScene();
+          if(nullptr != scene)
+          {
+            PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+            physicsWorld->removeConstraint(this);
+            
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+    
   }
 
   //    void PhysicsConstraint::setNodes(Node *nodeA, Node *nodeB)

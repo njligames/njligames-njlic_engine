@@ -249,10 +249,13 @@ namespace njli
       getNodeA()->getPhysicsBody()->setPhysicsConstraint(this);
     if (rigidBodyB)
       getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
-
-    //        Scene *scene = njli::World::getInstance()->getScene();
-    Scene *scene = getParent()->getParent()->getCurrentScene();
-    scene->getPhysicsWorld()->addConstraint(this);
+    
+    if(nullptr != rigidBodyA ||
+       nullptr != rigidBodyB)
+    {
+      addConstraint();
+    }
+    
   }
 
   void PhysicsConstraintSlider::setNodes(Node *nodeB,
@@ -766,12 +769,12 @@ namespace njli
     return m_btSliderConstraint;
   }
 
-  void PhysicsConstraintSlider::removeConstraint()
+  bool PhysicsConstraintSlider::removeConstraint()
   {
-    PhysicsConstraint::removeConstraint();
-
     if (m_btSliderConstraint)
       delete m_btSliderConstraint;
     m_btSliderConstraint = NULL;
+    
+    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli

@@ -358,7 +358,7 @@ namespace njli
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual void removeConstraint();
+    virtual bool removeConstraint();
 
   private:
     btGeneric6DofConstraint *m_btGeneric6DofConstraint;

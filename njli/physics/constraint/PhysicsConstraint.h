@@ -248,7 +248,8 @@ namespace njli
     virtual btTypedConstraint *getConstraint() = 0;
     virtual const btTypedConstraint *getConstraint() const = 0;
 
-    virtual void removeConstraint();
+    virtual bool addConstraint();
+    virtual bool removeConstraint();
     //    virtual void setNodes(Node *nodeA, Node *nodeB=NULL);
 
   private:

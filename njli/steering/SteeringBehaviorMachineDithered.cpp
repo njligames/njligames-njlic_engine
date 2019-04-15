@@ -217,7 +217,8 @@ namespace njli
         const float probability(sb->getProbability());
         if (RandFloat() < probability)
           {
-            force += (sb->calculateForce() * (sb->getWeight() / probability));
+            btVector3 calculatedForce(sb->calculateForce());
+            force += (calculatedForce * (sb->getWeight() / probability));
 
             if (!force.isZero())
               {

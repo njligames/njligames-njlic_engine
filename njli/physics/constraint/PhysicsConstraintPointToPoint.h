@@ -196,7 +196,7 @@ namespace njli
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual void removeConstraint();
+    virtual bool removeConstraint();
 
   private:
     btPoint2PointConstraint *m_btPoint2PointConstraint;

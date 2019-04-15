@@ -386,7 +386,7 @@ namespace njli
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual void removeConstraint();
+    virtual bool removeConstraint();
 
   private:
     btHingeConstraint *m_btHingeConstraint;
