@@ -192,6 +192,7 @@ namespace njli
          *  @param scaling <#scaling description#>
          */
     virtual void setLocalScaling(const btVector3 &scaling);
+      virtual void setLocalScaling(const btScalar &scaling);
     /**
          *  <#Description#>
          *

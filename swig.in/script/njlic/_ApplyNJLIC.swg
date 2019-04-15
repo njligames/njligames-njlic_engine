@@ -209,7 +209,44 @@ SWIG_USERDATA_TYPEMAP(WorldStateMachineBuilder);
 SWIG_USERDATA_TYPEMAP(Xml);
 SWIG_USERDATA_TYPEMAP(XmlBuilder);
 
+SWIG_USERDATA_TYPEMAP(btVector3);
+
 
 %apply s32* OUTPUT {s32  &w, s32 &h};
 %apply float* OUTPUT {float &x1, float &y1, float &z1, float &w1, float &x2, float &y2, float &z2, float &w2, float &x3, float &y3, float &z3, float &w3, float &x4, float &y4, float &z4, float &w4};
+
+%apply btVector3 *OUTPUT { btVector3  & aabbMin, btVector3 & aabbMax };
+
+
+
+
+
+
+// %typemap(in,numinputs=0) (btVector3 **values) (btVector3 *tmp=NULL) %{
+//   $1 = &tmp;
+// %}
+// 
+// %typemap(argout) (btVector3 **aabb) {
+//   // Adapted from OUTPUT[ANY] argout in typemaps.i
+//   int i;
+//   lua_newtable(L);
+//   for (i = 0; i < 2; i++){
+//     // lua_pushnumber(L,(lua_Number)(*$2)[i]);
+//     SWIG_NewPointerObj(L,(void *) new $*1_ltype(*$1),$1_descriptor,0);
+//     lua_rawseti(L,-2,i+1);/* -1 is the number, -2 is the table*/ 
+//     *$1++;
+//   }
+//   SWIG_arg++;
+// }
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1375,6 +1375,7 @@ namespace njli
          *  @snippet Node.lua Node_calculateSerializeBufferSize_
          */
     virtual void getAabb(btVector3 & aabbMin, btVector3 & aabbMax) const;
+//    virtual void getAabb(btVector3 ** aabb = nullptr) const;
 
   protected:
     /**

@@ -238,8 +238,7 @@ namespace njli
       rigidBodyB = dynamic_cast<btRigidBody *>(
           nodeB->getPhysicsBody()->getCollisionObject());
 
-    removeConstraint();
-
+//    removeConstraint();
     if (rigidBodyA && !rigidBodyB)
       {
         m_btPoint2PointConstraint =
