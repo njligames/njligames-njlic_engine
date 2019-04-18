@@ -448,6 +448,17 @@ namespace njli
         dynamic_cast<const btConeTwistConstraint *>(getConstraint());
     return constraint->getFrameOffsetB();
   }
+  
+  bool PhysicsConstraintConeTwist::removeConstraint()
+  {
+    
+    
+    if (m_btConeTwistConstraint)
+      delete m_btConeTwistConstraint;
+    m_btConeTwistConstraint = NULL;
+    
+    return PhysicsConstraint::removeConstraint();
+  }
 
   btTypedConstraint *PhysicsConstraintConeTwist::getConstraint()
   {
@@ -457,16 +468,5 @@ namespace njli
   const btTypedConstraint *PhysicsConstraintConeTwist::getConstraint() const
   {
     return m_btConeTwistConstraint;
-  }
-
-  bool PhysicsConstraintConeTwist::removeConstraint()
-  {
-    
-
-    if (m_btConeTwistConstraint)
-      delete m_btConeTwistConstraint;
-    m_btConeTwistConstraint = NULL;
-    
-    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli

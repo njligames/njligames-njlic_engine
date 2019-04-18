@@ -242,6 +242,15 @@ namespace njli
       addConstraint();
     }
   }
+  
+  bool PhysicsConstraintFixed::removeConstraint()
+  {
+    if (m_btFixedConstraint)
+      delete m_btFixedConstraint;
+    m_btFixedConstraint = NULL;
+    
+    return PhysicsConstraint::removeConstraint();
+  }
 
   btTypedConstraint *PhysicsConstraintFixed::getConstraint()
   {
@@ -251,14 +260,5 @@ namespace njli
   const btTypedConstraint *PhysicsConstraintFixed::getConstraint() const
   {
     return m_btFixedConstraint;
-  }
-
-  bool PhysicsConstraintFixed::removeConstraint()
-  {
-    if (m_btFixedConstraint)
-      delete m_btFixedConstraint;
-    m_btFixedConstraint = NULL;
-    
-    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli

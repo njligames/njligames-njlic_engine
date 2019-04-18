@@ -327,11 +327,12 @@ namespace njli
      */
     const btTransform &getFrameOffsetB() const;
 
+    virtual bool removeConstraint();
   protected:
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual bool removeConstraint();
+    
 
   private:
     btConeTwistConstraint *m_btConeTwistConstraint;

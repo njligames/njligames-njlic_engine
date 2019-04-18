@@ -413,7 +413,7 @@ namespace njli
                 !node->getPhysicsBody()->isKinematicPhysics())
               SDL_LogWarn(
                   SDL_LOG_CATEGORY_TEST,
-                  "The PhysicsBody needs to be Kinematic for steering.");
+                  "The PhysicsBody (%s) needs to be Kinematic for steering.", node->getPhysicsBody()->getName());
 #endif
           }
 

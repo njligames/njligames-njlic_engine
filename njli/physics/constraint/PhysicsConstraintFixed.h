@@ -158,11 +158,12 @@ namespace njli
                   const btTransform &frameInA = btTransform::getIdentity(),
                   const btTransform &frameInB = btTransform::getIdentity());
 
+    virtual bool removeConstraint();
   protected:
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual bool removeConstraint();
+    
 
   private:
     btFixedConstraint *m_btFixedConstraint;

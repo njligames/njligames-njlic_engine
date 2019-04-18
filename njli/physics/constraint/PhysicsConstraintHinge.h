@@ -382,11 +382,12 @@ namespace njli
      */
     f32 getMaxMotorImpulse();
 
+    virtual bool removeConstraint();
   protected:
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual bool removeConstraint();
+    
 
   private:
     btHingeConstraint *m_btHingeConstraint;

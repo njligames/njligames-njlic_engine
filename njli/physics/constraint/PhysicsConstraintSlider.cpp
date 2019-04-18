@@ -756,6 +756,15 @@ namespace njli
         dynamic_cast<btSliderConstraint *>(getConstraint());
     constraint->setFrames(frameA, frameB);
   }
+  
+  bool PhysicsConstraintSlider::removeConstraint()
+  {
+    if (m_btSliderConstraint)
+      delete m_btSliderConstraint;
+    m_btSliderConstraint = NULL;
+    
+    return PhysicsConstraint::removeConstraint();
+  }
 
   btTypedConstraint *PhysicsConstraintSlider::getConstraint()
   {
@@ -767,14 +776,5 @@ namespace njli
   {
     SDL_assert(m_btSliderConstraint);
     return m_btSliderConstraint;
-  }
-
-  bool PhysicsConstraintSlider::removeConstraint()
-  {
-    if (m_btSliderConstraint)
-      delete m_btSliderConstraint;
-    m_btSliderConstraint = NULL;
-    
-    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli

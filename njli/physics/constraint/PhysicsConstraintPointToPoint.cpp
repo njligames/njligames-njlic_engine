@@ -292,6 +292,19 @@ namespace njli
     return dynamic_cast<const btPoint2PointConstraint *>(getConstraint())
         ->getPivotInB();
   }
+  
+  bool PhysicsConstraintPointToPoint::removeConstraint()
+  {
+    if( PhysicsConstraint::removeConstraint())
+    {
+      if (m_btPoint2PointConstraint)
+        delete m_btPoint2PointConstraint;
+      m_btPoint2PointConstraint = NULL;
+      
+      return true;
+    }
+    return false;
+  }
 
   btTypedConstraint *PhysicsConstraintPointToPoint::getConstraint()
   {
@@ -301,14 +314,5 @@ namespace njli
   const btTypedConstraint *PhysicsConstraintPointToPoint::getConstraint() const
   {
     return m_btPoint2PointConstraint;
-  }
-
-  bool PhysicsConstraintPointToPoint::removeConstraint()
-  {
-    if (m_btPoint2PointConstraint)
-      delete m_btPoint2PointConstraint;
-    m_btPoint2PointConstraint = NULL;
-    
-    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli

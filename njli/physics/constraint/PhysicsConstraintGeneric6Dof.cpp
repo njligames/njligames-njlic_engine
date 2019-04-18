@@ -470,6 +470,15 @@ namespace njli
         dynamic_cast<btGeneric6DofConstraint *>(getConstraint());
     constraint->setAxis(axis1, axis2);
   }
+  
+  bool PhysicsConstraintGeneric6Dof::removeConstraint()
+  {
+    if (m_btGeneric6DofConstraint)
+      delete m_btGeneric6DofConstraint;
+    m_btGeneric6DofConstraint = NULL;
+    
+    return PhysicsConstraint::removeConstraint();
+  }
 
   btTypedConstraint *PhysicsConstraintGeneric6Dof::getConstraint()
   {
@@ -481,14 +490,5 @@ namespace njli
   {
     SDL_assert(m_btGeneric6DofConstraint);
     return m_btGeneric6DofConstraint;
-  }
-
-  bool PhysicsConstraintGeneric6Dof::removeConstraint()
-  {
-    if (m_btGeneric6DofConstraint)
-      delete m_btGeneric6DofConstraint;
-    m_btGeneric6DofConstraint = NULL;
-    
-    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli

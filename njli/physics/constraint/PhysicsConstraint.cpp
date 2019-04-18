@@ -299,6 +299,54 @@ namespace njli
   {
     return dynamic_cast<const PhysicsBody *>(AbstractDecorator::getParent());
   }
+  
+  bool PhysicsConstraint::removeConstraint()
+  {
+    Node *_nodeA = getNodeA();
+    Node *_nodeB = getNodeB();
+    
+    bool ret = false;
+    
+    if(nullptr != _nodeA ||
+       nullptr != _nodeB)
+    {
+      PhysicsBody *physicsBody = getParent();
+      if(nullptr != physicsBody)
+      {
+        Node *node = physicsBody->getParent();
+        if(nullptr != node)
+        {
+          Scene *scene = node->getCurrentScene();
+          if(nullptr != scene)
+          {
+            PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+            physicsWorld->removeConstraint(this);
+            
+            {
+              PhysicsBody *body = _nodeA->getPhysicsBody();
+              if (body)
+              {
+                body->removePhysicsConstraint(this);
+                ret = ret || true;
+              }
+            }
+            
+            {
+              PhysicsBody *body = _nodeB->getPhysicsBody();
+              if (body)
+              {
+                body->removePhysicsConstraint(this);
+                ret = ret || true;
+              }
+              
+            }
+          }
+        }
+      }
+    }
+    return ret;
+    
+  }
 
   bool PhysicsConstraint::addConstraint()
   {
@@ -319,58 +367,4 @@ namespace njli
     return false;
   }
   
-  bool PhysicsConstraint::removeConstraint()
-  {
-    Node *_nodeA = getNodeA();
-    if (_nodeA)
-      {
-        PhysicsBody *body = _nodeA->getPhysicsBody();
-        if (body)
-          {
-            body->removePhysicsConstraint(this);
-          }
-      }
-
-    Node *_nodeB = getNodeB();
-    if (_nodeB)
-      {
-        PhysicsBody *body = _nodeB->getPhysicsBody();
-        if (body)
-          {
-            body->removePhysicsConstraint(this);
-          }
-      }
-
-    if(nullptr != _nodeA ||
-       nullptr != _nodeB)
-    {
-      PhysicsBody *physicsBody = getParent();
-      if(nullptr != physicsBody)
-      {
-        Node *node = physicsBody->getParent();
-        if(nullptr != node)
-        {
-          Scene *scene = node->getCurrentScene();
-          if(nullptr != scene)
-          {
-            PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-            physicsWorld->removeConstraint(this);
-            
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-    
-  }
-
-  //    void PhysicsConstraint::setNodes(Node *nodeA, Node *nodeB)
-  //    {
-  //        if(nodeA && !nodeA->getPhysicsBody()->isDynamicPhysics())
-  //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "%s", nodeA->getName());
-  //
-  //        if(nodeB && !nodeB->getPhysicsBody()->isDynamicPhysics())
-  //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "%s", nodeB->getName());
-  //    }
 } // namespace njli

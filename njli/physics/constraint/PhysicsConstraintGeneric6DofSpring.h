@@ -220,11 +220,12 @@ namespace njli
      */
     virtual void setAxis(const btVector3 &axis1, const btVector3 &axis2);
 
+    virtual bool removeConstraint();
   protected:
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual bool removeConstraint();
+    
 
   private:
     btGeneric6DofSpringConstraint *m_btGeneric6DofSpringConstraint;

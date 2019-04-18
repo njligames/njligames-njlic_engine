@@ -595,11 +595,12 @@ namespace njli
      */
     void setFrames(const btTransform &frameA, const btTransform &frameB);
 
+    virtual bool removeConstraint();
   protected:
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual bool removeConstraint();
+    
 
   private:
     btSliderConstraint *m_btSliderConstraint;

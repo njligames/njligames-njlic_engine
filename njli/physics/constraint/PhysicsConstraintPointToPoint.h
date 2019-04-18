@@ -192,11 +192,12 @@ namespace njli
      */
     const btVector3 &getPivotInB() const;
 
+    virtual bool removeConstraint();
   protected:
     virtual btTypedConstraint *getConstraint();
     virtual const btTypedConstraint *getConstraint() const;
 
-    virtual bool removeConstraint();
+    
 
   private:
     btPoint2PointConstraint *m_btPoint2PointConstraint;

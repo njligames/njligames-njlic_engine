@@ -244,12 +244,14 @@ namespace njli
      */
     const PhysicsBody *getParent() const;
 
+    virtual bool removeConstraint();
+    
   protected:
     virtual btTypedConstraint *getConstraint() = 0;
     virtual const btTypedConstraint *getConstraint() const = 0;
 
     virtual bool addConstraint();
-    virtual bool removeConstraint();
+    
     //    virtual void setNodes(Node *nodeA, Node *nodeB=NULL);
 
   private:

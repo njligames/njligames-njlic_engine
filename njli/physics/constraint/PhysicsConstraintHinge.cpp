@@ -509,6 +509,15 @@ namespace njli
         dynamic_cast<btHingeConstraint *>(getConstraint());
     return constraint->getMaxMotorImpulse();
   }
+  
+  bool PhysicsConstraintHinge::removeConstraint()
+  {
+    if (m_btHingeConstraint)
+      delete m_btHingeConstraint;
+    m_btHingeConstraint = NULL;
+    
+    return PhysicsConstraint::removeConstraint();
+  }
 
   btTypedConstraint *PhysicsConstraintHinge::getConstraint()
   {
@@ -520,14 +529,5 @@ namespace njli
   {
     SDL_assert(m_btHingeConstraint);
     return m_btHingeConstraint;
-  }
-
-  bool PhysicsConstraintHinge::removeConstraint()
-  {
-    if (m_btHingeConstraint)
-      delete m_btHingeConstraint;
-    m_btHingeConstraint = NULL;
-    
-    return PhysicsConstraint::removeConstraint();
   }
 } // namespace njli
