@@ -194,9 +194,10 @@ namespace njli
   void Timer::enablePause(bool enable)
   {
     if (!isPaused() && enable)
+    {
       tick();
-
-    m_Clock->reset();
+      m_Clock->reset();
+    }
 
     m_IsPaused = enable;
   }

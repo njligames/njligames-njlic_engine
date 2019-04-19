@@ -210,7 +210,11 @@ namespace njli
   {
     m_OffsetPosition = offsetPosition;
   }
-  const btVector3 &SteeringBehaviorOffsetPursuit::getOffsetPosition() const
+//  const btVector3 &SteeringBehaviorOffsetPursuit::getOffsetPosition() const
+//  {
+//    return m_OffsetPosition;
+//  }
+  btVector3 SteeringBehaviorOffsetPursuit::getOffsetPosition() const
   {
     return m_OffsetPosition;
   }

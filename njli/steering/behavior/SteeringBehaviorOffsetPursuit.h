@@ -239,7 +239,8 @@ namespace njli
     // TODO: fill in specific methods for SteeringBehaviorOffsetPursuit
       
       void setOffsetPosition(const btVector3 &offsetPosition);
-      const btVector3 &getOffsetPosition()const;
+//      const btVector3 &getOffsetPosition()const;
+    btVector3 getOffsetPosition()const;
 
     virtual const btVector3 &calculateForce();
       
