@@ -13,6 +13,7 @@
 #include "AbstractFactoryObject.h"
 #include "AbstractFrameBufferObject.h"
 #include "lua.hpp"
+#include <functional>
 
 //#include "nanovg_gl_utils.h"
 
