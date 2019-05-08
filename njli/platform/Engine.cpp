@@ -505,46 +505,83 @@ namespace njli
   }
 #endif
 
+    static void saveScreenshotToFile(std::string filename, int windowWidth, int windowHeight) {
+        const int numberOfPixels = windowWidth * windowHeight * 3;
+        unsigned char pixels[numberOfPixels];
+        
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);
+        glReadBuffer(GL_FRONT);
+        glReadPixels(0, 0, windowWidth, windowHeight, GL_BGR_EXT, GL_UNSIGNED_BYTE, pixels);
+        
+        FILE *outputFile = fopen(filename.c_str(), "w");
+        short header[] = {0, 2, 0, 0, 0, 0, (short) windowWidth, (short) windowHeight, 24};
+        
+        fwrite(&header, sizeof(header), 1, outputFile);
+        fwrite(pixels, numberOfPixels, 1, outputFile);
+        fclose(outputFile);
+        
+        printf("Finish writing to file.\n");
+    }
+    
   static void SDLTest_ScreenShot(SDL_Renderer *renderer)
   {
-    SDL_Rect viewport;
-    SDL_Surface *surface;
+      SDL_Rect viewport;
+      SDL_RenderGetViewport(renderer, &viewport);
+      saveScreenshotToFile("screenshot.tga", viewport.w, viewport.h);
+      
+      
+      
+//      const Uint32 format = SDL_PIXELFORMAT_RGB888;
+//
+//      SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormat(0, viewport.w, viewport.h, 24, format);
+//      SDL_RenderReadPixels(renderer, NULL, format, surface->pixels, surface->pitch);
+//      SDL_SaveBMP(surface, "screenshot.bmp");
+//      SDL_FreeSurface(surface);
+      
+      
+//      SDL_Surface *sshot = SDL_CreateRGBSurface(0, viewport.w, viewport.h, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0x00000000);
+//      SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_ARGB8888, sshot->pixels, sshot->pitch);
+//      SDL_SaveBMP(sshot, "screenshot.bmp");
+//      SDL_FreeSurface(sshot);
+      
+//    SDL_Rect viewport;
+//    SDL_Surface *surface;
 
     if (!renderer)
       {
         return;
       }
 
-    SDL_RenderGetViewport(renderer, &viewport);
-    surface = SDL_CreateRGBSurface(0, viewport.w, viewport.h, 24,
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-                                   0x00FF0000, 0x0000FF00, 0x000000FF,
-#else
-                                   0x000000FF, 0x0000FF00, 0x00FF0000,
-#endif
-                                   0x00000000);
-    if (!surface)
-      {
-        //        fprintf(stderr, "Couldn't create surface: %s\n",
-        //        SDL_GetError());
-        return;
-      }
+//    SDL_RenderGetViewport(renderer, &viewport);
+//    surface = SDL_CreateRGBSurface(0, viewport.w, viewport.h, 24,
+//#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+//                                   0x00FF0000, 0x0000FF00, 0x000000FF,
+//#else
+//                                   0x000000FF, 0x0000FF00, 0x00FF0000,
+//#endif
+//                                   0x00000000);
+//    if (!surface)
+//      {
+//        //        fprintf(stderr, "Couldn't create surface: %s\n",
+//        //        SDL_GetError());
+//        return;
+//      }
 
-    if (SDL_RenderReadPixels(renderer, NULL, surface->format->format,
-                             surface->pixels, surface->pitch) < 0)
-      {
-        //        fprintf(stderr, "Couldn't read screen: %s\n", SDL_GetError());
-        SDL_free(surface);
-        return;
-      }
+//    if (SDL_RenderReadPixels(renderer, NULL, surface->format->format,
+//                             surface->pixels, surface->pitch) < 0)
+//      {
+//        //        fprintf(stderr, "Couldn't read screen: %s\n", SDL_GetError());
+//        SDL_free(surface);
+//        return;
+//      }
 
-    if (SDL_SaveBMP(surface, "screenshot.bmp") < 0)
-      {
-        //        fprintf(stderr, "Couldn't save screenshot.bmp: %s\n",
-        //        SDL_GetError());
-        SDL_free(surface);
-        return;
-      }
+//    if (SDL_SaveBMP(surface, "screenshot.bmp") < 0)
+//      {
+//        //        fprintf(stderr, "Couldn't save screenshot.bmp: %s\n",
+//        //        SDL_GetError());
+//        SDL_free(surface);
+//        return;
+//      }
   }
 
   static void FullscreenTo(int index, int windowId)
@@ -718,6 +755,7 @@ namespace njli
               switch (event.key.keysym.sym)
                 {
                 /* Add hotkeys here */
+//                    case SDLK_0:
                 case SDLK_PRINTSCREEN:
                   {
                     SDL_Window *window =
@@ -996,6 +1034,18 @@ namespace njli
                     }
                   break;
                 case SDLK_0:
+                    {
+                        SDL_Window *window =
+                        SDL_GetWindowFromID(event.key.windowID);
+                        if (window)
+                        {
+                            if (window == gWindow)
+                            {
+                                SDLTest_ScreenShot(gRenderer);
+                            }
+                        }
+                        
+                        
                   if (withControl)
                     {
                       SDL_Window *window =
@@ -1003,6 +1053,7 @@ namespace njli
                       SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
                                                "Test Message",
                                                "You're awesome!", window);
+                    }
                     }
                   break;
                 case SDLK_1:
