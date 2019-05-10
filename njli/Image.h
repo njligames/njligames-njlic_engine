@@ -399,6 +399,8 @@ namespace njli
 
     // get the pixel row
     std::vector<btVector4> operator[](u32 row);
+      
+      bool isWidthHeightPowerOf2()const;
 
   protected:
     bool copyData(void *dataPtr, long dataSize, s32 width, s32 height,

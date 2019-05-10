@@ -556,6 +556,8 @@ namespace njli
     return btVector2(0, 0);
   }
     
+    std::string convertToWords(const int number);
+    
 }
 
 #endif /* defined(__JLIGameEngineTest__World__) */

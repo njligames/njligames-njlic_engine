@@ -1006,6 +1006,15 @@ namespace njli
 
     return ret;
   }
+    
+    bool Image::isWidthHeightPowerOf2()const
+    {
+        u32 w = getWidth();
+        u32 h = getHeight();
+        bool bw = (w != 0) && ((w & (w - 1)) == 0);
+        bool bh = (h != 0) && ((h & (h - 1)) == 0);
+        return bw && bh;
+    }
 
   u32 Image::getClosestValidGLDim(const u32 dim) const
   {
