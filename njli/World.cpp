@@ -1602,9 +1602,8 @@ namespace njli
           }
         else
           {
-            //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-            //                        "setTouchCamera() must be called on the
-            //                        scene\n");
+              SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                          "setTouchCamera() must be called on the scene\n");
           }
       }
   }
@@ -2417,26 +2416,26 @@ namespace njli
         
         /* The first string is not used, it is to make
          array indexing simple */
-        char *single_digits[] = { "zero", "one", "two",
+        const char *single_digits[] = { "zero", "one", "two",
             "three", "four","five",
             "six", "seven", "eight", "nine"};
         
         /* The first string is not used, it is to make
          array indexing simple */
-        char *two_digits[] = {"", "ten", "eleven", "twelve",
+        const char *two_digits[] = {"", "ten", "eleven", "twelve",
             "thirteen", "fourteen",
             "fifteen", "sixteen",
             "seventeen", "eighteen", "nineteen"};
         
         /* The first two string are not used, they are to make
          array indexing simple*/
-        char *tens_multiple[] = {"", "", "twenty", "thirty", "forty", "fifty",
+        const char *tens_multiple[] = {"", "", "twenty", "thirty", "forty", "fifty",
             "sixty", "seventy", "eighty", "ninety"};
         
-        char *tens_power[] = {"hundred", "thousand"};
+        const char *tens_power[] = {"hundred", "thousand"};
         
         /* Used for debugging purpose only */
-        printf("\n%s: ", num);
+//        printf("\n%s: ", num);
         
         /* For single digit number */
         if (len == 1) {
