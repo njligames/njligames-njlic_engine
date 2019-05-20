@@ -1322,11 +1322,11 @@ namespace njli
         
         m_ModelViewTransformData    = new GLfloat[16 * maxNumberOfInstances() * numberOfVertices() * subdivisionBufferSize()];
         assert(m_ModelViewTransformData);
-        memset(m_ModelViewTransformData, std::numeric_limits<float>::max(), getModelViewTransformArrayBufferSize() * subdivisionBufferSize());
+        memset(m_ModelViewTransformData, 0, getModelViewTransformArrayBufferSize() * subdivisionBufferSize());
         
         m_NormalMatrixTransformData = new GLfloat[16 * maxNumberOfInstances() * numberOfVertices() * subdivisionBufferSize()];
         assert(m_NormalMatrixTransformData);
-        memset(m_NormalMatrixTransformData, std::numeric_limits<float>::max(), getNormalMatrixTransformArrayBufferSize() * subdivisionBufferSize());
+        memset(m_NormalMatrixTransformData, 0, getNormalMatrixTransformArrayBufferSize() * subdivisionBufferSize());
         
         //        unsigned long i;
         
@@ -1334,14 +1334,14 @@ namespace njli
         //             i < (16 * maxNumberOfInstances() * numberOfVertices() * subdivisionBufferSize());
         //             i += 16)
         //            memcpy(m_ModelViewTransformData + i, TRANSFORM_IDENTITY_MATRIX, sizeof(TRANSFORM_IDENTITY_MATRIX));
-        for(GLsizei i = 0; i < maxNumberOfInstances(); i++)
-            for(GLsizei j = 0; j < numberOfVertices(); j++)
-                setVerticeTransform(i, j, btTransform::getIdentity());
+//        for(GLsizei i = 0; i < maxNumberOfInstances(); i++)
+//            for(GLsizei j = 0; j < numberOfVertices(); j++)
+//                setVerticeTransform(i, j, btTransform::getIdentity());
         
-        for (GLsizei i = 0;
-             i < (16 * maxNumberOfInstances() * numberOfVertices() * subdivisionBufferSize());
-             i += 16)
-            memcpy(m_NormalMatrixTransformData + i, TRANSFORM_IDENTITY_MATRIX, sizeof(TRANSFORM_IDENTITY_MATRIX));
+//        for (GLsizei i = 0;
+//             i < (16 * maxNumberOfInstances() * numberOfVertices() * subdivisionBufferSize());
+//             i += 16)
+//            memcpy(m_NormalMatrixTransformData + i, TRANSFORM_IDENTITY_MATRIX, sizeof(TRANSFORM_IDENTITY_MATRIX));
         
         enableModelViewBufferChanged(true);
         enableNormalMatrixBufferChanged(true);

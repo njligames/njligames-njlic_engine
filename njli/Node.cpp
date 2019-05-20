@@ -788,6 +788,9 @@ namespace njli
   void Node::setGeometry(Geometry *geometry)
   {
     SDL_assert(geometry != NULL);
+      
+      if(geometry == m_Geometry)
+          return;
 
     removeGeometry();
 

@@ -100,9 +100,9 @@ namespace njli
         
         TexturedColoredVertex()
         : vertex(0, 0, 0)
-        , color(1, 1, 1, 1)
+        , color(1, 1, 1, 0)
         , texture(0, 0)
-        , normal(1,1,1)
+        , normal(0,0,0)
         , tangent(0, 0, 0)
         , bitangent(0, 0, 0)
         {

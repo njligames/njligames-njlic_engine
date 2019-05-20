@@ -196,7 +196,8 @@ namespace njli
 
   void PhysicsShapeBox::setHalfExtends(const btVector3 &extends)
   {
-    *m_btBoxShape = btBoxShape(extends);
+      
+    *m_btBoxShape = btBoxShape(extends * m_btBoxShape->getLocalScaling());
 
     //        enablePropertyChange();
     //        PhysicsShape::getParent()->setPhysicsBody();

@@ -14,11 +14,15 @@
 #include "Game.h"
 #include "btVector2.h"
 #include <string>
+#include "SDL.h"
+
 
 namespace njli
 {
   class DeviceTouch : public DeviceInputTime
   {
+  public:
+      static int eventFilter(void *userdata, SDL_Event *event);
   public:
     DeviceTouch()
         : m_xpos(0), m_ypos(0), m_prev_xpos(0), m_prev_ypos(0), m_address(0),

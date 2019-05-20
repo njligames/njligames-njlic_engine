@@ -10,9 +10,55 @@
 #include <UIKit/UIKit.h>
 #include "JLIFactoryTypes.h"
 #include "World.h"
+#include "NJLIInterface.h"
 
 namespace njli
 {
+    
+    
+    int DeviceTouch::eventFilter(void *userdata, SDL_Event *event)
+    {
+        dispatch_block_t block = ^{
+            
+//            njli::NJLIGameEngine::handleEvent(&event);
+            //    SDLTest_PrintEvent(event);
+            
+            Uint32 eventType = event->type;
+            
+            switch (eventType)
+            {
+                case SDL_JOYDEVICEMOTION:
+                {
+                    
+                    NJLI_HandleVRCameraRotationYPR(
+                                                   static_cast<float>(event->jmotion.yaw),
+                                                   static_cast<float>(event->jmotion.pitch),
+                                                   static_cast<float>(event->jmotion.roll));
+                }
+                    break;
+                case SDL_FINGERMOTION:
+                case SDL_FINGERDOWN:
+                case SDL_FINGERUP:
+                    NJLI_HandleTouch((int)event->tfinger.touchId,
+                                     (int)event->tfinger.fingerId, event->type,
+                                     event->tfinger.x, event->tfinger.y, event->tfinger.dx,
+                                     event->tfinger.dy, event->tfinger.pressure);
+                    break;
+                default:
+                    break;
+            }
+            NJLI_HandleFinishTouches();
+        };
+        
+        if ([NSThread isMainThread])
+        {
+            block();
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), block);
+        }
+    }
     const u8 DeviceTouch::MAX_TOUCHES = 5;
     
 //    -(CGPoint) pixelPointFromViewPoint:(CGPoint)touch

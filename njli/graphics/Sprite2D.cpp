@@ -525,7 +525,11 @@ f 2/1/1 4/4/1 3/2/1
         PhysicsShapeBox *shape3d =
             reinterpret_cast<PhysicsShapeBox *>(physicsShape);
         btVector3 halfExtends3d(halfExtends.x(), halfExtends.y(), 1.0f);
+          
+          shape3d->setLocalScaling(node->getScale());
         shape3d->setHalfExtends(halfExtends3d);
+          
+          
       }
 
     s64 spriteIndex = node->getGeometryIndex();

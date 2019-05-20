@@ -1592,11 +1592,14 @@ namespace njli
                   {
                     Node *n = untouchedNodes[i];
 
-                    char buffer[BUFFER_SIZE];
-                    sprintf(buffer, "%s", "__NJLINodeRayTouchMissed");
-                    njli::World::getInstance()
-                        ->getWorldLuaVirtualMachine()
-                        ->execute(buffer, n);
+                      if(n->getPhysicsBody() != NULL)
+                      {
+                          char buffer[BUFFER_SIZE];
+                          sprintf(buffer, "%s", "__NJLINodeRayTouchMissed");
+                          njli::World::getInstance()
+                          ->getWorldLuaVirtualMachine()
+                          ->execute(buffer, n);
+                      }
                   }
               }
           }
