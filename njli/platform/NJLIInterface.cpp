@@ -147,8 +147,8 @@ void NJLI_HandleTouch(int touchDevId, int pointerFingerId, int eventType,
   float _x = x * dw;
   float _y = (1.0 - y) * dh;
 
-  float _dx = dx * dw;
-  float _dy = (1.0 - dy) * dh;
+  float _dx = dx;
+    float _dy = dy;
   njli::NJLIGameEngine::handleFinger(touchDevId, pointerFingerId, action, _x,
                                      _y, _dx, _dy, pressure);
 }

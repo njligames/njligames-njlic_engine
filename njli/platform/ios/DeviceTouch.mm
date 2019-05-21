@@ -59,6 +59,28 @@ namespace njli
             dispatch_async(dispatch_get_main_queue(), block);
         }
     }
+    
+    int DeviceTouch::screenPPI()
+    {
+        static const int CONVERSION(((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+        CGFloat ns = [[UIScreen mainScreen] nativeScale];
+        return ns * CONVERSION;
+    }
+    
+    int DeviceTouch::pointToPixel(const int point)
+    {
+        static const int CONVERSION(((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+        static const int DPI(DeviceTouch::screenPPI());
+        return static_cast<int>((point * DPI) / CONVERSION);
+    }
+    
+    int DeviceTouch::pixelToPoint(const int pixel)
+    {
+        static const int CONVERSION(((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+        static const int DPI(DeviceTouch::screenPPI());
+        return ((CONVERSION * pixel) / DPI);
+    }
+    
     const u8 DeviceTouch::MAX_TOUCHES = 5;
     
 //    -(CGPoint) pixelPointFromViewPoint:(CGPoint)touch

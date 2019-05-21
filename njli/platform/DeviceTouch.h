@@ -23,6 +23,9 @@ namespace njli
   {
   public:
       static int eventFilter(void *userdata, SDL_Event *event);
+      static int screenPPI();
+      static int pointToPixel(const int point);
+      static int pixelToPoint(const int pixel);
   public:
     DeviceTouch()
         : m_xpos(0), m_ypos(0), m_prev_xpos(0), m_prev_ypos(0), m_address(0),
