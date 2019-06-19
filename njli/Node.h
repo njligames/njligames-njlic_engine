@@ -311,12 +311,12 @@ namespace njli
           return (transform);
         }
 
-//      btTransform transform(getTransform());
-        btTransform transform(btTransform::getIdentity());
-        
-
+      btTransform transform(getTransform());
+//        btTransform transform(btTransform::getIdentity());
+//
+//
       transform.setBasis(transform.getBasis().scaled(getScale()));
-        transform *= getTransform();
+//        transform *= getTransform();
         
       if (getParentNode())
         {

@@ -132,7 +132,8 @@ void njliSleep( unsigned int _ms )
 }
 
 const char* string_format(const char* fmt, ...) {
-    std::vector<char> str(100,'\0');
+    
+    static std::vector<char> str(4096,'\0');
     va_list ap;
     while (1) {
         va_start(ap, fmt);

@@ -22,7 +22,7 @@
 #include "btVector3.h"
 #include <map>
 
-#define FORMATSTRING "{\"njli::Camera\":[]}"
+#define FORMATSTRING "{\"njli::Camera\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 #include <cmath>
@@ -1169,7 +1169,8 @@ namespace njli
 
   Camera::operator std::string() const
   {
-    return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
+      std::string temp(string_format(FORMATSTRING, getName()));
+      return temp;
   }
 
   Camera **Camera::createArray(const u32 size)
