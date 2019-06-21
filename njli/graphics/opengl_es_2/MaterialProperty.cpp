@@ -602,9 +602,10 @@ namespace njli
 
     if (isTexture2D())
       {
-          SDL_assertCheck(img.isWidthHeightPowerOf2(), "The with and height have to be a power of 2");
+        SDL_assertCheck(img.isWidthHeightPowerOf2(),
+                        "The with and height have to be a power of 2");
         glGenerateMipmap(target);
-          // https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glGenerateMipmap.xml
+        // https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glGenerateMipmap.xml
         DEBUG_GL_ERROR_WRITE("glGenerateMipmap");
       }
   }
@@ -667,7 +668,8 @@ namespace njli
         DEBUG_GL_ERROR_WRITE("glTexSubImage2D");
       }
 
-      SDL_assertCheck(img.isWidthHeightPowerOf2(), "The with and height have to be a power of 2");
+    SDL_assertCheck(img.isWidthHeightPowerOf2(),
+                    "The with and height have to be a power of 2");
     glGenerateMipmap(target);
     DEBUG_GL_ERROR_WRITE("glGenerateMipmap");
 

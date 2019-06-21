@@ -1194,7 +1194,7 @@ namespace njli
 #endif
     return false;
   }
-  
+
   bool World::isVR()
   {
 #if defined(VR)
@@ -1592,21 +1592,21 @@ namespace njli
                   {
                     Node *n = untouchedNodes[i];
 
-                      if(n->getPhysicsBody() != NULL)
+                    if (n->getPhysicsBody() != NULL)
                       {
-                          char buffer[BUFFER_SIZE];
-                          sprintf(buffer, "%s", "__NJLINodeRayTouchMissed");
-                          njli::World::getInstance()
-                          ->getWorldLuaVirtualMachine()
-                          ->execute(buffer, n);
+                        char buffer[BUFFER_SIZE];
+                        sprintf(buffer, "%s", "__NJLINodeRayTouchMissed");
+                        njli::World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->execute(buffer, n);
                       }
                   }
               }
           }
         else
           {
-              SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                          "setTouchCamera() must be called on the scene\n");
+            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                        "setTouchCamera() must be called on the scene\n");
           }
       }
   }
@@ -1814,8 +1814,7 @@ namespace njli
 #endif
     m_WorldFactory->collectGarbage_GPU();
   }
-    
-    
+
   /*
    new (TestsWorldState)
    enter (TestsWorldState)
@@ -2387,122 +2386,131 @@ namespace njli
    enter (myTestNode->myTestNode)
 
    */
-    
-    
-    std::string convertToWords(const int number)
-    /* A function that prints given number in words */
-    //    void convert_to_words(char *num)
-    {
-        char *num = new char[1024];
-        char *buffer = new char[1024];
-        
-        SDL_itoa(abs(number), num, 10);
-        
-        auto len = strlen(num); // Get number of digits in given number
-        std::string ret;
-        
-        /* Base cases */
-        if (len == 0) {
-            fprintf(stderr, "empty string\n");
-            delete [] buffer;
-            delete [] num;
-            return std::string(num);
-        }
-        if (len > 4) {
-            fprintf(stderr, "Length more than 4 is not supported\n");
-            delete [] buffer;
-            delete [] num;
-            return  std::string(num);
-        }
-        if(number < 0)
-            ret = "negative ";
-        
-        /* The first string is not used, it is to make
-         array indexing simple */
-        const char *single_digits[] = { "zero", "one", "two",
-            "three", "four","five",
-            "six", "seven", "eight", "nine"};
-        
-        /* The first string is not used, it is to make
-         array indexing simple */
-        const char *two_digits[] = {"", "ten", "eleven", "twelve",
-            "thirteen", "fourteen",
-            "fifteen", "sixteen",
-            "seventeen", "eighteen", "nineteen"};
-        
-        /* The first two string are not used, they are to make
-         array indexing simple*/
-        const char *tens_multiple[] = {"", "", "twenty", "thirty", "forty", "fifty",
-            "sixty", "seventy", "eighty", "ninety"};
-        
-        const char *tens_power[] = {"hundred", "thousand"};
-        
-        /* Used for debugging purpose only */
-//        printf("\n%s: ", num);
-        
-        /* For single digit number */
-        if (len == 1) {
-            sprintf(buffer, "%s", single_digits[*num - '0']);
-            ret = ret + buffer;
-            delete [] buffer;
-            delete [] num;
-            return ret;
-        }
-        
-        /* Iterate while num is not '\0' */
-        while (*num != '\0') {
-            
-            /* Code path for first 2 digits */
-            if (len >= 3) {
-                if (*num -'0' != 0) {
+
+  std::string convertToWords(const int number)
+  /* A function that prints given number in words */
+  //    void convert_to_words(char *num)
+  {
+    char *num = new char[1024];
+    char *buffer = new char[1024];
+
+    SDL_itoa(abs(number), num, 10);
+
+    auto len = strlen(num); // Get number of digits in given number
+    std::string ret;
+
+    /* Base cases */
+    if (len == 0)
+      {
+        fprintf(stderr, "empty string\n");
+        delete[] buffer;
+        delete[] num;
+        return std::string(num);
+      }
+    if (len > 4)
+      {
+        fprintf(stderr, "Length more than 4 is not supported\n");
+        delete[] buffer;
+        delete[] num;
+        return std::string(num);
+      }
+    if (number < 0)
+      ret = "negative ";
+
+    /* The first string is not used, it is to make
+     array indexing simple */
+    const char *single_digits[] = {"zero", "one", "two",   "three", "four",
+                                   "five", "six", "seven", "eight", "nine"};
+
+    /* The first string is not used, it is to make
+     array indexing simple */
+    const char *two_digits[] = {"",          "ten",      "eleven",  "twelve",
+                                "thirteen",  "fourteen", "fifteen", "sixteen",
+                                "seventeen", "eighteen", "nineteen"};
+
+    /* The first two string are not used, they are to make
+     array indexing simple*/
+    const char *tens_multiple[] = {"",       "",      "twenty", "thirty",
+                                   "forty",  "fifty", "sixty",  "seventy",
+                                   "eighty", "ninety"};
+
+    const char *tens_power[] = {"hundred", "thousand"};
+
+    /* Used for debugging purpose only */
+    //        printf("\n%s: ", num);
+
+    /* For single digit number */
+    if (len == 1)
+      {
+        sprintf(buffer, "%s", single_digits[*num - '0']);
+        ret = ret + buffer;
+        delete[] buffer;
+        delete[] num;
+        return ret;
+      }
+
+    /* Iterate while num is not '\0' */
+    while (*num != '\0')
+      {
+
+        /* Code path for first 2 digits */
+        if (len >= 3)
+          {
+            if (*num - '0' != 0)
+              {
+                sprintf(buffer, "%s ", single_digits[*num - '0']);
+                ret = ret + std::string(buffer);
+                sprintf(buffer, "%s ",
+                        tens_power[len - 3]); // here len can be 3 or 4
+                ret = ret + std::string(buffer);
+              }
+            --len;
+          }
+
+        /* Code path for last 2 digits */
+        else
+          {
+            /* Need to explicitly handle 10-19. Sum of the two digits is
+             used as index of "two_digits" array of strings */
+            if (*num == '1')
+              {
+                int sum = *num - '0' + *(num + 1) - '0';
+                sprintf(buffer, "%s", two_digits[sum]);
+                ret = ret + std::string(buffer);
+                delete[] buffer;
+                delete[] num;
+                return ret;
+              }
+
+            /* Need to explicitely handle 20 */
+            else if (*num == '2' && *(num + 1) == '0')
+              {
+                sprintf(buffer, "twenty");
+                ret = ret + std::string(buffer);
+                delete[] buffer;
+                delete[] num;
+                return ret;
+              }
+
+            /* Rest of the two digit numbers i.e., 21 to 99 */
+            else
+              {
+                int i = *num - '0';
+                sprintf(buffer, "%s ", i ? tens_multiple[i] : "");
+                ret = ret + std::string(buffer);
+                ++num;
+                if (*num != '0')
+                  {
                     sprintf(buffer, "%s ", single_digits[*num - '0']);
                     ret = ret + std::string(buffer);
-                    sprintf(buffer, "%s ", tens_power[len-3]); // here len can be 3 or 4
-                    ret = ret + std::string(buffer);
-                }
-                --len;
-            }
-            
-            /* Code path for last 2 digits */
-            else {
-                /* Need to explicitly handle 10-19. Sum of the two digits is
-                 used as index of "two_digits" array of strings */
-                if (*num == '1') {
-                    int sum = *num - '0' + *(num + 1)- '0';
-                    sprintf(buffer, "%s", two_digits[sum]);
-                    ret = ret + std::string(buffer);
-                    delete [] buffer;
-                    delete [] num;
-                    return ret;
-                }
-                
-                /* Need to explicitely handle 20 */
-                else if (*num == '2' && *(num + 1) == '0') {
-                    sprintf(buffer, "twenty");
-                    ret = ret + std::string(buffer);
-                    delete [] buffer;
-                    delete [] num;
-                    return ret;
-                }
-                
-                /* Rest of the two digit numbers i.e., 21 to 99 */
-                else {
-                    int i = *num - '0';
-                    sprintf(buffer, "%s ", i? tens_multiple[i]: "");
-                    ret = ret + std::string(buffer);
-                    ++num;
-                    if (*num != '0')
-                    {
-                        sprintf(buffer, "%s ", single_digits[*num - '0']);
-                        ret = ret + std::string(buffer);
-                    }
-                }
-            }
-            ++num;
-        }
-        delete [] buffer;
-        delete [] num;
-        
-        return ret;
-    }
+                  }
+              }
+          }
+        ++num;
+      }
+    delete[] buffer;
+    delete[] num;
+
+    return ret;
+  }
 } // namespace njli

@@ -56,7 +56,7 @@ namespace njli
         m_TouchCamera(NULL),
         m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
-    
+
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
@@ -65,7 +65,7 @@ namespace njli
       : AbstractFactoryObject(this),
         //    m_Name("MyScene"),
         m_RootNode(NULL), m_SceneStateMachine(SceneStateMachine::create()),
-  
+
         m_BackgroundMaterial(Material::create()), m_PhysicsWorld(NULL),
         //    m_isPaused(false),
         m_ActiveCameras(new btAlignedObjectArray<Camera *>()),
@@ -76,7 +76,7 @@ namespace njli
         m_TouchCamera(NULL),
         m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
-    
+
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
@@ -85,7 +85,7 @@ namespace njli
       : AbstractFactoryObject(this),
         //    m_Name("MyScene"),
         m_RootNode(NULL), m_SceneStateMachine(SceneStateMachine::create()),
-  
+
         m_BackgroundMaterial(Material::create()), m_PhysicsWorld(NULL),
         //    m_isPaused(false),
         m_ActiveCameras(new btAlignedObjectArray<Camera *>()),
@@ -96,7 +96,7 @@ namespace njli
         m_TouchCamera(NULL),
         m_VRCameraTransform(new btTransform(btTransform::getIdentity()))
   {
-    
+
     addChild(m_SceneStateMachine);
     addChild(m_BackgroundMaterial);
   }
@@ -271,7 +271,7 @@ namespace njli
   void Scene::update(f32 timeStep, const u32 numSubSteps)
   {
     BT_PROFILE("Scene::update");
-    
+
     if (getPhysicsWorld())
       getPhysicsWorld()->update(timeStep);
 
@@ -1461,12 +1461,12 @@ namespace njli
   {
     m_VRCameraTransform->setOrigin(loc);
   }
-  
-  const btTransform &Scene::getVRCameraTransform()const
+
+  const btTransform &Scene::getVRCameraTransform() const
   {
     return *m_VRCameraTransform;
   }
-  
+
   //    void Scene::pause()
   //    {
   //        if(getPhysicsWorld())

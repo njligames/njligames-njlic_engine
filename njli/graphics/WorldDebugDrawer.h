@@ -134,7 +134,7 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-      void axisTriad(const glm::mat4 &transform,
+      void axisTriad(const btTransform &transform,
                    float size, float length,
                    int durationMillis = 10000,
                    bool depthEnabled = true);
@@ -286,7 +286,7 @@ namespace njli
      @param durationMillis <#durationMillis description#>
      @param depthEnabled <#depthEnabled description#>
      */
-      void frustum(const glm::mat4 &invClipMatrix,
+      void frustum(const btTransform &view, const btTransform &proj,
                  const btVector3 &color,
                  int durationMillis = 10000,
                  bool depthEnabled = true);

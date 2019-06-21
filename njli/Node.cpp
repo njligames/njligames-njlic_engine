@@ -442,10 +442,11 @@ namespace njli
 
   const btVector3 &Node::getScale() const { return *m_Scale; }
 
-  void Node::setScale(const btVector3 &scale) {
-      *m_Scale = scale;
-      if(getPhysicsBody() && getPhysicsBody()->getPhysicsShape())
-          getPhysicsBody()->getPhysicsShape()->setLocalScaling(*m_Scale);
+  void Node::setScale(const btVector3 &scale)
+  {
+    *m_Scale = scale;
+    if (getPhysicsBody() && getPhysicsBody()->getPhysicsShape())
+      getPhysicsBody()->getPhysicsShape()->setLocalScaling(*m_Scale);
   }
 
   void Node::setScale(const f32 scale)
@@ -788,9 +789,9 @@ namespace njli
   void Node::setGeometry(Geometry *geometry)
   {
     SDL_assert(geometry != NULL);
-      
-      if(geometry == m_Geometry)
-          return;
+
+    if (geometry == m_Geometry)
+      return;
 
     removeGeometry();
 
@@ -1341,14 +1342,14 @@ namespace njli
           }
       }
   }
-  
-//  void Node::getAabb(btVector3 ** aabb) const
-//  {
-//    static btVector3 _aabb[2];
-//    getAabb(_aabb[0], _aabb[1]);
-//    *aabb = _aabb;
-//  }
-  
+
+  //  void Node::getAabb(btVector3 ** aabb) const
+  //  {
+  //    static btVector3 _aabb[2];
+  //    getAabb(_aabb[0], _aabb[1]);
+  //    *aabb = _aabb;
+  //  }
+
   //    void Node::applyPhysicsShape()
   //    {
   //        BT_PROFILE("Node::applyPhysicsShape");
@@ -1673,7 +1674,7 @@ namespace njli
   void Node::applyPhysicsBodyTransform(const btTransform &transform)
   {
     PhysicsBody *physicsBody = getPhysicsBody();
-      
+
     if (physicsBody)
       physicsBody->setTransform(transform);
   }

@@ -158,13 +158,11 @@ namespace njli
   {
     getCollisionShape()->setLocalScaling(scaling);
   }
-    
-    void PhysicsShape::setLocalScaling(const btScalar &scaling)
-    {
-        setLocalScaling(btVector3(scaling, scaling, scaling));
-    }
-    
-    
+
+  void PhysicsShape::setLocalScaling(const btScalar &scaling)
+  {
+    setLocalScaling(btVector3(scaling, scaling, scaling));
+  }
 
   void PhysicsShape::getAabb(const btTransform &t, btVector3 &aabbMin,
                              btVector3 &aabbMax) const

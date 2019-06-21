@@ -239,7 +239,7 @@ namespace njli
           nodeB->getPhysicsBody()->getCollisionObject());
 
     removeConstraint();
-    
+
     if (rigidBodyA && !rigidBodyB)
       {
         m_btPoint2PointConstraint =
@@ -258,11 +258,10 @@ namespace njli
     if (rigidBodyB)
       getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
 
-    if(nullptr != rigidBodyA ||
-       nullptr != rigidBodyB)
-    {
-      addConstraint();
-    }
+    if (nullptr != rigidBodyA || nullptr != rigidBodyB)
+      {
+        addConstraint();
+      }
   }
 
   void PhysicsConstraintPointToPoint::setNodes(Node *nodeA,
@@ -292,17 +291,17 @@ namespace njli
     return dynamic_cast<const btPoint2PointConstraint *>(getConstraint())
         ->getPivotInB();
   }
-  
+
   bool PhysicsConstraintPointToPoint::removeConstraint()
   {
-    if( PhysicsConstraint::removeConstraint())
-    {
-      if (m_btPoint2PointConstraint)
-        delete m_btPoint2PointConstraint;
-      m_btPoint2PointConstraint = NULL;
-      
-      return true;
-    }
+    if (PhysicsConstraint::removeConstraint())
+      {
+        if (m_btPoint2PointConstraint)
+          delete m_btPoint2PointConstraint;
+        m_btPoint2PointConstraint = NULL;
+
+        return true;
+      }
     return false;
   }
 

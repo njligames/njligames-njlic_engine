@@ -18,6 +18,8 @@
 #include "btVector3.h"
 #include "lua.hpp"
 
+#include "Wall.h"
+
 namespace njli
 {
   class SteeringBehaviorWallAvoidanceBuilder;
@@ -236,12 +238,18 @@ namespace njli
     static u32 type();
 
   public:
-    // TODO: fill in specific methods for SteeringBehaviorWallAvoidance
+      
+      void addWall(const Wall &wall);
+      void setFeelerLength(const float feelerLength);
+      float getFeelerLength()const;
 
     virtual const btVector3 &calculateForce();
 
   protected:
   private:
+      std::vector<Wall> m_Walls;
+      std::vector<btVector3> m_Feelers;
+      float m_FeelerLength;
   };
 }
 

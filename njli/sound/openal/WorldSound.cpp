@@ -105,8 +105,8 @@ namespace njli
       : mDeviceAL(NULL), mContextAL(NULL), mDeviceName(""), mEnabled(false),
         mLastVolume(1.0f), mMasterVolume(1.0f)
   {
-      if(setupSoundPlatform())
-          Init();
+    if (setupSoundPlatform())
+      Init();
     //        ALboolean enumeration = alcIsExtensionPresent(NULL,
     //        "ALC_ENUMERATION_EXT");
     //        if (enumeration == AL_FALSE)
@@ -247,34 +247,35 @@ namespace njli
       }
   }
 
-    static void list_audio_devices(const ALCchar *devices)
-    {
-        const ALCchar *device = devices, *next = devices + 1;
-        size_t len = 0;
-        
-        fprintf(stdout, "Devices list:\n");
-        fprintf(stdout, "----------\n");
-        while (device && *device != '\0' && next && *next != '\0') {
-            fprintf(stdout, "%s\n", device);
-            len = strlen(device);
-            device += (len + 1);
-            next += (len + 2);
-        }
-        fprintf(stdout, "----------\n");
-    }
-    
+  static void list_audio_devices(const ALCchar *devices)
+  {
+    const ALCchar *device = devices, *next = devices + 1;
+    size_t len = 0;
+
+    fprintf(stdout, "Devices list:\n");
+    fprintf(stdout, "----------\n");
+    while (device && *device != '\0' && next && *next != '\0')
+      {
+        fprintf(stdout, "%s\n", device);
+        len = strlen(device);
+        device += (len + 1);
+        next += (len + 2);
+      }
+    fprintf(stdout, "----------\n");
+  }
+
   void WorldSound::Init()
   {
     // reset error stack
     alGetError();
-      
-      ALboolean enumeration;
-      
-      enumeration = alcIsExtensionPresent(NULL, "ALC_ENUMERATION_EXT");
-      if (enumeration == AL_TRUE)
-          list_audio_devices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
 
-      const char * devicename = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
+    ALboolean enumeration;
+
+    enumeration = alcIsExtensionPresent(NULL, "ALC_ENUMERATION_EXT");
+    if (enumeration == AL_TRUE)
+      list_audio_devices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
+
+    const char *devicename = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
     mDeviceAL = alcOpenDevice(devicename);
 
     if (mDeviceAL == NULL)

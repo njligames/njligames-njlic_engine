@@ -385,6 +385,88 @@ namespace njli
     *m_CurrentVelocity = btVector3Zero;
   }
 
+  //    inline void Vec3DRotateAroundOrigin(btVector3 &v, double ang)
+  //    {
+  //        //    //create a transformation matrix
+  //        //    C2DMatrix mat;
+  //        //
+  //        //    //rotate
+  //        //    mat.Rotate(ang);
+  //        //
+  //        //    //now transform the object's vertices
+  //        //    mat.TransformVector2Ds(v);
+  //
+  //        btQuaternion rotation(btVector3(1.0, 1.0, 1.0).normalized(), ang);
+  //        v = quatRotate(rotation, v);
+  //    }
+  //
+  //
+  //    void SteeringBehavior::CreateFeelers()
+  //    {
+  //        //feeler pointing straight in front
+  //        m_Feelers[0] = m_pVehicle->Pos() + m_dWallDetectionFeelerLength *
+  //        m_pVehicle->Heading();
+  //
+  //        //feeler to left
+  //        Vector2D temp = m_pVehicle->Heading();
+  //        Vec2DRotateAroundOrigin(temp, HalfPi * 3.5f);
+  //        m_Feelers[1] = m_pVehicle->Pos() + m_dWallDetectionFeelerLength/2.0f
+  //        * temp;
+  //
+  //        //feeler to right
+  //        temp = m_pVehicle->Heading();
+  //        Vec2DRotateAroundOrigin(temp, HalfPi * 0.5f);
+  //        m_Feelers[2] = m_pVehicle->Pos() + m_dWallDetectionFeelerLength/2.0f
+  //        * temp;
+  //    }
+
+  void SteeringBehaviorMachine::createFeelers(const btVector3 &origin,
+                                              const float feelerLength,
+                                              std::vector<btVector3> &feelers)
+  {
+    const float angle(btRadians(45.0));
+
+    feelers.clear();
+
+    const btVector3 heading(getHeadingVector());
+    const btVector3 up(getUpVector());
+    const btVector3 side(getSideVector());
+
+    const btQuaternion rotateLeft(up, angle);
+    const btQuaternion rotateRight(up, -angle);
+    const btQuaternion rotateUp(side, angle);
+    const btQuaternion rotateDown(side, -angle);
+
+    btVector3 feeler_forward(feelerLength * heading);
+
+    // front
+    feelers.push_back(feeler_forward);
+
+    // up-left
+    feelers.push_back(quatRotate(rotateUp * rotateLeft, feeler_forward));
+
+    // up
+    feelers.push_back(quatRotate(rotateUp, feeler_forward));
+
+    // up-right
+    feelers.push_back(quatRotate(rotateUp * rotateRight, feeler_forward));
+
+    // right
+    feelers.push_back(quatRotate(rotateRight, feeler_forward));
+
+    // down-right
+    feelers.push_back(quatRotate(rotateDown * rotateRight, feeler_forward));
+
+    // down
+    feelers.push_back(quatRotate(rotateDown, feeler_forward));
+
+    // down-left
+    feelers.push_back(quatRotate(rotateDown * rotateLeft, feeler_forward));
+
+    // left
+    feelers.push_back(quatRotate(rotateLeft, feeler_forward));
+  }
+
   f32 SteeringBehaviorMachine::getMaxForce2() const { return m_MaxForce2; }
 
   void SteeringBehaviorMachine::setCalculatedForce(const btVector3 &force)
@@ -413,7 +495,8 @@ namespace njli
                 !node->getPhysicsBody()->isKinematicPhysics())
               SDL_LogWarn(
                   SDL_LOG_CATEGORY_TEST,
-                  "The PhysicsBody (%s) needs to be Kinematic for steering.", node->getPhysicsBody()->getName());
+                  "The PhysicsBody (%s) needs to be Kinematic for steering.",
+                  node->getPhysicsBody()->getName());
 #endif
           }
 

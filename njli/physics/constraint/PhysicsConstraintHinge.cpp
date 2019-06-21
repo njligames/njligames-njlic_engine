@@ -305,12 +305,11 @@ namespace njli
       getNodeA()->getPhysicsBody()->setPhysicsConstraint(this);
     if (rigidBodyB)
       getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
-    
-    if(nullptr != rigidBodyA ||
-       nullptr != rigidBodyB)
-    {
-      addConstraint();
-    }
+
+    if (nullptr != rigidBodyA || nullptr != rigidBodyB)
+      {
+        addConstraint();
+      }
   }
 
   void PhysicsConstraintHinge::setNodes(Node *nodeA,
@@ -509,13 +508,13 @@ namespace njli
         dynamic_cast<btHingeConstraint *>(getConstraint());
     return constraint->getMaxMotorImpulse();
   }
-  
+
   bool PhysicsConstraintHinge::removeConstraint()
   {
     if (m_btHingeConstraint)
       delete m_btHingeConstraint;
     m_btHingeConstraint = NULL;
-    
+
     return PhysicsConstraint::removeConstraint();
   }
 

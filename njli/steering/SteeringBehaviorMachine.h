@@ -260,7 +260,10 @@ namespace njli
       void enable(bool enable=true){m_Enable=enable;}
       bool isEnabled()const{return m_Enable;}
       
+      
   public:
+      void createFeelers(const btVector3 &origin, const float feelerLength, std::vector<btVector3> &feelers);
+      
       static inline btVector3 seek(const btVector3 &targetPos,
                                    const btVector3 &vehiclePos,
                                    const btVector3 &vehicleVelocity,

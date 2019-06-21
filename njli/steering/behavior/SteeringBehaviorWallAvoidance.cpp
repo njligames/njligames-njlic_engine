@@ -22,22 +22,24 @@
 
 #include "SteeringBehaviorMachine.h"
 
+#include <limits>
+
 namespace njli
 {
   SteeringBehaviorWallAvoidance::SteeringBehaviorWallAvoidance()
-      : SteeringBehavior()
+      : SteeringBehavior(), m_FeelerLength(1.0f)
   {
   }
 
   SteeringBehaviorWallAvoidance::SteeringBehaviorWallAvoidance(
       const AbstractBuilder &builder)
-      : SteeringBehavior(builder)
+      : SteeringBehavior(builder), m_FeelerLength(1.0f)
   {
   }
 
   SteeringBehaviorWallAvoidance::SteeringBehaviorWallAvoidance(
       const SteeringBehaviorWallAvoidance &copy)
-      : SteeringBehavior(copy)
+      : SteeringBehavior(copy), m_FeelerLength(copy.m_FeelerLength)
   {
   }
 
@@ -48,6 +50,7 @@ namespace njli
   {
     if (this != &rhs)
       {
+        m_FeelerLength = rhs.m_FeelerLength;
       }
     return *this;
   }
@@ -202,9 +205,72 @@ namespace njli
     return JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidance;
   }
 
+  void SteeringBehaviorWallAvoidance::addWall(const Wall &wall)
+  {
+
+    m_Walls.push_back(wall);
+  }
+
+  void SteeringBehaviorWallAvoidance::setFeelerLength(const float feelerLength)
+  {
+    m_FeelerLength = feelerLength;
+  }
+  float SteeringBehaviorWallAvoidance::getFeelerLength() const
+  {
+    return m_FeelerLength;
+  }
+
   const btVector3 &SteeringBehaviorWallAvoidance::calculateForce()
   {
-    SDL_assertPrint(false, "TODO");
+    SteeringBehaviorMachine *machine = getParent();
+    const Node *vehicleNode = machine->getParent();
+
+    int ClosestWall = -1;
+    btVector3 ClosestPoint;
+    float DistToThisIP(0.0);
+    float DistToClosestIP(std::numeric_limits<float>::max());
+
+    *m_CurrentForce = btVector3(0, 0, 0);
+
+    machine->createFeelers(vehicleNode->getOrigin(), m_FeelerLength, m_Feelers);
+
+    for (auto f = 0; f < m_Feelers.size(); ++f)
+      {
+        for (auto w = 0; w < m_Walls.size(); ++w)
+          {
+            btVector3 point;
+            if (m_Walls[w].segmentIntersection(
+                    vehicleNode->getOrigin(),
+                    vehicleNode->getOrigin() + m_Feelers[f], point) > 0)
+              {
+                DistToThisIP = point.distance(vehicleNode->getOrigin());
+
+                if (DistToThisIP < DistToClosestIP)
+                  {
+                    DistToClosestIP = DistToThisIP;
+
+                    ClosestWall = w;
+
+                    ClosestPoint = point;
+                  }
+              }
+          }
+
+        // if an intersection point has been detected, calculate a force
+        // that will direct the agent away
+        if (ClosestWall >= 0)
+          {
+            // calculate by what distance the projected position of the agent
+            // will overshoot the wall
+            btVector3 OverShoot(m_Feelers[f] - ClosestPoint);
+
+            // create a force in the direction of the wall normal, with a
+            // magnitude of the overshoot
+            *m_CurrentForce =
+                m_Walls[ClosestWall].normal() * OverShoot.length();
+          }
+      }
+
     return *m_CurrentForce;
   }
 } // namespace njli

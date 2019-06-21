@@ -249,13 +249,11 @@ namespace njli
       getNodeA()->getPhysicsBody()->setPhysicsConstraint(this);
     if (rigidBodyB)
       getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
-    
-    if(nullptr != rigidBodyA ||
-       nullptr != rigidBodyB)
-    {
-      addConstraint();
-    }
-    
+
+    if (nullptr != rigidBodyA || nullptr != rigidBodyB)
+      {
+        addConstraint();
+      }
   }
 
   void PhysicsConstraintSlider::setNodes(Node *nodeB,
@@ -756,13 +754,13 @@ namespace njli
         dynamic_cast<btSliderConstraint *>(getConstraint());
     constraint->setFrames(frameA, frameB);
   }
-  
+
   bool PhysicsConstraintSlider::removeConstraint()
   {
     if (m_btSliderConstraint)
       delete m_btSliderConstraint;
     m_btSliderConstraint = NULL;
-    
+
     return PhysicsConstraint::removeConstraint();
   }
 

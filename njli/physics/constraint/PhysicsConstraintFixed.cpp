@@ -236,19 +236,18 @@ namespace njli
     if (rigidBodyB)
       getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
 
-    if(nullptr != rigidBodyA ||
-       nullptr != rigidBodyB)
-    {
-      addConstraint();
-    }
+    if (nullptr != rigidBodyA || nullptr != rigidBodyB)
+      {
+        addConstraint();
+      }
   }
-  
+
   bool PhysicsConstraintFixed::removeConstraint()
   {
     if (m_btFixedConstraint)
       delete m_btFixedConstraint;
     m_btFixedConstraint = NULL;
-    
+
     return PhysicsConstraint::removeConstraint();
   }
 

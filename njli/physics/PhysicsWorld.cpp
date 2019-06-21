@@ -699,8 +699,7 @@ namespace njli
     rayCallback.m_collisionFilterGroup = (int)collisionGroup;
     rayCallback.m_collisionFilterMask = (int)collisionMask;
     rayCallback.m_flags = 0;
-      
-      
+
     /*SDL_LogError(SDL_LOG_CATEGORY_TEST, "START\n");
 
     SDL_LogError(SDL_LOG_CATEGORY_TEST, "rayTest rayFromWorld %f,%f,%f\n",

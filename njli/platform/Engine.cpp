@@ -412,93 +412,102 @@ namespace njli
 
   static int EventFilter(void *userdata, SDL_Event *event)
   {
-      return DeviceTouch::eventFilter(userdata, event);
+    return DeviceTouch::eventFilter(userdata, event);
 
-//    njli::NJLIGameEngine::handleEvent(&event);
-//    //    SDLTest_PrintEvent(event);
-//
-//    Uint32 eventType = event->type;
-//
-//    switch (eventType)
-//      {
-//      case SDL_JOYDEVICEMOTION:
-//        {
-//          //              SDL_Log("Joystick device %d motion. [%f, %f, %f, %f,
-//          //              %f, %f, %f, %f, %f]\n", (int) event->jmotion.which,
-//          //              event->jmotion.m11, event->jmotion.m12,
-//          //              event->jmotion.m13, event->jmotion.m21,
-//          //              event->jmotion.m22, event->jmotion.m23,
-//          //              event->jmotion.m31, event->jmotion.m32,
-//          //              event->jmotion.m33); SDL_Log("Yaw, Pitch, Roll (%f,
-//          //              %f, %f)\n", event->jmotion.yaw, event->jmotion.pitch,
-//          //              event->jmotion.roll);
-//
-//          //              float _transform[] =
-//          //              {static_cast<float>(event->jmotion.m11),
-//          //              static_cast<float>(event->jmotion.m12),
-//          //              static_cast<float>(event->jmotion.m13),
-//          //              static_cast<float>(event->jmotion.m21),
-//          //              static_cast<float>(event->jmotion.m22),
-//          //              static_cast<float>(event->jmotion.m23),
-//          //              static_cast<float>(event->jmotion.m31),
-//          //              static_cast<float>(event->jmotion.m32),
-//          //              static_cast<float>(event->jmotion.m33)};
-//
-//          //              glm::mat4 transform = glm::make_mat4(_transform);
-//          //              NJLI_HandleVRCameraRotation(static_cast<float>(event->jmotion.m11),
-//          //              static_cast<float>(event->jmotion.m12),
-//          //              static_cast<float>(event->jmotion.m13),
-//          //              static_cast<float>(event->jmotion.m21),
-//          //              static_cast<float>(event->jmotion.m22),
-//          //              static_cast<float>(event->jmotion.m23),
-//          //              static_cast<float>(event->jmotion.m31),
-//          //              static_cast<float>(event->jmotion.m32),
-//          //              static_cast<float>(event->jmotion.m33));
-//
-//          NJLI_HandleVRCameraRotationYPR(
-//              static_cast<float>(event->jmotion.yaw),
-//              static_cast<float>(event->jmotion.pitch),
-//              static_cast<float>(event->jmotion.roll));
-//          // = glm::mat4(event->jmotion.m11, event->jmotion.m12,
-//          // event->jmotion.m13, event->jmotion.m21, event->jmotion.m22,
-//          // event->jmotion.m23, event->jmotion.m31, event->jmotion.m32,
-//          // event->jmotion.m33);
-//        }
-//        break;
-//        //#if ((defined(__MACOSX__) && __MACOSX__) || (defined(__EMSCRIPTEN__)
-//        //&&
-//        //__EMSCRIPTEN__))
-//        //      case SDL_MOUSEMOTION:
-//        //      case SDL_MOUSEBUTTONDOWN:
-//        //      case SDL_MOUSEBUTTONUP:
-//        //
-//        //        NJLI_HandleMouse(event->button.button, event->type,
-//        //        event->button.x,
-//        //                         event->button.y, event->button.clicks);
-//        //        break;
-//        //#endif
-//
-//      //#if ((defined(__IPHONEOS__) && __IPHONEOS__) || (defined(__ANDROID__) &&
-//      //__ANDROID__))
-//      case SDL_FINGERMOTION:
-//      case SDL_FINGERDOWN:
-//      case SDL_FINGERUP:
-//        NJLI_HandleTouch((int)event->tfinger.touchId,
-//                         (int)event->tfinger.fingerId, event->type,
-//                         event->tfinger.x, event->tfinger.y, event->tfinger.dx,
-//                         event->tfinger.dy, event->tfinger.pressure);
-//        break;
-//      //#endif
-//      default:
-//        break;
-//      }
-//
-//#if ((defined(__IPHONEOS__) && __IPHONEOS__) ||                                \
+    //    njli::NJLIGameEngine::handleEvent(&event);
+    //    //    SDLTest_PrintEvent(event);
+    //
+    //    Uint32 eventType = event->type;
+    //
+    //    switch (eventType)
+    //      {
+    //      case SDL_JOYDEVICEMOTION:
+    //        {
+    //          //              SDL_Log("Joystick device %d motion. [%f, %f, %f,
+    //          %f,
+    //          //              %f, %f, %f, %f, %f]\n", (int)
+    //          event->jmotion.which,
+    //          //              event->jmotion.m11, event->jmotion.m12,
+    //          //              event->jmotion.m13, event->jmotion.m21,
+    //          //              event->jmotion.m22, event->jmotion.m23,
+    //          //              event->jmotion.m31, event->jmotion.m32,
+    //          //              event->jmotion.m33); SDL_Log("Yaw, Pitch, Roll
+    //          (%f,
+    //          //              %f, %f)\n", event->jmotion.yaw,
+    //          event->jmotion.pitch,
+    //          //              event->jmotion.roll);
+    //
+    //          //              float _transform[] =
+    //          //              {static_cast<float>(event->jmotion.m11),
+    //          //              static_cast<float>(event->jmotion.m12),
+    //          //              static_cast<float>(event->jmotion.m13),
+    //          //              static_cast<float>(event->jmotion.m21),
+    //          //              static_cast<float>(event->jmotion.m22),
+    //          //              static_cast<float>(event->jmotion.m23),
+    //          //              static_cast<float>(event->jmotion.m31),
+    //          //              static_cast<float>(event->jmotion.m32),
+    //          //              static_cast<float>(event->jmotion.m33)};
+    //
+    //          //              glm::mat4 transform =
+    //          glm::make_mat4(_transform);
+    //          //
+    //          NJLI_HandleVRCameraRotation(static_cast<float>(event->jmotion.m11),
+    //          //              static_cast<float>(event->jmotion.m12),
+    //          //              static_cast<float>(event->jmotion.m13),
+    //          //              static_cast<float>(event->jmotion.m21),
+    //          //              static_cast<float>(event->jmotion.m22),
+    //          //              static_cast<float>(event->jmotion.m23),
+    //          //              static_cast<float>(event->jmotion.m31),
+    //          //              static_cast<float>(event->jmotion.m32),
+    //          //              static_cast<float>(event->jmotion.m33));
+    //
+    //          NJLI_HandleVRCameraRotationYPR(
+    //              static_cast<float>(event->jmotion.yaw),
+    //              static_cast<float>(event->jmotion.pitch),
+    //              static_cast<float>(event->jmotion.roll));
+    //          // = glm::mat4(event->jmotion.m11, event->jmotion.m12,
+    //          // event->jmotion.m13, event->jmotion.m21, event->jmotion.m22,
+    //          // event->jmotion.m23, event->jmotion.m31, event->jmotion.m32,
+    //          // event->jmotion.m33);
+    //        }
+    //        break;
+    //        //#if ((defined(__MACOSX__) && __MACOSX__) ||
+    //        (defined(__EMSCRIPTEN__)
+    //        //&&
+    //        //__EMSCRIPTEN__))
+    //        //      case SDL_MOUSEMOTION:
+    //        //      case SDL_MOUSEBUTTONDOWN:
+    //        //      case SDL_MOUSEBUTTONUP:
+    //        //
+    //        //        NJLI_HandleMouse(event->button.button, event->type,
+    //        //        event->button.x,
+    //        //                         event->button.y, event->button.clicks);
+    //        //        break;
+    //        //#endif
+    //
+    //      //#if ((defined(__IPHONEOS__) && __IPHONEOS__) ||
+    //      (defined(__ANDROID__) &&
+    //      //__ANDROID__))
+    //      case SDL_FINGERMOTION:
+    //      case SDL_FINGERDOWN:
+    //      case SDL_FINGERUP:
+    //        NJLI_HandleTouch((int)event->tfinger.touchId,
+    //                         (int)event->tfinger.fingerId, event->type,
+    //                         event->tfinger.x, event->tfinger.y,
+    //                         event->tfinger.dx, event->tfinger.dy,
+    //                         event->tfinger.pressure);
+    //        break;
+    //      //#endif
+    //      default:
+    //        break;
+    //      }
+    //
+    //#if ((defined(__IPHONEOS__) && __IPHONEOS__) || \
 //     (defined(__ANDROID__) && __ANDROID__))
-//    NJLI_HandleFinishTouches();
-//#endif
-//
-//    return 1;
+    //    NJLI_HandleFinishTouches();
+    //#endif
+    //
+    //    return 1;
   }
 #endif
 
@@ -605,7 +614,7 @@ namespace njli
 #if (defined(__IPHONEOS__) && __IPHONEOS__)
             SDL_iPhoneSetAnimationCallback(gWindow, 1, UpdateFrame,
                                            gGraphics.get());
-                  SDL_iPhoneSetEventPump(SDL_TRUE);
+            SDL_iPhoneSetEventPump(SDL_TRUE);
 #endif
             NJLI_HandleResume();
             break;

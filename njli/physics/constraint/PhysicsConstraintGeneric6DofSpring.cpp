@@ -259,11 +259,10 @@ namespace njli
     if (rigidBodyB)
       getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
 
-    if(nullptr != rigidBodyA ||
-       nullptr != rigidBodyB)
-    {
-      addConstraint();
-    }
+    if (nullptr != rigidBodyA || nullptr != rigidBodyB)
+      {
+        addConstraint();
+      }
   }
 
   void PhysicsConstraintGeneric6DofSpring::setNodes(
@@ -323,13 +322,13 @@ namespace njli
         dynamic_cast<btGeneric6DofSpringConstraint *>(getConstraint());
     constraint->setAxis(axis1, axis1);
   }
-  
+
   bool PhysicsConstraintGeneric6DofSpring::removeConstraint()
   {
     if (m_btGeneric6DofSpringConstraint)
       delete m_btGeneric6DofSpringConstraint;
     m_btGeneric6DofSpringConstraint = NULL;
-    
+
     return PhysicsConstraint::removeConstraint();
   }
 

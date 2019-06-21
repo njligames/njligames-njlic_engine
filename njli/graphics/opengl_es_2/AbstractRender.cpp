@@ -38,37 +38,33 @@ void renderGL(bool leftEye)
 #if !(defined(NDEBUG)) && defined(__APPLE__)
   glPushGroupMarkerEXT(0, "renderGL()");
 #endif
-  
-  
-  
+
 #if defined(VR)
-  
-  float x = viewX + ((leftEye)?0:(viewWidth / 2));
+
+  float x = viewX + ((leftEye) ? 0 : (viewWidth / 2));
   float y = viewY;
-  
+
   float w = viewWidth / 2;
-  float h = w;//viewHeight / 2;
-  
-  glViewport(x, y , w, h);
+  float h = w; // viewHeight / 2;
+
+  glViewport(x, y, w, h);
   glEnable(GL_SCISSOR_TEST);
-  glScissor(x, y , w, h);
-    
+  glScissor(x, y, w, h);
+
 #else
-  
+
   glViewport(viewX, viewY, viewWidth, viewHeight);
   glEnable(GL_SCISSOR_TEST);
   glScissor(viewX, viewY, viewWidth, viewHeight);
-  
+
 #endif
   glClearColor(bgRed, bgGreen, bgBlue, bgAlpha);
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    
-    
-    
-      glEnable(GL_BLEND);
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-      glBlendEquation(GL_FUNC_ADD);
+
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glBlendEquation(GL_FUNC_ADD);
 
   glEnable(GL_STENCIL_TEST);
   glEnable(GL_DEPTH_TEST);

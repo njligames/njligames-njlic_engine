@@ -613,8 +613,9 @@ namespace njli
       }
     else
       {
-//        SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "The physics world is NULL\n");
-          SDL_assertPrint(false, "The physics world is NULL\n");
+        //        SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "The physics world is
+        //        NULL\n");
+        SDL_assertPrint(false, "The physics world is NULL\n");
       }
     return false;
   }

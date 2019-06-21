@@ -54,7 +54,7 @@ void NJLI_HandleResize(int width, int height, int sdlFormat, float refreshRate)
   //      gDisplayMode.h = 600.0f;
   gDisplayMode.refresh_rate = 60.0f;
 #else
-  
+
   gDisplayMode.w = width;
   gDisplayMode.h = height;
   gDisplayMode.refresh_rate = refreshRate;
@@ -148,7 +148,7 @@ void NJLI_HandleTouch(int touchDevId, int pointerFingerId, int eventType,
   float _y = (1.0 - y) * dh;
 
   float _dx = dx;
-    float _dy = dy;
+  float _dy = dy;
   njli::NJLIGameEngine::handleFinger(touchDevId, pointerFingerId, action, _x,
                                      _y, _dx, _dy, pressure);
 }

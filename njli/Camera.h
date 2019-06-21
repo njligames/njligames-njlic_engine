@@ -364,10 +364,11 @@ namespace njli
     void updateViewSize();
 
     void setProjection(const glm::mat4 &projection);
+      const btTransform &getProjection() const;
   protected:
     void cull(btDbvtBroadphase * pbp);
 
-    const btTransform &getProjection() const;
+    
     const f32 *getProjectionMatrixArray();
     //    const f32* getModelViewMatrixArray();
     btTransform getModelView() const;
