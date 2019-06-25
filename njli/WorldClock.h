@@ -23,6 +23,7 @@ namespace njli
   public:
     using AbstractDecorator::setName;
     using AbstractDecorator::getName;
+      using AbstractDecorator::getUuid;
 
     /**
          *  <#Description#>

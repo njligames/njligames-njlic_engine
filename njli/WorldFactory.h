@@ -34,6 +34,7 @@ namespace njli
   public:
     using AbstractDecorator::setName;
     using AbstractDecorator::getName;
+      using AbstractDecorator::getUuid;
 
     typedef std::vector<AbstractFactoryObject *> ObjectList;
     typedef std::vector<AbstractFactoryObject **> ObjectArrayList;

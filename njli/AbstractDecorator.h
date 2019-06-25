@@ -65,6 +65,8 @@ namespace njli
       
       void enableTagged(const bool enable = true){m_isTagged=enable;}
       bool isTagged()const{return m_isTagged;}
+      
+      const std::string &getUuid()const;
 
   private:
     AbstractDecorator(const AbstractDecorator &);
@@ -76,6 +78,7 @@ namespace njli
     std::string m_Name;
     std::string m_Tag;
       bool m_isTagged;
+      std::string m_Uuid;
   };
 }
 

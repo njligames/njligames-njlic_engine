@@ -8,10 +8,62 @@
 
 #include "AbstractDecorator.h"
 
+#include <algorithm>
+#include <climits>
+#include <functional>
+#include <iostream>
+#include <random>
+#include <sstream>
+#include <string>
+#include <vector>
+
+static unsigned char random_char()
+{
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(0, 255);
+  return static_cast<unsigned char>(dis(gen));
+}
+
+static std::string generate_hex(const unsigned int len)
+{
+  std::stringstream ss;
+  for (auto i = 0; i < len; i++)
+    {
+      auto rc = random_char();
+      std::stringstream hexstream;
+      hexstream << std::hex << int(rc);
+      auto hex = hexstream.str();
+      ss << (hex.length() < 2 ? '0' + hex : hex);
+    }
+  return ss.str();
+}
+
+static std::string generate_uuid()
+{
+  // https://en.wikipedia.org/wiki/Universally_unique_identifier#Format
+
+  std::string time_low(generate_hex(8));
+  std::string time_mid(generate_hex(4));
+  std::string time_hi_and_version(generate_hex(4));
+  std::string clock_seq_hi_and_res_clock_deq_low(generate_hex(4));
+  std::string node(generate_hex(12));
+  std::string token("-");
+
+  std::string ret = time_low + token;
+  ret += time_low + token;
+  ret += time_mid + token;
+  ret += time_hi_and_version + token;
+  ret += clock_seq_hi_and_res_clock_deq_low + token;
+  ret += node;
+  return ret;
+}
+
 namespace njli
 {
   AbstractDecorator::AbstractDecorator()
-      : m_pParent(NULL), m_Name("<UNSET>"), m_Tag(""), m_isTagged(false)
+      : m_pParent(NULL), m_Name("<UNSET>"), m_Tag(""), m_isTagged(false),
+        m_Uuid(generate_uuid())
   {
   }
 
@@ -245,4 +297,6 @@ namespace njli
     m_Tag = tag;
   }
   const char *AbstractDecorator::getTag() const { return m_Tag.c_str(); }
+
+  const std::string &AbstractDecorator::getUuid() const { return m_Uuid; }
 } // namespace njli

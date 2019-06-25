@@ -26,6 +26,7 @@ namespace njli
   public:
     using AbstractDecorator::setName;
     using AbstractDecorator::getName;
+      using AbstractDecorator::getUuid;
     using AbstractFactoryObject::create;
     //    using AbstractFactoryObject::clone;
     using AbstractFactoryObject::getPointer;

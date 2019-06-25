@@ -92,6 +92,7 @@ namespace njli
   public:
     using AbstractDecorator::setName;
     using AbstractDecorator::getName;
+      using AbstractDecorator::getUuid;
 
     /**
          *  @author James Folk, 16-02-11 18:02:19
