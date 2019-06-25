@@ -416,15 +416,14 @@ namespace njli
 
   void WorldSound::AddSound(Sound *sound)
   {
-
-    std::string name = sound->getName();
-    if (this->ExistSound(name))
+    std::string uuid(sound->getUuid());
+    if (this->ExistSound(uuid))
       {
-        SDL_Log("Sound with name %s already exist.", name.c_str());
+        SDL_Log("Sound with id %s already exist.", uuid.c_str());
         return;
       }
 
-    mSounds.insert(std::make_pair(name, sound));
+    mSounds.insert(std::make_pair(uuid, sound));
 
     // sound->Play();
   }

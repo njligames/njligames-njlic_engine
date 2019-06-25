@@ -50,12 +50,15 @@ static std::string generate_uuid()
   std::string node(generate_hex(12));
   std::string token("-");
 
-  std::string ret = time_low + token;
+  std::string ret("");
   ret += time_low + token;
   ret += time_mid + token;
   ret += time_hi_and_version + token;
   ret += clock_seq_hi_and_res_clock_deq_low + token;
   ret += node;
+  
+  std::transform(ret.begin(), ret.end(), ret.begin(), ::toupper);
+
   return ret;
 }
 
