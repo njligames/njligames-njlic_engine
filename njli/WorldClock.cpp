@@ -16,29 +16,29 @@
 
 namespace njli
 {
-  WorldClock::WorldClock() {}
+    WorldClock::WorldClock() {}
 
-  WorldClock::~WorldClock() {}
+    WorldClock::~WorldClock() {}
 
-  const char *WorldClock::getClassName() const { return "WorldClock"; }
+    const char *WorldClock::getClassName() const { return "WorldClock"; }
 
-  s32 WorldClock::getType() const { return JLI_OBJECT_TYPE_WorldClock; }
+    s32 WorldClock::getType() const { return JLI_OBJECT_TYPE_WorldClock; }
 
-  WorldClock::operator std::string() const
-  {
-    return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
-  }
+    WorldClock::operator std::string() const
+    {
+        return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
+    }
 
-  f64 WorldClock::totalMilliseconds() const { return m_TotalMilliseconds; }
-  f32 WorldClock::timeStep() const { return m_TimeStep; }
+    f64 WorldClock::totalMilliseconds() const { return m_TotalMilliseconds; }
+    f32 WorldClock::timeStep() const { return m_TimeStep; }
 
-  void WorldClock::update(f64 milliseconds)
-  {
-    BT_PROFILE("WorldClock::update");
+    void WorldClock::update(f64 milliseconds)
+    {
+        BT_PROFILE("WorldClock::update");
 
-    m_TimeStep = milliseconds;
-    m_TotalMilliseconds += milliseconds;
+        m_TimeStep = milliseconds;
+        m_TotalMilliseconds += milliseconds;
 
-    //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%f",milliseconds);
-  }
+        //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%f",milliseconds);
+    }
 } // namespace njli

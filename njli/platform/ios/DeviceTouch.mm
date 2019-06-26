@@ -100,7 +100,8 @@ namespace njli
   ////                    // Simply scale the image size by the size of the
   /// frame /                case UIViewContentModeScaleToFill: / // Redraw is
   /// basically the same as scale to fill but redraws itself in the drawRect
-  /// call (so when bounds change) /                case UIViewContentModeRedraw:
+  /// call (so when bounds change) /                case
+  /// UIViewContentModeRedraw:
   //// return
   /// CGPointMake(floor(touch.x/(view.frame.size.width/view.image.size.width)),floor(touch.y/(view.frame.size.height/view.image.size.height)));
   ////                    // Although the documentation doesn't state it, we

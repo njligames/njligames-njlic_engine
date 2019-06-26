@@ -24,240 +24,243 @@
 
 namespace njli
 {
-  PhysicsConstraintFixed::PhysicsConstraintFixed()
-      : PhysicsConstraint(), m_btFixedConstraint(NULL)
-  {
-  }
+    PhysicsConstraintFixed::PhysicsConstraintFixed()
+        : PhysicsConstraint(), m_btFixedConstraint(NULL)
+    {
+    }
 
-  PhysicsConstraintFixed::PhysicsConstraintFixed(const AbstractBuilder &builder)
-      : PhysicsConstraint(builder), m_btFixedConstraint(NULL)
-  {
-  }
+    PhysicsConstraintFixed::PhysicsConstraintFixed(
+        const AbstractBuilder &builder)
+        : PhysicsConstraint(builder), m_btFixedConstraint(NULL)
+    {
+    }
 
-  PhysicsConstraintFixed::PhysicsConstraintFixed(
-      const PhysicsConstraintFixed &copy)
-      : PhysicsConstraint(copy), m_btFixedConstraint(NULL)
-  {
-  }
+    PhysicsConstraintFixed::PhysicsConstraintFixed(
+        const PhysicsConstraintFixed &copy)
+        : PhysicsConstraint(copy), m_btFixedConstraint(NULL)
+    {
+    }
 
-  PhysicsConstraintFixed::~PhysicsConstraintFixed() { removeConstraint(); }
+    PhysicsConstraintFixed::~PhysicsConstraintFixed() { removeConstraint(); }
 
-  PhysicsConstraintFixed &PhysicsConstraintFixed::
-  operator=(const PhysicsConstraintFixed &rhs)
-  {
-    if (this != &rhs)
-      {
-      }
-    return *this;
-  }
+    PhysicsConstraintFixed &PhysicsConstraintFixed::
+    operator=(const PhysicsConstraintFixed &rhs)
+    {
+        if (this != &rhs)
+            {
+            }
+        return *this;
+    }
 
-  s32 PhysicsConstraintFixed::calculateSerializeBufferSize() const
-  {
-    // TODO: calculateSerializeBufferSize
-    return 0;
-  }
+    s32 PhysicsConstraintFixed::calculateSerializeBufferSize() const
+    {
+        // TODO: calculateSerializeBufferSize
+        return 0;
+    }
 
-  void PhysicsConstraintFixed::serialize(void *dataBuffer,
-                                         btSerializer *serializer) const
-  {
-    // TODO: serialize
-  }
+    void PhysicsConstraintFixed::serialize(void *dataBuffer,
+                                           btSerializer *serializer) const
+    {
+        // TODO: serialize
+    }
 
-  const char *PhysicsConstraintFixed::getClassName() const
-  {
-    return "PhysicsConstraintFixed";
-  }
+    const char *PhysicsConstraintFixed::getClassName() const
+    {
+        return "PhysicsConstraintFixed";
+    }
 
-  s32 PhysicsConstraintFixed::getType() const
-  {
-    return PhysicsConstraintFixed::type();
-  }
+    s32 PhysicsConstraintFixed::getType() const
+    {
+        return PhysicsConstraintFixed::type();
+    }
 
-  PhysicsConstraintFixed::operator std::string() const
-  {
-    return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
-  }
+    PhysicsConstraintFixed::operator std::string() const
+    {
+        return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
+    }
 
-  PhysicsConstraintFixed **PhysicsConstraintFixed::createArray(const u32 size)
-  {
-    return (PhysicsConstraintFixed **)World::getInstance()
-        ->getWorldFactory()
-        ->createArray(PhysicsConstraintFixed::type(), size);
-  }
+    PhysicsConstraintFixed **PhysicsConstraintFixed::createArray(const u32 size)
+    {
+        return (PhysicsConstraintFixed **)World::getInstance()
+            ->getWorldFactory()
+            ->createArray(PhysicsConstraintFixed::type(), size);
+    }
 
-  void PhysicsConstraintFixed::destroyArray(PhysicsConstraintFixed **array,
-                                            const u32 size)
-  {
-    World::getInstance()->getWorldFactory()->destroyArray(
-        (AbstractFactoryObject **)array, size);
-  }
+    void PhysicsConstraintFixed::destroyArray(PhysicsConstraintFixed **array,
+                                              const u32 size)
+    {
+        World::getInstance()->getWorldFactory()->destroyArray(
+            (AbstractFactoryObject **)array, size);
+    }
 
-  PhysicsConstraintFixed *PhysicsConstraintFixed::create()
-  {
-    return dynamic_cast<PhysicsConstraintFixed *>(
-        World::getInstance()->getWorldFactory()->create(
-            PhysicsConstraintFixed::type()));
-  }
+    PhysicsConstraintFixed *PhysicsConstraintFixed::create()
+    {
+        return dynamic_cast<PhysicsConstraintFixed *>(
+            World::getInstance()->getWorldFactory()->create(
+                PhysicsConstraintFixed::type()));
+    }
 
-  PhysicsConstraintFixed *
-  PhysicsConstraintFixed::create(const PhysicsConstraintFixedBuilder &builder)
-  {
-    AbstractBuilder *b = (AbstractBuilder *)&builder;
+    PhysicsConstraintFixed *
+    PhysicsConstraintFixed::create(const PhysicsConstraintFixedBuilder &builder)
+    {
+        AbstractBuilder *b = (AbstractBuilder *)&builder;
 
-    return dynamic_cast<PhysicsConstraintFixed *>(
-        World::getInstance()->getWorldFactory()->create(*b));
-  }
+        return dynamic_cast<PhysicsConstraintFixed *>(
+            World::getInstance()->getWorldFactory()->create(*b));
+    }
 
-  PhysicsConstraintFixed *
-  PhysicsConstraintFixed::clone(const PhysicsConstraintFixed &object)
-  {
-    return dynamic_cast<PhysicsConstraintFixed *>(
-        World::getInstance()->getWorldFactory()->clone(object, false));
-  }
+    PhysicsConstraintFixed *
+    PhysicsConstraintFixed::clone(const PhysicsConstraintFixed &object)
+    {
+        return dynamic_cast<PhysicsConstraintFixed *>(
+            World::getInstance()->getWorldFactory()->clone(object, false));
+    }
 
-  PhysicsConstraintFixed *
-  PhysicsConstraintFixed::copy(const PhysicsConstraintFixed &object)
-  {
-    return dynamic_cast<PhysicsConstraintFixed *>(
-        World::getInstance()->getWorldFactory()->clone(object, true));
-  }
+    PhysicsConstraintFixed *
+    PhysicsConstraintFixed::copy(const PhysicsConstraintFixed &object)
+    {
+        return dynamic_cast<PhysicsConstraintFixed *>(
+            World::getInstance()->getWorldFactory()->clone(object, true));
+    }
 
-  void PhysicsConstraintFixed::destroy(PhysicsConstraintFixed *object)
-  {
-    if (object)
-      {
-        PhysicsConstraint::destroy(object);
-      }
-  }
+    void PhysicsConstraintFixed::destroy(PhysicsConstraintFixed *object)
+    {
+        if (object)
+            {
+                PhysicsConstraint::destroy(object);
+            }
+    }
 
-  void PhysicsConstraintFixed::load(PhysicsConstraintFixed &object,
-                                    lua_State *L, int index)
-  {
-    // Push another reference to the table on top of the stack (so we know
-    // where it is, and this function can work for negative, positive and
-    // pseudo indices
-    lua_pushvalue(L, index);
-    // stack now contains: -1 => table
-    lua_pushnil(L);
-    // stack now contains: -1 => nil; -2 => table
-    while (lua_next(L, -2))
-      {
-        // stack now contains: -1 => value; -2 => key; -3 => table
-        // copy the key so that lua_tostring does not modify the original
-        lua_pushvalue(L, -2);
-        // stack now contains: -1 => key; -2 => value; -3 => key; -4 => table
-        const char *key = lua_tostring(L, -1);
-        //            const char *value = lua_tostring(L, -2);
-        if (lua_istable(L, -2))
-          {
-            PhysicsConstraintFixed::load(object, L, -2);
-          }
-        else
-          {
-            if (lua_isnumber(L, index))
-              {
-                double number = lua_tonumber(L, index);
-                printf("%s => %f\n", key, number);
-              }
-            else if (lua_isstring(L, index))
-              {
-                const char *v = lua_tostring(L, index);
-                printf("%s => %s\n", key, v);
-              }
-            else if (lua_isboolean(L, index))
-              {
-                bool v = lua_toboolean(L, index);
-                printf("%s => %d\n", key, v);
-              }
-            else if (lua_isuserdata(L, index))
-              {
-                //                    swig_lua_userdata *usr;
-                //                    swig_type_info *type;
-                //                    assert(lua_isuserdata(L,index));
-                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                //                    /* get data */
-                //                    type = usr->type;
-                //                    njli::AbstractFactoryObject *object =
-                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                //                    printf("%s => %d:%s\n", key,
-                //                    object->getType(),
-                //                    object->getClassName());
-              }
-          }
-        // pop value + copy of key, leaving original key
-        lua_pop(L, 2);
-        // stack now contains: -1 => key; -2 => table
-      }
-    // stack now contains: -1 => table (when lua_next returns 0 it pops the key
-    // but does not push anything.)
-    // Pop table
-    lua_pop(L, 1);
-    // Stack is now the same as it was on entry to this function
-  }
+    void PhysicsConstraintFixed::load(PhysicsConstraintFixed &object,
+                                      lua_State *L, int index)
+    {
+        // Push another reference to the table on top of the stack (so we know
+        // where it is, and this function can work for negative, positive and
+        // pseudo indices
+        lua_pushvalue(L, index);
+        // stack now contains: -1 => table
+        lua_pushnil(L);
+        // stack now contains: -1 => nil; -2 => table
+        while (lua_next(L, -2))
+            {
+                // stack now contains: -1 => value; -2 => key; -3 => table
+                // copy the key so that lua_tostring does not modify the
+                // original
+                lua_pushvalue(L, -2);
+                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+                // table
+                const char *key = lua_tostring(L, -1);
+                //            const char *value = lua_tostring(L, -2);
+                if (lua_istable(L, -2))
+                    {
+                        PhysicsConstraintFixed::load(object, L, -2);
+                    }
+                else
+                    {
+                        if (lua_isnumber(L, index))
+                            {
+                                double number = lua_tonumber(L, index);
+                                printf("%s => %f\n", key, number);
+                            }
+                        else if (lua_isstring(L, index))
+                            {
+                                const char *v = lua_tostring(L, index);
+                                printf("%s => %s\n", key, v);
+                            }
+                        else if (lua_isboolean(L, index))
+                            {
+                                bool v = lua_toboolean(L, index);
+                                printf("%s => %d\n", key, v);
+                            }
+                        else if (lua_isuserdata(L, index))
+                            {
+                                //                    swig_lua_userdata *usr;
+                                //                    swig_type_info *type;
+                                //                    assert(lua_isuserdata(L,index));
+                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                                //                    /* get data */
+                                //                    type = usr->type;
+                                //                    njli::AbstractFactoryObject
+                                //                    *object =
+                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                                //                    printf("%s => %d:%s\n",
+                                //                    key, object->getType(),
+                                //                    object->getClassName());
+                            }
+                    }
+                // pop value + copy of key, leaving original key
+                lua_pop(L, 2);
+                // stack now contains: -1 => key; -2 => table
+            }
+        // stack now contains: -1 => table (when lua_next returns 0 it pops the
+        // key but does not push anything.) Pop table
+        lua_pop(L, 1);
+        // Stack is now the same as it was on entry to this function
+    }
 
-  u32 PhysicsConstraintFixed::type()
-  {
-    return JLI_OBJECT_TYPE_PhysicsConstraintFixed;
-  }
+    u32 PhysicsConstraintFixed::type()
+    {
+        return JLI_OBJECT_TYPE_PhysicsConstraintFixed;
+    }
 
-  void PhysicsConstraintFixed::setNodes(Node *nodeA, Node *nodeB,
-                                        const btTransform &frameInA,
-                                        const btTransform &frameInB)
-  {
-    SDL_assert(nodeA && nodeB);
+    void PhysicsConstraintFixed::setNodes(Node *nodeA, Node *nodeB,
+                                          const btTransform &frameInA,
+                                          const btTransform &frameInB)
+    {
+        SDL_assert(nodeA && nodeB);
 
-    if (nodeA && !nodeA->getPhysicsBody()->isDynamicPhysics())
-      SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "%s", nodeA->getName());
+        if (nodeA && !nodeA->getPhysicsBody()->isDynamicPhysics())
+            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "%s", nodeA->getName());
 
-    if (nodeB && !nodeB->getPhysicsBody()->isDynamicPhysics())
-      SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "%s", nodeB->getName());
+        if (nodeB && !nodeB->getPhysicsBody()->isDynamicPhysics())
+            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "%s", nodeB->getName());
 
-    SDL_assert(nodeA->getPhysicsBody());
-    SDL_assert(nodeB->getPhysicsBody());
+        SDL_assert(nodeA->getPhysicsBody());
+        SDL_assert(nodeB->getPhysicsBody());
 
-    btRigidBody *rigidBodyA = NULL;
-    btRigidBody *rigidBodyB = NULL;
+        btRigidBody *rigidBodyA = NULL;
+        btRigidBody *rigidBodyB = NULL;
 
-    if (nodeA)
-      rigidBodyA = dynamic_cast<btRigidBody *>(
-          nodeA->getPhysicsBody()->getCollisionObject());
+        if (nodeA)
+            rigidBodyA = dynamic_cast<btRigidBody *>(
+                nodeA->getPhysicsBody()->getCollisionObject());
 
-    if (nodeB)
-      rigidBodyB = dynamic_cast<btRigidBody *>(
-          nodeB->getPhysicsBody()->getCollisionObject());
+        if (nodeB)
+            rigidBodyB = dynamic_cast<btRigidBody *>(
+                nodeB->getPhysicsBody()->getCollisionObject());
 
-    removeConstraint();
+        removeConstraint();
 
-    m_btFixedConstraint =
-        new btFixedConstraint(*rigidBodyA, *rigidBodyB, frameInA, frameInB);
+        m_btFixedConstraint =
+            new btFixedConstraint(*rigidBodyA, *rigidBodyB, frameInA, frameInB);
 
-    if (rigidBodyA)
-      getNodeA()->getPhysicsBody()->setPhysicsConstraint(this);
-    if (rigidBodyB)
-      getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
+        if (rigidBodyA)
+            getNodeA()->getPhysicsBody()->setPhysicsConstraint(this);
+        if (rigidBodyB)
+            getNodeB()->getPhysicsBody()->setPhysicsConstraint(this);
 
-    if (nullptr != rigidBodyA || nullptr != rigidBodyB)
-      {
-        addConstraint();
-      }
-  }
+        if (nullptr != rigidBodyA || nullptr != rigidBodyB)
+            {
+                addConstraint();
+            }
+    }
 
-  bool PhysicsConstraintFixed::removeConstraint()
-  {
-    if (m_btFixedConstraint)
-      delete m_btFixedConstraint;
-    m_btFixedConstraint = NULL;
+    bool PhysicsConstraintFixed::removeConstraint()
+    {
+        if (m_btFixedConstraint)
+            delete m_btFixedConstraint;
+        m_btFixedConstraint = NULL;
 
-    return PhysicsConstraint::removeConstraint();
-  }
+        return PhysicsConstraint::removeConstraint();
+    }
 
-  btTypedConstraint *PhysicsConstraintFixed::getConstraint()
-  {
-    return m_btFixedConstraint;
-  }
+    btTypedConstraint *PhysicsConstraintFixed::getConstraint()
+    {
+        return m_btFixedConstraint;
+    }
 
-  const btTypedConstraint *PhysicsConstraintFixed::getConstraint() const
-  {
-    return m_btFixedConstraint;
-  }
+    const btTypedConstraint *PhysicsConstraintFixed::getConstraint() const
+    {
+        return m_btFixedConstraint;
+    }
 } // namespace njli

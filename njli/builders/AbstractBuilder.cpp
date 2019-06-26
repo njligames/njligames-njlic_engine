@@ -12,20 +12,20 @@
 
 namespace njli
 {
-  AbstractBuilder::AbstractBuilder() : AbstractFactoryObject(this) {}
+    AbstractBuilder::AbstractBuilder() : AbstractFactoryObject(this) {}
 
-  AbstractBuilder::AbstractBuilder(const AbstractBuilder &copy)
-      : AbstractFactoryObject(this)
-  {
-  }
+    AbstractBuilder::AbstractBuilder(const AbstractBuilder &copy)
+        : AbstractFactoryObject(this)
+    {
+    }
 
-  AbstractBuilder::~AbstractBuilder() {}
+    AbstractBuilder::~AbstractBuilder() {}
 
-  AbstractBuilder &AbstractBuilder::operator=(const AbstractBuilder &rhs)
-  {
-    if (this != &rhs)
-      {
-      }
-    return *this;
-  }
+    AbstractBuilder &AbstractBuilder::operator=(const AbstractBuilder &rhs)
+    {
+        if (this != &rhs)
+            {
+            }
+        return *this;
+    }
 } // namespace njli

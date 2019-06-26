@@ -19,323 +19,331 @@
 
 namespace njli
 {
-  PhysicsShapeBox::PhysicsShapeBox()
-      : PhysicsShape(), m_btBoxShape(new btBoxShape(btVector3(1, 1, 1)))
-  {
-    m_btBoxShape->setUserPointer(static_cast<void *>(this));
-  }
+    PhysicsShapeBox::PhysicsShapeBox()
+        : PhysicsShape(), m_btBoxShape(new btBoxShape(btVector3(1, 1, 1)))
+    {
+        m_btBoxShape->setUserPointer(static_cast<void *>(this));
+    }
 
-  PhysicsShapeBox::PhysicsShapeBox(const AbstractBuilder &builder)
-      : PhysicsShape(builder), m_btBoxShape(new btBoxShape(btVector3(1, 1, 1)))
-  {
-    m_btBoxShape->setUserPointer(static_cast<void *>(this));
-  }
+    PhysicsShapeBox::PhysicsShapeBox(const AbstractBuilder &builder)
+        : PhysicsShape(builder),
+          m_btBoxShape(new btBoxShape(btVector3(1, 1, 1)))
+    {
+        m_btBoxShape->setUserPointer(static_cast<void *>(this));
+    }
 
-  PhysicsShapeBox::PhysicsShapeBox(const PhysicsShapeBox &copy)
-      : PhysicsShape(copy), m_btBoxShape(new btBoxShape(btVector3(1, 1, 1)))
-  {
-    // TODO: implement
-
-    m_btBoxShape->setUserPointer(static_cast<void *>(this));
-  }
-
-  PhysicsShapeBox::~PhysicsShapeBox()
-  {
-    m_btBoxShape->setUserPointer(NULL);
-    delete m_btBoxShape;
-    m_btBoxShape = NULL;
-  }
-
-  PhysicsShapeBox &PhysicsShapeBox::operator=(const PhysicsShapeBox &rhs)
-  {
-    if (this != &rhs)
-      {
+    PhysicsShapeBox::PhysicsShapeBox(const PhysicsShapeBox &copy)
+        : PhysicsShape(copy), m_btBoxShape(new btBoxShape(btVector3(1, 1, 1)))
+    {
         // TODO: implement
-      }
-    return *this;
-  }
 
-  s32 PhysicsShapeBox::calculateSerializeBufferSize() const
-  {
-    // TODO: calculateSerializeBufferSize
-    return 0;
-  }
+        m_btBoxShape->setUserPointer(static_cast<void *>(this));
+    }
 
-  void PhysicsShapeBox::serialize(void *dataBuffer,
-                                  btSerializer *serializer) const
-  {
-    // TODO: serialize
-  }
+    PhysicsShapeBox::~PhysicsShapeBox()
+    {
+        m_btBoxShape->setUserPointer(NULL);
+        delete m_btBoxShape;
+        m_btBoxShape = NULL;
+    }
 
-  const char *PhysicsShapeBox::getClassName() const
-  {
-    return "PhysicsShapeBox";
-  }
+    PhysicsShapeBox &PhysicsShapeBox::operator=(const PhysicsShapeBox &rhs)
+    {
+        if (this != &rhs)
+            {
+                // TODO: implement
+            }
+        return *this;
+    }
 
-  s32 PhysicsShapeBox::getType() const { return PhysicsShapeBox::type(); }
+    s32 PhysicsShapeBox::calculateSerializeBufferSize() const
+    {
+        // TODO: calculateSerializeBufferSize
+        return 0;
+    }
 
-  PhysicsShapeBox::operator std::string() const
-  {
-    return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
-  }
+    void PhysicsShapeBox::serialize(void *dataBuffer,
+                                    btSerializer *serializer) const
+    {
+        // TODO: serialize
+    }
 
-  PhysicsShapeBox **PhysicsShapeBox::createArray(const u32 size)
-  {
-    return (PhysicsShapeBox **)World::getInstance()
-        ->getWorldFactory()
-        ->createArray(PhysicsShapeBox::type(), size);
-  }
+    const char *PhysicsShapeBox::getClassName() const
+    {
+        return "PhysicsShapeBox";
+    }
 
-  void PhysicsShapeBox::destroyArray(PhysicsShapeBox **array, const u32 size)
-  {
-    World::getInstance()->getWorldFactory()->destroyArray(
-        (AbstractFactoryObject **)array, size);
-  }
+    s32 PhysicsShapeBox::getType() const { return PhysicsShapeBox::type(); }
 
-  PhysicsShapeBox *PhysicsShapeBox::create()
-  {
-    return dynamic_cast<PhysicsShapeBox *>(
-        World::getInstance()->getWorldFactory()->create(
-            PhysicsShapeBox::type()));
-  }
+    PhysicsShapeBox::operator std::string() const
+    {
+        return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
+    }
 
-  PhysicsShapeBox *
-  PhysicsShapeBox::create(const PhysicsShapeBoxBuilder &builder)
-  {
-    AbstractBuilder *b = (AbstractBuilder *)&builder;
+    PhysicsShapeBox **PhysicsShapeBox::createArray(const u32 size)
+    {
+        return (PhysicsShapeBox **)World::getInstance()
+            ->getWorldFactory()
+            ->createArray(PhysicsShapeBox::type(), size);
+    }
 
-    return dynamic_cast<PhysicsShapeBox *>(
-        World::getInstance()->getWorldFactory()->create(*b));
-  }
+    void PhysicsShapeBox::destroyArray(PhysicsShapeBox **array, const u32 size)
+    {
+        World::getInstance()->getWorldFactory()->destroyArray(
+            (AbstractFactoryObject **)array, size);
+    }
 
-  PhysicsShapeBox *PhysicsShapeBox::clone(const PhysicsShapeBox &object)
-  {
-    return dynamic_cast<PhysicsShapeBox *>(
-        World::getInstance()->getWorldFactory()->clone(object, false));
-  }
+    PhysicsShapeBox *PhysicsShapeBox::create()
+    {
+        return dynamic_cast<PhysicsShapeBox *>(
+            World::getInstance()->getWorldFactory()->create(
+                PhysicsShapeBox::type()));
+    }
 
-  PhysicsShapeBox *PhysicsShapeBox::copy(const PhysicsShapeBox &object)
-  {
-    return dynamic_cast<PhysicsShapeBox *>(
-        World::getInstance()->getWorldFactory()->clone(object, true));
-  }
+    PhysicsShapeBox *
+    PhysicsShapeBox::create(const PhysicsShapeBoxBuilder &builder)
+    {
+        AbstractBuilder *b = (AbstractBuilder *)&builder;
 
-  void PhysicsShapeBox::destroy(PhysicsShapeBox *object)
-  {
-    if (object)
-      {
-        PhysicsShape::destroy(object);
-      }
-  }
+        return dynamic_cast<PhysicsShapeBox *>(
+            World::getInstance()->getWorldFactory()->create(*b));
+    }
 
-  void PhysicsShapeBox::load(PhysicsShapeBox &object, lua_State *L, int index)
-  {
-    // Push another reference to the table on top of the stack (so we know
-    // where it is, and this function can work for negative, positive and
-    // pseudo indices
-    lua_pushvalue(L, index);
-    // stack now contains: -1 => table
-    lua_pushnil(L);
-    // stack now contains: -1 => nil; -2 => table
-    while (lua_next(L, -2))
-      {
-        // stack now contains: -1 => value; -2 => key; -3 => table
-        // copy the key so that lua_tostring does not modify the original
-        lua_pushvalue(L, -2);
-        // stack now contains: -1 => key; -2 => value; -3 => key; -4 => table
-        const char *key = lua_tostring(L, -1);
-        //            const char *value = lua_tostring(L, -2);
-        if (lua_istable(L, -2))
-          {
-            PhysicsShapeBox::load(object, L, -2);
-          }
-        else
-          {
-            if (lua_isnumber(L, index))
-              {
-                double number = lua_tonumber(L, index);
-                printf("%s => %f\n", key, number);
-              }
-            else if (lua_isstring(L, index))
-              {
-                const char *v = lua_tostring(L, index);
-                printf("%s => %s\n", key, v);
-              }
-            else if (lua_isboolean(L, index))
-              {
-                bool v = lua_toboolean(L, index);
-                printf("%s => %d\n", key, v);
-              }
-            else if (lua_isuserdata(L, index))
-              {
-                //                    swig_lua_userdata *usr;
-                //                    swig_type_info *type;
-                //                    assert(lua_isuserdata(L,index));
-                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                //                    /* get data */
-                //                    type = usr->type;
-                //                    njli::AbstractFactoryObject *object =
-                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                //                    printf("%s => %d:%s\n", key,
-                //                    object->getType(),
-                //                    object->getClassName());
-              }
-          }
-        // pop value + copy of key, leaving original key
-        lua_pop(L, 2);
-        // stack now contains: -1 => key; -2 => table
-      }
-    // stack now contains: -1 => table (when lua_next returns 0 it pops the key
-    // but does not push anything.)
-    // Pop table
-    lua_pop(L, 1);
-    // Stack is now the same as it was on entry to this function
-  }
+    PhysicsShapeBox *PhysicsShapeBox::clone(const PhysicsShapeBox &object)
+    {
+        return dynamic_cast<PhysicsShapeBox *>(
+            World::getInstance()->getWorldFactory()->clone(object, false));
+    }
 
-  u32 PhysicsShapeBox::type() { return JLI_OBJECT_TYPE_PhysicsShapeBox; }
+    PhysicsShapeBox *PhysicsShapeBox::copy(const PhysicsShapeBox &object)
+    {
+        return dynamic_cast<PhysicsShapeBox *>(
+            World::getInstance()->getWorldFactory()->clone(object, true));
+    }
 
-  void PhysicsShapeBox::setHalfExtends(const btVector3 &extends)
-  {
+    void PhysicsShapeBox::destroy(PhysicsShapeBox *object)
+    {
+        if (object)
+            {
+                PhysicsShape::destroy(object);
+            }
+    }
 
-    *m_btBoxShape = btBoxShape(extends * m_btBoxShape->getLocalScaling());
+    void PhysicsShapeBox::load(PhysicsShapeBox &object, lua_State *L, int index)
+    {
+        // Push another reference to the table on top of the stack (so we know
+        // where it is, and this function can work for negative, positive and
+        // pseudo indices
+        lua_pushvalue(L, index);
+        // stack now contains: -1 => table
+        lua_pushnil(L);
+        // stack now contains: -1 => nil; -2 => table
+        while (lua_next(L, -2))
+            {
+                // stack now contains: -1 => value; -2 => key; -3 => table
+                // copy the key so that lua_tostring does not modify the
+                // original
+                lua_pushvalue(L, -2);
+                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+                // table
+                const char *key = lua_tostring(L, -1);
+                //            const char *value = lua_tostring(L, -2);
+                if (lua_istable(L, -2))
+                    {
+                        PhysicsShapeBox::load(object, L, -2);
+                    }
+                else
+                    {
+                        if (lua_isnumber(L, index))
+                            {
+                                double number = lua_tonumber(L, index);
+                                printf("%s => %f\n", key, number);
+                            }
+                        else if (lua_isstring(L, index))
+                            {
+                                const char *v = lua_tostring(L, index);
+                                printf("%s => %s\n", key, v);
+                            }
+                        else if (lua_isboolean(L, index))
+                            {
+                                bool v = lua_toboolean(L, index);
+                                printf("%s => %d\n", key, v);
+                            }
+                        else if (lua_isuserdata(L, index))
+                            {
+                                //                    swig_lua_userdata *usr;
+                                //                    swig_type_info *type;
+                                //                    assert(lua_isuserdata(L,index));
+                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                                //                    /* get data */
+                                //                    type = usr->type;
+                                //                    njli::AbstractFactoryObject
+                                //                    *object =
+                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                                //                    printf("%s => %d:%s\n",
+                                //                    key, object->getType(),
+                                //                    object->getClassName());
+                            }
+                    }
+                // pop value + copy of key, leaving original key
+                lua_pop(L, 2);
+                // stack now contains: -1 => key; -2 => table
+            }
+        // stack now contains: -1 => table (when lua_next returns 0 it pops the
+        // key but does not push anything.) Pop table
+        lua_pop(L, 1);
+        // Stack is now the same as it was on entry to this function
+    }
 
-    //        enablePropertyChange();
-    //        PhysicsShape::getParent()->setPhysicsBody();
-  }
+    u32 PhysicsShapeBox::type() { return JLI_OBJECT_TYPE_PhysicsShapeBox; }
 
-  btVector3 PhysicsShapeBox::getHalfExtentsWithMargin() const
-  {
-    return getShape()->getHalfExtentsWithMargin();
-  }
+    void PhysicsShapeBox::setHalfExtends(const btVector3 &extends)
+    {
 
-  const btVector3 &PhysicsShapeBox::getHalfExtentsWithoutMargin() const
-  {
-    return getShape()->getHalfExtentsWithoutMargin();
-  }
+        *m_btBoxShape = btBoxShape(extends * m_btBoxShape->getLocalScaling());
 
-  btVector3
-  PhysicsShapeBox::localGetSupportingVertex(const btVector3 &vec) const
-  {
-    return getShape()->localGetSupportingVertex(vec);
-  }
+        //        enablePropertyChange();
+        //        PhysicsShape::getParent()->setPhysicsBody();
+    }
 
-  btVector3 PhysicsShapeBox::localGetSupportingVertexWithoutMargin(
-      const btVector3 &vec) const
-  {
-    return getShape()->localGetSupportingVertexWithoutMargin(vec);
-  }
+    btVector3 PhysicsShapeBox::getHalfExtentsWithMargin() const
+    {
+        return getShape()->getHalfExtentsWithMargin();
+    }
 
-  void PhysicsShapeBox::batchedUnitVectorGetSupportingVertexWithoutMargin(
-      const btVector3 *vectors, btVector3 *supportVerticesOut,
-      int numVectors) const
-  {
-    getShape()->batchedUnitVectorGetSupportingVertexWithoutMargin(
-        vectors, supportVerticesOut, numVectors);
-  }
+    const btVector3 &PhysicsShapeBox::getHalfExtentsWithoutMargin() const
+    {
+        return getShape()->getHalfExtentsWithoutMargin();
+    }
 
-  void PhysicsShapeBox::setMargin(btScalar collisionMargin)
-  {
-    getShape()->setMargin(collisionMargin);
+    btVector3
+    PhysicsShapeBox::localGetSupportingVertex(const btVector3 &vec) const
+    {
+        return getShape()->localGetSupportingVertex(vec);
+    }
 
-    //        enablePropertyChange();
-    //        PhysicsShape::getParent()->setPhysicsBody();
-  }
+    btVector3 PhysicsShapeBox::localGetSupportingVertexWithoutMargin(
+        const btVector3 &vec) const
+    {
+        return getShape()->localGetSupportingVertexWithoutMargin(vec);
+    }
 
-  //    void PhysicsShapeBox::setLocalScaling(const btVector3& scaling)
-  //    {
-  //        getShape()->setLocalScaling(scaling);
-  //
-  ////        enablePropertyChange();
-  ////        PhysicsShape::getParent()->setPhysicsBody();
-  //    }
+    void PhysicsShapeBox::batchedUnitVectorGetSupportingVertexWithoutMargin(
+        const btVector3 *vectors, btVector3 *supportVerticesOut,
+        int numVectors) const
+    {
+        getShape()->batchedUnitVectorGetSupportingVertexWithoutMargin(
+            vectors, supportVerticesOut, numVectors);
+    }
 
-  //    void PhysicsShapeBox::getAabb(const btTransform& t,btVector3&
-  //    aabbMin,btVector3& aabbMax) const
-  //    {
-  //        getShape()->getAabb(t, aabbMin, aabbMax);
-  //    }
+    void PhysicsShapeBox::setMargin(btScalar collisionMargin)
+    {
+        getShape()->setMargin(collisionMargin);
 
-  void PhysicsShapeBox::calculateLocalInertia(btScalar mass,
-                                              btVector3 &inertia) const
-  {
-    getShape()->calculateLocalInertia(mass, inertia);
-  }
+        //        enablePropertyChange();
+        //        PhysicsShape::getParent()->setPhysicsBody();
+    }
 
-  void PhysicsShapeBox::getPlane(btVector3 &planeNormal,
-                                 btVector3 &planeSupport, int i) const
-  {
-    getShape()->getPlane(planeNormal, planeSupport, i);
-  }
+    //    void PhysicsShapeBox::setLocalScaling(const btVector3& scaling)
+    //    {
+    //        getShape()->setLocalScaling(scaling);
+    //
+    ////        enablePropertyChange();
+    ////        PhysicsShape::getParent()->setPhysicsBody();
+    //    }
 
-  btVector3 PhysicsShapeBox::getPlane(int i) const
-  {
-    btVector3 v, dummy;
-    getPlane(v, dummy, i);
-    return v;
-  }
+    //    void PhysicsShapeBox::getAabb(const btTransform& t,btVector3&
+    //    aabbMin,btVector3& aabbMax) const
+    //    {
+    //        getShape()->getAabb(t, aabbMin, aabbMax);
+    //    }
 
-  int PhysicsShapeBox::getNumPlanes() const
-  {
-    return getShape()->getNumPlanes();
-  }
+    void PhysicsShapeBox::calculateLocalInertia(btScalar mass,
+                                                btVector3 &inertia) const
+    {
+        getShape()->calculateLocalInertia(mass, inertia);
+    }
 
-  int PhysicsShapeBox::getNumVertices() const
-  {
-    return getShape()->getNumVertices();
-  }
+    void PhysicsShapeBox::getPlane(btVector3 &planeNormal,
+                                   btVector3 &planeSupport, int i) const
+    {
+        getShape()->getPlane(planeNormal, planeSupport, i);
+    }
 
-  int PhysicsShapeBox::getNumEdges() const { return getShape()->getNumEdges(); }
+    btVector3 PhysicsShapeBox::getPlane(int i) const
+    {
+        btVector3 v, dummy;
+        getPlane(v, dummy, i);
+        return v;
+    }
 
-  void PhysicsShapeBox::getVertex(int i, btVector3 &vtx) const
-  {
-    getShape()->getVertex(i, vtx);
-  }
+    int PhysicsShapeBox::getNumPlanes() const
+    {
+        return getShape()->getNumPlanes();
+    }
 
-  void PhysicsShapeBox::getPlaneEquation(btVector4 &plane, int i) const
-  {
-    getShape()->getPlaneEquation(plane, i);
-  }
+    int PhysicsShapeBox::getNumVertices() const
+    {
+        return getShape()->getNumVertices();
+    }
 
-  void PhysicsShapeBox::getEdge(int i, btVector3 &pa, btVector3 &pb) const
-  {
-    getShape()->getEdge(i, pa, pb);
-  }
+    int PhysicsShapeBox::getNumEdges() const
+    {
+        return getShape()->getNumEdges();
+    }
 
-  bool PhysicsShapeBox::isInside(const btVector3 &pt, btScalar tolerance) const
-  {
-    return getShape()->isInside(pt, tolerance);
-  }
+    void PhysicsShapeBox::getVertex(int i, btVector3 &vtx) const
+    {
+        getShape()->getVertex(i, vtx);
+    }
 
-  const btCollisionShape *PhysicsShapeBox::getCollisionShape() const
-  {
-    return m_btBoxShape;
-  }
+    void PhysicsShapeBox::getPlaneEquation(btVector4 &plane, int i) const
+    {
+        getShape()->getPlaneEquation(plane, i);
+    }
 
-  btCollisionShape *PhysicsShapeBox::getCollisionShape()
-  {
-    return m_btBoxShape;
-  }
+    void PhysicsShapeBox::getEdge(int i, btVector3 &pa, btVector3 &pb) const
+    {
+        getShape()->getEdge(i, pa, pb);
+    }
 
-  void PhysicsShapeBox::setCollisionShape(const btCollisionShape &shape)
-  {
-    SDL_assert(shape.getShapeType() == m_btBoxShape->getShapeType());
+    bool PhysicsShapeBox::isInside(const btVector3 &pt,
+                                   btScalar tolerance) const
+    {
+        return getShape()->isInside(pt, tolerance);
+    }
 
-    const btBoxShape *_btBoxShape = dynamic_cast<const btBoxShape *>(&shape);
+    const btCollisionShape *PhysicsShapeBox::getCollisionShape() const
+    {
+        return m_btBoxShape;
+    }
 
-    setHalfExtends(_btBoxShape->getHalfExtentsWithoutMargin() /
-                   _btBoxShape->getLocalScaling());
+    btCollisionShape *PhysicsShapeBox::getCollisionShape()
+    {
+        return m_btBoxShape;
+    }
 
-    //        enablePropertyChange();
-    //        PhysicsShape::getParent()->setPhysicsBody();
-  }
+    void PhysicsShapeBox::setCollisionShape(const btCollisionShape &shape)
+    {
+        SDL_assert(shape.getShapeType() == m_btBoxShape->getShapeType());
 
-  const btBoxShape *PhysicsShapeBox::getShape() const
-  {
-    return dynamic_cast<const btBoxShape *>(m_btBoxShape);
-  }
+        const btBoxShape *_btBoxShape =
+            dynamic_cast<const btBoxShape *>(&shape);
 
-  btBoxShape *PhysicsShapeBox::getShape()
-  {
-    return dynamic_cast<btBoxShape *>(m_btBoxShape);
-  }
+        setHalfExtends(_btBoxShape->getHalfExtentsWithoutMargin() /
+                       _btBoxShape->getLocalScaling());
+
+        //        enablePropertyChange();
+        //        PhysicsShape::getParent()->setPhysicsBody();
+    }
+
+    const btBoxShape *PhysicsShapeBox::getShape() const
+    {
+        return dynamic_cast<const btBoxShape *>(m_btBoxShape);
+    }
+
+    btBoxShape *PhysicsShapeBox::getShape()
+    {
+        return dynamic_cast<btBoxShape *>(m_btBoxShape);
+    }
 } // namespace njli

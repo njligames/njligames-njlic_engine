@@ -19,9 +19,9 @@ static const luaL_Reg mod[] = {
 \*-------------------------------------------------------------------------*/
 int luaopen_socket_unix(lua_State *L)
 {
-  int i;
-  lua_newtable(L);
-  for (i = 0; mod[i].name; i++)
-    mod[i].func(L);
-  return 1;
+    int i;
+    lua_newtable(L);
+    for (i = 0; mod[i].name; i++)
+        mod[i].func(L);
+    return 1;
 }

@@ -3905,65 +3905,65 @@ static const unsigned char B8[] = {
 
 socket int luaopen_socket(lua_State *L)
 {
-  int arg = lua_gettop(L);
-  luaL_loadbuffer(L, (const char *)B1, sizeof(B1), "socket.lua");
-  lua_insert(L, 1);
-  lua_call(L, arg, 1);
-  return 1;
+    int arg = lua_gettop(L);
+    luaL_loadbuffer(L, (const char *)B1, sizeof(B1), "socket.lua");
+    lua_insert(L, 1);
+    lua_call(L, arg, 1);
+    return 1;
 }
 socket int luaopen_socket_url(lua_State *L)
 {
-  int arg = lua_gettop(L);
-  luaL_loadbuffer(L, (const char *)B2, sizeof(B2), "socket/url.lua");
-  lua_insert(L, 1);
-  lua_call(L, arg, 1);
-  return 1;
+    int arg = lua_gettop(L);
+    luaL_loadbuffer(L, (const char *)B2, sizeof(B2), "socket/url.lua");
+    lua_insert(L, 1);
+    lua_call(L, arg, 1);
+    return 1;
 }
 socket int luaopen_socket_tp(lua_State *L)
 {
-  int arg = lua_gettop(L);
-  luaL_loadbuffer(L, (const char *)B3, sizeof(B3), "socket/tp.lua");
-  lua_insert(L, 1);
-  lua_call(L, arg, 1);
-  return 1;
+    int arg = lua_gettop(L);
+    luaL_loadbuffer(L, (const char *)B3, sizeof(B3), "socket/tp.lua");
+    lua_insert(L, 1);
+    lua_call(L, arg, 1);
+    return 1;
 }
 socket int luaopen_socket_smtp(lua_State *L)
 {
-  int arg = lua_gettop(L);
-  luaL_loadbuffer(L, (const char *)B4, sizeof(B4), "socket/smtp.lua");
-  lua_insert(L, 1);
-  lua_call(L, arg, 1);
-  return 1;
+    int arg = lua_gettop(L);
+    luaL_loadbuffer(L, (const char *)B4, sizeof(B4), "socket/smtp.lua");
+    lua_insert(L, 1);
+    lua_call(L, arg, 1);
+    return 1;
 }
 socket int luaopen_socket_mime(lua_State *L)
 {
-  int arg = lua_gettop(L);
-  luaL_loadbuffer(L, (const char *)B5, sizeof(B5), "socket/mime.lua");
-  lua_insert(L, 1);
-  lua_call(L, arg, 1);
-  return 1;
+    int arg = lua_gettop(L);
+    luaL_loadbuffer(L, (const char *)B5, sizeof(B5), "socket/mime.lua");
+    lua_insert(L, 1);
+    lua_call(L, arg, 1);
+    return 1;
 }
 socket int luaopen_socket_ltn12(lua_State *L)
 {
-  int arg = lua_gettop(L);
-  luaL_loadbuffer(L, (const char *)B6, sizeof(B6), "socket/ltn12.lua");
-  lua_insert(L, 1);
-  lua_call(L, arg, 1);
-  return 1;
+    int arg = lua_gettop(L);
+    luaL_loadbuffer(L, (const char *)B6, sizeof(B6), "socket/ltn12.lua");
+    lua_insert(L, 1);
+    lua_call(L, arg, 1);
+    return 1;
 }
 socket int luaopen_socket_http(lua_State *L)
 {
-  int arg = lua_gettop(L);
-  luaL_loadbuffer(L, (const char *)B7, sizeof(B7), "socket/http.lua");
-  lua_insert(L, 1);
-  lua_call(L, arg, 1);
-  return 1;
+    int arg = lua_gettop(L);
+    luaL_loadbuffer(L, (const char *)B7, sizeof(B7), "socket/http.lua");
+    lua_insert(L, 1);
+    lua_call(L, arg, 1);
+    return 1;
 }
 socket int luaopen_socket_ftp(lua_State *L)
 {
-  int arg = lua_gettop(L);
-  luaL_loadbuffer(L, (const char *)B8, sizeof(B8), "socket/ftp.lua");
-  lua_insert(L, 1);
-  lua_call(L, arg, 1);
-  return 1;
+    int arg = lua_gettop(L);
+    luaL_loadbuffer(L, (const char *)B8, sizeof(B8), "socket/ftp.lua");
+    lua_insert(L, 1);
+    lua_call(L, arg, 1);
+    return 1;
 }

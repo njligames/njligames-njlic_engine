@@ -44,1693 +44,1721 @@
 
 namespace njli
 {
-  void Node::updateActions(void *_ptr)
-  {
-    njli::Node *node = static_cast<njli::Node *>(_ptr);
-    node->updateActions();
-  }
+    void Node::updateActions(void *_ptr)
+    {
+        njli::Node *node = static_cast<njli::Node *>(_ptr);
+        node->updateActions();
+    }
 
-  Node::Node()
-      : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
-        m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL), m_Opacity(1.0f),
-        m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
-        m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
-        m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
-        m_OpacityDirty(true), m_TransformDirty(true),
-        m_RenderCategory(JLI_BIT_CATEGORY_NONE),
-        m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
-        m_GeometryIndex(-1), m_isTouchedByRay(false),
-        //    m_ApplyPhysicsShape(false),
-        m_Transform(new btTransform(btTransform::getIdentity())),
-        m_ColorTransform(new btTransform(btTransform::getIdentity())),
-        m_Orientation(new btQuaternion(btQuaternion::getIdentity())),
-        m_Scale(new btVector3(1, 1, 1)),
-        m_Pivot(new btTransform(btTransform::getIdentity())),
-        m_SteeringBehaviorMachine(NULL), m_CurrentScene(NULL) //,
-  //    m_ActionThread(Thread::create())
-  {
-    addChild(m_NodeStateMachine);
+    Node::Node()
+        : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
+          m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL),
+          m_Opacity(1.0f),
+          m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
+          m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
+          m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
+          m_OpacityDirty(true), m_TransformDirty(true),
+          m_RenderCategory(JLI_BIT_CATEGORY_NONE),
+          m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
+          m_GeometryIndex(-1), m_isTouchedByRay(false),
+          //    m_ApplyPhysicsShape(false),
+          m_Transform(new btTransform(btTransform::getIdentity())),
+          m_ColorTransform(new btTransform(btTransform::getIdentity())),
+          m_Orientation(new btQuaternion(btQuaternion::getIdentity())),
+          m_Scale(new btVector3(1, 1, 1)),
+          m_Pivot(new btTransform(btTransform::getIdentity())),
+          m_SteeringBehaviorMachine(NULL), m_CurrentScene(NULL) //,
+    //    m_ActionThread(Thread::create())
+    {
+        addChild(m_NodeStateMachine);
 
-    //        m_ActionThread->enablePause(false);
-  }
+        //        m_ActionThread->enablePause(false);
+    }
 
-  Node::Node(const AbstractBuilder &builder)
-      : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
-        m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL), m_Opacity(1.0f),
-        m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
-        m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
-        m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
-        m_OpacityDirty(true), m_TransformDirty(true),
-        m_RenderCategory(JLI_BIT_CATEGORY_NONE),
-        m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
-        m_GeometryIndex(-1), m_isTouchedByRay(false),
-        //    m_ApplyPhysicsShape(false),
-        m_Transform(new btTransform(btTransform::getIdentity())),
-        m_ColorTransform(new btTransform(btTransform::getIdentity())),
-        m_Orientation(new btQuaternion(btQuaternion::getIdentity())),
-        m_Scale(new btVector3(1, 1, 1)),
-        m_Pivot(new btTransform(btTransform::getIdentity())),
-        m_SteeringBehaviorMachine(NULL), m_CurrentScene(NULL) //,
-  //    m_ActionThread(Thread::create())
-  {
-    addChild(m_NodeStateMachine);
+    Node::Node(const AbstractBuilder &builder)
+        : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
+          m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL),
+          m_Opacity(1.0f),
+          m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
+          m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
+          m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
+          m_OpacityDirty(true), m_TransformDirty(true),
+          m_RenderCategory(JLI_BIT_CATEGORY_NONE),
+          m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
+          m_GeometryIndex(-1), m_isTouchedByRay(false),
+          //    m_ApplyPhysicsShape(false),
+          m_Transform(new btTransform(btTransform::getIdentity())),
+          m_ColorTransform(new btTransform(btTransform::getIdentity())),
+          m_Orientation(new btQuaternion(btQuaternion::getIdentity())),
+          m_Scale(new btVector3(1, 1, 1)),
+          m_Pivot(new btTransform(btTransform::getIdentity())),
+          m_SteeringBehaviorMachine(NULL), m_CurrentScene(NULL) //,
+    //    m_ActionThread(Thread::create())
+    {
+        addChild(m_NodeStateMachine);
 
-    //        m_ActionThread->enablePause(false);
-  }
+        //        m_ActionThread->enablePause(false);
+    }
 
-  Node::Node(const Node &copy)
-      : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
-        m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL), m_Opacity(1.0f),
-        m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
-        m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
-        m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
-        m_OpacityDirty(true), m_TransformDirty(true),
-        m_RenderCategory(JLI_BIT_CATEGORY_NONE),
-        m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
-        m_GeometryIndex(-1), m_isTouchedByRay(false),
-        //    m_ApplyPhysicsShape(false),
-        m_Transform(new btTransform(btTransform::getIdentity())),
-        m_ColorTransform(new btTransform(btTransform::getIdentity())),
-        m_Orientation(new btQuaternion(btQuaternion::getIdentity())),
-        m_Scale(new btVector3(1, 1, 1)),
-        m_Pivot(new btTransform(btTransform::getIdentity())),
-        m_SteeringBehaviorMachine(NULL), m_CurrentScene(NULL) //,
-  //    m_ActionThread(Thread::create())
-  {
-    addChild(m_NodeStateMachine);
+    Node::Node(const Node &copy)
+        : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
+          m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL),
+          m_Opacity(1.0f),
+          m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
+          m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
+          m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
+          m_OpacityDirty(true), m_TransformDirty(true),
+          m_RenderCategory(JLI_BIT_CATEGORY_NONE),
+          m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
+          m_GeometryIndex(-1), m_isTouchedByRay(false),
+          //    m_ApplyPhysicsShape(false),
+          m_Transform(new btTransform(btTransform::getIdentity())),
+          m_ColorTransform(new btTransform(btTransform::getIdentity())),
+          m_Orientation(new btQuaternion(btQuaternion::getIdentity())),
+          m_Scale(new btVector3(1, 1, 1)),
+          m_Pivot(new btTransform(btTransform::getIdentity())),
+          m_SteeringBehaviorMachine(NULL), m_CurrentScene(NULL) //,
+    //    m_ActionThread(Thread::create())
+    {
+        addChild(m_NodeStateMachine);
 
-    //        m_ActionThread->enablePause(false);
-  }
+        //        m_ActionThread->enablePause(false);
+    }
 
-  Node::~Node()
-  {
-    delete m_Pivot;
-    m_Pivot = NULL;
+    Node::~Node()
+    {
+        delete m_Pivot;
+        m_Pivot = NULL;
 
-    delete m_Scale;
-    m_Scale = NULL;
+        delete m_Scale;
+        m_Scale = NULL;
 
-    delete m_Orientation;
-    m_Orientation = NULL;
+        delete m_Orientation;
+        m_Orientation = NULL;
 
-    delete m_Transform;
-    m_Transform = NULL;
+        delete m_Transform;
+        m_Transform = NULL;
 
-    delete m_ColorTransform;
-    m_ColorTransform = NULL;
+        delete m_ColorTransform;
+        m_ColorTransform = NULL;
 
-    delete m_Colorbase;
-    m_Colorbase = NULL;
+        delete m_Colorbase;
+        m_Colorbase = NULL;
 
-    delete m_NormalMatrix;
-    m_NormalMatrix = NULL;
+        delete m_NormalMatrix;
+        m_NormalMatrix = NULL;
 
-    removeFromParentNode();
-  }
+        removeFromParentNode();
+    }
 
-  Node &Node::operator=(const Node &rhs)
-  {
-    if (this != &rhs)
-      {
-        // TODO: Implement....
-      }
-    return *this;
-  }
+    Node &Node::operator=(const Node &rhs)
+    {
+        if (this != &rhs)
+            {
+                // TODO: Implement....
+            }
+        return *this;
+    }
 
-  s32 Node::calculateSerializeBufferSize() const
-  {
-    // TODO: calculateSerializeBufferSize
-    return 0;
-  }
+    s32 Node::calculateSerializeBufferSize() const
+    {
+        // TODO: calculateSerializeBufferSize
+        return 0;
+    }
 
-  void Node::serialize(void *dataBuffer, btSerializer *serializer) const
-  {
-    // TODO: serialize
-  }
+    void Node::serialize(void *dataBuffer, btSerializer *serializer) const
+    {
+        // TODO: serialize
+    }
 
-  const char *Node::getClassName() const { return "Node"; }
+    const char *Node::getClassName() const { return "Node"; }
 
-  s32 Node::getType() const { return Node::type(); }
+    s32 Node::getType() const { return Node::type(); }
 
-  Node::operator std::string() const
-  {
-    std::string temp(string_format(FORMATSTRING, getName()));
-    return temp;
-    //      const char *temp = string_format(FORMATSTRING, getName());
-    //    return njli::JsonJLI::parse(temp);
-  }
+    Node::operator std::string() const
+    {
+        std::string temp(string_format(FORMATSTRING, getName()));
+        return temp;
+        //      const char *temp = string_format(FORMATSTRING, getName());
+        //    return njli::JsonJLI::parse(temp);
+    }
 
-  Node **Node::createArray(const u32 size)
-  {
-    return (Node **)World::getInstance()->getWorldFactory()->createArray(
-        Node::type(), size);
-  }
+    Node **Node::createArray(const u32 size)
+    {
+        return (Node **)World::getInstance()->getWorldFactory()->createArray(
+            Node::type(), size);
+    }
 
-  void Node::destroyArray(Node **array, const u32 size)
-  {
-    World::getInstance()->getWorldFactory()->destroyArray(
-        (AbstractFactoryObject **)array, size);
-  }
+    void Node::destroyArray(Node **array, const u32 size)
+    {
+        World::getInstance()->getWorldFactory()->destroyArray(
+            (AbstractFactoryObject **)array, size);
+    }
 
-  Node *Node::create()
-  {
-    return dynamic_cast<Node *>(
-        World::getInstance()->getWorldFactory()->create(Node::type()));
-  }
+    Node *Node::create()
+    {
+        return dynamic_cast<Node *>(
+            World::getInstance()->getWorldFactory()->create(Node::type()));
+    }
 
-  Node *Node::create(const NodeBuilder &builder)
-  {
-    AbstractBuilder *b = (AbstractBuilder *)&builder;
+    Node *Node::create(const NodeBuilder &builder)
+    {
+        AbstractBuilder *b = (AbstractBuilder *)&builder;
 
-    return dynamic_cast<Node *>(
-        World::getInstance()->getWorldFactory()->create(*b));
-  }
+        return dynamic_cast<Node *>(
+            World::getInstance()->getWorldFactory()->create(*b));
+    }
 
-  Node *Node::clone(const Node &object)
-  {
-    return dynamic_cast<Node *>(
-        World::getInstance()->getWorldFactory()->clone(object, false));
-  }
+    Node *Node::clone(const Node &object)
+    {
+        return dynamic_cast<Node *>(
+            World::getInstance()->getWorldFactory()->clone(object, false));
+    }
 
-  Node *Node::copy(const Node &object)
-  {
-    return dynamic_cast<Node *>(
-        World::getInstance()->getWorldFactory()->clone(object, true));
-  }
+    Node *Node::copy(const Node &object)
+    {
+        return dynamic_cast<Node *>(
+            World::getInstance()->getWorldFactory()->clone(object, true));
+    }
 
-  void Node::destroy(Node *object, bool destroyChildrenNodes)
-  {
-    if (object)
-      {
-        if (destroyChildrenNodes)
-          {
-            for (std::vector<Node *>::iterator iter =
-                     object->m_Children.begin();
-                 iter != object->m_Children.end(); ++iter)
-              {
-                Node::destroy(*iter, true);
-              }
-          }
+    void Node::destroy(Node *object, bool destroyChildrenNodes)
+    {
+        if (object)
+            {
+                if (destroyChildrenNodes)
+                    {
+                        for (std::vector<Node *>::iterator iter =
+                                 object->m_Children.begin();
+                             iter != object->m_Children.end(); ++iter)
+                            {
+                                Node::destroy(*iter, true);
+                            }
+                    }
 
-        object->removeAllActions();
-        object->removeAllParticleEmitters();
-        object->removePhysicsBody();
-        object->removeLight();
-        object->removeCamera();
-        object->removeGeometry();
-        object->removePhysicsField();
-        object->removeAllSounds();
+                object->removeAllActions();
+                object->removeAllParticleEmitters();
+                object->removePhysicsBody();
+                object->removeLight();
+                object->removeCamera();
+                object->removeGeometry();
+                object->removePhysicsField();
+                object->removeAllSounds();
 
-        NodeStateMachine *sm = object->getStateMachine();
-        if (World::getInstance()->getWorldFactory()->has(sm))
-          NodeStateMachine::destroy(sm);
-        object->removeStateMachine();
+                NodeStateMachine *sm = object->getStateMachine();
+                if (World::getInstance()->getWorldFactory()->has(sm))
+                    NodeStateMachine::destroy(sm);
+                object->removeStateMachine();
 
-        World::getInstance()->getWorldFactory()->destroy(object);
-      }
-  }
+                World::getInstance()->getWorldFactory()->destroy(object);
+            }
+    }
 
-  void Node::load(Node &object, lua_State *L, int index)
-  {
-    // Push another reference to the table on top of the stack (so we know
-    // where it is, and this function can work for negative, positive and
-    // pseudo indices
-    lua_pushvalue(L, index);
-    // stack now contains: -1 => table
-    lua_pushnil(L);
-    // stack now contains: -1 => nil; -2 => table
-    while (lua_next(L, -2))
-      {
-        // stack now contains: -1 => value; -2 => key; -3 => table
-        // copy the key so that lua_tostring does not modify the original
-        lua_pushvalue(L, -2);
-        // stack now contains: -1 => key; -2 => value; -3 => key; -4 => table
-        const char *key = lua_tostring(L, -1);
-        //            const char *value = lua_tostring(L, -2);
-        if (lua_istable(L, -2))
-          {
-            Node::load(object, L, -2);
-          }
-        else
-          {
-            if (lua_isnumber(L, index))
-              {
-                double number = lua_tonumber(L, index);
-                printf("%s => %f\n", key, number);
-              }
-            else if (lua_isstring(L, index))
-              {
-                const char *v = lua_tostring(L, index);
-                printf("%s => %s\n", key, v);
-              }
-            else if (lua_isboolean(L, index))
-              {
-                bool v = lua_toboolean(L, index);
-                printf("%s => %d\n", key, v);
-              }
-            else if (lua_isuserdata(L, index))
-              {
-                //                    swig_lua_userdata *usr;
-                //                    swig_type_info *type;
-                //                    assert(lua_isuserdata(L,index));
-                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                //                    /* get data */
-                //                    type = usr->type;
-                //                    njli::AbstractFactoryObject *object =
-                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                //                    printf("%s => %d:%s\n", key,
-                //                    object->getType(),
-                //                    object->getClassName());
-              }
-          }
-        // pop value + copy of key, leaving original key
-        lua_pop(L, 2);
-        // stack now contains: -1 => key; -2 => table
-      }
-    // stack now contains: -1 => table (when lua_next returns 0 it pops the key
-    // but does not push anything.)
-    // Pop table
-    lua_pop(L, 1);
-    // Stack is now the same as it was on entry to this function
-  }
+    void Node::load(Node &object, lua_State *L, int index)
+    {
+        // Push another reference to the table on top of the stack (so we know
+        // where it is, and this function can work for negative, positive and
+        // pseudo indices
+        lua_pushvalue(L, index);
+        // stack now contains: -1 => table
+        lua_pushnil(L);
+        // stack now contains: -1 => nil; -2 => table
+        while (lua_next(L, -2))
+            {
+                // stack now contains: -1 => value; -2 => key; -3 => table
+                // copy the key so that lua_tostring does not modify the
+                // original
+                lua_pushvalue(L, -2);
+                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+                // table
+                const char *key = lua_tostring(L, -1);
+                //            const char *value = lua_tostring(L, -2);
+                if (lua_istable(L, -2))
+                    {
+                        Node::load(object, L, -2);
+                    }
+                else
+                    {
+                        if (lua_isnumber(L, index))
+                            {
+                                double number = lua_tonumber(L, index);
+                                printf("%s => %f\n", key, number);
+                            }
+                        else if (lua_isstring(L, index))
+                            {
+                                const char *v = lua_tostring(L, index);
+                                printf("%s => %s\n", key, v);
+                            }
+                        else if (lua_isboolean(L, index))
+                            {
+                                bool v = lua_toboolean(L, index);
+                                printf("%s => %d\n", key, v);
+                            }
+                        else if (lua_isuserdata(L, index))
+                            {
+                                //                    swig_lua_userdata *usr;
+                                //                    swig_type_info *type;
+                                //                    assert(lua_isuserdata(L,index));
+                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                                //                    /* get data */
+                                //                    type = usr->type;
+                                //                    njli::AbstractFactoryObject
+                                //                    *object =
+                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                                //                    printf("%s => %d:%s\n",
+                                //                    key, object->getType(),
+                                //                    object->getClassName());
+                            }
+                    }
+                // pop value + copy of key, leaving original key
+                lua_pop(L, 2);
+                // stack now contains: -1 => key; -2 => table
+            }
+        // stack now contains: -1 => table (when lua_next returns 0 it pops the
+        // key but does not push anything.) Pop table
+        lua_pop(L, 1);
+        // Stack is now the same as it was on entry to this function
+    }
 
-  u32 Node::type() { return JLI_OBJECT_TYPE_Node; }
+    u32 Node::type() { return JLI_OBJECT_TYPE_Node; }
 
-  //    btTransform Node::getWorldTransform()const
-  //    {
-  //        const PhysicsBody *physicsBody = getPhysicsBody();
-  //
-  //        if(physicsBody)
-  //        {
-  //            btTransform transform(physicsBody->getWorldTransform());
-  //
-  //            transform.setBasis(transform.getBasis().scaled(getScale()));
-  //
-  //            if(getParentNode())
-  //            {
-  //                return (transform * getParentNode()->getWorldTransform());
-  //            }
-  //            return (transform);
-  //        }
-  //
-  //        btTransform transform(getTransform());
-  //
-  //        transform.setBasis(transform.getBasis().scaled(getScale()));
-  //
-  //        if(getParentNode())
-  //        {
-  //            return (transform * getParentNode()->getWorldTransform());
-  //        }
-  //        return (transform);
-  //    }
-
-  const btTransform &Node::getColorTransform() const
-  {
-    return *m_ColorTransform;
-  }
-
-  void Node::setColorTransform(const btTransform &transform)
-  {
-    *m_ColorTransform = transform;
-  }
-
-  const btTransform &Node::getTransform() const { return *m_Transform; }
-
-  void Node::setTransform(const btTransform &transform)
-  {
-    if (!(*m_Transform == transform))
-      {
-        m_TransformDirty = true;
-
-        *m_Transform = transform;
-
-        applyPhysicsBodyTransform(transform);
-      }
-
-    //        PhysicsBody *physicsBody = getPhysicsBody();
+    //    btTransform Node::getWorldTransform()const
+    //    {
+    //        const PhysicsBody *physicsBody = getPhysicsBody();
     //
-    //        if(physicsBody)// && physicsBody->getCollisionObject() &&
-    //        !physicsBody->isDynamicPhysics())
+    //        if(physicsBody)
     //        {
-    //            physicsBody->setWorldTransform(getTransform());
+    //            btTransform transform(physicsBody->getWorldTransform());
+    //
+    //            transform.setBasis(transform.getBasis().scaled(getScale()));
+    //
+    //            if(getParentNode())
+    //            {
+    //                return (transform * getParentNode()->getWorldTransform());
+    //            }
+    //            return (transform);
     //        }
-  }
+    //
+    //        btTransform transform(getTransform());
+    //
+    //        transform.setBasis(transform.getBasis().scaled(getScale()));
+    //
+    //        if(getParentNode())
+    //        {
+    //            return (transform * getParentNode()->getWorldTransform());
+    //        }
+    //        return (transform);
+    //    }
 
-  void Node::setTransform(const glm::mat4 &transform)
-  {
-    setTransform(glmToBullet(transform));
-  }
+    const btTransform &Node::getColorTransform() const
+    {
+        return *m_ColorTransform;
+    }
 
-  btVector3 Node::getOrigin() const { return getWorldTransform().getOrigin(); }
+    void Node::setColorTransform(const btTransform &transform)
+    {
+        *m_ColorTransform = transform;
+    }
 
-  void Node::setOrigin(const btVector3 &origin)
-  {
-    btTransform t(getTransform());
-    t.setOrigin(origin);
-    setTransform(t);
-  }
+    const btTransform &Node::getTransform() const { return *m_Transform; }
 
-  void Node::setOrigin(float x, float y, float z)
-  {
-    setOrigin(btVector3(x, y, z));
-  }
+    void Node::setTransform(const btTransform &transform)
+    {
+        if (!(*m_Transform == transform))
+            {
+                m_TransformDirty = true;
 
-  void Node::setOrigin(const btVector2 &origin)
-  {
-    btVector3 o(getOrigin());
-    btVector3 _origin(origin.x(), origin.y(), o.z());
-    Node::setOrigin(_origin);
-  }
+                *m_Transform = transform;
 
-  btQuaternion Node::getRotation() const
-  {
-    return getWorldTransform().getRotation();
-  }
+                applyPhysicsBodyTransform(transform);
+            }
 
-  void Node::setRotation(const btQuaternion &rotation)
-  {
-    btTransform t(getTransform());
-    t.setRotation(rotation);
-    setTransform(t);
-  }
+        //        PhysicsBody *physicsBody = getPhysicsBody();
+        //
+        //        if(physicsBody)// && physicsBody->getCollisionObject() &&
+        //        !physicsBody->isDynamicPhysics())
+        //        {
+        //            physicsBody->setWorldTransform(getTransform());
+        //        }
+    }
 
-  btVector3 Node::getEulerAngles() const
-  {
-    f32 x, y, z;
+    void Node::setTransform(const glm::mat4 &transform)
+    {
+        setTransform(glmToBullet(transform));
+    }
 
-    m_Transform->getBasis().getEulerYPR(x, y, z);
+    btVector3 Node::getOrigin() const
+    {
+        return getWorldTransform().getOrigin();
+    }
 
-    btVector3 v(x, y, z);
-    return v;
-  }
+    void Node::setOrigin(const btVector3 &origin)
+    {
+        btTransform t(getTransform());
+        t.setOrigin(origin);
+        setTransform(t);
+    }
 
-  void Node::setEulerAngles(const btVector3 &angles)
-  {
-    btTransform t(getTransform());
-    btMatrix3x3 m(t.getBasis());
-    m.setEulerYPR(angles.x(), angles.y(), angles.z());
-    t.setBasis(m);
-    setTransform(t);
-  }
+    void Node::setOrigin(float x, float y, float z)
+    {
+        setOrigin(btVector3(x, y, z));
+    }
 
-  const btQuaternion &Node::getOrientation() const { return *m_Orientation; }
+    void Node::setOrigin(const btVector2 &origin)
+    {
+        btVector3 o(getOrigin());
+        btVector3 _origin(origin.x(), origin.y(), o.z());
+        Node::setOrigin(_origin);
+    }
 
-  void Node::setOrientation(const btQuaternion &orientation)
-  {
-    *m_Orientation = orientation;
-  }
+    btQuaternion Node::getRotation() const
+    {
+        return getWorldTransform().getRotation();
+    }
 
-  const btVector3 &Node::getScale() const { return *m_Scale; }
+    void Node::setRotation(const btQuaternion &rotation)
+    {
+        btTransform t(getTransform());
+        t.setRotation(rotation);
+        setTransform(t);
+    }
 
-  void Node::setScale(const btVector3 &scale)
-  {
-    *m_Scale = scale;
-    if (getPhysicsBody() && getPhysicsBody()->getPhysicsShape())
-      getPhysicsBody()->getPhysicsShape()->setLocalScaling(*m_Scale);
-  }
+    btVector3 Node::getEulerAngles() const
+    {
+        f32 x, y, z;
 
-  void Node::setScale(const f32 scale)
-  {
-    btVector3 _scale(scale, scale, scale);
-    Node::setScale(_scale);
-  }
+        m_Transform->getBasis().getEulerYPR(x, y, z);
 
-  btTransform &Node::getPivot() const { return *m_Pivot; }
+        btVector3 v(x, y, z);
+        return v;
+    }
 
-  void Node::setPivot(const btTransform &pivot) { *m_Pivot = pivot; }
+    void Node::setEulerAngles(const btVector3 &angles)
+    {
+        btTransform t(getTransform());
+        btMatrix3x3 m(t.getBasis());
+        m.setEulerYPR(angles.x(), angles.y(), angles.z());
+        t.setBasis(m);
+        setTransform(t);
+    }
 
-  void Node::setSteeringBehaviorMachine(
-      SteeringBehaviorMachine *steeringBehaviorMachine)
-  {
-    SDL_assert(steeringBehaviorMachine != NULL);
+    const btQuaternion &Node::getOrientation() const { return *m_Orientation; }
 
-    removeSteeringBehaviorMachine();
+    void Node::setOrientation(const btQuaternion &orientation)
+    {
+        *m_Orientation = orientation;
+    }
 
-    m_SteeringBehaviorMachine = steeringBehaviorMachine;
+    const btVector3 &Node::getScale() const { return *m_Scale; }
 
-    std::vector<SteeringBehavior *> steeringBehaviors;
-    m_SteeringBehaviorMachine->getSteeringBehaviors(steeringBehaviors);
+    void Node::setScale(const btVector3 &scale)
+    {
+        *m_Scale = scale;
+        if (getPhysicsBody() && getPhysicsBody()->getPhysicsShape())
+            getPhysicsBody()->getPhysicsShape()->setLocalScaling(*m_Scale);
+    }
 
-    addChild(m_SteeringBehaviorMachine);
-  }
+    void Node::setScale(const f32 scale)
+    {
+        btVector3 _scale(scale, scale, scale);
+        Node::setScale(_scale);
+    }
 
-  void Node::removeSteeringBehaviorMachine()
-  {
-    if (getSteeringBehaviorMachine())
-      {
-        removeChild(getSteeringBehaviorMachine());
-      }
+    btTransform &Node::getPivot() const { return *m_Pivot; }
 
-    m_SteeringBehaviorMachine = NULL;
-  }
+    void Node::setPivot(const btTransform &pivot) { *m_Pivot = pivot; }
 
-  SteeringBehaviorMachine *Node::getSteeringBehaviorMachine()
-  {
-    s32 idx = getChildIndex(m_SteeringBehaviorMachine);
-    if (idx != -1)
-      {
-        //            SDL_assert(dynamic_cast<SteeringBehaviorMachine*>(getChild(idx)));
-        return dynamic_cast<SteeringBehaviorMachine *>(getChild(idx));
-      }
-    return NULL;
-  }
+    void Node::setSteeringBehaviorMachine(
+        SteeringBehaviorMachine *steeringBehaviorMachine)
+    {
+        SDL_assert(steeringBehaviorMachine != NULL);
 
-  const SteeringBehaviorMachine *Node::getSteeringBehaviorMachine() const
-  {
-    s32 idx = getChildIndex(m_SteeringBehaviorMachine);
-    if (idx != -1)
-      {
-        //            SDL_assert(dynamic_cast<const
-        //            SteeringBehaviorMachine*>(getChild(idx)));
-        return dynamic_cast<const SteeringBehaviorMachine *>(getChild(idx));
-      }
-    return NULL;
-  }
+        removeSteeringBehaviorMachine();
 
-  s32 Node::addParticleEmitter(ParticleEmitter *emitter)
-  {
-    SDL_assert(NULL != emitter);
+        m_SteeringBehaviorMachine = steeringBehaviorMachine;
 
-    Scene *scene = this->getCurrentScene();
-    SDL_assert(NULL != scene);
+        std::vector<SteeringBehavior *> steeringBehaviors;
+        m_SteeringBehaviorMachine->getSteeringBehaviors(steeringBehaviors);
 
-    std::vector<ParticleEmitter *>::const_iterator iter = std::find(
-        m_ParticleEmitterList.begin(), m_ParticleEmitterList.end(), emitter);
+        addChild(m_SteeringBehaviorMachine);
+    }
 
-    if (iter == m_ParticleEmitterList.end())
-      {
+    void Node::removeSteeringBehaviorMachine()
+    {
+        if (getSteeringBehaviorMachine())
+            {
+                removeChild(getSteeringBehaviorMachine());
+            }
+
+        m_SteeringBehaviorMachine = NULL;
+    }
+
+    SteeringBehaviorMachine *Node::getSteeringBehaviorMachine()
+    {
+        s32 idx = getChildIndex(m_SteeringBehaviorMachine);
+        if (idx != -1)
+            {
+                //            SDL_assert(dynamic_cast<SteeringBehaviorMachine*>(getChild(idx)));
+                return dynamic_cast<SteeringBehaviorMachine *>(getChild(idx));
+            }
+        return NULL;
+    }
+
+    const SteeringBehaviorMachine *Node::getSteeringBehaviorMachine() const
+    {
+        s32 idx = getChildIndex(m_SteeringBehaviorMachine);
+        if (idx != -1)
+            {
+                //            SDL_assert(dynamic_cast<const
+                //            SteeringBehaviorMachine*>(getChild(idx)));
+                return dynamic_cast<const SteeringBehaviorMachine *>(
+                    getChild(idx));
+            }
+        return NULL;
+    }
+
+    s32 Node::addParticleEmitter(ParticleEmitter *emitter)
+    {
+        SDL_assert(NULL != emitter);
+
+        Scene *scene = this->getCurrentScene();
+        SDL_assert(NULL != scene);
+
+        std::vector<ParticleEmitter *>::const_iterator iter =
+            std::find(m_ParticleEmitterList.begin(),
+                      m_ParticleEmitterList.end(), emitter);
+
+        if (iter == m_ParticleEmitterList.end())
+            {
+                std::vector<ParticleEmitter *>::iterator iter =
+                    std::find(m_ParticleEmitterList.begin(),
+                              m_ParticleEmitterList.end(), emitter);
+
+                if (iter != m_ParticleEmitterList.end())
+                    removeParticleEmitter(emitter);
+
+                m_ParticleEmitterList.push_back(emitter);
+
+                addChild(emitter);
+                scene->addActiveParticleEmitter(emitter);
+            }
+
+        return getParticleEmitterIndex(emitter);
+    }
+
+    bool Node::removeParticleEmitter(ParticleEmitter *emitter)
+    {
+        SDL_assert(NULL != emitter);
+
+        Scene *scene = this->getCurrentScene();
+        SDL_assert(NULL != scene);
+
         std::vector<ParticleEmitter *>::iterator iter =
             std::find(m_ParticleEmitterList.begin(),
                       m_ParticleEmitterList.end(), emitter);
 
         if (iter != m_ParticleEmitterList.end())
-          removeParticleEmitter(emitter);
+            {
+                removeChild(*iter);
+                scene->removeActiveParticleEmitter(*iter);
 
-        m_ParticleEmitterList.push_back(emitter);
+                m_ParticleEmitterList.erase(iter);
+                return true;
+            }
+        return false;
+    }
 
-        addChild(emitter);
-        scene->addActiveParticleEmitter(emitter);
-      }
+    void Node::removeAllParticleEmitters()
+    {
+        for (std::vector<ParticleEmitter *>::iterator iter =
+                 m_ParticleEmitterList.begin();
+             iter != m_ParticleEmitterList.end(); ++iter)
+            {
+                removeChild(*iter);
+            }
+        m_ParticleEmitterList.clear();
+    }
 
-    return getParticleEmitterIndex(emitter);
-  }
+    s32 Node::numberOfParticleEmitters() const
+    {
+        return m_ParticleEmitterList.size();
+    }
 
-  bool Node::removeParticleEmitter(ParticleEmitter *emitter)
-  {
-    SDL_assert(NULL != emitter);
+    void Node::getParticleEmitters(
+        std::vector<ParticleEmitter *> &particleEmitters) const
+    {
+        for (std::vector<ParticleEmitter *>::const_iterator iter =
+                 m_ParticleEmitterList.begin();
+             iter != m_ParticleEmitterList.end(); ++iter)
+            {
+                if (getChildIndex(*iter) != -1)
+                    particleEmitters.push_back(*iter);
+            }
+    }
 
-    Scene *scene = this->getCurrentScene();
-    SDL_assert(NULL != scene);
+    s32 Node::getParticleEmitterIndex(ParticleEmitter *emitter) const
+    {
+        std::vector<ParticleEmitter *>::const_iterator iter =
+            std::find(m_ParticleEmitterList.begin(),
+                      m_ParticleEmitterList.end(), emitter);
 
-    std::vector<ParticleEmitter *>::iterator iter = std::find(
-        m_ParticleEmitterList.begin(), m_ParticleEmitterList.end(), emitter);
+        if (iter != m_ParticleEmitterList.end())
+            {
+                return std::distance(m_ParticleEmitterList.begin(), iter);
+            }
+        return -1;
+    }
 
-    if (iter != m_ParticleEmitterList.end())
-      {
-        removeChild(*iter);
-        scene->removeActiveParticleEmitter(*iter);
+    ParticleEmitter *Node::getParticleEmitter(const u32 index)
+    {
+        if (index < m_ParticleEmitterList.size())
+            {
+                s32 idx = getChildIndex(m_ParticleEmitterList.at(index));
+                if (idx != -1)
+                    return dynamic_cast<ParticleEmitter *>(getChild(idx));
+            }
+        return NULL;
+    }
 
-        m_ParticleEmitterList.erase(iter);
-        return true;
-      }
-    return false;
-  }
+    const ParticleEmitter *Node::getParticleEmitter(const u32 index) const
+    {
+        if (index < m_ParticleEmitterList.size())
+            {
+                s32 idx = getChildIndex(m_ParticleEmitterList.at(index));
+                if (idx != -1)
+                    return dynamic_cast<const ParticleEmitter *>(getChild(idx));
+            }
+        return NULL;
+    }
 
-  void Node::removeAllParticleEmitters()
-  {
-    for (std::vector<ParticleEmitter *>::iterator iter =
-             m_ParticleEmitterList.begin();
-         iter != m_ParticleEmitterList.end(); ++iter)
-      {
-        removeChild(*iter);
-      }
-    m_ParticleEmitterList.clear();
-  }
+    void Node::setPhysicsBody(PhysicsBody *body, bool clearForces)
+    {
+        SDL_assert(body != NULL);
 
-  s32 Node::numberOfParticleEmitters() const
-  {
-    return m_ParticleEmitterList.size();
-  }
+        removePhysicsBody();
 
-  void Node::getParticleEmitters(
-      std::vector<ParticleEmitter *> &particleEmitters) const
-  {
-    for (std::vector<ParticleEmitter *>::const_iterator iter =
-             m_ParticleEmitterList.begin();
-         iter != m_ParticleEmitterList.end(); ++iter)
-      {
-        if (getChildIndex(*iter) != -1)
-          particleEmitters.push_back(*iter);
-      }
-  }
+        m_PhysicsBody = body;
 
-  s32 Node::getParticleEmitterIndex(ParticleEmitter *emitter) const
-  {
-    std::vector<ParticleEmitter *>::const_iterator iter = std::find(
-        m_ParticleEmitterList.begin(), m_ParticleEmitterList.end(), emitter);
+        addChild(m_PhysicsBody);
 
-    if (iter != m_ParticleEmitterList.end())
-      {
-        return std::distance(m_ParticleEmitterList.begin(), iter);
-      }
-    return -1;
-  }
+        getPhysicsBody()->setTransform(getTransform(), clearForces);
 
-  ParticleEmitter *Node::getParticleEmitter(const u32 index)
-  {
-    if (index < m_ParticleEmitterList.size())
-      {
-        s32 idx = getChildIndex(m_ParticleEmitterList.at(index));
+        //        m_ApplyPhysicsShape = true;
+    }
+
+    void Node::removePhysicsBody()
+    {
+        PhysicsBody *physicsBody = getPhysicsBody();
+
+        if (physicsBody)
+            {
+                removeChild(getPhysicsBody());
+
+                physicsBody->removePhysicsBody();
+            }
+
+        m_PhysicsBody = NULL;
+    }
+
+    PhysicsBody *Node::getPhysicsBody()
+    {
+        s32 idx = getChildIndex(m_PhysicsBody);
         if (idx != -1)
-          return dynamic_cast<ParticleEmitter *>(getChild(idx));
-      }
-    return NULL;
-  }
+            //#if !(defined(NDEBUG))
+            //        {
+            //            return dynamic_cast<PhysicsBody*>(getChild(idx));
+            //        }
+            //#else
+            {
+                //            SDL_assert(dynamic_cast<PhysicsBody*>(getChild(idx)));
+                return dynamic_cast<PhysicsBody *>(getChild(idx));
+            }
+        //#endif
 
-  const ParticleEmitter *Node::getParticleEmitter(const u32 index) const
-  {
-    if (index < m_ParticleEmitterList.size())
-      {
-        s32 idx = getChildIndex(m_ParticleEmitterList.at(index));
+        return NULL;
+    }
+
+    const PhysicsBody *Node::getPhysicsBody() const
+    {
+        s32 idx = getChildIndex(m_PhysicsBody);
         if (idx != -1)
-          return dynamic_cast<const ParticleEmitter *>(getChild(idx));
-      }
-    return NULL;
-  }
+            //#if !(defined(NDEBUG))
+            //        {
+            //            return dynamic_cast<const
+            //            PhysicsBody*>(getChild(idx));
+            //        }
+            //#else
+            {
+                //            SDL_assert(dynamic_cast<const
+                //            PhysicsBody*>(getChild(idx)));
+                return dynamic_cast<const PhysicsBody *>(getChild(idx));
+            }
+        //#endif
 
-  void Node::setPhysicsBody(PhysicsBody *body, bool clearForces)
-  {
-    SDL_assert(body != NULL);
+        return NULL;
+    }
 
-    removePhysicsBody();
+    void Node::setLight(Light *light)
+    {
+        SDL_assert(light != NULL);
 
-    m_PhysicsBody = body;
+        removeLight();
 
-    addChild(m_PhysicsBody);
+        m_Light = light;
 
-    getPhysicsBody()->setTransform(getTransform(), clearForces);
+        addChild(m_Light);
+    }
 
-    //        m_ApplyPhysicsShape = true;
-  }
+    void Node::removeLight()
+    {
+        if (getLight())
+            {
+                removeChild(getLight());
+            }
 
-  void Node::removePhysicsBody()
-  {
-    PhysicsBody *physicsBody = getPhysicsBody();
+        m_Light = NULL;
+    }
 
-    if (physicsBody)
-      {
-        removeChild(getPhysicsBody());
+    Light *Node::getLight()
+    {
+        s32 idx = getChildIndex(m_Light);
+        if (idx != -1)
+            return dynamic_cast<Light *>(getChild(idx));
+        return NULL;
+    }
 
-        physicsBody->removePhysicsBody();
-      }
+    const Light *Node::getLight() const
+    {
+        s32 idx = getChildIndex(m_Light);
+        if (idx != -1)
+            return dynamic_cast<const Light *>(getChild(idx));
+        return NULL;
+    }
 
-    m_PhysicsBody = NULL;
-  }
+    void Node::setCamera(Camera *camera)
+    {
+        SDL_assert(camera != NULL);
 
-  PhysicsBody *Node::getPhysicsBody()
-  {
-    s32 idx = getChildIndex(m_PhysicsBody);
-    if (idx != -1)
-      //#if !(defined(NDEBUG))
-      //        {
-      //            return dynamic_cast<PhysicsBody*>(getChild(idx));
-      //        }
-      //#else
-      {
-        //            SDL_assert(dynamic_cast<PhysicsBody*>(getChild(idx)));
-        return dynamic_cast<PhysicsBody *>(getChild(idx));
-      }
-    //#endif
+        removeCamera();
+        m_Camera = camera;
+        addChild(m_Camera);
 
-    return NULL;
-  }
+        //        Scene *scene = this->getCurrentScene();
+        //
+        //        if(scene)
+        //        {
+        //
+        //            scene->addActiveCamera(m_Camera);
+        //        }
+        //        else
+        //        {
+        //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Unable to set the
+        //            Camera, the scene is NULL\n");
+        //        }
 
-  const PhysicsBody *Node::getPhysicsBody() const
-  {
-    s32 idx = getChildIndex(m_PhysicsBody);
-    if (idx != -1)
-      //#if !(defined(NDEBUG))
-      //        {
-      //            return dynamic_cast<const PhysicsBody*>(getChild(idx));
-      //        }
-      //#else
-      {
-        //            SDL_assert(dynamic_cast<const
-        //            PhysicsBody*>(getChild(idx)));
-        return dynamic_cast<const PhysicsBody *>(getChild(idx));
-      }
-    //#endif
-
-    return NULL;
-  }
-
-  void Node::setLight(Light *light)
-  {
-    SDL_assert(light != NULL);
-
-    removeLight();
-
-    m_Light = light;
-
-    addChild(m_Light);
-  }
-
-  void Node::removeLight()
-  {
-    if (getLight())
-      {
-        removeChild(getLight());
-      }
-
-    m_Light = NULL;
-  }
-
-  Light *Node::getLight()
-  {
-    s32 idx = getChildIndex(m_Light);
-    if (idx != -1)
-      return dynamic_cast<Light *>(getChild(idx));
-    return NULL;
-  }
-
-  const Light *Node::getLight() const
-  {
-    s32 idx = getChildIndex(m_Light);
-    if (idx != -1)
-      return dynamic_cast<const Light *>(getChild(idx));
-    return NULL;
-  }
-
-  void Node::setCamera(Camera *camera)
-  {
-    SDL_assert(camera != NULL);
-
-    removeCamera();
-    m_Camera = camera;
-    addChild(m_Camera);
-
-    //        Scene *scene = this->getCurrentScene();
-    //
-    //        if(scene)
-    //        {
-    //
-    //            scene->addActiveCamera(m_Camera);
-    //        }
-    //        else
-    //        {
-    //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Unable to set the Camera,
-    //            the scene is NULL\n");
-    //        }
-
-    //        Scene *scene = this->getCurrentScene();
-    //        SDL_assert(NULL != scene);
-    //
-    //        removeCamera();
-    //
-    //        m_Camera = camera;
-    //
-    //        addChild(m_Camera);
-    ////        scene->addActiveCamera(m_Camera);
-  }
-
-  void Node::removeCamera()
-  {
-    if (getCamera())
-      {
         //        Scene *scene = this->getCurrentScene();
         //        SDL_assert(NULL != scene);
+        //
+        //        removeCamera();
+        //
+        //        m_Camera = camera;
+        //
+        //        addChild(m_Camera);
+        ////        scene->addActiveCamera(m_Camera);
+    }
 
-        Camera *camera = getCamera();
-        removeChild(camera);
+    void Node::removeCamera()
+    {
+        if (getCamera())
+            {
+                //        Scene *scene = this->getCurrentScene();
+                //        SDL_assert(NULL != scene);
+
+                Camera *camera = getCamera();
+                removeChild(camera);
+                Scene *scene = this->getCurrentScene();
+                if (scene)
+                    scene->removeActiveCamera(camera);
+            }
+
+        m_Camera = NULL;
+    }
+
+    Camera *Node::getCamera()
+    {
+        s32 idx = getChildIndex(m_Camera);
+        if (idx != -1)
+            return dynamic_cast<Camera *>(getChild(idx));
+        return NULL;
+    }
+
+    const Camera *Node::getCamera() const
+    {
+        s32 idx = getChildIndex(m_Camera);
+        if (idx != -1)
+            return dynamic_cast<const Camera *>(getChild(idx));
+        return NULL;
+    }
+
+    void Node::setGeometry(Geometry *geometry)
+    {
+        SDL_assert(geometry != NULL);
+
+        if (geometry == m_Geometry)
+            return;
+
+        removeGeometry();
+
+        m_Geometry = geometry;
+
+        addChild(m_Geometry);
+
+        m_Geometry->addReference(this);
+
+        //        m_ApplyPhysicsShape = true;
+
         Scene *scene = this->getCurrentScene();
+        //        SDL_assert(NULL != scene);
         if (scene)
-          scene->removeActiveCamera(camera);
-      }
+            {
+                scene->addActiveGeometry(m_Geometry);
+            }
+        else
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Unable to set the Geometry, the scene is NULL\n");
+            }
+    }
 
-    m_Camera = NULL;
-  }
+    void Node::removeGeometry()
+    {
+        Geometry *geometry = getGeometry();
+        if (geometry)
+            {
+                Scene *scene = this->getCurrentScene();
+                SDL_assert(NULL != scene);
 
-  Camera *Node::getCamera()
-  {
-    s32 idx = getChildIndex(m_Camera);
-    if (idx != -1)
-      return dynamic_cast<Camera *>(getChild(idx));
-    return NULL;
-  }
+                geometry->removeReference(this);
 
-  const Camera *Node::getCamera() const
-  {
-    s32 idx = getChildIndex(m_Camera);
-    if (idx != -1)
-      return dynamic_cast<const Camera *>(getChild(idx));
-    return NULL;
-  }
+                removeChild(geometry);
 
-  void Node::setGeometry(Geometry *geometry)
-  {
-    SDL_assert(geometry != NULL);
+                scene->removeActiveGeometry(geometry);
+            }
 
-    if (geometry == m_Geometry)
-      return;
+        m_Geometry = NULL;
+    }
 
-    removeGeometry();
+    Geometry *Node::getGeometry()
+    {
+        if (m_Geometry)
+            {
+                s32 idx = getChildIndex(m_Geometry);
+                if (idx != -1)
+                    {
+                        //                SDL_assert(dynamic_cast<Geometry*>(getChild(idx)));
+                        return dynamic_cast<Geometry *>(getChild(idx));
+                    }
+                //                return dynamic_cast<Geometry*>(getChild(idx));
+            }
+        return NULL;
+    }
 
-    m_Geometry = geometry;
+    const Geometry *Node::getGeometry() const
+    {
+        if (m_Geometry)
+            {
+                s32 idx = getChildIndex(m_Geometry);
+                if (idx != -1)
+                    return dynamic_cast<const Geometry *>(getChild(idx));
+            }
+        return NULL;
+    }
 
-    addChild(m_Geometry);
+    void Node::setPhysicsField(PhysicsField *field)
+    {
+        SDL_assert(field != NULL);
 
-    m_Geometry->addReference(this);
+        removePhysicsField();
 
-    //        m_ApplyPhysicsShape = true;
+        m_PhysicsField = field;
 
-    Scene *scene = this->getCurrentScene();
-    //        SDL_assert(NULL != scene);
-    if (scene)
-      {
-        scene->addActiveGeometry(m_Geometry);
-      }
-    else
-      {
-        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                    "Unable to set the Geometry, the scene is NULL\n");
-      }
-  }
+        addChild(m_PhysicsField);
+    }
 
-  void Node::removeGeometry()
-  {
-    Geometry *geometry = getGeometry();
-    if (geometry)
-      {
-        Scene *scene = this->getCurrentScene();
-        SDL_assert(NULL != scene);
+    void Node::removePhysicsField()
+    {
+        if (getPhysicsField())
+            {
+                removeChild(getPhysicsField());
+            }
 
-        geometry->removeReference(this);
+        m_PhysicsField = NULL;
+    }
 
-        removeChild(geometry);
-
-        scene->removeActiveGeometry(geometry);
-      }
-
-    m_Geometry = NULL;
-  }
-
-  Geometry *Node::getGeometry()
-  {
-    if (m_Geometry)
-      {
-        s32 idx = getChildIndex(m_Geometry);
+    PhysicsField *Node::getPhysicsField()
+    {
+        s32 idx = getChildIndex(m_PhysicsField);
         if (idx != -1)
-          {
-            //                SDL_assert(dynamic_cast<Geometry*>(getChild(idx)));
-            return dynamic_cast<Geometry *>(getChild(idx));
-          }
-        //                return dynamic_cast<Geometry*>(getChild(idx));
-      }
-    return NULL;
-  }
+            return dynamic_cast<PhysicsField *>(getChild(idx));
+        return NULL;
+    }
 
-  const Geometry *Node::getGeometry() const
-  {
-    if (m_Geometry)
-      {
-        s32 idx = getChildIndex(m_Geometry);
+    const PhysicsField *Node::getPhysicsField() const
+    {
+        s32 idx = getChildIndex(m_PhysicsField);
         if (idx != -1)
-          return dynamic_cast<const Geometry *>(getChild(idx));
-      }
-    return NULL;
-  }
+            return dynamic_cast<const PhysicsField *>(getChild(idx));
+        return NULL;
+    }
 
-  void Node::setPhysicsField(PhysicsField *field)
-  {
-    SDL_assert(field != NULL);
+    s32 Node::addSound(Sound *sound)
+    {
+        SDL_assert(NULL != sound);
 
-    removePhysicsField();
+        std::vector<Sound *>::const_iterator iter =
+            std::find(m_SoundList.begin(), m_SoundList.end(), sound);
 
-    m_PhysicsField = field;
+        if (iter == m_SoundList.end())
+            {
+                std::vector<Sound *>::iterator iter =
+                    std::find(m_SoundList.begin(), m_SoundList.end(), sound);
 
-    addChild(m_PhysicsField);
-  }
+                if (iter != m_SoundList.end())
+                    removeSound(sound);
 
-  void Node::removePhysicsField()
-  {
-    if (getPhysicsField())
-      {
-        removeChild(getPhysicsField());
-      }
+                m_SoundList.push_back(sound);
 
-    m_PhysicsField = NULL;
-  }
+                sound->setTransform(btTransform::getIdentity());
 
-  PhysicsField *Node::getPhysicsField()
-  {
-    s32 idx = getChildIndex(m_PhysicsField);
-    if (idx != -1)
-      return dynamic_cast<PhysicsField *>(getChild(idx));
-    return NULL;
-  }
+                addChild(sound);
+            }
 
-  const PhysicsField *Node::getPhysicsField() const
-  {
-    s32 idx = getChildIndex(m_PhysicsField);
-    if (idx != -1)
-      return dynamic_cast<const PhysicsField *>(getChild(idx));
-    return NULL;
-  }
+        return getSoundIndex(sound);
+    }
 
-  s32 Node::addSound(Sound *sound)
-  {
-    SDL_assert(NULL != sound);
+    bool Node::removeSound(Sound *sound)
+    {
+        SDL_assert(NULL != sound);
 
-    std::vector<Sound *>::const_iterator iter =
-        std::find(m_SoundList.begin(), m_SoundList.end(), sound);
-
-    if (iter == m_SoundList.end())
-      {
         std::vector<Sound *>::iterator iter =
             std::find(m_SoundList.begin(), m_SoundList.end(), sound);
 
         if (iter != m_SoundList.end())
-          removeSound(sound);
+            {
+                removeChild(*iter);
+                m_SoundList.erase(iter);
+                return true;
+            }
+        return false;
+    }
 
-        m_SoundList.push_back(sound);
+    void Node::removeAllSounds()
+    {
+        for (std::vector<Sound *>::iterator iter = m_SoundList.begin();
+             iter != m_SoundList.end(); ++iter)
+            {
+                removeChild(*iter);
+            }
+        m_SoundList.clear();
+    }
 
-        sound->setTransform(btTransform::getIdentity());
+    void Node::getSounds(std::vector<Sound *> &particleEmitters) const
+    {
+        for (std::vector<Sound *>::const_iterator iter = m_SoundList.begin();
+             iter != m_SoundList.end(); ++iter)
+            {
+                if (getChildIndex(*iter) != -1)
+                    particleEmitters.push_back(*iter);
+            }
+    }
 
-        addChild(sound);
-      }
+    s32 Node::getSoundIndex(Sound *sound) const
+    {
+        std::vector<Sound *>::const_iterator iter =
+            std::find(m_SoundList.begin(), m_SoundList.end(), sound);
 
-    return getSoundIndex(sound);
-  }
+        if (iter != m_SoundList.end())
+            {
+                return std::distance(m_SoundList.begin(), iter);
+            }
+        return -1;
+    }
 
-  bool Node::removeSound(Sound *sound)
-  {
-    SDL_assert(NULL != sound);
+    Sound *Node::getSound(const u32 index)
+    {
+        if (index < m_SoundList.size())
+            {
+                s32 idx = getChildIndex(m_SoundList.at(index));
+                if (idx != -1)
+                    return dynamic_cast<Sound *>(getChild(idx));
+            }
+        return NULL;
+    }
 
-    std::vector<Sound *>::iterator iter =
-        std::find(m_SoundList.begin(), m_SoundList.end(), sound);
+    const Sound *Node::getSound(const u32 index) const
+    {
+        if (index < m_SoundList.size())
+            {
+                s32 idx = getChildIndex(m_SoundList.at(index));
+                if (idx != -1)
+                    return dynamic_cast<const Sound *>(getChild(idx));
+            }
+        return NULL;
+    }
 
-    if (iter != m_SoundList.end())
-      {
-        removeChild(*iter);
-        m_SoundList.erase(iter);
-        return true;
-      }
-    return false;
-  }
+    void Node::setOpacity(f32 opacity)
+    {
+        if (m_Opacity != opacity)
+            {
+                m_Opacity = (opacity > 1.0f)
+                                ? 1.0f
+                                : ((opacity < 0.0f) ? 0.0f : opacity);
 
-  void Node::removeAllSounds()
-  {
-    for (std::vector<Sound *>::iterator iter = m_SoundList.begin();
-         iter != m_SoundList.end(); ++iter)
-      {
-        removeChild(*iter);
-      }
-    m_SoundList.clear();
-  }
+                Geometry *g = getGeometry();
+                if (g)
+                    {
+                        g->setOpacity(this);
+                    }
+                //          m_OpacityDirty = true;
+            }
+    }
 
-  void Node::getSounds(std::vector<Sound *> &particleEmitters) const
-  {
-    for (std::vector<Sound *>::const_iterator iter = m_SoundList.begin();
-         iter != m_SoundList.end(); ++iter)
-      {
-        if (getChildIndex(*iter) != -1)
-          particleEmitters.push_back(*iter);
-      }
-  }
-
-  s32 Node::getSoundIndex(Sound *sound) const
-  {
-    std::vector<Sound *>::const_iterator iter =
-        std::find(m_SoundList.begin(), m_SoundList.end(), sound);
-
-    if (iter != m_SoundList.end())
-      {
-        return std::distance(m_SoundList.begin(), iter);
-      }
-    return -1;
-  }
-
-  Sound *Node::getSound(const u32 index)
-  {
-    if (index < m_SoundList.size())
-      {
-        s32 idx = getChildIndex(m_SoundList.at(index));
-        if (idx != -1)
-          return dynamic_cast<Sound *>(getChild(idx));
-      }
-    return NULL;
-  }
-
-  const Sound *Node::getSound(const u32 index) const
-  {
-    if (index < m_SoundList.size())
-      {
-        s32 idx = getChildIndex(m_SoundList.at(index));
-        if (idx != -1)
-          return dynamic_cast<const Sound *>(getChild(idx));
-      }
-    return NULL;
-  }
-
-  void Node::setOpacity(f32 opacity)
-  {
-    if (m_Opacity != opacity)
-      {
-        m_Opacity =
-            (opacity > 1.0f) ? 1.0f : ((opacity < 0.0f) ? 0.0f : opacity);
-
+    void Node::transformVertices(const btTransform &transfrom)
+    {
         Geometry *g = getGeometry();
         if (g)
-          {
-            g->setOpacity(this);
-          }
-        //          m_OpacityDirty = true;
-      }
-  }
+            {
+                g->transformVertices(this, transfrom);
+            }
+    }
 
-  void Node::transformVertices(const btTransform &transfrom)
-  {
-    Geometry *g = getGeometry();
-    if (g)
-      {
-        g->transformVertices(this, transfrom);
-      }
-  }
+    void Node::transformVertexColors(const btTransform &transform)
+    {
+        Geometry *g = getGeometry();
+        if (g)
+            {
+                g->transformVertexColors(this, transform);
+            }
+    }
 
-  void Node::transformVertexColors(const btTransform &transform)
-  {
-    Geometry *g = getGeometry();
-    if (g)
-      {
-        g->transformVertexColors(this, transform);
-      }
-  }
+    void Node::transformTextureCoordinates(const btTransform &transform)
+    {
+        Geometry *g = getGeometry();
+        if (g)
+            {
+                g->transformTextureCoordinates(this, transform);
+            }
+    }
 
-  void Node::transformTextureCoordinates(const btTransform &transform)
-  {
-    Geometry *g = getGeometry();
-    if (g)
-      {
-        g->transformTextureCoordinates(this, transform);
-      }
-  }
+    f32 Node::getOpacity() const { return m_Opacity; }
 
-  f32 Node::getOpacity() const { return m_Opacity; }
+    bool Node::hasOpacity() const
+    {
+        const Geometry *geometry = getGeometry();
+        if (geometry)
+            {
+                assert(false && "need to implement the getMaterial()");
+                //        const Material *material = geometry->getMaterial();
+                //
+                //        if (material)
+                //          {
+                //            return (material->hasOpacity() ||
+                //                    (material->getTransparency() != 1.0) ||
+                //                    (m_Opacity != 1.0f));
+                //          }
+            }
+        return m_Opacity != 1.0f;
+    }
 
-  bool Node::hasOpacity() const
-  {
-    const Geometry *geometry = getGeometry();
-    if (geometry)
-      {
-        assert(false && "need to implement the getMaterial()");
-        //        const Material *material = geometry->getMaterial();
-        //
-        //        if (material)
-        //          {
-        //            return (material->hasOpacity() ||
-        //                    (material->getTransparency() != 1.0) ||
-        //                    (m_Opacity != 1.0f));
-        //          }
-      }
-    return m_Opacity != 1.0f;
-  }
+    void Node::setNormalMatrix(const btMatrix3x3 &mtx)
+    {
+        if (!(mtx == *m_NormalMatrix))
+            {
+                *m_NormalMatrix = mtx;
+                //            m_NormalMatrixDirty = true;
+            }
+    }
 
-  void Node::setNormalMatrix(const btMatrix3x3 &mtx)
-  {
-    if (!(mtx == *m_NormalMatrix))
-      {
-        *m_NormalMatrix = mtx;
-        //            m_NormalMatrixDirty = true;
-      }
-  }
+    const btMatrix3x3 &Node::getNormalMatrix() const { return *m_NormalMatrix; }
 
-  const btMatrix3x3 &Node::getNormalMatrix() const { return *m_NormalMatrix; }
+    void Node::setColorBase(const btVector4 &color)
+    {
+        //        if(*m_Colorbase != color)
+        //            m_ColorBaseDirty = true;
+        *m_Colorbase = color;
+    }
 
-  void Node::setColorBase(const btVector4 &color)
-  {
-    //        if(*m_Colorbase != color)
-    //            m_ColorBaseDirty = true;
-    *m_Colorbase = color;
-  }
+    const btVector4 &Node::getColorBase() const { return *m_Colorbase; }
 
-  const btVector4 &Node::getColorBase() const { return *m_Colorbase; }
+    void Node::enableHideGeometry(bool hidden)
+    {
+        //        if(hidden != m_HideGeometry)
+        //            m_HiddenDirty = true;
+        m_HideGeometry = hidden;
+    }
 
-  void Node::enableHideGeometry(bool hidden)
-  {
-    //        if(hidden != m_HideGeometry)
-    //            m_HiddenDirty = true;
-    m_HideGeometry = hidden;
-  }
+    bool Node::isHiddenGeometry() const { return m_HideGeometry; }
 
-  bool Node::isHiddenGeometry() const { return m_HideGeometry; }
-
-  void Node::hide(Camera *camera)
-  {
-    if (NULL == camera)
-      {
-        m_RenderCategory = (njliBitCategories)Off((s32)m_RenderCategory,
-                                                  (s32)JLI_BIT_CATEGORY_ALL);
-      }
-    else
-      {
-        m_RenderCategory = (njliBitCategories)Off(
-            (s32)m_RenderCategory, (s32)camera->getRenderCategory());
-      }
-
-    for (std::vector<Node *>::const_iterator iter = m_Children.begin();
-         iter != m_Children.end(); ++iter)
-      {
-        Node *n = (*iter);
-        if (NULL != n)
-          {
-            n->hide(camera);
-          }
-      }
-    for (int i = 0; i < numberOfParticleEmitters(); ++i)
-      {
-        ParticleEmitter *pe = getParticleEmitter(i);
-        pe->setRenderCategory(this);
-      }
-  }
-
-  void Node::show(Camera *camera)
-  {
-    if (camera)
-      {
-        m_RenderCategory = (njliBitCategories)On(m_RenderCategory,
-                                                 camera->getRenderCategory());
-      }
-
-    for (std::vector<Node *>::const_iterator iter = m_Children.begin();
-         iter != m_Children.end(); ++iter)
-      {
-        Node *n = (*iter);
-        if (NULL != n)
-          {
-            n->show(camera);
-          }
-      }
-    for (int i = 0; i < numberOfParticleEmitters(); ++i)
-      {
-        ParticleEmitter *pe = getParticleEmitter(i);
-        pe->setRenderCategory(this);
-      }
-  }
-
-  bool Node::isHidden(Camera *camera) const
-  {
-    return !camera->hasRenderCategory(m_RenderCategory);
-  }
-
-  void Node::setRenderCategory(Node *node)
-  {
-    if (node)
-      {
-        m_RenderCategory = node->m_RenderCategory;
+    void Node::hide(Camera *camera)
+    {
+        if (NULL == camera)
+            {
+                m_RenderCategory = (njliBitCategories)Off(
+                    (s32)m_RenderCategory, (s32)JLI_BIT_CATEGORY_ALL);
+            }
+        else
+            {
+                m_RenderCategory = (njliBitCategories)Off(
+                    (s32)m_RenderCategory, (s32)camera->getRenderCategory());
+            }
 
         for (std::vector<Node *>::const_iterator iter = m_Children.begin();
              iter != m_Children.end(); ++iter)
-          {
-            Node *n = (*iter);
-            if (NULL != n)
-              {
-                n->setRenderCategory(node);
-              }
-          }
+            {
+                Node *n = (*iter);
+                if (NULL != n)
+                    {
+                        n->hide(camera);
+                    }
+            }
         for (int i = 0; i < numberOfParticleEmitters(); ++i)
-          {
-            ParticleEmitter *pe = getParticleEmitter(i);
-            pe->setRenderCategory(node);
-          }
-      }
-  }
+            {
+                ParticleEmitter *pe = getParticleEmitter(i);
+                pe->setRenderCategory(this);
+            }
+    }
 
-  NodeStateMachine *Node::getStateMachine()
-  {
-    s32 idx = getChildIndex(m_NodeStateMachine);
-    if (idx != -1)
-      //#if !(defined(NDEBUG))
-      //        {
-      //            return dynamic_cast<NodeStateMachine*>(getChild(idx));
-      //        }
-      //#else
-      {
-        //            SDL_assert(dynamic_cast<NodeStateMachine*>(getChild(idx)));
-        return dynamic_cast<NodeStateMachine *>(getChild(idx));
-      }
-    //#endif
+    void Node::show(Camera *camera)
+    {
+        if (camera)
+            {
+                m_RenderCategory = (njliBitCategories)On(
+                    m_RenderCategory, camera->getRenderCategory());
+            }
 
-    return NULL;
-  }
-
-  const NodeStateMachine *Node::getStateMachine() const
-  {
-    s32 idx = getChildIndex(m_NodeStateMachine);
-
-    if (idx != -1)
-      //#if !(defined(NDEBUG))
-      //        {
-      //            return dynamic_cast<const NodeStateMachine*>(getChild(idx));
-      //        }
-      //#else
-      {
-        //            SDL_assert(dynamic_cast<const
-        //            NodeStateMachine*>(getChild(idx)));
-        return dynamic_cast<const NodeStateMachine *>(getChild(idx));
-      }
-    //#endif
-
-    return NULL;
-  }
-
-  void Node::removeStateMachine()
-  {
-    NodeStateMachine *sm = getStateMachine();
-    if (sm != NULL)
-      {
-        removeChild(sm);
-        m_NodeStateMachine = NULL;
-      }
-  }
-
-  bool Node::isTouched() const { return m_isTouchedByRay; }
-
-  void Node::enableTouched(bool enable) { m_isTouchedByRay = enable; }
-
-  bool Node::rayTestClosest(const btVector3 &from, const btVector3 &to,
-                            PhysicsRayContact &rayContact,
-                            njliBitCategories collisionGroup,
-                            njliBitCategories collisionMask) const
-  {
-    const Scene *scene = this->getCurrentScene();
-    SDL_assert(NULL != scene);
-
-    if (scene)
-      return scene->getPhysicsWorld()->rayTestClosest(
-          from, to, rayContact, collisionGroup, collisionMask);
-    return false;
-  }
-
-  bool Node::rayTestAll(const btVector3 &from, const btVector3 &to,
-                        btAlignedObjectArray<PhysicsRayContact *> &rayContacts,
-                        s32 &numContacts, njliBitCategories collisionGroup,
-                        njliBitCategories collisionMask) const
-  {
-    const Scene *scene = this->getCurrentScene();
-    SDL_assert(NULL != scene);
-
-    if (scene)
-      return scene->getPhysicsWorld()->rayTestAll(
-          from, to, rayContacts, numContacts, collisionGroup, collisionMask);
-    return false;
-  }
-
-  bool Node::rayTestClosest(const btVector2 &screenPosition,
-                            PhysicsRayContact &rayContact,
-                            njliBitCategories collisionGroup,
-                            njliBitCategories collisionMask) const
-  {
-    const Scene *scene = this->getCurrentScene();
-    SDL_assert(NULL != scene);
-
-    if (scene && scene->getPhysicsWorld() && getCamera())
-      {
-        btVector3 from = getCamera()->unProject(screenPosition);
-        btVector3 near = from * getCamera()->getZNear();
-        from += near;
-        btVector3 to = from * getCamera()->getZFar();
-
-        return rayTestClosest(from, to, rayContact, collisionGroup,
-                              collisionMask);
-      }
-    return false;
-  }
-
-  bool Node::rayTestAll(const btVector2 &screenPosition,
-                        btAlignedObjectArray<PhysicsRayContact *> &rayContacts,
-                        s32 &numContacts, njliBitCategories collisionGroup,
-                        njliBitCategories collisionMask) const
-  {
-    const Scene *scene = this->getCurrentScene();
-    SDL_assert(NULL != scene);
-
-    if (scene && scene->getPhysicsWorld() && getCamera())
-      {
-        btVector3 from = getCamera()->unProject(screenPosition);
-        btVector3 near = from * getCamera()->getZNear();
-        from += near;
-        btVector3 to = from * getCamera()->getZFar();
-
-        return rayTestAll(from, to, rayContacts, numContacts, collisionGroup,
-                          collisionMask);
-      }
-
-    return false;
-  }
-
-  void Node::runAction(Action *action, bool callCompletionFunction)
-  {
-    addChild(action);
-    //    AbstractActionable::runAction(action, callCompletionFunction);
-    AbstractActionable::runAction(action, getName(), callCompletionFunction);
-  }
-
-  void Node::runAction(Action *action, const char *key,
-                       bool callCompletionFunction)
-  {
-    addChild(action);
-    AbstractActionable::runAction(action, key, callCompletionFunction);
-  }
-
-  bool Node::removeAction(const char *key)
-  {
-    Action *a = AbstractActionable::getAction(key);
-    if (a)
-      {
-        removeChild(a);
-        return AbstractActionable::removeAction(key);
-      }
-    return false;
-  }
-
-  void Node::removeAllActions()
-  {
-    std::vector<std::string> actionNames;
-
-    AbstractActionable::getAllActionNames(actionNames);
-
-    for (s32 i = 0; i < actionNames.size(); ++i)
-      {
-        Node::removeAction(actionNames[i].c_str());
-      }
-  }
-
-  void Node::getAabb(btVector3 &aabbMin, btVector3 &aabbMax) const
-  {
-    btTransform transform(getWorldTransform());
-    aabbMin = btVector3(0, 0, 0);
-    aabbMax = btVector3(0, 0, 0);
-    transform.setOrigin(aabbMin);
-
-    const PhysicsBody *body = getPhysicsBody();
-    if (body)
-      {
-        const PhysicsShape *shape = body->getPhysicsShape();
-        if (shape)
-          {
-            shape->getAabb(transform, aabbMin, aabbMax);
-          }
-      }
-  }
-
-  //  void Node::getAabb(btVector3 ** aabb) const
-  //  {
-  //    static btVector3 _aabb[2];
-  //    getAabb(_aabb[0], _aabb[1]);
-  //    *aabb = _aabb;
-  //  }
-
-  //    void Node::applyPhysicsShape()
-  //    {
-  //        BT_PROFILE("Node::applyPhysicsShape");
-  //        Geometry *geometry = getGeometry();
-  //        if(geometry)
-  //        {
-  //            geometry->setTransform(this->getGeometryIndex(),
-  //            getWorldTransform());
-  //            PhysicsBody *physicsBody = getPhysicsBody();
-  //            if(physicsBody)
-  //                geometry->applyShape(this, physicsBody->getPhysicsShape());
-  //        }
-  //    }
-
-  Node *Node::getParentNode() { return m_pParent; }
-
-  const Node *Node::getParentNode() const { return m_pParent; }
-
-  bool Node::hasParentNode() const { return (NULL != m_pParent); }
-
-  void Node::setParentNode(Node *parent)
-  {
-    SDL_assertPrint(parent, "object is null");
-
-    m_pParent = parent;
-  }
-
-  void Node::removeParentNode() { m_pParent = NULL; }
-
-  bool Node::removeFromParentNode()
-  {
-    Node *parent = dynamic_cast<Node *>(getParentNode());
-
-    if (parent && parent->hasChildNode(this))
-      {
-        parent->removeChildNode(this);
-        return true;
-      }
-    return false;
-  }
-
-  Node *Node::findChildNode(const char *name)
-  {
-    if (strcmp(getName(), name) == 0)
-      {
-        return this;
-      }
-    else
-      {
         for (std::vector<Node *>::const_iterator iter = m_Children.begin();
              iter != m_Children.end(); ++iter)
-          {
-            Node *n = (*iter)->findChildNode(name);
-            if (NULL != n)
-              {
-                return n;
-              }
-          }
-      }
-    return NULL;
-  }
+            {
+                Node *n = (*iter);
+                if (NULL != n)
+                    {
+                        n->show(camera);
+                    }
+            }
+        for (int i = 0; i < numberOfParticleEmitters(); ++i)
+            {
+                ParticleEmitter *pe = getParticleEmitter(i);
+                pe->setRenderCategory(this);
+            }
+    }
 
-  const Node *Node::findChildNode(const char *name) const
-  {
-    if (strcmp(getName(), name) == 0)
-      {
-        return this;
-      }
-    else
-      {
-        for (std::vector<Node *>::const_iterator iter = m_Children.begin();
-             iter != m_Children.end(); ++iter)
-          {
-            Node *n = (*iter)->findChildNode(name);
-            if (NULL != n)
-              {
-                return n;
-              }
-          }
-      }
-    return NULL;
-  }
+    bool Node::isHidden(Camera *camera) const
+    {
+        return !camera->hasRenderCategory(m_RenderCategory);
+    }
 
-  Node *Node::getChildNode(const u32 index)
-  {
-    if (index < numberOfChildrenNodes())
-      {
-        return m_Children.at(index);
-      }
-    return NULL;
-  }
+    void Node::setRenderCategory(Node *node)
+    {
+        if (node)
+            {
+                m_RenderCategory = node->m_RenderCategory;
 
-  const Node *Node::getChildNode(const u32 index) const
-  {
-    if (index < numberOfChildrenNodes())
-      {
-        return m_Children.at(index);
-      }
-    return NULL;
-  }
+                for (std::vector<Node *>::const_iterator iter =
+                         m_Children.begin();
+                     iter != m_Children.end(); ++iter)
+                    {
+                        Node *n = (*iter);
+                        if (NULL != n)
+                            {
+                                n->setRenderCategory(node);
+                            }
+                    }
+                for (int i = 0; i < numberOfParticleEmitters(); ++i)
+                    {
+                        ParticleEmitter *pe = getParticleEmitter(i);
+                        pe->setRenderCategory(node);
+                    }
+            }
+    }
 
-  void Node::getChildrenNodes(std::vector<Node *> &children) const
-  {
-    children = m_Children;
-  }
+    NodeStateMachine *Node::getStateMachine()
+    {
+        s32 idx = getChildIndex(m_NodeStateMachine);
+        if (idx != -1)
+            //#if !(defined(NDEBUG))
+            //        {
+            //            return dynamic_cast<NodeStateMachine*>(getChild(idx));
+            //        }
+            //#else
+            {
+                //            SDL_assert(dynamic_cast<NodeStateMachine*>(getChild(idx)));
+                return dynamic_cast<NodeStateMachine *>(getChild(idx));
+            }
+        //#endif
 
-  s32 Node::getChildNodeIndex(Node *object) const
-  {
-    std::vector<Node *>::const_iterator iter =
-        std::find(m_Children.begin(), m_Children.end(), object);
+        return NULL;
+    }
 
-    if (iter != m_Children.end())
-      {
-        return std::distance(m_Children.begin(), iter);
-      }
-    return -1;
-  }
+    const NodeStateMachine *Node::getStateMachine() const
+    {
+        s32 idx = getChildIndex(m_NodeStateMachine);
 
-  bool Node::hasChildNode(Node *object) const
-  {
-    SDL_assertPrint(object, "object is null");
+        if (idx != -1)
+            //#if !(defined(NDEBUG))
+            //        {
+            //            return dynamic_cast<const
+            //            NodeStateMachine*>(getChild(idx));
+            //        }
+            //#else
+            {
+                //            SDL_assert(dynamic_cast<const
+                //            NodeStateMachine*>(getChild(idx)));
+                return dynamic_cast<const NodeStateMachine *>(getChild(idx));
+            }
+        //#endif
 
-    std::vector<Node *>::const_iterator iter =
-        std::find(m_Children.begin(), m_Children.end(), object);
+        return NULL;
+    }
 
-    if (m_Children.end() != iter)
-      return true;
+    void Node::removeStateMachine()
+    {
+        NodeStateMachine *sm = getStateMachine();
+        if (sm != NULL)
+            {
+                removeChild(sm);
+                m_NodeStateMachine = NULL;
+            }
+    }
 
-    for (iter = m_Children.begin(); iter != m_Children.end(); ++iter)
-      {
-        if ((*iter)->hasChildNode(object))
-          {
+    bool Node::isTouched() const { return m_isTouchedByRay; }
+
+    void Node::enableTouched(bool enable) { m_isTouchedByRay = enable; }
+
+    bool Node::rayTestClosest(const btVector3 &from, const btVector3 &to,
+                              PhysicsRayContact &rayContact,
+                              njliBitCategories collisionGroup,
+                              njliBitCategories collisionMask) const
+    {
+        const Scene *scene = this->getCurrentScene();
+        SDL_assert(NULL != scene);
+
+        if (scene)
+            return scene->getPhysicsWorld()->rayTestClosest(
+                from, to, rayContact, collisionGroup, collisionMask);
+        return false;
+    }
+
+    bool
+    Node::rayTestAll(const btVector3 &from, const btVector3 &to,
+                     btAlignedObjectArray<PhysicsRayContact *> &rayContacts,
+                     s32 &numContacts, njliBitCategories collisionGroup,
+                     njliBitCategories collisionMask) const
+    {
+        const Scene *scene = this->getCurrentScene();
+        SDL_assert(NULL != scene);
+
+        if (scene)
+            return scene->getPhysicsWorld()->rayTestAll(
+                from, to, rayContacts, numContacts, collisionGroup,
+                collisionMask);
+        return false;
+    }
+
+    bool Node::rayTestClosest(const btVector2 &screenPosition,
+                              PhysicsRayContact &rayContact,
+                              njliBitCategories collisionGroup,
+                              njliBitCategories collisionMask) const
+    {
+        const Scene *scene = this->getCurrentScene();
+        SDL_assert(NULL != scene);
+
+        if (scene && scene->getPhysicsWorld() && getCamera())
+            {
+                btVector3 from = getCamera()->unProject(screenPosition);
+                btVector3 near = from * getCamera()->getZNear();
+                from += near;
+                btVector3 to = from * getCamera()->getZFar();
+
+                return rayTestClosest(from, to, rayContact, collisionGroup,
+                                      collisionMask);
+            }
+        return false;
+    }
+
+    bool
+    Node::rayTestAll(const btVector2 &screenPosition,
+                     btAlignedObjectArray<PhysicsRayContact *> &rayContacts,
+                     s32 &numContacts, njliBitCategories collisionGroup,
+                     njliBitCategories collisionMask) const
+    {
+        const Scene *scene = this->getCurrentScene();
+        SDL_assert(NULL != scene);
+
+        if (scene && scene->getPhysicsWorld() && getCamera())
+            {
+                btVector3 from = getCamera()->unProject(screenPosition);
+                btVector3 near = from * getCamera()->getZNear();
+                from += near;
+                btVector3 to = from * getCamera()->getZFar();
+
+                return rayTestAll(from, to, rayContacts, numContacts,
+                                  collisionGroup, collisionMask);
+            }
+
+        return false;
+    }
+
+    void Node::runAction(Action *action, bool callCompletionFunction)
+    {
+        addChild(action);
+        //    AbstractActionable::runAction(action, callCompletionFunction);
+        AbstractActionable::runAction(action, getName(),
+                                      callCompletionFunction);
+    }
+
+    void Node::runAction(Action *action, const char *key,
+                         bool callCompletionFunction)
+    {
+        addChild(action);
+        AbstractActionable::runAction(action, key, callCompletionFunction);
+    }
+
+    bool Node::removeAction(const char *key)
+    {
+        Action *a = AbstractActionable::getAction(key);
+        if (a)
+            {
+                removeChild(a);
+                return AbstractActionable::removeAction(key);
+            }
+        return false;
+    }
+
+    void Node::removeAllActions()
+    {
+        std::vector<std::string> actionNames;
+
+        AbstractActionable::getAllActionNames(actionNames);
+
+        for (s32 i = 0; i < actionNames.size(); ++i)
+            {
+                Node::removeAction(actionNames[i].c_str());
+            }
+    }
+
+    void Node::getAabb(btVector3 &aabbMin, btVector3 &aabbMax) const
+    {
+        btTransform transform(getWorldTransform());
+        aabbMin = btVector3(0, 0, 0);
+        aabbMax = btVector3(0, 0, 0);
+        transform.setOrigin(aabbMin);
+
+        const PhysicsBody *body = getPhysicsBody();
+        if (body)
+            {
+                const PhysicsShape *shape = body->getPhysicsShape();
+                if (shape)
+                    {
+                        shape->getAabb(transform, aabbMin, aabbMax);
+                    }
+            }
+    }
+
+    //  void Node::getAabb(btVector3 ** aabb) const
+    //  {
+    //    static btVector3 _aabb[2];
+    //    getAabb(_aabb[0], _aabb[1]);
+    //    *aabb = _aabb;
+    //  }
+
+    //    void Node::applyPhysicsShape()
+    //    {
+    //        BT_PROFILE("Node::applyPhysicsShape");
+    //        Geometry *geometry = getGeometry();
+    //        if(geometry)
+    //        {
+    //            geometry->setTransform(this->getGeometryIndex(),
+    //            getWorldTransform());
+    //            PhysicsBody *physicsBody = getPhysicsBody();
+    //            if(physicsBody)
+    //                geometry->applyShape(this,
+    //                physicsBody->getPhysicsShape());
+    //        }
+    //    }
+
+    Node *Node::getParentNode() { return m_pParent; }
+
+    const Node *Node::getParentNode() const { return m_pParent; }
+
+    bool Node::hasParentNode() const { return (NULL != m_pParent); }
+
+    void Node::setParentNode(Node *parent)
+    {
+        SDL_assertPrint(parent, "object is null");
+
+        m_pParent = parent;
+    }
+
+    void Node::removeParentNode() { m_pParent = NULL; }
+
+    bool Node::removeFromParentNode()
+    {
+        Node *parent = dynamic_cast<Node *>(getParentNode());
+
+        if (parent && parent->hasChildNode(this))
+            {
+                parent->removeChildNode(this);
+                return true;
+            }
+        return false;
+    }
+
+    Node *Node::findChildNode(const char *name)
+    {
+        if (strcmp(getName(), name) == 0)
+            {
+                return this;
+            }
+        else
+            {
+                for (std::vector<Node *>::const_iterator iter =
+                         m_Children.begin();
+                     iter != m_Children.end(); ++iter)
+                    {
+                        Node *n = (*iter)->findChildNode(name);
+                        if (NULL != n)
+                            {
+                                return n;
+                            }
+                    }
+            }
+        return NULL;
+    }
+
+    const Node *Node::findChildNode(const char *name) const
+    {
+        if (strcmp(getName(), name) == 0)
+            {
+                return this;
+            }
+        else
+            {
+                for (std::vector<Node *>::const_iterator iter =
+                         m_Children.begin();
+                     iter != m_Children.end(); ++iter)
+                    {
+                        Node *n = (*iter)->findChildNode(name);
+                        if (NULL != n)
+                            {
+                                return n;
+                            }
+                    }
+            }
+        return NULL;
+    }
+
+    Node *Node::getChildNode(const u32 index)
+    {
+        if (index < numberOfChildrenNodes())
+            {
+                return m_Children.at(index);
+            }
+        return NULL;
+    }
+
+    const Node *Node::getChildNode(const u32 index) const
+    {
+        if (index < numberOfChildrenNodes())
+            {
+                return m_Children.at(index);
+            }
+        return NULL;
+    }
+
+    void Node::getChildrenNodes(std::vector<Node *> &children) const
+    {
+        children = m_Children;
+    }
+
+    s32 Node::getChildNodeIndex(Node *object) const
+    {
+        std::vector<Node *>::const_iterator iter =
+            std::find(m_Children.begin(), m_Children.end(), object);
+
+        if (iter != m_Children.end())
+            {
+                return std::distance(m_Children.begin(), iter);
+            }
+        return -1;
+    }
+
+    bool Node::hasChildNode(Node *object) const
+    {
+        SDL_assertPrint(object, "object is null");
+
+        std::vector<Node *>::const_iterator iter =
+            std::find(m_Children.begin(), m_Children.end(), object);
+
+        if (m_Children.end() != iter)
             return true;
-          }
-      }
-    return false;
-  }
 
-  bool Node::hasChildrenNodes() const { return (numberOfChildrenNodes() > 0); }
+        for (iter = m_Children.begin(); iter != m_Children.end(); ++iter)
+            {
+                if ((*iter)->hasChildNode(object))
+                    {
+                        return true;
+                    }
+            }
+        return false;
+    }
 
-  void Node::addChildNode(Node *object)
-  {
-    SDL_assertPrint(this != object, "cannot decorate self with self");
-    SDL_assertPrint(!hasChildNode(object), "already has the decorator");
+    bool Node::hasChildrenNodes() const
+    {
+        return (numberOfChildrenNodes() > 0);
+    }
 
-    object->setParentNode(this);
-    m_Children.push_back(object);
+    void Node::addChildNode(Node *object)
+    {
+        SDL_assertPrint(this != object, "cannot decorate self with self");
+        SDL_assertPrint(!hasChildNode(object), "already has the decorator");
 
-    Scene *scene = this->getCurrentScene();
-    if (NULL != scene)
-      scene->addActiveNode(object);
-  }
-
-  void Node::removeChildNode(const u32 index)
-  {
-    SDL_assertPrint(index < numberOfChildrenNodes(),
-                    "index must be smaller than the size of the array");
-    removeChildNode(getChildNode(index));
-  }
-
-  void Node::removeChildNode(Node *object)
-  {
-    const Scene *scene = this->getCurrentScene();
-    SDL_assert(NULL != scene);
-
-    SDL_assertPrint(object, "object is null");
-
-    std::vector<Node *>::iterator iter =
-        std::find(m_Children.begin(), m_Children.end(), object);
-
-    if (iter != m_Children.end())
-      {
-        (*iter)->removeParentNode();
-        m_Children.erase(iter);
+        object->setParentNode(this);
+        m_Children.push_back(object);
 
         Scene *scene = this->getCurrentScene();
         if (NULL != scene)
-          scene->removeActiveNode(object);
+            scene->addActiveNode(object);
+    }
 
-        scene->removeActiveNode(object);
-      }
-  }
+    void Node::removeChildNode(const u32 index)
+    {
+        SDL_assertPrint(index < numberOfChildrenNodes(),
+                        "index must be smaller than the size of the array");
+        removeChildNode(getChildNode(index));
+    }
 
-  void Node::removeChildrenNodes()
-  {
-    for (s32 i = 0; i < m_Children.size(); ++i)
-      {
-        removeChildNode(m_Children.at(i));
-      }
-    m_Children.clear();
-  }
+    void Node::removeChildNode(Node *object)
+    {
+        const Scene *scene = this->getCurrentScene();
+        SDL_assert(NULL != scene);
 
-  u32 Node::numberOfChildrenNodes() const { return m_Children.size(); }
+        SDL_assertPrint(object, "object is null");
 
-  void Node::replaceChildNode(Node *oldChild, Node *newChild)
-  {
-    Node *parent = dynamic_cast<Node *>(oldChild->getParentNode());
+        std::vector<Node *>::iterator iter =
+            std::find(m_Children.begin(), m_Children.end(), object);
 
-    parent->removeChildNode(oldChild);
-    parent->addChildNode(newChild);
-  }
+        if (iter != m_Children.end())
+            {
+                (*iter)->removeParentNode();
+                m_Children.erase(iter);
 
-  bool Node::isTransformDirty() const
-  {
-    //        if(m_PhysicsBody)
-    //        {
-    //            if (m_PhysicsBody->isKinematicPhysics() ||
-    //            m_PhysicsBody->isStaticPhysics())
-    //            {
-    //                if(getParentNode())
-    //                    return m_TransformDirty ||
-    //                    getParentNode()->isTransformDirty();
-    //                return m_TransformDirty;
-    //            }
-    //
-    //            if(getParentNode())
-    //            {
-    //                return m_PhysicsBody->isActive() ||
-    //                getParentNode()->isTransformDirty();
-    //            }
-    //            return m_PhysicsBody->isActive() ||
-    //            getParentNode()->isTransformDirty();
-    //        }
+                Scene *scene = this->getCurrentScene();
+                if (NULL != scene)
+                    scene->removeActiveNode(object);
 
-    //        if(getParentNode())
-    //        return m_TransformDirty || getParentNode()->isTransformDirty();
-    return m_TransformDirty;
-  }
+                scene->removeActiveNode(object);
+            }
+    }
 
-  void Node::resetTransformDirty() { m_TransformDirty = false; }
+    void Node::removeChildrenNodes()
+    {
+        for (s32 i = 0; i < m_Children.size(); ++i)
+            {
+                removeChildNode(m_Children.at(i));
+            }
+        m_Children.clear();
+    }
 
-  void Node::update(f32 timeStep)
-  {
-    BT_PROFILE("Node::update");
+    u32 Node::numberOfChildrenNodes() const { return m_Children.size(); }
 
-    setNormalMatrix(getWorldTransform().getBasis().inverse().transpose());
+    void Node::replaceChildNode(Node *oldChild, Node *newChild)
+    {
+        Node *parent = dynamic_cast<Node *>(oldChild->getParentNode());
 
-    SteeringBehaviorMachine *steeringMachine = getSteeringBehaviorMachine();
-    if (steeringMachine && steeringMachine->isEnabled())
-      {
-        steeringMachine->calculate(timeStep);
-      }
+        parent->removeChildNode(oldChild);
+        parent->addChildNode(newChild);
+    }
 
-    //        if(m_ActionThread->isPaused())
-    //        {
-    //            m_ActionThread->setup(&Node::updateActions, this,
-    //            SIO2_THREAD_PRIORITY_NORMAL);
-    //            m_ActionThread->enablePause(false);
-    //        }
-    AbstractActionable::update(timeStep);
-
-    NodeStateMachine *sm = getStateMachine();
-    if (sm != NULL)
-      {
-        sm->update(timeStep);
-      }
-
-    //        Node *parent = getParentNode();
-    //        //        if(m_ApplyPhysicsShape || (parent &&
-    //        parent->m_ApplyPhysicsShape))
-    //        {
-    //            applyPhysicsShape();
-    //            m_ApplyPhysicsShape = false;
-    //        }
-  }
-
-  void Node::updateGeometry(Geometry *const geometry, bool hiddenFromCamera)
-  {
-    if (geometry)
-      {
-        const unsigned long geometryIndex = getGeometryIndex();
-
-        //            if(isTransformDirty())
-        {
-          geometry->setTransform(geometryIndex, getWorldTransform());
-          //                resetTransformDirty();
-        }
-
-        //            if(m_ColorTransformDirty)
+    bool Node::isTransformDirty() const
+    {
+        //        if(m_PhysicsBody)
+        //        {
+        //            if (m_PhysicsBody->isKinematicPhysics() ||
+        //            m_PhysicsBody->isStaticPhysics())
         //            {
-        //                geometry->setColorTransform(geometryIndex,
-        //                getColorTransform()); m_ColorTransformDirty = false;
+        //                if(getParentNode())
+        //                    return m_TransformDirty ||
+        //                    getParentNode()->isTransformDirty();
+        //                return m_TransformDirty;
         //            }
-
-        //            if(m_NormalMatrixDirty)
-        {
-          geometry->setNormalMatrixTransform(geometryIndex,
-                                             btTransform(getNormalMatrix()));
-          //                m_NormalMatrixDirty = false;
-        }
-
-        //            if(m_ColorBaseDirty)
-        {
-          geometry->setColorBase(this);
-          //                m_ColorBaseDirty = false;
-        }
-
-        //            if(m_OpacityDirty)
-        {
-          geometry->setOpacity(this);
-          //                m_OpacityDirty = false;
-        }
-
-        //            if(m_HiddenDirty)
+        //
+        //            if(getParentNode())
         //            {
-        geometry->setHidden(this, hiddenFromCamera);
-        //                m_HiddenDirty = false;
+        //                return m_PhysicsBody->isActive() ||
+        //                getParentNode()->isTransformDirty();
         //            }
-      }
-  }
+        //            return m_PhysicsBody->isActive() ||
+        //            getParentNode()->isTransformDirty();
+        //        }
 
-  //    void Node::render(Camera *camera)
-  //    {
-  //        if(!isHidden(camera))
-  //        {
-  //            Geometry *geometry = getGeometry();
-  //            if(geometry != NULL)
-  //                geometry->render(camera);
-  //        }
-  //    }
+        //        if(getParentNode())
+        //        return m_TransformDirty ||
+        //        getParentNode()->isTransformDirty();
+        return m_TransformDirty;
+    }
 
-  void Node::applyPhysicsBodyTransform(const btTransform &transform)
-  {
-    PhysicsBody *physicsBody = getPhysicsBody();
+    void Node::resetTransformDirty() { m_TransformDirty = false; }
 
-    if (physicsBody)
-      physicsBody->setTransform(transform);
-  }
+    void Node::update(f32 timeStep)
+    {
+        BT_PROFILE("Node::update");
 
-  void Node::setGeometryIndex(s64 index)
-  {
-    SDL_assert(index >= 0);
-    SDL_assert(index < m_Geometry->maxNumberOfInstances());
-    m_GeometryIndex = index;
-    //        m_ApplyPhysicsShape = true;
-  }
-  size_t Node::getGeometryIndex() const { return m_GeometryIndex; }
-  void Node::clearGeometryIndex() { m_GeometryIndex = -1; }
+        setNormalMatrix(getWorldTransform().getBasis().inverse().transpose());
 
-  Scene *Node::getCurrentScene()
-  {
-    if (m_CurrentScene == NULL)
-      m_CurrentScene = njli::World::getInstance()->getScene();
-    return m_CurrentScene;
-  }
+        SteeringBehaviorMachine *steeringMachine = getSteeringBehaviorMachine();
+        if (steeringMachine && steeringMachine->isEnabled())
+            {
+                steeringMachine->calculate(timeStep);
+            }
 
-  const Scene *Node::getCurrentScene() const { return m_CurrentScene; }
+        //        if(m_ActionThread->isPaused())
+        //        {
+        //            m_ActionThread->setup(&Node::updateActions, this,
+        //            SIO2_THREAD_PRIORITY_NORMAL);
+        //            m_ActionThread->enablePause(false);
+        //        }
+        AbstractActionable::update(timeStep);
 
-  void Node::setCurrentScene(Scene *scene)
-  {
-    m_CurrentScene = scene;
+        NodeStateMachine *sm = getStateMachine();
+        if (sm != NULL)
+            {
+                sm->update(timeStep);
+            }
 
-    if (NULL != m_Geometry)
-      {
-        if (m_CurrentScene)
-          m_CurrentScene->addActiveGeometry(m_Geometry);
-      }
+        //        Node *parent = getParentNode();
+        //        //        if(m_ApplyPhysicsShape || (parent &&
+        //        parent->m_ApplyPhysicsShape))
+        //        {
+        //            applyPhysicsShape();
+        //            m_ApplyPhysicsShape = false;
+        //        }
+    }
 
-    if (NULL != m_Camera)
-      {
-        if (m_CurrentScene)
-          m_CurrentScene->addActiveCamera(m_Camera);
-      }
-  }
+    void Node::updateGeometry(Geometry *const geometry, bool hiddenFromCamera)
+    {
+        if (geometry)
+            {
+                const unsigned long geometryIndex = getGeometryIndex();
 
-  void Node::setCurrentScene(Node *node)
-  {
-    setCurrentScene(node->getCurrentScene());
-  }
-  void Node::removeCurrentScene() { m_CurrentScene = NULL; }
+                //            if(isTransformDirty())
+                {
+                    geometry->setTransform(geometryIndex, getWorldTransform());
+                    //                resetTransformDirty();
+                }
 
-  void Node::updateActions()
-  {
-    AbstractActionable::update(
-        World::getInstance()->getWorldClock()->timeStep());
-  }
+                //            if(m_ColorTransformDirty)
+                //            {
+                //                geometry->setColorTransform(geometryIndex,
+                //                getColorTransform()); m_ColorTransformDirty =
+                //                false;
+                //            }
 
-  bool Node::canDelete() const
-  {
-    bool can = AbstractFactoryObject::canDelete();
-    can = can && !hasChildrenNodes();
-    return can;
-  }
+                //            if(m_NormalMatrixDirty)
+                {
+                    geometry->setNormalMatrixTransform(
+                        geometryIndex, btTransform(getNormalMatrix()));
+                    //                m_NormalMatrixDirty = false;
+                }
+
+                //            if(m_ColorBaseDirty)
+                {
+                    geometry->setColorBase(this);
+                    //                m_ColorBaseDirty = false;
+                }
+
+                //            if(m_OpacityDirty)
+                {
+                    geometry->setOpacity(this);
+                    //                m_OpacityDirty = false;
+                }
+
+                //            if(m_HiddenDirty)
+                //            {
+                geometry->setHidden(this, hiddenFromCamera);
+                //                m_HiddenDirty = false;
+                //            }
+            }
+    }
+
+    //    void Node::render(Camera *camera)
+    //    {
+    //        if(!isHidden(camera))
+    //        {
+    //            Geometry *geometry = getGeometry();
+    //            if(geometry != NULL)
+    //                geometry->render(camera);
+    //        }
+    //    }
+
+    void Node::applyPhysicsBodyTransform(const btTransform &transform)
+    {
+        PhysicsBody *physicsBody = getPhysicsBody();
+
+        if (physicsBody)
+            physicsBody->setTransform(transform);
+    }
+
+    void Node::setGeometryIndex(s64 index)
+    {
+        SDL_assert(index >= 0);
+        SDL_assert(index < m_Geometry->maxNumberOfInstances());
+        m_GeometryIndex = index;
+        //        m_ApplyPhysicsShape = true;
+    }
+    size_t Node::getGeometryIndex() const { return m_GeometryIndex; }
+    void Node::clearGeometryIndex() { m_GeometryIndex = -1; }
+
+    Scene *Node::getCurrentScene()
+    {
+        if (m_CurrentScene == NULL)
+            m_CurrentScene = njli::World::getInstance()->getScene();
+        return m_CurrentScene;
+    }
+
+    const Scene *Node::getCurrentScene() const { return m_CurrentScene; }
+
+    void Node::setCurrentScene(Scene *scene)
+    {
+        m_CurrentScene = scene;
+
+        if (NULL != m_Geometry)
+            {
+                if (m_CurrentScene)
+                    m_CurrentScene->addActiveGeometry(m_Geometry);
+            }
+
+        if (NULL != m_Camera)
+            {
+                if (m_CurrentScene)
+                    m_CurrentScene->addActiveCamera(m_Camera);
+            }
+    }
+
+    void Node::setCurrentScene(Node *node)
+    {
+        setCurrentScene(node->getCurrentScene());
+    }
+    void Node::removeCurrentScene() { m_CurrentScene = NULL; }
+
+    void Node::updateActions()
+    {
+        AbstractActionable::update(
+            World::getInstance()->getWorldClock()->timeStep());
+    }
+
+    bool Node::canDelete() const
+    {
+        bool can = AbstractFactoryObject::canDelete();
+        can = can && !hasChildrenNodes();
+        return can;
+    }
 } // namespace njli

@@ -54,2463 +54,2579 @@ ImVec4 clear_color = ImColor(114, 144, 154);
 
 namespace njli
 {
-  World *World::s_Instance = NULL;
+    World *World::s_Instance = NULL;
 
-  void World::createInstance()
-  {
-    if (NULL == s_Instance)
-      {
-        s_Instance = new World();
-      }
-    MaterialProperty::initReferences();
-  }
+    void World::createInstance()
+    {
+        if (NULL == s_Instance)
+            {
+                s_Instance = new World();
+            }
+        MaterialProperty::initReferences();
+    }
 
-  void World::destroyInstance()
-  {
-    delete s_Instance;
-    s_Instance = NULL;
-  }
+    void World::destroyInstance()
+    {
+        delete s_Instance;
+        s_Instance = NULL;
+    }
 
-  World *World::getInstance()
-  {
-    SDL_assert(s_Instance);
-    //        if(NULL == s_Instance)
-    //        {
-    //            s_Instance = new World();
-    //        }
+    World *World::getInstance()
+    {
+        SDL_assert(s_Instance);
+        //        if(NULL == s_Instance)
+        //        {
+        //            s_Instance = new World();
+        //        }
 
-    return s_Instance;
-  }
+        return s_Instance;
+    }
 
-  bool World::hasInstance() { return (NULL != s_Instance); }
+    bool World::hasInstance() { return (NULL != s_Instance); }
 
-  bool World::usingZeroBrane = false;
+    bool World::usingZeroBrane = false;
 
-  World::World()
-      : m_WorldFactory(new WorldFactory()),
-        m_WorldResourceLoader(new WorldResourceLoader()),
-        m_WorldClock(new WorldClock()),
-        m_WorldLuaVirtualMachine(new WorldLuaVirtualMachine()),
-        //    m_WorldPythonVirtualMachine(new WorldPythonVirtualMachine()),
-        m_stateMachine(new WorldStateMachine()),
-        //    m_Name("MyWorld"),
-        m_ViewPortDimensions(new btVector2()), m_Scene(NULL),
-        m_WorldSocket(new WorldSocket),
+    World::World()
+        : m_WorldFactory(new WorldFactory()),
+          m_WorldResourceLoader(new WorldResourceLoader()),
+          m_WorldClock(new WorldClock()),
+          m_WorldLuaVirtualMachine(new WorldLuaVirtualMachine()),
+          //    m_WorldPythonVirtualMachine(new WorldPythonVirtualMachine()),
+          m_stateMachine(new WorldStateMachine()),
+          //    m_Name("MyWorld"),
+          m_ViewPortDimensions(new btVector2()), m_Scene(NULL),
+          m_WorldSocket(new WorldSocket),
 #if defined(USE_NANOVG_LIBRARY)
-        m_WorldHUD(new WorldHUD),
+          m_WorldHUD(new WorldHUD),
 #endif
-        m_WorldInput(new WorldInput), m_WorldSound(new WorldSound),
-        m_WorldDebugDrawer(new WorldDebugDrawer),
-        // m_WorldSQLite(new WorldSQLite),
-        // m_WorldFacebook(new WorldFacebook),
-        m_enableDebugDraw(false), m_DebugDrawCamera(NULL),
-        m_DebugDrawMaterial(NULL),
-        //    m_TouchCamera(NULL),
-        m_SocketEnabled(false), m_SocketAddress("192.168.1.10"),
-        m_SocketPort(2223), m_BackgroundColor(new btVector4(.5, .5, .5, .5)),
-        m_DeviceName("NOT - SET"), m_AnimationPaused(false), m_GamePaused(false)
-  {
-    //    m_WorldDebugDrawer->init();
+          m_WorldInput(new WorldInput), m_WorldSound(new WorldSound),
+          m_WorldDebugDrawer(new WorldDebugDrawer),
+          // m_WorldSQLite(new WorldSQLite),
+          // m_WorldFacebook(new WorldFacebook),
+          m_enableDebugDraw(false), m_DebugDrawCamera(NULL),
+          m_DebugDrawMaterial(NULL),
+          //    m_TouchCamera(NULL),
+          m_SocketEnabled(false), m_SocketAddress("192.168.1.10"),
+          m_SocketPort(2223), m_BackgroundColor(new btVector4(.5, .5, .5, .5)),
+          m_DeviceName("NOT - SET"), m_AnimationPaused(false),
+          m_GamePaused(false)
+    {
+        //    m_WorldDebugDrawer->init();
 
-    addChild(m_WorldSound);
-    addChild(m_WorldInput);
+        addChild(m_WorldSound);
+        addChild(m_WorldInput);
 #ifdef USE_NANOVG_LIBRARY
-    addChild(m_WorldHUD);
+        addChild(m_WorldHUD);
 #endif
-    addChild(m_WorldSocket);
-    addChild(m_stateMachine);
-    addChild(m_WorldLuaVirtualMachine);
-    addChild(m_WorldClock);
-    addChild(m_WorldResourceLoader);
-    addChild(m_WorldFactory);
-    // addChild(m_WorldFacebook);
+        addChild(m_WorldSocket);
+        addChild(m_stateMachine);
+        addChild(m_WorldLuaVirtualMachine);
+        addChild(m_WorldClock);
+        addChild(m_WorldResourceLoader);
+        addChild(m_WorldFactory);
+        // addChild(m_WorldFacebook);
 
-    //    for (s32 i = 0; i < MAX_CONTACTS; ++i)
-    //      {
-    //        PhysicsRayContact *contact = PhysicsRayContact::create();
-    //        m_RayContacts.push_back(contact);
-    //      }
-  }
+        //    for (s32 i = 0; i < MAX_CONTACTS; ++i)
+        //      {
+        //        PhysicsRayContact *contact = PhysicsRayContact::create();
+        //        m_RayContacts.push_back(contact);
+        //      }
+    }
 
-  World::~World()
-  {
-    //        getWorldSQLite()->deleteBuffer();
+    World::~World()
+    {
+        //        getWorldSQLite()->deleteBuffer();
 
-    delete m_BackgroundColor;
-    m_BackgroundColor = NULL;
-    // delete m_WorldFacebook;m_WorldFacebook=NULL;
-    // delete m_WorldSQLite;m_WorldSQLite=NULL;
-    delete m_WorldDebugDrawer;
-    m_WorldDebugDrawer = NULL;
-    delete m_WorldSound;
-    m_WorldSound = NULL;
-    delete m_WorldInput;
-    m_WorldInput = NULL;
+        delete m_BackgroundColor;
+        m_BackgroundColor = NULL;
+        // delete m_WorldFacebook;m_WorldFacebook=NULL;
+        // delete m_WorldSQLite;m_WorldSQLite=NULL;
+        delete m_WorldDebugDrawer;
+        m_WorldDebugDrawer = NULL;
+        delete m_WorldSound;
+        m_WorldSound = NULL;
+        delete m_WorldInput;
+        m_WorldInput = NULL;
 #if defined(USE_NANOVG_LIBRARY)
-    delete m_WorldHUD;
-    m_WorldHUD = NULL;
+        delete m_WorldHUD;
+        m_WorldHUD = NULL;
 #endif
-    delete m_WorldSocket;
-    m_WorldSocket = NULL;
-    delete m_ViewPortDimensions;
-    m_ViewPortDimensions = NULL;
-    delete m_stateMachine;
-    m_stateMachine = NULL;
-    delete m_WorldLuaVirtualMachine;
-    m_WorldLuaVirtualMachine = NULL;
-    delete m_WorldClock;
-    m_WorldClock = NULL;
-    delete m_WorldResourceLoader;
-    m_WorldResourceLoader = NULL;
-    delete m_WorldFactory;
-    m_WorldFactory = NULL;
+        delete m_WorldSocket;
+        m_WorldSocket = NULL;
+        delete m_ViewPortDimensions;
+        m_ViewPortDimensions = NULL;
+        delete m_stateMachine;
+        m_stateMachine = NULL;
+        delete m_WorldLuaVirtualMachine;
+        m_WorldLuaVirtualMachine = NULL;
+        delete m_WorldClock;
+        m_WorldClock = NULL;
+        delete m_WorldResourceLoader;
+        m_WorldResourceLoader = NULL;
+        delete m_WorldFactory;
+        m_WorldFactory = NULL;
 
-    if (m_DebugDrawMaterial)
-      {
-        Material::destroy(m_DebugDrawMaterial);
-        m_DebugDrawMaterial = NULL;
-      }
+        if (m_DebugDrawMaterial)
+            {
+                Material::destroy(m_DebugDrawMaterial);
+                m_DebugDrawMaterial = NULL;
+            }
 
-    for (s32 i = 0; i < m_RayContacts.size(); ++i)
-      {
+        for (s32 i = 0; i < m_RayContacts.size(); ++i)
+            {
 
-        PhysicsRayContact *c = m_RayContacts.at(i);
-        if (World::getInstance()->getWorldFactory()->has(c))
-          PhysicsRayContact::destroy(c);
-        removeChild(c);
-      }
-    m_RayContacts.clear();
-  }
+                PhysicsRayContact *c = m_RayContacts.at(i);
+                if (World::getInstance()->getWorldFactory()->has(c))
+                    PhysicsRayContact::destroy(c);
+                removeChild(c);
+            }
+        m_RayContacts.clear();
+    }
 
-  WorldFactory *World::getWorldFactory()
-  {
-    s32 idx = getChildIndex(m_WorldFactory);
-    if (idx != -1)
-      return dynamic_cast<WorldFactory *>(getChild(idx));
-    return NULL;
-  }
+    WorldFactory *World::getWorldFactory()
+    {
+        s32 idx = getChildIndex(m_WorldFactory);
+        if (idx != -1)
+            return dynamic_cast<WorldFactory *>(getChild(idx));
+        return NULL;
+    }
 
-  const WorldFactory *World::getWorldFactory() const
-  {
-    s32 idx = getChildIndex(m_WorldFactory);
-    if (idx != -1)
-      return dynamic_cast<const WorldFactory *>(getChild(idx));
-    return NULL;
-  }
+    const WorldFactory *World::getWorldFactory() const
+    {
+        s32 idx = getChildIndex(m_WorldFactory);
+        if (idx != -1)
+            return dynamic_cast<const WorldFactory *>(getChild(idx));
+        return NULL;
+    }
 
-  WorldResourceLoader *World::getWorldResourceLoader()
-  {
-    s32 idx = getChildIndex(m_WorldResourceLoader);
-    if (idx != -1)
-      return dynamic_cast<WorldResourceLoader *>(getChild(idx));
-    return NULL;
-  }
+    WorldResourceLoader *World::getWorldResourceLoader()
+    {
+        s32 idx = getChildIndex(m_WorldResourceLoader);
+        if (idx != -1)
+            return dynamic_cast<WorldResourceLoader *>(getChild(idx));
+        return NULL;
+    }
 
-  const WorldResourceLoader *World::getWorldResourceLoader() const
-  {
-    s32 idx = getChildIndex(m_WorldResourceLoader);
-    if (idx != -1)
-      return dynamic_cast<const WorldResourceLoader *>(getChild(idx));
-    return NULL;
-  }
+    const WorldResourceLoader *World::getWorldResourceLoader() const
+    {
+        s32 idx = getChildIndex(m_WorldResourceLoader);
+        if (idx != -1)
+            return dynamic_cast<const WorldResourceLoader *>(getChild(idx));
+        return NULL;
+    }
 
-  WorldClock *World::getWorldClock()
-  {
-    s32 idx = getChildIndex(m_WorldClock);
-    if (idx != -1)
-      return dynamic_cast<WorldClock *>(getChild(idx));
-    return NULL;
-  }
+    WorldClock *World::getWorldClock()
+    {
+        s32 idx = getChildIndex(m_WorldClock);
+        if (idx != -1)
+            return dynamic_cast<WorldClock *>(getChild(idx));
+        return NULL;
+    }
 
-  const WorldClock *World::getWorldClock() const
-  {
-    s32 idx = getChildIndex(m_WorldClock);
-    if (idx != -1)
-      return dynamic_cast<const WorldClock *>(getChild(idx));
-    return NULL;
-  }
+    const WorldClock *World::getWorldClock() const
+    {
+        s32 idx = getChildIndex(m_WorldClock);
+        if (idx != -1)
+            return dynamic_cast<const WorldClock *>(getChild(idx));
+        return NULL;
+    }
 
-  WorldLuaVirtualMachine *World::getWorldLuaVirtualMachine()
-  {
-    s32 idx = getChildIndex(m_WorldLuaVirtualMachine);
-    if (idx != -1)
-      //#if !(defined(NDEBUG))
-      //        {
-      //            return dynamic_cast<WorldLuaVirtualMachine*>(getChild(idx));
-      //        }
-      //#else
-      {
-        //            SDL_assert(dynamic_cast<WorldLuaVirtualMachine*>(getChild(idx)));
-        return dynamic_cast<WorldLuaVirtualMachine *>(getChild(idx));
-      }
-    //#endif
-    return NULL;
-  }
+    WorldLuaVirtualMachine *World::getWorldLuaVirtualMachine()
+    {
+        s32 idx = getChildIndex(m_WorldLuaVirtualMachine);
+        if (idx != -1)
+            //#if !(defined(NDEBUG))
+            //        {
+            //            return
+            //            dynamic_cast<WorldLuaVirtualMachine*>(getChild(idx));
+            //        }
+            //#else
+            {
+                //            SDL_assert(dynamic_cast<WorldLuaVirtualMachine*>(getChild(idx)));
+                return dynamic_cast<WorldLuaVirtualMachine *>(getChild(idx));
+            }
+        //#endif
+        return NULL;
+    }
 
-  const WorldLuaVirtualMachine *World::getWorldLuaVirtualMachine() const
-  {
-    s32 idx = getChildIndex(m_WorldLuaVirtualMachine);
-    if (idx != -1)
-      //#if !(defined(NDEBUG))
-      //        {
-      //            return dynamic_cast<const
-      //            WorldLuaVirtualMachine*>(getChild(idx));
-      //        }
-      //#else
-      {
-        //            SDL_assert(dynamic_cast<const
-        //            WorldLuaVirtualMachine*>(getChild(idx)));
-        return dynamic_cast<const WorldLuaVirtualMachine *>(getChild(idx));
-      }
-    //#endif
+    const WorldLuaVirtualMachine *World::getWorldLuaVirtualMachine() const
+    {
+        s32 idx = getChildIndex(m_WorldLuaVirtualMachine);
+        if (idx != -1)
+            //#if !(defined(NDEBUG))
+            //        {
+            //            return dynamic_cast<const
+            //            WorldLuaVirtualMachine*>(getChild(idx));
+            //        }
+            //#else
+            {
+                //            SDL_assert(dynamic_cast<const
+                //            WorldLuaVirtualMachine*>(getChild(idx)));
+                return dynamic_cast<const WorldLuaVirtualMachine *>(
+                    getChild(idx));
+            }
+        //#endif
 
-    return NULL;
-  }
+        return NULL;
+    }
 
-  //    WorldPythonVirtualMachine *World::getWorldPythonVirtualMachine()
-  //    {
-  //        s32 idx = getChildIndex(m_WorldPythonVirtualMachine);
-  //        if(idx != -1)
-  //            return dynamic_cast<WorldPythonVirtualMachine*>(getChild(idx));
-  //        return NULL;
-  //    }
-  //
-  //    const WorldPythonVirtualMachine *World::getWorldPythonVirtualMachine()
-  //    const
-  //    {
-  //        s32 idx = getChildIndex(m_WorldPythonVirtualMachine);
-  //        if(idx != -1)
-  //            return dynamic_cast<const
-  //            WorldPythonVirtualMachine*>(getChild(idx));
-  //        return NULL;
-  //    }
+    //    WorldPythonVirtualMachine *World::getWorldPythonVirtualMachine()
+    //    {
+    //        s32 idx = getChildIndex(m_WorldPythonVirtualMachine);
+    //        if(idx != -1)
+    //            return
+    //            dynamic_cast<WorldPythonVirtualMachine*>(getChild(idx));
+    //        return NULL;
+    //    }
+    //
+    //    const WorldPythonVirtualMachine *World::getWorldPythonVirtualMachine()
+    //    const
+    //    {
+    //        s32 idx = getChildIndex(m_WorldPythonVirtualMachine);
+    //        if(idx != -1)
+    //            return dynamic_cast<const
+    //            WorldPythonVirtualMachine*>(getChild(idx));
+    //        return NULL;
+    //    }
 
-  WorldSocket *World::getWorldSocket()
-  {
-    s32 idx = getChildIndex(m_WorldSocket);
-    if (idx != -1)
-      return dynamic_cast<WorldSocket *>(getChild(idx));
-    return NULL;
-  }
+    WorldSocket *World::getWorldSocket()
+    {
+        s32 idx = getChildIndex(m_WorldSocket);
+        if (idx != -1)
+            return dynamic_cast<WorldSocket *>(getChild(idx));
+        return NULL;
+    }
 
-  const WorldSocket *World::getWorldSocket() const
-  {
-    s32 idx = getChildIndex(m_WorldSocket);
-    if (idx != -1)
-      return dynamic_cast<const WorldSocket *>(getChild(idx));
-    return NULL;
-  }
+    const WorldSocket *World::getWorldSocket() const
+    {
+        s32 idx = getChildIndex(m_WorldSocket);
+        if (idx != -1)
+            return dynamic_cast<const WorldSocket *>(getChild(idx));
+        return NULL;
+    }
 
-  /*WorldFacebook *World::getWorldFacebook()
-  {
-      s32 idx = getChildIndex(m_WorldFacebook);
-      if(idx != -1)
-          return dynamic_cast<WorldFacebook*>(getChild(idx));
-      return NULL;
-  }*/
+    /*WorldFacebook *World::getWorldFacebook()
+    {
+        s32 idx = getChildIndex(m_WorldFacebook);
+        if(idx != -1)
+            return dynamic_cast<WorldFacebook*>(getChild(idx));
+        return NULL;
+    }*/
 
-  /*const WorldFacebook *World::getWorldFacebook() const
-  {
-      s32 idx = getChildIndex(m_WorldFacebook);
-      if(idx != -1)
-          return dynamic_cast<const WorldFacebook*>(getChild(idx));
-      return NULL;
-  }*/
+    /*const WorldFacebook *World::getWorldFacebook() const
+    {
+        s32 idx = getChildIndex(m_WorldFacebook);
+        if(idx != -1)
+            return dynamic_cast<const WorldFacebook*>(getChild(idx));
+        return NULL;
+    }*/
 
 #if defined(USE_NANOVG_LIBRARY)
-  WorldHUD *World::getWorldHUD()
-  {
-    s32 idx = getChildIndex(m_WorldHUD);
-    if (idx != -1)
-      return dynamic_cast<WorldHUD *>(getChild(idx));
-    return NULL;
-  }
+    WorldHUD *World::getWorldHUD()
+    {
+        s32 idx = getChildIndex(m_WorldHUD);
+        if (idx != -1)
+            return dynamic_cast<WorldHUD *>(getChild(idx));
+        return NULL;
+    }
 
-  const WorldHUD *World::getWorldHUD() const
-  {
-    s32 idx = getChildIndex(m_WorldHUD);
-    if (idx != -1)
-      return dynamic_cast<const WorldHUD *>(getChild(idx));
-    return NULL;
-  }
+    const WorldHUD *World::getWorldHUD() const
+    {
+        s32 idx = getChildIndex(m_WorldHUD);
+        if (idx != -1)
+            return dynamic_cast<const WorldHUD *>(getChild(idx));
+        return NULL;
+    }
 #endif
 
-  WorldInput *World::getWorldInput()
-  {
-    s32 idx = getChildIndex(m_WorldInput);
-    if (idx != -1)
-      return dynamic_cast<WorldInput *>(getChild(idx));
-    return NULL;
-  }
-
-  const WorldInput *World::getWorldInput() const
-  {
-    s32 idx = getChildIndex(m_WorldInput);
-    if (idx != -1)
-      return dynamic_cast<const WorldInput *>(getChild(idx));
-    return NULL;
-  }
-
-  WorldSound *World::getWorldSound()
-  {
-    s32 idx = getChildIndex(m_WorldSound);
-    if (idx != -1)
-      return dynamic_cast<WorldSound *>(getChild(idx));
-    return NULL;
-  }
-  const WorldSound *World::getWorldSound() const
-  {
-    s32 idx = getChildIndex(m_WorldSound);
-    if (idx != -1)
-      return dynamic_cast<const WorldSound *>(getChild(idx));
-    return NULL;
-  }
-
-  WorldStateMachine *World::getStateMachine()
-  {
-    s32 idx = getChildIndex(m_stateMachine);
-    if (idx != -1)
-      return dynamic_cast<WorldStateMachine *>(getChild(idx));
-    return NULL;
-  }
-
-  const WorldStateMachine *World::getStateMachine() const
-  {
-    s32 idx = getChildIndex(m_stateMachine);
-    if (idx != -1)
-      return dynamic_cast<const WorldStateMachine *>(getChild(idx));
-    return NULL;
-  }
-
-  WorldDebugDrawer *World::getDebugDrawer()
-  {
-    m_WorldDebugDrawer->init();
-    return m_WorldDebugDrawer;
-  }
-
-  const WorldDebugDrawer *World::getDebugDrawer() const
-  {
-    m_WorldDebugDrawer->init();
-    return m_WorldDebugDrawer;
-  }
-
-  // WorldSQLite *World::getWorldSQLite()
-  //{
-  //    return m_WorldSQLite;
-  //}
-
-  //    const WorldSQLite *World::getWorldSQLite()const
-  //    {
-  //        return m_WorldSQLite;
-  //    }
-
-  void World::touchDown(DeviceTouch **touch)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->touchDown(touch);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Down";
-    char buffer[BUFFER_SIZE] = "";
-    sprintf(buffer, "Touches%s", action);
-    checkRayCollision(touch, buffer);
-
-    if (getScene())
-      getScene()->touchDown(touch);
-
-    sprintf(buffer, "%s", "__NJLITouchesDown");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     touch);
-  }
-
-  void World::touchUp(DeviceTouch **touch)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->touchUp(touch);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Up";
-    char buffer[BUFFER_SIZE] = "";
-    sprintf(buffer, "Touches%s", action);
-    checkRayCollision(touch, buffer);
-
-    if (getScene())
-      getScene()->touchUp(touch);
-
-    sprintf(buffer, "%s", "__NJLITouchesUp");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     touch);
-  }
-
-  void World::touchMove(DeviceTouch **touch)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->touchMove(touch);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Move";
-    char buffer[BUFFER_SIZE] = "";
-    sprintf(buffer, "Touches%s", action);
-    checkRayCollision(touch, buffer);
-
-    if (getScene())
-      getScene()->touchMove(touch);
-
-    sprintf(buffer, "%s", "__NJLITouchesMove");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     touch);
-  }
-
-  void World::touchCancelled(DeviceTouch **touch)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->touchCancelled(touch);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Cancelled";
-    char buffer[BUFFER_SIZE] = "";
-    sprintf(buffer, "Touches%s", action);
-    checkRayCollision(touch, buffer);
-
-    if (getScene())
-      getScene()->touchCancelled(touch);
-
-    sprintf(buffer, "%s", "__NJLITouchesCancelled");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     touch);
-  }
-
-  void World::touchDown(const DeviceTouch &touch)
-  {
-    //        getDebugDrawer()->connectSynergyServer("192.168.7.22");
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->touchDown(touch);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Down";
-    char buffer[BUFFER_SIZE] = "";
-    sprintf(buffer, "Touch%s", action);
-    checkRayCollision(touch, buffer);
-
-    if (getScene())
-      getScene()->touchDown(touch);
-
-    sprintf(buffer, "%s", "__NJLITouchDown");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     touch);
-  }
-
-  void World::touchUp(const DeviceTouch &touch)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->touchUp(touch);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Up";
-    char buffer[BUFFER_SIZE] = "";
-    sprintf(buffer, "Touch%s", action);
-    checkRayCollision(touch, buffer);
-
-    if (getScene())
-      getScene()->touchUp(touch);
-
-    sprintf(buffer, "%s", "__NJLITouchUp");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     touch);
-  }
-
-  void World::touchMove(const DeviceTouch &touch)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->touchMove(touch);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Move";
-    char buffer[BUFFER_SIZE] = "";
-    sprintf(buffer, "Touch%s", action);
-    checkRayCollision(touch, buffer);
-
-    if (getScene())
-      getScene()->touchMove(touch);
-
-    sprintf(buffer, "%s", "__NJLITouchMove");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     touch);
-  }
-
-  void World::mouseDown(const DeviceMouse &mouse)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->mouseDown(mouse);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Down";
-    char buffer[BUFFER_SIZE] = "";
-
-    sprintf(buffer, "Mouse%s", action);
-    checkRayCollision(mouse, buffer);
-
-    if (getScene())
-      getScene()->mouseDown(mouse);
-
-    //    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIMouseDown");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     mouse);
-  }
-
-  void World::mouseUp(const DeviceMouse &mouse)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->mouseUp(mouse);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Up";
-    char buffer[BUFFER_SIZE] = "";
-
-    sprintf(buffer, "Mouse%s", action);
-    checkRayCollision(mouse, buffer);
-
-    if (getScene())
-      getScene()->mouseUp(mouse);
-
-    //    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIMouseUp");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     mouse);
-  }
-
-  void World::mouseMove(const DeviceMouse &mouse)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->mouseMove(mouse);
-      }
-    else
-      {
-        //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //        WorldState\n");
-      }
-
-    char action[BUFFER_SIZE] = "Move";
-    char buffer[BUFFER_SIZE] = "";
-
-    sprintf(buffer, "Mouse%s", action);
-    checkRayCollision(mouse, buffer);
-
-    if (getScene())
-      getScene()->mouseMove(mouse);
-
-    //    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIMouseMove");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     mouse);
-  }
-
-  void World::keyUp(const char *keycodeName, bool withCapsLock,
-                    bool withControl, bool withShift, bool withAlt,
-                    bool withGui)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->keyUp(keycodeName, withCapsLock, withControl, withShift,
-                            withAlt, withGui);
-      }
-    else
-      {
-        //            SDL_LogDebug(SDL _LOG_CATEGORY_TEST, "There is no
-        //            WorldState\n");
-      }
-
-    if (getScene())
-      getScene()->keyUp(keycodeName, withCapsLock, withControl, withShift,
-                        withAlt, withGui);
-
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIKeyUp");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
-        buffer, keycodeName, withCapsLock, withControl, withShift, withAlt,
-        withGui);
-  }
-
-  void World::keyDown(const char *keycodeName, bool withCapsLock,
+    WorldInput *World::getWorldInput()
+    {
+        s32 idx = getChildIndex(m_WorldInput);
+        if (idx != -1)
+            return dynamic_cast<WorldInput *>(getChild(idx));
+        return NULL;
+    }
+
+    const WorldInput *World::getWorldInput() const
+    {
+        s32 idx = getChildIndex(m_WorldInput);
+        if (idx != -1)
+            return dynamic_cast<const WorldInput *>(getChild(idx));
+        return NULL;
+    }
+
+    WorldSound *World::getWorldSound()
+    {
+        s32 idx = getChildIndex(m_WorldSound);
+        if (idx != -1)
+            return dynamic_cast<WorldSound *>(getChild(idx));
+        return NULL;
+    }
+    const WorldSound *World::getWorldSound() const
+    {
+        s32 idx = getChildIndex(m_WorldSound);
+        if (idx != -1)
+            return dynamic_cast<const WorldSound *>(getChild(idx));
+        return NULL;
+    }
+
+    WorldStateMachine *World::getStateMachine()
+    {
+        s32 idx = getChildIndex(m_stateMachine);
+        if (idx != -1)
+            return dynamic_cast<WorldStateMachine *>(getChild(idx));
+        return NULL;
+    }
+
+    const WorldStateMachine *World::getStateMachine() const
+    {
+        s32 idx = getChildIndex(m_stateMachine);
+        if (idx != -1)
+            return dynamic_cast<const WorldStateMachine *>(getChild(idx));
+        return NULL;
+    }
+
+    WorldDebugDrawer *World::getDebugDrawer()
+    {
+        m_WorldDebugDrawer->init();
+        return m_WorldDebugDrawer;
+    }
+
+    const WorldDebugDrawer *World::getDebugDrawer() const
+    {
+        m_WorldDebugDrawer->init();
+        return m_WorldDebugDrawer;
+    }
+
+    // WorldSQLite *World::getWorldSQLite()
+    //{
+    //    return m_WorldSQLite;
+    //}
+
+    //    const WorldSQLite *World::getWorldSQLite()const
+    //    {
+    //        return m_WorldSQLite;
+    //    }
+
+    void World::touchDown(DeviceTouch **touch)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->touchDown(touch);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Down";
+        char buffer[BUFFER_SIZE] = "";
+        sprintf(buffer, "Touches%s", action);
+        checkRayCollision(touch, buffer);
+
+        if (getScene())
+            getScene()->touchDown(touch);
+
+        sprintf(buffer, "%s", "__NJLITouchesDown");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         touch);
+    }
+
+    void World::touchUp(DeviceTouch **touch)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->touchUp(touch);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Up";
+        char buffer[BUFFER_SIZE] = "";
+        sprintf(buffer, "Touches%s", action);
+        checkRayCollision(touch, buffer);
+
+        if (getScene())
+            getScene()->touchUp(touch);
+
+        sprintf(buffer, "%s", "__NJLITouchesUp");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         touch);
+    }
+
+    void World::touchMove(DeviceTouch **touch)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->touchMove(touch);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Move";
+        char buffer[BUFFER_SIZE] = "";
+        sprintf(buffer, "Touches%s", action);
+        checkRayCollision(touch, buffer);
+
+        if (getScene())
+            getScene()->touchMove(touch);
+
+        sprintf(buffer, "%s", "__NJLITouchesMove");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         touch);
+    }
+
+    void World::touchCancelled(DeviceTouch **touch)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->touchCancelled(touch);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Cancelled";
+        char buffer[BUFFER_SIZE] = "";
+        sprintf(buffer, "Touches%s", action);
+        checkRayCollision(touch, buffer);
+
+        if (getScene())
+            getScene()->touchCancelled(touch);
+
+        sprintf(buffer, "%s", "__NJLITouchesCancelled");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         touch);
+    }
+
+    void World::touchDown(const DeviceTouch &touch)
+    {
+        //        getDebugDrawer()->connectSynergyServer("192.168.7.22");
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->touchDown(touch);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Down";
+        char buffer[BUFFER_SIZE] = "";
+        sprintf(buffer, "Touch%s", action);
+        checkRayCollision(touch, buffer);
+
+        if (getScene())
+            getScene()->touchDown(touch);
+
+        sprintf(buffer, "%s", "__NJLITouchDown");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         touch);
+    }
+
+    void World::touchUp(const DeviceTouch &touch)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->touchUp(touch);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Up";
+        char buffer[BUFFER_SIZE] = "";
+        sprintf(buffer, "Touch%s", action);
+        checkRayCollision(touch, buffer);
+
+        if (getScene())
+            getScene()->touchUp(touch);
+
+        sprintf(buffer, "%s", "__NJLITouchUp");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         touch);
+    }
+
+    void World::touchMove(const DeviceTouch &touch)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->touchMove(touch);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Move";
+        char buffer[BUFFER_SIZE] = "";
+        sprintf(buffer, "Touch%s", action);
+        checkRayCollision(touch, buffer);
+
+        if (getScene())
+            getScene()->touchMove(touch);
+
+        sprintf(buffer, "%s", "__NJLITouchMove");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         touch);
+    }
+
+    void World::mouseDown(const DeviceMouse &mouse)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->mouseDown(mouse);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Down";
+        char buffer[BUFFER_SIZE] = "";
+
+        sprintf(buffer, "Mouse%s", action);
+        checkRayCollision(mouse, buffer);
+
+        if (getScene())
+            getScene()->mouseDown(mouse);
+
+        //    char buffer[256];
+        sprintf(buffer, "%s", "__NJLIMouseDown");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         mouse);
+    }
+
+    void World::mouseUp(const DeviceMouse &mouse)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->mouseUp(mouse);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Up";
+        char buffer[BUFFER_SIZE] = "";
+
+        sprintf(buffer, "Mouse%s", action);
+        checkRayCollision(mouse, buffer);
+
+        if (getScene())
+            getScene()->mouseUp(mouse);
+
+        //    char buffer[256];
+        sprintf(buffer, "%s", "__NJLIMouseUp");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         mouse);
+    }
+
+    void World::mouseMove(const DeviceMouse &mouse)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->mouseMove(mouse);
+            }
+        else
+            {
+                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //        WorldState\n");
+            }
+
+        char action[BUFFER_SIZE] = "Move";
+        char buffer[BUFFER_SIZE] = "";
+
+        sprintf(buffer, "Mouse%s", action);
+        checkRayCollision(mouse, buffer);
+
+        if (getScene())
+            getScene()->mouseMove(mouse);
+
+        //    char buffer[256];
+        sprintf(buffer, "%s", "__NJLIMouseMove");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         mouse);
+    }
+
+    void World::keyUp(const char *keycodeName, bool withCapsLock,
                       bool withControl, bool withShift, bool withAlt,
                       bool withGui)
-  {
-    WorldState *currentState =
-        dynamic_cast<WorldState *>(m_stateMachine->getState());
-
-    if (currentState)
-      {
-        currentState->keyDown(keycodeName, withCapsLock, withControl, withShift,
-                              withAlt, withGui);
-      }
-    else
-      {
-        //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-        //            WorldState\n");
-      }
-
-    if (getScene())
-      getScene()->keyDown(keycodeName, withCapsLock, withControl, withShift,
-                          withAlt, withGui);
-
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIKeyDown");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
-        buffer, keycodeName, withCapsLock, withControl, withShift, withAlt,
-        withGui);
-  }
-
-  //    void World::touchCancelled(const DeviceTouch &touches)
-  //    {
-  //        WorldState *currentState =
-  //        dynamic_cast<WorldState*>(m_stateMachine->getState());
-  //
-  //        if(currentState)
-  //        {
-  //            currentState->touchCancelled(touches);
-  //        }
-  //        else
-  //        {
-  //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no WorldState\n");
-  //        }
-  //
-  //        if(getScene())
-  //            getScene()->touchCancelled(touch);
-  //
-  //        char buffer[256];
-  //        sprintf(buffer, "%s", "__NJLITouchCancelled");
-  //        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-  //        touches);
-  //    }
-
-  void World::keyboardShow()
-  {
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIWorldKeyboardShow");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
-
-    if (getScene())
-      getScene()->keyboardShow();
-  }
-
-  void World::keyboardCancel()
-  {
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIWorldKeyboardCancel");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
-
-    if (getScene())
-      getScene()->keyboardCancel();
-  }
-
-  void World::keyboardReturn(const char *text)
-  {
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIWorldKeyboardReturn");
-
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     text);
-
-    if (getScene())
-      getScene()->keyboardReturn(text);
-  }
-
-  //    void World::setTouchCamera(Camera *camera)
-  //    {
-  //        m_TouchCamera = camera;
-  //    }
-  //    Camera *World::getTouchCamera()
-  //    {
-  //        return m_TouchCamera;
-  //    }
-  //    const Camera *World::getTouchCamera()const
-  //    {
-  //        return m_TouchCamera;
-  //    }
-
-  void World::getViewPort(s32 *viewPort) const
-  {
-    viewPort[0] = 0;
-    viewPort[1] = 0;
-
-    //        if
-    //        (njli::World::getInstance()->getWorldInput()->isPortraitOrientation())
     {
-      viewPort[2] = static_cast<s32>(
-          njli::World::getInstance()->getViewportDimensions().x());
-      viewPort[3] = static_cast<s32>(
-          njli::World::getInstance()->getViewportDimensions().y());
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->keyUp(keycodeName, withCapsLock, withControl,
+                                    withShift, withAlt, withGui);
+            }
+        else
+            {
+                //            SDL_LogDebug(SDL _LOG_CATEGORY_TEST, "There is no
+                //            WorldState\n");
+            }
+
+        if (getScene())
+            getScene()->keyUp(keycodeName, withCapsLock, withControl, withShift,
+                              withAlt, withGui);
+
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIKeyUp");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer, keycodeName, withCapsLock, withControl, withShift, withAlt,
+            withGui);
     }
-    //        else if
-    //        (njli::World::getInstance()->getWorldInput()->isLandscapeOrientation())
+
+    void World::keyDown(const char *keycodeName, bool withCapsLock,
+                        bool withControl, bool withShift, bool withAlt,
+                        bool withGui)
+    {
+        WorldState *currentState =
+            dynamic_cast<WorldState *>(m_stateMachine->getState());
+
+        if (currentState)
+            {
+                currentState->keyDown(keycodeName, withCapsLock, withControl,
+                                      withShift, withAlt, withGui);
+            }
+        else
+            {
+                //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+                //            WorldState\n");
+            }
+
+        if (getScene())
+            getScene()->keyDown(keycodeName, withCapsLock, withControl,
+                                withShift, withAlt, withGui);
+
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIKeyDown");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer, keycodeName, withCapsLock, withControl, withShift, withAlt,
+            withGui);
+    }
+
+    //    void World::touchCancelled(const DeviceTouch &touches)
+    //    {
+    //        WorldState *currentState =
+    //        dynamic_cast<WorldState*>(m_stateMachine->getState());
+    //
+    //        if(currentState)
     //        {
-    //            viewPort[2] =
-    //            static_cast<s32>(njli::World::getInstance()->getViewportDimensions().y());
-    //            viewPort[3] =
-    //            static_cast<s32>(njli::World::getInstance()->getViewportDimensions().x());
+    //            currentState->touchCancelled(touches);
     //        }
-  }
-
-  void World::createScript()
-  {
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLICreate");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
-  }
-
-  void World::destroyScript()
-  {
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIDestroy()");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
-  }
-
-  void World::update(f32 timeStep, const u32 numSubSteps)
-  {
-    BT_PROFILE("World::update");
-
-    m_WorldClock->update(timeStep);
-
-    if (getScene())
-      getScene()->update(timeStep, numSubSteps);
-
-    m_stateMachine->update(timeStep);
-
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIUpdate");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                                     timeStep);
-
-    //        for (s32 cameraIndex = 0; cameraIndex < m_cameraArray.size();
-    //        ++cameraIndex)
+    //        else
     //        {
-    //            m_cameraArray[cameraIndex]->updateProjection();
+    //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+    //            WorldState\n");
     //        }
-    //        for (s32 nodeIndex = 0; nodeIndex < m_nodeArray.size();
-    //        ++nodeIndex)
-    //        {
-    //            m_nodeArray[nodeIndex]->update(timeStep);
-    //        }
+    //
+    //        if(getScene())
+    //            getScene()->touchCancelled(touch);
+    //
+    //        char buffer[256];
+    //        sprintf(buffer, "%s", "__NJLITouchCancelled");
+    //        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+    //        touches);
+    //    }
 
-    if (m_SocketEnabled)
-      handleSocketMessage();
-    m_WorldSound->update();
+    void World::keyboardShow()
+    {
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIWorldKeyboardShow");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer);
 
-    //        u64 before = m_WorldFactory->collectGarbageSize();
-    m_WorldFactory->collectGarbage();
-    //        u64 after = m_WorldFactory->collectGarbageSize();
+        if (getScene())
+            getScene()->keyboardShow();
+    }
 
-    //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "There were (%lld) objects
-    //        before and (%lld) objects after", before, after);
-  }
+    void World::keyboardCancel()
+    {
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIWorldKeyboardCancel");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer);
 
-  void World::render()
-  {
+        if (getScene())
+            getScene()->keyboardCancel();
+    }
+
+    void World::keyboardReturn(const char *text)
+    {
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIWorldKeyboardReturn");
+
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                                         text);
+
+        if (getScene())
+            getScene()->keyboardReturn(text);
+    }
+
+    //    void World::setTouchCamera(Camera *camera)
+    //    {
+    //        m_TouchCamera = camera;
+    //    }
+    //    Camera *World::getTouchCamera()
+    //    {
+    //        return m_TouchCamera;
+    //    }
+    //    const Camera *World::getTouchCamera()const
+    //    {
+    //        return m_TouchCamera;
+    //    }
+
+    void World::getViewPort(s32 *viewPort) const
+    {
+        viewPort[0] = 0;
+        viewPort[1] = 0;
+
+        //        if
+        //        (njli::World::getInstance()->getWorldInput()->isPortraitOrientation())
+        {
+            viewPort[2] = static_cast<s32>(
+                njli::World::getInstance()->getViewportDimensions().x());
+            viewPort[3] = static_cast<s32>(
+                njli::World::getInstance()->getViewportDimensions().y());
+        }
+        //        else if
+        //        (njli::World::getInstance()->getWorldInput()->isLandscapeOrientation())
+        //        {
+        //            viewPort[2] =
+        //            static_cast<s32>(njli::World::getInstance()->getViewportDimensions().y());
+        //            viewPort[3] =
+        //            static_cast<s32>(njli::World::getInstance()->getViewportDimensions().x());
+        //        }
+    }
+
+    void World::createScript()
+    {
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLICreate");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer);
+    }
+
+    void World::destroyScript()
+    {
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIDestroy()");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer);
+    }
+
+    void World::update(f32 timeStep, const u32 numSubSteps)
+    {
+        BT_PROFILE("World::update");
+
+        m_WorldClock->update(timeStep);
+
+        if (getScene())
+            getScene()->update(timeStep, numSubSteps);
+
+        m_stateMachine->update(timeStep);
+
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIUpdate");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer, timeStep);
+
+        //        for (s32 cameraIndex = 0; cameraIndex < m_cameraArray.size();
+        //        ++cameraIndex)
+        //        {
+        //            m_cameraArray[cameraIndex]->updateProjection();
+        //        }
+        //        for (s32 nodeIndex = 0; nodeIndex < m_nodeArray.size();
+        //        ++nodeIndex)
+        //        {
+        //            m_nodeArray[nodeIndex]->update(timeStep);
+        //        }
+
+        if (m_SocketEnabled)
+            handleSocketMessage();
+        m_WorldSound->update();
+
+        //        u64 before = m_WorldFactory->collectGarbageSize();
+        m_WorldFactory->collectGarbage();
+        //        u64 after = m_WorldFactory->collectGarbageSize();
+
+        //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "There were (%lld)
+        //        objects before and (%lld) objects after", before, after);
+    }
+
+    void World::render()
+    {
 
 #if defined(USE_NANOVG_LIBRARY)
-    getWorldHUD()->renderFBOs();
+        getWorldHUD()->renderFBOs();
 #endif
 
 #if defined(VR)
-    renderGL(true);
-    renderInternal();
+        renderGL(true);
+        renderInternal();
 
-    renderGL(false);
-    renderInternal();
+        renderGL(false);
+        renderInternal();
 #else
-    renderGL();
-    renderInternal();
+        renderGL();
+        renderInternal();
 #endif
-  }
+    }
 
-  void World::resize(s32 x, s32 y, s32 width, s32 height, s32 orientation)
-  {
-    setGLViewSize(x, y, width, height);
-    m_ViewPortDimensions->setX(width);
-    m_ViewPortDimensions->setY(height);
-    getWorldInput()->setOrientation(orientation);
+    void World::resize(s32 x, s32 y, s32 width, s32 height, s32 orientation)
+    {
+        setGLViewSize(x, y, width, height);
+        m_ViewPortDimensions->setX(width);
+        m_ViewPortDimensions->setY(height);
+        getWorldInput()->setOrientation(orientation);
 
-    if (getScene())
-      getScene()->updateViewSize();
+        if (getScene())
+            getScene()->updateViewSize();
 
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIResize");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
-        buffer, width, height, orientation);
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIResize");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer, width, height, orientation);
 
-    // SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Screen Dimensions:`%dx%d`", width,
-    // height);
-  }
+        // SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Screen Dimensions:`%dx%d`",
+        // width, height);
+    }
 
-  const btVector2 &World::getViewportDimensions() const
-  {
-    return *m_ViewPortDimensions;
-  }
+    const btVector2 &World::getViewportDimensions() const
+    {
+        return *m_ViewPortDimensions;
+    }
 
-  f32 World::getAspectRatio() const
-  {
-    return fabsf(m_ViewPortDimensions->x() / m_ViewPortDimensions->y());
-  }
+    f32 World::getAspectRatio() const
+    {
+        return fabsf(m_ViewPortDimensions->x() / m_ViewPortDimensions->y());
+    }
 
-  const char *World::getClassName() const { return "World"; }
+    const char *World::getClassName() const { return "World"; }
 
-  s32 World::getType() const { return JLI_OBJECT_TYPE_World; }
+    s32 World::getType() const { return JLI_OBJECT_TYPE_World; }
 
-  World::operator std::string() const
-  {
-    return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
-  }
+    World::operator std::string() const
+    {
+        return njli::JsonJLI::parse(string_format("%s", FORMATSTRING));
+    }
 
-  //    Scene *World::getScene()const
-  //    {
-  //        return m_Scene;
-  //    }
+    //    Scene *World::getScene()const
+    //    {
+    //        return m_Scene;
+    //    }
 
-  void World::setScene(Scene *scene)
-  {
-    SDL_assert(scene != NULL);
+    void World::setScene(Scene *scene)
+    {
+        SDL_assert(scene != NULL);
 
-    Scene *currentScene = getScene();
-    if (scene != currentScene)
-      {
-        if (currentScene)
-          {
-            removeChild(currentScene);
+        Scene *currentScene = getScene();
+        if (scene != currentScene)
+            {
+                if (currentScene)
+                    {
+                        removeChild(currentScene);
 
-            SceneStateMachine *sm = currentScene->getStateMachine();
-            if (sm)
-              {
-                sm->clear();
-              }
-          }
+                        SceneStateMachine *sm = currentScene->getStateMachine();
+                        if (sm)
+                            {
+                                sm->clear();
+                            }
+                    }
 
-        m_Scene = scene;
-        m_Scene->updateViewSize();
+                m_Scene = scene;
+                m_Scene->updateViewSize();
 
-        addChild(m_Scene);
-      }
-  }
+                addChild(m_Scene);
+            }
+    }
 
-  void World::removeScene()
-  {
-    if (getScene())
-      removeChild(getScene());
+    void World::removeScene()
+    {
+        if (getScene())
+            removeChild(getScene());
 
-    m_Scene = NULL;
-  }
+        m_Scene = NULL;
+    }
 
-  Scene *World::getScene()
-  {
-    s32 idx = getChildIndex(m_Scene);
-    if (idx != -1)
-      //#if !(defined(NDEBUG))
-      //        {
-      //            return dynamic_cast<Scene*>(getChild(idx));
-      //        }
-      //#else
-      {
-        //            SDL_assert(dynamic_cast<Scene*>(getChild(idx)));
-        return dynamic_cast<Scene *>(getChild(idx));
-      }
-    //#endif
+    Scene *World::getScene()
+    {
+        s32 idx = getChildIndex(m_Scene);
+        if (idx != -1)
+            //#if !(defined(NDEBUG))
+            //        {
+            //            return dynamic_cast<Scene*>(getChild(idx));
+            //        }
+            //#else
+            {
+                //            SDL_assert(dynamic_cast<Scene*>(getChild(idx)));
+                return dynamic_cast<Scene *>(getChild(idx));
+            }
+        //#endif
 
-    return NULL;
-  }
+        return NULL;
+    }
 
-  const Scene *World::getScene() const
-  {
-    s32 idx = getChildIndex(m_Scene);
-    if (idx != -1)
-      //#if !(defined(NDEBUG))
-      //        {
-      //            return dynamic_cast<const Scene*>(getChild(idx));
-      //        }
-      //#else
-      {
-        //            SDL_assert(dynamic_cast<const Scene*>(getChild(idx)));
-        return dynamic_cast<const Scene *>(getChild(idx));
-      }
-    //#endif
+    const Scene *World::getScene() const
+    {
+        s32 idx = getChildIndex(m_Scene);
+        if (idx != -1)
+            //#if !(defined(NDEBUG))
+            //        {
+            //            return dynamic_cast<const Scene*>(getChild(idx));
+            //        }
+            //#else
+            {
+                //            SDL_assert(dynamic_cast<const
+                //            Scene*>(getChild(idx)));
+                return dynamic_cast<const Scene *>(getChild(idx));
+            }
+        //#endif
 
-    return NULL;
-  }
+        return NULL;
+    }
 
-  void World::enableDebugDraw(Camera *camera)
-  {
-    if (camera)
-      {
-        m_enableDebugDraw = true;
-        m_DebugDrawCamera = camera;
-      }
-    else
-      {
-        SDL_LogDebug(SDL_LOG_CATEGORY_TEST,
-                     "Unable to enableDebugDraw, camera is NULL\n");
-      }
-  }
+    void World::enableDebugDraw(Camera *camera)
+    {
+        if (camera)
+            {
+                m_enableDebugDraw = true;
+                m_DebugDrawCamera = camera;
+            }
+        else
+            {
+                SDL_LogDebug(SDL_LOG_CATEGORY_TEST,
+                             "Unable to enableDebugDraw, camera is NULL\n");
+            }
+    }
 
-  void World::disableDebugDraw()
-  {
-    m_enableDebugDraw = false;
-    m_DebugDrawCamera = NULL;
-  }
+    void World::disableDebugDraw()
+    {
+        m_enableDebugDraw = false;
+        m_DebugDrawCamera = NULL;
+    }
 
-  //    void World::enableDebugDraw(bool enable)
-  //    {
-  //        m_enableDebugDraw = enable;
-  //    }
-  //    void World::setDebugDrawCamera(Camera *camera)
-  //    {
-  //        njliAssert(camera);
-  //        m_DebugDrawCamera = camera;
-  //    }
-  //
-  //    void World::setDebugShader(ShaderProgram *shaderProgram)
-  //    {
-  //        njliAssert(shaderProgram);
-  //
-  //        getDebugDrawer()->addShaderProgram(shaderProgram);
-  //    }
-  //
-  //    void World::setDebugMaterial(Material *material)
-  //    {
-  //        njliAssert(material);
-  //
-  //        getDebugDrawer()->addMaterial(material);
-  //    }
+    //    void World::enableDebugDraw(bool enable)
+    //    {
+    //        m_enableDebugDraw = enable;
+    //    }
+    //    void World::setDebugDrawCamera(Camera *camera)
+    //    {
+    //        njliAssert(camera);
+    //        m_DebugDrawCamera = camera;
+    //    }
+    //
+    //    void World::setDebugShader(ShaderProgram *shaderProgram)
+    //    {
+    //        njliAssert(shaderProgram);
+    //
+    //        getDebugDrawer()->addShaderProgram(shaderProgram);
+    //    }
+    //
+    //    void World::setDebugMaterial(Material *material)
+    //    {
+    //        njliAssert(material);
+    //
+    //        getDebugDrawer()->addMaterial(material);
+    //    }
 
-  void World::startSocket(u8 n0, u8 n1, u8 n2, u8 n3, u16 port)
-  {
-    stopSocket();
+    void World::startSocket(u8 n0, u8 n1, u8 n2, u8 n3, u16 port)
+    {
+        stopSocket();
 
-    char buffer[1024];
-    sprintf(buffer, "%d.%d.%d.%d", n0, n1, n2, n3);
-    if ((n0 >= 0 && n0 <= 255) && (n1 >= 0 && n1 <= 255) &&
-        (n2 >= 0 && n2 <= 255) && (n3 >= 0 && n3 <= 255))
-      {
-        m_SocketAddress = buffer;
+        char buffer[1024];
+        sprintf(buffer, "%d.%d.%d.%d", n0, n1, n2, n3);
+        if ((n0 >= 0 && n0 <= 255) && (n1 >= 0 && n1 <= 255) &&
+            (n2 >= 0 && n2 <= 255) && (n3 >= 0 && n3 <= 255))
+            {
+                m_SocketAddress = buffer;
+                m_SocketPort = port;
+                m_SocketEnabled = true;
+            }
+        else
+            {
+                SDL_LogError(SDL_LOG_CATEGORY_TEST, "Invalid ip %s", buffer);
+            }
+    }
+
+    void World::startSocket(u16 port)
+    {
+        stopSocket();
+
+        m_SocketAddress = std::string("localhost");
         m_SocketPort = port;
         m_SocketEnabled = true;
-      }
-    else
-      {
-        SDL_LogError(SDL_LOG_CATEGORY_TEST, "Invalid ip %s", buffer);
-      }
-  }
+    }
 
-  void World::startSocket(u16 port)
-  {
-    stopSocket();
+    bool World::isSocketEnabled() const { return m_SocketEnabled; }
+    void World::stopSocket()
+    {
+        m_SocketEnabled = false;
+        if (getWorldSocket()->isConnected())
+            getWorldSocket()->disconnectJLI();
+    }
 
-    m_SocketAddress = std::string("localhost");
-    m_SocketPort = port;
-    m_SocketEnabled = true;
-  }
+    const char *World::getSocketAddress() const
+    {
+        return m_SocketAddress.c_str();
+    }
+    u16 World::getSocketPort() const { return m_SocketPort; }
 
-  bool World::isSocketEnabled() const { return m_SocketEnabled; }
-  void World::stopSocket()
-  {
-    m_SocketEnabled = false;
-    if (getWorldSocket()->isConnected())
-      getWorldSocket()->disconnectJLI();
-  }
+    void World::setBackgroundAlpha(const f32 alpha)
+    {
+        btVector4 _color(m_BackgroundColor->x(), m_BackgroundColor->y(),
+                         m_BackgroundColor->z(), clampColor(alpha));
+        setBackgroundColor(_color);
+    }
 
-  const char *World::getSocketAddress() const
-  {
-    return m_SocketAddress.c_str();
-  }
-  u16 World::getSocketPort() const { return m_SocketPort; }
+    void World::setBackgroundColor(const btVector3 &color)
+    {
+        btVector4 _color(color.x(), color.y(), color.z(),
+                         m_BackgroundColor->w());
+        setBackgroundColor(_color);
+    }
 
-  void World::setBackgroundAlpha(const f32 alpha)
-  {
-    btVector4 _color(m_BackgroundColor->x(), m_BackgroundColor->y(),
-                     m_BackgroundColor->z(), clampColor(alpha));
-    setBackgroundColor(_color);
-  }
+    void World::setBackgroundColor(const btVector4 &color)
+    {
+        *m_BackgroundColor = color;
+        setGLBackgroundColor(clampColor(m_BackgroundColor->x()),
+                             clampColor(m_BackgroundColor->y()),
+                             clampColor(m_BackgroundColor->z()),
+                             clampColor(m_BackgroundColor->w()));
+    }
 
-  void World::setBackgroundColor(const btVector3 &color)
-  {
-    btVector4 _color(color.x(), color.y(), color.z(), m_BackgroundColor->w());
-    setBackgroundColor(_color);
-  }
+    void World::setBackgroundColor(f32 red, f32 green, f32 blue)
+    {
+        btVector4 _color(red, green, blue, m_BackgroundColor->w());
+        setBackgroundColor(_color);
+    }
 
-  void World::setBackgroundColor(const btVector4 &color)
-  {
-    *m_BackgroundColor = color;
-    setGLBackgroundColor(
-        clampColor(m_BackgroundColor->x()), clampColor(m_BackgroundColor->y()),
-        clampColor(m_BackgroundColor->z()), clampColor(m_BackgroundColor->w()));
-  }
+    const btVector4 &World::getBackgroundColor() const
+    {
+        return *m_BackgroundColor;
+    }
 
-  void World::setBackgroundColor(f32 red, f32 green, f32 blue)
-  {
-    btVector4 _color(red, green, blue, m_BackgroundColor->w());
-    setBackgroundColor(_color);
-  }
+    const char *World::getDeviceName() const { return m_DeviceName.c_str(); }
 
-  const btVector4 &World::getBackgroundColor() const
-  {
-    return *m_BackgroundColor;
-  }
+    void World::setDeviceName(const char *name) { m_DeviceName = name; }
 
-  const char *World::getDeviceName() const { return m_DeviceName.c_str(); }
+    void World::enablePauseAnimation(bool enable)
+    {
+        m_AnimationPaused = enable;
+    }
 
-  void World::setDeviceName(const char *name) { m_DeviceName = name; }
+    bool World::isAnimationPaused() const { return m_AnimationPaused; }
 
-  void World::enablePauseAnimation(bool enable) { m_AnimationPaused = enable; }
+    void World::enablePauseGame(bool enable)
+    {
+        if (enable && !isPausedGame())
+            {
+                s8 buffer[BUFFER_SIZE];
+                sprintf(buffer, "%s", "__NJLIWorldGamePause");
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer);
 
-  bool World::isAnimationPaused() const { return m_AnimationPaused; }
+                if (getScene())
+                    getScene()->pauseGame();
+            }
 
-  void World::enablePauseGame(bool enable)
-  {
-    if (enable && !isPausedGame())
-      {
-        s8 buffer[BUFFER_SIZE];
-        sprintf(buffer, "%s", "__NJLIWorldGamePause");
-        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
-            buffer);
+        if (!enable && isPausedGame())
+            {
+                s8 buffer[BUFFER_SIZE];
+                sprintf(buffer, "%s", "__NJLIWorldGameUnPause");
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer);
 
-        if (getScene())
-          getScene()->pauseGame();
-      }
+                if (getScene())
+                    getScene()->unPauseGame();
+            }
 
-    if (!enable && isPausedGame())
-      {
-        s8 buffer[BUFFER_SIZE];
-        sprintf(buffer, "%s", "__NJLIWorldGameUnPause");
-        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
-            buffer);
+        m_GamePaused = enable;
+    }
 
-        if (getScene())
-          getScene()->unPauseGame();
-      }
+    bool World::isPausedGame() const { return m_GamePaused; }
 
-    m_GamePaused = enable;
-  }
-
-  bool World::isPausedGame() const { return m_GamePaused; }
-
-  bool World::isDebug() const
-  {
+    bool World::isDebug() const
+    {
 #if !(defined(MINSIZEREL))
-    return true;
+        return true;
 #endif
-    return false;
-  }
-  bool World::runJavascript(const char *script)
-  {
+        return false;
+    }
+    bool World::runJavascript(const char *script)
+    {
 #if defined(__EMSCRIPTEN__)
-    emscripten_run_script(script);
-    return true;
+        emscripten_run_script(script);
+        return true;
 #endif
-    return false;
-  }
+        return false;
+    }
 
-  bool World::isVR()
-  {
+    bool World::isVR()
+    {
 #if defined(VR)
-    return true;
+        return true;
 #else
-    return false;
+        return false;
 #endif
-  }
+    }
 
-  //    void World::addNode(Node *node)
-  //    {
-  //        if(!hasNode(node))
-  //            m_nodeArray.push_back(node);
-  //    }
-  //
-  //    void World::removeNode(Node *node)
-  //    {
-  //        if(hasNode(node))
-  //            m_nodeArray.push_back(node);
-  //    }
-  //
-  //    bool World::hasNode(Node *node)
-  //    {
-  //        return m_nodeArray.size() != m_nodeArray.findLinearSearch(node);
-  //    }
-  //
-  //    void World::removeAllNodes()
-  //    {
-  //        m_nodeArray.clear();
-  //    }
-  //    void World::parseSocketMessage(const char *msg)
-  //    {
-  //        if(NULL!=msg)// && strcmp(msg, "") != 0)
-  //        {
-  //            std::string socketMessage(msg);
-  //            size_t found=socketMessage.find("<root>");
-  //            if (found != -1)
-  //            {
-  //                found=socketMessage.find("</root>");
-  //                if(found != -1)
-  //                {
-  //                    TiXmlDocument document;
-  //                    document.Parse(socketMessage.c_str());
-  //
-  //                    TiXmlNode* ele = NULL;
-  //                    while ( (ele = document.FirstChildElement( "root"
-  //                    )->IterateChildren( ele ) ) != 0 )
-  //                    {
-  //                        TiXmlElement *e = ele->ToElement();
-  //
-  //                        std::string contentType(e->Value());
-  //                        std::transform(contentType.begin(),
-  //                        contentType.end(), contentType.begin(), ::tolower);
-  //
-  //                        if(contentType == std::string("lua"))
-  //                        {
-  //                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-  //                            e->GetText());
-  //                            World::getInstance()->getWorldLuaVirtualMachine()->loadString(e->GetText());
-  //                        }
-  //                        else if(contentType == std::string("vertex"))
-  //                        {
-  //                            std::string name(e->Attribute("name"));
-  //
-  //                            //                    Log("%s\n%s\b%s",
-  //                            e->Value(), name.c_str(), e->GetText());
-  //                        }
-  //                        else if(contentType == std::string("fragment"))
-  //                        {
-  //                            std::string name(e->Attribute("name"));
-  //
-  //                            //                    Log("%s\n%s\b%s",
-  //                            e->Value(), name.c_str(), e->GetText());
-  //
-  //                        }
-  //                    }
-  //                }
-  //                else
-  //                {
-  //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Maybe need to resize
-  //                    the Socket buffer?\n%s", msg);
-  //
-  //                }
-  //            }
-  //        }
-  //    }
+    //    void World::addNode(Node *node)
+    //    {
+    //        if(!hasNode(node))
+    //            m_nodeArray.push_back(node);
+    //    }
+    //
+    //    void World::removeNode(Node *node)
+    //    {
+    //        if(hasNode(node))
+    //            m_nodeArray.push_back(node);
+    //    }
+    //
+    //    bool World::hasNode(Node *node)
+    //    {
+    //        return m_nodeArray.size() != m_nodeArray.findLinearSearch(node);
+    //    }
+    //
+    //    void World::removeAllNodes()
+    //    {
+    //        m_nodeArray.clear();
+    //    }
+    //    void World::parseSocketMessage(const char *msg)
+    //    {
+    //        if(NULL!=msg)// && strcmp(msg, "") != 0)
+    //        {
+    //            std::string socketMessage(msg);
+    //            size_t found=socketMessage.find("<root>");
+    //            if (found != -1)
+    //            {
+    //                found=socketMessage.find("</root>");
+    //                if(found != -1)
+    //                {
+    //                    TiXmlDocument document;
+    //                    document.Parse(socketMessage.c_str());
+    //
+    //                    TiXmlNode* ele = NULL;
+    //                    while ( (ele = document.FirstChildElement( "root"
+    //                    )->IterateChildren( ele ) ) != 0 )
+    //                    {
+    //                        TiXmlElement *e = ele->ToElement();
+    //
+    //                        std::string contentType(e->Value());
+    //                        std::transform(contentType.begin(),
+    //                        contentType.end(), contentType.begin(),
+    //                        ::tolower);
+    //
+    //                        if(contentType == std::string("lua"))
+    //                        {
+    //                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+    //                            e->GetText());
+    //                            World::getInstance()->getWorldLuaVirtualMachine()->loadString(e->GetText());
+    //                        }
+    //                        else if(contentType == std::string("vertex"))
+    //                        {
+    //                            std::string name(e->Attribute("name"));
+    //
+    //                            //                    Log("%s\n%s\b%s",
+    //                            e->Value(), name.c_str(), e->GetText());
+    //                        }
+    //                        else if(contentType == std::string("fragment"))
+    //                        {
+    //                            std::string name(e->Attribute("name"));
+    //
+    //                            //                    Log("%s\n%s\b%s",
+    //                            e->Value(), name.c_str(), e->GetText());
+    //
+    //                        }
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Maybe need to
+    //                    resize the Socket buffer?\n%s", msg);
+    //
+    //                }
+    //            }
+    //        }
+    //    }
 
-  void World::processMessage(const std::string &socketMessage,
-                             const std::string delimeter)
-  {
+    void World::processMessage(const std::string &socketMessage,
+                               const std::string delimeter)
+    {
 
 #if !defined(_WIN32)
 
-    TiXmlDocument document;
-    document.Parse(socketMessage.c_str());
+        TiXmlDocument document;
+        document.Parse(socketMessage.c_str());
 
-    TiXmlNode *ele = NULL;
-    while ((ele = document.FirstChildElement(delimeter.c_str())
-                      ->IterateChildren(ele)) != 0)
-      {
-        TiXmlElement *e = ele->ToElement();
+        TiXmlNode *ele = NULL;
+        while ((ele = document.FirstChildElement(delimeter.c_str())
+                          ->IterateChildren(ele)) != 0)
+            {
+                TiXmlElement *e = ele->ToElement();
 
-        std::string contentType(e->Value());
-        std::transform(contentType.begin(), contentType.end(),
-                       contentType.begin(), ::tolower);
+                std::string contentType(e->Value());
+                std::transform(contentType.begin(), contentType.end(),
+                               contentType.begin(), ::tolower);
 
-        if (contentType == std::string("lua"))
-          {
-            std::string type(e->Attribute("type"));
-            std::string name(e->Attribute("name"));
+                if (contentType == std::string("lua"))
+                    {
+                        std::string type(e->Attribute("type"));
+                        std::string name(e->Attribute("name"));
 
-            //                std::string source;
-            //                const TiXmlNode* child = e->FirstChild();
-            //                if ( child ) {
-            //                    source = child->Value();
-            ////                    const TiXmlText* childText =
-            /// child->ToText();
-            ////                    if ( childText ) {
-            ////                        TiXmlString s = childText->ValueTStr();
-            ////                        source = s.data();
-            //////                        return childText->Value();
-            ////                    }
-            //                }
+                        //                std::string source;
+                        //                const TiXmlNode* child =
+                        //                e->FirstChild(); if ( child ) {
+                        //                    source = child->Value();
+                        ////                    const TiXmlText* childText =
+                        /// child->ToText();
+                        ////                    if ( childText ) {
+                        ////                        TiXmlString s =
+                        ///childText->ValueTStr(); / source = s.data();
+                        //////                        return childText->Value();
+                        ////                    }
+                        //                }
 
-            std::string source(e->GetText());
-            std::string filePath = DOCUMENT_PATH(name.c_str());
-            int numwrote = 0;
+                        std::string source(e->GetText());
+                        std::string filePath = DOCUMENT_PATH(name.c_str());
+                        int numwrote = 0;
 
-            if (type == std::string("build") || type == std::string("run"))
-              {
-                if (type == std::string("build"))
-                  {
-                    bool wrote = false;
+                        if (type == std::string("build") ||
+                            type == std::string("run"))
+                            {
+                                if (type == std::string("build"))
+                                    {
+                                        bool wrote = false;
 
-                    if (access(filePath.c_str(), F_OK) != -1)
-                      {
-                        FILE *f = fopen(filePath.c_str(), "wb");
+                                        if (access(filePath.c_str(), F_OK) !=
+                                            -1)
+                                            {
+                                                FILE *f = fopen(
+                                                    filePath.c_str(), "wb");
 
-                        if (f != NULL)
-                          {
-                            numwrote = fwrite(source.c_str(), sizeof(char),
-                                              source.length(), f);
+                                                if (f != NULL)
+                                                    {
+                                                        numwrote = fwrite(
+                                                            source.c_str(),
+                                                            sizeof(char),
+                                                            source.length(), f);
 
-                            fclose(f);
+                                                        fclose(f);
 
-                            if (0 == ferror(f))
-                              wrote = true;
-                          }
-                      }
+                                                        if (0 == ferror(f))
+                                                            wrote = true;
+                                                    }
+                                            }
 
-                    if (!wrote)
-                      SDL_LogVerbose(
-                          SDL_LOG_CATEGORY_TEST,
-                          "Couldn't write file %s - (%d bytes of %lu)",
-                          filePath.c_str(), numwrote, source.length());
-                    else
-                      SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s",
-                                     filePath.c_str());
-                  }
+                                        if (!wrote)
+                                            SDL_LogVerbose(
+                                                SDL_LOG_CATEGORY_TEST,
+                                                "Couldn't write file %s - (%d "
+                                                "bytes of %lu)",
+                                                filePath.c_str(), numwrote,
+                                                source.length());
+                                        else
+                                            SDL_LogVerbose(
+                                                SDL_LOG_CATEGORY_TEST,
+                                                "Wrote file %s",
+                                                filePath.c_str());
+                                    }
 
-                if (type == std::string("run"))
-                  {
-                    World::getInstance()->getWorldLuaVirtualMachine()->reset();
+                                if (type == std::string("run"))
+                                    {
+                                        World::getInstance()
+                                            ->getWorldLuaVirtualMachine()
+                                            ->reset();
 
-                    World::getInstance()
-                        ->getWorldLuaVirtualMachine()
-                        ->loadString(source.c_str());
-                    World::getInstance()->getWorldLuaVirtualMachine()->loadFile(
-                        DOCUMENT_PATH("scripts/main.lua"));
-                    World::getInstance()
-                        ->getWorldLuaVirtualMachine()
-                        ->compile();
-                  }
-                else
-                  {
-                    World::getInstance()
-                        ->getWorldLuaVirtualMachine()
-                        ->loadString(source.c_str());
-                    World::getInstance()
-                        ->getWorldLuaVirtualMachine()
-                        ->compile();
-                  }
-              }
-          }
-        else if (contentType == std::string("vertex"))
-          {
-            std::string name(e->Attribute("name"));
+                                        World::getInstance()
+                                            ->getWorldLuaVirtualMachine()
+                                            ->loadString(source.c_str());
+                                        World::getInstance()
+                                            ->getWorldLuaVirtualMachine()
+                                            ->loadFile(DOCUMENT_PATH(
+                                                "scripts/main.lua"));
+                                        World::getInstance()
+                                            ->getWorldLuaVirtualMachine()
+                                            ->compile();
+                                    }
+                                else
+                                    {
+                                        World::getInstance()
+                                            ->getWorldLuaVirtualMachine()
+                                            ->loadString(source.c_str());
+                                        World::getInstance()
+                                            ->getWorldLuaVirtualMachine()
+                                            ->compile();
+                                    }
+                            }
+                    }
+                else if (contentType == std::string("vertex"))
+                    {
+                        std::string name(e->Attribute("name"));
 
-            //                    Log("%s\n%s\b%s", e->Value(), name.c_str(),
-            //                    e->GetText());
-          }
-        else if (contentType == std::string("fragment"))
-          {
-            std::string name(e->Attribute("name"));
+                        //                    Log("%s\n%s\b%s", e->Value(),
+                        //                    name.c_str(), e->GetText());
+                    }
+                else if (contentType == std::string("fragment"))
+                    {
+                        std::string name(e->Attribute("name"));
 
-            //                    Log("%s\n%s\b%s", e->Value(), name.c_str(),
-            //                    e->GetText());
-          }
-      }
+                        //                    Log("%s\n%s\b%s", e->Value(),
+                        //                    name.c_str(), e->GetText());
+                    }
+            }
 #endif
-  }
+    }
 
-  void World::handleSocketMessage()
-  {
-    if (getWorldSocket()->hasMessage())
-      {
-        processMessage(getWorldSocket()->popMessage());
-      }
+    void World::handleSocketMessage()
+    {
+        if (getWorldSocket()->hasMessage())
+            {
+                processMessage(getWorldSocket()->popMessage());
+            }
 
-    if (getWorldSocket()->isConnected())
-      {
-        getWorldSocket()->parseMessage("root");
-      }
-    else
-      {
-        getWorldSocket()->connectJLI(m_SocketAddress.c_str(), m_SocketPort);
-      }
-  }
-
-  void World::checkRayCollision(DeviceTouch **m_CurrentTouches,
-                                const char *code, bool disableNodeTouched)
-  {
-    Scene *scene = njli::World::getInstance()->getScene();
-
-    if (scene)
-      {
-        Camera *camera = scene->getTouchCamera();
-        if (NULL != camera)
-          {
-            PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-            if (physicsWorld)
-              {
-                btAlignedObjectArray<Node *> untouchedNodes;
-                untouchedNodes.clear();
-
-                scene->getActiveNodes(untouchedNodes);
-
-                bool touched = false;
-                for (s32 i = 0; i < DeviceTouch::MAX_TOUCHES; ++i)
-                  {
-                    if (m_CurrentTouches[i])
-                      {
-                        btVector2 touchPosition =
-                            m_CurrentTouches[i]->getPosition();
-                        btVector3 from, to;
-                        camera->getTouchRay(touchPosition, from, to);
-
-                        if (m_RayContacts.size() <= 0)
-                          {
-                            for (s32 i = 0; i < MAX_CONTACTS; ++i)
-                              {
-                                PhysicsRayContact *contact =
-                                    PhysicsRayContact::create();
-                                m_RayContacts.push_back(contact);
-                              }
-                          }
-                        s32 numContacts = 0;
-                        if (physicsWorld->rayTestAll(from, to, m_RayContacts,
-                                                     numContacts))
-                          {
-                            for (s32 i = 0; i < numContacts; ++i)
-                              {
-                                PhysicsRayContact *contact =
-                                    m_RayContacts.at(i);
-
-                                if (disableNodeTouched)
-                                  {
-                                    contact->getHitNode()->enableTouched(false);
-                                  }
-                                untouchedNodes.remove(contact->getHitNode());
-                                contact->screenPosition(
-                                    btVector2(from.x(), from.y()));
-                                char buffer[BUFFER_SIZE];
-                                sprintf(buffer, "%s%s", "__NJLINodeRay", code);
-                                njli::World::getInstance()
-                                    ->getWorldLuaVirtualMachine()
-                                    ->execute(buffer, *contact);
-                                touched = true;
-                              }
-                          }
-                        //                        if(physicsWorld->rayTestClosest(from,
-                        //                        to, *m_RayContact))
-                        //                        {
-                        //                            if (disableNodeTouched)
-                        //                            {
-                        //                                m_RayContact->getHitNode()->enableTouched(false);
-                        //                            }
-                        //                            m_RayContact->screenPosition(btVector2(from.x(),
-                        //                            from.y()));
-                        //                            char buffer[BUFFER_SIZE];
-                        //                            sprintf(buffer, "%s%s",
-                        //                            code, "Ray");
-                        //                            njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                        //                            *m_RayContact);
-                        //                            touched = true;
-                        //                        }
-                      }
-                  }
-
-                for (unsigned int i = 0; i < untouchedNodes.size(); i++)
-                  {
-                    Node *n = untouchedNodes[i];
-
-                    char buffer[BUFFER_SIZE];
-                    sprintf(buffer, "%s", "__NJLINodeRayTouchesMissed");
-                    njli::World::getInstance()
-                        ->getWorldLuaVirtualMachine()
-                        ->execute(buffer, n);
-                  }
-                //                if (!touched)
-                //                {
-                //                    char buffer[BUFFER_SIZE];
-                //                    sprintf(buffer, "%s%s", code,
-                //                    "RayMissed");
-                //                    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
-                //                }
-              }
-          }
+        if (getWorldSocket()->isConnected())
+            {
+                getWorldSocket()->parseMessage("root");
+            }
         else
-          {
-            //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-            //                        "setTouchCamera() must be called on the
-            //                        scene\n");
-          }
-      }
-  }
+            {
+                getWorldSocket()->connectJLI(m_SocketAddress.c_str(),
+                                             m_SocketPort);
+            }
+    }
 
-  void World::checkRayCollision(const DeviceTouch &touch, const char *code,
-                                bool disableNodeTouched)
-  {
-    Scene *scene = njli::World::getInstance()->getScene();
+    void World::checkRayCollision(DeviceTouch **m_CurrentTouches,
+                                  const char *code, bool disableNodeTouched)
+    {
+        Scene *scene = njli::World::getInstance()->getScene();
 
-    if (scene)
-      {
-        Camera *camera = scene->getTouchCamera();
-        if (NULL != camera)
-          {
-            PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-            if (physicsWorld)
-              {
-                btAlignedObjectArray<Node *> untouchedNodes;
-                untouchedNodes.clear();
+        if (scene)
+            {
+                Camera *camera = scene->getTouchCamera();
+                if (NULL != camera)
+                    {
+                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                        if (physicsWorld)
+                            {
+                                btAlignedObjectArray<Node *> untouchedNodes;
+                                untouchedNodes.clear();
 
-                scene->getActiveNodes(untouchedNodes);
+                                scene->getActiveNodes(untouchedNodes);
 
-                bool touched = false;
-                btVector2 touchPosition = touch.getPosition();
-                btVector3 from, to;
-                camera->getTouchRay(touchPosition, from, to);
+                                bool touched = false;
+                                for (s32 i = 0; i < DeviceTouch::MAX_TOUCHES;
+                                     ++i)
+                                    {
+                                        if (m_CurrentTouches[i])
+                                            {
+                                                btVector2 touchPosition =
+                                                    m_CurrentTouches[i]
+                                                        ->getPosition();
+                                                btVector3 from, to;
+                                                camera->getTouchRay(
+                                                    touchPosition, from, to);
 
-                if (m_RayContacts.size() <= 0)
-                  {
-                    for (s32 i = 0; i < MAX_CONTACTS; ++i)
-                      {
-                        PhysicsRayContact *contact =
-                            PhysicsRayContact::create();
-                        m_RayContacts.push_back(contact);
-                      }
-                  }
+                                                if (m_RayContacts.size() <= 0)
+                                                    {
+                                                        for (s32 i = 0;
+                                                             i < MAX_CONTACTS;
+                                                             ++i)
+                                                            {
+                                                                PhysicsRayContact
+                                                                    *contact =
+                                                                        PhysicsRayContact::
+                                                                            create();
+                                                                m_RayContacts
+                                                                    .push_back(
+                                                                        contact);
+                                                            }
+                                                    }
+                                                s32 numContacts = 0;
+                                                if (physicsWorld->rayTestAll(
+                                                        from, to, m_RayContacts,
+                                                        numContacts))
+                                                    {
+                                                        for (s32 i = 0;
+                                                             i < numContacts;
+                                                             ++i)
+                                                            {
+                                                                PhysicsRayContact
+                                                                    *contact =
+                                                                        m_RayContacts
+                                                                            .at(i);
 
-                if (m_RayContacts.size() <= 0)
-                  {
-                    for (s32 i = 0; i < MAX_CONTACTS; ++i)
-                      {
-                        PhysicsRayContact *contact =
-                            PhysicsRayContact::create();
-                        m_RayContacts.push_back(contact);
-                      }
-                  }
+                                                                if (disableNodeTouched)
+                                                                    {
+                                                                        contact
+                                                                            ->getHitNode()
+                                                                            ->enableTouched(
+                                                                                false);
+                                                                    }
+                                                                untouchedNodes.remove(
+                                                                    contact
+                                                                        ->getHitNode());
+                                                                contact->screenPosition(
+                                                                    btVector2(
+                                                                        from.x(),
+                                                                        from.y()));
+                                                                char buffer
+                                                                    [BUFFER_SIZE];
+                                                                sprintf(buffer,
+                                                                        "%s%s",
+                                                                        "__"
+                                                                        "NJLINo"
+                                                                        "deRay",
+                                                                        code);
+                                                                njli::World::getInstance()
+                                                                    ->getWorldLuaVirtualMachine()
+                                                                    ->execute(
+                                                                        buffer,
+                                                                        *contact);
+                                                                touched = true;
+                                                            }
+                                                    }
+                                                //                        if(physicsWorld->rayTestClosest(from,
+                                                //                        to,
+                                                //                        *m_RayContact))
+                                                //                        {
+                                                //                            if
+                                                //                            (disableNodeTouched)
+                                                //                            {
+                                                //                                m_RayContact->getHitNode()->enableTouched(false);
+                                                //                            }
+                                                //                            m_RayContact->screenPosition(btVector2(from.x(),
+                                                //                            from.y()));
+                                                //                            char
+                                                //                            buffer[BUFFER_SIZE];
+                                                //                            sprintf(buffer,
+                                                //                            "%s%s",
+                                                //                            code,
+                                                //                            "Ray");
+                                                //                            njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                                                //                            *m_RayContact);
+                                                //                            touched
+                                                //                            =
+                                                //                            true;
+                                                //                        }
+                                            }
+                                    }
 
-                s32 numContacts = 0;
-                if (physicsWorld->rayTestAll(from, to, m_RayContacts,
-                                             numContacts))
-                  {
-                    for (s32 i = 0; i < numContacts; ++i)
-                      {
-                        PhysicsRayContact *contact = m_RayContacts.at(i);
+                                for (unsigned int i = 0;
+                                     i < untouchedNodes.size(); i++)
+                                    {
+                                        Node *n = untouchedNodes[i];
 
-                        if (disableNodeTouched)
-                          {
-                            contact->getHitNode()->enableTouched(false);
-                          }
-                        untouchedNodes.remove(contact->getHitNode());
-                        contact->screenPosition(btVector2(from.x(), from.y()));
-                        char buffer[BUFFER_SIZE];
-                        sprintf(buffer, "%s%s", "__NJLINodeRay", code);
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, *contact);
-                        touched = true;
-                      }
-                  }
-
-                for (unsigned int i = 0; i < untouchedNodes.size(); i++)
-                  {
-                    Node *n = untouchedNodes[i];
-
-                    if (n->getPhysicsBody() != NULL)
-                      {
-                        char buffer[BUFFER_SIZE];
-                        sprintf(buffer, "%s", "__NJLINodeRayTouchMissed");
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, n);
-                      }
-                  }
-              }
-          }
-        else
-          {
-            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        "setTouchCamera() must be called on the scene\n");
-          }
-      }
-  }
-
-  void World::checkRayCollision(const DeviceMouse &mouse, const char *code,
-                                bool disableNodeTouched)
-  {
-    Scene *scene = njli::World::getInstance()->getScene();
-
-    if (scene)
-      {
-        Camera *camera = scene->getTouchCamera();
-        if (NULL != camera)
-          {
-            PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-            if (physicsWorld)
-              {
-                btAlignedObjectArray<Node *> untouchedNodes;
-                untouchedNodes.clear();
-
-                scene->getActiveNodes(untouchedNodes);
-
-                bool touched = false;
-                btVector2 touchPosition = mouse.getPosition();
-                btVector3 from, to;
-                camera->getTouchRay(touchPosition, from, to);
-
-                if (m_RayContacts.size() <= 0)
-                  {
-                    for (s32 i = 0; i < MAX_CONTACTS; ++i)
-                      {
-                        PhysicsRayContact *contact =
-                            PhysicsRayContact::create();
-                        m_RayContacts.push_back(contact);
-                      }
-                  }
-
-                PhysicsRayContact *contact = m_RayContacts.at(0);
-                s32 numContacts = 0;
-                if (physicsWorld->rayTestAll(from, to, m_RayContacts,
-                                             numContacts))
-                  {
-                    //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
-                    //                                  "RayTest Hit (all).\n");
-                    for (s32 i = 0; i < numContacts; ++i)
-                      {
-                        contact = m_RayContacts.at(i);
-
-                        if (disableNodeTouched)
-                          {
-                            contact->getHitNode()->enableTouched(false);
-                          }
-                        untouchedNodes.remove(contact->getHitNode());
-                        contact->screenPosition(btVector2(from.x(), from.y()));
-                        char buffer[BUFFER_SIZE];
-                        sprintf(buffer, "%s%s", "__NJLINodeRay", code);
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, *contact);
-                        touched = true;
-                      }
-                  }
-                else if (physicsWorld->rayTestClosest(from, to, *contact))
-                  {
-                    //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
-                    //                                  "RayTest Hit
-                    //                                  (closest).\n");
-
-                    if (disableNodeTouched)
-                      {
-                        contact->getHitNode()->enableTouched(false);
-                      }
-                    untouchedNodes.remove(contact->getHitNode());
-                    contact->screenPosition(btVector2(from.x(), from.y()));
-                    char buffer[BUFFER_SIZE];
-                    sprintf(buffer, "%s%s", "__NJLINodeRay", code);
-                    njli::World::getInstance()
-                        ->getWorldLuaVirtualMachine()
-                        ->execute(buffer, *contact);
-                    touched = true;
-                  }
+                                        char buffer[BUFFER_SIZE];
+                                        sprintf(buffer, "%s",
+                                                "__NJLINodeRayTouchesMissed");
+                                        njli::World::getInstance()
+                                            ->getWorldLuaVirtualMachine()
+                                            ->execute(buffer, n);
+                                    }
+                                //                if (!touched)
+                                //                {
+                                //                    char buffer[BUFFER_SIZE];
+                                //                    sprintf(buffer, "%s%s",
+                                //                    code, "RayMissed");
+                                //                    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
+                                //                }
+                            }
+                    }
                 else
-                  {
-                    //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
-                    //                                  "RayTest Missed.\n");
-                  }
+                    {
+                        //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                        //                        "setTouchCamera() must be
+                        //                        called on the scene\n");
+                    }
+            }
+    }
 
-                for (unsigned int i = 0; i < untouchedNodes.size(); i++)
-                  {
-                    Node *n = untouchedNodes[i];
-                    std::string name = n->getName();
+    void World::checkRayCollision(const DeviceTouch &touch, const char *code,
+                                  bool disableNodeTouched)
+    {
+        Scene *scene = njli::World::getInstance()->getScene();
 
-                    if (n->getPhysicsBody() != NULL)
-                      {
-                        char buffer[BUFFER_SIZE];
-                        sprintf(buffer, "%s", "__NJLINodeRayMouseMissed");
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, n);
-                      }
-                  }
-              }
-          }
-        else
-          {
-            //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-            //                        "setTouchCamera() must be called on the
-            //                        scene\n");
-          }
-      }
-  }
+        if (scene)
+            {
+                Camera *camera = scene->getTouchCamera();
+                if (NULL != camera)
+                    {
+                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                        if (physicsWorld)
+                            {
+                                btAlignedObjectArray<Node *> untouchedNodes;
+                                untouchedNodes.clear();
 
-  void World::renderInternal(bool is_left)
-  {
-    Scene *scene = getScene();
+                                scene->getActiveNodes(untouchedNodes);
 
-    if (scene)
-      scene->render(is_left);
+                                bool touched = false;
+                                btVector2 touchPosition = touch.getPosition();
+                                btVector3 from, to;
+                                camera->getTouchRay(touchPosition, from, to);
+
+                                if (m_RayContacts.size() <= 0)
+                                    {
+                                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
+                                            {
+                                                PhysicsRayContact *contact =
+                                                    PhysicsRayContact::create();
+                                                m_RayContacts.push_back(
+                                                    contact);
+                                            }
+                                    }
+
+                                if (m_RayContacts.size() <= 0)
+                                    {
+                                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
+                                            {
+                                                PhysicsRayContact *contact =
+                                                    PhysicsRayContact::create();
+                                                m_RayContacts.push_back(
+                                                    contact);
+                                            }
+                                    }
+
+                                s32 numContacts = 0;
+                                if (physicsWorld->rayTestAll(
+                                        from, to, m_RayContacts, numContacts))
+                                    {
+                                        for (s32 i = 0; i < numContacts; ++i)
+                                            {
+                                                PhysicsRayContact *contact =
+                                                    m_RayContacts.at(i);
+
+                                                if (disableNodeTouched)
+                                                    {
+                                                        contact->getHitNode()
+                                                            ->enableTouched(
+                                                                false);
+                                                    }
+                                                untouchedNodes.remove(
+                                                    contact->getHitNode());
+                                                contact->screenPosition(
+                                                    btVector2(from.x(),
+                                                              from.y()));
+                                                char buffer[BUFFER_SIZE];
+                                                sprintf(buffer, "%s%s",
+                                                        "__NJLINodeRay", code);
+                                                njli::World::getInstance()
+                                                    ->getWorldLuaVirtualMachine()
+                                                    ->execute(buffer, *contact);
+                                                touched = true;
+                                            }
+                                    }
+
+                                for (unsigned int i = 0;
+                                     i < untouchedNodes.size(); i++)
+                                    {
+                                        Node *n = untouchedNodes[i];
+
+                                        if (n->getPhysicsBody() != NULL)
+                                            {
+                                                char buffer[BUFFER_SIZE];
+                                                sprintf(
+                                                    buffer, "%s",
+                                                    "__NJLINodeRayTouchMissed");
+                                                njli::World::getInstance()
+                                                    ->getWorldLuaVirtualMachine()
+                                                    ->execute(buffer, n);
+                                            }
+                                    }
+                            }
+                    }
+                else
+                    {
+                        SDL_LogWarn(
+                            SDL_LOG_CATEGORY_TEST,
+                            "setTouchCamera() must be called on the scene\n");
+                    }
+            }
+    }
+
+    void World::checkRayCollision(const DeviceMouse &mouse, const char *code,
+                                  bool disableNodeTouched)
+    {
+        Scene *scene = njli::World::getInstance()->getScene();
+
+        if (scene)
+            {
+                Camera *camera = scene->getTouchCamera();
+                if (NULL != camera)
+                    {
+                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                        if (physicsWorld)
+                            {
+                                btAlignedObjectArray<Node *> untouchedNodes;
+                                untouchedNodes.clear();
+
+                                scene->getActiveNodes(untouchedNodes);
+
+                                bool touched = false;
+                                btVector2 touchPosition = mouse.getPosition();
+                                btVector3 from, to;
+                                camera->getTouchRay(touchPosition, from, to);
+
+                                if (m_RayContacts.size() <= 0)
+                                    {
+                                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
+                                            {
+                                                PhysicsRayContact *contact =
+                                                    PhysicsRayContact::create();
+                                                m_RayContacts.push_back(
+                                                    contact);
+                                            }
+                                    }
+
+                                PhysicsRayContact *contact =
+                                    m_RayContacts.at(0);
+                                s32 numContacts = 0;
+                                if (physicsWorld->rayTestAll(
+                                        from, to, m_RayContacts, numContacts))
+                                    {
+                                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
+                                        //                                  "RayTest
+                                        //                                  Hit
+                                        //                                  (all).\n");
+                                        for (s32 i = 0; i < numContacts; ++i)
+                                            {
+                                                contact = m_RayContacts.at(i);
+
+                                                if (disableNodeTouched)
+                                                    {
+                                                        contact->getHitNode()
+                                                            ->enableTouched(
+                                                                false);
+                                                    }
+                                                untouchedNodes.remove(
+                                                    contact->getHitNode());
+                                                contact->screenPosition(
+                                                    btVector2(from.x(),
+                                                              from.y()));
+                                                char buffer[BUFFER_SIZE];
+                                                sprintf(buffer, "%s%s",
+                                                        "__NJLINodeRay", code);
+                                                njli::World::getInstance()
+                                                    ->getWorldLuaVirtualMachine()
+                                                    ->execute(buffer, *contact);
+                                                touched = true;
+                                            }
+                                    }
+                                else if (physicsWorld->rayTestClosest(from, to,
+                                                                      *contact))
+                                    {
+                                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
+                                        //                                  "RayTest
+                                        //                                  Hit
+                                        //                                  (closest).\n");
+
+                                        if (disableNodeTouched)
+                                            {
+                                                contact->getHitNode()
+                                                    ->enableTouched(false);
+                                            }
+                                        untouchedNodes.remove(
+                                            contact->getHitNode());
+                                        contact->screenPosition(
+                                            btVector2(from.x(), from.y()));
+                                        char buffer[BUFFER_SIZE];
+                                        sprintf(buffer, "%s%s", "__NJLINodeRay",
+                                                code);
+                                        njli::World::getInstance()
+                                            ->getWorldLuaVirtualMachine()
+                                            ->execute(buffer, *contact);
+                                        touched = true;
+                                    }
+                                else
+                                    {
+                                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
+                                        //                                  "RayTest
+                                        //                                  Missed.\n");
+                                    }
+
+                                for (unsigned int i = 0;
+                                     i < untouchedNodes.size(); i++)
+                                    {
+                                        Node *n = untouchedNodes[i];
+                                        std::string name = n->getName();
+
+                                        if (n->getPhysicsBody() != NULL)
+                                            {
+                                                char buffer[BUFFER_SIZE];
+                                                sprintf(
+                                                    buffer, "%s",
+                                                    "__NJLINodeRayMouseMissed");
+                                                njli::World::getInstance()
+                                                    ->getWorldLuaVirtualMachine()
+                                                    ->execute(buffer, n);
+                                            }
+                                    }
+                            }
+                    }
+                else
+                    {
+                        //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                        //                        "setTouchCamera() must be
+                        //                        called on the scene\n");
+                    }
+            }
+    }
+
+    void World::renderInternal(bool is_left)
+    {
+        Scene *scene = getScene();
+
+        if (scene)
+            scene->render(is_left);
 #if defined(USE_NANOVG_LIBRARY)
-    getWorldHUD()->render();
+        getWorldHUD()->render();
 #endif
 
-    char buffer[256];
-    sprintf(buffer, "%s", "__NJLIRender");
-    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
+        char buffer[256];
+        sprintf(buffer, "%s", "__NJLIRender");
+        njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+            buffer);
 
 #if !defined(MINSIZEREL)
 
-    if (m_enableDebugDraw)
-      {
-        getDebugDrawer()->beginDraw();
+        if (m_enableDebugDraw)
+            {
+                getDebugDrawer()->beginDraw();
 
-        if (scene)
-          {
-            PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-            if (physicsWorld)
-              {
-                physicsWorld->debugDrawWorld();
-              }
-            else
-              {
-                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                //                                "Debug draw is enabled without
-                //                                a physics World.");
-              }
-          }
-        else
-          {
-            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        "Debug draw is enabled without a scene.");
-          }
+                if (scene)
+                    {
+                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                        if (physicsWorld)
+                            {
+                                physicsWorld->debugDrawWorld();
+                            }
+                        else
+                            {
+                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                //                                "Debug draw is
+                                //                                enabled
+                                //                                without a
+                                //                                physics
+                                //                                World.");
+                            }
+                    }
+                else
+                    {
+                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                    "Debug draw is enabled without a scene.");
+                    }
 
-        if (m_DebugDrawCamera)
-          {
-            getDebugDrawer()->draw(m_DebugDrawCamera);
-          }
-        else
-          {
-            //                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Debug draw is
-            //                enabled without a camera.");
-          }
+                if (m_DebugDrawCamera)
+                    {
+                        getDebugDrawer()->draw(m_DebugDrawCamera);
+                    }
+                else
+                    {
+                        //                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                        //                "Debug draw is enabled without a
+                        //                camera.");
+                    }
 
-        //            // 1. Show a simple window
-        //            // Tip: if we don't call ImGui::Begin()/ImGui::End() the
-        //            widgets appears in a window automatically called "Debug"
-        //                        {
-        //                            static float f = 0.0f;
-        //                            ImGui::Text("Hello, world!");
-        //                            ImGui::SliderFloat("float", &f,
-        //                            0.0f, 1.0f); ImGui::ColorEdit3("clear
-        //                            color", (float*)&clear_color); if
-        //                            (ImGui::Button("Test Window"))
-        //                            show_test_window ^= 1; if
-        //                            (ImGui::Button("Another Window"))
-        //                            show_another_window ^= 1;
-        //                            ImGui::Text("Application average %.3f
-        //                            ms/frame (%.1f FPS)", 1000.0f /
-        //                            ImGui::GetIO().Framerate,
-        //                            ImGui::GetIO().Framerate);
-        //                        }
-        //
-        //            // 2. Show another simple window, this time using an
-        //            explicit Begin/End pair
-        //                        if (show_another_window)
-        //                        {
-        //                            ImGui::SetNextWindowSize(ImVec2(200,100),
-        //                            ImGuiSetCond_FirstUseEver);
-        //                            ImGui::Begin("Another Window",
-        //                            &show_another_window);
-        //                            ImGui::Text("Hello");
-        //                            ImGui::End();
-        //                        }
-        //
-        //            // 3. Show the ImGui test window. Most of the sample code
-        //            is in ImGui::ShowTestWindow()
-        //                        if (show_test_window)
-        //                        {
-        //                            ImGui::SetNextWindowPos(ImVec2(650, 20),
-        //                            ImGuiSetCond_FirstUseEver);
-        //                            ImGui::ShowTestWindow(&show_test_window);
-        //                        }
+                //            // 1. Show a simple window
+                //            // Tip: if we don't call
+                //            ImGui::Begin()/ImGui::End() the widgets appears in
+                //            a window automatically called "Debug"
+                //                        {
+                //                            static float f = 0.0f;
+                //                            ImGui::Text("Hello, world!");
+                //                            ImGui::SliderFloat("float", &f,
+                //                            0.0f, 1.0f);
+                //                            ImGui::ColorEdit3("clear color",
+                //                            (float*)&clear_color); if
+                //                            (ImGui::Button("Test Window"))
+                //                            show_test_window ^= 1; if
+                //                            (ImGui::Button("Another Window"))
+                //                            show_another_window ^= 1;
+                //                            ImGui::Text("Application average
+                //                            %.3f ms/frame (%.1f FPS)", 1000.0f
+                //                            / ImGui::GetIO().Framerate,
+                //                            ImGui::GetIO().Framerate);
+                //                        }
+                //
+                //            // 2. Show another simple window, this time using
+                //            an explicit Begin/End pair
+                //                        if (show_another_window)
+                //                        {
+                //                            ImGui::SetNextWindowSize(ImVec2(200,100),
+                //                            ImGuiSetCond_FirstUseEver);
+                //                            ImGui::Begin("Another Window",
+                //                            &show_another_window);
+                //                            ImGui::Text("Hello");
+                //                            ImGui::End();
+                //                        }
+                //
+                //            // 3. Show the ImGui test window. Most of the
+                //            sample code is in ImGui::ShowTestWindow()
+                //                        if (show_test_window)
+                //                        {
+                //                            ImGui::SetNextWindowPos(ImVec2(650,
+                //                            20), ImGuiSetCond_FirstUseEver);
+                //                            ImGui::ShowTestWindow(&show_test_window);
+                //                        }
 
-        getDebugDrawer()->endDraw();
-      }
+                getDebugDrawer()->endDraw();
+            }
 #endif
-    m_WorldFactory->collectGarbage_GPU();
-  }
+        m_WorldFactory->collectGarbage_GPU();
+    }
 
-  /*
-   new (TestsWorldState)
-   enter (TestsWorldState)
-      new (BasicTestSceneState)
-      enter (BasicTestSceneState)
-          new (myTestNode)
-          enter (myTestNode->myTestNode)
-          exit (myTestNode->myTestNode)
-          delete (myTestNode)
-      exit (BasicTestSceneState)
-      delete (BasicTestSceneState)
-   exit (TestsWorldState)
+    /*
+     new (TestsWorldState)
+     enter (TestsWorldState)
+        new (BasicTestSceneState)
+        enter (BasicTestSceneState)
+            new (myTestNode)
+            enter (myTestNode->myTestNode)
+            exit (myTestNode->myTestNode)
+            delete (myTestNode)
+        exit (BasicTestSceneState)
+        delete (BasicTestSceneState)
+     exit (TestsWorldState)
 
-   enter (TestsWorldState)
-      new (BasicTestSceneState)
-      enter (BasicTestSceneState)
-          new (myTestNode)
-          enter (myTestNode->myTestNode)
-          exit (myTestNode->myTestNode)
-          delete (myTestNode)
-      exit (BasicTestSceneState)
-      delete (BasicTestSceneState)
-   exit (TestsWorldState)
+     enter (TestsWorldState)
+        new (BasicTestSceneState)
+        enter (BasicTestSceneState)
+            new (myTestNode)
+            enter (myTestNode->myTestNode)
+            exit (myTestNode->myTestNode)
+            delete (myTestNode)
+        exit (BasicTestSceneState)
+        delete (BasicTestSceneState)
+     exit (TestsWorldState)
 
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
-   exit (myTestNode->myTestNode)
-   delete (myTestNode)
-   exit (BasicTestSceneState)
-   delete (BasicTestSceneState)
-   exit (TestsWorldState)
-   enter (TestsWorldState)
-   new (BasicTestSceneState)
-   enter (BasicTestSceneState)
-   new (myTestNode)
-   enter (myTestNode->myTestNode)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
+     exit (myTestNode->myTestNode)
+     delete (myTestNode)
+     exit (BasicTestSceneState)
+     delete (BasicTestSceneState)
+     exit (TestsWorldState)
+     enter (TestsWorldState)
+     new (BasicTestSceneState)
+     enter (BasicTestSceneState)
+     new (myTestNode)
+     enter (myTestNode->myTestNode)
 
-   */
+     */
 
-  std::string convertToWords(const int number)
-  /* A function that prints given number in words */
-  //    void convert_to_words(char *num)
-  {
-    char *num = new char[1024];
-    char *buffer = new char[1024];
+    std::string convertToWords(const int number)
+    /* A function that prints given number in words */
+    //    void convert_to_words(char *num)
+    {
+        char *num = new char[1024];
+        char *buffer = new char[1024];
 
-    SDL_itoa(abs(number), num, 10);
+        SDL_itoa(abs(number), num, 10);
 
-    auto len = strlen(num); // Get number of digits in given number
-    std::string ret;
+        auto len = strlen(num); // Get number of digits in given number
+        std::string ret;
 
-    /* Base cases */
-    if (len == 0)
-      {
-        fprintf(stderr, "empty string\n");
-        delete[] buffer;
-        delete[] num;
-        return std::string(num);
-      }
-    if (len > 4)
-      {
-        fprintf(stderr, "Length more than 4 is not supported\n");
-        delete[] buffer;
-        delete[] num;
-        return std::string(num);
-      }
-    if (number < 0)
-      ret = "negative ";
+        /* Base cases */
+        if (len == 0)
+            {
+                fprintf(stderr, "empty string\n");
+                delete[] buffer;
+                delete[] num;
+                return std::string(num);
+            }
+        if (len > 4)
+            {
+                fprintf(stderr, "Length more than 4 is not supported\n");
+                delete[] buffer;
+                delete[] num;
+                return std::string(num);
+            }
+        if (number < 0)
+            ret = "negative ";
 
-    /* The first string is not used, it is to make
-     array indexing simple */
-    const char *single_digits[] = {"zero", "one", "two",   "three", "four",
-                                   "five", "six", "seven", "eight", "nine"};
+        /* The first string is not used, it is to make
+         array indexing simple */
+        const char *single_digits[] = {"zero", "one", "two",   "three", "four",
+                                       "five", "six", "seven", "eight", "nine"};
 
-    /* The first string is not used, it is to make
-     array indexing simple */
-    const char *two_digits[] = {"",          "ten",      "eleven",  "twelve",
-                                "thirteen",  "fourteen", "fifteen", "sixteen",
-                                "seventeen", "eighteen", "nineteen"};
+        /* The first string is not used, it is to make
+         array indexing simple */
+        const char *two_digits[] = {"",         "ten",      "eleven",
+                                    "twelve",   "thirteen", "fourteen",
+                                    "fifteen",  "sixteen",  "seventeen",
+                                    "eighteen", "nineteen"};
 
-    /* The first two string are not used, they are to make
-     array indexing simple*/
-    const char *tens_multiple[] = {"",       "",      "twenty", "thirty",
-                                   "forty",  "fifty", "sixty",  "seventy",
-                                   "eighty", "ninety"};
+        /* The first two string are not used, they are to make
+         array indexing simple*/
+        const char *tens_multiple[] = {"",       "",      "twenty", "thirty",
+                                       "forty",  "fifty", "sixty",  "seventy",
+                                       "eighty", "ninety"};
 
-    const char *tens_power[] = {"hundred", "thousand"};
+        const char *tens_power[] = {"hundred", "thousand"};
 
-    /* Used for debugging purpose only */
-    //        printf("\n%s: ", num);
+        /* Used for debugging purpose only */
+        //        printf("\n%s: ", num);
 
-    /* For single digit number */
-    if (len == 1)
-      {
-        sprintf(buffer, "%s", single_digits[*num - '0']);
-        ret = ret + buffer;
-        delete[] buffer;
-        delete[] num;
-        return ret;
-      }
-
-    /* Iterate while num is not '\0' */
-    while (*num != '\0')
-      {
-
-        /* Code path for first 2 digits */
-        if (len >= 3)
-          {
-            if (*num - '0' != 0)
-              {
-                sprintf(buffer, "%s ", single_digits[*num - '0']);
-                ret = ret + std::string(buffer);
-                sprintf(buffer, "%s ",
-                        tens_power[len - 3]); // here len can be 3 or 4
-                ret = ret + std::string(buffer);
-              }
-            --len;
-          }
-
-        /* Code path for last 2 digits */
-        else
-          {
-            /* Need to explicitly handle 10-19. Sum of the two digits is
-             used as index of "two_digits" array of strings */
-            if (*num == '1')
-              {
-                int sum = *num - '0' + *(num + 1) - '0';
-                sprintf(buffer, "%s", two_digits[sum]);
-                ret = ret + std::string(buffer);
+        /* For single digit number */
+        if (len == 1)
+            {
+                sprintf(buffer, "%s", single_digits[*num - '0']);
+                ret = ret + buffer;
                 delete[] buffer;
                 delete[] num;
                 return ret;
-              }
+            }
 
-            /* Need to explicitely handle 20 */
-            else if (*num == '2' && *(num + 1) == '0')
-              {
-                sprintf(buffer, "twenty");
-                ret = ret + std::string(buffer);
-                delete[] buffer;
-                delete[] num;
-                return ret;
-              }
+        /* Iterate while num is not '\0' */
+        while (*num != '\0')
+            {
 
-            /* Rest of the two digit numbers i.e., 21 to 99 */
-            else
-              {
-                int i = *num - '0';
-                sprintf(buffer, "%s ", i ? tens_multiple[i] : "");
-                ret = ret + std::string(buffer);
+                /* Code path for first 2 digits */
+                if (len >= 3)
+                    {
+                        if (*num - '0' != 0)
+                            {
+                                sprintf(buffer, "%s ",
+                                        single_digits[*num - '0']);
+                                ret = ret + std::string(buffer);
+                                sprintf(buffer, "%s ",
+                                        tens_power[len - 3]); // here len can be
+                                                              // 3 or 4
+                                ret = ret + std::string(buffer);
+                            }
+                        --len;
+                    }
+
+                /* Code path for last 2 digits */
+                else
+                    {
+                        /* Need to explicitly handle 10-19. Sum of the two
+                         digits is used as index of "two_digits" array of
+                         strings */
+                        if (*num == '1')
+                            {
+                                int sum = *num - '0' + *(num + 1) - '0';
+                                sprintf(buffer, "%s", two_digits[sum]);
+                                ret = ret + std::string(buffer);
+                                delete[] buffer;
+                                delete[] num;
+                                return ret;
+                            }
+
+                        /* Need to explicitely handle 20 */
+                        else if (*num == '2' && *(num + 1) == '0')
+                            {
+                                sprintf(buffer, "twenty");
+                                ret = ret + std::string(buffer);
+                                delete[] buffer;
+                                delete[] num;
+                                return ret;
+                            }
+
+                        /* Rest of the two digit numbers i.e., 21 to 99 */
+                        else
+                            {
+                                int i = *num - '0';
+                                sprintf(buffer, "%s ",
+                                        i ? tens_multiple[i] : "");
+                                ret = ret + std::string(buffer);
+                                ++num;
+                                if (*num != '0')
+                                    {
+                                        sprintf(buffer, "%s ",
+                                                single_digits[*num - '0']);
+                                        ret = ret + std::string(buffer);
+                                    }
+                            }
+                    }
                 ++num;
-                if (*num != '0')
-                  {
-                    sprintf(buffer, "%s ", single_digits[*num - '0']);
-                    ret = ret + std::string(buffer);
-                  }
-              }
-          }
-        ++num;
-      }
-    delete[] buffer;
-    delete[] num;
+            }
+        delete[] buffer;
+        delete[] num;
 
-    return ret;
-  }
+        return ret;
+    }
 } // namespace njli

@@ -224,7 +224,7 @@ namespace njli
 
     bool mLoaded;
       
-      bool mLooping;
+//      bool mLooping;
 
   private:
 //    typedef struct{
