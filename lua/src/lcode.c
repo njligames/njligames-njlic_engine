@@ -37,18 +37,18 @@ static int tonumeral(expdesc *e, TValue *v)
     if (hasjumps(e))
         return 0; /* not a numeral */
     switch (e->k)
-        {
-        case VKINT:
-            if (v)
-                setivalue(v, e->u.ival);
-            return 1;
-        case VKFLT:
-            if (v)
-                setfltvalue(v, e->u.nval);
-            return 1;
-        default:
-            return 0;
-        }
+    {
+    case VKINT:
+        if (v)
+            setivalue(v, e->u.ival);
+        return 1;
+    case VKFLT:
+        if (v)
+            setfltvalue(v, e->u.nval);
+        return 1;
+    default:
+        return 0;
+    }
 }
 
 void luaK_nil(FuncState *fs, int from, int n)
@@ -56,25 +56,25 @@ void luaK_nil(FuncState *fs, int from, int n)
     Instruction *previous;
     int l = from + n - 1; /* last register to set nil */
     if (fs->pc > fs->lasttarget)
-        { /* no jumps to current position? */
-            previous = &fs->f->code[fs->pc - 1];
-            if (GET_OPCODE(*previous) == OP_LOADNIL)
-                {
-                    int pfrom = GETARG_A(*previous);
-                    int pl = pfrom + GETARG_B(*previous);
-                    if ((pfrom <= from && from <= pl + 1) ||
-                        (from <= pfrom && pfrom <= l + 1))
-                        { /* can connect both? */
-                            if (pfrom < from)
-                                from = pfrom; /* from = min(from, pfrom) */
-                            if (pl > l)
-                                l = pl; /* l = max(l, pl) */
-                            SETARG_A(*previous, from);
-                            SETARG_B(*previous, l - from);
-                            return;
-                        }
-                } /* else go through */
-        }
+    { /* no jumps to current position? */
+        previous = &fs->f->code[fs->pc - 1];
+        if (GET_OPCODE(*previous) == OP_LOADNIL)
+        {
+            int pfrom = GETARG_A(*previous);
+            int pl = pfrom + GETARG_B(*previous);
+            if ((pfrom <= from && from <= pl + 1) ||
+                (from <= pfrom && pfrom <= l + 1))
+            { /* can connect both? */
+                if (pfrom < from)
+                    from = pfrom; /* from = min(from, pfrom) */
+                if (pl > l)
+                    l = pl; /* l = max(l, pl) */
+                SETARG_A(*previous, from);
+                SETARG_B(*previous, l - from);
+                return;
+            }
+        } /* else go through */
+    }
     luaK_codeABC(fs, OP_LOADNIL, from, n - 1, 0); /* else no optimization */
 }
 
@@ -144,11 +144,11 @@ static Instruction *getjumpcontrol(FuncState *fs, int pc)
 static int need_value(FuncState *fs, int list)
 {
     for (; list != NO_JUMP; list = getjump(fs, list))
-        {
-            Instruction i = *getjumpcontrol(fs, list);
-            if (GET_OPCODE(i) != OP_TESTSET)
-                return 1;
-        }
+    {
+        Instruction i = *getjumpcontrol(fs, list);
+        if (GET_OPCODE(i) != OP_TESTSET)
+            return 1;
+    }
     return 0; /* not found */
 }
 
@@ -175,14 +175,14 @@ static void patchlistaux(FuncState *fs, int list, int vtarget, int reg,
                          int dtarget)
 {
     while (list != NO_JUMP)
-        {
-            int next = getjump(fs, list);
-            if (patchtestreg(fs, list, reg))
-                fixjump(fs, list, vtarget);
-            else
-                fixjump(fs, list, dtarget); /* jump to default target */
-            list = next;
-        }
+    {
+        int next = getjump(fs, list);
+        if (patchtestreg(fs, list, reg))
+            fixjump(fs, list, vtarget);
+        else
+            fixjump(fs, list, dtarget); /* jump to default target */
+        list = next;
+    }
 }
 
 static void dischargejpc(FuncState *fs)
@@ -196,24 +196,24 @@ void luaK_patchlist(FuncState *fs, int list, int target)
     if (target == fs->pc)
         luaK_patchtohere(fs, list);
     else
-        {
-            lua_assert(target < fs->pc);
-            patchlistaux(fs, list, target, NO_REG, target);
-        }
+    {
+        lua_assert(target < fs->pc);
+        patchlistaux(fs, list, target, NO_REG, target);
+    }
 }
 
 void luaK_patchclose(FuncState *fs, int list, int level)
 {
     level++; /* argument is +1 to reserve 0 as non-op */
     while (list != NO_JUMP)
-        {
-            int next = getjump(fs, list);
-            lua_assert(GET_OPCODE(fs->f->code[list]) == OP_JMP &&
-                       (GETARG_A(fs->f->code[list]) == 0 ||
-                        GETARG_A(fs->f->code[list]) >= level));
-            SETARG_A(fs->f->code[list], level);
-            list = next;
-        }
+    {
+        int next = getjump(fs, list);
+        lua_assert(GET_OPCODE(fs->f->code[list]) == OP_JMP &&
+                   (GETARG_A(fs->f->code[list]) == 0 ||
+                    GETARG_A(fs->f->code[list]) >= level));
+        SETARG_A(fs->f->code[list], level);
+        list = next;
+    }
 }
 
 void luaK_patchtohere(FuncState *fs, int list)
@@ -229,14 +229,13 @@ void luaK_concat(FuncState *fs, int *l1, int l2)
     else if (*l1 == NO_JUMP)
         *l1 = l2;
     else
-        {
-            int list = *l1;
-            int next;
-            while ((next = getjump(fs, list)) !=
-                   NO_JUMP) /* find last element */
-                list = next;
-            fixjump(fs, list, l2);
-        }
+    {
+        int list = *l1;
+        int next;
+        while ((next = getjump(fs, list)) != NO_JUMP) /* find last element */
+            list = next;
+        fixjump(fs, list, l2);
+    }
 }
 
 static int luaK_code(FuncState *fs, Instruction i)
@@ -282,23 +281,23 @@ int luaK_codek(FuncState *fs, int reg, int k)
     if (k <= MAXARG_Bx)
         return luaK_codeABx(fs, OP_LOADK, reg, k);
     else
-        {
-            int p = luaK_codeABx(fs, OP_LOADKX, reg, 0);
-            codeextraarg(fs, k);
-            return p;
-        }
+    {
+        int p = luaK_codeABx(fs, OP_LOADKX, reg, 0);
+        codeextraarg(fs, k);
+        return p;
+    }
 }
 
 void luaK_checkstack(FuncState *fs, int n)
 {
     int newstack = fs->freereg + n;
     if (newstack > fs->f->maxstacksize)
-        {
-            if (newstack >= MAXREGS)
-                luaX_syntaxerror(
-                    fs->ls, "function or expression needs too many registers");
-            fs->f->maxstacksize = cast_byte(newstack);
-        }
+    {
+        if (newstack >= MAXREGS)
+            luaX_syntaxerror(fs->ls,
+                             "function or expression needs too many registers");
+        fs->f->maxstacksize = cast_byte(newstack);
+    }
 }
 
 void luaK_reserveregs(FuncState *fs, int n)
@@ -310,10 +309,10 @@ void luaK_reserveregs(FuncState *fs, int n)
 static void freereg(FuncState *fs, int reg)
 {
     if (!ISK(reg) && reg >= fs->nactvar)
-        {
-            fs->freereg--;
-            lua_assert(reg == fs->freereg);
-        }
+    {
+        fs->freereg--;
+        lua_assert(reg == fs->freereg);
+    }
 }
 
 static void freeexp(FuncState *fs, expdesc *e)
@@ -333,14 +332,14 @@ static int addk(FuncState *fs, TValue *key, TValue *v)
     TValue *idx = luaH_set(L, fs->ls->h, key); /* index scanner table */
     int k, oldsize;
     if (ttisinteger(idx))
-        { /* is there an index there? */
-            k = cast_int(ivalue(idx));
-            /* correct value? (warning: must distinguish floats from integers!)
-             */
-            if (k < fs->nk && ttype(&f->k[k]) == ttype(v) &&
-                luaV_rawequalobj(&f->k[k], v))
-                return k; /* reuse index */
-        }
+    { /* is there an index there? */
+        k = cast_int(ivalue(idx));
+        /* correct value? (warning: must distinguish floats from integers!)
+         */
+        if (k < fs->nk && ttype(&f->k[k]) == ttype(v) &&
+            luaV_rawequalobj(&f->k[k], v))
+            return k; /* reuse index */
+    }
     /* constant not found; create a new entry */
     oldsize = f->sizek;
     k = fs->nk;
@@ -402,68 +401,68 @@ static int nilK(FuncState *fs)
 void luaK_setreturns(FuncState *fs, expdesc *e, int nresults)
 {
     if (e->k == VCALL)
-        { /* expression is an open function call? */
-            SETARG_C(getcode(fs, e), nresults + 1);
-        }
+    { /* expression is an open function call? */
+        SETARG_C(getcode(fs, e), nresults + 1);
+    }
     else if (e->k == VVARARG)
-        {
-            SETARG_B(getcode(fs, e), nresults + 1);
-            SETARG_A(getcode(fs, e), fs->freereg);
-            luaK_reserveregs(fs, 1);
-        }
+    {
+        SETARG_B(getcode(fs, e), nresults + 1);
+        SETARG_A(getcode(fs, e), fs->freereg);
+        luaK_reserveregs(fs, 1);
+    }
 }
 
 void luaK_setoneret(FuncState *fs, expdesc *e)
 {
     if (e->k == VCALL)
-        { /* expression is an open function call? */
-            e->k = VNONRELOC;
-            e->u.info = GETARG_A(getcode(fs, e));
-        }
+    { /* expression is an open function call? */
+        e->k = VNONRELOC;
+        e->u.info = GETARG_A(getcode(fs, e));
+    }
     else if (e->k == VVARARG)
-        {
-            SETARG_B(getcode(fs, e), 2);
-            e->k = VRELOCABLE; /* can relocate its simple result */
-        }
+    {
+        SETARG_B(getcode(fs, e), 2);
+        e->k = VRELOCABLE; /* can relocate its simple result */
+    }
 }
 
 void luaK_dischargevars(FuncState *fs, expdesc *e)
 {
     switch (e->k)
-        {
-        case VLOCAL:
-            {
-                e->k = VNONRELOC;
-                break;
-            }
-        case VUPVAL:
-            {
-                e->u.info = luaK_codeABC(fs, OP_GETUPVAL, 0, e->u.info, 0);
-                e->k = VRELOCABLE;
-                break;
-            }
-        case VINDEXED:
-            {
-                OpCode op = OP_GETTABUP; /* assume 't' is in an upvalue */
-                freereg(fs, e->u.ind.idx);
-                if (e->u.ind.vt == VLOCAL)
-                    { /* 't' is in a register? */
-                        freereg(fs, e->u.ind.t);
-                        op = OP_GETTABLE;
-                    }
-                e->u.info = luaK_codeABC(fs, op, 0, e->u.ind.t, e->u.ind.idx);
-                e->k = VRELOCABLE;
-                break;
-            }
-        case VVARARG:
-        case VCALL:
-            {
-                luaK_setoneret(fs, e);
-                break;
-            }
-        default:
-            break; /* there is one value available (somewhere) */
+    {
+    case VLOCAL:
+    {
+        e->k = VNONRELOC;
+        break;
+    }
+    case VUPVAL:
+    {
+        e->u.info = luaK_codeABC(fs, OP_GETUPVAL, 0, e->u.info, 0);
+        e->k = VRELOCABLE;
+        break;
+    }
+    case VINDEXED:
+    {
+        OpCode op = OP_GETTABUP; /* assume 't' is in an upvalue */
+        freereg(fs, e->u.ind.idx);
+        if (e->u.ind.vt == VLOCAL)
+        { /* 't' is in a register? */
+            freereg(fs, e->u.ind.t);
+            op = OP_GETTABLE;
         }
+        e->u.info = luaK_codeABC(fs, op, 0, e->u.ind.t, e->u.ind.idx);
+        e->k = VRELOCABLE;
+        break;
+    }
+    case VVARARG:
+    case VCALL:
+    {
+        luaK_setoneret(fs, e);
+        break;
+    }
+    default:
+        break; /* there is one value available (somewhere) */
+    }
 }
 
 static int code_label(FuncState *fs, int A, int b, int jump)
@@ -476,51 +475,51 @@ static void discharge2reg(FuncState *fs, expdesc *e, int reg)
 {
     luaK_dischargevars(fs, e);
     switch (e->k)
-        {
-        case VNIL:
-            {
-                luaK_nil(fs, reg, 1);
-                break;
-            }
-        case VFALSE:
-        case VTRUE:
-            {
-                luaK_codeABC(fs, OP_LOADBOOL, reg, e->k == VTRUE, 0);
-                break;
-            }
-        case VK:
-            {
-                luaK_codek(fs, reg, e->u.info);
-                break;
-            }
-        case VKFLT:
-            {
-                luaK_codek(fs, reg, luaK_numberK(fs, e->u.nval));
-                break;
-            }
-        case VKINT:
-            {
-                luaK_codek(fs, reg, luaK_intK(fs, e->u.ival));
-                break;
-            }
-        case VRELOCABLE:
-            {
-                Instruction *pc = &getcode(fs, e);
-                SETARG_A(*pc, reg);
-                break;
-            }
-        case VNONRELOC:
-            {
-                if (reg != e->u.info)
-                    luaK_codeABC(fs, OP_MOVE, reg, e->u.info, 0);
-                break;
-            }
-        default:
-            {
-                lua_assert(e->k == VVOID || e->k == VJMP);
-                return; /* nothing to do... */
-            }
-        }
+    {
+    case VNIL:
+    {
+        luaK_nil(fs, reg, 1);
+        break;
+    }
+    case VFALSE:
+    case VTRUE:
+    {
+        luaK_codeABC(fs, OP_LOADBOOL, reg, e->k == VTRUE, 0);
+        break;
+    }
+    case VK:
+    {
+        luaK_codek(fs, reg, e->u.info);
+        break;
+    }
+    case VKFLT:
+    {
+        luaK_codek(fs, reg, luaK_numberK(fs, e->u.nval));
+        break;
+    }
+    case VKINT:
+    {
+        luaK_codek(fs, reg, luaK_intK(fs, e->u.ival));
+        break;
+    }
+    case VRELOCABLE:
+    {
+        Instruction *pc = &getcode(fs, e);
+        SETARG_A(*pc, reg);
+        break;
+    }
+    case VNONRELOC:
+    {
+        if (reg != e->u.info)
+            luaK_codeABC(fs, OP_MOVE, reg, e->u.info, 0);
+        break;
+    }
+    default:
+    {
+        lua_assert(e->k == VVOID || e->k == VJMP);
+        return; /* nothing to do... */
+    }
+    }
     e->u.info = reg;
     e->k = VNONRELOC;
 }
@@ -528,10 +527,10 @@ static void discharge2reg(FuncState *fs, expdesc *e, int reg)
 static void discharge2anyreg(FuncState *fs, expdesc *e)
 {
     if (e->k != VNONRELOC)
-        {
-            luaK_reserveregs(fs, 1);
-            discharge2reg(fs, e, fs->freereg - 1);
-        }
+    {
+        luaK_reserveregs(fs, 1);
+        discharge2reg(fs, e, fs->freereg - 1);
+    }
 }
 
 static void exp2reg(FuncState *fs, expdesc *e, int reg)
@@ -540,21 +539,21 @@ static void exp2reg(FuncState *fs, expdesc *e, int reg)
     if (e->k == VJMP)
         luaK_concat(fs, &e->t, e->u.info); /* put this jump in 't' list */
     if (hasjumps(e))
+    {
+        int final;         /* position after whole expression */
+        int p_f = NO_JUMP; /* position of an eventual LOAD false */
+        int p_t = NO_JUMP; /* position of an eventual LOAD true */
+        if (need_value(fs, e->t) || need_value(fs, e->f))
         {
-            int final;         /* position after whole expression */
-            int p_f = NO_JUMP; /* position of an eventual LOAD false */
-            int p_t = NO_JUMP; /* position of an eventual LOAD true */
-            if (need_value(fs, e->t) || need_value(fs, e->f))
-                {
-                    int fj = (e->k == VJMP) ? NO_JUMP : luaK_jump(fs);
-                    p_f = code_label(fs, reg, 0, 1);
-                    p_t = code_label(fs, reg, 1, 0);
-                    luaK_patchtohere(fs, fj);
-                }
-            final = luaK_getlabel(fs);
-            patchlistaux(fs, e->f, final, reg, p_f);
-            patchlistaux(fs, e->t, final, reg, p_t);
+            int fj = (e->k == VJMP) ? NO_JUMP : luaK_jump(fs);
+            p_f = code_label(fs, reg, 0, 1);
+            p_t = code_label(fs, reg, 1, 0);
+            luaK_patchtohere(fs, fj);
         }
+        final = luaK_getlabel(fs);
+        patchlistaux(fs, e->f, final, reg, p_f);
+        patchlistaux(fs, e->t, final, reg, p_t);
+    }
     e->f = e->t = NO_JUMP;
     e->u.info = reg;
     e->k = VNONRELOC;
@@ -572,15 +571,15 @@ int luaK_exp2anyreg(FuncState *fs, expdesc *e)
 {
     luaK_dischargevars(fs, e);
     if (e->k == VNONRELOC)
-        {
-            if (!hasjumps(e))
-                return e->u.info; /* exp is already in a register */
-            if (e->u.info >= fs->nactvar)
-                {                              /* reg. is not a local? */
-                    exp2reg(fs, e, e->u.info); /* put value on it */
-                    return e->u.info;
-                }
+    {
+        if (!hasjumps(e))
+            return e->u.info; /* exp is already in a register */
+        if (e->u.info >= fs->nactvar)
+        {                              /* reg. is not a local? */
+            exp2reg(fs, e, e->u.info); /* put value on it */
+            return e->u.info;
         }
+    }
     luaK_exp2nextreg(fs, e); /* default */
     return e->u.info;
 }
@@ -603,44 +602,43 @@ int luaK_exp2RK(FuncState *fs, expdesc *e)
 {
     luaK_exp2val(fs, e);
     switch (e->k)
-        {
-        case VTRUE:
-        case VFALSE:
-        case VNIL:
-            {
-                if (fs->nk <= MAXINDEXRK)
-                    { /* constant fits in RK operand? */
-                        e->u.info = (e->k == VNIL) ? nilK(fs)
-                                                   : boolK(fs, (e->k == VTRUE));
-                        e->k = VK;
-                        return RKASK(e->u.info);
-                    }
-                else
-                    break;
-            }
-        case VKINT:
-            {
-                e->u.info = luaK_intK(fs, e->u.ival);
-                e->k = VK;
-                goto vk;
-            }
-        case VKFLT:
-            {
-                e->u.info = luaK_numberK(fs, e->u.nval);
-                e->k = VK;
-            }
-        /* FALLTHROUGH */
-        case VK:
-            {
-            vk:
-                if (e->u.info <= MAXINDEXRK) /* constant fits in 'argC'? */
-                    return RKASK(e->u.info);
-                else
-                    break;
-            }
-        default:
-            break;
+    {
+    case VTRUE:
+    case VFALSE:
+    case VNIL:
+    {
+        if (fs->nk <= MAXINDEXRK)
+        { /* constant fits in RK operand? */
+            e->u.info = (e->k == VNIL) ? nilK(fs) : boolK(fs, (e->k == VTRUE));
+            e->k = VK;
+            return RKASK(e->u.info);
         }
+        else
+            break;
+    }
+    case VKINT:
+    {
+        e->u.info = luaK_intK(fs, e->u.ival);
+        e->k = VK;
+        goto vk;
+    }
+    case VKFLT:
+    {
+        e->u.info = luaK_numberK(fs, e->u.nval);
+        e->k = VK;
+    }
+    /* FALLTHROUGH */
+    case VK:
+    {
+    vk:
+        if (e->u.info <= MAXINDEXRK) /* constant fits in 'argC'? */
+            return RKASK(e->u.info);
+        else
+            break;
+    }
+    default:
+        break;
+    }
     /* not a constant in the right range: put it in a register */
     return luaK_exp2anyreg(fs, e);
 }
@@ -648,33 +646,32 @@ int luaK_exp2RK(FuncState *fs, expdesc *e)
 void luaK_storevar(FuncState *fs, expdesc *var, expdesc *ex)
 {
     switch (var->k)
-        {
-        case VLOCAL:
-            {
-                freeexp(fs, ex);
-                exp2reg(fs, ex, var->u.info);
-                return;
-            }
-        case VUPVAL:
-            {
-                int e = luaK_exp2anyreg(fs, ex);
-                luaK_codeABC(fs, OP_SETUPVAL, e, var->u.info, 0);
-                break;
-            }
-        case VINDEXED:
-            {
-                OpCode op =
-                    (var->u.ind.vt == VLOCAL) ? OP_SETTABLE : OP_SETTABUP;
-                int e = luaK_exp2RK(fs, ex);
-                luaK_codeABC(fs, op, var->u.ind.t, var->u.ind.idx, e);
-                break;
-            }
-        default:
-            {
-                lua_assert(0); /* invalid var kind to store */
-                break;
-            }
-        }
+    {
+    case VLOCAL:
+    {
+        freeexp(fs, ex);
+        exp2reg(fs, ex, var->u.info);
+        return;
+    }
+    case VUPVAL:
+    {
+        int e = luaK_exp2anyreg(fs, ex);
+        luaK_codeABC(fs, OP_SETUPVAL, e, var->u.info, 0);
+        break;
+    }
+    case VINDEXED:
+    {
+        OpCode op = (var->u.ind.vt == VLOCAL) ? OP_SETTABLE : OP_SETTABUP;
+        int e = luaK_exp2RK(fs, ex);
+        luaK_codeABC(fs, op, var->u.ind.t, var->u.ind.idx, e);
+        break;
+    }
+    default:
+    {
+        lua_assert(0); /* invalid var kind to store */
+        break;
+    }
+    }
     freeexp(fs, ex);
 }
 
@@ -702,15 +699,15 @@ static void invertjump(FuncState *fs, expdesc *e)
 static int jumponcond(FuncState *fs, expdesc *e, int cond)
 {
     if (e->k == VRELOCABLE)
+    {
+        Instruction ie = getcode(fs, e);
+        if (GET_OPCODE(ie) == OP_NOT)
         {
-            Instruction ie = getcode(fs, e);
-            if (GET_OPCODE(ie) == OP_NOT)
-                {
-                    fs->pc--; /* remove previous OP_NOT */
-                    return condjump(fs, OP_TEST, GETARG_B(ie), 0, !cond);
-                }
-            /* else go through */
+            fs->pc--; /* remove previous OP_NOT */
+            return condjump(fs, OP_TEST, GETARG_B(ie), 0, !cond);
         }
+        /* else go through */
+    }
     discharge2anyreg(fs, e);
     freeexp(fs, e);
     return condjump(fs, OP_TESTSET, NO_REG, e->u.info, cond);
@@ -721,27 +718,27 @@ void luaK_goiftrue(FuncState *fs, expdesc *e)
     int pc; /* pc of last jump */
     luaK_dischargevars(fs, e);
     switch (e->k)
-        {
-        case VJMP:
-            {
-                invertjump(fs, e);
-                pc = e->u.info;
-                break;
-            }
-        case VK:
-        case VKFLT:
-        case VKINT:
-        case VTRUE:
-            {
-                pc = NO_JUMP; /* always true; do nothing */
-                break;
-            }
-        default:
-            {
-                pc = jumponcond(fs, e, 0);
-                break;
-            }
-        }
+    {
+    case VJMP:
+    {
+        invertjump(fs, e);
+        pc = e->u.info;
+        break;
+    }
+    case VK:
+    case VKFLT:
+    case VKINT:
+    case VTRUE:
+    {
+        pc = NO_JUMP; /* always true; do nothing */
+        break;
+    }
+    default:
+    {
+        pc = jumponcond(fs, e, 0);
+        break;
+    }
+    }
     luaK_concat(fs, &e->f, pc); /* insert last jump in 'f' list */
     luaK_patchtohere(fs, e->t);
     e->t = NO_JUMP;
@@ -752,24 +749,24 @@ void luaK_goiffalse(FuncState *fs, expdesc *e)
     int pc; /* pc of last jump */
     luaK_dischargevars(fs, e);
     switch (e->k)
-        {
-        case VJMP:
-            {
-                pc = e->u.info;
-                break;
-            }
-        case VNIL:
-        case VFALSE:
-            {
-                pc = NO_JUMP; /* always false; do nothing */
-                break;
-            }
-        default:
-            {
-                pc = jumponcond(fs, e, 1);
-                break;
-            }
-        }
+    {
+    case VJMP:
+    {
+        pc = e->u.info;
+        break;
+    }
+    case VNIL:
+    case VFALSE:
+    {
+        pc = NO_JUMP; /* always false; do nothing */
+        break;
+    }
+    default:
+    {
+        pc = jumponcond(fs, e, 1);
+        break;
+    }
+    }
     luaK_concat(fs, &e->t, pc); /* insert last jump in 't' list */
     luaK_patchtohere(fs, e->f);
     e->f = NO_JUMP;
@@ -779,41 +776,41 @@ static void codenot(FuncState *fs, expdesc *e)
 {
     luaK_dischargevars(fs, e);
     switch (e->k)
-        {
-        case VNIL:
-        case VFALSE:
-            {
-                e->k = VTRUE;
-                break;
-            }
-        case VK:
-        case VKFLT:
-        case VKINT:
-        case VTRUE:
-            {
-                e->k = VFALSE;
-                break;
-            }
-        case VJMP:
-            {
-                invertjump(fs, e);
-                break;
-            }
-        case VRELOCABLE:
-        case VNONRELOC:
-            {
-                discharge2anyreg(fs, e);
-                freeexp(fs, e);
-                e->u.info = luaK_codeABC(fs, OP_NOT, 0, e->u.info, 0);
-                e->k = VRELOCABLE;
-                break;
-            }
-        default:
-            {
-                lua_assert(0); /* cannot happen */
-                break;
-            }
-        }
+    {
+    case VNIL:
+    case VFALSE:
+    {
+        e->k = VTRUE;
+        break;
+    }
+    case VK:
+    case VKFLT:
+    case VKINT:
+    case VTRUE:
+    {
+        e->k = VFALSE;
+        break;
+    }
+    case VJMP:
+    {
+        invertjump(fs, e);
+        break;
+    }
+    case VRELOCABLE:
+    case VNONRELOC:
+    {
+        discharge2anyreg(fs, e);
+        freeexp(fs, e);
+        e->u.info = luaK_codeABC(fs, OP_NOT, 0, e->u.info, 0);
+        e->k = VRELOCABLE;
+        break;
+    }
+    default:
+    {
+        lua_assert(0); /* cannot happen */
+        break;
+    }
+    }
     /* interchange true and false lists */
     {
         int temp = e->f;
@@ -840,24 +837,24 @@ void luaK_indexed(FuncState *fs, expdesc *t, expdesc *k)
 static int validop(int op, TValue *v1, TValue *v2)
 {
     switch (op)
-        {
-        case LUA_OPBAND:
-        case LUA_OPBOR:
-        case LUA_OPBXOR:
-        case LUA_OPSHL:
-        case LUA_OPSHR:
-        case LUA_OPBNOT:
-            { /* conversion errors */
-                lua_Integer i;
-                return (tointeger(v1, &i) && tointeger(v2, &i));
-            }
-        case LUA_OPDIV:
-        case LUA_OPIDIV:
-        case LUA_OPMOD: /* division by 0 */
-            return (nvalue(v2) != 0);
-        default:
-            return 1; /* everything else is valid */
-        }
+    {
+    case LUA_OPBAND:
+    case LUA_OPBOR:
+    case LUA_OPBXOR:
+    case LUA_OPSHL:
+    case LUA_OPSHR:
+    case LUA_OPBNOT:
+    { /* conversion errors */
+        lua_Integer i;
+        return (tointeger(v1, &i) && tointeger(v2, &i));
+    }
+    case LUA_OPDIV:
+    case LUA_OPIDIV:
+    case LUA_OPMOD: /* division by 0 */
+        return (nvalue(v2) != 0);
+    default:
+        return 1; /* everything else is valid */
+    }
 }
 
 /*
@@ -870,18 +867,18 @@ static int constfolding(FuncState *fs, int op, expdesc *e1, expdesc *e2)
         return 0; /* non-numeric operands or not safe to fold */
     luaO_arith(fs->ls->L, op, &v1, &v2, &res); /* does operation */
     if (ttisinteger(&res))
-        {
-            e1->k = VKINT;
-            e1->u.ival = ivalue(&res);
-        }
+    {
+        e1->k = VKINT;
+        e1->u.ival = ivalue(&res);
+    }
     else
-        { /* folds neither NaN nor 0.0 (to avoid collapsing with -0.0) */
-            lua_Number n = fltvalue(&res);
-            if (luai_numisnan(n) || n == 0)
-                return 0;
-            e1->k = VKFLT;
-            e1->u.nval = n;
-        }
+    { /* folds neither NaN nor 0.0 (to avoid collapsing with -0.0) */
+        lua_Number n = fltvalue(&res);
+        if (luai_numisnan(n) || n == 0)
+            return 0;
+        e1->k = VKFLT;
+        e1->u.nval = n;
+    }
     return 1;
 }
 
@@ -899,34 +896,33 @@ static void codeexpval(FuncState *fs, OpCode op, expdesc *e1, expdesc *e2,
     if (op <= OP_BNOT && constfolding(fs, (op - OP_ADD) + LUA_OPADD, e1, e2))
         return; /* result has been folded */
     else
-        {
-            int o1, o2;
-            /* move operands to registers (if needed) */
-            if (op == OP_UNM || op == OP_BNOT || op == OP_LEN)
-                {           /* unary op? */
-                    o2 = 0; /* no second expression */
-                    o1 = luaK_exp2anyreg(fs,
-                                         e1); /* cannot operate on constants */
-                }
-            else
-                { /* regular case (binary operators) */
-                    o2 = luaK_exp2RK(fs, e2); /* both operands are "RK" */
-                    o1 = luaK_exp2RK(fs, e1);
-                }
-            if (o1 > o2)
-                { /* free registers in proper order */
-                    freeexp(fs, e1);
-                    freeexp(fs, e2);
-                }
-            else
-                {
-                    freeexp(fs, e2);
-                    freeexp(fs, e1);
-                }
-            e1->u.info = luaK_codeABC(fs, op, 0, o1, o2); /* generate opcode */
-            e1->k = VRELOCABLE; /* all those operations are relocatable */
-            luaK_fixline(fs, line);
+    {
+        int o1, o2;
+        /* move operands to registers (if needed) */
+        if (op == OP_UNM || op == OP_BNOT || op == OP_LEN)
+        {                                 /* unary op? */
+            o2 = 0;                       /* no second expression */
+            o1 = luaK_exp2anyreg(fs, e1); /* cannot operate on constants */
         }
+        else
+        {                             /* regular case (binary operators) */
+            o2 = luaK_exp2RK(fs, e2); /* both operands are "RK" */
+            o1 = luaK_exp2RK(fs, e1);
+        }
+        if (o1 > o2)
+        { /* free registers in proper order */
+            freeexp(fs, e1);
+            freeexp(fs, e2);
+        }
+        else
+        {
+            freeexp(fs, e2);
+            freeexp(fs, e1);
+        }
+        e1->u.info = luaK_codeABC(fs, op, 0, o1, o2); /* generate opcode */
+        e1->k = VRELOCABLE; /* all those operations are relocatable */
+        luaK_fixline(fs, line);
+    }
 }
 
 static void codecomp(FuncState *fs, OpCode op, int cond, expdesc *e1,
@@ -937,13 +933,13 @@ static void codecomp(FuncState *fs, OpCode op, int cond, expdesc *e1,
     freeexp(fs, e2);
     freeexp(fs, e1);
     if (cond == 0 && op != OP_EQ)
-        {
-            int temp; /* exchange args to replace by '<' or '<=' */
-            temp = o1;
-            o1 = o2;
-            o2 = temp; /* o1 <==> o2 */
-            cond = 1;
-        }
+    {
+        int temp; /* exchange args to replace by '<' or '<=' */
+        temp = o1;
+        o1 = o2;
+        o2 = temp; /* o1 <==> o2 */
+        cond = 1;
+    }
     e1->u.info = condjump(fs, op, cond, o1, o2);
     e1->k = VJMP;
 }
@@ -955,141 +951,137 @@ void luaK_prefix(FuncState *fs, UnOpr op, expdesc *e, int line)
     e2.k = VKINT;
     e2.u.ival = 0;
     switch (op)
-        {
-        case OPR_MINUS:
-        case OPR_BNOT:
-        case OPR_LEN:
-            {
-                codeexpval(fs, cast(OpCode, (op - OPR_MINUS) + OP_UNM), e, &e2,
-                           line);
-                break;
-            }
-        case OPR_NOT:
-            codenot(fs, e);
-            break;
-        default:
-            lua_assert(0);
-        }
+    {
+    case OPR_MINUS:
+    case OPR_BNOT:
+    case OPR_LEN:
+    {
+        codeexpval(fs, cast(OpCode, (op - OPR_MINUS) + OP_UNM), e, &e2, line);
+        break;
+    }
+    case OPR_NOT:
+        codenot(fs, e);
+        break;
+    default:
+        lua_assert(0);
+    }
 }
 
 void luaK_infix(FuncState *fs, BinOpr op, expdesc *v)
 {
     switch (op)
-        {
-        case OPR_AND:
-            {
-                luaK_goiftrue(fs, v);
-                break;
-            }
-        case OPR_OR:
-            {
-                luaK_goiffalse(fs, v);
-                break;
-            }
-        case OPR_CONCAT:
-            {
-                luaK_exp2nextreg(fs, v); /* operand must be on the 'stack' */
-                break;
-            }
-        case OPR_ADD:
-        case OPR_SUB:
-        case OPR_MUL:
-        case OPR_DIV:
-        case OPR_IDIV:
-        case OPR_MOD:
-        case OPR_POW:
-        case OPR_BAND:
-        case OPR_BOR:
-        case OPR_BXOR:
-        case OPR_SHL:
-        case OPR_SHR:
-            {
-                if (!tonumeral(v, NULL))
-                    luaK_exp2RK(fs, v);
-                break;
-            }
-        default:
-            {
-                luaK_exp2RK(fs, v);
-                break;
-            }
-        }
+    {
+    case OPR_AND:
+    {
+        luaK_goiftrue(fs, v);
+        break;
+    }
+    case OPR_OR:
+    {
+        luaK_goiffalse(fs, v);
+        break;
+    }
+    case OPR_CONCAT:
+    {
+        luaK_exp2nextreg(fs, v); /* operand must be on the 'stack' */
+        break;
+    }
+    case OPR_ADD:
+    case OPR_SUB:
+    case OPR_MUL:
+    case OPR_DIV:
+    case OPR_IDIV:
+    case OPR_MOD:
+    case OPR_POW:
+    case OPR_BAND:
+    case OPR_BOR:
+    case OPR_BXOR:
+    case OPR_SHL:
+    case OPR_SHR:
+    {
+        if (!tonumeral(v, NULL))
+            luaK_exp2RK(fs, v);
+        break;
+    }
+    default:
+    {
+        luaK_exp2RK(fs, v);
+        break;
+    }
+    }
 }
 
 void luaK_posfix(FuncState *fs, BinOpr op, expdesc *e1, expdesc *e2, int line)
 {
     switch (op)
+    {
+    case OPR_AND:
+    {
+        lua_assert(e1->t == NO_JUMP); /* list must be closed */
+        luaK_dischargevars(fs, e2);
+        luaK_concat(fs, &e2->f, e1->f);
+        *e1 = *e2;
+        break;
+    }
+    case OPR_OR:
+    {
+        lua_assert(e1->f == NO_JUMP); /* list must be closed */
+        luaK_dischargevars(fs, e2);
+        luaK_concat(fs, &e2->t, e1->t);
+        *e1 = *e2;
+        break;
+    }
+    case OPR_CONCAT:
+    {
+        luaK_exp2val(fs, e2);
+        if (e2->k == VRELOCABLE && GET_OPCODE(getcode(fs, e2)) == OP_CONCAT)
         {
-        case OPR_AND:
-            {
-                lua_assert(e1->t == NO_JUMP); /* list must be closed */
-                luaK_dischargevars(fs, e2);
-                luaK_concat(fs, &e2->f, e1->f);
-                *e1 = *e2;
-                break;
-            }
-        case OPR_OR:
-            {
-                lua_assert(e1->f == NO_JUMP); /* list must be closed */
-                luaK_dischargevars(fs, e2);
-                luaK_concat(fs, &e2->t, e1->t);
-                *e1 = *e2;
-                break;
-            }
-        case OPR_CONCAT:
-            {
-                luaK_exp2val(fs, e2);
-                if (e2->k == VRELOCABLE &&
-                    GET_OPCODE(getcode(fs, e2)) == OP_CONCAT)
-                    {
-                        lua_assert(e1->u.info == GETARG_B(getcode(fs, e2)) - 1);
-                        freeexp(fs, e1);
-                        SETARG_B(getcode(fs, e2), e1->u.info);
-                        e1->k = VRELOCABLE;
-                        e1->u.info = e2->u.info;
-                    }
-                else
-                    {
-                        luaK_exp2nextreg(
-                            fs, e2); /* operand must be on the 'stack' */
-                        codeexpval(fs, OP_CONCAT, e1, e2, line);
-                    }
-                break;
-            }
-        case OPR_ADD:
-        case OPR_SUB:
-        case OPR_MUL:
-        case OPR_DIV:
-        case OPR_IDIV:
-        case OPR_MOD:
-        case OPR_POW:
-        case OPR_BAND:
-        case OPR_BOR:
-        case OPR_BXOR:
-        case OPR_SHL:
-        case OPR_SHR:
-            {
-                codeexpval(fs, cast(OpCode, (op - OPR_ADD) + OP_ADD), e1, e2,
-                           line);
-                break;
-            }
-        case OPR_EQ:
-        case OPR_LT:
-        case OPR_LE:
-            {
-                codecomp(fs, cast(OpCode, (op - OPR_EQ) + OP_EQ), 1, e1, e2);
-                break;
-            }
-        case OPR_NE:
-        case OPR_GT:
-        case OPR_GE:
-            {
-                codecomp(fs, cast(OpCode, (op - OPR_NE) + OP_EQ), 0, e1, e2);
-                break;
-            }
-        default:
-            lua_assert(0);
+            lua_assert(e1->u.info == GETARG_B(getcode(fs, e2)) - 1);
+            freeexp(fs, e1);
+            SETARG_B(getcode(fs, e2), e1->u.info);
+            e1->k = VRELOCABLE;
+            e1->u.info = e2->u.info;
         }
+        else
+        {
+            luaK_exp2nextreg(fs, e2); /* operand must be on the 'stack' */
+            codeexpval(fs, OP_CONCAT, e1, e2, line);
+        }
+        break;
+    }
+    case OPR_ADD:
+    case OPR_SUB:
+    case OPR_MUL:
+    case OPR_DIV:
+    case OPR_IDIV:
+    case OPR_MOD:
+    case OPR_POW:
+    case OPR_BAND:
+    case OPR_BOR:
+    case OPR_BXOR:
+    case OPR_SHL:
+    case OPR_SHR:
+    {
+        codeexpval(fs, cast(OpCode, (op - OPR_ADD) + OP_ADD), e1, e2, line);
+        break;
+    }
+    case OPR_EQ:
+    case OPR_LT:
+    case OPR_LE:
+    {
+        codecomp(fs, cast(OpCode, (op - OPR_EQ) + OP_EQ), 1, e1, e2);
+        break;
+    }
+    case OPR_NE:
+    case OPR_GT:
+    case OPR_GE:
+    {
+        codecomp(fs, cast(OpCode, (op - OPR_NE) + OP_EQ), 0, e1, e2);
+        break;
+    }
+    default:
+        lua_assert(0);
+    }
 }
 
 void luaK_fixline(FuncState *fs, int line)
@@ -1105,10 +1097,10 @@ void luaK_setlist(FuncState *fs, int base, int nelems, int tostore)
     if (c <= MAXARG_C)
         luaK_codeABC(fs, OP_SETLIST, base, b, c);
     else if (c <= MAXARG_Ax)
-        {
-            luaK_codeABC(fs, OP_SETLIST, base, b, 0);
-            codeextraarg(fs, c);
-        }
+    {
+        luaK_codeABC(fs, OP_SETLIST, base, b, 0);
+        codeextraarg(fs, c);
+    }
     else
         luaX_syntaxerror(fs->ls, "constructor too long");
     fs->freereg = base + 1; /* free registers with list values */

@@ -37,26 +37,26 @@ namespace njli
         for (std::unordered_map<int, DeviceTouch *>::iterator iter =
                  m_FingerDownMap.begin();
              iter != m_FingerDownMap.end(); iter++)
-            {
-                DeviceTouch *touch = iter->second;
-                delete touch;
-            }
+        {
+            DeviceTouch *touch = iter->second;
+            delete touch;
+        }
 
         for (std::unordered_map<int, DeviceTouch *>::iterator iter =
                  m_FingerUpMap.begin();
              iter != m_FingerUpMap.end(); iter++)
-            {
-                DeviceTouch *touch = iter->second;
-                delete touch;
-            }
+        {
+            DeviceTouch *touch = iter->second;
+            delete touch;
+        }
 
         for (std::unordered_map<int, DeviceTouch *>::iterator iter =
                  m_FingerMoveMap.begin();
              iter != m_FingerMoveMap.end(); iter++)
-            {
-                DeviceTouch *touch = iter->second;
-                delete touch;
-            }
+        {
+            DeviceTouch *touch = iter->second;
+            delete touch;
+        }
     }
 
     const char *WorldInput::getClassName() const { return "WorldInput"; }
@@ -79,125 +79,125 @@ namespace njli
         DeviceTouch *touch = NULL;
 
         switch (action)
+        {
+        case 0:
+        {
+            std::unordered_map<int, DeviceTouch *>::iterator iter =
+                m_FingerDownMap.find(pointerFingerId);
+            if (iter == m_FingerDownMap.end())
             {
-            case 0:
-                {
-                    std::unordered_map<int, DeviceTouch *>::iterator iter =
-                        m_FingerDownMap.find(pointerFingerId);
-                    if (iter == m_FingerDownMap.end())
-                        {
-                            touch = new DeviceTouch();
-                        }
-                    else
-                        {
-                            touch = m_FingerDownMap[pointerFingerId];
-                        }
-
-                    touch->set(touchDevId, pointerFingerId, SDL_FINGERDOWN, x,
-                               y, dx, dy, pressure);
-
-                    njli::World::getInstance()->touchDown(*touch);
-                }
-                break;
-            case 1:
-                {
-                    std::unordered_map<int, DeviceTouch *>::iterator iter =
-                        m_FingerUpMap.find(pointerFingerId);
-                    if (iter == m_FingerUpMap.end())
-                        {
-                            touch = new DeviceTouch();
-                        }
-                    else
-                        {
-                            touch = m_FingerUpMap[pointerFingerId];
-                        }
-
-                    touch->set(touchDevId, pointerFingerId, SDL_FINGERUP, x, y,
-                               dx, dy, pressure);
-
-                    njli::World::getInstance()->touchUp(*touch);
-                }
-                break;
-            case 2:
-                {
-                    std::unordered_map<int, DeviceTouch *>::iterator iter =
-                        m_FingerMoveMap.find(pointerFingerId);
-                    if (iter == m_FingerMoveMap.end())
-                        {
-                            touch = new DeviceTouch();
-                        }
-                    else
-                        {
-                            touch = m_FingerMoveMap[pointerFingerId];
-                        }
-
-                    touch->set(touchDevId, pointerFingerId, SDL_FINGERMOTION, x,
-                               y, dx, dy, pressure);
-
-                    njli::World::getInstance()->touchMove(*touch);
-                }
-                break;
-            default:
-                return;
+                touch = new DeviceTouch();
             }
+            else
+            {
+                touch = m_FingerDownMap[pointerFingerId];
+            }
+
+            touch->set(touchDevId, pointerFingerId, SDL_FINGERDOWN, x, y, dx,
+                       dy, pressure);
+
+            njli::World::getInstance()->touchDown(*touch);
+        }
+        break;
+        case 1:
+        {
+            std::unordered_map<int, DeviceTouch *>::iterator iter =
+                m_FingerUpMap.find(pointerFingerId);
+            if (iter == m_FingerUpMap.end())
+            {
+                touch = new DeviceTouch();
+            }
+            else
+            {
+                touch = m_FingerUpMap[pointerFingerId];
+            }
+
+            touch->set(touchDevId, pointerFingerId, SDL_FINGERUP, x, y, dx, dy,
+                       pressure);
+
+            njli::World::getInstance()->touchUp(*touch);
+        }
+        break;
+        case 2:
+        {
+            std::unordered_map<int, DeviceTouch *>::iterator iter =
+                m_FingerMoveMap.find(pointerFingerId);
+            if (iter == m_FingerMoveMap.end())
+            {
+                touch = new DeviceTouch();
+            }
+            else
+            {
+                touch = m_FingerMoveMap[pointerFingerId];
+            }
+
+            touch->set(touchDevId, pointerFingerId, SDL_FINGERMOTION, x, y, dx,
+                       dy, pressure);
+
+            njli::World::getInstance()->touchMove(*touch);
+        }
+        break;
+        default:
+            return;
+        }
     }
 
     void WorldInput::handleFingers()
     {
 
         if (!m_FingerDownMap.empty())
+        {
+            int i = 0;
+            for (i = 0; i < njli::DeviceTouch::MAX_TOUCHES * 3; i++)
             {
-                int i = 0;
-                for (i = 0; i < njli::DeviceTouch::MAX_TOUCHES * 3; i++)
-                    {
-                        m_TouchBuffer[i] = NULL;
-                    }
-                i = 0;
-                for (std::unordered_map<int, DeviceTouch *>::iterator iter =
-                         m_FingerDownMap.begin();
-                     iter != m_FingerDownMap.end(); iter++)
-                    {
-                        m_TouchBuffer[i++] = iter->second;
-                    }
-                njli::World::getInstance()->touchDown(m_TouchBuffer);
-                m_FingerDownMap.clear();
+                m_TouchBuffer[i] = NULL;
             }
+            i = 0;
+            for (std::unordered_map<int, DeviceTouch *>::iterator iter =
+                     m_FingerDownMap.begin();
+                 iter != m_FingerDownMap.end(); iter++)
+            {
+                m_TouchBuffer[i++] = iter->second;
+            }
+            njli::World::getInstance()->touchDown(m_TouchBuffer);
+            m_FingerDownMap.clear();
+        }
 
         if (!m_FingerUpMap.empty())
+        {
+            int i = 0;
+            for (i = 0; i < njli::DeviceTouch::MAX_TOUCHES * 3; i++)
             {
-                int i = 0;
-                for (i = 0; i < njli::DeviceTouch::MAX_TOUCHES * 3; i++)
-                    {
-                        m_TouchBuffer[i] = NULL;
-                    }
-                i = 0;
-                for (std::unordered_map<int, DeviceTouch *>::iterator iter =
-                         m_FingerUpMap.begin();
-                     iter != m_FingerUpMap.end(); iter++)
-                    {
-                        m_TouchBuffer[i++] = iter->second;
-                    }
-                njli::World::getInstance()->touchDown(m_TouchBuffer);
-                m_FingerUpMap.clear();
+                m_TouchBuffer[i] = NULL;
             }
+            i = 0;
+            for (std::unordered_map<int, DeviceTouch *>::iterator iter =
+                     m_FingerUpMap.begin();
+                 iter != m_FingerUpMap.end(); iter++)
+            {
+                m_TouchBuffer[i++] = iter->second;
+            }
+            njli::World::getInstance()->touchDown(m_TouchBuffer);
+            m_FingerUpMap.clear();
+        }
 
         if (!m_FingerMoveMap.empty())
+        {
+            int i = 0;
+            for (i = 0; i < njli::DeviceTouch::MAX_TOUCHES * 3; i++)
             {
-                int i = 0;
-                for (i = 0; i < njli::DeviceTouch::MAX_TOUCHES * 3; i++)
-                    {
-                        m_TouchBuffer[i] = NULL;
-                    }
-                i = 0;
-                for (std::unordered_map<int, DeviceTouch *>::iterator iter =
-                         m_FingerMoveMap.begin();
-                     iter != m_FingerMoveMap.end(); iter++)
-                    {
-                        m_TouchBuffer[i++] = iter->second;
-                    }
-                njli::World::getInstance()->touchDown(m_TouchBuffer);
-                m_FingerMoveMap.clear();
+                m_TouchBuffer[i] = NULL;
             }
+            i = 0;
+            for (std::unordered_map<int, DeviceTouch *>::iterator iter =
+                     m_FingerMoveMap.begin();
+                 iter != m_FingerMoveMap.end(); iter++)
+            {
+                m_TouchBuffer[i++] = iter->second;
+            }
+            njli::World::getInstance()->touchDown(m_TouchBuffer);
+            m_FingerMoveMap.clear();
+        }
     }
 
     void WorldInput::handleMouse(int button, int eventType, float x, float y,
@@ -205,19 +205,19 @@ namespace njli
     {
         m_Mouse->set(button, eventType, x, y, clicks);
         switch (eventType)
-            {
-            case SDL_MOUSEMOTION:
-                njli::World::getInstance()->mouseMove(*m_Mouse);
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                njli::World::getInstance()->mouseDown(*m_Mouse);
-                break;
-            case SDL_MOUSEBUTTONUP:
-                njli::World::getInstance()->mouseUp(*m_Mouse);
-                break;
-            default:
-                break;
-            }
+        {
+        case SDL_MOUSEMOTION:
+            njli::World::getInstance()->mouseMove(*m_Mouse);
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            njli::World::getInstance()->mouseDown(*m_Mouse);
+            break;
+        case SDL_MOUSEBUTTONUP:
+            njli::World::getInstance()->mouseUp(*m_Mouse);
+            break;
+        default:
+            break;
+        }
     }
 
     void WorldInput::handleKeyUp(const char *keycodeName, bool withCapsLock,

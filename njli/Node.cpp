@@ -154,9 +154,9 @@ namespace njli
     Node &Node::operator=(const Node &rhs)
     {
         if (this != &rhs)
-            {
-                // TODO: Implement....
-            }
+        {
+            // TODO: Implement....
+        }
         return *this;
     }
 
@@ -224,33 +224,33 @@ namespace njli
     void Node::destroy(Node *object, bool destroyChildrenNodes)
     {
         if (object)
+        {
+            if (destroyChildrenNodes)
             {
-                if (destroyChildrenNodes)
-                    {
-                        for (std::vector<Node *>::iterator iter =
-                                 object->m_Children.begin();
-                             iter != object->m_Children.end(); ++iter)
-                            {
-                                Node::destroy(*iter, true);
-                            }
-                    }
-
-                object->removeAllActions();
-                object->removeAllParticleEmitters();
-                object->removePhysicsBody();
-                object->removeLight();
-                object->removeCamera();
-                object->removeGeometry();
-                object->removePhysicsField();
-                object->removeAllSounds();
-
-                NodeStateMachine *sm = object->getStateMachine();
-                if (World::getInstance()->getWorldFactory()->has(sm))
-                    NodeStateMachine::destroy(sm);
-                object->removeStateMachine();
-
-                World::getInstance()->getWorldFactory()->destroy(object);
+                for (std::vector<Node *>::iterator iter =
+                         object->m_Children.begin();
+                     iter != object->m_Children.end(); ++iter)
+                {
+                    Node::destroy(*iter, true);
+                }
             }
+
+            object->removeAllActions();
+            object->removeAllParticleEmitters();
+            object->removePhysicsBody();
+            object->removeLight();
+            object->removeCamera();
+            object->removeGeometry();
+            object->removePhysicsField();
+            object->removeAllSounds();
+
+            NodeStateMachine *sm = object->getStateMachine();
+            if (World::getInstance()->getWorldFactory()->has(sm))
+                NodeStateMachine::destroy(sm);
+            object->removeStateMachine();
+
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void Node::load(Node &object, lua_State *L, int index)
@@ -263,56 +263,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Node::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Node::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -364,13 +364,13 @@ namespace njli
     void Node::setTransform(const btTransform &transform)
     {
         if (!(*m_Transform == transform))
-            {
-                m_TransformDirty = true;
+        {
+            m_TransformDirty = true;
 
-                *m_Transform = transform;
+            *m_Transform = transform;
 
-                applyPhysicsBodyTransform(transform);
-            }
+            applyPhysicsBodyTransform(transform);
+        }
 
         //        PhysicsBody *physicsBody = getPhysicsBody();
         //
@@ -485,9 +485,9 @@ namespace njli
     void Node::removeSteeringBehaviorMachine()
     {
         if (getSteeringBehaviorMachine())
-            {
-                removeChild(getSteeringBehaviorMachine());
-            }
+        {
+            removeChild(getSteeringBehaviorMachine());
+        }
 
         m_SteeringBehaviorMachine = NULL;
     }
@@ -496,10 +496,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_SteeringBehaviorMachine);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<SteeringBehaviorMachine*>(getChild(idx)));
-                return dynamic_cast<SteeringBehaviorMachine *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<SteeringBehaviorMachine*>(getChild(idx)));
+            return dynamic_cast<SteeringBehaviorMachine *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -507,12 +507,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_SteeringBehaviorMachine);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            SteeringBehaviorMachine*>(getChild(idx)));
-                return dynamic_cast<const SteeringBehaviorMachine *>(
-                    getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            SteeringBehaviorMachine*>(getChild(idx)));
+            return dynamic_cast<const SteeringBehaviorMachine *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -528,19 +527,19 @@ namespace njli
                       m_ParticleEmitterList.end(), emitter);
 
         if (iter == m_ParticleEmitterList.end())
-            {
-                std::vector<ParticleEmitter *>::iterator iter =
-                    std::find(m_ParticleEmitterList.begin(),
-                              m_ParticleEmitterList.end(), emitter);
+        {
+            std::vector<ParticleEmitter *>::iterator iter =
+                std::find(m_ParticleEmitterList.begin(),
+                          m_ParticleEmitterList.end(), emitter);
 
-                if (iter != m_ParticleEmitterList.end())
-                    removeParticleEmitter(emitter);
+            if (iter != m_ParticleEmitterList.end())
+                removeParticleEmitter(emitter);
 
-                m_ParticleEmitterList.push_back(emitter);
+            m_ParticleEmitterList.push_back(emitter);
 
-                addChild(emitter);
-                scene->addActiveParticleEmitter(emitter);
-            }
+            addChild(emitter);
+            scene->addActiveParticleEmitter(emitter);
+        }
 
         return getParticleEmitterIndex(emitter);
     }
@@ -557,13 +556,13 @@ namespace njli
                       m_ParticleEmitterList.end(), emitter);
 
         if (iter != m_ParticleEmitterList.end())
-            {
-                removeChild(*iter);
-                scene->removeActiveParticleEmitter(*iter);
+        {
+            removeChild(*iter);
+            scene->removeActiveParticleEmitter(*iter);
 
-                m_ParticleEmitterList.erase(iter);
-                return true;
-            }
+            m_ParticleEmitterList.erase(iter);
+            return true;
+        }
         return false;
     }
 
@@ -572,9 +571,9 @@ namespace njli
         for (std::vector<ParticleEmitter *>::iterator iter =
                  m_ParticleEmitterList.begin();
              iter != m_ParticleEmitterList.end(); ++iter)
-            {
-                removeChild(*iter);
-            }
+        {
+            removeChild(*iter);
+        }
         m_ParticleEmitterList.clear();
     }
 
@@ -589,10 +588,10 @@ namespace njli
         for (std::vector<ParticleEmitter *>::const_iterator iter =
                  m_ParticleEmitterList.begin();
              iter != m_ParticleEmitterList.end(); ++iter)
-            {
-                if (getChildIndex(*iter) != -1)
-                    particleEmitters.push_back(*iter);
-            }
+        {
+            if (getChildIndex(*iter) != -1)
+                particleEmitters.push_back(*iter);
+        }
     }
 
     s32 Node::getParticleEmitterIndex(ParticleEmitter *emitter) const
@@ -602,31 +601,31 @@ namespace njli
                       m_ParticleEmitterList.end(), emitter);
 
         if (iter != m_ParticleEmitterList.end())
-            {
-                return std::distance(m_ParticleEmitterList.begin(), iter);
-            }
+        {
+            return std::distance(m_ParticleEmitterList.begin(), iter);
+        }
         return -1;
     }
 
     ParticleEmitter *Node::getParticleEmitter(const u32 index)
     {
         if (index < m_ParticleEmitterList.size())
-            {
-                s32 idx = getChildIndex(m_ParticleEmitterList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<ParticleEmitter *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_ParticleEmitterList.at(index));
+            if (idx != -1)
+                return dynamic_cast<ParticleEmitter *>(getChild(idx));
+        }
         return NULL;
     }
 
     const ParticleEmitter *Node::getParticleEmitter(const u32 index) const
     {
         if (index < m_ParticleEmitterList.size())
-            {
-                s32 idx = getChildIndex(m_ParticleEmitterList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<const ParticleEmitter *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_ParticleEmitterList.at(index));
+            if (idx != -1)
+                return dynamic_cast<const ParticleEmitter *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -650,11 +649,11 @@ namespace njli
         PhysicsBody *physicsBody = getPhysicsBody();
 
         if (physicsBody)
-            {
-                removeChild(getPhysicsBody());
+        {
+            removeChild(getPhysicsBody());
 
-                physicsBody->removePhysicsBody();
-            }
+            physicsBody->removePhysicsBody();
+        }
 
         m_PhysicsBody = NULL;
     }
@@ -663,15 +662,15 @@ namespace njli
     {
         s32 idx = getChildIndex(m_PhysicsBody);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<PhysicsBody*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<PhysicsBody*>(getChild(idx)));
-                return dynamic_cast<PhysicsBody *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<PhysicsBody*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<PhysicsBody*>(getChild(idx)));
+            return dynamic_cast<PhysicsBody *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -681,17 +680,17 @@ namespace njli
     {
         s32 idx = getChildIndex(m_PhysicsBody);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<const
-            //            PhysicsBody*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            PhysicsBody*>(getChild(idx)));
-                return dynamic_cast<const PhysicsBody *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<const
+        //            PhysicsBody*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            PhysicsBody*>(getChild(idx)));
+            return dynamic_cast<const PhysicsBody *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -711,9 +710,9 @@ namespace njli
     void Node::removeLight()
     {
         if (getLight())
-            {
-                removeChild(getLight());
-            }
+        {
+            removeChild(getLight());
+        }
 
         m_Light = NULL;
     }
@@ -769,16 +768,16 @@ namespace njli
     void Node::removeCamera()
     {
         if (getCamera())
-            {
-                //        Scene *scene = this->getCurrentScene();
-                //        SDL_assert(NULL != scene);
+        {
+            //        Scene *scene = this->getCurrentScene();
+            //        SDL_assert(NULL != scene);
 
-                Camera *camera = getCamera();
-                removeChild(camera);
-                Scene *scene = this->getCurrentScene();
-                if (scene)
-                    scene->removeActiveCamera(camera);
-            }
+            Camera *camera = getCamera();
+            removeChild(camera);
+            Scene *scene = this->getCurrentScene();
+            if (scene)
+                scene->removeActiveCamera(camera);
+        }
 
         m_Camera = NULL;
     }
@@ -819,30 +818,30 @@ namespace njli
         Scene *scene = this->getCurrentScene();
         //        SDL_assert(NULL != scene);
         if (scene)
-            {
-                scene->addActiveGeometry(m_Geometry);
-            }
+        {
+            scene->addActiveGeometry(m_Geometry);
+        }
         else
-            {
-                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                            "Unable to set the Geometry, the scene is NULL\n");
-            }
+        {
+            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                        "Unable to set the Geometry, the scene is NULL\n");
+        }
     }
 
     void Node::removeGeometry()
     {
         Geometry *geometry = getGeometry();
         if (geometry)
-            {
-                Scene *scene = this->getCurrentScene();
-                SDL_assert(NULL != scene);
+        {
+            Scene *scene = this->getCurrentScene();
+            SDL_assert(NULL != scene);
 
-                geometry->removeReference(this);
+            geometry->removeReference(this);
 
-                removeChild(geometry);
+            removeChild(geometry);
 
-                scene->removeActiveGeometry(geometry);
-            }
+            scene->removeActiveGeometry(geometry);
+        }
 
         m_Geometry = NULL;
     }
@@ -850,26 +849,26 @@ namespace njli
     Geometry *Node::getGeometry()
     {
         if (m_Geometry)
+        {
+            s32 idx = getChildIndex(m_Geometry);
+            if (idx != -1)
             {
-                s32 idx = getChildIndex(m_Geometry);
-                if (idx != -1)
-                    {
-                        //                SDL_assert(dynamic_cast<Geometry*>(getChild(idx)));
-                        return dynamic_cast<Geometry *>(getChild(idx));
-                    }
-                //                return dynamic_cast<Geometry*>(getChild(idx));
+                //                SDL_assert(dynamic_cast<Geometry*>(getChild(idx)));
+                return dynamic_cast<Geometry *>(getChild(idx));
             }
+            //                return dynamic_cast<Geometry*>(getChild(idx));
+        }
         return NULL;
     }
 
     const Geometry *Node::getGeometry() const
     {
         if (m_Geometry)
-            {
-                s32 idx = getChildIndex(m_Geometry);
-                if (idx != -1)
-                    return dynamic_cast<const Geometry *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_Geometry);
+            if (idx != -1)
+                return dynamic_cast<const Geometry *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -887,9 +886,9 @@ namespace njli
     void Node::removePhysicsField()
     {
         if (getPhysicsField())
-            {
-                removeChild(getPhysicsField());
-            }
+        {
+            removeChild(getPhysicsField());
+        }
 
         m_PhysicsField = NULL;
     }
@@ -918,19 +917,19 @@ namespace njli
             std::find(m_SoundList.begin(), m_SoundList.end(), sound);
 
         if (iter == m_SoundList.end())
-            {
-                std::vector<Sound *>::iterator iter =
-                    std::find(m_SoundList.begin(), m_SoundList.end(), sound);
+        {
+            std::vector<Sound *>::iterator iter =
+                std::find(m_SoundList.begin(), m_SoundList.end(), sound);
 
-                if (iter != m_SoundList.end())
-                    removeSound(sound);
+            if (iter != m_SoundList.end())
+                removeSound(sound);
 
-                m_SoundList.push_back(sound);
+            m_SoundList.push_back(sound);
 
-                sound->setTransform(btTransform::getIdentity());
+            sound->setTransform(btTransform::getIdentity());
 
-                addChild(sound);
-            }
+            addChild(sound);
+        }
 
         return getSoundIndex(sound);
     }
@@ -943,11 +942,11 @@ namespace njli
             std::find(m_SoundList.begin(), m_SoundList.end(), sound);
 
         if (iter != m_SoundList.end())
-            {
-                removeChild(*iter);
-                m_SoundList.erase(iter);
-                return true;
-            }
+        {
+            removeChild(*iter);
+            m_SoundList.erase(iter);
+            return true;
+        }
         return false;
     }
 
@@ -955,9 +954,9 @@ namespace njli
     {
         for (std::vector<Sound *>::iterator iter = m_SoundList.begin();
              iter != m_SoundList.end(); ++iter)
-            {
-                removeChild(*iter);
-            }
+        {
+            removeChild(*iter);
+        }
         m_SoundList.clear();
     }
 
@@ -965,10 +964,10 @@ namespace njli
     {
         for (std::vector<Sound *>::const_iterator iter = m_SoundList.begin();
              iter != m_SoundList.end(); ++iter)
-            {
-                if (getChildIndex(*iter) != -1)
-                    particleEmitters.push_back(*iter);
-            }
+        {
+            if (getChildIndex(*iter) != -1)
+                particleEmitters.push_back(*iter);
+        }
     }
 
     s32 Node::getSoundIndex(Sound *sound) const
@@ -977,76 +976,75 @@ namespace njli
             std::find(m_SoundList.begin(), m_SoundList.end(), sound);
 
         if (iter != m_SoundList.end())
-            {
-                return std::distance(m_SoundList.begin(), iter);
-            }
+        {
+            return std::distance(m_SoundList.begin(), iter);
+        }
         return -1;
     }
 
     Sound *Node::getSound(const u32 index)
     {
         if (index < m_SoundList.size())
-            {
-                s32 idx = getChildIndex(m_SoundList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<Sound *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_SoundList.at(index));
+            if (idx != -1)
+                return dynamic_cast<Sound *>(getChild(idx));
+        }
         return NULL;
     }
 
     const Sound *Node::getSound(const u32 index) const
     {
         if (index < m_SoundList.size())
-            {
-                s32 idx = getChildIndex(m_SoundList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<const Sound *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_SoundList.at(index));
+            if (idx != -1)
+                return dynamic_cast<const Sound *>(getChild(idx));
+        }
         return NULL;
     }
 
     void Node::setOpacity(f32 opacity)
     {
         if (m_Opacity != opacity)
-            {
-                m_Opacity = (opacity > 1.0f)
-                                ? 1.0f
-                                : ((opacity < 0.0f) ? 0.0f : opacity);
+        {
+            m_Opacity =
+                (opacity > 1.0f) ? 1.0f : ((opacity < 0.0f) ? 0.0f : opacity);
 
-                Geometry *g = getGeometry();
-                if (g)
-                    {
-                        g->setOpacity(this);
-                    }
-                //          m_OpacityDirty = true;
+            Geometry *g = getGeometry();
+            if (g)
+            {
+                g->setOpacity(this);
             }
+            //          m_OpacityDirty = true;
+        }
     }
 
     void Node::transformVertices(const btTransform &transfrom)
     {
         Geometry *g = getGeometry();
         if (g)
-            {
-                g->transformVertices(this, transfrom);
-            }
+        {
+            g->transformVertices(this, transfrom);
+        }
     }
 
     void Node::transformVertexColors(const btTransform &transform)
     {
         Geometry *g = getGeometry();
         if (g)
-            {
-                g->transformVertexColors(this, transform);
-            }
+        {
+            g->transformVertexColors(this, transform);
+        }
     }
 
     void Node::transformTextureCoordinates(const btTransform &transform)
     {
         Geometry *g = getGeometry();
         if (g)
-            {
-                g->transformTextureCoordinates(this, transform);
-            }
+        {
+            g->transformTextureCoordinates(this, transform);
+        }
     }
 
     f32 Node::getOpacity() const { return m_Opacity; }
@@ -1055,27 +1053,27 @@ namespace njli
     {
         const Geometry *geometry = getGeometry();
         if (geometry)
-            {
-                assert(false && "need to implement the getMaterial()");
-                //        const Material *material = geometry->getMaterial();
-                //
-                //        if (material)
-                //          {
-                //            return (material->hasOpacity() ||
-                //                    (material->getTransparency() != 1.0) ||
-                //                    (m_Opacity != 1.0f));
-                //          }
-            }
+        {
+            assert(false && "need to implement the getMaterial()");
+            //        const Material *material = geometry->getMaterial();
+            //
+            //        if (material)
+            //          {
+            //            return (material->hasOpacity() ||
+            //                    (material->getTransparency() != 1.0) ||
+            //                    (m_Opacity != 1.0f));
+            //          }
+        }
         return m_Opacity != 1.0f;
     }
 
     void Node::setNormalMatrix(const btMatrix3x3 &mtx)
     {
         if (!(mtx == *m_NormalMatrix))
-            {
-                *m_NormalMatrix = mtx;
-                //            m_NormalMatrixDirty = true;
-            }
+        {
+            *m_NormalMatrix = mtx;
+            //            m_NormalMatrixDirty = true;
+        }
     }
 
     const btMatrix3x3 &Node::getNormalMatrix() const { return *m_NormalMatrix; }
@@ -1101,54 +1099,54 @@ namespace njli
     void Node::hide(Camera *camera)
     {
         if (NULL == camera)
-            {
-                m_RenderCategory = (njliBitCategories)Off(
-                    (s32)m_RenderCategory, (s32)JLI_BIT_CATEGORY_ALL);
-            }
+        {
+            m_RenderCategory = (njliBitCategories)Off(
+                (s32)m_RenderCategory, (s32)JLI_BIT_CATEGORY_ALL);
+        }
         else
-            {
-                m_RenderCategory = (njliBitCategories)Off(
-                    (s32)m_RenderCategory, (s32)camera->getRenderCategory());
-            }
+        {
+            m_RenderCategory = (njliBitCategories)Off(
+                (s32)m_RenderCategory, (s32)camera->getRenderCategory());
+        }
 
         for (std::vector<Node *>::const_iterator iter = m_Children.begin();
              iter != m_Children.end(); ++iter)
+        {
+            Node *n = (*iter);
+            if (NULL != n)
             {
-                Node *n = (*iter);
-                if (NULL != n)
-                    {
-                        n->hide(camera);
-                    }
+                n->hide(camera);
             }
+        }
         for (int i = 0; i < numberOfParticleEmitters(); ++i)
-            {
-                ParticleEmitter *pe = getParticleEmitter(i);
-                pe->setRenderCategory(this);
-            }
+        {
+            ParticleEmitter *pe = getParticleEmitter(i);
+            pe->setRenderCategory(this);
+        }
     }
 
     void Node::show(Camera *camera)
     {
         if (camera)
-            {
-                m_RenderCategory = (njliBitCategories)On(
-                    m_RenderCategory, camera->getRenderCategory());
-            }
+        {
+            m_RenderCategory = (njliBitCategories)On(
+                m_RenderCategory, camera->getRenderCategory());
+        }
 
         for (std::vector<Node *>::const_iterator iter = m_Children.begin();
              iter != m_Children.end(); ++iter)
+        {
+            Node *n = (*iter);
+            if (NULL != n)
             {
-                Node *n = (*iter);
-                if (NULL != n)
-                    {
-                        n->show(camera);
-                    }
+                n->show(camera);
             }
+        }
         for (int i = 0; i < numberOfParticleEmitters(); ++i)
-            {
-                ParticleEmitter *pe = getParticleEmitter(i);
-                pe->setRenderCategory(this);
-            }
+        {
+            ParticleEmitter *pe = getParticleEmitter(i);
+            pe->setRenderCategory(this);
+        }
     }
 
     bool Node::isHidden(Camera *camera) const
@@ -1159,40 +1157,39 @@ namespace njli
     void Node::setRenderCategory(Node *node)
     {
         if (node)
-            {
-                m_RenderCategory = node->m_RenderCategory;
+        {
+            m_RenderCategory = node->m_RenderCategory;
 
-                for (std::vector<Node *>::const_iterator iter =
-                         m_Children.begin();
-                     iter != m_Children.end(); ++iter)
-                    {
-                        Node *n = (*iter);
-                        if (NULL != n)
-                            {
-                                n->setRenderCategory(node);
-                            }
-                    }
-                for (int i = 0; i < numberOfParticleEmitters(); ++i)
-                    {
-                        ParticleEmitter *pe = getParticleEmitter(i);
-                        pe->setRenderCategory(node);
-                    }
+            for (std::vector<Node *>::const_iterator iter = m_Children.begin();
+                 iter != m_Children.end(); ++iter)
+            {
+                Node *n = (*iter);
+                if (NULL != n)
+                {
+                    n->setRenderCategory(node);
+                }
             }
+            for (int i = 0; i < numberOfParticleEmitters(); ++i)
+            {
+                ParticleEmitter *pe = getParticleEmitter(i);
+                pe->setRenderCategory(node);
+            }
+        }
     }
 
     NodeStateMachine *Node::getStateMachine()
     {
         s32 idx = getChildIndex(m_NodeStateMachine);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<NodeStateMachine*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<NodeStateMachine*>(getChild(idx)));
-                return dynamic_cast<NodeStateMachine *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<NodeStateMachine*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<NodeStateMachine*>(getChild(idx)));
+            return dynamic_cast<NodeStateMachine *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -1203,17 +1200,17 @@ namespace njli
         s32 idx = getChildIndex(m_NodeStateMachine);
 
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<const
-            //            NodeStateMachine*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            NodeStateMachine*>(getChild(idx)));
-                return dynamic_cast<const NodeStateMachine *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<const
+        //            NodeStateMachine*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            NodeStateMachine*>(getChild(idx)));
+            return dynamic_cast<const NodeStateMachine *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -1223,10 +1220,10 @@ namespace njli
     {
         NodeStateMachine *sm = getStateMachine();
         if (sm != NULL)
-            {
-                removeChild(sm);
-                m_NodeStateMachine = NULL;
-            }
+        {
+            removeChild(sm);
+            m_NodeStateMachine = NULL;
+        }
     }
 
     bool Node::isTouched() const { return m_isTouchedByRay; }
@@ -1272,15 +1269,15 @@ namespace njli
         SDL_assert(NULL != scene);
 
         if (scene && scene->getPhysicsWorld() && getCamera())
-            {
-                btVector3 from = getCamera()->unProject(screenPosition);
-                btVector3 near = from * getCamera()->getZNear();
-                from += near;
-                btVector3 to = from * getCamera()->getZFar();
+        {
+            btVector3 from = getCamera()->unProject(screenPosition);
+            btVector3 near = from * getCamera()->getZNear();
+            from += near;
+            btVector3 to = from * getCamera()->getZFar();
 
-                return rayTestClosest(from, to, rayContact, collisionGroup,
-                                      collisionMask);
-            }
+            return rayTestClosest(from, to, rayContact, collisionGroup,
+                                  collisionMask);
+        }
         return false;
     }
 
@@ -1294,15 +1291,15 @@ namespace njli
         SDL_assert(NULL != scene);
 
         if (scene && scene->getPhysicsWorld() && getCamera())
-            {
-                btVector3 from = getCamera()->unProject(screenPosition);
-                btVector3 near = from * getCamera()->getZNear();
-                from += near;
-                btVector3 to = from * getCamera()->getZFar();
+        {
+            btVector3 from = getCamera()->unProject(screenPosition);
+            btVector3 near = from * getCamera()->getZNear();
+            from += near;
+            btVector3 to = from * getCamera()->getZFar();
 
-                return rayTestAll(from, to, rayContacts, numContacts,
-                                  collisionGroup, collisionMask);
-            }
+            return rayTestAll(from, to, rayContacts, numContacts,
+                              collisionGroup, collisionMask);
+        }
 
         return false;
     }
@@ -1326,10 +1323,10 @@ namespace njli
     {
         Action *a = AbstractActionable::getAction(key);
         if (a)
-            {
-                removeChild(a);
-                return AbstractActionable::removeAction(key);
-            }
+        {
+            removeChild(a);
+            return AbstractActionable::removeAction(key);
+        }
         return false;
     }
 
@@ -1340,9 +1337,9 @@ namespace njli
         AbstractActionable::getAllActionNames(actionNames);
 
         for (s32 i = 0; i < actionNames.size(); ++i)
-            {
-                Node::removeAction(actionNames[i].c_str());
-            }
+        {
+            Node::removeAction(actionNames[i].c_str());
+        }
     }
 
     void Node::getAabb(btVector3 &aabbMin, btVector3 &aabbMax) const
@@ -1354,13 +1351,13 @@ namespace njli
 
         const PhysicsBody *body = getPhysicsBody();
         if (body)
+        {
+            const PhysicsShape *shape = body->getPhysicsShape();
+            if (shape)
             {
-                const PhysicsShape *shape = body->getPhysicsShape();
-                if (shape)
-                    {
-                        shape->getAabb(transform, aabbMin, aabbMax);
-                    }
+                shape->getAabb(transform, aabbMin, aabbMax);
             }
+        }
     }
 
     //  void Node::getAabb(btVector3 ** aabb) const
@@ -1405,72 +1402,70 @@ namespace njli
         Node *parent = dynamic_cast<Node *>(getParentNode());
 
         if (parent && parent->hasChildNode(this))
-            {
-                parent->removeChildNode(this);
-                return true;
-            }
+        {
+            parent->removeChildNode(this);
+            return true;
+        }
         return false;
     }
 
     Node *Node::findChildNode(const char *name)
     {
         if (strcmp(getName(), name) == 0)
-            {
-                return this;
-            }
+        {
+            return this;
+        }
         else
+        {
+            for (std::vector<Node *>::const_iterator iter = m_Children.begin();
+                 iter != m_Children.end(); ++iter)
             {
-                for (std::vector<Node *>::const_iterator iter =
-                         m_Children.begin();
-                     iter != m_Children.end(); ++iter)
-                    {
-                        Node *n = (*iter)->findChildNode(name);
-                        if (NULL != n)
-                            {
-                                return n;
-                            }
-                    }
+                Node *n = (*iter)->findChildNode(name);
+                if (NULL != n)
+                {
+                    return n;
+                }
             }
+        }
         return NULL;
     }
 
     const Node *Node::findChildNode(const char *name) const
     {
         if (strcmp(getName(), name) == 0)
-            {
-                return this;
-            }
+        {
+            return this;
+        }
         else
+        {
+            for (std::vector<Node *>::const_iterator iter = m_Children.begin();
+                 iter != m_Children.end(); ++iter)
             {
-                for (std::vector<Node *>::const_iterator iter =
-                         m_Children.begin();
-                     iter != m_Children.end(); ++iter)
-                    {
-                        Node *n = (*iter)->findChildNode(name);
-                        if (NULL != n)
-                            {
-                                return n;
-                            }
-                    }
+                Node *n = (*iter)->findChildNode(name);
+                if (NULL != n)
+                {
+                    return n;
+                }
             }
+        }
         return NULL;
     }
 
     Node *Node::getChildNode(const u32 index)
     {
         if (index < numberOfChildrenNodes())
-            {
-                return m_Children.at(index);
-            }
+        {
+            return m_Children.at(index);
+        }
         return NULL;
     }
 
     const Node *Node::getChildNode(const u32 index) const
     {
         if (index < numberOfChildrenNodes())
-            {
-                return m_Children.at(index);
-            }
+        {
+            return m_Children.at(index);
+        }
         return NULL;
     }
 
@@ -1485,9 +1480,9 @@ namespace njli
             std::find(m_Children.begin(), m_Children.end(), object);
 
         if (iter != m_Children.end())
-            {
-                return std::distance(m_Children.begin(), iter);
-            }
+        {
+            return std::distance(m_Children.begin(), iter);
+        }
         return -1;
     }
 
@@ -1502,12 +1497,12 @@ namespace njli
             return true;
 
         for (iter = m_Children.begin(); iter != m_Children.end(); ++iter)
+        {
+            if ((*iter)->hasChildNode(object))
             {
-                if ((*iter)->hasChildNode(object))
-                    {
-                        return true;
-                    }
+                return true;
             }
+        }
         return false;
     }
 
@@ -1547,24 +1542,24 @@ namespace njli
             std::find(m_Children.begin(), m_Children.end(), object);
 
         if (iter != m_Children.end())
-            {
-                (*iter)->removeParentNode();
-                m_Children.erase(iter);
+        {
+            (*iter)->removeParentNode();
+            m_Children.erase(iter);
 
-                Scene *scene = this->getCurrentScene();
-                if (NULL != scene)
-                    scene->removeActiveNode(object);
-
+            Scene *scene = this->getCurrentScene();
+            if (NULL != scene)
                 scene->removeActiveNode(object);
-            }
+
+            scene->removeActiveNode(object);
+        }
     }
 
     void Node::removeChildrenNodes()
     {
         for (s32 i = 0; i < m_Children.size(); ++i)
-            {
-                removeChildNode(m_Children.at(i));
-            }
+        {
+            removeChildNode(m_Children.at(i));
+        }
         m_Children.clear();
     }
 
@@ -1616,9 +1611,9 @@ namespace njli
 
         SteeringBehaviorMachine *steeringMachine = getSteeringBehaviorMachine();
         if (steeringMachine && steeringMachine->isEnabled())
-            {
-                steeringMachine->calculate(timeStep);
-            }
+        {
+            steeringMachine->calculate(timeStep);
+        }
 
         //        if(m_ActionThread->isPaused())
         //        {
@@ -1630,9 +1625,9 @@ namespace njli
 
         NodeStateMachine *sm = getStateMachine();
         if (sm != NULL)
-            {
-                sm->update(timeStep);
-            }
+        {
+            sm->update(timeStep);
+        }
 
         //        Node *parent = getParentNode();
         //        //        if(m_ApplyPhysicsShape || (parent &&
@@ -1646,47 +1641,47 @@ namespace njli
     void Node::updateGeometry(Geometry *const geometry, bool hiddenFromCamera)
     {
         if (geometry)
+        {
+            const unsigned long geometryIndex = getGeometryIndex();
+
+            //            if(isTransformDirty())
             {
-                const unsigned long geometryIndex = getGeometryIndex();
-
-                //            if(isTransformDirty())
-                {
-                    geometry->setTransform(geometryIndex, getWorldTransform());
-                    //                resetTransformDirty();
-                }
-
-                //            if(m_ColorTransformDirty)
-                //            {
-                //                geometry->setColorTransform(geometryIndex,
-                //                getColorTransform()); m_ColorTransformDirty =
-                //                false;
-                //            }
-
-                //            if(m_NormalMatrixDirty)
-                {
-                    geometry->setNormalMatrixTransform(
-                        geometryIndex, btTransform(getNormalMatrix()));
-                    //                m_NormalMatrixDirty = false;
-                }
-
-                //            if(m_ColorBaseDirty)
-                {
-                    geometry->setColorBase(this);
-                    //                m_ColorBaseDirty = false;
-                }
-
-                //            if(m_OpacityDirty)
-                {
-                    geometry->setOpacity(this);
-                    //                m_OpacityDirty = false;
-                }
-
-                //            if(m_HiddenDirty)
-                //            {
-                geometry->setHidden(this, hiddenFromCamera);
-                //                m_HiddenDirty = false;
-                //            }
+                geometry->setTransform(geometryIndex, getWorldTransform());
+                //                resetTransformDirty();
             }
+
+            //            if(m_ColorTransformDirty)
+            //            {
+            //                geometry->setColorTransform(geometryIndex,
+            //                getColorTransform()); m_ColorTransformDirty =
+            //                false;
+            //            }
+
+            //            if(m_NormalMatrixDirty)
+            {
+                geometry->setNormalMatrixTransform(
+                    geometryIndex, btTransform(getNormalMatrix()));
+                //                m_NormalMatrixDirty = false;
+            }
+
+            //            if(m_ColorBaseDirty)
+            {
+                geometry->setColorBase(this);
+                //                m_ColorBaseDirty = false;
+            }
+
+            //            if(m_OpacityDirty)
+            {
+                geometry->setOpacity(this);
+                //                m_OpacityDirty = false;
+            }
+
+            //            if(m_HiddenDirty)
+            //            {
+            geometry->setHidden(this, hiddenFromCamera);
+            //                m_HiddenDirty = false;
+            //            }
+        }
     }
 
     //    void Node::render(Camera *camera)
@@ -1731,16 +1726,16 @@ namespace njli
         m_CurrentScene = scene;
 
         if (NULL != m_Geometry)
-            {
-                if (m_CurrentScene)
-                    m_CurrentScene->addActiveGeometry(m_Geometry);
-            }
+        {
+            if (m_CurrentScene)
+                m_CurrentScene->addActiveGeometry(m_Geometry);
+        }
 
         if (NULL != m_Camera)
-            {
-                if (m_CurrentScene)
-                    m_CurrentScene->addActiveCamera(m_Camera);
-            }
+        {
+            if (m_CurrentScene)
+                m_CurrentScene->addActiveCamera(m_Camera);
+        }
     }
 
     void Node::setCurrentScene(Node *node)

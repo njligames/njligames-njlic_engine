@@ -90,22 +90,22 @@ static int b_not(lua_State *L)
 static int b_shift(lua_State *L, lua_Unsigned r, lua_Integer i)
 {
     if (i < 0)
-        { /* shift right? */
-            i = -i;
-            r = trim(r);
-            if (i >= LUA_NBITS)
-                r = 0;
-            else
-                r >>= i;
-        }
+    { /* shift right? */
+        i = -i;
+        r = trim(r);
+        if (i >= LUA_NBITS)
+            r = 0;
+        else
+            r >>= i;
+    }
     else
-        { /* shift left */
-            if (i >= LUA_NBITS)
-                r = 0;
-            else
-                r <<= i;
-            r = trim(r);
-        }
+    { /* shift left */
+        if (i >= LUA_NBITS)
+            r = 0;
+        else
+            r <<= i;
+        r = trim(r);
+    }
     pushunsigned(L, r);
     return 1;
 }
@@ -127,15 +127,15 @@ static int b_arshift(lua_State *L)
     if (i < 0 || !(r & ((lua_Unsigned)1 << (LUA_NBITS - 1))))
         return b_shift(L, r, -i);
     else
-        { /* arithmetic shift for 'negative' number */
-            if (i >= LUA_NBITS)
-                r = ALLONES;
-            else
-                r = trim((r >> i) |
-                         ~(trim(~(lua_Unsigned)0) >> i)); /* add signal bit */
-            pushunsigned(L, r);
-            return 1;
-        }
+    { /* arithmetic shift for 'negative' number */
+        if (i >= LUA_NBITS)
+            r = ALLONES;
+        else
+            r = trim((r >> i) |
+                     ~(trim(~(lua_Unsigned)0) >> i)); /* add signal bit */
+        pushunsigned(L, r);
+        return 1;
+    }
 }
 
 static int b_rot(lua_State *L, lua_Integer d)

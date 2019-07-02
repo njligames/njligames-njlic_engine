@@ -81,27 +81,27 @@ static int global_unload(lua_State *L)
 static int base_open(lua_State *L)
 {
     if (socket_open())
-        {
-            /* export functions (and leave namespace table on top of stack) */
-            lua_newtable(L);
-            luaL_setfuncs(L, func, 0);
+    {
+        /* export functions (and leave namespace table on top of stack) */
+        lua_newtable(L);
+        luaL_setfuncs(L, func, 0);
 #ifdef LUASOCKET_DEBUG
-            lua_pushstring(L, "_DEBUG");
-            lua_pushboolean(L, 1);
-            lua_rawset(L, -3);
+        lua_pushstring(L, "_DEBUG");
+        lua_pushboolean(L, 1);
+        lua_rawset(L, -3);
 #endif
-            /* make version string available to scripts */
-            lua_pushstring(L, "_VERSION");
-            lua_pushstring(L, LUASOCKET_VERSION);
-            lua_rawset(L, -3);
-            return 1;
-        }
+        /* make version string available to scripts */
+        lua_pushstring(L, "_VERSION");
+        lua_pushstring(L, LUASOCKET_VERSION);
+        lua_rawset(L, -3);
+        return 1;
+    }
     else
-        {
-            lua_pushstring(L, "unable to initialize library");
-            lua_error(L);
-            return 0;
-        }
+    {
+        lua_pushstring(L, "unable to initialize library");
+        lua_error(L);
+        return 0;
+    }
 }
 
 /*-------------------------------------------------------------------------*\

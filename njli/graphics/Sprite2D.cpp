@@ -216,9 +216,9 @@ namespace njli
     void Sprite2D::destroy(Sprite2D *object)
     {
         if (object)
-            {
-                MeshGeometry::destroy(object);
-            }
+        {
+            MeshGeometry::destroy(object);
+        }
     }
 
     void Sprite2D::load(Sprite2D &object, lua_State *L, int index)
@@ -231,56 +231,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Sprite2D::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Sprite2D::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -303,10 +303,10 @@ namespace njli
         m_SpritePivots = new btVector2[numInstances];
         m_changedDimensionArray = new bool[numInstances];
         for (int i = 0; i < numInstances; i++)
-            {
-                m_SpritePivots[i] = DEFAULTPIVOT;
-                m_changedDimensionArray[i] = true;
-            }
+        {
+            m_SpritePivots[i] = DEFAULTPIVOT;
+            m_changedDimensionArray[i] = true;
+        }
 
         /*
          (0, 1)                                   (1, 1)
@@ -521,22 +521,22 @@ f 2/1/1 4/4/1 3/2/1
         //        if(NULL != (shape2d  =
         //        dynamic_cast<PhysicsShapeBox2D*>(physicsShape)))
         if (strcmp(physicsShape->getClassName(), "PhysicsShapeBox2D") == 0)
-            {
-                PhysicsShapeBox2D *shape2d =
-                    reinterpret_cast<PhysicsShapeBox2D *>(physicsShape);
-                shape2d->setHalfExtends(halfExtends);
-            }
+        {
+            PhysicsShapeBox2D *shape2d =
+                reinterpret_cast<PhysicsShapeBox2D *>(physicsShape);
+            shape2d->setHalfExtends(halfExtends);
+        }
         //        else if(NULL != (shape3d  =
         //        dynamic_cast<PhysicsShapeBox*>(physicsShape)))
         else if (strcmp(physicsShape->getClassName(), "PhysicsShapeBox") == 0)
-            {
-                PhysicsShapeBox *shape3d =
-                    reinterpret_cast<PhysicsShapeBox *>(physicsShape);
-                btVector3 halfExtends3d(halfExtends.x(), halfExtends.y(), 1.0f);
+        {
+            PhysicsShapeBox *shape3d =
+                reinterpret_cast<PhysicsShapeBox *>(physicsShape);
+            btVector3 halfExtends3d(halfExtends.x(), halfExtends.y(), 1.0f);
 
-                shape3d->setLocalScaling(node->getScale());
-                shape3d->setHalfExtends(halfExtends3d);
-            }
+            shape3d->setLocalScaling(node->getScale());
+            shape3d->setHalfExtends(halfExtends3d);
+        }
 
         s64 spriteIndex = node->getGeometryIndex();
         m_changedDimensionArray[spriteIndex] = false;
@@ -601,80 +601,79 @@ f 2/1/1 4/4/1 3/2/1
         s64 spriteIndex = node->getGeometryIndex();
 
         if (spriteIndex >= 0)
-            {
+        {
 
-                /*
-                 // bottom-left
-                 TexturedColoredVertex a = getVertex(spriteIndex, 0);//-0.5, 0.5
-                 // top-right
-                 TexturedColoredVertex b = getVertex(spriteIndex, 1);//0.5, -0.5
-                 // top-left
-                 TexturedColoredVertex c = getVertex(spriteIndex, 2);//-0.5,
-                 -0.5
-                 // bottom-left
-                 TexturedColoredVertex d = getVertex(spriteIndex, 3);//-0.5, 0.5
-                 // bottom-right
-                 TexturedColoredVertex e = getVertex(spriteIndex, 4);//0.5, 0.5
-                 //top-right
-                 TexturedColoredVertex f = getVertex(spriteIndex, 5);//0.5, -0.5
+            /*
+             // bottom-left
+             TexturedColoredVertex a = getVertex(spriteIndex, 0);//-0.5, 0.5
+             // top-right
+             TexturedColoredVertex b = getVertex(spriteIndex, 1);//0.5, -0.5
+             // top-left
+             TexturedColoredVertex c = getVertex(spriteIndex, 2);//-0.5,
+             -0.5
+             // bottom-left
+             TexturedColoredVertex d = getVertex(spriteIndex, 3);//-0.5, 0.5
+             // bottom-right
+             TexturedColoredVertex e = getVertex(spriteIndex, 4);//0.5, 0.5
+             //top-right
+             TexturedColoredVertex f = getVertex(spriteIndex, 5);//0.5, -0.5
 
 
-                 ### should be top-left
-                 Printing description of bottomLeft:
-                 (const btVector2 &) bottomLeft = 0x00007ffeefbfcc70: {
-                 xy_ = ([0] = -37.5, [1] = -37.5)
-                 }
-                 ### should be bottom-right
-                 Printing description of topRight:
-                 (const btVector2 &) topRight = 0x00007ffeefbfcc40: {
-                 xy_ = ([0] = 37.5, [1] = 37.5)
-                 }
-                 ### bottom-left
-                 Printing description of topLeft:
-                 (const btVector2 &) topLeft = 0x00007ffeefbfcc50: {
-                 xy_ = ([0] = -37.5, [1] = 37.5)
-                 }
-                 ### top-right
-                 Printing description of bottomRight:
-                 (const btVector2 &) bottomRight = 0x00007ffeefbfcc60: {
-                 xy_ = ([0] = 37.5, [1] = -37.5)
-                 }
+             ### should be top-left
+             Printing description of bottomLeft:
+             (const btVector2 &) bottomLeft = 0x00007ffeefbfcc70: {
+             xy_ = ([0] = -37.5, [1] = -37.5)
+             }
+             ### should be bottom-right
+             Printing description of topRight:
+             (const btVector2 &) topRight = 0x00007ffeefbfcc40: {
+             xy_ = ([0] = 37.5, [1] = 37.5)
+             }
+             ### bottom-left
+             Printing description of topLeft:
+             (const btVector2 &) topLeft = 0x00007ffeefbfcc50: {
+             xy_ = ([0] = -37.5, [1] = 37.5)
+             }
+             ### top-right
+             Printing description of bottomRight:
+             (const btVector2 &) bottomRight = 0x00007ffeefbfcc60: {
+             xy_ = ([0] = 37.5, [1] = -37.5)
+             }
 
-                 */
+             */
 
-                f32 left_half_width = (dimensions.x() * spritePivotPoint.x());
-                f32 right_half_width =
-                    (dimensions.x() * (1.0f - spritePivotPoint.x()));
+            f32 left_half_width = (dimensions.x() * spritePivotPoint.x());
+            f32 right_half_width =
+                (dimensions.x() * (1.0f - spritePivotPoint.x()));
 
-                f32 bottom_half_height =
-                    (dimensions.y() * spritePivotPoint.y());
-                f32 top_half_height =
-                    (dimensions.y() * (1.0f - spritePivotPoint.y()));
+            f32 bottom_half_height = (dimensions.y() * spritePivotPoint.y());
+            f32 top_half_height =
+                (dimensions.y() * (1.0f - spritePivotPoint.y()));
 
-                btVector2 bottomLeft(BL_VERTEX.x() * left_half_width,
-                                     BL_VERTEX.y() * bottom_half_height);
-                btVector2 bottomRight(BR_VERTEX.x() * right_half_width,
-                                      BR_VERTEX.y() * bottom_half_height);
-                btVector2 topLeft(TL_VERTEX.x() * left_half_width,
-                                  TL_VERTEX.y() * top_half_height);
-                btVector2 topRight(TR_VERTEX.x() * right_half_width,
-                                   TR_VERTEX.y() * top_half_height);
+            btVector2 bottomLeft(BL_VERTEX.x() * left_half_width,
+                                 BL_VERTEX.y() * bottom_half_height);
+            btVector2 bottomRight(BR_VERTEX.x() * right_half_width,
+                                  BR_VERTEX.y() * bottom_half_height);
+            btVector2 topLeft(TL_VERTEX.x() * left_half_width,
+                              TL_VERTEX.y() * top_half_height);
+            btVector2 topRight(TR_VERTEX.x() * right_half_width,
+                               TR_VERTEX.y() * top_half_height);
 
-                setVertexPositions(spriteIndex, bottomLeft, bottomRight,
-                                   topLeft, topRight);
+            setVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft,
+                               topRight);
 
-                m_SpritePivots[spriteIndex] = spritePivotPoint;
-                m_changedDimensionArray[spriteIndex] = true;
-            }
+            m_SpritePivots[spriteIndex] = spritePivotPoint;
+            m_changedDimensionArray[spriteIndex] = true;
+        }
     }
 
     bool Sprite2D::shouldApplyShape(Node *node) const
     {
         s64 spriteIndex = node->getGeometryIndex();
         if (spriteIndex >= 0)
-            {
-                return m_changedDimensionArray[spriteIndex];
-            }
+        {
+            return m_changedDimensionArray[spriteIndex];
+        }
         return false;
     }
 
@@ -685,23 +684,23 @@ f 2/1/1 4/4/1 3/2/1
         s64 spriteIndex = node->getGeometryIndex();
 
         if (spriteIndex >= 0)
-            {
-                btVector2 bottomLeft;
-                btVector2 bottomRight;
-                btVector2 topLeft;
-                btVector2 topRight;
+        {
+            btVector2 bottomLeft;
+            btVector2 bottomRight;
+            btVector2 topLeft;
+            btVector2 topRight;
 
-                getVertexPositions(spriteIndex, bottomLeft, bottomRight,
-                                   topLeft, topRight);
+            getVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft,
+                               topRight);
 
-                f32 left = btMax<btScalar>(bottomLeft.x(), topLeft.x());
-                f32 right = btMax<btScalar>(bottomRight.x(), topRight.x());
-                f32 top = btMax<btScalar>(topLeft.y(), topRight.y());
-                f32 bottom = btMax<btScalar>(bottomLeft.y(), bottomRight.y());
+            f32 left = btMax<btScalar>(bottomLeft.x(), topLeft.x());
+            f32 right = btMax<btScalar>(bottomRight.x(), topRight.x());
+            f32 top = btMax<btScalar>(topLeft.y(), topRight.y());
+            f32 bottom = btMax<btScalar>(bottomLeft.y(), bottomRight.y());
 
-                dimensions.setX((right - left));
-                dimensions.setY((bottom - top));
-            }
+            dimensions.setX((right - left));
+            dimensions.setY((bottom - top));
+        }
 
         return dimensions;
     }
@@ -721,9 +720,9 @@ f 2/1/1 4/4/1 3/2/1
         s64 spriteIndex = node->getGeometryIndex();
 
         if (spriteIndex >= 0)
-            {
-                spritePivotPoint = m_SpritePivots[spriteIndex];
-            }
+        {
+            spritePivotPoint = m_SpritePivots[spriteIndex];
+        }
         return spritePivotPoint;
     }
 
@@ -734,55 +733,53 @@ f 2/1/1 4/4/1 3/2/1
         s64 spriteIndex = node->getGeometryIndex();
 
         if (spriteIndex >= 0)
-            {
-                f32 width = getMaterial()->getDiffuse()->getWidth();
-                f32 height = getMaterial()->getDiffuse()->getHeight();
+        {
+            f32 width = getMaterial()->getDiffuse()->getWidth();
+            f32 height = getMaterial()->getDiffuse()->getHeight();
 
-                f32 left = textureCoordOffset.x() / width;
-                f32 right =
-                    (textureCoordOffset.x() + textureCoordDimensions.x()) /
-                    width;
+            f32 left = textureCoordOffset.x() / width;
+            f32 right =
+                (textureCoordOffset.x() + textureCoordDimensions.x()) / width;
 
-                f32 bottom = (textureCoordOffset.y()) / height;
-                f32 top =
-                    (((textureCoordOffset.y()) + textureCoordDimensions.y()) /
-                     height);
+            f32 bottom = (textureCoordOffset.y()) / height;
+            f32 top = (((textureCoordOffset.y()) + textureCoordDimensions.y()) /
+                       height);
 
-                btVector2 bottomLeft(left, bottom);
-                btVector2 bottomRight(right, bottom);
-                btVector2 topLeft(left, top);
-                btVector2 topRight(right, top);
+            btVector2 bottomLeft(left, bottom);
+            btVector2 bottomRight(right, bottom);
+            btVector2 topLeft(left, top);
+            btVector2 topRight(right, top);
 
-                /*
-                 static const btVector2 BL_TEXTURECOORD = { 0, 0 };
-                 static const btVector2 BR_TEXTURECOORD = { 1, 0 };
-                 static const btVector2 TL_TEXTURECOORD = { 0, 1 };
-                 static const btVector2 TR_TEXTURECOORD = { 1, 1 };
+            /*
+             static const btVector2 BL_TEXTURECOORD = { 0, 0 };
+             static const btVector2 BR_TEXTURECOORD = { 1, 0 };
+             static const btVector2 TL_TEXTURECOORD = { 0, 1 };
+             static const btVector2 TR_TEXTURECOORD = { 1, 1 };
 
-                 (0, 1)                                   (1, 1)
-                 ___________________________________
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-                 |___________________________________|
-                 (0, 0)                                   (1, 0)
-                 */
+             (0, 1)                                   (1, 1)
+             ___________________________________
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+             |___________________________________|
+             (0, 0)                                   (1, 0)
+             */
 
-                setVertexTextureCoordinates(spriteIndex, bottomLeft,
-                                            bottomRight, topLeft, topRight);
-            }
+            setVertexTextureCoordinates(spriteIndex, bottomLeft, bottomRight,
+                                        topLeft, topRight);
+        }
     }
 
     btVector2 Sprite2D::getTextureCoordinateOffsets(Node *node) const
@@ -802,10 +799,10 @@ f 2/1/1 4/4/1 3/2/1
         s64 spriteIndex = node->getGeometryIndex();
 
         if (spriteIndex >= 0)
-            {
-                setVertexColors(spriteIndex, bottomLeft, bottomRight, topLeft,
-                                topRight);
-            }
+        {
+            setVertexColors(spriteIndex, bottomLeft, bottomRight, topLeft,
+                            topRight);
+        }
     }
 
     void Sprite2D::setColors(Node *node, const btVector4 &color)
@@ -819,10 +816,10 @@ f 2/1/1 4/4/1 3/2/1
         btVector4 ret(0, 0, 0, 0);
 
         if (spriteIndex >= 0)
-            {
-                btVector4 dummy;
-                getVertexColors(spriteIndex, ret, dummy, dummy, dummy);
-            }
+        {
+            btVector4 dummy;
+            getVertexColors(spriteIndex, ret, dummy, dummy, dummy);
+        }
 
         return ret;
     }
@@ -832,10 +829,10 @@ f 2/1/1 4/4/1 3/2/1
         btVector4 ret(0, 0, 0, 0);
 
         if (spriteIndex >= 0)
-            {
-                btVector4 dummy;
-                getVertexColors(spriteIndex, dummy, ret, dummy, dummy);
-            }
+        {
+            btVector4 dummy;
+            getVertexColors(spriteIndex, dummy, ret, dummy, dummy);
+        }
 
         return ret;
     }
@@ -845,10 +842,10 @@ f 2/1/1 4/4/1 3/2/1
         btVector4 ret(0, 0, 0, 0);
 
         if (spriteIndex >= 0)
-            {
-                btVector4 dummy;
-                getVertexColors(spriteIndex, dummy, dummy, ret, dummy);
-            }
+        {
+            btVector4 dummy;
+            getVertexColors(spriteIndex, dummy, dummy, ret, dummy);
+        }
 
         return ret;
     }
@@ -858,10 +855,10 @@ f 2/1/1 4/4/1 3/2/1
         btVector4 ret(0, 0, 0, 0);
 
         if (spriteIndex >= 0)
-            {
-                btVector4 dummy;
-                getVertexColors(spriteIndex, dummy, dummy, dummy, ret);
-            }
+        {
+            btVector4 dummy;
+            getVertexColors(spriteIndex, dummy, dummy, dummy, ret);
+        }
 
         return ret;
     }
@@ -883,10 +880,10 @@ f 2/1/1 4/4/1 3/2/1
         s64 spriteIndex = node->getGeometryIndex();
 
         if (spriteIndex >= 0)
-            {
-                setVertexPositions(spriteIndex, bottomLeft, bottomRight,
-                                   topLeft, topRight);
-            }
+        {
+            setVertexPositions(spriteIndex, bottomLeft, bottomRight, topLeft,
+                               topRight);
+        }
     }
 
     void Sprite2D::setVertexPositions(const u64 spriteIndex,

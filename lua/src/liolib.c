@@ -288,17 +288,17 @@ static FILE *getiofile(lua_State *L, const char *findex)
 static int g_iofile(lua_State *L, const char *f, const char *mode)
 {
     if (!lua_isnoneornil(L, 1))
+    {
+        const char *filename = lua_tostring(L, 1);
+        if (filename)
+            opencheck(L, filename, mode);
+        else
         {
-            const char *filename = lua_tostring(L, 1);
-            if (filename)
-                opencheck(L, filename, mode);
-            else
-                {
-                    tofile(L); /* check that it's a valid file handle */
-                    lua_pushvalue(L, 1);
-                }
-            lua_setfield(L, LUA_REGISTRYINDEX, f);
+            tofile(L); /* check that it's a valid file handle */
+            lua_pushvalue(L, 1);
         }
+        lua_setfield(L, LUA_REGISTRYINDEX, f);
+    }
     /* return current value */
     lua_getfield(L, LUA_REGISTRYINDEX, f);
     return 1;
@@ -339,20 +339,19 @@ static int io_lines(lua_State *L)
     if (lua_isnone(L, 1))
         lua_pushnil(L); /* at least one argument */
     if (lua_isnil(L, 1))
-        { /* no file name? */
-            lua_getfield(L, LUA_REGISTRYINDEX,
-                         IO_INPUT); /* get default input */
-            lua_replace(L, 1);      /* put it at index 1 */
-            tofile(L);              /* check that it's a valid file handle */
-            toclose = 0;            /* do not close it after iteration */
-        }
+    {                                                 /* no file name? */
+        lua_getfield(L, LUA_REGISTRYINDEX, IO_INPUT); /* get default input */
+        lua_replace(L, 1);                            /* put it at index 1 */
+        tofile(L);   /* check that it's a valid file handle */
+        toclose = 0; /* do not close it after iteration */
+    }
     else
-        { /* open a new file */
-            const char *filename = luaL_checkstring(L, 1);
-            opencheck(L, filename, "r");
-            lua_replace(L, 1); /* put file at index 1 */
-            toclose = 1;       /* close it after iteration */
-        }
+    { /* open a new file */
+        const char *filename = luaL_checkstring(L, 1);
+        opencheck(L, filename, "r");
+        lua_replace(L, 1); /* put file at index 1 */
+        toclose = 1;       /* close it after iteration */
+    }
     aux_lines(L, toclose);
     return 1;
 }
@@ -381,16 +380,16 @@ typedef struct
 static int nextc(RN *rn)
 {
     if (rn->n >= MAXRN)
-        {                       /* buffer overflow? */
-            rn->buff[0] = '\0'; /* invalidate result */
-            return 0;           /* fail */
-        }
+    {                       /* buffer overflow? */
+        rn->buff[0] = '\0'; /* invalidate result */
+        return 0;           /* fail */
+    }
     else
-        {
-            rn->buff[rn->n++] = rn->c; /* save current char */
-            rn->c = l_getc(rn->f);     /* read next one */
-            return 1;
-        }
+    {
+        rn->buff[rn->n++] = rn->c; /* save current char */
+        rn->c = l_getc(rn->f);     /* read next one */
+        return 1;
+    }
 }
 
 /*
@@ -432,36 +431,35 @@ static int read_number(lua_State *L, FILE *f)
     decp[1] = '\0';
     l_lockfile(rn.f);
     do
-        {
-            rn.c = l_getc(rn.f);
-        }
-    while (isspace(rn.c)); /* skip spaces */
-    test2(&rn, "-+");      /* optional signal */
+    {
+        rn.c = l_getc(rn.f);
+    } while (isspace(rn.c)); /* skip spaces */
+    test2(&rn, "-+");        /* optional signal */
     if (test2(&rn, "0"))
-        {
-            if (test2(&rn, "xX"))
-                hex = 1; /* numeral is hexadecimal */
-            else
-                count = 1; /* count initial '0' as a valid digit */
-        }
+    {
+        if (test2(&rn, "xX"))
+            hex = 1; /* numeral is hexadecimal */
+        else
+            count = 1; /* count initial '0' as a valid digit */
+    }
     count += readdigits(&rn, hex);     /* integral part */
     if (test2(&rn, decp))              /* decimal point? */
         count += readdigits(&rn, hex); /* fractional part */
     if (count > 0 && test2(&rn, (hex ? "pP" : "eE")))
-        {                       /* exponent mark? */
-            test2(&rn, "-+");   /* exponent signal */
-            readdigits(&rn, 0); /* exponent digits */
-        }
+    {                       /* exponent mark? */
+        test2(&rn, "-+");   /* exponent signal */
+        readdigits(&rn, 0); /* exponent digits */
+    }
     ungetc(rn.c, rn.f); /* unread look-ahead char */
     l_unlockfile(rn.f);
     rn.buff[rn.n] = '\0';               /* finish string */
     if (lua_stringtonumber(L, rn.buff)) /* is this a valid number? */
         return 1;                       /* ok */
     else
-        {                   /* invalid format */
-            lua_pushnil(L); /* "result" to be removed */
-            return 0;       /* read fails */
-        }
+    {                   /* invalid format */
+        lua_pushnil(L); /* "result" to be removed */
+        return 0;       /* read fails */
+    }
 }
 
 static int test_eof(lua_State *L, FILE *f)
@@ -478,15 +476,15 @@ static int read_line(lua_State *L, FILE *f, int chop)
     int c = '\0';
     luaL_buffinit(L, &b);
     while (c != EOF && c != '\n')
-        {                                     /* repeat until end of line */
-            char *buff = luaL_prepbuffer(&b); /* preallocate buffer */
-            int i = 0;
-            l_lockfile(f); /* no memory errors can happen inside the lock */
-            while (i < LUAL_BUFFERSIZE && (c = l_getc(f)) != EOF && c != '\n')
-                buff[i++] = c;
-            l_unlockfile(f);
-            luaL_addsize(&b, i);
-        }
+    {                                     /* repeat until end of line */
+        char *buff = luaL_prepbuffer(&b); /* preallocate buffer */
+        int i = 0;
+        l_lockfile(f); /* no memory errors can happen inside the lock */
+        while (i < LUAL_BUFFERSIZE && (c = l_getc(f)) != EOF && c != '\n')
+            buff[i++] = c;
+        l_unlockfile(f);
+        luaL_addsize(&b, i);
+    }
     if (!chop && c == '\n')  /* want a newline and have one? */
         luaL_addchar(&b, c); /* add ending newline to result */
     luaL_pushresult(&b);     /* close buffer */
@@ -500,12 +498,11 @@ static void read_all(lua_State *L, FILE *f)
     luaL_Buffer b;
     luaL_buffinit(L, &b);
     do
-        { /* read file in chunks of LUAL_BUFFERSIZE bytes */
-            char *p = luaL_prepbuffer(&b);
-            nr = fread(p, sizeof(char), LUAL_BUFFERSIZE, f);
-            luaL_addsize(&b, nr);
-        }
-    while (nr == LUAL_BUFFERSIZE);
+    { /* read file in chunks of LUAL_BUFFERSIZE bytes */
+        char *p = luaL_prepbuffer(&b);
+        nr = fread(p, sizeof(char), LUAL_BUFFERSIZE, f);
+        luaL_addsize(&b, nr);
+    } while (nr == LUAL_BUFFERSIZE);
     luaL_pushresult(&b); /* close buffer */
 }
 
@@ -529,56 +526,54 @@ static int g_read(lua_State *L, FILE *f, int first)
     int n;
     clearerr(f);
     if (nargs == 0)
-        { /* no arguments? */
-            success = read_line(L, f, 1);
-            n = first + 1; /* to return 1 result */
-        }
+    { /* no arguments? */
+        success = read_line(L, f, 1);
+        n = first + 1; /* to return 1 result */
+    }
     else
-        { /* ensure stack space for all results and for auxlib's buffer */
-            luaL_checkstack(L, nargs + LUA_MINSTACK, "too many arguments");
-            success = 1;
-            for (n = first; nargs-- && success; n++)
+    { /* ensure stack space for all results and for auxlib's buffer */
+        luaL_checkstack(L, nargs + LUA_MINSTACK, "too many arguments");
+        success = 1;
+        for (n = first; nargs-- && success; n++)
+        {
+            if (lua_type(L, n) == LUA_TNUMBER)
+            {
+                size_t l = (size_t)luaL_checkinteger(L, n);
+                success = (l == 0) ? test_eof(L, f) : read_chars(L, f, l);
+            }
+            else
+            {
+                const char *p = luaL_checkstring(L, n);
+                if (*p == '*')
+                    p++; /* skip optional '*' (for compatibility) */
+                switch (*p)
                 {
-                    if (lua_type(L, n) == LUA_TNUMBER)
-                        {
-                            size_t l = (size_t)luaL_checkinteger(L, n);
-                            success =
-                                (l == 0) ? test_eof(L, f) : read_chars(L, f, l);
-                        }
-                    else
-                        {
-                            const char *p = luaL_checkstring(L, n);
-                            if (*p == '*')
-                                p++; /* skip optional '*' (for compatibility) */
-                            switch (*p)
-                                {
-                                case 'n': /* number */
-                                    success = read_number(L, f);
-                                    break;
-                                case 'l': /* line */
-                                    success = read_line(L, f, 1);
-                                    break;
-                                case 'L': /* line with end-of-line */
-                                    success = read_line(L, f, 0);
-                                    break;
-                                case 'a':           /* file */
-                                    read_all(L, f); /* read entire file */
-                                    success = 1;    /* always success */
-                                    break;
-                                default:
-                                    return luaL_argerror(L, n,
-                                                         "invalid format");
-                                }
-                        }
+                case 'n': /* number */
+                    success = read_number(L, f);
+                    break;
+                case 'l': /* line */
+                    success = read_line(L, f, 1);
+                    break;
+                case 'L': /* line with end-of-line */
+                    success = read_line(L, f, 0);
+                    break;
+                case 'a':           /* file */
+                    read_all(L, f); /* read entire file */
+                    success = 1;    /* always success */
+                    break;
+                default:
+                    return luaL_argerror(L, n, "invalid format");
                 }
+            }
         }
+    }
     if (ferror(f))
         return luaL_fileresult(L, 0, NULL);
     if (!success)
-        {
-            lua_pop(L, 1);  /* remove last result */
-            lua_pushnil(L); /* push nil instead */
-        }
+    {
+        lua_pop(L, 1);  /* remove last result */
+        lua_pushnil(L); /* push nil instead */
+    }
     return n - first;
 }
 
@@ -605,20 +600,20 @@ static int io_readline(lua_State *L)
     if (lua_toboolean(L, -n)) /* read at least one value? */
         return n;             /* return them */
     else
-        { /* first result is nil: EOF or error */
-            if (n > 1)
-                { /* is there error information? */
-                    /* 2nd result is error message */
-                    return luaL_error(L, "%s", lua_tostring(L, -n + 1));
-                }
-            if (lua_toboolean(L, lua_upvalueindex(3)))
-                { /* generator created file? */
-                    lua_settop(L, 0);
-                    lua_pushvalue(L, lua_upvalueindex(1));
-                    aux_close(L); /* close it */
-                }
-            return 0;
+    { /* first result is nil: EOF or error */
+        if (n > 1)
+        { /* is there error information? */
+            /* 2nd result is error message */
+            return luaL_error(L, "%s", lua_tostring(L, -n + 1));
         }
+        if (lua_toboolean(L, lua_upvalueindex(3)))
+        { /* generator created file? */
+            lua_settop(L, 0);
+            lua_pushvalue(L, lua_upvalueindex(1));
+            aux_close(L); /* close it */
+        }
+        return 0;
+    }
 }
 
 /* }====================================================== */
@@ -628,23 +623,22 @@ static int g_write(lua_State *L, FILE *f, int arg)
     int nargs = lua_gettop(L) - arg;
     int status = 1;
     for (; nargs--; arg++)
+    {
+        if (lua_type(L, arg) == LUA_TNUMBER)
         {
-            if (lua_type(L, arg) == LUA_TNUMBER)
-                {
-                    /* optimization: could be done exactly as for strings */
-                    int len =
-                        lua_isinteger(L, arg)
-                            ? fprintf(f, LUA_INTEGER_FMT, lua_tointeger(L, arg))
-                            : fprintf(f, LUA_NUMBER_FMT, lua_tonumber(L, arg));
-                    status = status && (len > 0);
-                }
-            else
-                {
-                    size_t l;
-                    const char *s = luaL_checklstring(L, arg, &l);
-                    status = status && (fwrite(s, sizeof(char), l, f) == l);
-                }
+            /* optimization: could be done exactly as for strings */
+            int len = lua_isinteger(L, arg)
+                          ? fprintf(f, LUA_INTEGER_FMT, lua_tointeger(L, arg))
+                          : fprintf(f, LUA_NUMBER_FMT, lua_tonumber(L, arg));
+            status = status && (len > 0);
         }
+        else
+        {
+            size_t l;
+            const char *s = luaL_checklstring(L, arg, &l);
+            status = status && (fwrite(s, sizeof(char), l, f) == l);
+        }
+    }
     if (status)
         return 1; /* file handle already on stack top */
     else
@@ -677,10 +671,10 @@ static int f_seek(lua_State *L)
     if (op)
         return luaL_fileresult(L, 0, NULL); /* error */
     else
-        {
-            lua_pushinteger(L, (lua_Integer)l_ftell(f));
-            return 1;
-        }
+    {
+        lua_pushinteger(L, (lua_Integer)l_ftell(f));
+        return 1;
+    }
 }
 
 static int f_setvbuf(lua_State *L)
@@ -751,10 +745,10 @@ static void createstdfile(lua_State *L, FILE *f, const char *k,
     p->f = f;
     p->closef = &io_noclose;
     if (k != NULL)
-        {
-            lua_pushvalue(L, -1);
-            lua_setfield(L, LUA_REGISTRYINDEX, k); /* add file to registry */
-        }
+    {
+        lua_pushvalue(L, -1);
+        lua_setfield(L, LUA_REGISTRYINDEX, k); /* add file to registry */
+    }
     lua_setfield(L, -2, fname); /* add file to module */
 }
 

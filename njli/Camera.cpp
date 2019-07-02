@@ -105,10 +105,10 @@ static inline btTransform makeFrustum(f32 *matrixBuffer, float fov,
     // check for bad parameters to avoid divide by zero:
     // if found, assert and return an identity matrix.
     if (fov <= 0 || aspect == 0)
-        {
-            SDL_assert(fov > 0 && aspect != 0);
-            return btTransform::getIdentity();
-        }
+    {
+        SDL_assert(fov > 0 && aspect != 0);
+        return btTransform::getIdentity();
+    }
 
     float frustumDepth = farDist - nearDist;
     float oneOverDepth = 1.0f / frustumDepth;
@@ -166,10 +166,10 @@ static void __gluMultMatrixVecd(const f32 matrix[16], const f32 in[4],
     s32 i;
 
     for (i = 0; i < 4; i++)
-        {
-            out[i] = in[0] * matrix[0 * 4 + i] + in[1] * matrix[1 * 4 + i] +
-                     in[2] * matrix[2 * 4 + i] + in[3] * matrix[3 * 4 + i];
-        }
+    {
+        out[i] = in[0] * matrix[0 * 4 + i] + in[1] * matrix[1 * 4 + i] +
+                 in[2] * matrix[2 * 4 + i] + in[3] * matrix[3 * 4 + i];
+    }
 }
 
 /*
@@ -234,15 +234,14 @@ static void __gluMultMatricesd(const f32 a[16], const f32 b[16], f32 r[16])
     s32 i, j;
 
     for (i = 0; i < 4; i++)
+    {
+        for (j = 0; j < 4; j++)
         {
-            for (j = 0; j < 4; j++)
-                {
-                    r[i * 4 + j] = a[i * 4 + 0] * b[0 * 4 + j] +
-                                   a[i * 4 + 1] * b[1 * 4 + j] +
-                                   a[i * 4 + 2] * b[2 * 4 + j] +
-                                   a[i * 4 + 3] * b[3 * 4 + j];
-                }
+            r[i * 4 + j] =
+                a[i * 4 + 0] * b[0 * 4 + j] + a[i * 4 + 1] * b[1 * 4 + j] +
+                a[i * 4 + 2] * b[2 * 4 + j] + a[i * 4 + 3] * b[3 * 4 + j];
         }
+    }
 }
 
 s32 gluProject(f32 objx, f32 objy, f32 objz, const f32 modelMatrix[16],
@@ -443,32 +442,32 @@ int glhInvertMatrixf2(float *m, float *out)
     r3[3] -= m3 * s;
     s = r0[4];
     if (s != 0.0)
-        {
-            r1[4] -= m1 * s;
-            r2[4] -= m2 * s;
-            r3[4] -= m3 * s;
-        }
+    {
+        r1[4] -= m1 * s;
+        r2[4] -= m2 * s;
+        r3[4] -= m3 * s;
+    }
     s = r0[5];
     if (s != 0.0)
-        {
-            r1[5] -= m1 * s;
-            r2[5] -= m2 * s;
-            r3[5] -= m3 * s;
-        }
+    {
+        r1[5] -= m1 * s;
+        r2[5] -= m2 * s;
+        r3[5] -= m3 * s;
+    }
     s = r0[6];
     if (s != 0.0)
-        {
-            r1[6] -= m1 * s;
-            r2[6] -= m2 * s;
-            r3[6] -= m3 * s;
-        }
+    {
+        r1[6] -= m1 * s;
+        r2[6] -= m2 * s;
+        r3[6] -= m3 * s;
+    }
     s = r0[7];
     if (s != 0.0)
-        {
-            r1[7] -= m1 * s;
-            r2[7] -= m2 * s;
-            r3[7] -= m3 * s;
-        }
+    {
+        r1[7] -= m1 * s;
+        r2[7] -= m2 * s;
+        r3[7] -= m3 * s;
+    }
     /* choose pivot - or die */
     if (fabsf(r3[1]) > fabsf(r2[1]))
         SWAP_ROWS_FLOAT(r3, r2);
@@ -485,28 +484,28 @@ int glhInvertMatrixf2(float *m, float *out)
     r3[3] -= m3 * r1[3];
     s = r1[4];
     if (0.0 != s)
-        {
-            r2[4] -= m2 * s;
-            r3[4] -= m3 * s;
-        }
+    {
+        r2[4] -= m2 * s;
+        r3[4] -= m3 * s;
+    }
     s = r1[5];
     if (0.0 != s)
-        {
-            r2[5] -= m2 * s;
-            r3[5] -= m3 * s;
-        }
+    {
+        r2[5] -= m2 * s;
+        r3[5] -= m3 * s;
+    }
     s = r1[6];
     if (0.0 != s)
-        {
-            r2[6] -= m2 * s;
-            r3[6] -= m3 * s;
-        }
+    {
+        r2[6] -= m2 * s;
+        r3[6] -= m3 * s;
+    }
     s = r1[7];
     if (0.0 != s)
-        {
-            r2[7] -= m2 * s;
-            r3[7] -= m3 * s;
-        }
+    {
+        r2[7] -= m2 * s;
+        r3[7] -= m3 * s;
+    }
     /* choose pivot - or die */
     if (fabsf(r3[2]) > fabsf(r2[2]))
         SWAP_ROWS_FLOAT(r3, r2);
@@ -684,9 +683,9 @@ namespace njli
         void initialize()
         {
             if (!initialized)
-                {
-                    setup(128, 128);
-                }
+            {
+                setup(128, 128);
+            }
             SDL_assert(m_Camera);
             SDL_assert(m_Camera->getParent());
 
@@ -709,11 +708,11 @@ namespace njli
         static bool project(btVector4 *p, s32 n)
         {
             for (s32 i = 0; i < n; ++i)
-                {
-                    p[i][2] = 1 / p[i][3];
-                    p[i][0] *= p[i][2];
-                    p[i][1] *= p[i][2];
-                }
+            {
+                p[i][2] = 1 / p[i][3];
+                p[i][0] *= p[i][2];
+                p[i][1] *= p[i][2];
+            }
             return (true);
         }
         template <const s32 NP>
@@ -722,35 +721,34 @@ namespace njli
             btScalar s[NP];
             s32 m = 0;
             for (s32 i = 0; i < NP; ++i)
-                {
-                    s[i] = pi[i][2] + pi[i][3];
-                    if (s[i] < 0)
-                        m += 1 << i;
-                }
+            {
+                s[i] = pi[i][2] + pi[i][3];
+                if (s[i] < 0)
+                    m += 1 << i;
+            }
             if (m == ((1 << NP) - 1))
                 return (0);
             if (m != 0)
+            {
+                s32 n = 0;
+                for (s32 i = NP - 1, j = 0; j < NP; i = j++)
                 {
-                    s32 n = 0;
-                    for (s32 i = NP - 1, j = 0; j < NP; i = j++)
-                        {
-                            const btVector4 &a = pi[i];
-                            const btVector4 &b = pi[j];
-                            const btScalar t =
-                                s[i] / (a[3] + a[2] - b[3] - b[2]);
-                            if ((t > 0) && (t < 1))
-                                {
-                                    po[n][0] = a[0] + (b[0] - a[0]) * t;
-                                    po[n][1] = a[1] + (b[1] - a[1]) * t;
-                                    po[n][2] = a[2] + (b[2] - a[2]) * t;
-                                    po[n][3] = a[3] + (b[3] - a[3]) * t;
-                                    ++n;
-                                }
-                            if (s[j] > 0)
-                                po[n++] = b;
-                        }
-                    return (n);
+                    const btVector4 &a = pi[i];
+                    const btVector4 &b = pi[j];
+                    const btScalar t = s[i] / (a[3] + a[2] - b[3] - b[2]);
+                    if ((t > 0) && (t < 1))
+                    {
+                        po[n][0] = a[0] + (b[0] - a[0]) * t;
+                        po[n][1] = a[1] + (b[1] - a[1]) * t;
+                        po[n][2] = a[2] + (b[2] - a[2]) * t;
+                        po[n][3] = a[3] + (b[3] - a[3]) * t;
+                        ++n;
+                    }
+                    if (s[j] > 0)
+                        po[n++] = b;
                 }
+                return (n);
+            }
             for (s32 i = 0; i < NP; ++i)
                 po[i] = pi[i];
             return (NP);
@@ -761,76 +759,71 @@ namespace njli
         {
             const btScalar a2 = (b - a).cross(c - a)[2];
             if (a2 > 0)
+            {
+                if (a2 < minarea)
+                    return (true);
+                const s32 x[] = {(s32)(a.x() * scales[0] + offsets[0]),
+                                 (s32)(b.x() * scales[0] + offsets[0]),
+                                 (s32)(c.x() * scales[0] + offsets[0])};
+                const s32 y[] = {(s32)(a.y() * scales[1] + offsets[1]),
+                                 (s32)(b.y() * scales[1] + offsets[1]),
+                                 (s32)(c.y() * scales[1] + offsets[1])};
+                const btScalar z[] = {a.z(), b.z(), c.z()};
+                const s32 mix = btMax(0, btMin(x[0], btMin(x[1], x[2])));
+                const s32 mxx =
+                    btMin(sizes[0], 1 + btMax(x[0], btMax(x[1], x[2])));
+                const s32 miy = btMax(0, btMin(y[0], btMin(y[1], y[2])));
+                const s32 mxy =
+                    btMin(sizes[1], 1 + btMax(y[0], btMax(y[1], y[2])));
+                const s32 width = mxx - mix;
+                const s32 height = mxy - miy;
+                if ((width * height) > 0)
                 {
-                    if (a2 < minarea)
-                        return (true);
-                    const s32 x[] = {(s32)(a.x() * scales[0] + offsets[0]),
-                                     (s32)(b.x() * scales[0] + offsets[0]),
-                                     (s32)(c.x() * scales[0] + offsets[0])};
-                    const s32 y[] = {(s32)(a.y() * scales[1] + offsets[1]),
-                                     (s32)(b.y() * scales[1] + offsets[1]),
-                                     (s32)(c.y() * scales[1] + offsets[1])};
-                    const btScalar z[] = {a.z(), b.z(), c.z()};
-                    const s32 mix = btMax(0, btMin(x[0], btMin(x[1], x[2])));
-                    const s32 mxx =
-                        btMin(sizes[0], 1 + btMax(x[0], btMax(x[1], x[2])));
-                    const s32 miy = btMax(0, btMin(y[0], btMin(y[1], y[2])));
-                    const s32 mxy =
-                        btMin(sizes[1], 1 + btMax(y[0], btMax(y[1], y[2])));
-                    const s32 width = mxx - mix;
-                    const s32 height = mxy - miy;
-                    if ((width * height) > 0)
+                    const s32 dx[] = {y[0] - y[1], y[1] - y[2], y[2] - y[0]};
+                    const s32 dy[] = {x[1] - x[0] - dx[0] * width,
+                                      x[2] - x[1] - dx[1] * width,
+                                      x[0] - x[2] - dx[2] * width};
+                    const s32 a = x[2] * y[0] + x[0] * y[1] - x[2] * y[1] -
+                                  x[0] * y[2] + x[1] * y[2] - x[1] * y[0];
+                    const btScalar ia = 1 / (btScalar)a;
+                    const btScalar dzx =
+                        ia * (y[2] * (z[1] - z[0]) + y[1] * (z[0] - z[2]) +
+                              y[0] * (z[2] - z[1]));
+                    const btScalar dzy =
+                        ia * (x[2] * (z[0] - z[1]) + x[0] * (z[1] - z[2]) +
+                              x[1] * (z[2] - z[0])) -
+                        (dzx * width);
+                    s32 c[] = {miy * x[1] + mix * y[0] - x[1] * y[0] -
+                                   mix * y[1] + x[0] * y[1] - miy * x[0],
+                               miy * x[2] + mix * y[1] - x[2] * y[1] -
+                                   mix * y[2] + x[1] * y[2] - miy * x[1],
+                               miy * x[0] + mix * y[2] - x[0] * y[2] -
+                                   mix * y[0] + x[2] * y[0] - miy * x[2]};
+                    btScalar v =
+                        ia * ((z[2] * c[0]) + (z[0] * c[1]) + (z[1] * c[2]));
+                    btScalar *scan = &buffer[miy * sizes[1]];
+                    for (s32 iy = miy; iy < mxy; ++iy)
+                    {
+                        for (s32 ix = mix; ix < mxx; ++ix)
                         {
-                            const s32 dx[] = {y[0] - y[1], y[1] - y[2],
-                                              y[2] - y[0]};
-                            const s32 dy[] = {x[1] - x[0] - dx[0] * width,
-                                              x[2] - x[1] - dx[1] * width,
-                                              x[0] - x[2] - dx[2] * width};
-                            const s32 a = x[2] * y[0] + x[0] * y[1] -
-                                          x[2] * y[1] - x[0] * y[2] +
-                                          x[1] * y[2] - x[1] * y[0];
-                            const btScalar ia = 1 / (btScalar)a;
-                            const btScalar dzx = ia * (y[2] * (z[1] - z[0]) +
-                                                       y[1] * (z[0] - z[2]) +
-                                                       y[0] * (z[2] - z[1]));
-                            const btScalar dzy = ia * (x[2] * (z[0] - z[1]) +
-                                                       x[0] * (z[1] - z[2]) +
-                                                       x[1] * (z[2] - z[0])) -
-                                                 (dzx * width);
-                            s32 c[] = {
-                                miy * x[1] + mix * y[0] - x[1] * y[0] -
-                                    mix * y[1] + x[0] * y[1] - miy * x[0],
-                                miy * x[2] + mix * y[1] - x[2] * y[1] -
-                                    mix * y[2] + x[1] * y[2] - miy * x[1],
-                                miy * x[0] + mix * y[2] - x[0] * y[2] -
-                                    mix * y[0] + x[2] * y[0] - miy * x[2]};
-                            btScalar v = ia * ((z[2] * c[0]) + (z[0] * c[1]) +
-                                               (z[1] * c[2]));
-                            btScalar *scan = &buffer[miy * sizes[1]];
-                            for (s32 iy = miy; iy < mxy; ++iy)
-                                {
-                                    for (s32 ix = mix; ix < mxx; ++ix)
-                                        {
-                                            if ((c[0] >= 0) && (c[1] >= 0) &&
-                                                (c[2] >= 0))
-                                                {
-                                                    if (POLICY::Process(
-                                                            scan[ix], v))
-                                                        return (true);
-                                                }
-                                            c[0] += dx[0];
-                                            c[1] += dx[1];
-                                            c[2] += dx[2];
-                                            v += dzx;
-                                        }
-                                    c[0] += dy[0];
-                                    c[1] += dy[1];
-                                    c[2] += dy[2];
-                                    v += dzy;
-                                    scan += sizes[0];
-                                }
+                            if ((c[0] >= 0) && (c[1] >= 0) && (c[2] >= 0))
+                            {
+                                if (POLICY::Process(scan[ix], v))
+                                    return (true);
+                            }
+                            c[0] += dx[0];
+                            c[1] += dx[1];
+                            c[2] += dx[2];
+                            v += dzx;
                         }
+                        c[0] += dy[0];
+                        c[1] += dy[1];
+                        c[2] += dy[2];
+                        v += dzy;
+                        scan += sizes[0];
+                    }
                 }
+            }
             return (false);
         }
         template <const s32 NP, typename POLICY>
@@ -841,9 +834,9 @@ namespace njli
             bool earlyexit = false;
             project(o, n);
             for (s32 i = 2; i < n; ++i)
-                {
-                    earlyexit |= draw<POLICY>(o[0], o[i - 1], o[i], minarea);
-                }
+            {
+                earlyexit |= draw<POLICY>(o[0], o[i - 1], o[i], minarea);
+            }
             return (earlyexit);
         }
         void appendOccluder(const btVector3 &a, const btVector3 &b,
@@ -873,11 +866,11 @@ namespace njli
             static const s32 d[] = {1, 0, 3, 2, 4, 5, 6, 7, 4, 7, 3, 0,
                                     6, 5, 1, 2, 7, 6, 2, 3, 5, 4, 0, 1};
             for (u32 i = 0; i < (sizeof(d) / sizeof(d[0]));)
-                {
-                    const btVector4 p[] = {x[d[i++]], x[d[i++]], x[d[i++]],
-                                           x[d[i++]]};
-                    clipDraw<4, WriteOCL>(p, ocarea);
-                }
+            {
+                const btVector4 p[] = {x[d[i++]], x[d[i++]], x[d[i++]],
+                                       x[d[i++]]};
+                clipDraw<4, WriteOCL>(p, ocarea);
+            }
         }
         void appendOccluder(
             const btVector3 &occluderInnerBoxCollisionShapeHalfExtent,
@@ -898,11 +891,11 @@ namespace njli
             static const s32 d[] = {1, 0, 3, 2, 4, 5, 6, 7, 4, 7, 3, 0,
                                     6, 5, 1, 2, 7, 6, 2, 3, 5, 4, 0, 1};
             for (u32 i = 0; i < (sizeof(d) / sizeof(d[0]));)
-                {
-                    const btVector4 p[] = {x[d[i++]], x[d[i++]], x[d[i++]],
-                                           x[d[i++]]};
-                    clipDraw<4, WriteOCL>(p, ocarea);
-                }
+            {
+                const btVector4 p[] = {x[d[i++]], x[d[i++]], x[d[i++]],
+                                       x[d[i++]]};
+                clipDraw<4, WriteOCL>(p, ocarea);
+            }
         }
         inline bool queryOccluder(const btVector3 &a, const btVector3 &b,
                                   const btVector3 &c)
@@ -929,19 +922,19 @@ namespace njli
                 transform(btVector3(c[0] + e[0], c[1] + e[1], c[2] + e[2])),
                 transform(btVector3(c[0] - e[0], c[1] + e[1], c[2] + e[2]))};
             for (s32 i = 0; i < 8; ++i)
-                {
-                    if ((x[i][2] + x[i][3]) <= 0)
-                        return (true);
-                }
+            {
+                if ((x[i][2] + x[i][3]) <= 0)
+                    return (true);
+            }
             static const s32 d[] = {1, 0, 3, 2, 4, 5, 6, 7, 4, 7, 3, 0,
                                     6, 5, 1, 2, 7, 6, 2, 3, 5, 4, 0, 1};
             for (u32 i = 0; i < (sizeof(d) / sizeof(d[0]));)
-                {
-                    const btVector4 p[] = {x[d[i++]], x[d[i++]], x[d[i++]],
-                                           x[d[i++]]};
-                    if (clipDraw<4, QueryOCL>(p, qrarea))
-                        return (true);
-                }
+            {
+                const btVector4 p[] = {x[d[i++]], x[d[i++]], x[d[i++]],
+                                       x[d[i++]]};
+                if (clipDraw<4, QueryOCL>(p, qrarea))
+                    return (true);
+            }
             return (false);
         }
     };
@@ -1021,36 +1014,36 @@ namespace njli
         Node *entity = static_cast<Node *>(co->getUserPointer());
 
         if (entity->getOpacity() != 1.0)
-            {
-                btScalar distance = btDistance(
-                    entity->getOrigin(), m_Camera->getParent()->getOrigin());
+        {
+            btScalar distance = btDistance(entity->getOrigin(),
+                                           m_Camera->getParent()->getOrigin());
 
-                m_TranslucentEntities.insert(Pair(distance, entity));
-            }
+            m_TranslucentEntities.insert(Pair(distance, entity));
+        }
         else
-            {
-                m_OpaqueEntities.push_back(entity);
-            }
+        {
+            m_OpaqueEntities.push_back(entity);
+        }
 
         if (m_ocb)
-            {
-                static btVector3 aabbMin;
-                static btVector3 aabbMax;
-                co->getCollisionShape()->getAabb(
-                    btTransform::getIdentity(), aabbMin,
-                    aabbMax); // Actually here I should get
-                              // the MINIMAL aabb that can
-                              // be nested INSIDE the shape
-                              // (ie. only btBoxShapes
-                              // work)
-                m_ocb->appendOccluder(
-                    (aabbMax - aabbMin) * btScalar(0.5f),
-                    co->getWorldTransform()); // Note that only a
-                                              // btVector3 (the inner
-                                              // box shape half
-                                              // extent) seems to be
-                                              // needed...
-            }
+        {
+            static btVector3 aabbMin;
+            static btVector3 aabbMax;
+            co->getCollisionShape()->getAabb(btTransform::getIdentity(),
+                                             aabbMin,
+                                             aabbMax); // Actually here I should
+                                                       // get the MINIMAL aabb
+                                                       // that can be nested
+                                                       // INSIDE the shape (ie.
+                                                       // only btBoxShapes work)
+            m_ocb->appendOccluder(
+                (aabbMax - aabbMin) * btScalar(0.5f),
+                co->getWorldTransform()); // Note that only a
+                                          // btVector3 (the inner
+                                          // box shape half
+                                          // extent) seems to be
+                                          // needed...
+        }
     }
 
     s32 SceneRenderer::getNumObjectsDrawn() const { return m_drawn; }
@@ -1164,14 +1157,14 @@ namespace njli
     Camera &Camera::operator=(const Camera &rhs)
     {
         if (this != &rhs)
-            {
-                m_Near = rhs.getZNear();
-                m_Far = rhs.getZFar();
-                m_Fov = rhs.getFov();
-                m_Orthographic = rhs.isOrthographic();
-                m_RenderCategory = rhs.getRenderCategory();
-                // TODO: Implement...
-            }
+        {
+            m_Near = rhs.getZNear();
+            m_Far = rhs.getZFar();
+            m_Fov = rhs.getFov();
+            m_Orthographic = rhs.isOrthographic();
+            m_RenderCategory = rhs.getRenderCategory();
+            // TODO: Implement...
+        }
         return *this;
     }
 
@@ -1237,9 +1230,9 @@ namespace njli
     void Camera::destroy(Camera *object)
     {
         if (object)
-            {
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+        {
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void Camera::load(Camera &object, lua_State *L, int index)
@@ -1252,56 +1245,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Camera::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Camera::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -1315,21 +1308,21 @@ namespace njli
         m_Near = val;
         //        enablePropertyChanged();
         if (m_Orthographic)
-            {
-                *m_projectionMatrix = makeOrtho(
-                    0, njli::World::getInstance()->getViewportDimensions().x(),
-                    0, njli::World::getInstance()->getViewportDimensions().y(),
-                    getZNear(), getZFar());
+        {
+            *m_projectionMatrix = makeOrtho(
+                0, njli::World::getInstance()->getViewportDimensions().x(), 0,
+                njli::World::getInstance()->getViewportDimensions().y(),
+                getZNear(), getZFar());
 
-                getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
-            }
+            getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
+        }
         else
-            {
-                *m_projectionMatrix =
-                    makeFrustum(m_ProjectionMatrixArray, getFov(),
-                                njli::World::getInstance()->getAspectRatio(),
-                                getZNear(), getZFar());
-            }
+        {
+            *m_projectionMatrix =
+                makeFrustum(m_ProjectionMatrixArray, getFov(),
+                            njli::World::getInstance()->getAspectRatio(),
+                            getZNear(), getZFar());
+        }
     }
 
     f32 Camera::getZNear() const { return m_Near; }
@@ -1339,21 +1332,21 @@ namespace njli
         m_Far = val;
         //        enablePropertyChanged();
         if (m_Orthographic)
-            {
-                *m_projectionMatrix = makeOrtho(
-                    0, njli::World::getInstance()->getViewportDimensions().x(),
-                    0, njli::World::getInstance()->getViewportDimensions().y(),
-                    getZNear(), getZFar());
+        {
+            *m_projectionMatrix = makeOrtho(
+                0, njli::World::getInstance()->getViewportDimensions().x(), 0,
+                njli::World::getInstance()->getViewportDimensions().y(),
+                getZNear(), getZFar());
 
-                getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
-            }
+            getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
+        }
         else
-            {
-                *m_projectionMatrix =
-                    makeFrustum(m_ProjectionMatrixArray, getFov(),
-                                njli::World::getInstance()->getAspectRatio(),
-                                getZNear(), getZFar());
-            }
+        {
+            *m_projectionMatrix =
+                makeFrustum(m_ProjectionMatrixArray, getFov(),
+                            njli::World::getInstance()->getAspectRatio(),
+                            getZNear(), getZFar());
+        }
     }
 
     f32 Camera::getZFar() const { return m_Far; }
@@ -1363,21 +1356,21 @@ namespace njli
         m_Fov = fmod(fabsf(val), 360.0f);
         //        enablePropertyChanged();
         if (m_Orthographic)
-            {
-                *m_projectionMatrix = makeOrtho(
-                    0, njli::World::getInstance()->getViewportDimensions().x(),
-                    0, njli::World::getInstance()->getViewportDimensions().y(),
-                    getZNear(), getZFar());
+        {
+            *m_projectionMatrix = makeOrtho(
+                0, njli::World::getInstance()->getViewportDimensions().x(), 0,
+                njli::World::getInstance()->getViewportDimensions().y(),
+                getZNear(), getZFar());
 
-                getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
-            }
+            getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
+        }
         else
-            {
-                *m_projectionMatrix =
-                    makeFrustum(m_ProjectionMatrixArray, getFov(),
-                                njli::World::getInstance()->getAspectRatio(),
-                                getZNear(), getZFar());
-            }
+        {
+            *m_projectionMatrix =
+                makeFrustum(m_ProjectionMatrixArray, getFov(),
+                            njli::World::getInstance()->getAspectRatio(),
+                            getZNear(), getZFar());
+        }
     }
 
     f32 Camera::getFov() const { return m_Fov; }
@@ -1388,27 +1381,27 @@ namespace njli
         m_Orthographic = enable;
 
         if (m_Orthographic)
-            {
-                m_Near = near;
-                m_Far = far;
+        {
+            m_Near = near;
+            m_Far = far;
 
-                *m_projectionMatrix = makeOrtho(
-                    0, njli::World::getInstance()->getViewportDimensions().x(),
-                    0, njli::World::getInstance()->getViewportDimensions().y(),
-                    getZNear(), getZFar());
+            *m_projectionMatrix = makeOrtho(
+                0, njli::World::getInstance()->getViewportDimensions().x(), 0,
+                njli::World::getInstance()->getViewportDimensions().y(),
+                getZNear(), getZFar());
 
-                getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
-            }
+            getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
+        }
         else
-            {
-                m_Near = 0.1f;
-                m_Far = 1000.0f;
+        {
+            m_Near = 0.1f;
+            m_Far = 1000.0f;
 
-                *m_projectionMatrix =
-                    makeFrustum(m_ProjectionMatrixArray, getFov(),
-                                njli::World::getInstance()->getAspectRatio(),
-                                getZNear(), getZFar());
-            }
+            *m_projectionMatrix =
+                makeFrustum(m_ProjectionMatrixArray, getFov(),
+                            njli::World::getInstance()->getAspectRatio(),
+                            getZNear(), getZFar());
+        }
 
         //        enablePropertyChanged(enable != m_Orthographic);
         //        if(isOrthographic())
@@ -1492,34 +1485,34 @@ namespace njli
                              btVector3 &to)
     {
         if (m_Orthographic)
-            {
-                from = unProject(windowPosition);
-                to = from;
-                to.setZ(to.z() * getZFar());
-            }
+        {
+            from = unProject(windowPosition);
+            to = from;
+            to.setZ(to.z() * getZFar());
+        }
         else
-            {
-                njli::World::getInstance()->getViewPort(m_ViewPort);
+        {
+            njli::World::getInstance()->getViewPort(m_ViewPort);
 
-                btTransform modMatrix(getParent()->getWorldTransform());
-                modMatrix.setRotation(getParent()->getOrientation());
-                modMatrix.getOpenGLMatrix(m_ModelMatrix);
+            btTransform modMatrix(getParent()->getWorldTransform());
+            modMatrix.setRotation(getParent()->getOrientation());
+            modMatrix.getOpenGLMatrix(m_ModelMatrix);
 
-                getProjection().getOpenGLMatrix(m_ProjectionMatrix);
+            getProjection().getOpenGLMatrix(m_ProjectionMatrix);
 
-                f32 wx0, wy0, wz0;
-                gluUnProject((f32)windowPosition.x(), (f32)windowPosition.y(),
-                             0.0, m_ModelMatrix, m_ProjectionMatrix, m_ViewPort,
-                             &wx0, &wy0, &wz0);
-                from = btVector3(wx0, wy0, wz0);
+            f32 wx0, wy0, wz0;
+            gluUnProject((f32)windowPosition.x(), (f32)windowPosition.y(), 0.0,
+                         m_ModelMatrix, m_ProjectionMatrix, m_ViewPort, &wx0,
+                         &wy0, &wz0);
+            from = btVector3(wx0, wy0, wz0);
 
-                f32 wx1, wy1, wz1;
-                gluUnProject((f32)windowPosition.x(), (f32)windowPosition.y(),
-                             1.0, m_ModelMatrix, m_ProjectionMatrix, m_ViewPort,
-                             &wx1, &wy1, &wz1);
-                to = btVector3(wx1, wy1, wz1);
-                to *= getZFar();
-            }
+            f32 wx1, wy1, wz1;
+            gluUnProject((f32)windowPosition.x(), (f32)windowPosition.y(), 1.0,
+                         m_ModelMatrix, m_ProjectionMatrix, m_ViewPort, &wx1,
+                         &wy1, &wz1);
+            to = btVector3(wx1, wy1, wz1);
+            to *= getZFar();
+        }
     }
 
     btVector3 Camera::getForwardVector() const
@@ -1639,7 +1632,7 @@ namespace njli
     ////
     //// getProjection().getOpenGLMatrix(m_ProjectionMatrixArray); / } / else /
     ///{ /                *m_projectionMatrix =
-    ///makeFrustum(m_ProjectionMatrixArray,
+    /// makeFrustum(m_ProjectionMatrixArray,
     /// getFov(), njli::World::getInstance()->getAspectRatio(), getZNear(),
     /// getZFar());
     ////            }
@@ -1649,21 +1642,21 @@ namespace njli
     void Camera::updateViewSize()
     {
         if (m_Orthographic)
-            {
-                *m_projectionMatrix = makeOrtho(
-                    0, njli::World::getInstance()->getViewportDimensions().x(),
-                    0, njli::World::getInstance()->getViewportDimensions().y(),
-                    getZNear(), getZFar());
+        {
+            *m_projectionMatrix = makeOrtho(
+                0, njli::World::getInstance()->getViewportDimensions().x(), 0,
+                njli::World::getInstance()->getViewportDimensions().y(),
+                getZNear(), getZFar());
 
-                getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
-            }
+            getProjection().getOpenGLMatrix(m_ProjectionMatrixArray);
+        }
         else
-            {
-                *m_projectionMatrix =
-                    makeFrustum(m_ProjectionMatrixArray, getFov(),
-                                njli::World::getInstance()->getAspectRatio(),
-                                getZNear(), getZFar());
-            }
+        {
+            *m_projectionMatrix =
+                makeFrustum(m_ProjectionMatrixArray, getFov(),
+                            njli::World::getInstance()->getAspectRatio(),
+                            getZNear(), getZFar());
+        }
     }
 
     void Camera::setProjection(const glm::mat4 &projection)
@@ -1720,25 +1713,25 @@ namespace njli
         btScalar planesFraction = getZFar() / getZNear();
 
         if (m_Orthographic)
-            {
-                top = njli::World::getInstance()->getViewportDimensions().y();
-                bottom = 0;
+        {
+            top = njli::World::getInstance()->getViewportDimensions().y();
+            bottom = 0;
 
-                left = 0;
-                right = njli::World::getInstance()->getViewportDimensions().x();
+            left = 0;
+            right = njli::World::getInstance()->getViewportDimensions().x();
 
-                planesFraction = 1.0f;
-            }
+            planesFraction = 1.0f;
+        }
         else
-            {
-                f32 aspectRatio = njli::World::getInstance()->getAspectRatio();
-                SDL_assert(!std::isnan(aspectRatio));
+        {
+            f32 aspectRatio = njli::World::getInstance()->getAspectRatio();
+            SDL_assert(!std::isnan(aspectRatio));
 
-                top = getZNear() * btTan(btRadians(getFov()));
-                bottom = -top;
-                left = bottom * aspectRatio;
-                right = top * aspectRatio;
-            }
+            top = getZNear() * btTan(btRadians(getFov()));
+            bottom = -top;
+            left = bottom * aspectRatio;
+            right = top * aspectRatio;
+        }
 
         farLeft = left * planesFraction;
         farRight = right * planesFraction;
@@ -1853,23 +1846,23 @@ namespace njli
             planeOffsets[i] = -(origin.dot(planeNormals[i]));
 
         if (eye != NULL)
-            {
-                m_OcclusionBuffer->initialize();
-                m_OcclusionBuffer->eye = *eye;
-                m_SceneRenderer->setOcclusionBuffer(m_OcclusionBuffer);
-                btDbvt::collideOCL(root1, planeNormals, planeOffsets, sortaxis,
-                                   count, *m_SceneRenderer);
-                btDbvt::collideOCL(root2, planeNormals, planeOffsets, sortaxis,
-                                   count, *m_SceneRenderer);
-            }
+        {
+            m_OcclusionBuffer->initialize();
+            m_OcclusionBuffer->eye = *eye;
+            m_SceneRenderer->setOcclusionBuffer(m_OcclusionBuffer);
+            btDbvt::collideOCL(root1, planeNormals, planeOffsets, sortaxis,
+                               count, *m_SceneRenderer);
+            btDbvt::collideOCL(root2, planeNormals, planeOffsets, sortaxis,
+                               count, *m_SceneRenderer);
+        }
         else
-            {
-                m_SceneRenderer->setOcclusionBuffer(NULL);
-                btDbvt::collideKDOP(root1, planeNormals, planeOffsets, count,
-                                    *m_SceneRenderer);
-                btDbvt::collideKDOP(root2, planeNormals, planeOffsets, count,
-                                    *m_SceneRenderer);
-            }
+        {
+            m_SceneRenderer->setOcclusionBuffer(NULL);
+            btDbvt::collideKDOP(root1, planeNormals, planeOffsets, count,
+                                *m_SceneRenderer);
+            btDbvt::collideKDOP(root2, planeNormals, planeOffsets, count,
+                                *m_SceneRenderer);
+        }
         m_SceneRenderer->render();
 
         //    s32 visiblecount=m_SceneRenderer->getNumObjectsDrawn();
@@ -1879,35 +1872,33 @@ namespace njli
     void Camera::render(ShaderProgram *const shader, bool shouldRedraw)
     {
         if (shader)
+        {
+            if (m_OrthographicDirty || shouldRedraw)
             {
-                if (m_OrthographicDirty || shouldRedraw)
-                    {
-                        GLuint orthographic = (m_Orthographic == true) ? 1 : 0;
-                        if (shader->setUniformValue("orthographicCamera",
-                                                    orthographic))
-                            {
-                                m_OrthographicDirty = false;
-                            }
-                    }
-
-                if (m_ModelViewDirty || shouldRedraw)
-                    {
-                        if (shader->setUniformValue("modelView",
-                                                    getModelView()))
-                            {
-                                m_ModelViewDirty = false;
-                            }
-                    }
-
-                if (m_ProjectionDirty || shouldRedraw)
-                    {
-                        if (shader->setUniformValue("projection",
-                                                    m_ProjectionMatrixArray))
-                            {
-                                m_ProjectionDirty = false;
-                            }
-                    }
+                GLuint orthographic = (m_Orthographic == true) ? 1 : 0;
+                if (shader->setUniformValue("orthographicCamera", orthographic))
+                {
+                    m_OrthographicDirty = false;
+                }
             }
+
+            if (m_ModelViewDirty || shouldRedraw)
+            {
+                if (shader->setUniformValue("modelView", getModelView()))
+                {
+                    m_ModelViewDirty = false;
+                }
+            }
+
+            if (m_ProjectionDirty || shouldRedraw)
+            {
+                if (shader->setUniformValue("projection",
+                                            m_ProjectionMatrixArray))
+                {
+                    m_ProjectionDirty = false;
+                }
+            }
+        }
     }
 
     //    bool Camera::isPropertyChanged()const

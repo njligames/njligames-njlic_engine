@@ -42,18 +42,18 @@ static int checkfield(lua_State *L, const char *key, int n)
 static void checktab(lua_State *L, int arg, int what)
 {
     if (lua_type(L, arg) != LUA_TTABLE)
-        {                                   /* is it not a table? */
-            int n = 1;                      /* number of elements to pop */
-            if (lua_getmetatable(L, arg) && /* must have metatable */
-                (!(what & TAB_R) || checkfield(L, "__index", ++n)) &&
-                (!(what & TAB_W) || checkfield(L, "__newindex", ++n)) &&
-                (!(what & TAB_L) || checkfield(L, "__len", ++n)))
-                {
-                    lua_pop(L, n); /* pop metatable and tested metamethods */
-                }
-            else
-                luaL_argerror(L, arg, "table expected"); /* force an error */
+    {                                   /* is it not a table? */
+        int n = 1;                      /* number of elements to pop */
+        if (lua_getmetatable(L, arg) && /* must have metatable */
+            (!(what & TAB_R) || checkfield(L, "__index", ++n)) &&
+            (!(what & TAB_W) || checkfield(L, "__newindex", ++n)) &&
+            (!(what & TAB_L) || checkfield(L, "__len", ++n)))
+        {
+            lua_pop(L, n); /* pop metatable and tested metamethods */
         }
+        else
+            luaL_argerror(L, arg, "table expected"); /* force an error */
+    }
 }
 
 #if defined(LUA_COMPAT_MAXN)
@@ -63,15 +63,15 @@ static int maxn(lua_State *L)
     luaL_checktype(L, 1, LUA_TTABLE);
     lua_pushnil(L); /* first key */
     while (lua_next(L, 1))
+    {
+        lua_pop(L, 1); /* remove value */
+        if (lua_type(L, -1) == LUA_TNUMBER)
         {
-            lua_pop(L, 1); /* remove value */
-            if (lua_type(L, -1) == LUA_TNUMBER)
-                {
-                    lua_Number v = lua_tonumber(L, -1);
-                    if (v > max)
-                        max = v;
-                }
+            lua_Number v = lua_tonumber(L, -1);
+            if (v > max)
+                max = v;
         }
+    }
     lua_pushnumber(L, max);
     return 1;
 }
@@ -82,31 +82,29 @@ static int tinsert(lua_State *L)
     lua_Integer e = aux_getn(L, 1, TAB_RW) + 1; /* first empty element */
     lua_Integer pos; /* where to insert new element */
     switch (lua_gettop(L))
-        {
-        case 2:
-            {            /* called with only 2 arguments */
-                pos = e; /* insert new element at the end */
-                break;
-            }
-        case 3:
-            {
-                lua_Integer i;
-                pos =
-                    luaL_checkinteger(L, 2); /* 2nd argument is the position */
-                luaL_argcheck(L, 1 <= pos && pos <= e, 2,
-                              "position out of bounds");
-                for (i = e; i > pos; i--)
-                    { /* move up elements */
-                        lua_geti(L, 1, i - 1);
-                        lua_seti(L, 1, i); /* t[i] = t[i - 1] */
-                    }
-                break;
-            }
-        default:
-            {
-                return luaL_error(L, "wrong number of arguments to 'insert'");
-            }
+    {
+    case 2:
+    {            /* called with only 2 arguments */
+        pos = e; /* insert new element at the end */
+        break;
+    }
+    case 3:
+    {
+        lua_Integer i;
+        pos = luaL_checkinteger(L, 2); /* 2nd argument is the position */
+        luaL_argcheck(L, 1 <= pos && pos <= e, 2, "position out of bounds");
+        for (i = e; i > pos; i--)
+        { /* move up elements */
+            lua_geti(L, 1, i - 1);
+            lua_seti(L, 1, i); /* t[i] = t[i - 1] */
         }
+        break;
+    }
+    default:
+    {
+        return luaL_error(L, "wrong number of arguments to 'insert'");
+    }
+    }
     lua_seti(L, 1, pos); /* t[pos] = v */
     return 0;
 }
@@ -120,10 +118,10 @@ static int tremove(lua_State *L)
                       "position out of bounds");
     lua_geti(L, 1, pos); /* result = t[pos] */
     for (; pos < size; pos++)
-        {
-            lua_geti(L, 1, pos + 1);
-            lua_seti(L, 1, pos); /* t[pos] = t[pos + 1] */
-        }
+    {
+        lua_geti(L, 1, pos + 1);
+        lua_seti(L, 1, pos); /* t[pos] = t[pos + 1] */
+    }
     lua_pushnil(L);
     lua_seti(L, 1, pos); /* t[pos] = nil */
     return 1;
@@ -144,30 +142,30 @@ static int tmove(lua_State *L)
     checktab(L, 1, TAB_R);
     checktab(L, tt, TAB_W);
     if (e >= f)
-        { /* otherwise, nothing to move */
-            lua_Integer n, i;
-            luaL_argcheck(L, f > 0 || e < LUA_MAXINTEGER + f, 3,
-                          "too many elements to move");
-            n = e - f + 1; /* number of elements to move */
-            luaL_argcheck(L, t <= LUA_MAXINTEGER - n + 1, 4,
-                          "destination wrap around");
-            if (t > e || t <= f || tt != 1)
-                {
-                    for (i = 0; i < n; i++)
-                        {
-                            lua_geti(L, 1, f + i);
-                            lua_seti(L, tt, t + i);
-                        }
-                }
-            else
-                {
-                    for (i = n - 1; i >= 0; i--)
-                        {
-                            lua_geti(L, 1, f + i);
-                            lua_seti(L, tt, t + i);
-                        }
-                }
+    { /* otherwise, nothing to move */
+        lua_Integer n, i;
+        luaL_argcheck(L, f > 0 || e < LUA_MAXINTEGER + f, 3,
+                      "too many elements to move");
+        n = e - f + 1; /* number of elements to move */
+        luaL_argcheck(L, t <= LUA_MAXINTEGER - n + 1, 4,
+                      "destination wrap around");
+        if (t > e || t <= f || tt != 1)
+        {
+            for (i = 0; i < n; i++)
+            {
+                lua_geti(L, 1, f + i);
+                lua_seti(L, tt, t + i);
+            }
         }
+        else
+        {
+            for (i = n - 1; i >= 0; i--)
+            {
+                lua_geti(L, 1, f + i);
+                lua_seti(L, tt, t + i);
+            }
+        }
+    }
     lua_pushvalue(L, tt); /* return "to table" */
     return 1;
 }
@@ -191,10 +189,10 @@ static int tconcat(lua_State *L)
     last = luaL_opt(L, luaL_checkinteger, 4, last);
     luaL_buffinit(L, &b);
     for (; i < last; i++)
-        {
-            addfield(L, &b, i);
-            luaL_addlstring(&b, sep, lsep);
-        }
+    {
+        addfield(L, &b, i);
+        luaL_addlstring(&b, sep, lsep);
+    }
     if (i == last) /* add last value (if interval was not empty) */
         addfield(L, &b, i);
     luaL_pushresult(&b);
@@ -231,9 +229,9 @@ static int unpack(lua_State *L)
     if (n >= (unsigned int)INT_MAX || !lua_checkstack(L, (int)(++n)))
         return luaL_error(L, "too many results to unpack");
     for (; i < e; i++)
-        { /* push arg[i..e - 1] (to avoid overflows) */
-            lua_geti(L, 1, i);
-        }
+    { /* push arg[i..e - 1] (to avoid overflows) */
+        lua_geti(L, 1, i);
+    }
     lua_geti(L, 1, e); /* push last element */
     return (int)n;
 }
@@ -300,16 +298,16 @@ static int sort_comp(lua_State *L, int a, int b)
     if (lua_isnil(L, 2))                       /* no function? */
         return lua_compare(L, a, b, LUA_OPLT); /* a < b */
     else
-        { /* function */
-            int res;
-            lua_pushvalue(L, 2);        /* push function */
-            lua_pushvalue(L, a - 1);    /* -1 to compensate function */
-            lua_pushvalue(L, b - 2);    /* -2 to compensate function and 'a' */
-            lua_call(L, 2, 1);          /* call function */
-            res = lua_toboolean(L, -1); /* get result */
-            lua_pop(L, 1);              /* pop result */
-            return res;
-        }
+    { /* function */
+        int res;
+        lua_pushvalue(L, 2);        /* push function */
+        lua_pushvalue(L, a - 1);    /* -1 to compensate function */
+        lua_pushvalue(L, b - 2);    /* -2 to compensate function and 'a' */
+        lua_call(L, 2, 1);          /* call function */
+        res = lua_toboolean(L, -1); /* get result */
+        lua_pop(L, 1);              /* pop result */
+        return res;
+    }
 }
 
 /*
@@ -325,35 +323,35 @@ static unsigned int partition(lua_State *L, unsigned int lo, unsigned int up)
     unsigned int j = up - 1; /* will be decremented before first use */
     /* loop invariant: a[lo .. i] <= P <= a[j .. up] */
     for (;;)
+    {
+        /* next loop: repeat ++i while a[i] < P */
+        while (lua_geti(L, 1, ++i), sort_comp(L, -1, -2))
         {
-            /* next loop: repeat ++i while a[i] < P */
-            while (lua_geti(L, 1, ++i), sort_comp(L, -1, -2))
-                {
-                    if (i == up - 1) /* a[i] < P  but a[up - 1] == P  ?? */
-                        luaL_error(L, "invalid order function for sorting");
-                    lua_pop(L, 1); /* remove a[i] */
-                }
-            /* after the loop, a[i] >= P and a[lo .. i - 1] < P */
-            /* next loop: repeat --j while P < a[j] */
-            while (lua_geti(L, 1, --j), sort_comp(L, -3, -1))
-                {
-                    if (j < i) /* j < i  but  a[j] > P ?? */
-                        luaL_error(L, "invalid order function for sorting");
-                    lua_pop(L, 1); /* remove a[j] */
-                }
-            /* after the loop, a[j] <= P and a[j + 1 .. up] >= P */
-            if (j < i)
-                { /* no elements out of place? */
-                    /* a[lo .. i - 1] <= P <= a[j + 1 .. i .. up] */
-                    lua_pop(L, 1); /* pop a[j] */
-                    /* swap pivot (a[up - 1]) with a[i] to satisfy pos-condition
-                     */
-                    set2(L, up - 1, i);
-                    return i;
-                }
-            /* otherwise, swap a[i] - a[j] to restore invariant and repeat */
-            set2(L, i, j);
+            if (i == up - 1) /* a[i] < P  but a[up - 1] == P  ?? */
+                luaL_error(L, "invalid order function for sorting");
+            lua_pop(L, 1); /* remove a[i] */
         }
+        /* after the loop, a[i] >= P and a[lo .. i - 1] < P */
+        /* next loop: repeat --j while P < a[j] */
+        while (lua_geti(L, 1, --j), sort_comp(L, -3, -1))
+        {
+            if (j < i) /* j < i  but  a[j] > P ?? */
+                luaL_error(L, "invalid order function for sorting");
+            lua_pop(L, 1); /* remove a[j] */
+        }
+        /* after the loop, a[j] <= P and a[j + 1 .. up] >= P */
+        if (j < i)
+        { /* no elements out of place? */
+            /* a[lo .. i - 1] <= P <= a[j + 1 .. i .. up] */
+            lua_pop(L, 1); /* pop a[j] */
+            /* swap pivot (a[up - 1]) with a[i] to satisfy pos-condition
+             */
+            set2(L, up - 1, i);
+            return i;
+        }
+        /* otherwise, swap a[i] - a[j] to restore invariant and repeat */
+        set2(L, i, j);
+    }
 }
 
 /*
@@ -376,77 +374,75 @@ static void auxsort(lua_State *L, unsigned int lo, unsigned int up,
                     unsigned int rnd)
 {
     while (lo < up)
-        {                   /* loop for tail recursion */
-            unsigned int p; /* Pivot index */
-            unsigned int n; /* to be used later */
-            /* sort elements 'lo', 'p', and 'up' */
-            lua_geti(L, 1, lo);
+    {                   /* loop for tail recursion */
+        unsigned int p; /* Pivot index */
+        unsigned int n; /* to be used later */
+        /* sort elements 'lo', 'p', and 'up' */
+        lua_geti(L, 1, lo);
+        lua_geti(L, 1, up);
+        if (sort_comp(L, -1, -2)) /* a[up] < a[lo]? */
+            set2(L, lo, up);      /* swap a[lo] - a[up] */
+        else
+            lua_pop(L, 2); /* remove both values */
+        if (up - lo == 1)  /* only 2 elements? */
+            return;        /* already sorted */
+        if (up - lo < RANLIMIT ||
+            rnd == 0)          /* small interval or no randomize? */
+            p = (lo + up) / 2; /* middle element is a good pivot */
+        else /* for larger intervals, it is worth a random pivot */
+            p = choosePivot(lo, up, rnd);
+        lua_geti(L, 1, p);
+        lua_geti(L, 1, lo);
+        if (sort_comp(L, -2, -1)) /* a[p] < a[lo]? */
+            set2(L, p, lo);       /* swap a[p] - a[lo] */
+        else
+        {
+            lua_pop(L, 1); /* remove a[lo] */
             lua_geti(L, 1, up);
-            if (sort_comp(L, -1, -2)) /* a[up] < a[lo]? */
-                set2(L, lo, up);      /* swap a[lo] - a[up] */
+            if (sort_comp(L, -1, -2)) /* a[up] < a[p]? */
+                set2(L, p, up);       /* swap a[up] - a[p] */
             else
-                lua_pop(L, 2); /* remove both values */
-            if (up - lo == 1)  /* only 2 elements? */
-                return;        /* already sorted */
-            if (up - lo < RANLIMIT ||
-                rnd == 0)          /* small interval or no randomize? */
-                p = (lo + up) / 2; /* middle element is a good pivot */
-            else /* for larger intervals, it is worth a random pivot */
-                p = choosePivot(lo, up, rnd);
-            lua_geti(L, 1, p);
-            lua_geti(L, 1, lo);
-            if (sort_comp(L, -2, -1)) /* a[p] < a[lo]? */
-                set2(L, p, lo);       /* swap a[p] - a[lo] */
-            else
-                {
-                    lua_pop(L, 1); /* remove a[lo] */
-                    lua_geti(L, 1, up);
-                    if (sort_comp(L, -1, -2)) /* a[up] < a[p]? */
-                        set2(L, p, up);       /* swap a[up] - a[p] */
-                    else
-                        lua_pop(L, 2);
-                }
-            if (up - lo == 2)       /* only 3 elements? */
-                return;             /* already sorted */
-            lua_geti(L, 1, p);      /* get middle element (Pivot) */
-            lua_pushvalue(L, -1);   /* push Pivot */
-            lua_geti(L, 1, up - 1); /* push a[up - 1] */
-            set2(L, p, up - 1);     /* swap Pivot (a[p]) with a[up - 1] */
-            p = partition(L, lo, up);
-            /* a[lo .. p - 1] <= a[p] == P <= a[p + 1 .. up] */
-            if (p - lo < up - p)
-                { /* lower interval is smaller? */
-                    auxsort(L, lo, p - 1,
-                            rnd); /* call recursively for lower interval */
-                    n = p - lo;   /* size of smaller interval */
-                    lo = p +
-                         1; /* tail call for [p + 1 .. up] (upper interval) */
-                }
-            else
-                {
-                    auxsort(L, p + 1, up,
-                            rnd); /* call recursively for upper interval */
-                    n = up - p;   /* size of smaller interval */
-                    up = p -
-                         1; /* tail call for [lo .. p - 1]  (lower interval) */
-                }
-            if ((up - lo) / 128u > n)     /* partition too imbalanced? */
-                rnd = l_randomizePivot(); /* try a new randomization */
-        } /* tail call auxsort(L, lo, up, rnd) */
+                lua_pop(L, 2);
+        }
+        if (up - lo == 2)       /* only 3 elements? */
+            return;             /* already sorted */
+        lua_geti(L, 1, p);      /* get middle element (Pivot) */
+        lua_pushvalue(L, -1);   /* push Pivot */
+        lua_geti(L, 1, up - 1); /* push a[up - 1] */
+        set2(L, p, up - 1);     /* swap Pivot (a[p]) with a[up - 1] */
+        p = partition(L, lo, up);
+        /* a[lo .. p - 1] <= a[p] == P <= a[p + 1 .. up] */
+        if (p - lo < up - p)
+        { /* lower interval is smaller? */
+            auxsort(L, lo, p - 1,
+                    rnd); /* call recursively for lower interval */
+            n = p - lo;   /* size of smaller interval */
+            lo = p + 1;   /* tail call for [p + 1 .. up] (upper interval) */
+        }
+        else
+        {
+            auxsort(L, p + 1, up,
+                    rnd); /* call recursively for upper interval */
+            n = up - p;   /* size of smaller interval */
+            up = p - 1;   /* tail call for [lo .. p - 1]  (lower interval) */
+        }
+        if ((up - lo) / 128u > n)     /* partition too imbalanced? */
+            rnd = l_randomizePivot(); /* try a new randomization */
+    }                                 /* tail call auxsort(L, lo, up, rnd) */
 }
 
 static int sort(lua_State *L)
 {
     lua_Integer n = aux_getn(L, 1, TAB_RW);
     if (n > 1)
-        { /* non-trivial interval? */
-            luaL_argcheck(L, n < INT_MAX, 1, "array too big");
-            luaL_checkstack(L, 40, ""); /* assume array is smaller than 2^40 */
-            if (!lua_isnoneornil(L, 2)) /* is there a 2nd argument? */
-                luaL_checktype(L, 2, LUA_TFUNCTION); /* must be a function */
-            lua_settop(L, 2); /* make sure there are two arguments */
-            auxsort(L, 1, (unsigned int)n, 0u);
-        }
+    { /* non-trivial interval? */
+        luaL_argcheck(L, n < INT_MAX, 1, "array too big");
+        luaL_checkstack(L, 40, ""); /* assume array is smaller than 2^40 */
+        if (!lua_isnoneornil(L, 2)) /* is there a 2nd argument? */
+            luaL_checktype(L, 2, LUA_TFUNCTION); /* must be a function */
+        lua_settop(L, 2); /* make sure there are two arguments */
+        auxsort(L, 1, (unsigned int)n, 0u);
+    }
     return 0;
 }
 

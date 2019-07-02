@@ -34,8 +34,8 @@ namespace njli
     SceneState &SceneState::operator=(const SceneState &rhs)
     {
         if (this != &rhs)
-            {
-            }
+        {
+        }
         return *this;
     }
 
@@ -102,9 +102,9 @@ namespace njli
     void SceneState::destroy(SceneState *object)
     {
         if (object)
-            {
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+        {
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void SceneState::load(SceneState &object, lua_State *L, int index)
@@ -117,56 +117,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        SceneState::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                SceneState::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -218,17 +218,17 @@ namespace njli
             buffer, scene, m_CurrentTouches);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeTouches%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeTouches%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], m_CurrentTouches);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], m_CurrentTouches);
             }
+        }
     }
 
     void SceneState::touchUp(Scene *scene, DeviceTouch **m_CurrentTouches)
@@ -241,17 +241,17 @@ namespace njli
             buffer, scene, m_CurrentTouches);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeTouches%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeTouches%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], m_CurrentTouches);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], m_CurrentTouches);
             }
+        }
     }
 
     void SceneState::touchMove(Scene *scene, DeviceTouch **m_CurrentTouches)
@@ -264,17 +264,17 @@ namespace njli
             buffer, scene, m_CurrentTouches);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeTouches%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeTouches%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], m_CurrentTouches);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], m_CurrentTouches);
             }
+        }
     }
 
     void SceneState::touchCancelled(Scene *scene,
@@ -288,17 +288,17 @@ namespace njli
             buffer, scene, m_CurrentTouches);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeTouches%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeTouches%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], m_CurrentTouches);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], m_CurrentTouches);
             }
+        }
     }
 
     void SceneState::touchDown(Scene *scene, const DeviceTouch &touch)
@@ -311,17 +311,17 @@ namespace njli
             buffer, scene, touch);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeTouch%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeTouch%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], touch);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], touch);
             }
+        }
     }
 
     void SceneState::touchUp(Scene *scene, const DeviceTouch &touch)
@@ -334,17 +334,17 @@ namespace njli
             buffer, scene, touch);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeTouch%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeTouch%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], touch);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], touch);
             }
+        }
     }
 
     void SceneState::touchMove(Scene *scene, const DeviceTouch &touch)
@@ -357,17 +357,17 @@ namespace njli
             buffer, scene, touch);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeTouch%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeTouch%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], touch);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], touch);
             }
+        }
     }
 
     void SceneState::mouseDown(Scene *scene, const DeviceMouse &mouse)
@@ -380,17 +380,17 @@ namespace njli
             buffer, scene, mouse);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeMouse%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeMouse%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], mouse);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], mouse);
             }
+        }
     }
 
     void SceneState::mouseUp(Scene *scene, const DeviceMouse &mouse)
@@ -403,17 +403,17 @@ namespace njli
             buffer, scene, mouse);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeMouse%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeMouse%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], mouse);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], mouse);
             }
+        }
     }
 
     void SceneState::mouseMove(Scene *scene, const DeviceMouse &mouse)
@@ -426,17 +426,17 @@ namespace njli
             buffer, scene, mouse);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeMouse%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeMouse%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], mouse);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], mouse);
             }
+        }
     }
 
     void SceneState::keyUp(Scene *scene, const char *keycodeName,
@@ -452,19 +452,18 @@ namespace njli
             withAlt, withGui);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeKey%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeKey%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], keycodeName,
-                                      withCapsLock, withControl, withShift,
-                                      withAlt, withGui);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], keycodeName, withCapsLock,
+                              withControl, withShift, withAlt, withGui);
             }
+        }
     }
 
     void SceneState::keyDown(Scene *scene, const char *keycodeName,
@@ -480,19 +479,18 @@ namespace njli
             withAlt, withGui);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeKey%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeKey%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], keycodeName,
-                                      withCapsLock, withControl, withShift,
-                                      withAlt, withGui);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], keycodeName, withCapsLock,
+                              withControl, withShift, withAlt, withGui);
             }
+        }
     }
 
     void SceneState::touchCancelled(Scene *scene, const DeviceTouch &touch)
@@ -505,17 +503,17 @@ namespace njli
             buffer, scene, touch);
 
         if (scene)
+        {
+            sprintf(buffer, "__NJLINodeTouch%s", action);
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "__NJLINodeTouch%s", action);
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], touch);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], touch);
             }
+        }
     }
 
     void SceneState::keyboardShow(Scene *scene)
@@ -527,17 +525,17 @@ namespace njli
                                                                          scene);
 
         if (scene)
+        {
+            sprintf(buffer, "%s", "__NJLINodeKeyboardShow");
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "%s", "__NJLINodeKeyboardShow");
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i]);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i]);
             }
+        }
     }
 
     void SceneState::keyboardCancel(Scene *scene)
@@ -549,17 +547,17 @@ namespace njli
                                                                          scene);
 
         if (scene)
+        {
+            sprintf(buffer, "%s", "__NJLINodeKeyboardCancel");
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "%s", "__NJLINodeKeyboardCancel");
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i]);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i]);
             }
+        }
     }
 
     void SceneState::keyboardReturn(Scene *scene, const char *text)
@@ -571,17 +569,17 @@ namespace njli
             buffer, scene, text);
 
         if (scene)
+        {
+            sprintf(buffer, "%s", "__NJLINodeKeyboardReturn");
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "%s", "__NJLINodeKeyboardReturn");
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i], text);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i], text);
             }
+        }
     }
 
     void SceneState::renderHUD(Scene *scene)
@@ -593,17 +591,17 @@ namespace njli
                                                                          scene);
 
         if (scene)
+        {
+            sprintf(buffer, "%s", "__NJLINodeRenderHUD");
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "%s", "__NJLINodeRenderHUD");
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i]);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i]);
             }
+        }
     }
 
     void SceneState::pauseGame(Scene *scene)
@@ -615,17 +613,17 @@ namespace njli
                                                                          scene);
 
         if (scene)
+        {
+            sprintf(buffer, "%s", "__NJLINodeGamePause");
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "%s", "__NJLINodeGamePause");
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i]);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i]);
             }
+        }
     }
     void SceneState::unPauseGame(Scene *scene)
     {
@@ -636,17 +634,17 @@ namespace njli
                                                                          scene);
 
         if (scene)
+        {
+            sprintf(buffer, "%s", "__NJLINodeGameUnPause");
+            btAlignedObjectArray<Node *> activeNodes;
+            scene->getActiveNodes(activeNodes);
+            for (unsigned int i = 0; i < activeNodes.size(); i++)
             {
-                sprintf(buffer, "%s", "__NJLINodeGameUnPause");
-                btAlignedObjectArray<Node *> activeNodes;
-                scene->getActiveNodes(activeNodes);
-                for (unsigned int i = 0; i < activeNodes.size(); i++)
-                    {
-                        njli::World::getInstance()
-                            ->getWorldLuaVirtualMachine()
-                            ->execute(buffer, activeNodes[i]);
-                    }
+                njli::World::getInstance()
+                    ->getWorldLuaVirtualMachine()
+                    ->execute(buffer, activeNodes[i]);
             }
+        }
     }
 
     void SceneState::willResignActive(Scene *object)

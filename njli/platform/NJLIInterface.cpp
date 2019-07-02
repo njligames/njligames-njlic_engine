@@ -124,19 +124,19 @@ void NJLI_HandleTouch(int touchDevId, int pointerFingerId, int eventType,
 {
     int action = eventType;
     switch (eventType)
-        {
-        case SDL_FINGERDOWN:
-            action = 0;
-            break;
-        case SDL_FINGERUP:
-            action = 1;
-            break;
-        case SDL_FINGERMOTION:
-            action = 2;
-            break;
-        default:
-            break;
-        }
+    {
+    case SDL_FINGERDOWN:
+        action = 0;
+        break;
+    case SDL_FINGERUP:
+        action = 1;
+        break;
+    case SDL_FINGERMOTION:
+        action = 2;
+        break;
+    default:
+        break;
+    }
 
     int w, h;
     SDL_GetWindowSize(gWindow, &w, &h);
@@ -165,12 +165,12 @@ void NJLI_HandleSurfaceDestroyed()
 
     for (JoystickMap::iterator i = gGameJoystickMap.begin();
          i != gGameJoystickMap.end();)
-        {
-            SDL_Joystick *joystick = i->second;
+    {
+        SDL_Joystick *joystick = i->second;
 
-            SDL_JoystickClose(joystick);
-            i = gGameJoystickMap.erase(i);
-        }
+        SDL_JoystickClose(joystick);
+        i = gGameJoystickMap.erase(i);
+    }
 
     SDL_GL_DeleteContext(gGlContext);
     SDL_DestroyWindow(gWindow);

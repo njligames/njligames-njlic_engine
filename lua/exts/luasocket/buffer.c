@@ -98,17 +98,17 @@ int buffer_meth_send(lua_State *L, p_buffer buf)
         err = sendraw(buf, data + start - 1, end - start + 1, &sent);
     /* check if there was an error */
     if (err != IO_DONE)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, buf->io->error(buf->io->ctx, err));
-            lua_pushnumber(L, (lua_Number)(sent + start - 1));
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, buf->io->error(buf->io->ctx, err));
+        lua_pushnumber(L, (lua_Number)(sent + start - 1));
+    }
     else
-        {
-            lua_pushnumber(L, (lua_Number)(sent + start - 1));
-            lua_pushnil(L);
-            lua_pushnil(L);
-        }
+    {
+        lua_pushnumber(L, (lua_Number)(sent + start - 1));
+        lua_pushnil(L);
+        lua_pushnil(L);
+    }
 #ifdef LUASOCKET_DEBUG
     /* push time elapsed during operation as the last return value */
     lua_pushnumber(L, timeout_gettime() - timeout_getstart(buf->tm));
@@ -132,43 +132,43 @@ int buffer_meth_receive(lua_State *L, p_buffer buf)
     luaL_addlstring(&b, part, size);
     /* receive new patterns */
     if (!lua_isnumber(L, 2))
-        {
-            const char *p = luaL_optstring(L, 2, "*l");
-            if (p[0] == '*' && p[1] == 'l')
-                err = recvline(buf, &b);
-            else if (p[0] == '*' && p[1] == 'a')
-                err = recvall(buf, &b);
-            else
-                luaL_argcheck(L, 0, 2, "invalid receive pattern");
-            /* get a fixed number of bytes (minus what was already partially
-             * received) */
-        }
+    {
+        const char *p = luaL_optstring(L, 2, "*l");
+        if (p[0] == '*' && p[1] == 'l')
+            err = recvline(buf, &b);
+        else if (p[0] == '*' && p[1] == 'a')
+            err = recvall(buf, &b);
+        else
+            luaL_argcheck(L, 0, 2, "invalid receive pattern");
+        /* get a fixed number of bytes (minus what was already partially
+         * received) */
+    }
     else
-        {
-            double n = lua_tonumber(L, 2);
-            size_t wanted = (size_t)n;
-            luaL_argcheck(L, n >= 0, 2, "invalid receive pattern");
-            if (size == 0 || wanted > size)
-                err = recvraw(buf, wanted - size, &b);
-        }
+    {
+        double n = lua_tonumber(L, 2);
+        size_t wanted = (size_t)n;
+        luaL_argcheck(L, n >= 0, 2, "invalid receive pattern");
+        if (size == 0 || wanted > size)
+            err = recvraw(buf, wanted - size, &b);
+    }
     /* check if there was an error */
     if (err != IO_DONE)
-        {
-            /* we can't push anyting in the stack before pushing the
-             * contents of the buffer. this is the reason for the complication
-             */
-            luaL_pushresult(&b);
-            lua_pushstring(L, buf->io->error(buf->io->ctx, err));
-            lua_pushvalue(L, -2);
-            lua_pushnil(L);
-            lua_replace(L, -4);
-        }
+    {
+        /* we can't push anyting in the stack before pushing the
+         * contents of the buffer. this is the reason for the complication
+         */
+        luaL_pushresult(&b);
+        lua_pushstring(L, buf->io->error(buf->io->ctx, err));
+        lua_pushvalue(L, -2);
+        lua_pushnil(L);
+        lua_replace(L, -4);
+    }
     else
-        {
-            luaL_pushresult(&b);
-            lua_pushnil(L);
-            lua_pushnil(L);
-        }
+    {
+        luaL_pushresult(&b);
+        lua_pushnil(L);
+        lua_pushnil(L);
+    }
 #ifdef LUASOCKET_DEBUG
     /* push time elapsed during operation as the last return value */
     lua_pushnumber(L, timeout_gettime() - timeout_getstart(buf->tm));
@@ -195,13 +195,12 @@ static int sendraw(p_buffer buf, const char *data, size_t count, size_t *sent)
     size_t total = 0;
     int err = IO_DONE;
     while (total < count && err == IO_DONE)
-        {
-            size_t done = 0;
-            size_t step =
-                (count - total <= STEPSIZE) ? count - total : STEPSIZE;
-            err = io->send(io->ctx, data + total, step, &done, tm);
-            total += done;
-        }
+    {
+        size_t done = 0;
+        size_t step = (count - total <= STEPSIZE) ? count - total : STEPSIZE;
+        err = io->send(io->ctx, data + total, step, &done, tm);
+        total += done;
+    }
     *sent = total;
     buf->sent += total;
     return err;
@@ -215,17 +214,17 @@ static int recvraw(p_buffer buf, size_t wanted, luaL_Buffer *b)
     int err = IO_DONE;
     size_t total = 0;
     while (err == IO_DONE)
-        {
-            size_t count;
-            const char *data;
-            err = buffer_get(buf, &data, &count);
-            count = MIN(count, wanted - total);
-            luaL_addlstring(b, data, count);
-            buffer_skip(buf, count);
-            total += count;
-            if (total >= wanted)
-                break;
-        }
+    {
+        size_t count;
+        const char *data;
+        err = buffer_get(buf, &data, &count);
+        count = MIN(count, wanted - total);
+        luaL_addlstring(b, data, count);
+        buffer_skip(buf, count);
+        total += count;
+        if (total >= wanted)
+            break;
+    }
     return err;
 }
 
@@ -237,21 +236,21 @@ static int recvall(p_buffer buf, luaL_Buffer *b)
     int err = IO_DONE;
     size_t total = 0;
     while (err == IO_DONE)
-        {
-            const char *data;
-            size_t count;
-            err = buffer_get(buf, &data, &count);
-            total += count;
-            luaL_addlstring(b, data, count);
-            buffer_skip(buf, count);
-        }
+    {
+        const char *data;
+        size_t count;
+        err = buffer_get(buf, &data, &count);
+        total += count;
+        luaL_addlstring(b, data, count);
+        buffer_skip(buf, count);
+    }
     if (err == IO_CLOSED)
-        {
-            if (total > 0)
-                return IO_DONE;
-            else
-                return IO_CLOSED;
-        }
+    {
+        if (total > 0)
+            return IO_DONE;
+        else
+            return IO_CLOSED;
+    }
     else
         return err;
 }
@@ -264,26 +263,26 @@ static int recvline(p_buffer buf, luaL_Buffer *b)
 {
     int err = IO_DONE;
     while (err == IO_DONE)
+    {
+        size_t count, pos;
+        const char *data;
+        err = buffer_get(buf, &data, &count);
+        pos = 0;
+        while (pos < count && data[pos] != '\n')
         {
-            size_t count, pos;
-            const char *data;
-            err = buffer_get(buf, &data, &count);
-            pos = 0;
-            while (pos < count && data[pos] != '\n')
-                {
-                    /* we ignore all \r's */
-                    if (data[pos] != '\r')
-                        luaL_addchar(b, data[pos]);
-                    pos++;
-                }
-            if (pos < count)
-                {                              /* found '\n' */
-                    buffer_skip(buf, pos + 1); /* skip '\n' too */
-                    break;                     /* we are done */
-                }
-            else /* reached the end of the buffer */
-                buffer_skip(buf, pos);
+            /* we ignore all \r's */
+            if (data[pos] != '\r')
+                luaL_addchar(b, data[pos]);
+            pos++;
         }
+        if (pos < count)
+        {                              /* found '\n' */
+            buffer_skip(buf, pos + 1); /* skip '\n' too */
+            break;                     /* we are done */
+        }
+        else /* reached the end of the buffer */
+            buffer_skip(buf, pos);
+    }
     return err;
 }
 
@@ -309,12 +308,12 @@ static int buffer_get(p_buffer buf, const char **data, size_t *count)
     p_io io = buf->io;
     p_timeout tm = buf->tm;
     if (buffer_isempty(buf))
-        {
-            size_t got;
-            err = io->recv(io->ctx, buf->data, BUF_SIZE, &got, tm);
-            buf->first = 0;
-            buf->last = got;
-        }
+    {
+        size_t got;
+        err = io->recv(io->ctx, buf->data, BUF_SIZE, &got, tm);
+        buf->first = 0;
+        buf->last = got;
+    }
     *count = buf->last - buf->first;
     *data = buf->data + buf->first;
     return err;

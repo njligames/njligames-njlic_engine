@@ -121,11 +121,11 @@ void luaE_freeCI(lua_State *L)
     CallInfo *next = ci->next;
     ci->next = NULL;
     while ((ci = next) != NULL)
-        {
-            next = ci->next;
-            luaM_free(L, ci);
-            L->nci--;
-        }
+    {
+        next = ci->next;
+        luaM_free(L, ci);
+        L->nci--;
+    }
 }
 
 /*
@@ -137,13 +137,13 @@ void luaE_shrinkCI(lua_State *L)
     CallInfo *next2; /* next's next */
     /* while there are two nexts */
     while (ci->next != NULL && (next2 = ci->next->next) != NULL)
-        {
-            luaM_free(L, ci->next); /* free next */
-            L->nci--;
-            ci->next = next2; /* remove 'next' from the list */
-            next2->previous = ci;
-            ci = next2; /* keep next's next */
-        }
+    {
+        luaM_free(L, ci->next); /* free next */
+        L->nci--;
+        ci->next = next2; /* remove 'next' from the list */
+        next2->previous = ci;
+        ci = next2; /* keep next's next */
+    }
 }
 
 static void stack_init(lua_State *L1, lua_State *L)
@@ -332,11 +332,11 @@ LUA_API lua_State *lua_newstate(lua_Alloc f, void *ud)
     for (i = 0; i < LUA_NUMTAGS; i++)
         g->mt[i] = NULL;
     if (luaD_rawrunprotected(L, f_luaopen, NULL) != LUA_OK)
-        {
-            /* memory allocation error: free partial state */
-            close_state(L);
-            L = NULL;
-        }
+    {
+        /* memory allocation error: free partial state */
+        close_state(L);
+        L = NULL;
+    }
     return L;
 }
 

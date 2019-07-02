@@ -142,9 +142,9 @@ namespace njli
     MaterialProperty &MaterialProperty::operator=(const MaterialProperty &rhs)
     {
         if (this != &rhs)
-            {
-                // TODO: Implement...
-            }
+        {
+            // TODO: Implement...
+        }
         return *this;
     }
 
@@ -217,17 +217,17 @@ namespace njli
     void MaterialProperty::destroy(MaterialProperty *object)
     {
         if (object)
-            {
-                //            for (s32 i = 0; i < NUMBER_OF_IMAGES; ++i)
-                //            {
-                //                Image *img = object->m_loadGPU_images[i];
-                //                object->removeChild(img);
-                //                Image::destroy(img);
-                //            }
-                //            Image::destroyArray(object->m_loadGPU_images);
+        {
+            //            for (s32 i = 0; i < NUMBER_OF_IMAGES; ++i)
+            //            {
+            //                Image *img = object->m_loadGPU_images[i];
+            //                object->removeChild(img);
+            //                Image::destroy(img);
+            //            }
+            //            Image::destroyArray(object->m_loadGPU_images);
 
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void MaterialProperty::load(MaterialProperty &object, lua_State *L,
@@ -241,56 +241,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        MaterialProperty::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                MaterialProperty::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -397,14 +397,14 @@ namespace njli
     void MaterialProperty::unLoadGPU()
     {
         if (-1 != m_textureID)
-            {
-                u8 textureIndex = getTextureIndex();
-                m_materialBound[textureIndex] = false;
+        {
+            u8 textureIndex = getTextureIndex();
+            m_materialBound[textureIndex] = false;
 
-                MaterialProperty::removeReference(this);
+            MaterialProperty::removeReference(this);
 
-                glDeleteTextures(1, &m_textureID);
-            }
+            glDeleteTextures(1, &m_textureID);
+        }
         m_textureID = -1;
         m_AbstractFrameBufferObject = NULL;
     }
@@ -416,20 +416,20 @@ namespace njli
         glActiveTexture(GL_TEXTURE0 + getTextureIndex());
 
         if (m_AbstractFrameBufferObject)
-            {
-                glBindTexture(m_textureType,
-                              m_AbstractFrameBufferObject->getTextureID());
-            }
+        {
+            glBindTexture(m_textureType,
+                          m_AbstractFrameBufferObject->getTextureID());
+        }
         else
-            {
-                // Bind to the texture that has been loaded for this particle
-                // system
-                glBindTexture(m_textureType, m_textureID);
+        {
+            // Bind to the texture that has been loaded for this particle
+            // system
+            glBindTexture(m_textureType, m_textureID);
 
-                loadProperties();
+            loadProperties();
 
-                reLoadTexImage2DInternal(img, GL_TEXTURE_2D, offset);
-            }
+            reLoadTexImage2DInternal(img, GL_TEXTURE_2D, offset);
+        }
         m_hasOpacity = img.hasAlpha();
     }
 
@@ -446,35 +446,35 @@ namespace njli
         loadProperties();
 
         switch (cubeSide)
-            {
-            case JLI_TEXTURECUBE_SIDE_NEGATIVE_X:
-                reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
-                                         offset);
-                break;
-            case JLI_TEXTURECUBE_SIDE_NEGATIVE_Y:
-                reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
-                                         offset);
-                break;
-            case JLI_TEXTURECUBE_SIDE_NEGATIVE_Z:
-                reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
-                                         offset);
-                break;
-            case JLI_TEXTURECUBE_SIDE_POSITIVE_X:
-                reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_POSITIVE_X,
-                                         offset);
-                break;
-            case JLI_TEXTURECUBE_SIDE_POSITIVE_Y:
-                reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
-                                         offset);
-                break;
-            case JLI_TEXTURECUBE_SIDE_POSITIVE_Z:
-                reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
-                                         offset);
-                break;
+        {
+        case JLI_TEXTURECUBE_SIDE_NEGATIVE_X:
+            reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+                                     offset);
+            break;
+        case JLI_TEXTURECUBE_SIDE_NEGATIVE_Y:
+            reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+                                     offset);
+            break;
+        case JLI_TEXTURECUBE_SIDE_NEGATIVE_Z:
+            reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
+                                     offset);
+            break;
+        case JLI_TEXTURECUBE_SIDE_POSITIVE_X:
+            reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_POSITIVE_X,
+                                     offset);
+            break;
+        case JLI_TEXTURECUBE_SIDE_POSITIVE_Y:
+            reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+                                     offset);
+            break;
+        case JLI_TEXTURECUBE_SIDE_POSITIVE_Z:
+            reLoadTexImage2DInternal(img, GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+                                     offset);
+            break;
 
-            default:
-                break;
-            }
+        default:
+            break;
+        }
         m_hasOpacity = img.hasAlpha();
     }
 
@@ -525,21 +525,21 @@ namespace njli
             glActiveTexture(GL_TEXTURE0 + textureIndex);
 
         if (m_AbstractFrameBufferObject)
-            {
-                glBindTexture(m_textureType,
-                              m_AbstractFrameBufferObject->getTextureID());
-                retVal = true;
-            }
+        {
+            glBindTexture(m_textureType,
+                          m_AbstractFrameBufferObject->getTextureID());
+            retVal = true;
+        }
         else if (m_textureID != -1)
-            {
-                // Bind to the texture that has been loaded for this particle
-                // system
-                glBindTexture(m_textureType, m_textureID);
+        {
+            // Bind to the texture that has been loaded for this particle
+            // system
+            glBindTexture(m_textureType, m_textureID);
 
-                m_materialBound[textureIndex] = true;
+            m_materialBound[textureIndex] = true;
 
-                retVal = true;
-            }
+            retVal = true;
+        }
         return retVal;
     }
 
@@ -548,14 +548,14 @@ namespace njli
         u8 textureIndex = getTextureIndex();
 
         if (m_textureID != -1)
-            {
-                //            m_materialBound[textureIndex] = false;
+        {
+            //            m_materialBound[textureIndex] = false;
 
-                glActiveTexture(GL_TEXTURE0 + textureIndex);
-                // Bind to the texture that has been loaded for this particle
-                // system
-                glBindTexture(m_textureType, 0);
-            }
+            glActiveTexture(GL_TEXTURE0 + textureIndex);
+            // Bind to the texture that has been loaded for this particle
+            // system
+            glBindTexture(m_textureType, 0);
+        }
     }
 
     void MaterialProperty::loadTexImage2DInternal(const Image &img, s32 target)
@@ -573,55 +573,55 @@ namespace njli
             img.getWidth() * img.getHeight() * img.getNumberOfComponents();
 
         switch (m_NumberOfComponents)
-            {
-            case 1:
-                {
-                    internalformat = GL_LUMINANCE;
-                    format = GL_LUMINANCE;
-                }
-                break;
+        {
+        case 1:
+        {
+            internalformat = GL_LUMINANCE;
+            format = GL_LUMINANCE;
+        }
+        break;
 
-            case 2:
-                {
-                    internalformat = GL_LUMINANCE_ALPHA;
-                    format = GL_LUMINANCE_ALPHA;
-                }
-                break;
-            case 3:
-                {
-                    internalformat = GL_RGB;
-                    format = GL_RGB;
-                }
-                break;
-            case 4:
-                {
-                    internalformat = GL_RGBA;
-                    format = GL_RGBA;
-                }
-                break;
-            }
+        case 2:
+        {
+            internalformat = GL_LUMINANCE_ALPHA;
+            format = GL_LUMINANCE_ALPHA;
+        }
+        break;
+        case 3:
+        {
+            internalformat = GL_RGB;
+            format = GL_RGB;
+        }
+        break;
+        case 4:
+        {
+            internalformat = GL_RGBA;
+            format = GL_RGBA;
+        }
+        break;
+        }
 
         if (img.isCompressed())
-            {
-                glCompressedTexImage2D(target, level, internalformat, m_Width,
-                                       m_Height, border, imageSize, pixels);
-                DEBUG_GL_ERROR_WRITE("glCompressedTexImage2D");
-            }
+        {
+            glCompressedTexImage2D(target, level, internalformat, m_Width,
+                                   m_Height, border, imageSize, pixels);
+            DEBUG_GL_ERROR_WRITE("glCompressedTexImage2D");
+        }
         else
-            {
-                glTexImage2D(target, level, internalformat, m_Width, m_Height,
-                             border, format, type, pixels);
-                DEBUG_GL_ERROR_WRITE("glTexImage2D");
-            }
+        {
+            glTexImage2D(target, level, internalformat, m_Width, m_Height,
+                         border, format, type, pixels);
+            DEBUG_GL_ERROR_WRITE("glTexImage2D");
+        }
 
         if (isTexture2D())
-            {
-                SDL_assertCheck(img.isWidthHeightPowerOf2(),
-                                "The with and height have to be a power of 2");
-                glGenerateMipmap(target);
-                // https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glGenerateMipmap.xml
-                DEBUG_GL_ERROR_WRITE("glGenerateMipmap");
-            }
+        {
+            SDL_assertCheck(img.isWidthHeightPowerOf2(),
+                            "The with and height have to be a power of 2");
+            glGenerateMipmap(target);
+            // https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glGenerateMipmap.xml
+            DEBUG_GL_ERROR_WRITE("glGenerateMipmap");
+        }
     }
 
     void MaterialProperty::reLoadTexImage2DInternal(const Image &img,
@@ -642,47 +642,47 @@ namespace njli
         SDL_assert(img.getNumberOfComponents() == m_NumberOfComponents);
 
         switch (m_NumberOfComponents)
-            {
-            case 1:
-                {
-                    internalformat = GL_LUMINANCE;
-                    format = GL_LUMINANCE;
-                }
-                break;
+        {
+        case 1:
+        {
+            internalformat = GL_LUMINANCE;
+            format = GL_LUMINANCE;
+        }
+        break;
 
-            case 2:
-                {
-                    internalformat = GL_LUMINANCE_ALPHA;
-                    format = GL_LUMINANCE_ALPHA;
-                }
-                break;
-            case 3:
-                {
-                    internalformat = GL_RGB;
-                    format = GL_RGB;
-                }
-                break;
-            case 4:
-                {
-                    internalformat = GL_RGBA;
-                    format = GL_RGBA;
-                }
-                break;
-            }
+        case 2:
+        {
+            internalformat = GL_LUMINANCE_ALPHA;
+            format = GL_LUMINANCE_ALPHA;
+        }
+        break;
+        case 3:
+        {
+            internalformat = GL_RGB;
+            format = GL_RGB;
+        }
+        break;
+        case 4:
+        {
+            internalformat = GL_RGBA;
+            format = GL_RGBA;
+        }
+        break;
+        }
 
         if (img.isCompressed())
-            {
-                glCompressedTexSubImage2D(target, level, offset.x(), offset.y(),
-                                          m_Width, m_Height, format, imageSize,
-                                          pixels);
-                DEBUG_GL_ERROR_WRITE("glCompressedTexSubImage2D");
-            }
+        {
+            glCompressedTexSubImage2D(target, level, offset.x(), offset.y(),
+                                      m_Width, m_Height, format, imageSize,
+                                      pixels);
+            DEBUG_GL_ERROR_WRITE("glCompressedTexSubImage2D");
+        }
         else
-            {
-                glTexSubImage2D(target, level, offset.x(), offset.y(), m_Width,
-                                m_Height, format, type, pixels);
-                DEBUG_GL_ERROR_WRITE("glTexSubImage2D");
-            }
+        {
+            glTexSubImage2D(target, level, offset.x(), offset.y(), m_Width,
+                            m_Height, format, type, pixels);
+            DEBUG_GL_ERROR_WRITE("glTexSubImage2D");
+        }
 
         SDL_assertCheck(img.isWidthHeightPowerOf2(),
                         "The with and height have to be a power of 2");
@@ -704,98 +704,92 @@ namespace njli
                    m_sWrap < JLI_TEXTURE_WRAP_TYPE_MAX);
 
         switch (m_minVal)
-            {
-            case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_NEAREST:
-                glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
-                                GL_NEAREST);
-                DEBUG_GL_ERROR_WRITE("glTexParameteri");
-                break;
-            case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_LINEAR:
-                glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
-                                GL_LINEAR);
-                DEBUG_GL_ERROR_WRITE("glTexParameteri");
-                break;
-            case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_NEAREST_MIPMAP_NEAREST:
-                glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
-                                GL_NEAREST_MIPMAP_NEAREST);
-                DEBUG_GL_ERROR_WRITE("glTexParameteri");
-                break;
-            case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_NEAREST_MIPMAP_LINEAR:
-                glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
-                                GL_NEAREST_MIPMAP_LINEAR);
-                DEBUG_GL_ERROR_WRITE("glTexParameteri");
-                break;
-            case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_LINEAR_MIPMAP_NEAREST:
-                glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
-                                GL_LINEAR_MIPMAP_NEAREST);
-                DEBUG_GL_ERROR_WRITE("glTexParameteri");
-                break;
-            case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_LINEAR_MIPMAP_LINEAR:
-                glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
-                                GL_LINEAR_MIPMAP_LINEAR);
-                DEBUG_GL_ERROR_WRITE("glTexParameteri");
-                break;
-            default:
-                SDL_assert(false);
-                break;
-            }
+        {
+        case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_NEAREST:
+            glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            DEBUG_GL_ERROR_WRITE("glTexParameteri");
+            break;
+        case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_LINEAR:
+            glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            DEBUG_GL_ERROR_WRITE("glTexParameteri");
+            break;
+        case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_NEAREST_MIPMAP_NEAREST:
+            glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
+                            GL_NEAREST_MIPMAP_NEAREST);
+            DEBUG_GL_ERROR_WRITE("glTexParameteri");
+            break;
+        case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_NEAREST_MIPMAP_LINEAR:
+            glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
+                            GL_NEAREST_MIPMAP_LINEAR);
+            DEBUG_GL_ERROR_WRITE("glTexParameteri");
+            break;
+        case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_LINEAR_MIPMAP_NEAREST:
+            glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
+                            GL_LINEAR_MIPMAP_NEAREST);
+            DEBUG_GL_ERROR_WRITE("glTexParameteri");
+            break;
+        case JLI_TEXTURE_MINIFICATION_VALUE_TYPE_LINEAR_MIPMAP_LINEAR:
+            glTexParameteri(m_textureType, GL_TEXTURE_MIN_FILTER,
+                            GL_LINEAR_MIPMAP_LINEAR);
+            DEBUG_GL_ERROR_WRITE("glTexParameteri");
+            break;
+        default:
+            SDL_assert(false);
+            break;
+        }
 
         switch (m_magVal)
-            {
-            case JLI_TEXTURE_MAGNIFICATION_VALUE_TYPE_NEAREST:
-                glTexParameteri(m_textureType, GL_TEXTURE_MAG_FILTER,
-                                GL_NEAREST);
-                DEBUG_GL_ERROR_WRITE("glTexParameteri");
-                break;
-            case JLI_TEXTURE_MAGNIFICATION_VALUE_TYPE_LINEAR:
-                glTexParameteri(m_textureType, GL_TEXTURE_MAG_FILTER,
-                                GL_LINEAR);
-                DEBUG_GL_ERROR_WRITE("glTexParameteri");
-                break;
-            default:
-                SDL_assert(false);
-                break;
-            }
+        {
+        case JLI_TEXTURE_MAGNIFICATION_VALUE_TYPE_NEAREST:
+            glTexParameteri(m_textureType, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            DEBUG_GL_ERROR_WRITE("glTexParameteri");
+            break;
+        case JLI_TEXTURE_MAGNIFICATION_VALUE_TYPE_LINEAR:
+            glTexParameteri(m_textureType, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            DEBUG_GL_ERROR_WRITE("glTexParameteri");
+            break;
+        default:
+            SDL_assert(false);
+            break;
+        }
 
         switch (m_sWrap)
-            {
-            case JLI_TEXTURE_WRAP_TYPE_REPEAT:
-                glTexParameterf(m_textureType, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                DEBUG_GL_ERROR_WRITE("glTexParameterf");
-                break;
-            case JLI_TEXTURE_WRAP_TYPE_CLAMP_TO_EDGE:
-                glTexParameterf(m_textureType, GL_TEXTURE_WRAP_S,
-                                GL_CLAMP_TO_EDGE);
-                DEBUG_GL_ERROR_WRITE("glTexParameterf");
-                break;
-            case JLI_TEXTURE_WRAP_TYPE_MIRRORED_REPEAT:
-                glTexParameterf(m_textureType, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                DEBUG_GL_ERROR_WRITE("glTexParameterf");
-                break;
-            default:
-                SDL_assert(false);
-                break;
-            }
+        {
+        case JLI_TEXTURE_WRAP_TYPE_REPEAT:
+            glTexParameterf(m_textureType, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            DEBUG_GL_ERROR_WRITE("glTexParameterf");
+            break;
+        case JLI_TEXTURE_WRAP_TYPE_CLAMP_TO_EDGE:
+            glTexParameterf(m_textureType, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            DEBUG_GL_ERROR_WRITE("glTexParameterf");
+            break;
+        case JLI_TEXTURE_WRAP_TYPE_MIRRORED_REPEAT:
+            glTexParameterf(m_textureType, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            DEBUG_GL_ERROR_WRITE("glTexParameterf");
+            break;
+        default:
+            SDL_assert(false);
+            break;
+        }
 
         switch (m_tWrap)
-            {
-            case JLI_TEXTURE_WRAP_TYPE_REPEAT:
-                glTexParameterf(m_textureType, GL_TEXTURE_WRAP_T, GL_REPEAT);
-                DEBUG_GL_ERROR_WRITE("glTexParameterf");
-                break;
-            case JLI_TEXTURE_WRAP_TYPE_CLAMP_TO_EDGE:
-                glTexParameterf(m_textureType, GL_TEXTURE_WRAP_T,
-                                GL_CLAMP_TO_EDGE);
-                DEBUG_GL_ERROR_WRITE("glTexParameterf");
-                break;
-            case JLI_TEXTURE_WRAP_TYPE_MIRRORED_REPEAT:
-                glTexParameterf(m_textureType, GL_TEXTURE_WRAP_T, GL_REPEAT);
-                DEBUG_GL_ERROR_WRITE("glTexParameterf");
-                break;
-            default:
-                SDL_assert(false);
-                break;
-            }
+        {
+        case JLI_TEXTURE_WRAP_TYPE_REPEAT:
+            glTexParameterf(m_textureType, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            DEBUG_GL_ERROR_WRITE("glTexParameterf");
+            break;
+        case JLI_TEXTURE_WRAP_TYPE_CLAMP_TO_EDGE:
+            glTexParameterf(m_textureType, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            DEBUG_GL_ERROR_WRITE("glTexParameterf");
+            break;
+        case JLI_TEXTURE_WRAP_TYPE_MIRRORED_REPEAT:
+            glTexParameterf(m_textureType, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            DEBUG_GL_ERROR_WRITE("glTexParameterf");
+            break;
+        default:
+            SDL_assert(false);
+            break;
+        }
     }
 
     //    void MaterialProperty::render()
@@ -871,14 +865,14 @@ namespace njli
         end = s_MaxTextureUnits;
 #endif
         for (s32 i = 0; i < end && !added; ++i)
+        {
+            if (false == s_TextureIDReferences[i])
             {
-                if (false == s_TextureIDReferences[i])
-                    {
-                        s_TextureIDReferences[i] = 1;
-                        property->setTextureIndex(i);
-                        added = true;
-                    }
+                s_TextureIDReferences[i] = 1;
+                property->setTextureIndex(i);
+                added = true;
             }
+        }
 
         //        std::string ids = s_TextureIDReferences.to_string();
         //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "add\t%s", ids.c_str());
@@ -922,40 +916,40 @@ namespace njli
         m_textureType = GL_TEXTURE_2D;
 
         if (img.isPvr())
-            {
-                glActiveTexture(GL_TEXTURE0 + getTextureIndex());
+        {
+            glActiveTexture(GL_TEXTURE0 + getTextureIndex());
 
-                DEBUG_GL_ERROR_WRITE("glActiveTexture");
+            DEBUG_GL_ERROR_WRITE("glActiveTexture");
 
-                SDL_assertPrint(
-                    true, "need to add the functionality to load pvr images");
+            SDL_assertPrint(true,
+                            "need to add the functionality to load pvr images");
 
-                //            if(PVRTTextureLoadFromPointer(img.getDataRaw(),
-                //            &m_textureID) != PVR_SUCCESS)
-                //            {
-                //                SDL_LogError(SDL_LOG_CATEGORY_TEST, "ERROR:
-                //                Failed to load texture.");
-                //            }
-            }
+            //            if(PVRTTextureLoadFromPointer(img.getDataRaw(),
+            //            &m_textureID) != PVR_SUCCESS)
+            //            {
+            //                SDL_LogError(SDL_LOG_CATEGORY_TEST, "ERROR:
+            //                Failed to load texture.");
+            //            }
+        }
         else
-            {
-                //            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        {
+            //            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-                glActiveTexture(GL_TEXTURE0 + getTextureIndex());
-                DEBUG_GL_ERROR_WRITE("glActiveTexture");
+            glActiveTexture(GL_TEXTURE0 + getTextureIndex());
+            DEBUG_GL_ERROR_WRITE("glActiveTexture");
 
-                glGenTextures(1, &m_textureID);
-                DEBUG_GL_ERROR_WRITE("glGenTextures");
+            glGenTextures(1, &m_textureID);
+            DEBUG_GL_ERROR_WRITE("glGenTextures");
 
-                glBindTexture(m_textureType, m_textureID);
-                DEBUG_GL_ERROR_WRITE("glBindTexture");
+            glBindTexture(m_textureType, m_textureID);
+            DEBUG_GL_ERROR_WRITE("glBindTexture");
 
-                loadTexImage2DInternal(img, GL_TEXTURE_2D);
+            loadTexImage2DInternal(img, GL_TEXTURE_2D);
 
-                loadProperties();
+            loadProperties();
 
-                m_hasOpacity = img.hasAlpha();
-            }
+            m_hasOpacity = img.hasAlpha();
+        }
     }
 
     void MaterialProperty::loadGPU_Internal(

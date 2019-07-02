@@ -26,13 +26,13 @@ namespace njli
     const DeviceMouse &DeviceMouse::operator=(const DeviceMouse &rhs)
     {
         if (this != &rhs)
-            {
-                m_Button = rhs.m_Button;
-                m_EventType = rhs.m_EventType;
-                m_X = rhs.m_X;
-                m_Y = rhs.m_Y;
-                m_Clicks = rhs.m_Clicks;
-            }
+        {
+            m_Button = rhs.m_Button;
+            m_EventType = rhs.m_EventType;
+            m_X = rhs.m_X;
+            m_Y = rhs.m_Y;
+            m_Clicks = rhs.m_Clicks;
+        }
         return *this;
     }
 

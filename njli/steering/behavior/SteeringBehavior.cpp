@@ -50,9 +50,9 @@ namespace njli
     SteeringBehavior &SteeringBehavior::operator=(const SteeringBehavior &rhs)
     {
         if (this != &rhs)
-            {
-                *m_CurrentForce = *(rhs.m_CurrentForce);
-            }
+        {
+            *m_CurrentForce = *(rhs.m_CurrentForce);
+        }
         return *this;
     }
 
@@ -139,56 +139,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        SteeringBehavior::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    jli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<jli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                SteeringBehavior::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    jli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<jli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -210,11 +210,11 @@ namespace njli
             std::find(m_TargetList.begin(), m_TargetList.end(), target);
 
         if (iter == m_TargetList.end())
-            {
-                m_TargetList.push_back(target);
+        {
+            m_TargetList.push_back(target);
 
-                addChild(target);
-            }
+            addChild(target);
+        }
 
         return getTargetIndex(target);
     }
@@ -227,11 +227,11 @@ namespace njli
             std::find(m_TargetList.begin(), m_TargetList.end(), target);
 
         if (iter != m_TargetList.end())
-            {
-                removeChild(*iter);
-                m_TargetList.erase(iter);
-                return true;
-            }
+        {
+            removeChild(*iter);
+            m_TargetList.erase(iter);
+            return true;
+        }
         return false;
     }
 
@@ -239,9 +239,9 @@ namespace njli
     {
         for (std::vector<Node *>::iterator iter = m_TargetList.begin();
              iter != m_TargetList.end(); ++iter)
-            {
-                removeChild(*iter);
-            }
+        {
+            removeChild(*iter);
+        }
         m_TargetList.clear();
     }
 
@@ -254,10 +254,10 @@ namespace njli
     {
         for (std::vector<Node *>::const_iterator iter = m_TargetList.begin();
              iter != m_TargetList.end(); ++iter)
-            {
-                if (getChildIndex(*iter) != -1)
-                    targets.push_back(*iter);
-            }
+        {
+            if (getChildIndex(*iter) != -1)
+                targets.push_back(*iter);
+        }
     }
 
     s32 SteeringBehavior::getTargetIndex(Node *target) const
@@ -266,31 +266,31 @@ namespace njli
             std::find(m_TargetList.begin(), m_TargetList.end(), target);
 
         if (iter != m_TargetList.end())
-            {
-                return std::distance(m_TargetList.begin(), iter);
-            }
+        {
+            return std::distance(m_TargetList.begin(), iter);
+        }
         return -1;
     }
 
     Node *SteeringBehavior::getTarget(const u32 index)
     {
         if (index < m_TargetList.size())
-            {
-                s32 idx = getChildIndex(m_TargetList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<Node *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_TargetList.at(index));
+            if (idx != -1)
+                return dynamic_cast<Node *>(getChild(idx));
+        }
         return NULL;
     }
 
     const Node *SteeringBehavior::getTarget(const u32 index) const
     {
         if (index < m_TargetList.size())
-            {
-                s32 idx = getChildIndex(m_TargetList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<const Node *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_TargetList.at(index));
+            if (idx != -1)
+                return dynamic_cast<const Node *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -315,18 +315,17 @@ namespace njli
     btVector3 SteeringBehavior::getAverageTargetPosition() const
     {
         if (numberOfTargets() > 0)
+        {
+            btVector3 target(0, 0, 0);
+
+            for (std::vector<Node *>::const_iterator i = m_TargetList.begin();
+                 i != m_TargetList.end(); i++)
             {
-                btVector3 target(0, 0, 0);
-
-                for (std::vector<Node *>::const_iterator i =
-                         m_TargetList.begin();
-                     i != m_TargetList.end(); i++)
-                    {
-                        target += (*i)->getOrigin();
-                    }
-
-                return (target / numberOfTargets());
+                target += (*i)->getOrigin();
             }
+
+            return (target / numberOfTargets());
+        }
 
         return btVector3(0, 0, 0);
     }

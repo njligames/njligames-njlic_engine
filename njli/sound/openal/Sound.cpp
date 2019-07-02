@@ -53,21 +53,20 @@ static inline void CheckOpenALError(const char *stmt, const char *fname,
 
     ALenum err = alGetError();
     if (err != AL_NO_ERROR)
-        {
-            SDL_Log("OpenAL error %08x, (%s) at %s:%i - for %s", err,
-                    GetOpenALErrorString(err), fname, line, stmt);
-        }
+    {
+        SDL_Log("OpenAL error %08x, (%s) at %s:%i - for %s", err,
+                GetOpenALErrorString(err), fname, line, stmt);
+    }
 };
 
 #ifndef AL_CHECK
 //#if !(defined(NDEBUG))
 #define AL_CHECK(stmt)                                                         \
     do                                                                         \
-        {                                                                      \
-            stmt;                                                              \
-            CheckOpenALError(#stmt, __FILE__, __LINE__);                       \
-        }                                                                      \
-    while (0);
+    {                                                                          \
+        stmt;                                                                  \
+        CheckOpenALError(#stmt, __FILE__, __LINE__);                           \
+    } while (0);
 #else
 #define AL_CHECK(stmt) stmt
 //#endif
@@ -98,7 +97,7 @@ namespace njli
 {
     Sound::Sound() : AbstractFactoryObject(this)
     {
-//        SINGLE_BUFFER_SIZE = 64 * 1024;
+        //        SINGLE_BUFFER_SIZE = 64 * 1024;
         SINGLE_BUFFER_SIZE = 2048 * 2048;
 
         mSettings.fileName = "";
@@ -121,7 +120,7 @@ namespace njli
 
         mSpinLock = false;
         mLoaded = false;
-//        mLooping = false;
+        //        mLooping = false;
     }
 
     Sound::Sound(const AbstractBuilder &builder) : AbstractFactoryObject(this)
@@ -141,8 +140,8 @@ namespace njli
         SDL_assert(false);
 
         if (this != &rhs)
-            {
-            }
+        {
+        }
         return *this;
     }
 
@@ -216,56 +215,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            // const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                // const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Sound::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Sound::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -389,23 +388,23 @@ namespace njli
         float time = mSoundFileWrapper->GetTime() - preBufferTime;
 
         if (mRemainBuffers < PRELOAD_BUFFERS_COUNT)
-            {
-                // file has already been read all
-                // we are currently "playing" sound from cache only
-                // and there is no loop active
-                time = mSoundFileWrapper->GetTotalTime() - preBufferTime;
-            }
+        {
+            // file has already been read all
+            // we are currently "playing" sound from cache only
+            // and there is no loop active
+            time = mSoundFileWrapper->GetTotalTime() - preBufferTime;
+        }
 
         if (time < 0)
-            {
-                // file has already been read all
-                // we are currently "playing" sound from last loop cycle
-                // but file stream is already in next loop
-                // because of the cache delay
+        {
+            // file has already been read all
+            // we are currently "playing" sound from last loop cycle
+            // but file stream is already in next loop
+            // because of the cache delay
 
-                // Signe of "+" => "- abs(time)" rewritten to "+ time"
-                time = mSoundFileWrapper->GetTotalTime() + time;
-            }
+            // Signe of "+" => "- abs(time)" rewritten to "+ time"
+            time = mSoundFileWrapper->GetTotalTime() + time;
+        }
 
         // add current buffer play time to time from file stream
         float result;
@@ -429,9 +428,9 @@ namespace njli
     void Sound::Release()
     {
         if (mState != STOPPED)
-            {
-                this->Stop();
-            }
+        {
+            this->Stop();
+        }
 
         fclose(mVfsFile);
         mVfsFile = NULL;
@@ -442,45 +441,44 @@ namespace njli
             delete mSoundFileWrapper;
 
         for (int i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
-            {
-                njli::World::getInstance()->getWorldSound()->FreeBuffer(
-                    mBuffers[i]);
-            }
+        {
+            njli::World::getInstance()->getWorldSound()->FreeBuffer(
+                mBuffers[i]);
+        }
     }
 
     void Sound::Play()
     {
         if (mState == PLAYING)
-            {
-                // can not start play same sound twice
-                return;
-            }
+        {
+            // can not start play same sound twice
+            return;
+        }
 
         if (mState == PAUSED)
-            {
-                mState = PLAYING;
+        {
+            mState = PLAYING;
 
-                AL_CHECK(alSourcef(mSource->refID, AL_PITCH, mSettings.pitch));
-                AL_CHECK(alSourcef(mSource->refID, AL_GAIN, mSettings.gain));
-                AL_CHECK(alSource3f(mSource->refID, AL_POSITION,
-                                    mSettings.pos.x(), mSettings.pos.y(),
-                                    mSettings.pos.z()));
-                AL_CHECK(alSource3f(
-                    mSource->refID, AL_VELOCITY, mSettings.velocity.x(),
-                    mSettings.velocity.y(), mSettings.velocity.z()));
-                AL_CHECK(alSourcei(mSource->refID, AL_LOOPING, mSettings.loop));
+            AL_CHECK(alSourcef(mSource->refID, AL_PITCH, mSettings.pitch));
+            AL_CHECK(alSourcef(mSource->refID, AL_GAIN, mSettings.gain));
+            AL_CHECK(alSource3f(mSource->refID, AL_POSITION, mSettings.pos.x(),
+                                mSettings.pos.y(), mSettings.pos.z()));
+            AL_CHECK(alSource3f(mSource->refID, AL_VELOCITY,
+                                mSettings.velocity.x(), mSettings.velocity.y(),
+                                mSettings.velocity.z()));
+            AL_CHECK(alSourcei(mSource->refID, AL_LOOPING, mSettings.loop));
 
-                AL_CHECK(alSourcePlay(mSource->refID));
+            AL_CHECK(alSourcePlay(mSource->refID));
 
-                return;
-            }
+            return;
+        }
 
         mSource = njli::World::getInstance()->getWorldSound()->GetFreeSource();
 
         if (mSource == NULL)
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         AL_CHECK(alSourcef(mSource->refID, AL_PITCH, mSettings.pitch));
         AL_CHECK(alSourcef(mSource->refID, AL_GAIN, mSettings.gain));
@@ -492,15 +490,15 @@ namespace njli
 
         int usedBuffersCount = 0;
         for (int i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
+        {
+            if (mBuffers[i] == NULL)
             {
-                if (mBuffers[i] == NULL)
-                    {
-                        continue;
-                    }
-                AL_CHECK(alSourceQueueBuffers(mSource->refID, 1,
-                                              &mBuffers[i]->refID));
-                usedBuffersCount++;
+                continue;
             }
+            AL_CHECK(
+                alSourceQueueBuffers(mSource->refID, 1, &mBuffers[i]->refID));
+            usedBuffersCount++;
+        }
 
         mPlayedCount++;
         AL_CHECK(alSourcePlay(mSource->refID));
@@ -512,9 +510,9 @@ namespace njli
     void Sound::Pause()
     {
         if (mState != PLAYING)
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         mState = PAUSED;
 
@@ -524,9 +522,9 @@ namespace njli
     void Sound::Stop()
     {
         if (mState == STOPPED)
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         mSpinLock = true;
         mState = STOPPED;
@@ -534,34 +532,33 @@ namespace njli
         AL_CHECK(alSourceStop(mSource->refID));
 
         for (int i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
+        {
+            if (mBuffers[i] == NULL)
             {
-                if (mBuffers[i] == NULL)
-                    {
-                        continue;
-                    }
-                AL_CHECK(alSourceUnqueueBuffers(mSource->refID, 1,
-                                                &mBuffers[i]->refID));
+                continue;
             }
+            AL_CHECK(
+                alSourceUnqueueBuffers(mSource->refID, 1, &mBuffers[i]->refID));
+        }
 
         njli::World::getInstance()->getWorldSound()->FreeSource(mSource);
 
         mSoundFileWrapper->ResetStream();
 
         for (u32 i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
-            {
-                njli::World::getInstance()->getWorldSound()->FreeBuffer(
-                    mBuffers[i]);
+        {
+            njli::World::getInstance()->getWorldSound()->FreeBuffer(
+                mBuffers[i]);
 
-                SoundBuffer *buf = njli::World::getInstance()
-                                       ->getWorldSound()
-                                       ->GetFreeBuffer();
-                if (buf == NULL)
-                    {
-                        SDL_Log("Not enought free sound-buffers");
-                        continue;
-                    }
-                mBuffers[i] = buf;
+            SoundBuffer *buf =
+                njli::World::getInstance()->getWorldSound()->GetFreeBuffer();
+            if (buf == NULL)
+            {
+                SDL_Log("Not enought free sound-buffers");
+                continue;
             }
+            mBuffers[i] = buf;
+        }
 
         this->Preload();
         mSpinLock = false;
@@ -577,12 +574,12 @@ namespace njli
     void Sound::GetRawData(std::vector<char> *rawData)
     {
         if (mState == PLAYING)
-            {
-                SDL_Log("Can not get raw data for sound (%s), that is in PLAY "
-                        "state.",
-                        mSettings.name.c_str());
-                return;
-            }
+        {
+            SDL_Log("Can not get raw data for sound (%s), that is in PLAY "
+                    "state.",
+                    mSettings.name.c_str());
+            return;
+        }
 
         mSoundFileWrapper->DecompressAll(*rawData);
     }
@@ -594,42 +591,42 @@ namespace njli
         this->GetRawData(&raw);
 
         if (raw.size() == 0)
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         auto bytesToT = [](short a, short b) {
             return ((b << 8) | a) / static_cast<T>(32768.0);
         };
 
         if (mSoundInfo.bitsPerChannel == 16)
+        {
+            int pos = 0;
+            while (pos < raw.size())
             {
-                int pos = 0;
-                while (pos < raw.size())
-                    {
-                        T v = bytesToT(raw[pos], raw[pos + 1]);
-                        pos += 2;
-                        rawData->push_back(v);
-                    }
+                T v = bytesToT(raw[pos], raw[pos + 1]);
+                pos += 2;
+                rawData->push_back(v);
             }
+        }
         else if (mSoundInfo.bitsPerChannel == 8)
+        {
+            int pos = 0;
+            while (pos < raw.size())
             {
-                int pos = 0;
-                while (pos < raw.size())
-                    {
-                        T v = raw[pos] / static_cast<T>(32768.0);
-                        pos += 1;
-                        rawData->push_back(v);
-                    }
+                T v = raw[pos] / static_cast<T>(32768.0);
+                pos += 1;
+                rawData->push_back(v);
             }
+        }
     }
 
     void Sound::LoadData()
     {
         for (int i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
-            {
-                mBuffers[i] = NULL;
-            }
+        {
+            mBuffers[i] = NULL;
+        }
 
         mSpinLock = false;
 
@@ -638,32 +635,32 @@ namespace njli
         fseek(vfsFile, 0L, SEEK_END);
         auto sz = ftell(vfsFile);
         fseek(vfsFile, 0L, SEEK_SET);
-        while(sz > this->SINGLE_BUFFER_SIZE)
+        while (sz > this->SINGLE_BUFFER_SIZE)
             this->SINGLE_BUFFER_SIZE *= 2;
-        
+
         if (vfsFile == NULL)
-            {
-                SDL_Log("File %s not found", mSettings.fileName.c_str());
-                return;
-            }
+        {
+            SDL_Log("File %s not found", mSettings.fileName.c_str());
+            return;
+        }
 
         if (mSettings.fileName.substr(mSettings.fileName.find_last_of(".") +
                                       1) == "ogg")
-            {
-                mSoundFileWrapper = new WrapperOgg(this->SINGLE_BUFFER_SIZE);
-            }
+        {
+            mSoundFileWrapper = new WrapperOgg(this->SINGLE_BUFFER_SIZE);
+        }
         else if (mSettings.fileName.substr(
                      mSettings.fileName.find_last_of(".") + 1) == "wav")
-            {
-                mSoundFileWrapper = new WrapperWav(this->SINGLE_BUFFER_SIZE);
-            }
+        {
+            mSoundFileWrapper = new WrapperWav(this->SINGLE_BUFFER_SIZE);
+        }
         else
-            {
-                SDL_Log("File extension %s not supported.",
-                        mSettings.fileName
-                            .substr(mSettings.fileName.find_last_of(".") + 1)
-                            .c_str());
-            }
+        {
+            SDL_Log("File extension %s not supported.",
+                    mSettings.fileName
+                        .substr(mSettings.fileName.find_last_of(".") + 1)
+                        .c_str());
+        }
 
         mSoundFileWrapper->LoadFromFile((FILE *)vfsFile, &mSoundInfo);
 
@@ -689,42 +686,41 @@ namespace njli
         // AL_CHECK( alGenBuffers((ALuint)1, &this->buffer) );
 
         if (mSoundInfo.bitsPerChannel == 16)
-            {
+        {
 
-                if (mSoundInfo.channels == 1)
-                    {
-                        mSoundInfo.format = AL_FORMAT_MONO16;
-                    }
-                else
-                    {
-                        mSoundInfo.format = AL_FORMAT_STEREO16;
-                    }
+            if (mSoundInfo.channels == 1)
+            {
+                mSoundInfo.format = AL_FORMAT_MONO16;
             }
+            else
+            {
+                mSoundInfo.format = AL_FORMAT_STEREO16;
+            }
+        }
         else if (mSoundInfo.bitsPerChannel == 8)
-            {
+        {
 
-                if (mSoundInfo.channels == 1)
-                    {
-                        mSoundInfo.format = AL_FORMAT_MONO8;
-                    }
-                else
-                    {
-                        mSoundInfo.format = AL_FORMAT_STEREO8;
-                    }
+            if (mSoundInfo.channels == 1)
+            {
+                mSoundInfo.format = AL_FORMAT_MONO8;
             }
+            else
+            {
+                mSoundInfo.format = AL_FORMAT_STEREO8;
+            }
+        }
 
         for (u32 i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
+        {
+            SoundBuffer *buf =
+                njli::World::getInstance()->getWorldSound()->GetFreeBuffer();
+            if (buf == NULL)
             {
-                SoundBuffer *buf = njli::World::getInstance()
-                                       ->getWorldSound()
-                                       ->GetFreeBuffer();
-                if (buf == NULL)
-                    {
-                        SDL_Log("Not enought free sound-buffers");
-                        continue;
-                    }
-                mBuffers[i] = buf;
+                SDL_Log("Not enought free sound-buffers");
+                continue;
             }
+            mBuffers[i] = buf;
+        }
 
         this->Preload();
 
@@ -743,9 +739,9 @@ namespace njli
     void Sound::LoadRawData(char *rawData, u32 dataSize)
     {
         for (int i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
-            {
-                mBuffers[i] = NULL;
-            }
+        {
+            mBuffers[i] = NULL;
+        }
 
         mSpinLock = false;
 
@@ -755,42 +751,41 @@ namespace njli
         mSoundFileWrapper->LoadFromMemory(rawData, dataSize, &mSoundInfo);
 
         if (mSoundInfo.bitsPerChannel == 16)
-            {
+        {
 
-                if (mSoundInfo.channels == 1)
-                    {
-                        mSoundInfo.format = AL_FORMAT_MONO16;
-                    }
-                else
-                    {
-                        mSoundInfo.format = AL_FORMAT_STEREO16;
-                    }
+            if (mSoundInfo.channels == 1)
+            {
+                mSoundInfo.format = AL_FORMAT_MONO16;
             }
+            else
+            {
+                mSoundInfo.format = AL_FORMAT_STEREO16;
+            }
+        }
         else if (mSoundInfo.bitsPerChannel == 8)
-            {
+        {
 
-                if (mSoundInfo.channels == 1)
-                    {
-                        mSoundInfo.format = AL_FORMAT_MONO8;
-                    }
-                else
-                    {
-                        mSoundInfo.format = AL_FORMAT_STEREO8;
-                    }
+            if (mSoundInfo.channels == 1)
+            {
+                mSoundInfo.format = AL_FORMAT_MONO8;
             }
+            else
+            {
+                mSoundInfo.format = AL_FORMAT_STEREO8;
+            }
+        }
 
         for (u32 i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
+        {
+            SoundBuffer *buf =
+                njli::World::getInstance()->getWorldSound()->GetFreeBuffer();
+            if (buf == NULL)
             {
-                SoundBuffer *buf = njli::World::getInstance()
-                                       ->getWorldSound()
-                                       ->GetFreeBuffer();
-                if (buf == NULL)
-                    {
-                        SDL_Log("Not enought free sound-buffers");
-                        continue;
-                    }
-                mBuffers[i] = buf;
+                SDL_Log("Not enought free sound-buffers");
+                continue;
             }
+            mBuffers[i] = buf;
+        }
 
         this->Preload();
 
@@ -800,26 +795,25 @@ namespace njli
     bool Sound::Preload()
     {
         for (int i = 0; i < PRELOAD_BUFFERS_COUNT; i++)
+        {
+            if (mBuffers[i] == NULL)
             {
-                if (mBuffers[i] == NULL)
-                    {
-                        continue;
-                    }
-                if (this->PreloadBuffer(mBuffers[i]->refID) == false)
-                    {
-                        // preload raw data - all buffers were not used, free
-                        // them
-                        for (int j = i; j < PRELOAD_BUFFERS_COUNT; j++)
-                            {
-                                njli::World::getInstance()
-                                    ->getWorldSound()
-                                    ->FreeBuffer(mBuffers[j]);
-                                mBuffers[j] = NULL;
-                            }
-
-                        return false;
-                    }
+                continue;
             }
+            if (this->PreloadBuffer(mBuffers[i]->refID) == false)
+            {
+                // preload raw data - all buffers were not used, free
+                // them
+                for (int j = i; j < PRELOAD_BUFFERS_COUNT; j++)
+                {
+                    njli::World::getInstance()->getWorldSound()->FreeBuffer(
+                        mBuffers[j]);
+                    mBuffers[j] = NULL;
+                }
+
+                return false;
+            }
+        }
 
         return true;
     }
@@ -830,10 +824,10 @@ namespace njli
         mSoundFileWrapper->DecompressStream(decompressBuffer, mSettings.loop);
 
         if (decompressBuffer.size() == 0)
-            {
-                // nothing more to read
-                return false;
-            }
+        {
+            // nothing more to read
+            return false;
+        }
 
         AL_CHECK(alBufferData(bufferID, mSoundInfo.format, &decompressBuffer[0],
                               static_cast<ALsizei>(decompressBuffer.size()),
@@ -845,10 +839,15 @@ namespace njli
     float lastTimeTmp = 0;
     void Sound::Update()
     {
+        //        alGetSourcei(mSource->refID, AL_SOURCE_STATE, &mALState);
+        //#define AL_INITIAL                                0x1011
+        //#define AL_PLAYING                                0x1012
+        //#define AL_PAUSED                                 0x1013
+        //#define AL_STOPPED                                0x1014
         if (mState != PLAYING)
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         mSpinLock = true;
 
@@ -870,58 +869,56 @@ namespace njli
 
         // check to see if we have a buffer to deQ
         if (buffersProcessed > 0)
+        {
+            if (buffersProcessed > 1)
             {
-                if (buffersProcessed > 1)
-                    {
-                        // we have processed more than 1 buffer since last call
-                        // of Update method we should probably reload more
-                        // buffers than just the one
-                        SDL_Log(
-                            "Processed more than 1 buffer since last Update");
-                    }
-
-                mActiveBufferID += buffersProcessed;
-                mActiveBufferID %= PRELOAD_BUFFERS_COUNT;
-
-                // great! deQ a buffer and re-fill it
-                u32 bufferID;
-
-                // remove the buffer form the source
-                AL_CHECK(alSourceUnqueueBuffers(mSource->refID, 1, &bufferID));
-
-                // fill the buffer up and reQ!
-                // if we cant fill it up then we are finished
-                // in which case we dont need to re-Q
-                // return NO if we dont have more buffers to Q
-
-                if (mState == STOPPED)
-                    {
-                        // put it back
-                        AL_CHECK(
-                            alSourceQueueBuffers(mSource->refID, 1, &bufferID));
-                        mSpinLock = false;
-                        return;
-                    }
-
-                if (this->PreloadBuffer(bufferID) == false)
-                    {
-                        mRemainBuffers--;
-                    }
-
-                // put it back
-                AL_CHECK(alSourceQueueBuffers(mSource->refID, 1, &bufferID));
+                // we have processed more than 1 buffer since last call
+                // of Update method we should probably reload more
+                // buffers than just the one
+                SDL_Log("Processed more than 1 buffer since last Update");
             }
 
+            mActiveBufferID += buffersProcessed;
+            mActiveBufferID %= PRELOAD_BUFFERS_COUNT;
+
+            // great! deQ a buffer and re-fill it
+            u32 bufferID;
+
+            // remove the buffer form the source
+            AL_CHECK(alSourceUnqueueBuffers(mSource->refID, 1, &bufferID));
+
+            // fill the buffer up and reQ!
+            // if we cant fill it up then we are finished
+            // in which case we dont need to re-Q
+            // return NO if we dont have more buffers to Q
+
+            if (mState == STOPPED)
+            {
+                // put it back
+                AL_CHECK(alSourceQueueBuffers(mSource->refID, 1, &bufferID));
+                mSpinLock = false;
+                return;
+            }
+
+            if (this->PreloadBuffer(bufferID) == false)
+            {
+                mRemainBuffers--;
+            }
+
+            // put it back
+            AL_CHECK(alSourceQueueBuffers(mSource->refID, 1, &bufferID));
+        }
+
         mSpinLock = false;
-//        if (mRemainBuffers <= 0)
-//            {
-//                SDL_Log("Ran out of buffers");
-//                this->Stop();
-//                if (mLooping)
-//                    {
-//                        this->Play();
-//                    }
-//            }
+        if (mRemainBuffers <= 0)
+        {
+            //                SDL_Log("Ran out of buffers");
+            this->Stop();
+            //                if (mLooping)
+            //                    {
+            //                        this->Play();
+            //                    }
+        }
     }
 
     float Sound::GetBufferedTime(int buffersCount) const

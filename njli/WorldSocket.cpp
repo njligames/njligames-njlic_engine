@@ -83,13 +83,13 @@ namespace njli
         // Create socket
         m_sck = socket(AF_INET, SOCK_STREAM, 0);
         if (m_sck < 0)
-            {
-                SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                             "Error creating socket (%d %s)\n", errno,
-                             strerror(errno));
-                disconnectJLI();
-                return false;
-            }
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                         "Error creating socket (%d %s)\n", errno,
+                         strerror(errno));
+            disconnectJLI();
+            return false;
+        }
 
         addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
@@ -97,90 +97,36 @@ namespace njli
 
         // Set non-blocking
         if ((arg = fcntl(m_sck, F_GETFL, NULL)) < 0)
-            {
-                SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                             "Error fcntl(..., F_GETFL) (%s)\n",
-                             strerror(errno));
-                disconnectJLI();
-                return false;
-            }
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                         "Error fcntl(..., F_GETFL) (%s)\n", strerror(errno));
+            disconnectJLI();
+            return false;
+        }
         arg |= O_NONBLOCK;
         if (fcntl(m_sck, F_SETFL, arg) < 0)
-            {
-                SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                             "Error fcntl(..., F_SETFL) (%s)\n",
-                             strerror(errno));
-                disconnectJLI();
-                return false;
-            }
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                         "Error fcntl(..., F_SETFL) (%s)\n", strerror(errno));
+            disconnectJLI();
+            return false;
+        }
         // Trying to connect with timeout
         res = connect(m_sck, (struct sockaddr *)&addr, sizeof(addr));
         if (res < 0)
+        {
+            if (errno == EINPROGRESS)
             {
-                if (errno == EINPROGRESS)
-                    {
-                        SDL_LogError(SDL_LOG_CATEGORY_TEST, "%s",
-                                     "EINPROGRESS in connect() - selecting\n");
-                        do
-                            {
-                                tv.tv_sec = 1;
-                                tv.tv_usec = 0;
-                                FD_ZERO(&myset);
-                                FD_SET(m_sck, &myset);
-                                res =
-                                    select(m_sck + 1, NULL, &myset, NULL, &tv);
-                                if (res < 0 && errno != EINTR)
-                                    {
-                                        SDL_LogError(
-                                            SDL_LOG_CATEGORY_TEST,
-                                            "Error connecting %d - %s\n", errno,
-                                            strerror(errno));
-                                        disconnectJLI();
-                                        return false;
-                                    }
-                                else if (res > 0)
-                                    {
-                                        // Socket selected for write
-                                        lon = sizeof(int);
-                                        if (getsockopt(
-                                                m_sck, SOL_SOCKET, SO_ERROR,
-                                                (void *)(&valopt), &lon) < 0)
-                                            {
-                                                SDL_LogError(
-                                                    SDL_LOG_CATEGORY_TEST,
-                                                    "Error in getsockopt() %d "
-                                                    "- %s\n",
-                                                    errno, strerror(errno));
-                                                disconnectJLI();
-                                                return false;
-                                            }
-                                        // Check the value returned...
-                                        if (valopt)
-                                            {
-                                                SDL_LogError(
-                                                    SDL_LOG_CATEGORY_TEST,
-                                                    "Error in delayed "
-                                                    "connection() %d - %s\n",
-                                                    valopt, strerror(valopt));
-                                                disconnectJLI();
-                                                return false;
-                                            }
-                                        m_isConnected = true;
-                                        return isConnected();
-                                    }
-                                else
-                                    {
-                                        SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                                                     "%s",
-                                                     "Timeout in select() - "
-                                                     "Cancelling!\n");
-                                        disconnectJLI();
-                                        return false;
-                                    }
-                            }
-                        while (1);
-                    }
-                else
+                SDL_LogError(SDL_LOG_CATEGORY_TEST, "%s",
+                             "EINPROGRESS in connect() - selecting\n");
+                do
+                {
+                    tv.tv_sec = 1;
+                    tv.tv_usec = 0;
+                    FD_ZERO(&myset);
+                    FD_SET(m_sck, &myset);
+                    res = select(m_sck + 1, NULL, &myset, NULL, &tv);
+                    if (res < 0 && errno != EINTR)
                     {
                         SDL_LogError(SDL_LOG_CATEGORY_TEST,
                                      "Error connecting %d - %s\n", errno,
@@ -188,25 +134,68 @@ namespace njli
                         disconnectJLI();
                         return false;
                     }
+                    else if (res > 0)
+                    {
+                        // Socket selected for write
+                        lon = sizeof(int);
+                        if (getsockopt(m_sck, SOL_SOCKET, SO_ERROR,
+                                       (void *)(&valopt), &lon) < 0)
+                        {
+                            SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                                         "Error in getsockopt() %d "
+                                         "- %s\n",
+                                         errno, strerror(errno));
+                            disconnectJLI();
+                            return false;
+                        }
+                        // Check the value returned...
+                        if (valopt)
+                        {
+                            SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                                         "Error in delayed "
+                                         "connection() %d - %s\n",
+                                         valopt, strerror(valopt));
+                            disconnectJLI();
+                            return false;
+                        }
+                        m_isConnected = true;
+                        return isConnected();
+                    }
+                    else
+                    {
+                        SDL_LogError(SDL_LOG_CATEGORY_TEST, "%s",
+                                     "Timeout in select() - "
+                                     "Cancelling!\n");
+                        disconnectJLI();
+                        return false;
+                    }
+                } while (1);
             }
+            else
+            {
+                SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                             "Error connecting %d - %s\n", errno,
+                             strerror(errno));
+                disconnectJLI();
+                return false;
+            }
+        }
         // Set to blocking mode again...
         if ((arg = fcntl(m_sck, F_GETFL, NULL)) < 0)
-            {
-                SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                             "Error fcntl(..., F_GETFL) (%s)\n",
-                             strerror(errno));
-                disconnectJLI();
-                return false;
-            }
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                         "Error fcntl(..., F_GETFL) (%s)\n", strerror(errno));
+            disconnectJLI();
+            return false;
+        }
         arg &= (~O_NONBLOCK);
         if (fcntl(m_sck, F_SETFL, arg) < 0)
-            {
-                SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                             "Error fcntl(..., F_SETFL) (%s)\n",
-                             strerror(errno));
-                disconnectJLI();
-                return false;
-            }
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                         "Error fcntl(..., F_SETFL) (%s)\n", strerror(errno));
+            disconnectJLI();
+            return false;
+        }
         // I hope that is all
 
         m_isConnected = true;
@@ -270,56 +259,55 @@ namespace njli
     {
         size_t pos = 0;
         while ((pos = subject.find(search, pos)) != std::string::npos)
-            {
-                subject.replace(pos, search.length(), replace);
-                pos += replace.length();
-            }
+        {
+            subject.replace(pos, search.length(), replace);
+            pos += replace.length();
+        }
     }
 
     void WorldSocket::parseMessage(const std::string &delimeter)
     {
 #if !defined(_WIN32) && !defined(__ANDROID__)
         if (isConnected())
+        {
+            s64 len = 0;
+
+            if ((len = recv(m_sck, &m_buffer[0], JLI_SOCKET_BUFFER_SIZE, 0)) >
+                0)
             {
-                s64 len = 0;
+                m_buffer[len] = '\0';
+                std::string socketMessage(m_buffer);
 
-                if ((len = recv(m_sck, &m_buffer[0], JLI_SOCKET_BUFFER_SIZE,
-                                0)) > 0)
-                    {
-                        m_buffer[len] = '\0';
-                        std::string socketMessage(m_buffer);
+                std::string fullStartDelimeter = "<" + delimeter + ">";
+                std::string fullEndDelimeter = "</" + delimeter + ">";
 
-                        std::string fullStartDelimeter = "<" + delimeter + ">";
-                        std::string fullEndDelimeter = "</" + delimeter + ">";
+                m_SocketData += socketMessage;
 
-                        m_SocketData += socketMessage;
+                unsigned long i = m_SocketData.find(fullStartDelimeter);
+                unsigned long j = m_SocketData.find(fullEndDelimeter);
+                if ((i != -1) && (j != -1))
+                {
+                    std::string extract = m_SocketData.substr(
+                        i, j + std::string(fullEndDelimeter).length());
+                    std::string remainder = m_SocketData.substr(
+                        j + std::string(fullEndDelimeter).length(),
+                        m_SocketData.length());
+                    m_SocketData = remainder;
 
-                        unsigned long i = m_SocketData.find(fullStartDelimeter);
-                        unsigned long j = m_SocketData.find(fullEndDelimeter);
-                        if ((i != -1) && (j != -1))
-                            {
-                                std::string extract = m_SocketData.substr(
-                                    i,
-                                    j + std::string(fullEndDelimeter).length());
-                                std::string remainder = m_SocketData.substr(
-                                    j + std::string(fullEndDelimeter).length(),
-                                    m_SocketData.length());
-                                m_SocketData = remainder;
+                    ReplaceStringInPlace(extract, "&lt;", "<");
+                    ReplaceStringInPlace(extract, "&gt;", ">");
+                    ReplaceStringInPlace(extract, "&amp;", "&");
+                    ReplaceStringInPlace(extract, "&apos;", "'");
+                    ReplaceStringInPlace(extract, "&quot;", "\"");
 
-                                ReplaceStringInPlace(extract, "&lt;", "<");
-                                ReplaceStringInPlace(extract, "&gt;", ">");
-                                ReplaceStringInPlace(extract, "&amp;", "&");
-                                ReplaceStringInPlace(extract, "&apos;", "'");
-                                ReplaceStringInPlace(extract, "&quot;", "\"");
-
-                                m_MessageQueue.push(extract);
-                            }
-                    }
-
-                //            if(len!=-1)
-                //                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST,
-                //                "Received a message of %lld length", len);
+                    m_MessageQueue.push(extract);
+                }
             }
+
+            //            if(len!=-1)
+            //                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST,
+            //                "Received a message of %lld length", len);
+        }
 #endif
     }
 
@@ -340,13 +328,13 @@ namespace njli
     {
 #if !defined(_WIN32) && !defined(__ANDROID__)
         if (isConnected())
-            {
-                size_t nbytes_sent = 0;
-                nbytes_sent = send(m_sck, message.c_str(), message.length(), 0);
+        {
+            size_t nbytes_sent = 0;
+            nbytes_sent = send(m_sck, message.c_str(), message.length(), 0);
 
-                //            printf("Bytes_sent: %s -> %zu\n", message.c_str(),
-                //            nbytes_sent);
-            }
+            //            printf("Bytes_sent: %s -> %zu\n", message.c_str(),
+            //            nbytes_sent);
+        }
 #endif
     }
 
@@ -354,12 +342,12 @@ namespace njli
     {
 #if !defined(_WIN32) && !defined(__ANDROID__)
         if (m_sck > -1)
-            {
-                close(m_sck);
-                shutdown(m_sck, SHUT_RDWR);
+        {
+            close(m_sck);
+            shutdown(m_sck, SHUT_RDWR);
 
-                m_sck = -1;
-            }
+            m_sck = -1;
+        }
 #endif
         m_isConnected = false;
     }

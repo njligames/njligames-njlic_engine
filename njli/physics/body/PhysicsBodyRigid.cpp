@@ -38,11 +38,10 @@ namespace njli
           m_Damping(0)
     {
         for (s32 i = 0; i < 20; ++i)
-            {
-                m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
-                m_AngularForceAndPositionArray.push_back(
-                    new ForceAndPosition());
-            }
+        {
+            m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
+            m_AngularForceAndPositionArray.push_back(new ForceAndPosition());
+        }
         //        enableHandleCollideCallback();
         //        setDynamicPhysics();
     }
@@ -58,11 +57,10 @@ namespace njli
           m_Damping(0)
     {
         for (s32 i = 0; i < 20; ++i)
-            {
-                m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
-                m_AngularForceAndPositionArray.push_back(
-                    new ForceAndPosition());
-            }
+        {
+            m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
+            m_AngularForceAndPositionArray.push_back(new ForceAndPosition());
+        }
         //        enableHandleCollideCallback();
         //        setDynamicPhysics();
     }
@@ -78,11 +76,10 @@ namespace njli
           m_Damping(0)
     {
         for (s32 i = 0; i < 20; ++i)
-            {
-                m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
-                m_AngularForceAndPositionArray.push_back(
-                    new ForceAndPosition());
-            }
+        {
+            m_LinearForceAndPositionArray.push_back(new ForceAndPosition());
+            m_AngularForceAndPositionArray.push_back(new ForceAndPosition());
+        }
     }
 
     PhysicsBodyRigid::~PhysicsBodyRigid()
@@ -95,13 +92,13 @@ namespace njli
         ForceAndPosition *p = NULL;
 
         for (s32 i = 0; i < 20; ++i)
-            {
-                p = m_LinearForceAndPositionArray.at(i);
-                delete p;
+        {
+            p = m_LinearForceAndPositionArray.at(i);
+            delete p;
 
-                p = m_AngularForceAndPositionArray.at(i);
-                delete p;
-            }
+            p = m_AngularForceAndPositionArray.at(i);
+            delete p;
+        }
 
         //        delete m_btTransform;
         //        m_btTransform=NULL;
@@ -117,9 +114,9 @@ namespace njli
     PhysicsBodyRigid &PhysicsBodyRigid::operator=(const PhysicsBodyRigid &rhs)
     {
         if (this != &rhs)
-            {
-                // TODO: implement
-            }
+        {
+            // TODO: implement
+        }
         return *this;
     }
 
@@ -192,9 +189,9 @@ namespace njli
     void PhysicsBodyRigid::destroy(PhysicsBodyRigid *object)
     {
         if (object)
-            {
-                PhysicsBody::destroy(object);
-            }
+        {
+            PhysicsBody::destroy(object);
+        }
     }
 
     void PhysicsBodyRigid::load(PhysicsBodyRigid &object, lua_State *L,
@@ -208,56 +205,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        PhysicsBodyRigid::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                PhysicsBodyRigid::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -279,9 +276,9 @@ namespace njli
     {
         btTransform t(btTransform::getIdentity());
         if (getBody() && getBody()->getMotionState())
-            {
-                getBody()->getMotionState()->getWorldTransform(t);
-            }
+        {
+            getBody()->getMotionState()->getWorldTransform(t);
+        }
         //        SDL_assert(getBody());
         //        SDL_assert(getBody()->getMotionState());
         //
@@ -302,10 +299,10 @@ namespace njli
         *m_LinearFactor = factor;
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
 
     const btVector3 &PhysicsBodyRigid::getLinearFactor() const
@@ -318,10 +315,10 @@ namespace njli
         *m_AngularFactor = factor;
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
 
     void PhysicsBodyRigid::setAngularFactor(f32 factor)
@@ -339,10 +336,10 @@ namespace njli
         m_Mass = mass;
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
 
     f32 PhysicsBodyRigid::getMass() const { return m_Mass; }
@@ -356,10 +353,10 @@ namespace njli
         m_Damping = damping;
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
 
     f32 PhysicsBodyRigid::getDamping() const { return m_Damping; }
@@ -369,10 +366,10 @@ namespace njli
         m_AngularDamping = damping;
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
 
     f32 PhysicsBodyRigid::getAngularDamping() const { return m_AngularDamping; }
@@ -380,57 +377,57 @@ namespace njli
     void PhysicsBodyRigid::applyForce(const btVector3 &direction, bool impulse)
     {
         if (impulse)
-            {
-                if (getBody())
-                    getBody()->applyCentralImpulse(direction);
-            }
+        {
+            if (getBody())
+                getBody()->applyCentralImpulse(direction);
+        }
         else
-            {
-                SDL_assert(m_LinearForceAndPositionArrayIndex < (20 - 1));
+        {
+            SDL_assert(m_LinearForceAndPositionArrayIndex < (20 - 1));
 
-                ForceAndPosition *fp = m_LinearForceAndPositionArray.at(
-                    m_LinearForceAndPositionArrayIndex);
-                fp->set(direction, getParent()->getOrigin());
-                ++m_LinearForceAndPositionArrayIndex;
-            }
+            ForceAndPosition *fp = m_LinearForceAndPositionArray.at(
+                m_LinearForceAndPositionArrayIndex);
+            fp->set(direction, getParent()->getOrigin());
+            ++m_LinearForceAndPositionArrayIndex;
+        }
     }
 
     void PhysicsBodyRigid::applyForce(const btVector3 &direction,
                                       const btVector3 &position, bool impulse)
     {
         if (impulse)
-            {
-                if (getBody())
-                    getBody()->applyImpulse(direction, position);
-            }
+        {
+            if (getBody())
+                getBody()->applyImpulse(direction, position);
+        }
         else
-            {
-                SDL_assert(m_LinearForceAndPositionArrayIndex < (20 - 1));
+        {
+            SDL_assert(m_LinearForceAndPositionArrayIndex < (20 - 1));
 
-                ForceAndPosition *fp = m_LinearForceAndPositionArray.at(
-                    m_LinearForceAndPositionArrayIndex);
-                fp->set(direction, position);
-                ++m_LinearForceAndPositionArrayIndex;
-            }
+            ForceAndPosition *fp = m_LinearForceAndPositionArray.at(
+                m_LinearForceAndPositionArrayIndex);
+            fp->set(direction, position);
+            ++m_LinearForceAndPositionArrayIndex;
+        }
     }
 
     void PhysicsBodyRigid::applyAngularForce(const btVector3 &direction,
                                              bool impulse)
     {
         if (impulse)
-            {
-                if (getBody())
-                    getBody()->applyTorqueImpulse(direction);
-            }
+        {
+            if (getBody())
+                getBody()->applyTorqueImpulse(direction);
+        }
         else
-            {
-                SDL_assert(m_AngularForceAndPositionArrayIndex < (20 - 1));
+        {
+            SDL_assert(m_AngularForceAndPositionArrayIndex < (20 - 1));
 
-                ForceAndPosition *fp = m_AngularForceAndPositionArray.at(
-                    m_AngularForceAndPositionArrayIndex);
-                fp->set(direction, getParent()->getOrigin());
-                ++m_AngularForceAndPositionArrayIndex;
-            }
+            ForceAndPosition *fp = m_AngularForceAndPositionArray.at(
+                m_AngularForceAndPositionArrayIndex);
+            fp->set(direction, getParent()->getOrigin());
+            ++m_AngularForceAndPositionArrayIndex;
+        }
     }
 
     void PhysicsBodyRigid::clearAllForces()
@@ -502,21 +499,21 @@ namespace njli
     void PhysicsBodyRigid::applyFinalForce()
     {
         for (s32 i = 0; i < m_LinearForceAndPositionArrayIndex; ++i)
-            {
-                getBody()->applyForce(
-                    m_LinearForceAndPositionArray[i]->getForce(),
-                    m_LinearForceAndPositionArray[i]->getPosition());
-            }
+        {
+            getBody()->applyForce(
+                m_LinearForceAndPositionArray[i]->getForce(),
+                m_LinearForceAndPositionArray[i]->getPosition());
+        }
         m_LinearForceAndPositionArrayIndex = 0;
     }
 
     void PhysicsBodyRigid::applyFinalAngularForce()
     {
         for (s32 i = 0; i < m_AngularForceAndPositionArrayIndex; ++i)
-            {
-                getBody()->applyTorque(
-                    m_AngularForceAndPositionArray[i]->getForce());
-            }
+        {
+            getBody()->applyTorque(
+                m_AngularForceAndPositionArray[i]->getForce());
+        }
         m_AngularForceAndPositionArrayIndex = 0;
     }
 
@@ -533,105 +530,102 @@ namespace njli
                                         bool clearForces)
     {
         if (m_btRigidBody && m_btRigidBody->getNumConstraintRefs() != 0)
-            {
-                //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "The
-                //            PhysicsBodyRigid has constraints so it cannot be
-                //            added.");
-                return false;
-            }
+        {
+            //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "The
+            //            PhysicsBodyRigid has constraints so it cannot be
+            //            added.");
+            return false;
+        }
 
         Scene *scene = getParent()->getCurrentScene();
         if (!scene)
-            {
-                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                            "Unable to set the Transform, the scene is NULL\n");
-                return false;
-            }
+        {
+            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                        "Unable to set the Transform, the scene is NULL\n");
+            return false;
+        }
 
         PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
         if (NULL != physicsWorld)
+        {
+            removePhysicsBody();
+
+            Node *parent = PhysicsBody::getParent();
+
+            if (!parent)
+                SDL_LogWarn(
+                    SDL_LOG_CATEGORY_TEST,
+                    "The PhysicsBodyRigid is not attached to a Node.\n");
+
+            PhysicsShape *physicsShape = getPhysicsShape();
+
+            if (!physicsShape)
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "The PhysicsBodyRigid does not have a shape.\n");
+
+            if (physicsShape && parent)
             {
-                removePhysicsBody();
+                //                m_btDefaultMotionState->setWorldTransform(transform);
+                setWorldTransform(transform);
 
-                Node *parent = PhysicsBody::getParent();
+                f32 mass = 0;
+                if (isDynamicPhysics())
+                {
+                    mass = getMass();
+                }
 
-                if (!parent)
-                    SDL_LogWarn(
-                        SDL_LOG_CATEGORY_TEST,
-                        "The PhysicsBodyRigid is not attached to a Node.\n");
+                /*
+                 m_linearVelocity.setValue(btScalar(0.0), btScalar(0.0),
+                 btScalar(0.0));
+                 m_angularVelocity.setValue(btScalar(0.),btScalar(0.),btScalar(0.));
+                 m_angularFactor.setValue(1,1,1);
+                 m_linearFactor.setValue(1,1,1);
+                 */
 
-                PhysicsShape *physicsShape = getPhysicsShape();
+                btVector3 localInertia(
+                    physicsShape->calculateLocalInertia(mass));
 
-                if (!physicsShape)
-                    SDL_LogWarn(
-                        SDL_LOG_CATEGORY_TEST,
-                        "The PhysicsBodyRigid does not have a shape.\n");
+                btRigidBody::btRigidBodyConstructionInfo cinfo(
+                    getMass(), m_btDefaultMotionState,
+                    physicsShape->getCollisionShape(), localInertia);
 
-                if (physicsShape && parent)
+                if (m_btRigidBody)
+                {
+                    btVector3 linearVelocity(getVelocity());
+                    btVector3 angularVelocity(getAngularVelocity());
+
+                    *m_btRigidBody = btRigidBody(cinfo);
+
+                    if (!clearForces)
                     {
-                        //                m_btDefaultMotionState->setWorldTransform(transform);
-                        setWorldTransform(transform);
-
-                        f32 mass = 0;
-                        if (isDynamicPhysics())
-                            {
-                                mass = getMass();
-                            }
-
-                        /*
-                         m_linearVelocity.setValue(btScalar(0.0), btScalar(0.0),
-                         btScalar(0.0));
-                         m_angularVelocity.setValue(btScalar(0.),btScalar(0.),btScalar(0.));
-                         m_angularFactor.setValue(1,1,1);
-                         m_linearFactor.setValue(1,1,1);
-                         */
-
-                        btVector3 localInertia(
-                            physicsShape->calculateLocalInertia(mass));
-
-                        btRigidBody::btRigidBodyConstructionInfo cinfo(
-                            getMass(), m_btDefaultMotionState,
-                            physicsShape->getCollisionShape(), localInertia);
-
-                        if (m_btRigidBody)
-                            {
-                                btVector3 linearVelocity(getVelocity());
-                                btVector3 angularVelocity(getAngularVelocity());
-
-                                *m_btRigidBody = btRigidBody(cinfo);
-
-                                if (!clearForces)
-                                    {
-                                        m_btRigidBody->setAngularVelocity(
-                                            angularVelocity);
-                                        m_btRigidBody->setLinearVelocity(
-                                            linearVelocity);
-                                    }
-                                else
-                                    {
-                                        m_btRigidBody->clearForces();
-                                    }
-                            }
-                        else
-                            {
-                                m_btRigidBody = new btRigidBody(cinfo);
-                            }
-
-                        m_btRigidBody->setCollisionFlags(getCollisionFlags());
-                        m_btRigidBody->setActivationState(getActivationState());
-                        m_btRigidBody->setAngularFactor(*m_AngularFactor);
-                        m_btRigidBody->setLinearFactor(*m_LinearFactor);
-                        m_btRigidBody->setDamping(m_Damping, m_AngularDamping);
-
-                        return physicsWorld->addRigidBody(this);
+                        m_btRigidBody->setAngularVelocity(angularVelocity);
+                        m_btRigidBody->setLinearVelocity(linearVelocity);
                     }
+                    else
+                    {
+                        m_btRigidBody->clearForces();
+                    }
+                }
+                else
+                {
+                    m_btRigidBody = new btRigidBody(cinfo);
+                }
+
+                m_btRigidBody->setCollisionFlags(getCollisionFlags());
+                m_btRigidBody->setActivationState(getActivationState());
+                m_btRigidBody->setAngularFactor(*m_AngularFactor);
+                m_btRigidBody->setLinearFactor(*m_LinearFactor);
+                m_btRigidBody->setDamping(m_Damping, m_AngularDamping);
+
+                return physicsWorld->addRigidBody(this);
             }
+        }
         else
-            {
-                //        SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "The physics world
-                //        is NULL\n");
-                SDL_assertPrint(false, "The physics world is NULL\n");
-            }
+        {
+            //        SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "The physics world
+            //        is NULL\n");
+            SDL_assertPrint(false, "The physics world is NULL\n");
+        }
         return false;
     }
 
@@ -639,23 +633,22 @@ namespace njli
     {
         Scene *scene = NULL;
         if (getParent())
+        {
+            scene = getParent()->getCurrentScene();
+
+            if (scene)
             {
-                scene = getParent()->getCurrentScene();
-
-                if (scene)
-                    {
-                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-                        if (physicsWorld)
-                            return physicsWorld->removeRigidBody(this);
-                    }
-                else
-                    {
-
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "The scene is NULL\n");
-                        return false;
-                    }
+                PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                if (physicsWorld)
+                    return physicsWorld->removeRigidBody(this);
             }
+            else
+            {
+
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "The scene is NULL\n");
+                return false;
+            }
+        }
 
         return false;
     }
@@ -683,10 +676,10 @@ namespace njli
     operator=(const PhysicsBodyRigid::ForceAndPosition &rhs)
     {
         if (this != &rhs)
-            {
-                *m_Force = *(rhs.m_Force);
-                *m_Position = *(rhs.m_Position);
-            }
+        {
+            *m_Force = *(rhs.m_Force);
+            *m_Position = *(rhs.m_Position);
+        }
         return *this;
     }
 

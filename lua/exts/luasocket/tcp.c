@@ -193,26 +193,26 @@ static int meth_accept(lua_State *L)
     const char *err = inet_tryaccept(&server->sock, server->family, &sock, tm);
     /* if successful, push client socket */
     if (err == NULL)
-        {
-            p_tcp clnt = (p_tcp)lua_newuserdata(L, sizeof(t_tcp));
-            auxiliar_setclass(L, "tcp{client}", -1);
-            /* initialize structure fields */
-            memset(clnt, 0, sizeof(t_tcp));
-            socket_setnonblocking(&sock);
-            clnt->sock = sock;
-            io_init(&clnt->io, (p_send)socket_send, (p_recv)socket_recv,
-                    (p_error)socket_ioerror, &clnt->sock);
-            timeout_init(&clnt->tm, -1, -1);
-            buffer_init(&clnt->buf, &clnt->io, &clnt->tm);
-            clnt->family = server->family;
-            return 1;
-        }
+    {
+        p_tcp clnt = (p_tcp)lua_newuserdata(L, sizeof(t_tcp));
+        auxiliar_setclass(L, "tcp{client}", -1);
+        /* initialize structure fields */
+        memset(clnt, 0, sizeof(t_tcp));
+        socket_setnonblocking(&sock);
+        clnt->sock = sock;
+        io_init(&clnt->io, (p_send)socket_send, (p_recv)socket_recv,
+                (p_error)socket_ioerror, &clnt->sock);
+        timeout_init(&clnt->tm, -1, -1);
+        buffer_init(&clnt->buf, &clnt->io, &clnt->tm);
+        clnt->family = server->family;
+        return 1;
+    }
     else
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, err);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, err);
+        return 2;
+    }
 }
 
 /*-------------------------------------------------------------------------*\
@@ -231,11 +231,11 @@ static int meth_bind(lua_State *L)
     bindhints.ai_flags = AI_PASSIVE;
     err = inet_trybind(&tcp->sock, &tcp->family, address, port, &bindhints);
     if (err)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, err);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, err);
+        return 2;
+    }
     lua_pushnumber(L, 1);
     return 1;
 }
@@ -260,11 +260,11 @@ static int meth_connect(lua_State *L)
     /* have to set the class even if it failed due to non-blocking connects */
     auxiliar_setclass(L, "tcp{client}", 1);
     if (err)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, err);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, err);
+        return 2;
+    }
     lua_pushnumber(L, 1);
     return 1;
 }
@@ -287,20 +287,20 @@ static int meth_getfamily(lua_State *L)
 {
     p_tcp tcp = (p_tcp)auxiliar_checkgroup(L, "tcp{any}", 1);
     if (tcp->family == AF_INET6)
-        {
-            lua_pushliteral(L, "inet6");
-            return 1;
-        }
+    {
+        lua_pushliteral(L, "inet6");
+        return 1;
+    }
     else if (tcp->family == AF_INET)
-        {
-            lua_pushliteral(L, "inet4");
-            return 1;
-        }
+    {
+        lua_pushliteral(L, "inet4");
+        return 1;
+    }
     else
-        {
-            lua_pushliteral(L, "inet4");
-            return 1;
-        }
+    {
+        lua_pushliteral(L, "inet4");
+        return 1;
+    }
 }
 
 /*-------------------------------------------------------------------------*\
@@ -312,11 +312,11 @@ static int meth_listen(lua_State *L)
     int backlog = (int)luaL_optnumber(L, 2, 32);
     int err = socket_listen(&tcp->sock, backlog);
     if (err != IO_DONE)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, socket_strerror(err));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, socket_strerror(err));
+        return 2;
+    }
     /* turn master object into a server object */
     auxiliar_setclass(L, "tcp{server}", 1);
     lua_pushnumber(L, 1);
@@ -390,17 +390,16 @@ static int tcp_create(lua_State *L, int family)
     timeout_init(&tcp->tm, -1, -1);
     buffer_init(&tcp->buf, &tcp->io, &tcp->tm);
     if (family != AF_UNSPEC)
+    {
+        const char *err = inet_trycreate(&tcp->sock, family, SOCK_STREAM, 0);
+        if (err != NULL)
         {
-            const char *err =
-                inet_trycreate(&tcp->sock, family, SOCK_STREAM, 0);
-            if (err != NULL)
-                {
-                    lua_pushnil(L);
-                    lua_pushstring(L, err);
-                    return 2;
-                }
-            socket_setnonblocking(&tcp->sock);
+            lua_pushnil(L);
+            lua_pushstring(L, err);
+            return 2;
         }
+        socket_setnonblocking(&tcp->sock);
+    }
     return 1;
 }
 
@@ -434,16 +433,16 @@ static int global_connect(lua_State *L)
     bindhints.ai_family = family;
     bindhints.ai_flags = AI_PASSIVE;
     if (localaddr)
+    {
+        err = inet_trybind(&tcp->sock, &tcp->family, localaddr, localserv,
+                           &bindhints);
+        if (err)
         {
-            err = inet_trybind(&tcp->sock, &tcp->family, localaddr, localserv,
-                               &bindhints);
-            if (err)
-                {
-                    lua_pushnil(L);
-                    lua_pushstring(L, err);
-                    return 2;
-                }
+            lua_pushnil(L);
+            lua_pushstring(L, err);
+            return 2;
         }
+    }
     /* try to connect to remote address and port */
     memset(&connecthints, 0, sizeof(connecthints));
     connecthints.ai_socktype = SOCK_STREAM;
@@ -452,12 +451,12 @@ static int global_connect(lua_State *L)
     err = inet_tryconnect(&tcp->sock, &tcp->family, remoteaddr, remoteserv,
                           &tcp->tm, &connecthints);
     if (err)
-        {
-            socket_destroy(&tcp->sock);
-            lua_pushnil(L);
-            lua_pushstring(L, err);
-            return 2;
-        }
+    {
+        socket_destroy(&tcp->sock);
+        lua_pushnil(L);
+        lua_pushstring(L, err);
+        return 2;
+    }
     auxiliar_setclass(L, "tcp{client}", -1);
     return 1;
 }

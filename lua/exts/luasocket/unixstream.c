@@ -165,24 +165,24 @@ static int meth_accept(lua_State *L)
     int err = socket_accept(&server->sock, &sock, NULL, NULL, tm);
     /* if successful, push client socket */
     if (err == IO_DONE)
-        {
-            p_unix clnt = (p_unix)lua_newuserdata(L, sizeof(t_unix));
-            auxiliar_setclass(L, "unixstream{client}", -1);
-            /* initialize structure fields */
-            socket_setnonblocking(&sock);
-            clnt->sock = sock;
-            io_init(&clnt->io, (p_send)socket_send, (p_recv)socket_recv,
-                    (p_error)socket_ioerror, &clnt->sock);
-            timeout_init(&clnt->tm, -1, -1);
-            buffer_init(&clnt->buf, &clnt->io, &clnt->tm);
-            return 1;
-        }
+    {
+        p_unix clnt = (p_unix)lua_newuserdata(L, sizeof(t_unix));
+        auxiliar_setclass(L, "unixstream{client}", -1);
+        /* initialize structure fields */
+        socket_setnonblocking(&sock);
+        clnt->sock = sock;
+        io_init(&clnt->io, (p_send)socket_send, (p_recv)socket_recv,
+                (p_error)socket_ioerror, &clnt->sock);
+        timeout_init(&clnt->tm, -1, -1);
+        buffer_init(&clnt->buf, &clnt->io, &clnt->tm);
+        return 1;
+    }
     else
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, socket_strerror(err));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, socket_strerror(err));
+        return 2;
+    }
 }
 
 /*-------------------------------------------------------------------------*\
@@ -216,11 +216,11 @@ static int meth_bind(lua_State *L)
     const char *path = luaL_checkstring(L, 2);
     const char *err = unixstream_trybind(un, path);
     if (err)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, err);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, err);
+        return 2;
+    }
     lua_pushnumber(L, 1);
     return 1;
 }
@@ -232,11 +232,11 @@ static int meth_getsockname(lua_State *L)
     socklen_t peer_len = sizeof(peer);
 
     if (getsockname(un->sock, (SA *)&peer, &peer_len) < 0)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, socket_strerror(errno));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, socket_strerror(errno));
+        return 2;
+    }
 
     lua_pushstring(L, peer.sun_path);
     return 1;
@@ -275,11 +275,11 @@ static int meth_connect(lua_State *L)
     const char *path = luaL_checkstring(L, 2);
     const char *err = unixstream_tryconnect(un, path);
     if (err)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, err);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, err);
+        return 2;
+    }
     /* turn master object into a client object */
     auxiliar_setclass(L, "unixstream{client}", 1);
     lua_pushnumber(L, 1);
@@ -306,11 +306,11 @@ static int meth_listen(lua_State *L)
     int backlog = (int)luaL_optnumber(L, 2, 32);
     int err = socket_listen(&un->sock, backlog);
     if (err != IO_DONE)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, socket_strerror(err));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, socket_strerror(err));
+        return 2;
+    }
     /* turn master object into a server object */
     auxiliar_setclass(L, "unixstream{server}", 1);
     lua_pushnumber(L, 1);
@@ -353,24 +353,24 @@ static int global_create(lua_State *L)
     int err = socket_create(&sock, AF_UNIX, SOCK_STREAM, 0);
     /* try to allocate a system socket */
     if (err == IO_DONE)
-        {
-            /* allocate unixstream object */
-            p_unix un = (p_unix)lua_newuserdata(L, sizeof(t_unix));
-            /* set its type as master object */
-            auxiliar_setclass(L, "unixstream{master}", -1);
-            /* initialize remaining structure fields */
-            socket_setnonblocking(&sock);
-            un->sock = sock;
-            io_init(&un->io, (p_send)socket_send, (p_recv)socket_recv,
-                    (p_error)socket_ioerror, &un->sock);
-            timeout_init(&un->tm, -1, -1);
-            buffer_init(&un->buf, &un->io, &un->tm);
-            return 1;
-        }
+    {
+        /* allocate unixstream object */
+        p_unix un = (p_unix)lua_newuserdata(L, sizeof(t_unix));
+        /* set its type as master object */
+        auxiliar_setclass(L, "unixstream{master}", -1);
+        /* initialize remaining structure fields */
+        socket_setnonblocking(&sock);
+        un->sock = sock;
+        io_init(&un->io, (p_send)socket_send, (p_recv)socket_recv,
+                (p_error)socket_ioerror, &un->sock);
+        timeout_init(&un->tm, -1, -1);
+        buffer_init(&un->buf, &un->io, &un->tm);
+        return 1;
+    }
     else
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, socket_strerror(err));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, socket_strerror(err));
+        return 2;
+    }
 }

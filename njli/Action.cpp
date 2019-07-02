@@ -270,22 +270,22 @@ namespace njli
     Action::~Action()
     {
         while (!m_ActionGroups.empty())
-            {
-                Sequence *sequence = m_ActionGroups.back();
-                m_ActionGroups.pop_back();
+        {
+            Sequence *sequence = m_ActionGroups.back();
+            m_ActionGroups.pop_back();
 
-                delete sequence->sequenceQueue;
-                sequence->sequenceQueue = NULL;
-                delete sequence;
-                sequence = NULL;
-            }
+            delete sequence->sequenceQueue;
+            sequence->sequenceQueue = NULL;
+            delete sequence;
+            sequence = NULL;
+        }
     }
 
     Action &Action::operator=(const Action &rhs)
     {
         if (this != &rhs)
-            {
-            }
+        {
+        }
         return *this;
     }
 
@@ -350,9 +350,9 @@ namespace njli
     void Action::destroy(Action *object)
     {
         if (object)
-            {
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+        {
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void Action::load(Action &object, lua_State *L, int index)
@@ -365,56 +365,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Action::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Action::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -428,14 +428,14 @@ namespace njli
         Action *action = create();
 
         for (u32 i = 0; i < count; ++i)
-            {
-                Sequence *sequence = new Sequence();
-                sequence->sequenceQueue = new std::queue<Action *>();
-                sequence->sequenceQueue->push(actions[i]);
-                sequence->numberOfActions = 1;
+        {
+            Sequence *sequence = new Sequence();
+            sequence->sequenceQueue = new std::queue<Action *>();
+            sequence->sequenceQueue->push(actions[i]);
+            sequence->numberOfActions = 1;
 
-                action->m_ActionGroups.push_back(sequence);
-            }
+            action->m_ActionGroups.push_back(sequence);
+        }
 
         return action;
     }
@@ -448,11 +448,11 @@ namespace njli
         sequence->numberOfActions = 0;
 
         for (u32 i = 0; i < count; ++i)
-            {
-                Action *currentAction = actions[i];
-                sequence->sequenceQueue->push(currentAction);
-                ++sequence->numberOfActions;
-            }
+        {
+            Action *currentAction = actions[i];
+            sequence->sequenceQueue->push(currentAction);
+            ++sequence->numberOfActions;
+        }
 
         action->m_ActionGroups.push_back(sequence);
 
@@ -519,10 +519,10 @@ namespace njli
         m_timeLeft -= step;
 
         if (m_timeLeft <= 0)
-            {
-                if (!isFinishedRepeating())
-                    decrementRepeatCounter();
-            }
+        {
+            if (!isFinishedRepeating())
+                decrementRepeatCounter();
+        }
     }
 
     bool Action::isFinished() const { return (m_timeLeft <= 0); }
@@ -530,9 +530,9 @@ namespace njli
     bool Action::isFinishedRepeating() const
     {
         if (m_RepeatCount == std::numeric_limits<s32>::min())
-            {
-                return false;
-            }
+        {
+            return false;
+        }
 
         return (m_RepeatCount <= 0);
     }
@@ -540,61 +540,61 @@ namespace njli
     bool Action::isChildrenFinished() const
     {
         for (u32 i = 0; i < m_ActionGroups.size(); ++i)
-            {
-                Sequence *sequence = m_ActionGroups.at(i);
-                if (sequence->numberOfActions > 0)
-                    return false;
-            }
+        {
+            Sequence *sequence = m_ActionGroups.at(i);
+            if (sequence->numberOfActions > 0)
+                return false;
+        }
         return true;
     }
 
     void Action::handleActionChildren(f32 timeStep)
     {
         for (u32 i = 0; i < m_ActionGroups.size(); ++i)
+        {
+            Sequence *currentSequence = m_ActionGroups.at(i);
+
+            if (currentSequence->numberOfActions > 0)
             {
-                Sequence *currentSequence = m_ActionGroups.at(i);
+                std::queue<Action *> *currentQueue =
+                    m_ActionGroups.at(i)->sequenceQueue;
 
-                if (currentSequence->numberOfActions > 0)
+                if (currentQueue->size() > 0)
+                {
+                    Action *currentAction = currentQueue->front();
+
+                    currentAction->update(timeStep);
+
+                    if (currentAction->isFinished() &&
+                        currentAction->isFinishedRepeating() &&
+                        currentAction->isChildrenFinished())
                     {
-                        std::queue<Action *> *currentQueue =
-                            m_ActionGroups.at(i)->sequenceQueue;
+                        currentQueue->pop();
 
-                        if (currentQueue->size() > 0)
-                            {
-                                Action *currentAction = currentQueue->front();
+                        currentAction->m_timeLeft =
+                            currentAction->getDuration();
 
-                                currentAction->update(timeStep);
+                        currentQueue->push(currentAction);
 
-                                if (currentAction->isFinished() &&
-                                    currentAction->isFinishedRepeating() &&
-                                    currentAction->isChildrenFinished())
-                                    {
-                                        currentQueue->pop();
-
-                                        currentAction->m_timeLeft =
-                                            currentAction->getDuration();
-
-                                        currentQueue->push(currentAction);
-
-                                        --m_ActionGroups.at(i)->numberOfActions;
-                                    }
-                            }
+                        --m_ActionGroups.at(i)->numberOfActions;
                     }
+                }
             }
+        }
     }
 
     void Action::decrementRepeatCounter()
     {
         if (m_RepeatCount != std::numeric_limits<s32>::min())
-            {
-                --m_RepeatCount;
-            }
+        {
+            --m_RepeatCount;
+        }
 
         m_timeLeft = m_Duration;
         for (u32 i = 0; i < m_ActionGroups.size(); ++i)
-            {
-                m_ActionGroups.at(i)->numberOfActions =
-                    m_ActionGroups.at(i)->sequenceQueue->size();
-            }
+        {
+            m_ActionGroups.at(i)->numberOfActions =
+                m_ActionGroups.at(i)->sequenceQueue->size();
+        }
     }
 } // namespace njli

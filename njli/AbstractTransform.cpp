@@ -44,9 +44,9 @@ namespace njli
     operator=(const AbstractTransform &rhs)
     {
         if (this != &rhs)
-            {
-                *m_WorldTransform = *rhs.m_WorldTransform;
-            }
+        {
+            *m_WorldTransform = *rhs.m_WorldTransform;
+        }
         return *this;
     }
 

@@ -43,8 +43,8 @@ namespace njli
     operator=(const PhysicsConstraint &rhs)
     {
         if (this != &rhs)
-            {
-            }
+        {
+        }
         return *this;
     }
 
@@ -120,10 +120,10 @@ namespace njli
     void PhysicsConstraint::destroy(PhysicsConstraint *object)
     {
         if (object)
-            {
-                object->removeConstraint();
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+        {
+            object->removeConstraint();
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void PhysicsConstraint::load(PhysicsConstraint &object, lua_State *L,
@@ -137,56 +137,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        PhysicsConstraint::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                PhysicsConstraint::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -199,13 +199,13 @@ namespace njli
     {
         btTypedConstraint *constraint = getConstraint();
         if (constraint)
+        {
+            btRigidBody *rigidBody = &constraint->getRigidBodyA();
+            if (rigidBody)
             {
-                btRigidBody *rigidBody = &constraint->getRigidBodyA();
-                if (rigidBody)
-                    {
-                        return static_cast<Node *>(rigidBody->getUserPointer());
-                    }
+                return static_cast<Node *>(rigidBody->getUserPointer());
             }
+        }
         return NULL;
     }
 
@@ -213,14 +213,13 @@ namespace njli
     {
         const btTypedConstraint *constraint = getConstraint();
         if (constraint)
+        {
+            const btRigidBody *rigidBody = &constraint->getRigidBodyA();
+            if (rigidBody)
             {
-                const btRigidBody *rigidBody = &constraint->getRigidBodyA();
-                if (rigidBody)
-                    {
-                        return static_cast<const Node *>(
-                            rigidBody->getUserPointer());
-                    }
+                return static_cast<const Node *>(rigidBody->getUserPointer());
             }
+        }
         return NULL;
     }
 
@@ -229,13 +228,13 @@ namespace njli
         btTypedConstraint *constraint = getConstraint();
 
         if (constraint)
+        {
+            btRigidBody *rigidBody = &constraint->getRigidBodyB();
+            if (rigidBody)
             {
-                btRigidBody *rigidBody = &constraint->getRigidBodyB();
-                if (rigidBody)
-                    {
-                        return static_cast<Node *>(rigidBody->getUserPointer());
-                    }
+                return static_cast<Node *>(rigidBody->getUserPointer());
             }
+        }
         return NULL;
     }
 
@@ -243,14 +242,13 @@ namespace njli
     {
         const btTypedConstraint *constraint = getConstraint();
         if (constraint)
+        {
+            const btRigidBody *rigidBody = &constraint->getRigidBodyB();
+            if (rigidBody)
             {
-                const btRigidBody *rigidBody = &constraint->getRigidBodyB();
-                if (rigidBody)
-                    {
-                        return static_cast<const Node *>(
-                            rigidBody->getUserPointer());
-                    }
+                return static_cast<const Node *>(rigidBody->getUserPointer());
             }
+        }
 
         return NULL;
     }
@@ -314,45 +312,40 @@ namespace njli
         bool ret = false;
 
         if (nullptr != _nodeA || nullptr != _nodeB)
+        {
+            PhysicsBody *physicsBody = getParent();
+            if (nullptr != physicsBody)
             {
-                PhysicsBody *physicsBody = getParent();
-                if (nullptr != physicsBody)
+                Node *node = physicsBody->getParent();
+                if (nullptr != node)
+                {
+                    Scene *scene = node->getCurrentScene();
+                    if (nullptr != scene)
                     {
-                        Node *node = physicsBody->getParent();
-                        if (nullptr != node)
+                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                        physicsWorld->removeConstraint(this);
+
+                        {
+                            PhysicsBody *body = _nodeA->getPhysicsBody();
+                            if (body)
                             {
-                                Scene *scene = node->getCurrentScene();
-                                if (nullptr != scene)
-                                    {
-                                        PhysicsWorld *physicsWorld =
-                                            scene->getPhysicsWorld();
-                                        physicsWorld->removeConstraint(this);
-
-                                        {
-                                            PhysicsBody *body =
-                                                _nodeA->getPhysicsBody();
-                                            if (body)
-                                                {
-                                                    body->removePhysicsConstraint(
-                                                        this);
-                                                    ret = ret || true;
-                                                }
-                                        }
-
-                                        {
-                                            PhysicsBody *body =
-                                                _nodeB->getPhysicsBody();
-                                            if (body)
-                                                {
-                                                    body->removePhysicsConstraint(
-                                                        this);
-                                                    ret = ret || true;
-                                                }
-                                        }
-                                    }
+                                body->removePhysicsConstraint(this);
+                                ret = ret || true;
                             }
+                        }
+
+                        {
+                            PhysicsBody *body = _nodeB->getPhysicsBody();
+                            if (body)
+                            {
+                                body->removePhysicsConstraint(this);
+                                ret = ret || true;
+                            }
+                        }
                     }
+                }
             }
+        }
         return ret;
     }
 
@@ -360,19 +353,18 @@ namespace njli
     {
         PhysicsBody *physicsBody = getParent();
         if (nullptr != physicsBody)
+        {
+            Node *node = physicsBody->getParent();
+            if (nullptr != node)
             {
-                Node *node = physicsBody->getParent();
-                if (nullptr != node)
-                    {
-                        Scene *scene = node->getCurrentScene();
-                        if (nullptr != scene)
-                            {
-                                PhysicsWorld *physicsWorld =
-                                    scene->getPhysicsWorld();
-                                return physicsWorld->addConstraint(this);
-                            }
-                    }
+                Scene *scene = node->getCurrentScene();
+                if (nullptr != scene)
+                {
+                    PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                    return physicsWorld->addConstraint(this);
+                }
             }
+        }
         return false;
     }
 

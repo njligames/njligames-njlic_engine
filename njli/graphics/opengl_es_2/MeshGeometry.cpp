@@ -131,9 +131,9 @@ namespace njli
     void MeshGeometry::destroy(MeshGeometry *object)
     {
         if (object)
-            {
-                Geometry::destroy(object);
-            }
+        {
+            Geometry::destroy(object);
+        }
     }
 
     void MeshGeometry::load(MeshGeometry &object, lua_State *L, int index)
@@ -146,56 +146,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        MeshGeometry::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                MeshGeometry::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -217,66 +217,63 @@ namespace njli
     void MeshGeometry::subdivide()
     {
         if (m_TotalSubdivisions < maxNumberOfSubDivisions())
+        {
+            GLsizei previousNumberOfIndices = m_NumberOfIndices;
+
+            m_NumberOfVertices *= 4;
+            m_NumberOfIndices *= 4;
+
+            for (GLsizei currentIndice = 0, newIndice = 0;
+                 currentIndice < previousNumberOfIndices;
+                 currentIndice += 3, newIndice += 12)
             {
-                GLsizei previousNumberOfIndices = m_NumberOfIndices;
+                subdivideTriangle(m_VertexData[currentIndice + 0],
+                                  m_VertexData[currentIndice + 1],
+                                  m_VertexData[currentIndice + 2],
+                                  m_triangleBuffer, newIndice, m_indiceBuffer);
 
-                m_NumberOfVertices *= 4;
-                m_NumberOfIndices *= 4;
-
-                for (GLsizei currentIndice = 0, newIndice = 0;
-                     currentIndice < previousNumberOfIndices;
-                     currentIndice += 3, newIndice += 12)
-                    {
-                        subdivideTriangle(m_VertexData[currentIndice + 0],
-                                          m_VertexData[currentIndice + 1],
-                                          m_VertexData[currentIndice + 2],
-                                          m_triangleBuffer, newIndice,
-                                          m_indiceBuffer);
-
-                        memcpy(m_VertexDataBuffer + newIndice, m_triangleBuffer,
-                               sizeof(TexturedColoredVertex) * 12);
-                        memcpy(m_IndiceDataBuffer + newIndice, m_indiceBuffer,
-                               sizeof(GLuint) * 12);
-                    }
-
-                enableVertexArrayBufferChanged(true);
-                enableIndiceArrayBufferChanged(true);
-
-                ++m_TotalSubdivisions;
-
-                unsigned long vertexInstanceIndex = 0;
-                unsigned long indiceInstanceIndex = 0;
-                for (unsigned long meshIndex = 0;
-                     meshIndex < maxNumberOfInstances(); meshIndex++)
-                    {
-                        memcpy(m_VertexData + vertexInstanceIndex,
-                               m_VertexDataBuffer,
-                               sizeof(TexturedColoredVertex) *
-                                   numberOfVertices());
-                        vertexInstanceIndex += numberOfVertices();
-
-                        for (unsigned long indiceIndex = 0;
-                             indiceIndex < numberOfIndices(); indiceIndex++)
-                            {
-                                m_IndiceData[indiceInstanceIndex] =
-                                    m_IndiceDataBuffer[indiceIndex] +
-                                    (GLuint)((meshIndex * numberOfVertices()));
-                                indiceInstanceIndex++;
-                            }
-                        //                memcpy(m_IndiceData +
-                        //                indiceInstanceIndex,
-                        //                       m_IndiceDataBuffer +
-                        //                       (GLuint)((meshIndex *
-                        //                       numberOfVertices())),
-                        //                       sizeof(GLuint) *
-                        //                       numberOfIndices());
-                        //                indiceInstanceIndex +=
-                        //                numberOfIndices();
-                    }
-
-                enableModelViewBufferChanged(true);
-                enableNormalMatrixBufferChanged(true);
+                memcpy(m_VertexDataBuffer + newIndice, m_triangleBuffer,
+                       sizeof(TexturedColoredVertex) * 12);
+                memcpy(m_IndiceDataBuffer + newIndice, m_indiceBuffer,
+                       sizeof(GLuint) * 12);
             }
+
+            enableVertexArrayBufferChanged(true);
+            enableIndiceArrayBufferChanged(true);
+
+            ++m_TotalSubdivisions;
+
+            unsigned long vertexInstanceIndex = 0;
+            unsigned long indiceInstanceIndex = 0;
+            for (unsigned long meshIndex = 0;
+                 meshIndex < maxNumberOfInstances(); meshIndex++)
+            {
+                memcpy(m_VertexData + vertexInstanceIndex, m_VertexDataBuffer,
+                       sizeof(TexturedColoredVertex) * numberOfVertices());
+                vertexInstanceIndex += numberOfVertices();
+
+                for (unsigned long indiceIndex = 0;
+                     indiceIndex < numberOfIndices(); indiceIndex++)
+                {
+                    m_IndiceData[indiceInstanceIndex] =
+                        m_IndiceDataBuffer[indiceIndex] +
+                        (GLuint)((meshIndex * numberOfVertices()));
+                    indiceInstanceIndex++;
+                }
+                //                memcpy(m_IndiceData +
+                //                indiceInstanceIndex,
+                //                       m_IndiceDataBuffer +
+                //                       (GLuint)((meshIndex *
+                //                       numberOfVertices())),
+                //                       sizeof(GLuint) *
+                //                       numberOfIndices());
+                //                indiceInstanceIndex +=
+                //                numberOfIndices();
+            }
+
+            enableModelViewBufferChanged(true);
+            enableNormalMatrixBufferChanged(true);
+        }
     }
 
     bool MeshGeometry::isMaxSubdivisions()
@@ -291,15 +288,15 @@ namespace njli
 
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                GLsizei idx = (instanceIdx * numberOfVertices());
-                idx += (verticeIdx * 1);
+        {
+            GLsizei idx = (instanceIdx * numberOfVertices());
+            idx += (verticeIdx * 1);
 
-                memcpy(m_triangleBuffer, m_VertexData + idx,
-                       sizeof(TexturedColoredVertex) * 12);
+            memcpy(m_triangleBuffer, m_VertexData + idx,
+                   sizeof(TexturedColoredVertex) * 12);
 
-                ret = m_triangleBuffer[0].vertex;
-            }
+            ret = m_triangleBuffer[0].vertex;
+        }
 
         return ret;
     }
@@ -311,15 +308,15 @@ namespace njli
 
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                GLsizei idx = (instanceIdx * numberOfVertices());
-                idx += (verticeIdx * 1);
+        {
+            GLsizei idx = (instanceIdx * numberOfVertices());
+            idx += (verticeIdx * 1);
 
-                memcpy(m_triangleBuffer, m_VertexData + idx,
-                       sizeof(TexturedColoredVertex) * 12);
+            memcpy(m_triangleBuffer, m_VertexData + idx,
+                   sizeof(TexturedColoredVertex) * 12);
 
-                ret = m_triangleBuffer[0].color;
-            }
+            ret = m_triangleBuffer[0].color;
+        }
 
         return ret;
     }
@@ -331,15 +328,15 @@ namespace njli
 
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                GLsizei idx = (instanceIdx * numberOfVertices());
-                idx += (verticeIdx * 1);
+        {
+            GLsizei idx = (instanceIdx * numberOfVertices());
+            idx += (verticeIdx * 1);
 
-                memcpy(m_triangleBuffer, m_VertexData + idx,
-                       sizeof(TexturedColoredVertex) * 12);
+            memcpy(m_triangleBuffer, m_VertexData + idx,
+                   sizeof(TexturedColoredVertex) * 12);
 
-                ret = m_triangleBuffer[0].texture;
-            }
+            ret = m_triangleBuffer[0].texture;
+        }
 
         return ret;
     }
@@ -351,15 +348,15 @@ namespace njli
 
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                GLsizei idx = (instanceIdx * numberOfVertices());
-                idx += (verticeIdx * 1);
+        {
+            GLsizei idx = (instanceIdx * numberOfVertices());
+            idx += (verticeIdx * 1);
 
-                memcpy(m_triangleBuffer, m_VertexData + idx,
-                       sizeof(TexturedColoredVertex) * 12);
+            memcpy(m_triangleBuffer, m_VertexData + idx,
+                   sizeof(TexturedColoredVertex) * 12);
 
-                ret = m_triangleBuffer[0].normal;
-            }
+            ret = m_triangleBuffer[0].normal;
+        }
 
         return ret;
     }
@@ -371,15 +368,15 @@ namespace njli
 
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                GLsizei idx = (instanceIdx * numberOfVertices());
-                idx += (verticeIdx * 1);
+        {
+            GLsizei idx = (instanceIdx * numberOfVertices());
+            idx += (verticeIdx * 1);
 
-                memcpy(m_triangleBuffer, m_VertexData + idx,
-                       sizeof(TexturedColoredVertex) * 12);
+            memcpy(m_triangleBuffer, m_VertexData + idx,
+                   sizeof(TexturedColoredVertex) * 12);
 
-                ret = m_triangleBuffer[0].tangent;
-            }
+            ret = m_triangleBuffer[0].tangent;
+        }
 
         return ret;
     }
@@ -391,15 +388,15 @@ namespace njli
 
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                GLsizei idx = (instanceIdx * numberOfVertices());
-                idx += (verticeIdx * 1);
+        {
+            GLsizei idx = (instanceIdx * numberOfVertices());
+            idx += (verticeIdx * 1);
 
-                memcpy(m_triangleBuffer, m_VertexData + idx,
-                       sizeof(TexturedColoredVertex) * 12);
+            memcpy(m_triangleBuffer, m_VertexData + idx,
+                   sizeof(TexturedColoredVertex) * 12);
 
-                ret = m_triangleBuffer[0].bitangent;
-            }
+            ret = m_triangleBuffer[0].bitangent;
+        }
 
         return ret;
     }
@@ -410,10 +407,10 @@ namespace njli
     {
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                unsigned long offset = instanceIdx * numberOfVertices();
-                m_VertexData[offset + verticeIdx].vertex = v;
-            }
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].vertex = v;
+        }
 
         //        for (unsigned long vertexIndex = 0;
         //             vertexIndex < numberOfVertices();
@@ -469,10 +466,10 @@ namespace njli
     {
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                unsigned long offset = instanceIdx * numberOfVertices();
-                m_VertexData[offset + verticeIdx].color = v;
-            }
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].color = v;
+        }
     }
 
     void MeshGeometry::setVertexTexture(const btVector2 &v,
@@ -481,10 +478,10 @@ namespace njli
     {
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                unsigned long offset = instanceIdx * numberOfVertices();
-                m_VertexData[offset + verticeIdx].texture = v;
-            }
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].texture = v;
+        }
     }
 
     void MeshGeometry::setVertexNormal(const btVector3 &v,
@@ -493,10 +490,10 @@ namespace njli
     {
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                unsigned long offset = instanceIdx * numberOfVertices();
-                m_VertexData[offset + verticeIdx].normal = v;
-            }
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].normal = v;
+        }
     }
 
     void MeshGeometry::setVertexTangent(const btVector3 &v,
@@ -505,10 +502,10 @@ namespace njli
     {
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                unsigned long offset = instanceIdx * numberOfVertices();
-                m_VertexData[offset + verticeIdx].tangent = v;
-            }
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].tangent = v;
+        }
     }
 
     void MeshGeometry::setVertexBitangent(const btVector3 &v,
@@ -517,10 +514,10 @@ namespace njli
     {
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                unsigned long offset = instanceIdx * numberOfVertices();
-                m_VertexData[offset + verticeIdx].bitangent = v;
-            }
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx].bitangent = v;
+        }
     }
 
     TexturedColoredVertex
@@ -531,15 +528,15 @@ namespace njli
 
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                GLsizei idx = (instanceIdx * numberOfVertices());
-                idx += (verticeIdx * 1);
+        {
+            GLsizei idx = (instanceIdx * numberOfVertices());
+            idx += (verticeIdx * 1);
 
-                memcpy(m_triangleBuffer, m_VertexData + idx,
-                       sizeof(TexturedColoredVertex) * 12);
+            memcpy(m_triangleBuffer, m_VertexData + idx,
+                   sizeof(TexturedColoredVertex) * 12);
 
-                ret = m_triangleBuffer[0];
-            }
+            ret = m_triangleBuffer[0];
+        }
 
         return ret;
     }
@@ -550,10 +547,10 @@ namespace njli
     {
         if (instanceIdx < maxNumberOfInstances() &&
             verticeIdx < numberOfVertices())
-            {
-                unsigned long offset = instanceIdx * numberOfVertices();
-                m_VertexData[offset + verticeIdx] = tcv;
-            }
+        {
+            unsigned long offset = instanceIdx * numberOfVertices();
+            m_VertexData[offset + verticeIdx] = tcv;
+        }
     }
 
     void MeshGeometry::subdivideTriangle(const TexturedColoredVertex &p0,
@@ -612,117 +609,112 @@ namespace njli
         float maxX = 0, maxY = 0, maxZ = 0;
 
         while (std::getline(ss_line, line, '\n'))
+        {
+            if (line[0] == '#')
+                continue;
+
+            std::replace(line.begin(), line.end(), '\t', ' ');
+            std::replace(line.begin(), line.end(), '\r', ' ');
+
+            std::stringstream ss_token(line);
+            std::string token;
+            int tokencount = 0;
+            vec3 = btVector3(0, 0, 0);
+            vec2 = btVector2(0, 0);
+
+            while (std::getline(ss_token, token, ' '))
             {
-                if (line[0] == '#')
-                    continue;
-
-                std::replace(line.begin(), line.end(), '\t', ' ');
-                std::replace(line.begin(), line.end(), '\r', ' ');
-
-                std::stringstream ss_token(line);
-                std::string token;
-                int tokencount = 0;
-                vec3 = btVector3(0, 0, 0);
-                vec2 = btVector2(0, 0);
-
-                while (std::getline(ss_token, token, ' '))
-                    {
-                        if (tokencount == 0)
-                            {
-                                if (token == "v")
-                                    mode = v;
-                                else if (token == "vt")
-                                    mode = vt;
-                                else if (token == "vn")
-                                    mode = vn;
-                                else if (token == "f")
-                                    mode = f;
-                                //                    else
-                                //                        mode = none;
-                            }
-                        else
-                            {
-                                //                    if(!isFloat(token))
-                                //                        continue;
-                                switch (mode)
-                                    {
-                                    case v:
-                                    case vn:
-                                        {
-                                            switch (tokencount)
-                                                {
-                                                case 1:
-                                                    vec3.setX(
-                                                        atof(token.c_str()));
-                                                    break;
-                                                case 2:
-                                                    vec3.setY(
-                                                        atof(token.c_str()));
-                                                    break;
-                                                case 3:
-                                                    vec3.setZ(
-                                                        atof(token.c_str()));
-                                                    break;
-                                                default:
-                                                    assert(false);
-                                                }
-                                        }
-                                        break;
-                                    case vt:
-                                        {
-                                            switch (tokencount)
-                                                {
-                                                case 1:
-                                                    vec2.setX(
-                                                        atof(token.c_str()));
-                                                    break;
-                                                case 2:
-                                                    vec2.setY(
-                                                        atof(token.c_str()));
-                                                    break;
-                                                default:
-                                                    assert(false);
-                                                }
-                                        }
-                                        break;
-                                    case f:
-                                        {
-                                            faces.push_back(token);
-                                        }
-                                        break;
-
-                                    default:
-                                        break;
-                                    }
-                            }
-                        tokencount++;
-                    }
-
-                switch (mode)
+                if (tokencount == 0)
+                {
+                    if (token == "v")
+                        mode = v;
+                    else if (token == "vt")
+                        mode = vt;
+                    else if (token == "vn")
+                        mode = vn;
+                    else if (token == "f")
+                        mode = f;
+                    //                    else
+                    //                        mode = none;
+                }
+                else
+                {
+                    //                    if(!isFloat(token))
+                    //                        continue;
+                    switch (mode)
                     {
                     case v:
-                        maxX = std::max<float>(vec3.x(), maxX);
-                        maxY = std::max<float>(vec3.y(), maxY);
-                        maxZ = std::max<float>(vec3.z(), maxZ);
-
-                        vertices.push_back(vec3);
-                        break;
                     case vn:
-                        normals.push_back(vec3);
-                        break;
-                    case vt:
-                        texture.push_back(vec2);
-                        break;
-                    case f:
+                    {
+                        switch (tokencount)
                         {
+                        case 1:
+                            vec3.setX(atof(token.c_str()));
+                            break;
+                        case 2:
+                            vec3.setY(atof(token.c_str()));
+                            break;
+                        case 3:
+                            vec3.setZ(atof(token.c_str()));
+                            break;
+                        default:
+                            assert(false);
                         }
-                        break;
+                    }
+                    break;
+                    case vt:
+                    {
+                        switch (tokencount)
+                        {
+                        case 1:
+                            vec2.setX(atof(token.c_str()));
+                            break;
+                        case 2:
+                            vec2.setY(atof(token.c_str()));
+                            break;
+                        default:
+                            assert(false);
+                        }
+                    }
+                    break;
+                    case f:
+                    {
+                        faces.push_back(token);
+                    }
+                    break;
 
                     default:
                         break;
                     }
-                mode = none;
+                }
+                tokencount++;
             }
+
+            switch (mode)
+            {
+            case v:
+                maxX = std::max<float>(vec3.x(), maxX);
+                maxY = std::max<float>(vec3.y(), maxY);
+                maxZ = std::max<float>(vec3.z(), maxZ);
+
+                vertices.push_back(vec3);
+                break;
+            case vn:
+                normals.push_back(vec3);
+                break;
+            case vt:
+                texture.push_back(vec2);
+                break;
+            case f:
+            {
+            }
+            break;
+
+            default:
+                break;
+            }
+            mode = none;
+        }
 
         m_NumberOfIndices = (GLsizei)faces.size();
         m_NumberOfVertices = (GLsizei)faces.size();
@@ -733,49 +725,49 @@ namespace njli
 
         for (std::vector<std::string>::iterator i = faces.begin();
              i != faces.end(); i++, idx++)
+        {
+            std::string faceString = *i;
+            std::stringstream ss_faceData(*i);
+            std::string faceData;
+            int ii = 0;
+            TexturedColoredVertex t;
+
+            while (std::getline(ss_faceData, faceData, '/'))
             {
-                std::string faceString = *i;
-                std::stringstream ss_faceData(*i);
-                std::string faceData;
-                int ii = 0;
-                TexturedColoredVertex t;
+                unsigned long idx = atoi(faceData.c_str()) - 1;
 
-                while (std::getline(ss_faceData, faceData, '/'))
-                    {
-                        unsigned long idx = atoi(faceData.c_str()) - 1;
+                switch (ii)
+                {
+                case 0:
+                    // vertex idx
+                    assert(idx < vertices.size());
+                    t.vertex = vertices.at(idx);
+                    break;
+                case 1:
+                    assert(idx < texture.size());
+                    t.texture = texture.at(idx);
+                    // texture idx
+                    //                            vertexData[vertexIndex].texture
+                    //                            = texture.at(idx);
+                    break;
+                case 2:
+                    assert(idx < normals.size());
+                    // normal idx
+                    t.normal = normals.at(idx);
+                    break;
 
-                        switch (ii)
-                            {
-                            case 0:
-                                // vertex idx
-                                assert(idx < vertices.size());
-                                t.vertex = vertices.at(idx);
-                                break;
-                            case 1:
-                                assert(idx < texture.size());
-                                t.texture = texture.at(idx);
-                                // texture idx
-                                //                            vertexData[vertexIndex].texture
-                                //                            = texture.at(idx);
-                                break;
-                            case 2:
-                                assert(idx < normals.size());
-                                // normal idx
-                                t.normal = normals.at(idx);
-                                break;
-
-                            default:
-                                assert(false);
-                                break;
-                            }
-                        ii++;
-                    }
-
-                t.color = btVector4(1.0f, 1.0f, 1.0f, 1.0f);
-
-                vertexData[idx] = t;
-                indiceData[idx] = (GLuint)idx;
+                default:
+                    assert(false);
+                    break;
+                }
+                ii++;
             }
+
+            t.color = btVector4(1.0f, 1.0f, 1.0f, 1.0f);
+
+            vertexData[idx] = t;
+            indiceData[idx] = (GLuint)idx;
+        }
 
         Geometry::loadData();
 
@@ -812,24 +804,22 @@ namespace njli
         unsigned long indiceInstanceIndex = 0;
         for (unsigned long meshIndex = 0; meshIndex < maxNumberOfInstances();
              meshIndex++)
+        {
+            for (unsigned long verticeIndex = 0;
+                 verticeIndex < numberOfVertices(); verticeIndex++)
             {
-                for (unsigned long verticeIndex = 0;
-                     verticeIndex < numberOfVertices(); verticeIndex++)
-                    {
-                        m_VertexData[vertexInstanceIndex] =
-                            vertexData[verticeIndex];
-                        vertexInstanceIndex++;
-                    }
-
-                for (unsigned long indiceIndex = 0;
-                     indiceIndex < numberOfIndices(); indiceIndex++)
-                    {
-                        m_IndiceData[indiceInstanceIndex] =
-                            (GLuint)((meshIndex * numberOfVertices()) +
-                                     indiceData[indiceIndex]);
-                        indiceInstanceIndex++;
-                    }
+                m_VertexData[vertexInstanceIndex] = vertexData[verticeIndex];
+                vertexInstanceIndex++;
             }
+
+            for (unsigned long indiceIndex = 0; indiceIndex < numberOfIndices();
+                 indiceIndex++)
+            {
+                m_IndiceData[indiceInstanceIndex] = (GLuint)(
+                    (meshIndex * numberOfVertices()) + indiceData[indiceIndex]);
+                indiceInstanceIndex++;
+            }
+        }
 
         TexturedColoredVertex::computeTangentBasis(m_VertexData,
                                                    numberOfVertices());
@@ -885,27 +875,25 @@ namespace njli
         long index = getGeometryIndex(node);
 
         if (index >= 0 && m_VertexData)
+        {
+            float opacity = node->getOpacity();
+            bool hidden = node->isHiddenGeometry();
+
+            float o =
+                (opacity > 1.0f) ? 1.0f : ((opacity < 0.0f) ? 0.0f : opacity);
+            o = (hidden) ? 0.0f : o;
+
+            unsigned long offset = index * numberOfVertices();
+            for (unsigned long vertexIndex = 0;
+                 vertexIndex < numberOfVertices(); vertexIndex++)
             {
-                float opacity = node->getOpacity();
-                bool hidden = node->isHiddenGeometry();
+                btVector4 color(m_VertexData[vertexIndex + offset].color);
+                color.setW(o);
 
-                float o = (opacity > 1.0f)
-                              ? 1.0f
-                              : ((opacity < 0.0f) ? 0.0f : opacity);
-                o = (hidden) ? 0.0f : o;
-
-                unsigned long offset = index * numberOfVertices();
-                for (unsigned long vertexIndex = 0;
-                     vertexIndex < numberOfVertices(); vertexIndex++)
-                    {
-                        btVector4 color(
-                            m_VertexData[vertexIndex + offset].color);
-                        color.setW(o);
-
-                        m_VertexData[vertexIndex + offset].color = color;
-                    }
-                enableVertexArrayBufferChanged(true);
+                m_VertexData[vertexIndex + offset].color = color;
             }
+            enableVertexArrayBufferChanged(true);
+        }
     }
 
     void MeshGeometry::setHidden(Node *node, bool hiddenFromCamera)
@@ -913,23 +901,22 @@ namespace njli
         long index = getGeometryIndex(node);
 
         if (index >= 0 && m_VertexData)
+        {
+            bool hidden = node->isHiddenGeometry() || hiddenFromCamera;
+
+            float alpha = (hidden) ? 0.0f : 1.0f;
+
+            unsigned long offset = index * numberOfVertices();
+            for (unsigned long vertexIndex = 0;
+                 vertexIndex < numberOfVertices(); vertexIndex++)
             {
-                bool hidden = node->isHiddenGeometry() || hiddenFromCamera;
+                btVector4 color(m_VertexData[vertexIndex + offset].color);
+                color.setW(alpha);
 
-                float alpha = (hidden) ? 0.0f : 1.0f;
-
-                unsigned long offset = index * numberOfVertices();
-                for (unsigned long vertexIndex = 0;
-                     vertexIndex < numberOfVertices(); vertexIndex++)
-                    {
-                        btVector4 color(
-                            m_VertexData[vertexIndex + offset].color);
-                        color.setW(alpha);
-
-                        m_VertexData[vertexIndex + offset].color = color;
-                    }
-                enableVertexArrayBufferChanged(true);
+                m_VertexData[vertexIndex + offset].color = color;
             }
+            enableVertexArrayBufferChanged(true);
+        }
     }
 
     void MeshGeometry::setColorBase(Node *node)
@@ -937,22 +924,22 @@ namespace njli
         long index = getGeometryIndex(node);
 
         if (index >= 0 && m_VertexData)
+        {
+            bool hidden = node->isHiddenGeometry();
+
+            btVector4 c(node->getColorBase());
+
+            if (hidden)
+                c.setW(0.0f);
+
+            unsigned long offset = index * numberOfVertices();
+            for (unsigned long vertexIndex = 0;
+                 vertexIndex < numberOfVertices(); vertexIndex++)
             {
-                bool hidden = node->isHiddenGeometry();
-
-                btVector4 c(node->getColorBase());
-
-                if (hidden)
-                    c.setW(0.0f);
-
-                unsigned long offset = index * numberOfVertices();
-                for (unsigned long vertexIndex = 0;
-                     vertexIndex < numberOfVertices(); vertexIndex++)
-                    {
-                        m_VertexData[offset + vertexIndex].color = c;
-                    }
-                enableVertexArrayBufferChanged(true);
+                m_VertexData[offset + vertexIndex].color = c;
             }
+            enableVertexArrayBufferChanged(true);
+        }
     }
 
     void MeshGeometry::applyShape(Node *node, PhysicsShape *physicsShape)

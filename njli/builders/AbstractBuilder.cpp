@@ -24,8 +24,8 @@ namespace njli
     AbstractBuilder &AbstractBuilder::operator=(const AbstractBuilder &rhs)
     {
         if (this != &rhs)
-            {
-            }
+        {
+        }
         return *this;
     }
 } // namespace njli

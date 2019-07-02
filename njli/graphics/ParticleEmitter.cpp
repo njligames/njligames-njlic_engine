@@ -160,8 +160,8 @@ namespace njli
     ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &rhs)
     {
         if (this != &rhs)
-            {
-            }
+        {
+        }
         return *this;
     }
 
@@ -241,9 +241,9 @@ namespace njli
     void ParticleEmitter::destroy(ParticleEmitter *object)
     {
         if (object)
-            {
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+        {
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void ParticleEmitter::load(ParticleEmitter &object, lua_State *L, int index)
@@ -256,56 +256,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        ParticleEmitter::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                ParticleEmitter::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -328,10 +328,10 @@ namespace njli
         active = false;
         elapsedTime = 0;
         for (int i = 0; i < particleCount; i++)
-            {
-                Particle *p = &m_ParticleArray[i];
-                p->timeToLive = 0;
-            }
+        {
+            Particle *p = &m_ParticleArray[i];
+            p->timeToLive = 0;
+        }
         emitCounter = 0;
         emissionRate =
             maxParticles / ((particleLifespan == 0) ? 1.0f : particleLifespan);
@@ -346,228 +346,227 @@ namespace njli
         int i = 0;
         while ((ele = document.FirstChildElement("particleEmitterConfig")
                           ->IterateChildren(ele)) != 0)
+        {
+            f64 double_value, x, y, r, g, b, a;
+            int int_value;
+
+            TiXmlElement *e = ele->ToElement();
+            e->Attribute("value", &int_value);
+            e->Attribute("value", &double_value);
+            e->Attribute("x", &x);
+            e->Attribute("y", &y);
+            e->Attribute("red", &r);
+            e->Attribute("green", &g);
+            e->Attribute("blue", &b);
+            e->Attribute("alpha", &a);
+
+            if (strcmp("emitterType", ele->Value()) == 0)
             {
-                f64 double_value, x, y, r, g, b, a;
-                int int_value;
-
-                TiXmlElement *e = ele->ToElement();
-                e->Attribute("value", &int_value);
-                e->Attribute("value", &double_value);
-                e->Attribute("x", &x);
-                e->Attribute("y", &y);
-                e->Attribute("red", &r);
-                e->Attribute("green", &g);
-                e->Attribute("blue", &b);
-                e->Attribute("alpha", &a);
-
-                if (strcmp("emitterType", ele->Value()) == 0)
-                    {
-                        emitterType = int_value;
-                        ++i;
-                    }
-                else if (strcmp("sourcePosition", ele->Value()) == 0)
-                    {
-                        btTransform t(btTransform::getIdentity());
-                        //                t.setOrigin(btVector3(x, y, z));
-                        //                setTransform(t);
-                        ++i;
-                    }
-                else if (strcmp("sourcePositionVariance", ele->Value()) == 0)
-                    {
-                        *sourcePositionVariance = btVector3(x, y, 0);
-                        ++i;
-                    }
-                else if (strcmp("speed", ele->Value()) == 0)
-                    {
-                        speed = double_value;
-                        ++i;
-                    }
-                else if (strcmp("speedVariance", ele->Value()) == 0)
-                    {
-                        speedVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("particleLifeSpan", ele->Value()) == 0)
-                    {
-                        particleLifespan = double_value;
-                        ++i;
-                    }
-                else if (strcmp("particleLifespanVariance", ele->Value()) == 0)
-                    {
-                        particleLifespanVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("angle", ele->Value()) == 0)
-                    {
-                        angle = double_value;
-                        ++i;
-                    }
-                else if (strcmp("angleVariance", ele->Value()) == 0)
-                    {
-                        angleVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("gravity", ele->Value()) == 0)
-                    {
-                        gravity->setX(x);
-                        gravity->setY(y);
-                        gravity->setZ(0);
-                        ++i;
-                    }
-                else if (strcmp("radialAcceleration", ele->Value()) == 0)
-                    {
-                        radialAcceleration = double_value;
-                        ++i;
-                    }
-                else if (strcmp("radialAccelVariance", ele->Value()) == 0)
-                    {
-                        radialAccelVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("tangentialAcceleration", ele->Value()) == 0)
-                    {
-                        tangentialAcceleration = double_value;
-                        ++i;
-                    }
-                else if (strcmp("tangentialAccelVariance", ele->Value()) == 0)
-                    {
-                        tangentialAccelVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("startColor", ele->Value()) == 0)
-                    {
-                        startColor->setX(r);
-                        startColor->setY(g);
-                        startColor->setZ(b);
-                        startColor->setW(a);
-                        ++i;
-                    }
-                else if (strcmp("startColorVariance", ele->Value()) == 0)
-                    {
-                        startColorVariance->setX(r);
-                        startColorVariance->setY(g);
-                        startColorVariance->setZ(b);
-                        startColorVariance->setW(a);
-                        ++i;
-                    }
-                else if (strcmp("finishColor", ele->Value()) == 0)
-                    {
-                        finishColor->setX(r);
-                        finishColor->setY(g);
-                        finishColor->setZ(b);
-                        finishColor->setW(a);
-                        ++i;
-                    }
-                else if (strcmp("finishColorVariance", ele->Value()) == 0)
-                    {
-                        finishColorVariance->setX(r);
-                        finishColorVariance->setY(g);
-                        finishColorVariance->setZ(b);
-                        finishColorVariance->setW(a);
-                        ++i;
-                    }
-                else if (strcmp("maxParticles", ele->Value()) == 0)
-                    {
-                        maxParticles = int_value;
-                        ++i;
-                    }
-                else if (strcmp("startParticleSize", ele->Value()) == 0)
-                    {
-                        startParticleSize = double_value;
-                        ++i;
-                    }
-                else if (strcmp("startParticleSizeVariance", ele->Value()) == 0)
-                    {
-                        startParticleSizeVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("finishParticleSize", ele->Value()) == 0)
-                    {
-                        finishParticleSize = double_value;
-                        ++i;
-                    }
-                else if (strcmp("finishParticleSizeVariance", ele->Value()) ==
-                         0)
-                    {
-                        finishParticleSizeVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("duration", ele->Value()) == 0)
-                    {
-                        duration = double_value;
-                        ++i;
-                    }
-                else if (strcmp("blendFuncSource", ele->Value()) == 0)
-                    {
-                        blendFuncSource = int_value;
-                        ++i;
-                    }
-                else if (strcmp("blendFuncDestination", ele->Value()) == 0)
-                    {
-                        blendFuncDestination = int_value;
-                        ++i;
-                    }
-                else if (strcmp("maxRadius", ele->Value()) == 0)
-                    {
-                        maxRadius = double_value;
-                        ++i;
-                    }
-                else if (strcmp("maxRadiusVariance", ele->Value()) == 0)
-                    {
-                        maxRadiusVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("minRadius", ele->Value()) == 0)
-                    {
-                        minRadius = double_value;
-                        ++i;
-                    }
-                else if (strcmp("minRadiusVariance", ele->Value()) == 0)
-                    {
-                        minRadiusVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("rotatePerSecond", ele->Value()) == 0)
-                    {
-                        rotatePerSecond = double_value;
-                        ++i;
-                    }
-                else if (strcmp("rotatePerSecondVariance", ele->Value()) == 0)
-                    {
-                        rotatePerSecondVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("rotationStart", ele->Value()) == 0)
-                    {
-                        rotationStart = double_value;
-                        ++i;
-                    }
-                else if (strcmp("rotationStartVariance", ele->Value()) == 0)
-                    {
-                        rotationStartVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("rotationEnd", ele->Value()) == 0)
-                    {
-                        rotationEnd = double_value;
-                        ++i;
-                    }
-                else if (strcmp("rotationEndVariance", ele->Value()) == 0)
-                    {
-                        rotationEndVariance = double_value;
-                        ++i;
-                    }
-                else if (strcmp("texture", ele->Value()) == 0)
-                    {
-                        textureFilename = e->Attribute("name");
-                        ++i;
-                    }
-                else
-                    {
-                        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "unused: %s\n",
-                                       ele->Value());
-                    }
+                emitterType = int_value;
+                ++i;
             }
+            else if (strcmp("sourcePosition", ele->Value()) == 0)
+            {
+                btTransform t(btTransform::getIdentity());
+                //                t.setOrigin(btVector3(x, y, z));
+                //                setTransform(t);
+                ++i;
+            }
+            else if (strcmp("sourcePositionVariance", ele->Value()) == 0)
+            {
+                *sourcePositionVariance = btVector3(x, y, 0);
+                ++i;
+            }
+            else if (strcmp("speed", ele->Value()) == 0)
+            {
+                speed = double_value;
+                ++i;
+            }
+            else if (strcmp("speedVariance", ele->Value()) == 0)
+            {
+                speedVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("particleLifeSpan", ele->Value()) == 0)
+            {
+                particleLifespan = double_value;
+                ++i;
+            }
+            else if (strcmp("particleLifespanVariance", ele->Value()) == 0)
+            {
+                particleLifespanVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("angle", ele->Value()) == 0)
+            {
+                angle = double_value;
+                ++i;
+            }
+            else if (strcmp("angleVariance", ele->Value()) == 0)
+            {
+                angleVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("gravity", ele->Value()) == 0)
+            {
+                gravity->setX(x);
+                gravity->setY(y);
+                gravity->setZ(0);
+                ++i;
+            }
+            else if (strcmp("radialAcceleration", ele->Value()) == 0)
+            {
+                radialAcceleration = double_value;
+                ++i;
+            }
+            else if (strcmp("radialAccelVariance", ele->Value()) == 0)
+            {
+                radialAccelVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("tangentialAcceleration", ele->Value()) == 0)
+            {
+                tangentialAcceleration = double_value;
+                ++i;
+            }
+            else if (strcmp("tangentialAccelVariance", ele->Value()) == 0)
+            {
+                tangentialAccelVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("startColor", ele->Value()) == 0)
+            {
+                startColor->setX(r);
+                startColor->setY(g);
+                startColor->setZ(b);
+                startColor->setW(a);
+                ++i;
+            }
+            else if (strcmp("startColorVariance", ele->Value()) == 0)
+            {
+                startColorVariance->setX(r);
+                startColorVariance->setY(g);
+                startColorVariance->setZ(b);
+                startColorVariance->setW(a);
+                ++i;
+            }
+            else if (strcmp("finishColor", ele->Value()) == 0)
+            {
+                finishColor->setX(r);
+                finishColor->setY(g);
+                finishColor->setZ(b);
+                finishColor->setW(a);
+                ++i;
+            }
+            else if (strcmp("finishColorVariance", ele->Value()) == 0)
+            {
+                finishColorVariance->setX(r);
+                finishColorVariance->setY(g);
+                finishColorVariance->setZ(b);
+                finishColorVariance->setW(a);
+                ++i;
+            }
+            else if (strcmp("maxParticles", ele->Value()) == 0)
+            {
+                maxParticles = int_value;
+                ++i;
+            }
+            else if (strcmp("startParticleSize", ele->Value()) == 0)
+            {
+                startParticleSize = double_value;
+                ++i;
+            }
+            else if (strcmp("startParticleSizeVariance", ele->Value()) == 0)
+            {
+                startParticleSizeVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("finishParticleSize", ele->Value()) == 0)
+            {
+                finishParticleSize = double_value;
+                ++i;
+            }
+            else if (strcmp("finishParticleSizeVariance", ele->Value()) == 0)
+            {
+                finishParticleSizeVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("duration", ele->Value()) == 0)
+            {
+                duration = double_value;
+                ++i;
+            }
+            else if (strcmp("blendFuncSource", ele->Value()) == 0)
+            {
+                blendFuncSource = int_value;
+                ++i;
+            }
+            else if (strcmp("blendFuncDestination", ele->Value()) == 0)
+            {
+                blendFuncDestination = int_value;
+                ++i;
+            }
+            else if (strcmp("maxRadius", ele->Value()) == 0)
+            {
+                maxRadius = double_value;
+                ++i;
+            }
+            else if (strcmp("maxRadiusVariance", ele->Value()) == 0)
+            {
+                maxRadiusVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("minRadius", ele->Value()) == 0)
+            {
+                minRadius = double_value;
+                ++i;
+            }
+            else if (strcmp("minRadiusVariance", ele->Value()) == 0)
+            {
+                minRadiusVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("rotatePerSecond", ele->Value()) == 0)
+            {
+                rotatePerSecond = double_value;
+                ++i;
+            }
+            else if (strcmp("rotatePerSecondVariance", ele->Value()) == 0)
+            {
+                rotatePerSecondVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("rotationStart", ele->Value()) == 0)
+            {
+                rotationStart = double_value;
+                ++i;
+            }
+            else if (strcmp("rotationStartVariance", ele->Value()) == 0)
+            {
+                rotationStartVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("rotationEnd", ele->Value()) == 0)
+            {
+                rotationEnd = double_value;
+                ++i;
+            }
+            else if (strcmp("rotationEndVariance", ele->Value()) == 0)
+            {
+                rotationEndVariance = double_value;
+                ++i;
+            }
+            else if (strcmp("texture", ele->Value()) == 0)
+            {
+                textureFilename = e->Attribute("name");
+                ++i;
+            }
+            else
+            {
+                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "unused: %s\n",
+                               ele->Value());
+            }
+        }
 
         return (i >= 37);
     }
@@ -587,18 +586,18 @@ namespace njli
         geometry->enableDepthTest(false);
 
         for (u32 i = 0; i < maxParticles; ++i)
-            {
-                Node *node = m_Nodes[i];
+        {
+            Node *node = m_Nodes[i];
 
-                particlesRootNode->addChildNode(node);
+            particlesRootNode->addChildNode(node);
 
-                node->setGeometry(geometry);
+            node->setGeometry(geometry);
 
-                node->setRenderCategory(getParent());
+            node->setRenderCategory(getParent());
 
-                if (body)
-                    node->setPhysicsBody(body);
-            }
+            if (body)
+                node->setPhysicsBody(body);
+        }
 
         if (m_ParticleArray)
             delete[] m_ParticleArray;
@@ -613,12 +612,12 @@ namespace njli
         //        active = true;
 
         for (int i = 0; i < maxParticles; i++)
-            {
-                Particle *p = &m_ParticleArray[i];
-                p->timeToLive = 0;
-                p->node = m_Nodes[i];
-                p->used = false;
-            }
+        {
+            Particle *p = &m_ParticleArray[i];
+            p->timeToLive = 0;
+            p->node = m_Nodes[i];
+            p->used = false;
+        }
 
         // Set the particle count to zero
         particleCount = 0;
@@ -1006,220 +1005,213 @@ namespace njli
         f32 scale = (m_Scale->x() + m_Scale->y() + m_Scale->z()) / 3.0f;
 
         if (active && emissionRate)
+        {
+            f32 rate = 1.0f / emissionRate;
+
+            if (particleCount < maxParticles)
+                emitCounter += timeStep;
+
+            while (particleCount < maxParticles && emitCounter > rate)
             {
-                f32 rate = 1.0f / emissionRate;
-
-                if (particleCount < maxParticles)
-                    emitCounter += timeStep;
-
-                while (particleCount < maxParticles && emitCounter > rate)
-                    {
-                        addParticle();
-                        emitCounter -= rate;
-                    }
-
-                elapsedTime += timeStep;
-
-                if (duration != -1 && duration < elapsedTime)
-                    {
-                        stop();
-                    }
+                addParticle();
+                emitCounter -= rate;
             }
+
+            elapsedTime += timeStep;
+
+            if (duration != -1 && duration < elapsedTime)
+            {
+                stop();
+            }
+        }
 
         for (std::vector<Particle *>::iterator i = m_ActiveParticles.begin();
              i != m_ActiveParticles.end();)
+        {
+            Particle *currentParticle = *i; //&m_ParticleArray[particleIndex];
+            Node *currentNode = currentParticle->node;
+
+            currentParticle->timeToLive -= timeStep;
+
+            // If the current particle is alive then update it
+            if (currentParticle->timeToLive > 0)
             {
-                Particle *currentParticle =
-                    *i; //&m_ParticleArray[particleIndex];
-                Node *currentNode = currentParticle->node;
 
-                currentParticle->timeToLive -= timeStep;
+                // If maxRadius is greater than 0 then the particles are
+                // going to spin otherwise they are effected by speed
+                // and gravity
+                if (emitterType == kParticleTypeRadial)
+                {
 
-                // If the current particle is alive then update it
-                if (currentParticle->timeToLive > 0)
-                    {
+                    // FIX 2
+                    // Update the angle of the particle from the
+                    // sourcePosition and the radius.  This is only
+                    // done of the particles are rotating
+                    currentParticle->angle +=
+                        currentParticle->degreesPerSecond * timeStep;
+                    currentParticle->radius +=
+                        currentParticle->radiusDelta * timeStep;
 
-                        // If maxRadius is greater than 0 then the particles are
-                        // going to spin otherwise they are effected by speed
-                        // and gravity
-                        if (emitterType == kParticleTypeRadial)
-                            {
-
-                                // FIX 2
-                                // Update the angle of the particle from the
-                                // sourcePosition and the radius.  This is only
-                                // done of the particles are rotating
-                                currentParticle->angle +=
-                                    currentParticle->degreesPerSecond *
-                                    timeStep;
-                                currentParticle->radius +=
-                                    currentParticle->radiusDelta * timeStep;
-
-                                btVector3 tmp(0, 0, 0);
-                                tmp.setX(getSourcePosition().x() -
-                                         cosf(currentParticle->angle) *
-                                             currentParticle->radius);
-                                tmp.setY(getSourcePosition().y() -
-                                         sinf(currentParticle->angle) *
-                                             currentParticle->radius);
-                                *(currentParticle->position) = tmp;
-                            }
-                        else
-                            {
-                                btVector3 tmp, radial, tangential;
-                                btVector3 zero(0, 0, 0);
-
-                                radial.setX(0);
-                                radial.setY(0);
-                                radial.setZ(0);
-
-                                // By default this emitters particles are moved
-                                // relative to the emitter node position
-
-                                btVector3 positionDifference =
-                                    *(currentParticle->startPos) - zero;
-                                *(currentParticle->position) =
-                                    *(currentParticle->position) -
-                                    (positionDifference * scale);
-
-                                if (currentParticle->position->x() ||
-                                    currentParticle->position->y())
-                                    radial =
-                                        currentParticle->position->normalized();
-
-                                tangential = radial;
-                                radial *= currentParticle->radialAcceleration;
-
-                                f32 newy = tangential.x();
-                                tangential.setX(-tangential.y());
-                                tangential.setY(newy);
-                                tangential *=
-                                    currentParticle->tangentialAcceleration;
-
-                                tmp = ((radial + tangential) + (*gravity * 1));
-                                tmp *= timeStep;
-                                *(currentParticle->direction) =
-                                    *(currentParticle->direction) + tmp;
-                                tmp = *(currentParticle->direction) * timeStep;
-                                *(currentParticle->position) =
-                                    *(currentParticle->position) +
-                                    (tmp * scale);
-
-                                // Now apply the difference calculated early
-                                // causing the particles to be relative in
-                                // position to the emitter position
-                                *(currentParticle->position) =
-                                    *(currentParticle->position) +
-                                    (positionDifference * scale);
-                            }
-
-                        // Update the particles color
-                        currentParticle->color->setX(
-                            currentParticle->color->x() +
-                            (currentParticle->deltaColor->x() * timeStep));
-                        currentParticle->color->setY(
-                            currentParticle->color->y() +
-                            (currentParticle->deltaColor->y() * timeStep));
-                        currentParticle->color->setZ(
-                            currentParticle->color->z() +
-                            (currentParticle->deltaColor->z() * timeStep));
-                        currentParticle->color->setW(
-                            currentParticle->color->w() +
-                            (currentParticle->deltaColor->w() * timeStep));
-
-                        // Update the particle size
-                        currentParticle->particleSize +=
-                            currentParticle->particleSizeDelta * timeStep;
-                        currentParticle->particleSize =
-                            btMax<f32>(0, currentParticle->particleSize);
-
-                        // Update the rotation of the particle
-                        currentParticle->rotation +=
-                            currentParticle->rotationDelta * timeStep;
-
-                        // As we are rendering the particles as quads, we need
-                        // to define 6 vertices for each particle
-                        f32 halfSize = currentParticle->particleSize * 0.5f;
-
-                        // If a rotation has been defined for this particle then
-                        // apply the rotation to the vertices that define the
-                        // particle
-                        if (currentParticle->rotation)
-                            {
-                                //                    float x1 = -halfSize;
-                                //                    float y1 = -halfSize;
-                                //                    float x2 = halfSize;
-                                //                    float y2 = halfSize;
-                                //                    float x =
-                                //                    currentParticle->position->x();
-                                //                    float y =
-                                //                    currentParticle->position->y();
-                                //                    float r =
-                                //                    btRadians(currentParticle->rotation);
-                                //                    float cr = cosf(r);
-                                //                    float sr = sinf(r);
-                                //                    float ax = x1 * cr - y1 *
-                                //                    sr + x; float ay = x1 * sr
-                                //                    + y1 * cr + y; float bx =
-                                //                    x2 * cr - y1 * sr + x;
-                                //                    float by = x2 * sr + y1 *
-                                //                    cr + y; float cx = x2 * cr
-                                //                    - y2 * sr + x; float cy =
-                                //                    x2 * sr + y2 * cr + y;
-                                //                    float dx = x1 * cr - y2 *
-                                //                    sr + x; float dy = x1 * sr
-                                //                    + y2 * cr + y;
-
-                                //                    m_Sprite2D[particleIndex].bl.vertex.setX(ax);
-                                //                    m_Sprite2D[particleIndex].bl.vertex.setY(ay);
-                                //                    m_Sprite2D[particleIndex].bl.color
-                                //                    = currentParticle->color;
-                                //
-                                //                    m_Sprite2D[particleIndex].br.vertex.setX(bx);
-                                //                    m_Sprite2D[particleIndex].br.vertex.setY(by);
-                                //                    m_Sprite2D[particleIndex].br.color
-                                //                    = currentParticle->color;
-                                //
-                                //                    m_Sprite2D[particleIndex].tl.vertex.setX(dx);
-                                //                    m_Sprite2D[particleIndex].tl.vertex.setY(dy);
-                                //                    m_Sprite2D[particleIndex].tl.color
-                                //                    = currentParticle->color;
-                                //
-                                //                    m_Sprite2D[particleIndex].tr.vertex.setX(cx);
-                                //                    m_Sprite2D[particleIndex].tr.vertex.setY(cy);
-                            }
-                        else
-                            {
-                                // Using the position of the particle, work out
-                                // the four vertices for the quad that will hold
-                                // the particle and load those into the quads
-                                // array.
-
-                                currentNode->setColorBase(
-                                    *(currentParticle->color));
-                                currentNode->getGeometry()->setColorBase(
-                                    currentNode);
-
-                                assert(false && "need to set the size of the "
-                                                "geometry somehow. maybe "
-                                                "specifically specify that the "
-                                                "geometry is sprite2d?");
-                                //                currentNode->getGeometry()->setSize(
-                                //                    currentNode,
-                                //                    *(currentParticle->position),
-                                //                    halfSize);
-                            }
-                        ++i;
-                    }
+                    btVector3 tmp(0, 0, 0);
+                    tmp.setX(getSourcePosition().x() -
+                             cosf(currentParticle->angle) *
+                                 currentParticle->radius);
+                    tmp.setY(getSourcePosition().y() -
+                             sinf(currentParticle->angle) *
+                                 currentParticle->radius);
+                    *(currentParticle->position) = tmp;
+                }
                 else
-                    {
-                        --particleCount;
-                        currentParticle->used = false;
-                        currentNode->setOpacity(0.0f);
-                        currentNode->getGeometry()->setOpacity(currentNode);
-                        i = m_ActiveParticles.erase(i);
-                    }
+                {
+                    btVector3 tmp, radial, tangential;
+                    btVector3 zero(0, 0, 0);
+
+                    radial.setX(0);
+                    radial.setY(0);
+                    radial.setZ(0);
+
+                    // By default this emitters particles are moved
+                    // relative to the emitter node position
+
+                    btVector3 positionDifference =
+                        *(currentParticle->startPos) - zero;
+                    *(currentParticle->position) =
+                        *(currentParticle->position) -
+                        (positionDifference * scale);
+
+                    if (currentParticle->position->x() ||
+                        currentParticle->position->y())
+                        radial = currentParticle->position->normalized();
+
+                    tangential = radial;
+                    radial *= currentParticle->radialAcceleration;
+
+                    f32 newy = tangential.x();
+                    tangential.setX(-tangential.y());
+                    tangential.setY(newy);
+                    tangential *= currentParticle->tangentialAcceleration;
+
+                    tmp = ((radial + tangential) + (*gravity * 1));
+                    tmp *= timeStep;
+                    *(currentParticle->direction) =
+                        *(currentParticle->direction) + tmp;
+                    tmp = *(currentParticle->direction) * timeStep;
+                    *(currentParticle->position) =
+                        *(currentParticle->position) + (tmp * scale);
+
+                    // Now apply the difference calculated early
+                    // causing the particles to be relative in
+                    // position to the emitter position
+                    *(currentParticle->position) =
+                        *(currentParticle->position) +
+                        (positionDifference * scale);
+                }
+
+                // Update the particles color
+                currentParticle->color->setX(
+                    currentParticle->color->x() +
+                    (currentParticle->deltaColor->x() * timeStep));
+                currentParticle->color->setY(
+                    currentParticle->color->y() +
+                    (currentParticle->deltaColor->y() * timeStep));
+                currentParticle->color->setZ(
+                    currentParticle->color->z() +
+                    (currentParticle->deltaColor->z() * timeStep));
+                currentParticle->color->setW(
+                    currentParticle->color->w() +
+                    (currentParticle->deltaColor->w() * timeStep));
+
+                // Update the particle size
+                currentParticle->particleSize +=
+                    currentParticle->particleSizeDelta * timeStep;
+                currentParticle->particleSize =
+                    btMax<f32>(0, currentParticle->particleSize);
+
+                // Update the rotation of the particle
+                currentParticle->rotation +=
+                    currentParticle->rotationDelta * timeStep;
+
+                // As we are rendering the particles as quads, we need
+                // to define 6 vertices for each particle
+                f32 halfSize = currentParticle->particleSize * 0.5f;
+
+                // If a rotation has been defined for this particle then
+                // apply the rotation to the vertices that define the
+                // particle
+                if (currentParticle->rotation)
+                {
+                    //                    float x1 = -halfSize;
+                    //                    float y1 = -halfSize;
+                    //                    float x2 = halfSize;
+                    //                    float y2 = halfSize;
+                    //                    float x =
+                    //                    currentParticle->position->x();
+                    //                    float y =
+                    //                    currentParticle->position->y();
+                    //                    float r =
+                    //                    btRadians(currentParticle->rotation);
+                    //                    float cr = cosf(r);
+                    //                    float sr = sinf(r);
+                    //                    float ax = x1 * cr - y1 *
+                    //                    sr + x; float ay = x1 * sr
+                    //                    + y1 * cr + y; float bx =
+                    //                    x2 * cr - y1 * sr + x;
+                    //                    float by = x2 * sr + y1 *
+                    //                    cr + y; float cx = x2 * cr
+                    //                    - y2 * sr + x; float cy =
+                    //                    x2 * sr + y2 * cr + y;
+                    //                    float dx = x1 * cr - y2 *
+                    //                    sr + x; float dy = x1 * sr
+                    //                    + y2 * cr + y;
+
+                    //                    m_Sprite2D[particleIndex].bl.vertex.setX(ax);
+                    //                    m_Sprite2D[particleIndex].bl.vertex.setY(ay);
+                    //                    m_Sprite2D[particleIndex].bl.color
+                    //                    = currentParticle->color;
+                    //
+                    //                    m_Sprite2D[particleIndex].br.vertex.setX(bx);
+                    //                    m_Sprite2D[particleIndex].br.vertex.setY(by);
+                    //                    m_Sprite2D[particleIndex].br.color
+                    //                    = currentParticle->color;
+                    //
+                    //                    m_Sprite2D[particleIndex].tl.vertex.setX(dx);
+                    //                    m_Sprite2D[particleIndex].tl.vertex.setY(dy);
+                    //                    m_Sprite2D[particleIndex].tl.color
+                    //                    = currentParticle->color;
+                    //
+                    //                    m_Sprite2D[particleIndex].tr.vertex.setX(cx);
+                    //                    m_Sprite2D[particleIndex].tr.vertex.setY(cy);
+                }
+                else
+                {
+                    // Using the position of the particle, work out
+                    // the four vertices for the quad that will hold
+                    // the particle and load those into the quads
+                    // array.
+
+                    currentNode->setColorBase(*(currentParticle->color));
+                    currentNode->getGeometry()->setColorBase(currentNode);
+
+                    assert(false && "need to set the size of the "
+                                    "geometry somehow. maybe "
+                                    "specifically specify that the "
+                                    "geometry is sprite2d?");
+                    //                currentNode->getGeometry()->setSize(
+                    //                    currentNode,
+                    //                    *(currentParticle->position),
+                    //                    halfSize);
+                }
+                ++i;
             }
+            else
+            {
+                --particleCount;
+                currentParticle->used = false;
+                currentNode->setOpacity(0.0f);
+                currentNode->getGeometry()->setOpacity(currentNode);
+                i = m_ActiveParticles.erase(i);
+            }
+        }
     }
 
     ParticleEmitter::Particle *ParticleEmitter::findUnusedParticle()
@@ -1228,17 +1220,17 @@ namespace njli
 
         for (int i = particleCount, counter = 0; counter < maxParticles;
              ++i, ++counter)
+        {
+            particleIndex = i % maxParticles;
+            if (!m_ParticleArray[particleIndex].used)
             {
-                particleIndex = i % maxParticles;
-                if (!m_ParticleArray[particleIndex].used)
-                    {
-                        m_ParticleArray[particleIndex].used = true;
-                        Node *currentNode = m_ParticleArray[particleIndex].node;
-                        currentNode->setOpacity(1.0f);
-                        currentNode->getGeometry()->setOpacity(currentNode);
-                        return &m_ParticleArray[particleIndex];
-                    }
+                m_ParticleArray[particleIndex].used = true;
+                Node *currentNode = m_ParticleArray[particleIndex].node;
+                currentNode->setOpacity(1.0f);
+                currentNode->getGeometry()->setOpacity(currentNode);
+                return &m_ParticleArray[particleIndex];
             }
+        }
         return NULL;
     }
 
@@ -1390,11 +1382,11 @@ namespace njli
     void ParticleEmitter::setRenderCategory(Node *node)
     {
         for (u32 i = 0; i < maxParticles; ++i)
-            {
-                Node *_node = m_Nodes[i];
+        {
+            Node *_node = m_Nodes[i];
 
-                _node->setRenderCategory(node);
-            }
+            _node->setRenderCategory(node);
+        }
     }
 
     ParticleEmitter::Particle::Particle()

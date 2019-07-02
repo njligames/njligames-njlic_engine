@@ -132,22 +132,21 @@ namespace njli
         std::string main_file("scripts/main.lua");
         bool found_project_file = false;
         for (int i = 0; i < argc; ++i)
+        {
+            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "arg # %d `%s`", i, argv[i]);
+
+            std::string s(argv[i]);
+
+            if (found_project_file)
             {
-                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "arg # %d `%s`", i,
-                               argv[i]);
-
-                std::string s(argv[i]);
-
-                if (found_project_file)
-                    {
-                        main_file = std::string(argv[i]);
-                        found_project_file = false;
-                    }
-                if (s == "-project")
-                    {
-                        found_project_file = true;
-                    }
+                main_file = std::string(argv[i]);
+                found_project_file = false;
             }
+            if (s == "-project")
+            {
+                found_project_file = true;
+            }
+        }
 
         njli::World::getInstance()->getWorldClock()->reset();
 
@@ -170,8 +169,8 @@ namespace njli
             World::getInstance()->getWorldLuaVirtualMachine()->compileFile(
                 main_file.c_str());
         if (!ret)
-            {
-            }
+        {
+        }
         njli::World::getInstance()->createScript();
         return true;
     }

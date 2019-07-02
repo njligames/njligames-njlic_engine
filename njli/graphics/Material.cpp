@@ -145,43 +145,43 @@ namespace njli
     Material &Material::operator=(const Material &rhs)
     {
         if (this != &rhs)
-            {
-                MaterialProperty::destroy(m_Multiply);
-                MaterialProperty::destroy(m_Transparent);
-                MaterialProperty::destroy(m_Emission);
-                MaterialProperty::destroy(m_Reflective);
-                MaterialProperty::destroy(m_Normal);
-                MaterialProperty::destroy(m_Specular);
-                MaterialProperty::destroy(m_Ambient);
-                MaterialProperty::destroy(m_Diffuse);
+        {
+            MaterialProperty::destroy(m_Multiply);
+            MaterialProperty::destroy(m_Transparent);
+            MaterialProperty::destroy(m_Emission);
+            MaterialProperty::destroy(m_Reflective);
+            MaterialProperty::destroy(m_Normal);
+            MaterialProperty::destroy(m_Specular);
+            MaterialProperty::destroy(m_Ambient);
+            MaterialProperty::destroy(m_Diffuse);
 
-                m_Diffuse = MaterialProperty::clone(*(rhs.m_Diffuse));
-                m_Ambient = MaterialProperty::clone(*(rhs.m_Ambient));
-                m_Specular = MaterialProperty::clone(*(rhs.m_Specular));
-                m_Normal = MaterialProperty::clone(*(rhs.m_Normal));
-                m_Reflective = MaterialProperty::clone(*(rhs.m_Reflective));
-                m_Emission = MaterialProperty::clone(*(rhs.m_Emission));
-                m_Transparent = MaterialProperty::clone(*(rhs.m_Transparent));
-                m_Multiply = MaterialProperty::clone(*(rhs.m_Multiply));
+            m_Diffuse = MaterialProperty::clone(*(rhs.m_Diffuse));
+            m_Ambient = MaterialProperty::clone(*(rhs.m_Ambient));
+            m_Specular = MaterialProperty::clone(*(rhs.m_Specular));
+            m_Normal = MaterialProperty::clone(*(rhs.m_Normal));
+            m_Reflective = MaterialProperty::clone(*(rhs.m_Reflective));
+            m_Emission = MaterialProperty::clone(*(rhs.m_Emission));
+            m_Transparent = MaterialProperty::clone(*(rhs.m_Transparent));
+            m_Multiply = MaterialProperty::clone(*(rhs.m_Multiply));
 
-                addChild(m_Multiply);
-                addChild(m_Transparent);
-                addChild(m_Emission);
-                addChild(m_Reflective);
-                addChild(m_Normal);
-                addChild(m_Specular);
-                addChild(m_Ambient);
-                addChild(m_Diffuse);
+            addChild(m_Multiply);
+            addChild(m_Transparent);
+            addChild(m_Emission);
+            addChild(m_Reflective);
+            addChild(m_Normal);
+            addChild(m_Specular);
+            addChild(m_Ambient);
+            addChild(m_Diffuse);
 
-                //            setName(rhs.m_Name.c_str());
-                setShininess(rhs.m_Shininess);
-                setFresnelExponenet(rhs.m_FresnelExponent);
-                setTransparency(rhs.m_Transparency);
-                enableLitPerPixel(rhs.m_LitPerPixel);
-                enableDoubleSided(rhs.m_DoubleSided);
-                setTransparencyMode(rhs.m_TransparencyMode);
-                setCullMode(rhs.m_CullMode);
-            }
+            //            setName(rhs.m_Name.c_str());
+            setShininess(rhs.m_Shininess);
+            setFresnelExponenet(rhs.m_FresnelExponent);
+            setTransparency(rhs.m_Transparency);
+            enableLitPerPixel(rhs.m_LitPerPixel);
+            enableDoubleSided(rhs.m_DoubleSided);
+            setTransparencyMode(rhs.m_TransparencyMode);
+            setCullMode(rhs.m_CullMode);
+        }
         return *this;
     }
 
@@ -247,51 +247,51 @@ namespace njli
     void Material::destroy(Material *object)
     {
         if (object)
-            {
-                MaterialProperty *m = NULL;
+        {
+            MaterialProperty *m = NULL;
 
-                m = object->getMultiply();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    MaterialProperty::destroy(m);
-                object->removeMultiply();
+            m = object->getMultiply();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                MaterialProperty::destroy(m);
+            object->removeMultiply();
 
-                m = object->getTransparent();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    MaterialProperty::destroy(m);
-                object->removeTransparent();
+            m = object->getTransparent();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                MaterialProperty::destroy(m);
+            object->removeTransparent();
 
-                m = object->getEmission();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    MaterialProperty::destroy(m);
-                object->removeEmission();
+            m = object->getEmission();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                MaterialProperty::destroy(m);
+            object->removeEmission();
 
-                m = object->getReflective();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    MaterialProperty::destroy(m);
-                object->removeReflective();
+            m = object->getReflective();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                MaterialProperty::destroy(m);
+            object->removeReflective();
 
-                m = object->getNormal();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    MaterialProperty::destroy(m);
-                object->removeNormal();
+            m = object->getNormal();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                MaterialProperty::destroy(m);
+            object->removeNormal();
 
-                m = object->getSpecular();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    MaterialProperty::destroy(m);
-                object->removeSpecular();
+            m = object->getSpecular();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                MaterialProperty::destroy(m);
+            object->removeSpecular();
 
-                m = object->getAmbient();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    MaterialProperty::destroy(m);
-                object->removeAmbient();
+            m = object->getAmbient();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                MaterialProperty::destroy(m);
+            object->removeAmbient();
 
-                m = object->getDiffuse();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    MaterialProperty::destroy(m);
-                object->removeDiffuse();
+            m = object->getDiffuse();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                MaterialProperty::destroy(m);
+            object->removeDiffuse();
 
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void Material::load(Material &object, lua_State *L, int index)
@@ -304,56 +304,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Material::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Material::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -366,10 +366,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Diffuse);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -377,10 +377,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Ambient);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -388,10 +388,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Specular);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -399,10 +399,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Normal);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -410,10 +410,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Reflective);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -421,10 +421,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Emission);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -432,10 +432,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Transparent);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -443,10 +443,10 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Multiply);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -454,11 +454,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Diffuse);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<const MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<const MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -466,11 +466,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Ambient);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<const MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<const MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -478,11 +478,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Specular);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<const MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<const MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -490,11 +490,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Normal);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<const MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<const MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -502,11 +502,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Reflective);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<const MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<const MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -514,11 +514,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Emission);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<const MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<const MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -526,11 +526,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Transparent);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<const MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<const MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -538,11 +538,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Multiply);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            MaterialProperty*>(getChild(idx)));
-                return dynamic_cast<const MaterialProperty *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            MaterialProperty*>(getChild(idx)));
+            return dynamic_cast<const MaterialProperty *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -670,80 +670,80 @@ namespace njli
     {
         MaterialProperty *mp = getDiffuse();
         if (mp != NULL)
-            {
-                removeChild(mp);
-                m_Diffuse = NULL;
-            }
+        {
+            removeChild(mp);
+            m_Diffuse = NULL;
+        }
     }
 
     void Material::removeAmbient()
     {
         MaterialProperty *mp = getAmbient();
         if (mp != NULL)
-            {
-                removeChild(mp);
-                m_Ambient = NULL;
-            }
+        {
+            removeChild(mp);
+            m_Ambient = NULL;
+        }
     }
 
     void Material::removeSpecular()
     {
         MaterialProperty *mp = getSpecular();
         if (mp != NULL)
-            {
-                removeChild(mp);
-                m_Specular = NULL;
-            }
+        {
+            removeChild(mp);
+            m_Specular = NULL;
+        }
     }
 
     void Material::removeNormal()
     {
         MaterialProperty *mp = getNormal();
         if (mp != NULL)
-            {
-                removeChild(mp);
-                m_Normal = NULL;
-            }
+        {
+            removeChild(mp);
+            m_Normal = NULL;
+        }
     }
 
     void Material::removeReflective()
     {
         MaterialProperty *mp = getReflective();
         if (mp != NULL)
-            {
-                removeChild(mp);
-                m_Reflective = NULL;
-            }
+        {
+            removeChild(mp);
+            m_Reflective = NULL;
+        }
     }
 
     void Material::removeEmission()
     {
         MaterialProperty *mp = getEmission();
         if (mp != NULL)
-            {
-                removeChild(mp);
-                m_Emission = NULL;
-            }
+        {
+            removeChild(mp);
+            m_Emission = NULL;
+        }
     }
 
     void Material::removeTransparent()
     {
         MaterialProperty *mp = getTransparent();
         if (mp != NULL)
-            {
-                removeChild(mp);
-                m_Transparent = NULL;
-            }
+        {
+            removeChild(mp);
+            m_Transparent = NULL;
+        }
     }
 
     void Material::removeMultiply()
     {
         MaterialProperty *mp = getMultiply();
         if (mp != NULL)
-            {
-                removeChild(mp);
-                m_Multiply = NULL;
-            }
+        {
+            removeChild(mp);
+            m_Multiply = NULL;
+        }
     }
 
     void Material::bind(ShaderProgram *shader)
@@ -753,25 +753,23 @@ namespace njli
         //      assert(false && "setUniformValue changed when i introduced the
         //      new shader kcode");
         if (getDiffuse()->bind(shader))
+        {
+            if (!shader->setUniformValue(
+                    "tDiffuseColor", (GLuint)getDiffuse()->getTextureIndex()))
             {
-                if (!shader->setUniformValue(
-                        "tDiffuseColor",
-                        (GLuint)getDiffuse()->getTextureIndex()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set tDiffuseColor\n");
-                    }
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set tDiffuseColor\n");
             }
+        }
 
         if (getTransparent()->bind(shader))
+        {
+            if (!shader->setUniformValue(
+                    "tAlpha", (GLuint)getTransparent()->getTextureIndex()))
             {
-                if (!shader->setUniformValue(
-                        "tAlpha", (GLuint)getTransparent()->getTextureIndex()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set tAlpha\n");
-                    }
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Couldn't set tAlpha\n");
             }
+        }
 
         //        getAmbient()->bind(shader, "Ambient");
         //        getSpecular()->bind(shader, "Specular");

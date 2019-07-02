@@ -19,8 +19,8 @@ namespace njli
     GameClock &GameClock::operator=(const GameClock &rhs)
     {
         if (this != &rhs)
-            {
-            }
+        {
+        }
         return *this;
     }
 

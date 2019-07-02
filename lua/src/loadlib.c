@@ -188,11 +188,11 @@ static void setprogdir(lua_State *L)
     if (n == 0 || n == nsize || (lb = strrchr(buff, '\\')) == NULL)
         luaL_error(L, "unable to get ModuleFileName");
     else
-        {
-            *lb = '\0';
-            luaL_gsub(L, lua_tostring(L, -1), LUA_EXEC_DIR, buff);
-            lua_remove(L, -2); /* remove original string */
-        }
+    {
+        *lb = '\0';
+        luaL_gsub(L, lua_tostring(L, -1), LUA_EXEC_DIR, buff);
+        lua_remove(L, -2); /* remove original string */
+    }
 }
 
 static void pusherror(lua_State *L)
@@ -296,11 +296,11 @@ static int gctm(lua_State *L)
 {
     lua_Integer n = luaL_len(L, 1);
     for (; n >= 1; n--)
-        {                         /* for each handle, in reverse order */
-            lua_rawgeti(L, 1, n); /* get handle CLIBS[n] */
-            lsys_unloadlib(lua_touserdata(L, -1));
-            lua_pop(L, 1); /* pop handle */
-        }
+    {                         /* for each handle, in reverse order */
+        lua_rawgeti(L, 1, n); /* get handle CLIBS[n] */
+        lsys_unloadlib(lua_touserdata(L, -1));
+        lua_pop(L, 1); /* pop handle */
+    }
     return 0;
 }
 
@@ -323,26 +323,26 @@ static int lookforfunc(lua_State *L, const char *path, const char *sym)
 {
     void *reg = checkclib(L, path); /* check loaded C libraries */
     if (reg == NULL)
-        { /* must load library? */
-            reg = lsys_load(L, path,
-                            *sym == '*'); /* global symbols if 'sym'=='*' */
-            if (reg == NULL)
-                return ERRLIB; /* unable to load library */
-            addtoclib(L, path, reg);
-        }
+    { /* must load library? */
+        reg =
+            lsys_load(L, path, *sym == '*'); /* global symbols if 'sym'=='*' */
+        if (reg == NULL)
+            return ERRLIB; /* unable to load library */
+        addtoclib(L, path, reg);
+    }
     if (*sym == '*')
-        {                          /* loading only library (no function)? */
-            lua_pushboolean(L, 1); /* return 'true' */
-            return 0;              /* no errors */
-        }
+    {                          /* loading only library (no function)? */
+        lua_pushboolean(L, 1); /* return 'true' */
+        return 0;              /* no errors */
+    }
     else
-        {
-            lua_CFunction f = lsys_sym(L, reg, sym);
-            if (f == NULL)
-                return ERRFUNC;      /* unable to find function */
-            lua_pushcfunction(L, f); /* else create new function */
-            return 0;                /* no errors */
-        }
+    {
+        lua_CFunction f = lsys_sym(L, reg, sym);
+        if (f == NULL)
+            return ERRFUNC;      /* unable to find function */
+        lua_pushcfunction(L, f); /* else create new function */
+        return 0;                /* no errors */
+    }
 }
 
 static int ll_loadlib(lua_State *L)
@@ -353,12 +353,12 @@ static int ll_loadlib(lua_State *L)
     if (stat == 0) /* no errors? */
         return 1;  /* return the loaded function */
     else
-        { /* error; error message is on stack top */
-            lua_pushnil(L);
-            lua_insert(L, -2);
-            lua_pushstring(L, (stat == ERRLIB) ? LIB_FAIL : "init");
-            return 3; /* return nil, error message, and where */
-        }
+    { /* error; error message is on stack top */
+        lua_pushnil(L);
+        lua_insert(L, -2);
+        lua_pushstring(L, (stat == ERRLIB) ? LIB_FAIL : "init");
+        return 3; /* return nil, error message, and where */
+    }
 }
 
 /*
@@ -398,16 +398,16 @@ static const char *searchpath(lua_State *L, const char *name, const char *path,
     if (*sep != '\0')                           /* non-empty separator? */
         name = luaL_gsub(L, name, sep, dirsep); /* replace it by 'dirsep' */
     while ((path = pushnexttemplate(L, path)) != NULL)
-        {
-            const char *filename =
-                luaL_gsub(L, lua_tostring(L, -1), LUA_PATH_MARK, name);
-            lua_remove(L, -2);      /* remove path template */
-            if (readable(filename)) /* does file exist and is readable? */
-                return filename;    /* return that file name */
-            lua_pushfstring(L, "\n\tno file '%s'", filename);
-            lua_remove(L, -2);   /* remove file name */
-            luaL_addvalue(&msg); /* concatenate error msg. entry */
-        }
+    {
+        const char *filename =
+            luaL_gsub(L, lua_tostring(L, -1), LUA_PATH_MARK, name);
+        lua_remove(L, -2);      /* remove path template */
+        if (readable(filename)) /* does file exist and is readable? */
+            return filename;    /* return that file name */
+        lua_pushfstring(L, "\n\tno file '%s'", filename);
+        lua_remove(L, -2);   /* remove file name */
+        luaL_addvalue(&msg); /* concatenate error msg. entry */
+    }
     luaL_pushresult(&msg); /* create error message */
     return NULL;           /* not found */
 }
@@ -420,11 +420,11 @@ static int ll_searchpath(lua_State *L)
     if (f != NULL)
         return 1;
     else
-        { /* error message is on top of the stack */
-            lua_pushnil(L);
-            lua_insert(L, -2);
-            return 2; /* return nil + error message */
-        }
+    { /* error message is on top of the stack */
+        lua_pushnil(L);
+        lua_insert(L, -2);
+        return 2; /* return nil + error message */
+    }
 }
 
 static const char *findfile(lua_State *L, const char *name, const char *pname,
@@ -441,10 +441,10 @@ static const char *findfile(lua_State *L, const char *name, const char *pname,
 static int checkload(lua_State *L, int stat, const char *filename)
 {
     if (stat)
-        {                                /* module loaded successfully? */
-            lua_pushstring(L, filename); /* will be 2nd argument to module */
-            return 2; /* return open function and file name */
-        }
+    {                                /* module loaded successfully? */
+        lua_pushstring(L, filename); /* will be 2nd argument to module */
+        return 2;                    /* return open function and file name */
+    }
     else
         return luaL_error(L, "error loading module '%s' from file '%s':\n\t%s",
                           lua_tostring(L, 1), filename, lua_tostring(L, -1));
@@ -475,15 +475,15 @@ static int loadfunc(lua_State *L, const char *filename, const char *modname)
     modname = luaL_gsub(L, modname, ".", LUA_OFSEP);
     mark = strchr(modname, *LUA_IGMARK);
     if (mark)
-        {
-            int stat;
-            openfunc = lua_pushlstring(L, modname, mark - modname);
-            openfunc = lua_pushfstring(L, LUA_POF "%s", openfunc);
-            stat = lookforfunc(L, filename, openfunc);
-            if (stat != ERRFUNC)
-                return stat;
-            modname = mark + 1; /* else go ahead and try old-style name */
-        }
+    {
+        int stat;
+        openfunc = lua_pushlstring(L, modname, mark - modname);
+        openfunc = lua_pushfstring(L, LUA_POF "%s", openfunc);
+        stat = lookforfunc(L, filename, openfunc);
+        if (stat != ERRFUNC)
+            return stat;
+        modname = mark + 1; /* else go ahead and try old-style name */
+    }
     openfunc = lua_pushfstring(L, LUA_POF "%s", modname);
     return lookforfunc(L, filename, openfunc);
 }
@@ -510,16 +510,16 @@ static int searcher_Croot(lua_State *L)
     if (filename == NULL)
         return 1; /* root not found */
     if ((stat = loadfunc(L, filename, name)) != 0)
-        {
-            if (stat != ERRFUNC)
-                return checkload(L, 0, filename); /* real error */
-            else
-                { /* open function not found */
-                    lua_pushfstring(L, "\n\tno module '%s' in file '%s'", name,
-                                    filename);
-                    return 1;
-                }
+    {
+        if (stat != ERRFUNC)
+            return checkload(L, 0, filename); /* real error */
+        else
+        { /* open function not found */
+            lua_pushfstring(L, "\n\tno module '%s' in file '%s'", name,
+                            filename);
+            return 1;
         }
+    }
     lua_pushstring(L, filename); /* will be 2nd argument to module */
     return 2;
 }
@@ -543,26 +543,26 @@ static void findloader(lua_State *L, const char *name)
         luaL_error(L, "'package.searchers' must be a table");
     /*  iterate over available searchers to find a loader */
     for (i = 1;; i++)
-        {
-            if (lua_rawgeti(L, 3, i) == LUA_TNIL)
-                {                          /* no more searchers? */
-                    lua_pop(L, 1);         /* remove nil */
-                    luaL_pushresult(&msg); /* create error message */
-                    luaL_error(L, "module '%s' not found:%s", name,
-                               lua_tostring(L, -1));
-                }
-            lua_pushstring(L, name);
-            lua_call(L, 1, 2);         /* call it */
-            if (lua_isfunction(L, -2)) /* did it find a loader? */
-                return;                /* module loader found */
-            else if (lua_isstring(L, -2))
-                {                        /* searcher returned error message? */
-                    lua_pop(L, 1);       /* remove extra return */
-                    luaL_addvalue(&msg); /* concatenate error message */
-                }
-            else
-                lua_pop(L, 2); /* remove both returns */
+    {
+        if (lua_rawgeti(L, 3, i) == LUA_TNIL)
+        {                          /* no more searchers? */
+            lua_pop(L, 1);         /* remove nil */
+            luaL_pushresult(&msg); /* create error message */
+            luaL_error(L, "module '%s' not found:%s", name,
+                       lua_tostring(L, -1));
         }
+        lua_pushstring(L, name);
+        lua_call(L, 1, 2);         /* call it */
+        if (lua_isfunction(L, -2)) /* did it find a loader? */
+            return;                /* module loader found */
+        else if (lua_isstring(L, -2))
+        {                        /* searcher returned error message? */
+            lua_pop(L, 1);       /* remove extra return */
+            luaL_addvalue(&msg); /* concatenate error message */
+        }
+        else
+            lua_pop(L, 2); /* remove both returns */
+    }
 }
 
 static int ll_require(lua_State *L)
@@ -582,11 +582,11 @@ static int ll_require(lua_State *L)
     if (!lua_isnil(L, -1))   /* non-nil return? */
         lua_setfield(L, 2, name); /* _LOADED[name] = returned value */
     if (lua_getfield(L, 2, name) == LUA_TNIL)
-        {                             /* module set no value? */
-            lua_pushboolean(L, 1);    /* use true as result */
-            lua_pushvalue(L, -1);     /* extra copy to be returned */
-            lua_setfield(L, 2, name); /* _LOADED[name] = true */
-        }
+    {                             /* module set no value? */
+        lua_pushboolean(L, 1);    /* use true as result */
+        lua_pushvalue(L, -1);     /* extra copy to be returned */
+        lua_setfield(L, 2, name); /* _LOADED[name] = true */
+    }
     return 1;
 }
 
@@ -618,14 +618,14 @@ static void dooptions(lua_State *L, int n)
 {
     int i;
     for (i = 2; i <= n; i++)
-        {
-            if (lua_isfunction(L, i))
-                {                         /* avoid 'calling' extra info. */
-                    lua_pushvalue(L, i);  /* get option (a function) */
-                    lua_pushvalue(L, -2); /* module */
-                    lua_call(L, 1, 0);
-                }
+    {
+        if (lua_isfunction(L, i))
+        {                         /* avoid 'calling' extra info. */
+            lua_pushvalue(L, i);  /* get option (a function) */
+            lua_pushvalue(L, -2); /* module */
+            lua_call(L, 1, 0);
         }
+    }
 }
 
 static void modinit(lua_State *L, const char *modname)
@@ -654,10 +654,10 @@ static int ll_module(lua_State *L)
     if (lua_getfield(L, -1, "_NAME") != LUA_TNIL)
         lua_pop(L, 1); /* table is an initialized module */
     else
-        { /* no; initialize it */
-            lua_pop(L, 1);
-            modinit(L, modname);
-        }
+    { /* no; initialize it */
+        lua_pop(L, 1);
+        modinit(L, modname);
+    }
     lua_pushvalue(L, -1);
     set_env(L);
     dooptions(L, lastarg);
@@ -668,11 +668,11 @@ static int ll_seeall(lua_State *L)
 {
     luaL_checktype(L, 1, LUA_TTABLE);
     if (!lua_getmetatable(L, 1))
-        {
-            lua_createtable(L, 0, 1); /* create new metatable */
-            lua_pushvalue(L, -1);
-            lua_setmetatable(L, 1);
-        }
+    {
+        lua_createtable(L, 0, 1); /* create new metatable */
+        lua_pushvalue(L, -1);
+        lua_setmetatable(L, 1);
+    }
     lua_pushglobaltable(L);
     lua_setfield(L, -2, "__index"); /* mt.__index = _G */
     return 0;
@@ -705,13 +705,13 @@ static void setpath(lua_State *L, const char *fieldname, const char *envname1,
     if (path == NULL || noenv(L)) /* no environment variable? */
         lua_pushstring(L, def);   /* use default */
     else
-        {
-            /* replace ";;" by ";AUXMARK;" and then AUXMARK by default path */
-            path = luaL_gsub(L, path, LUA_PATH_SEP LUA_PATH_SEP,
-                             LUA_PATH_SEP AUXMARK LUA_PATH_SEP);
-            luaL_gsub(L, path, AUXMARK, def);
-            lua_remove(L, -2);
-        }
+    {
+        /* replace ";;" by ";AUXMARK;" and then AUXMARK by default path */
+        path = luaL_gsub(L, path, LUA_PATH_SEP LUA_PATH_SEP,
+                         LUA_PATH_SEP AUXMARK LUA_PATH_SEP);
+        luaL_gsub(L, path, AUXMARK, def);
+        lua_remove(L, -2);
+    }
     setprogdir(L);
     lua_setfield(L, -2, fieldname);
 }
@@ -745,12 +745,11 @@ static void createsearcherstable(lua_State *L)
     lua_createtable(L, sizeof(searchers) / sizeof(searchers[0]) - 1, 0);
     /* fill it with predefined searchers */
     for (i = 0; searchers[i] != NULL; i++)
-        {
-            lua_pushvalue(L,
-                          -2); /* set 'package' as upvalue for all searchers */
-            lua_pushcclosure(L, searchers[i], 1);
-            lua_rawseti(L, -2, i + 1);
-        }
+    {
+        lua_pushvalue(L, -2); /* set 'package' as upvalue for all searchers */
+        lua_pushcclosure(L, searchers[i], 1);
+        lua_rawseti(L, -2, i + 1);
+    }
 #if defined(LUA_COMPAT_LOADERS)
     lua_pushvalue(L, -1);           /* make a copy of 'searchers' table */
     lua_setfield(L, -3, "loaders"); /* put it in field 'loaders' */

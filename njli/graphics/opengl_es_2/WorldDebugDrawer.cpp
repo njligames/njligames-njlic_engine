@@ -59,12 +59,12 @@ glm::mat4 bulletToGlm(const btTransform &t)
     const btMatrix3x3 &basis = t.getBasis();
     // rotation
     for (int r = 0; r < 3; r++)
+    {
+        for (int c = 0; c < 3; c++)
         {
-            for (int c = 0; c < 3; c++)
-                {
-                    m[c][r] = basis[r][c];
-                }
+            m[c][r] = basis[r][c];
         }
+    }
     // traslation
     btVector3 origin = t.getOrigin();
     m[3][0] = origin.getX();
@@ -218,13 +218,13 @@ namespace njli
         GLboolean _depthEnabled = glIsEnabled(GL_DEPTH_TEST);
 
         if (depthEnabled)
-            {
-                glEnable(GL_DEPTH_TEST);
-            }
+        {
+            glEnable(GL_DEPTH_TEST);
+        }
         else
-            {
-                glDisable(GL_DEPTH_TEST);
-            }
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
 
         // NOTE: Could also use glBufferData to take advantage of the buffer
         // orphaning trick...
@@ -240,13 +240,13 @@ namespace njli
         glBindVertexArray_NJLIC(0);
 
         if (_depthEnabled)
-            {
-                glEnable(GL_DEPTH_TEST);
-            }
+        {
+            glEnable(GL_DEPTH_TEST);
+        }
         else
-            {
-                glDisable(GL_DEPTH_TEST);
-            }
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -266,13 +266,13 @@ namespace njli
         GLboolean _depthEnabled = glIsEnabled(GL_DEPTH_TEST);
 
         if (depthEnabled)
-            {
-                glEnable(GL_DEPTH_TEST);
-            }
+        {
+            glEnable(GL_DEPTH_TEST);
+        }
         else
-            {
-                glDisable(GL_DEPTH_TEST);
-            }
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
 
         // NOTE: Could also use glBufferData to take advantage of the buffer
         // orphaning trick...
@@ -288,13 +288,13 @@ namespace njli
         glBindVertexArray_NJLIC(0);
 
         if (_depthEnabled)
-            {
-                glEnable(GL_DEPTH_TEST);
-            }
+        {
+            glEnable(GL_DEPTH_TEST);
+        }
         else
-            {
-                glDisable(GL_DEPTH_TEST);
-            }
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
@@ -316,12 +316,12 @@ namespace njli
                                              height);
 
         if (glyphTex != nullptr)
-            {
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_2D,
-                              static_cast<GLuint>(
-                                  reinterpret_cast<std::size_t>(glyphTex)));
-            }
+        {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(
+                GL_TEXTURE_2D,
+                static_cast<GLuint>(reinterpret_cast<std::size_t>(glyphTex)));
+        }
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -343,9 +343,9 @@ namespace njli
     void WorldDebugDrawer::destroyGlyphTexture(dd::GlyphTextureHandle glyphTex)
     {
         if (glyphTex == nullptr)
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         const GLuint textureId =
             static_cast<GLuint>(reinterpret_cast<std::size_t>(glyphTex));
@@ -438,46 +438,46 @@ namespace njli
     void WorldDebugDrawer::init()
     {
         if (!m_Initialized)
-            {
-                m_Initialized = true;
+        {
+            m_Initialized = true;
 
-                dd::initialize(this);
+            dd::initialize(this);
 
-                glEnable(GL_CULL_FACE);
-                glEnable(GL_DEPTH_TEST);
-                glDisable(GL_BLEND);
+            glEnable(GL_CULL_FACE);
+            glEnable(GL_DEPTH_TEST);
+            glDisable(GL_BLEND);
 
-                // This has to be enabled since the point drawing shader will
-                // use gl_PointSize.
+            // This has to be enabled since the point drawing shader will
+            // use gl_PointSize.
 
-                //        glEnable(GL_PROGRAM_POINT_SIZE);
+            //        glEnable(GL_PROGRAM_POINT_SIZE);
 
-                m_LinePointShaderProgram = njli::ShaderProgram::create();
-                m_TextShaderProgram = njli::ShaderProgram::create();
+            m_LinePointShaderProgram = njli::ShaderProgram::create();
+            m_TextShaderProgram = njli::ShaderProgram::create();
 
-                m_LinePointShaderProgram->load(linePointVertShaderSource,
-                                               linePointFragShaderSource);
-                m_TextShaderProgram->load(textVertShaderSrc, textFragShaderSrc);
+            m_LinePointShaderProgram->load(linePointVertShaderSource,
+                                           linePointFragShaderSource);
+            m_TextShaderProgram->load(textVertShaderSrc, textFragShaderSrc);
 
-                setupVertexBuffers();
+            setupVertexBuffers();
 
-                initImgui();
-            }
+            initImgui();
+        }
     }
 
     void WorldDebugDrawer::unInit()
     {
         if (m_Initialized)
-            {
-                m_Initialized = false;
+        {
+            m_Initialized = false;
 
-                njli::ShaderProgram::destroy(m_TextShaderProgram);
-                njli::ShaderProgram::destroy(m_LinePointShaderProgram);
+            njli::ShaderProgram::destroy(m_TextShaderProgram);
+            njli::ShaderProgram::destroy(m_LinePointShaderProgram);
 
-                unInitImgui();
+            unInitImgui();
 
-                dd::shutdown();
-            }
+            dd::shutdown();
+        }
     }
 
     void WorldDebugDrawer::draw(Camera *camera)
@@ -485,16 +485,15 @@ namespace njli
         m_Camera = camera;
 
         if (m_Camera && m_Camera->hasParent())
-            {
-                (m_Camera->getProjection() * m_Camera->getModelView())
-                    .getOpenGLMatrix(m_textMat4Buffer);
-            }
+        {
+            (m_Camera->getProjection() * m_Camera->getModelView())
+                .getOpenGLMatrix(m_textMat4Buffer);
+        }
 
         if (dd::hasPendingDraws())
-            {
-                dd::flush(
-                    njli::World::getInstance()->getWorldClock()->timeStep());
-            }
+        {
+            dd::flush(njli::World::getInstance()->getWorldClock()->timeStep());
+        }
     }
 
     void WorldDebugDrawer::point(const btVector3 &pos, const btVector3 &color,
@@ -1207,11 +1206,11 @@ namespace njli
     void WorldDebugDrawer::unInitImgui()
     {
         if (g_FontTexture)
-            {
-                glDeleteTextures(1, &g_FontTexture);
-                ImGui::GetIO().Fonts->TexID = 0;
-                g_FontTexture = 0;
-            }
+        {
+            glDeleteTextures(1, &g_FontTexture);
+            ImGui::GetIO().Fonts->TexID = 0;
+            g_FontTexture = 0;
+        }
         ImGui::Shutdown();
     }
 
@@ -1223,26 +1222,26 @@ namespace njli
         setenv("LANG", "C", 1);
         FILE *fp = popen("ifconfig", "r");
         if (fp)
+        {
+            char *p = NULL, *e;
+            size_t n;
+            while ((getline(&p, &n, fp) > 0) && p)
             {
-                char *p = NULL, *e;
-                size_t n;
-                while ((getline(&p, &n, fp) > 0) && p)
+                if ((p = strstr(p, "inet ")))
+                {
+                    p += 5;
+                    if ((p = strchr(p, ':')))
                     {
-                        if ((p = strstr(p, "inet ")))
-                            {
-                                p += 5;
-                                if ((p = strchr(p, ':')))
-                                    {
-                                        ++p;
-                                        if ((e = strchr(p, ' ')))
-                                            {
-                                                *e = '\0';
-                                                printf("%s\n", p);
-                                            }
-                                    }
-                            }
+                        ++p;
+                        if ((e = strchr(p, ' ')))
+                        {
+                            *e = '\0';
+                            printf("%s\n", p);
+                        }
                     }
+                }
             }
+        }
         pclose(fp);
     }
 #endif
@@ -1258,9 +1257,9 @@ namespace njli
         ImGuiStyle &style = ImGui::GetStyle();
 
         if (!g_FontTexture)
-            {
-                ImGui_ImplIOS_CreateDeviceObjects();
-            }
+        {
+            ImGui_ImplIOS_CreateDeviceObjects();
+        }
 
         io.DisplaySize =
             ImVec2(njli::World::getInstance()->getViewportDimensions().x(),
@@ -1275,50 +1274,46 @@ namespace njli
 
         io.MouseDrawCursor = g_synergyPtrActive;
         if (g_synergyPtrActive)
+        {
+            style.TouchExtraPadding = ImVec2(0.0, 0.0);
+            io.MousePos = ImVec2(g_mousePosX, g_mousePosY);
+            for (int i = 0; i < 3; i++)
             {
-                style.TouchExtraPadding = ImVec2(0.0, 0.0);
-                io.MousePos = ImVec2(g_mousePosX, g_mousePosY);
-                for (int i = 0; i < 3; i++)
-                    {
-                        io.MouseDown[i] = g_MousePressed[i];
-                    }
-
-                io.MouseWheel = g_mouseWheelY / 500.0;
+                io.MouseDown[i] = g_MousePressed[i];
             }
+
+            io.MouseWheel = g_mouseWheelY / 500.0;
+        }
         else
-            {
+        {
 #if !defined(__ANDROID__) && !defined(__IPHONEOS__)
-                int mx, my;
-                Uint32 mouseMask = SDL_GetMouseState(&mx, &my);
-                if (SDL_GetWindowFlags(gWindow) & SDL_WINDOW_MOUSE_FOCUS)
-                    {
-                        io.MousePos = ImVec2((float)mx, (float)my);
-                    }
-                else
-                    {
-                        io.MousePos = ImVec2(-1, -1);
-                    }
-
-                // If a mouse press event came, always pass it as "mouse held
-                // this frame", so we don't miss click-release events that are
-                // shorter than 1 frame.
-                io.MouseDown[0] =
-                    g_MousePressed[0] ||
-                    (mouseMask & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
-                io.MouseDown[1] =
-                    g_MousePressed[1] ||
-                    (mouseMask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
-                io.MouseDown[2] =
-                    g_MousePressed[2] ||
-                    (mouseMask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
-                g_MousePressed[0] = g_MousePressed[1] = g_MousePressed[2] =
-                    false;
-
-                io.MouseWheel = g_MouseWheel;
-                g_MouseWheel = 0.0f;
-                SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
-#endif
+            int mx, my;
+            Uint32 mouseMask = SDL_GetMouseState(&mx, &my);
+            if (SDL_GetWindowFlags(gWindow) & SDL_WINDOW_MOUSE_FOCUS)
+            {
+                io.MousePos = ImVec2((float)mx, (float)my);
             }
+            else
+            {
+                io.MousePos = ImVec2(-1, -1);
+            }
+
+            // If a mouse press event came, always pass it as "mouse held
+            // this frame", so we don't miss click-release events that are
+            // shorter than 1 frame.
+            io.MouseDown[0] = g_MousePressed[0] ||
+                              (mouseMask & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
+            io.MouseDown[1] = g_MousePressed[1] ||
+                              (mouseMask & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
+            io.MouseDown[2] = g_MousePressed[2] ||
+                              (mouseMask & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
+            g_MousePressed[0] = g_MousePressed[1] = g_MousePressed[2] = false;
+
+            io.MouseWheel = g_MouseWheel;
+            g_MouseWheel = 0.0f;
+            SDL_ShowCursor(io.MouseDrawCursor ? 0 : 1);
+#endif
+        }
 
         ImGui::NewFrame();
         ImGuizmo::BeginFrame();
@@ -1368,70 +1363,67 @@ namespace njli
     {
         ImGuiIO &io = ImGui::GetIO();
         switch (event->type)
-            {
-            case SDL_MOUSEWHEEL:
-                {
-                    if (event->wheel.y > 0)
-                        g_MouseWheel = 1;
-                    if (event->wheel.y < 0)
-                        g_MouseWheel = -1;
-                    return true;
-                }
-            case SDL_MOUSEBUTTONDOWN:
-                {
-                    if (event->button.button == SDL_BUTTON_LEFT)
-                        g_MousePressed[0] = true;
-                    if (event->button.button == SDL_BUTTON_RIGHT)
-                        g_MousePressed[1] = true;
-                    if (event->button.button == SDL_BUTTON_MIDDLE)
-                        g_MousePressed[2] = true;
-                    return true;
-                }
+        {
+        case SDL_MOUSEWHEEL:
+        {
+            if (event->wheel.y > 0)
+                g_MouseWheel = 1;
+            if (event->wheel.y < 0)
+                g_MouseWheel = -1;
+            return true;
+        }
+        case SDL_MOUSEBUTTONDOWN:
+        {
+            if (event->button.button == SDL_BUTTON_LEFT)
+                g_MousePressed[0] = true;
+            if (event->button.button == SDL_BUTTON_RIGHT)
+                g_MousePressed[1] = true;
+            if (event->button.button == SDL_BUTTON_MIDDLE)
+                g_MousePressed[2] = true;
+            return true;
+        }
 
-            case SDL_FINGERMOTION:
-                {
-                    g_MousePressed[0] = true;
-                    float x = event->tfinger.x * gDisplayMode.w;
-                    float y =
-                        gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
-                    io.MousePos = ImVec2(x, y);
-                }
-                return true;
-            case SDL_FINGERDOWN:
-                {
-                    g_MousePressed[0] = true;
-                    float x = event->tfinger.x * gDisplayMode.w;
-                    float y =
-                        gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
-                    io.MousePos = ImVec2(x, y);
-                }
-                return true;
-            case SDL_FINGERUP:
-                {
-                    g_MousePressed[0] = false;
-                    float x = event->tfinger.x * gDisplayMode.w;
-                    float y =
-                        gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
-                    io.MousePos = ImVec2(x, y);
-                }
-                return true;
-            case SDL_TEXTINPUT:
-                {
-                    ImGuiIO &io = ImGui::GetIO();
-                    io.AddInputCharactersUTF8(event->text.text);
-                    return true;
-                }
-            case SDL_KEYDOWN:
-            case SDL_KEYUP:
-                {
-                    int key = event->key.keysym.sym & ~SDLK_SCANCODE_MASK;
-                    io.KeysDown[key] = (event->type == SDL_KEYDOWN);
-                    io.KeyShift = ((SDL_GetModState() & KMOD_SHIFT) != 0);
-                    io.KeyCtrl = ((SDL_GetModState() & KMOD_CTRL) != 0);
-                    io.KeyAlt = ((SDL_GetModState() & KMOD_ALT) != 0);
-                    return true;
-                }
-            }
+        case SDL_FINGERMOTION:
+        {
+            g_MousePressed[0] = true;
+            float x = event->tfinger.x * gDisplayMode.w;
+            float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+            io.MousePos = ImVec2(x, y);
+        }
+            return true;
+        case SDL_FINGERDOWN:
+        {
+            g_MousePressed[0] = true;
+            float x = event->tfinger.x * gDisplayMode.w;
+            float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+            io.MousePos = ImVec2(x, y);
+        }
+            return true;
+        case SDL_FINGERUP:
+        {
+            g_MousePressed[0] = false;
+            float x = event->tfinger.x * gDisplayMode.w;
+            float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
+            io.MousePos = ImVec2(x, y);
+        }
+            return true;
+        case SDL_TEXTINPUT:
+        {
+            ImGuiIO &io = ImGui::GetIO();
+            io.AddInputCharactersUTF8(event->text.text);
+            return true;
+        }
+        case SDL_KEYDOWN:
+        case SDL_KEYUP:
+        {
+            int key = event->key.keysym.sym & ~SDLK_SCANCODE_MASK;
+            io.KeysDown[key] = (event->type == SDL_KEYDOWN);
+            io.KeyShift = ((SDL_GetModState() & KMOD_SHIFT) != 0);
+            io.KeyCtrl = ((SDL_GetModState() & KMOD_CTRL) != 0);
+            io.KeyAlt = ((SDL_GetModState() & KMOD_ALT) != 0);
+            return true;
+        }
+        }
         return false;
     }
 
@@ -1508,77 +1500,72 @@ namespace njli
         glBindVertexArray_NJLIC(g_VaoHandle);
 
         for (int n = 0; n < draw_data->CmdListsCount; n++)
-            {
-                const ImDrawList *cmd_list = draw_data->CmdLists[n];
-                const ImDrawIdx *idx_buffer_offset = 0;
+        {
+            const ImDrawList *cmd_list = draw_data->CmdLists[n];
+            const ImDrawIdx *idx_buffer_offset = 0;
 
-                glBindBuffer(GL_ARRAY_BUFFER, g_VboHandle);
-                glBufferData(
-                    GL_ARRAY_BUFFER,
-                    (GLsizeiptr)cmd_list->VtxBuffer.size() * sizeof(ImDrawVert),
-                    (GLvoid *)&cmd_list->VtxBuffer.front(), GL_STREAM_DRAW);
+            glBindBuffer(GL_ARRAY_BUFFER, g_VboHandle);
+            glBufferData(
+                GL_ARRAY_BUFFER,
+                (GLsizeiptr)cmd_list->VtxBuffer.size() * sizeof(ImDrawVert),
+                (GLvoid *)&cmd_list->VtxBuffer.front(), GL_STREAM_DRAW);
 
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_ElementsHandle);
-                glBufferData(
-                    GL_ELEMENT_ARRAY_BUFFER,
-                    (GLsizeiptr)cmd_list->IdxBuffer.size() * sizeof(ImDrawIdx),
-                    (GLvoid *)&cmd_list->IdxBuffer.front(), GL_STREAM_DRAW);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_ElementsHandle);
+            glBufferData(
+                GL_ELEMENT_ARRAY_BUFFER,
+                (GLsizeiptr)cmd_list->IdxBuffer.size() * sizeof(ImDrawIdx),
+                (GLvoid *)&cmd_list->IdxBuffer.front(), GL_STREAM_DRAW);
 
-                glEnableVertexAttribArray(g_AttribLocationPosition);
-                glEnableVertexAttribArray(g_AttribLocationUV);
-                glEnableVertexAttribArray(g_AttribLocationColor);
+            glEnableVertexAttribArray(g_AttribLocationPosition);
+            glEnableVertexAttribArray(g_AttribLocationUV);
+            glEnableVertexAttribArray(g_AttribLocationColor);
 
 #define OFFSETOF(TYPE, ELEMENT) ((size_t) & (((TYPE *)0)->ELEMENT))
-                glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT,
-                                      GL_FALSE, sizeof(ImDrawVert),
-                                      (GLvoid *)OFFSETOF(ImDrawVert, pos));
-                glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE,
-                                      sizeof(ImDrawVert),
-                                      (GLvoid *)OFFSETOF(ImDrawVert, uv));
-                glVertexAttribPointer(
-                    g_AttribLocationColor, 4, GL_UNSIGNED_BYTE, GL_TRUE,
-                    sizeof(ImDrawVert), (GLvoid *)OFFSETOF(ImDrawVert, col));
+            glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT,
+                                  GL_FALSE, sizeof(ImDrawVert),
+                                  (GLvoid *)OFFSETOF(ImDrawVert, pos));
+            glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE,
+                                  sizeof(ImDrawVert),
+                                  (GLvoid *)OFFSETOF(ImDrawVert, uv));
+            glVertexAttribPointer(g_AttribLocationColor, 4, GL_UNSIGNED_BYTE,
+                                  GL_TRUE, sizeof(ImDrawVert),
+                                  (GLvoid *)OFFSETOF(ImDrawVert, col));
 #undef OFFSETOF
-                for (const ImDrawCmd *pcmd = cmd_list->CmdBuffer.begin();
-                     pcmd != cmd_list->CmdBuffer.end(); pcmd++)
-                    {
-                        if (pcmd->UserCallback)
-                            {
-                                pcmd->UserCallback(cmd_list, pcmd);
-                            }
-                        else
-                            {
-                                glBindTexture(
-                                    GL_TEXTURE_2D,
-                                    (GLuint)(intptr_t)pcmd->TextureId);
-                                //                    glScissor((int)pcmd->ClipRect.x,
-                                //                              (int)(fb_height
-                                //                              -
-                                //                              pcmd->ClipRect.w),
-                                //                              (int)(pcmd->ClipRect.z
-                                //                              -
-                                //                              pcmd->ClipRect.x),
-                                //                              (int)(pcmd->ClipRect.w
-                                //                              -
-                                //                              pcmd->ClipRect.y));
+            for (const ImDrawCmd *pcmd = cmd_list->CmdBuffer.begin();
+                 pcmd != cmd_list->CmdBuffer.end(); pcmd++)
+            {
+                if (pcmd->UserCallback)
+                {
+                    pcmd->UserCallback(cmd_list, pcmd);
+                }
+                else
+                {
+                    glBindTexture(GL_TEXTURE_2D,
+                                  (GLuint)(intptr_t)pcmd->TextureId);
+                    //                    glScissor((int)pcmd->ClipRect.x,
+                    //                              (int)(fb_height
+                    //                              -
+                    //                              pcmd->ClipRect.w),
+                    //                              (int)(pcmd->ClipRect.z
+                    //                              -
+                    //                              pcmd->ClipRect.x),
+                    //                              (int)(pcmd->ClipRect.w
+                    //                              -
+                    //                              pcmd->ClipRect.y));
 
-                                glScissor(
-                                    (int)(pcmd->ClipRect.x * g_displayScale),
-                                    (int)((height - pcmd->ClipRect.w) *
-                                          g_displayScale),
-                                    (int)((pcmd->ClipRect.z -
-                                           pcmd->ClipRect.x) *
-                                          g_displayScale),
-                                    (int)((pcmd->ClipRect.w -
-                                           pcmd->ClipRect.y) *
-                                          g_displayScale));
-                                glDrawElements(
-                                    GL_TRIANGLES, (GLsizei)pcmd->ElemCount,
-                                    GL_UNSIGNED_SHORT, idx_buffer_offset);
-                            }
-                        idx_buffer_offset += pcmd->ElemCount;
-                    }
+                    glScissor(
+                        (int)(pcmd->ClipRect.x * g_displayScale),
+                        (int)((height - pcmd->ClipRect.w) * g_displayScale),
+                        (int)((pcmd->ClipRect.z - pcmd->ClipRect.x) *
+                              g_displayScale),
+                        (int)((pcmd->ClipRect.w - pcmd->ClipRect.y) *
+                              g_displayScale));
+                    glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount,
+                                   GL_UNSIGNED_SHORT, idx_buffer_offset);
+                }
+                idx_buffer_offset += pcmd->ElemCount;
             }
+        }
 
         // Restore modified state
         glBindVertexArray_NJLIC(0);
@@ -1662,12 +1649,12 @@ namespace njli
         GLint logLength;
         glGetShaderiv(g_VertHandle, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0)
-            {
-                GLchar *log = (GLchar *)malloc(logLength);
-                glGetShaderInfoLog(g_VertHandle, logLength, &logLength, log);
-                SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "%s", log);
-                free(log);
-            }
+        {
+            GLchar *log = (GLchar *)malloc(logLength);
+            glGetShaderInfoLog(g_VertHandle, logLength, &logLength, log);
+            SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "%s", log);
+            free(log);
+        }
 #endif
 
         glCompileShader(g_FragHandle);
@@ -1675,12 +1662,12 @@ namespace njli
 #if !(defined(NDEBUG))
         glGetShaderiv(g_FragHandle, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0)
-            {
-                GLchar *log = (GLchar *)malloc(logLength);
-                glGetShaderInfoLog(g_FragHandle, logLength, &logLength, log);
-                SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "%s", log);
-                free(log);
-            }
+        {
+            GLchar *log = (GLchar *)malloc(logLength);
+            glGetShaderInfoLog(g_FragHandle, logLength, &logLength, log);
+            SDL_LogInfo(SDL_LOG_CATEGORY_TEST, "%s", log);
+            free(log);
+        }
 #endif
 
         glAttachShader(g_ShaderHandle, g_VertHandle);

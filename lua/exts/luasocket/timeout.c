@@ -61,23 +61,23 @@ void timeout_init(p_timeout tm, double block, double total)
 double timeout_get(p_timeout tm)
 {
     if (tm->block < 0.0 && tm->total < 0.0)
-        {
-            return -1;
-        }
+    {
+        return -1;
+    }
     else if (tm->block < 0.0)
-        {
-            double t = tm->total - timeout_gettime() + tm->start;
-            return MAX(t, 0.0);
-        }
+    {
+        double t = tm->total - timeout_gettime() + tm->start;
+        return MAX(t, 0.0);
+    }
     else if (tm->total < 0.0)
-        {
-            return tm->block;
-        }
+    {
+        return tm->block;
+    }
     else
-        {
-            double t = tm->total - timeout_gettime() + tm->start;
-            return MIN(tm->block, MAX(t, 0.0));
-        }
+    {
+        double t = tm->total - timeout_gettime() + tm->start;
+        return MIN(tm->block, MAX(t, 0.0));
+    }
 }
 
 /*-------------------------------------------------------------------------*\
@@ -100,24 +100,24 @@ double timeout_getstart(p_timeout tm) { return tm->start; }
 double timeout_getretry(p_timeout tm)
 {
     if (tm->block < 0.0 && tm->total < 0.0)
-        {
-            return -1;
-        }
+    {
+        return -1;
+    }
     else if (tm->block < 0.0)
-        {
-            double t = tm->total - timeout_gettime() + tm->start;
-            return MAX(t, 0.0);
-        }
+    {
+        double t = tm->total - timeout_gettime() + tm->start;
+        return MAX(t, 0.0);
+    }
     else if (tm->total < 0.0)
-        {
-            double t = tm->block - timeout_gettime() + tm->start;
-            return MAX(t, 0.0);
-        }
+    {
+        double t = tm->block - timeout_gettime() + tm->start;
+        return MAX(t, 0.0);
+    }
     else
-        {
-            double t = tm->total - timeout_gettime() + tm->start;
-            return MIN(tm->block, MAX(t, 0.0));
-        }
+    {
+        double t = tm->total - timeout_gettime() + tm->start;
+        return MIN(tm->block, MAX(t, 0.0));
+    }
 }
 
 /*-------------------------------------------------------------------------*\
@@ -177,18 +177,18 @@ int timeout_meth_settimeout(lua_State *L, p_timeout tm)
     double t = luaL_optnumber(L, 2, -1);
     const char *mode = luaL_optstring(L, 3, "b");
     switch (*mode)
-        {
-        case 'b':
-            tm->block = t;
-            break;
-        case 'r':
-        case 't':
-            tm->total = t;
-            break;
-        default:
-            luaL_argcheck(L, 0, 3, "invalid timeout mode");
-            break;
-        }
+    {
+    case 'b':
+        tm->block = t;
+        break;
+    case 'r':
+    case 't':
+        tm->total = t;
+        break;
+    default:
+        luaL_argcheck(L, 0, 3, "invalid timeout mode");
+        break;
+    }
     lua_pushnumber(L, 1);
     return 1;
 }
@@ -247,10 +247,10 @@ int timeout_lua_sleep(lua_State *L)
     if (t.tv_nsec >= 1000000000)
         t.tv_nsec = 999999999;
     while (nanosleep(&t, &r) != 0)
-        {
-            t.tv_sec = r.tv_sec;
-            t.tv_nsec = r.tv_nsec;
-        }
+    {
+        t.tv_sec = r.tv_sec;
+        t.tv_nsec = r.tv_nsec;
+    }
     return 0;
 }
 #endif

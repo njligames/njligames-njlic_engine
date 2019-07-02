@@ -16,9 +16,9 @@ void luax_loadexts(lua_State *L)
     lua_getglobal(L, "package");
     lua_getfield(L, -1, "preload");
     for (; lib->func; lib++)
-        {
-            lua_pushcfunction(L, lib->func);
-            lua_setfield(L, -2, lib->name);
-        }
+    {
+        lua_pushcfunction(L, lib->func);
+        lua_setfield(L, -2, lib->name);
+    }
     lua_pop(L, 2);
 }

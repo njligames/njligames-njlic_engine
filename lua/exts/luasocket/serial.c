@@ -160,12 +160,12 @@ static int global_create(lua_State *L)
     /*printf("open %s on %d\n", path, sock);*/
 
     if (sock < 0)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, socket_strerror(errno));
-            lua_pushnumber(L, errno);
-            return 3;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, socket_strerror(errno));
+        lua_pushnumber(L, errno);
+        return 3;
+    }
     /* set its type as client object */
     auxiliar_setclass(L, "serial{client}", -1);
     /* initialize remaining structure fields */

@@ -34,21 +34,20 @@ static inline void CheckOpenALError(const char *stmt, const char *fname,
 
     ALenum err = alGetError();
     if (err != AL_NO_ERROR)
-        {
-            SDL_Log("OpenAL error %08x, (%s) at %s:%i - for %s", err,
-                    GetOpenALErrorString(err), fname, line, stmt);
-        }
+    {
+        SDL_Log("OpenAL error %08x, (%s) at %s:%i - for %s", err,
+                GetOpenALErrorString(err), fname, line, stmt);
+    }
 };
 
 #ifndef AL_CHECK
 //#if !(defined(NDEBUG))
 #define AL_CHECK(stmt)                                                         \
     do                                                                         \
-        {                                                                      \
-            stmt;                                                              \
-            CheckOpenALError(#stmt, __FILE__, __LINE__);                       \
-        }                                                                      \
-    while (0);
+    {                                                                          \
+        stmt;                                                                  \
+        CheckOpenALError(#stmt, __FILE__, __LINE__);                           \
+    } while (0);
 #else
 #define AL_CHECK(stmt) stmt
 //#endif
@@ -157,23 +156,23 @@ namespace njli
 
         std::unordered_map<std::string, Sound *>::iterator it;
         for (it = mSounds.begin(); it != mSounds.end(); it++)
-            {
-                it->second->stop();
-                //            SAFE_DELETE(it->second);
-            }
+        {
+            it->second->stop();
+            //            SAFE_DELETE(it->second);
+        }
 
         mSounds.clear();
 
         for (u32 i = 0; i < mBuffers.size(); i++)
-            {
-                SoundBuffer buffer = mBuffers[i];
-                AL_CHECK(alDeleteBuffers(1, &buffer.refID));
-            }
+        {
+            SoundBuffer buffer = mBuffers[i];
+            AL_CHECK(alDeleteBuffers(1, &buffer.refID));
+        }
 
         for (u32 i = 0; i < mSources.size(); i++)
-            {
-                AL_CHECK(alDeleteSources(1, &mSources[i].refID));
-            }
+        {
+            AL_CHECK(alDeleteSources(1, &mSources[i].refID));
+        }
 
         alcDestroyContext(mContextAL);
         alcCloseDevice(mDeviceAL);
@@ -219,10 +218,10 @@ namespace njli
     bool WorldSound::loadSound(const char *path, Sound &sound)
     {
         if (sound.load(NULL, path))
-            {
-                AddSound(&sound);
-                return true;
-            }
+        {
+            AddSound(&sound);
+            return true;
+        }
         //        if(sound.load(NULL, path))
         //        {
         //            mSounds.push_back(&sound);
@@ -242,11 +241,11 @@ namespace njli
     void WorldSound::enablePause(bool enable)
     {
         if (enable)
-            {
-            }
+        {
+        }
         else
-            {
-            }
+        {
+        }
     }
 
     static void list_audio_devices(const ALCchar *devices)
@@ -257,12 +256,12 @@ namespace njli
         fprintf(stdout, "Devices list:\n");
         fprintf(stdout, "----------\n");
         while (device && *device != '\0' && next && *next != '\0')
-            {
-                fprintf(stdout, "%s\n", device);
-                len = strlen(device);
-                device += (len + 1);
-                next += (len + 2);
-            }
+        {
+            fprintf(stdout, "%s\n", device);
+            len = strlen(device);
+            device += (len + 1);
+            next += (len + 2);
+        }
         fprintf(stdout, "----------\n");
     }
 
@@ -282,37 +281,37 @@ namespace njli
         mDeviceAL = alcOpenDevice(devicename);
 
         if (mDeviceAL == NULL)
-            {
-                SDL_Log("Failed to init OpenAL device.");
-                return;
-            }
+        {
+            SDL_Log("Failed to init OpenAL device.");
+            return;
+        }
 
         mContextAL = alcCreateContext(mDeviceAL, NULL);
         AL_CHECK(alcMakeContextCurrent(mContextAL));
 
         for (int i = 0; i < 512; i++)
-            {
-                SoundBuffer buffer;
-                AL_CHECK(alGenBuffers((ALuint)1, &buffer.refID));
-                mBuffers.push_back(buffer);
-            }
+        {
+            SoundBuffer buffer;
+            AL_CHECK(alGenBuffers((ALuint)1, &buffer.refID));
+            mBuffers.push_back(buffer);
+        }
 
         for (int i = 0; i < 16; i++)
-            {
-                SoundSource source;
-                AL_CHECK(alGenSources((ALuint)1, &source.refID));
-                mSources.push_back(source);
-            }
+        {
+            SoundSource source;
+            AL_CHECK(alGenSources((ALuint)1, &source.refID));
+            mSources.push_back(source);
+        }
 
         for (u32 i = 0; i < mBuffers.size(); i++)
-            {
-                mFreeBuffers.push_back(&mBuffers[i]);
-            }
+        {
+            mFreeBuffers.push_back(&mBuffers[i]);
+        }
 
         for (u32 i = 0; i < mSources.size(); i++)
-            {
-                mFreeSources.push_back(&mSources[i]);
-            }
+        {
+            mFreeSources.push_back(&mSources[i]);
+        }
 
         //        if (this->useThreadUpdate)
         //        {
@@ -331,9 +330,9 @@ namespace njli
     SoundSource *WorldSound::GetFreeSource()
     {
         if (mFreeSources.size() == 0)
-            {
-                return NULL;
-            }
+        {
+            return NULL;
+        }
 
         SoundSource *source = mFreeSources.front();
         mFreeSources.pop_front();
@@ -345,9 +344,9 @@ namespace njli
     SoundBuffer *WorldSound::GetFreeBuffer()
     {
         if (mFreeBuffers.size() == 0)
-            {
-                return NULL;
-            }
+        {
+            return NULL;
+        }
 
         SoundBuffer *buf = mFreeBuffers.front();
         mFreeBuffers.pop_front();
@@ -359,9 +358,9 @@ namespace njli
     void WorldSound::FreeSource(SoundSource *source)
     {
         if (source == NULL)
-            {
-                return;
-            }
+        {
+            return;
+        }
         source->free = true;
         mFreeSources.push_back(source);
     }
@@ -369,9 +368,9 @@ namespace njli
     void WorldSound::FreeBuffer(SoundBuffer *buffer)
     {
         if (buffer == NULL)
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         AL_CHECK(alDeleteBuffers(1, &buffer->refID));
         AL_CHECK(alGenBuffers(1, &buffer->refID));
@@ -383,9 +382,9 @@ namespace njli
     bool WorldSound::ExistSound(const std::string &name) const
     {
         if (mSounds.find(name) == mSounds.end())
-            {
-                return false;
-            }
+        {
+            return false;
+        }
 
         return true;
     }
@@ -393,9 +392,9 @@ namespace njli
     void WorldSound::ReleaseSound(const std::string &name)
     {
         if (!this->ExistSound(name))
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         mSounds[name]->stop();
         //        SAFE_DELETE(mSounds[name]);
@@ -421,10 +420,10 @@ namespace njli
     {
         std::string uuid(sound->getUuid());
         if (this->ExistSound(uuid))
-            {
-                SDL_Log("Sound with id %s already exist.", uuid.c_str());
-                return;
-            }
+        {
+            SDL_Log("Sound with id %s already exist.", uuid.c_str());
+            return;
+        }
 
         mSounds.insert(std::make_pair(uuid, sound));
 
@@ -434,9 +433,9 @@ namespace njli
     Sound *WorldSound::GetSound(const std::string &name)
     {
         if (!this->ExistSound(name))
-            {
-                return NULL;
-            }
+        {
+            return NULL;
+        }
 
         return mSounds[name];
     }
@@ -446,12 +445,12 @@ namespace njli
         std::unordered_map<std::string, Sound *>::iterator it;
 
         for (it = mSounds.begin(); it != mSounds.end(); it++)
+        {
+            if (it->second->isPlaying())
             {
-                if (it->second->isPlaying())
-                    {
-                        it->second->update();
-                    }
+                it->second->update();
             }
+        }
     }
 
     void WorldSound::SetMasterVolume(float volume)
@@ -476,9 +475,9 @@ namespace njli
     void WorldSound::Disable()
     {
         if (mEnabled == false)
-            {
-                return;
-            }
+        {
+            return;
+        }
 
         mEnabled = false;
         mLastVolume = mMasterVolume; // store last volume
@@ -489,9 +488,9 @@ namespace njli
     void WorldSound::Enable()
     {
         if (mEnabled)
-            {
-                return;
-            }
+        {
+            return;
+        }
         mEnabled = true;
 
         this->SetMasterVolume(mLastVolume); // restore volume

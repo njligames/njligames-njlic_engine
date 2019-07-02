@@ -391,9 +391,9 @@ namespace njli
     void ShaderProgram::destroy(ShaderProgram *object)
     {
         if (object)
-            {
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+        {
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void ShaderProgram::load(ShaderProgram &object, lua_State *L, int index)
@@ -406,56 +406,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        ShaderProgram::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    SDL_assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                ShaderProgram::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    SDL_assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -473,52 +473,52 @@ namespace njli
         m_Program = glCreateProgram();
 
         if (!(vertShader = compileShader(vertexSource, GL_VERTEX_SHADER)))
-            {
-                glDeleteProgram(m_Program);
-                return false;
-            }
+        {
+            glDeleteProgram(m_Program);
+            return false;
+        }
 
         if (!(fragShader = compileShader(fragmentSource, GL_FRAGMENT_SHADER)))
-            {
-                glDeleteProgram(m_Program);
-                glDeleteShader(vertShader);
-                return false;
-            }
+        {
+            glDeleteProgram(m_Program);
+            glDeleteShader(vertShader);
+            return false;
+        }
 
         glAttachShader(m_Program, vertShader);
         glAttachShader(m_Program, fragShader);
 
         if (!linkProgram(m_Program))
+        {
+            if (vertShader)
             {
-                if (vertShader)
-                    {
-                        glDeleteShader(vertShader);
-                        vertShader = 0;
-                    }
-                if (fragShader)
-                    {
-                        glDeleteShader(fragShader);
-                        fragShader = 0;
-                    }
-                if (m_Program)
-                    {
-                        glDeleteProgram(m_Program);
-                        m_Program = 0;
-                    }
-                return false;
+                glDeleteShader(vertShader);
+                vertShader = 0;
             }
+            if (fragShader)
+            {
+                glDeleteShader(fragShader);
+                fragShader = 0;
+            }
+            if (m_Program)
+            {
+                glDeleteProgram(m_Program);
+                m_Program = 0;
+            }
+            return false;
+        }
 
         if (vertShader)
-            {
-                glDetachShader(m_Program, vertShader);
-                glDeleteShader(vertShader);
-            }
+        {
+            glDetachShader(m_Program, vertShader);
+            glDeleteShader(vertShader);
+        }
 
         if (fragShader)
-            {
-                glDetachShader(m_Program, fragShader);
-                glDeleteShader(fragShader);
-            }
+        {
+            glDetachShader(m_Program, fragShader);
+            glDeleteShader(fragShader);
+        }
 
         return true;
     }
@@ -535,13 +535,13 @@ namespace njli
     bool ShaderProgram::use() const
     {
         if (m_Program)
-            {
-                GLint id;
-                glGetIntegerv(GL_CURRENT_PROGRAM, &id);
-                if (id != m_Program)
-                    glUseProgram(m_Program);
-                return true;
-            }
+        {
+            GLint id;
+            glGetIntegerv(GL_CURRENT_PROGRAM, &id);
+            if (id != m_Program)
+                glUseProgram(m_Program);
+            return true;
+        }
         return false;
     }
 
@@ -552,14 +552,13 @@ namespace njli
 
 #if defined(DEBUG)
         if (location == -1)
-            {
-                std::cout
-                    << "The named attribute variable " << attributeName
-                    << " is not an active attribute in the specified program "
-                       "object or if name starts with the reserved prefix "
-                       "\"gl_\""
-                    << std::endl;
-            }
+        {
+            std::cout << "The named attribute variable " << attributeName
+                      << " is not an active attribute in the specified program "
+                         "object or if name starts with the reserved prefix "
+                         "\"gl_\""
+                      << std::endl;
+        }
 #endif
 
         return location;
@@ -571,25 +570,24 @@ namespace njli
 
         UniformMap::iterator iter = m_UniformMap.find(uniformName);
         if (iter != m_UniformMap.end())
-            {
-                location = iter->second;
-            }
+        {
+            location = iter->second;
+        }
         else
-            {
-                location = glGetUniformLocation(m_Program, uniformName.c_str());
-                m_UniformMap.insert(UniformPair(uniformName, location));
-            }
+        {
+            location = glGetUniformLocation(m_Program, uniformName.c_str());
+            m_UniformMap.insert(UniformPair(uniformName, location));
+        }
 
 #if defined(DEBUG)
         if (location == -1)
-            {
-                std::cout
-                    << "The named attribute variable " << uniformName
-                    << " is not an active attribute in the specified program "
-                       "object or if name starts with the reserved prefix "
-                       "\"gl_\""
-                    << std::endl;
-            }
+        {
+            std::cout << "The named attribute variable " << uniformName
+                      << " is not an active attribute in the specified program "
+                         "object or if name starts with the reserved prefix "
+                         "\"gl_\""
+                      << std::endl;
+        }
 #endif
 
         return location;
@@ -608,11 +606,11 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
-            {
-                glUniformMatrix4fv(location, 1,
-                                   (transpose) ? GL_TRUE : GL_FALSE, matrix4x4);
-                return true;
-            }
+        {
+            glUniformMatrix4fv(location, 1, (transpose) ? GL_TRUE : GL_FALSE,
+                               matrix4x4);
+            return true;
+        }
         return false;
     }
 
@@ -621,11 +619,11 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
-            {
-                glGetUniformfv(m_Program, location, m_mat4Buffer);
-                value.setFromOpenGLMatrix(m_mat4Buffer);
-                return true;
-            }
+        {
+            glGetUniformfv(m_Program, location, m_mat4Buffer);
+            value.setFromOpenGLMatrix(m_mat4Buffer);
+            return true;
+        }
         return false;
     }
 
@@ -633,17 +631,17 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
+        {
+            GLuint oldValue;
+            if (getUniformValue(uniformName, oldValue))
             {
-                GLuint oldValue;
-                if (getUniformValue(uniformName, oldValue))
-                    {
-                        if (oldValue == value)
-                            return true;
-                    }
-
-                glUniform1i(location, value);
-                return true;
+                if (oldValue == value)
+                    return true;
             }
+
+            glUniform1i(location, value);
+            return true;
+        }
         return false;
     }
 
@@ -651,12 +649,12 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
-            {
-                GLint t;
-                glGetUniformiv(m_Program, location, &t);
-                value = t;
-                return true;
-            }
+        {
+            GLint t;
+            glGetUniformiv(m_Program, location, &t);
+            value = t;
+            return true;
+        }
         return false;
     }
 
@@ -665,18 +663,18 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
+        {
+            btVector3 oldValue;
+            if (getUniformValue(uniformName, oldValue))
             {
-                btVector3 oldValue;
-                if (getUniformValue(uniformName, oldValue))
-                    {
-                        if (oldValue == value)
-                            return true;
-                    }
-
-                glUniform3f(location, value.x(), value.y(), value.z());
-
-                return true;
+                if (oldValue == value)
+                    return true;
             }
+
+            glUniform3f(location, value.x(), value.y(), value.z());
+
+            return true;
+        }
         return false;
     }
 
@@ -685,16 +683,16 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
-            {
-                glGetUniformfv(m_Program, location, m_vec3Buffer);
+        {
+            glGetUniformfv(m_Program, location, m_vec3Buffer);
 
-                value.setX(m_vec3Buffer[0]);
-                value.setY(m_vec3Buffer[1]);
-                value.setZ(m_vec3Buffer[2]);
-                value.setW(0.0);
+            value.setX(m_vec3Buffer[0]);
+            value.setY(m_vec3Buffer[1]);
+            value.setZ(m_vec3Buffer[2]);
+            value.setW(0.0);
 
-                return true;
-            }
+            return true;
+        }
         return false;
     }
 
@@ -702,17 +700,17 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
+        {
+            float oldValue;
+            if (getUniformValue(uniformName, oldValue))
             {
-                float oldValue;
-                if (getUniformValue(uniformName, oldValue))
-                    {
-                        if (oldValue == value)
-                            return true;
-                    }
-
-                glUniform1f(location, value);
-                return true;
+                if (oldValue == value)
+                    return true;
             }
+
+            glUniform1f(location, value);
+            return true;
+        }
         return false;
     }
 
@@ -720,10 +718,10 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
-            {
-                glGetUniformfv(m_Program, location, &value);
-                return true;
-            }
+        {
+            glGetUniformfv(m_Program, location, &value);
+            return true;
+        }
         return false;
     }
 
@@ -732,19 +730,18 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
+        {
+            btVector4 oldValue;
+            if (getUniformValue(uniformName, oldValue))
             {
-                btVector4 oldValue;
-                if (getUniformValue(uniformName, oldValue))
-                    {
-                        if (oldValue == value)
-                            return true;
-                    }
-
-                glUniform4f(location, value.x(), value.y(), value.z(),
-                            value.w());
-
-                return true;
+                if (oldValue == value)
+                    return true;
             }
+
+            glUniform4f(location, value.x(), value.y(), value.z(), value.w());
+
+            return true;
+        }
         return false;
     }
 
@@ -753,16 +750,16 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
-            {
-                glGetUniformfv(m_Program, location, m_vec4Buffer);
+        {
+            glGetUniformfv(m_Program, location, m_vec4Buffer);
 
-                value.setX(m_vec4Buffer[0]);
-                value.setY(m_vec4Buffer[1]);
-                value.setZ(m_vec4Buffer[2]);
-                value.setW(m_vec4Buffer[3]);
+            value.setX(m_vec4Buffer[0]);
+            value.setY(m_vec4Buffer[1]);
+            value.setZ(m_vec4Buffer[2]);
+            value.setW(m_vec4Buffer[3]);
 
-                return true;
-            }
+            return true;
+        }
         return false;
     }
 
@@ -771,20 +768,20 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
+        {
+            float oldValue1, oldValue2;
+            if (getUniformValue(uniformName, oldValue1, oldValue2))
             {
-                float oldValue1, oldValue2;
-                if (getUniformValue(uniformName, oldValue1, oldValue2))
-                    {
-                        if (oldValue1 == f1)
-                            return true;
-                        if (oldValue2 == f2)
-                            return true;
-                    }
-
-                glUniform2f(location, f1, f2);
-
-                return true;
+                if (oldValue1 == f1)
+                    return true;
+                if (oldValue2 == f2)
+                    return true;
             }
+
+            glUniform2f(location, f1, f2);
+
+            return true;
+        }
         return false;
     }
 
@@ -793,14 +790,14 @@ namespace njli
     {
         int location = getUniformLocation(uniformName);
         if (location != -1)
-            {
-                glGetUniformfv(m_Program, location, m_vec4Buffer);
+        {
+            glGetUniformfv(m_Program, location, m_vec4Buffer);
 
-                f1 = m_vec4Buffer[0];
-                f2 = m_vec4Buffer[1];
+            f1 = m_vec4Buffer[0];
+            f2 = m_vec4Buffer[1];
 
-                return true;
-            }
+            return true;
+        }
         return false;
     }
 
@@ -831,12 +828,12 @@ namespace njli
         GLint logLength;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0)
-            {
-                GLchar *log = (GLchar *)malloc(logLength);
-                glGetShaderInfoLog(shader, logLength, &logLength, log);
-                std::cout << "ShaderProgram compile log:" << std::endl << log;
-                free(log);
-            }
+        {
+            GLchar *log = (GLchar *)malloc(logLength);
+            glGetShaderInfoLog(shader, logLength, &logLength, log);
+            std::cout << "ShaderProgram compile log:" << std::endl << log;
+            free(log);
+        }
 #endif
         /* delete[] *str;
          delete str;*/
@@ -847,10 +844,10 @@ namespace njli
 
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
         if (status == 0)
-            {
-                glDeleteShader(shader);
-                shader = 0;
-            }
+        {
+            glDeleteShader(shader);
+            shader = 0;
+        }
 
         return shader;
     }
@@ -863,11 +860,11 @@ namespace njli
         GLint log_length = 0;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
         if (log_length > 0)
-            {
-                GLchar log_buffer[1024];
-                glGetShaderInfoLog(shader, log_length, NULL, log_buffer);
-                std::cout << log_buffer << std::endl;
-            }
+        {
+            GLchar log_buffer[1024];
+            glGetShaderInfoLog(shader, log_length, NULL, log_buffer);
+            std::cout << log_buffer << std::endl;
+        }
 
         return (compileStatus == GL_TRUE);
     }
@@ -881,12 +878,12 @@ namespace njli
         GLint logLength;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
         if (logLength > 0)
-            {
-                GLchar *log = (GLchar *)malloc(logLength);
-                glGetProgramInfoLog(program, logLength, &logLength, log);
-                std::cout << "Program link log:\n" << log;
-                free(log);
-            }
+        {
+            GLchar *log = (GLchar *)malloc(logLength);
+            glGetProgramInfoLog(program, logLength, &logLength, log);
+            std::cout << "Program link log:\n" << log;
+            free(log);
+        }
 #endif
 
         glGetProgramiv(program, GL_LINK_STATUS, &status);

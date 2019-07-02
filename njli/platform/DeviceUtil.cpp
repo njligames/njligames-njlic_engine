@@ -30,9 +30,9 @@ std::string DeviceUtil::hardwareString()
 
     // int errno = 0;
     if (uname(&buffer) != 0)
-        {
-            perror("uname");
-        }
+    {
+        perror("uname");
+    }
 
     printf("system name = %s\n", buffer.sysname);
     printf("node name   = %s\n", buffer.nodename);
@@ -173,28 +173,28 @@ std::string DeviceUtil::hardwareDescription()
     std::string foobar(hardware);
     auto res = std::mismatch(foo.begin(), foo.end(), foobar.begin());
     if (res.first == foo.end())
-        {
-            // foo is a prefix of foobar.
-            return "iPhone";
-        }
+    {
+        // foo is a prefix of foobar.
+        return "iPhone";
+    }
 
     foo = std::string("iPod");
     foobar = std::string(hardware);
     res = std::mismatch(foo.begin(), foo.end(), foobar.begin());
     if (res.first == foo.end())
-        {
-            // foo is a prefix of foobar.
-            return "iPod";
-        }
+    {
+        // foo is a prefix of foobar.
+        return "iPod";
+    }
 
     foo = std::string("iPad");
     foobar = std::string(hardware);
     res = std::mismatch(foo.begin(), foo.end(), foobar.begin());
     if (res.first == foo.end())
-        {
-            // foo is a prefix of foobar.
-            return "iPad";
-        }
+    {
+        // foo is a prefix of foobar.
+        return "iPad";
+    }
 #endif
     return "";
 }

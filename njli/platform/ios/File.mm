@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+static char s_Buffer[4098];
+
 const char *RESOURCE_PATH()
 {
   NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
@@ -18,9 +20,13 @@ const char *ASSET_PATH(const char *file)
       appendString:[[NSString alloc] initWithCString:file
                                             encoding:NSASCIIStringEncoding]];
 
-  return [[[NSBundle mainBundle] pathForResource:adjusted_relative_path
-                                          ofType:nil]
-      cStringUsingEncoding:NSASCIIStringEncoding];
+  NSString *obj = [[NSBundle mainBundle] pathForResource:adjusted_relative_path
+                                                  ofType:nil];
+
+  SDL_assertCheck(obj != nil, "The path `%s`, doesn't exist", file);
+
+  strcpy(s_Buffer, [obj cStringUsingEncoding:NSASCIIStringEncoding]);
+  return s_Buffer;
 }
 
 const char *BUNDLE_PATH()

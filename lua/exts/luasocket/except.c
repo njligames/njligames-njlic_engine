@@ -47,14 +47,14 @@ static void wrap(lua_State *L)
 static int finalize(lua_State *L)
 {
     if (!lua_toboolean(L, 1))
-        {
-            lua_pushvalue(L, lua_upvalueindex(2));
-            lua_call(L, 0, 0);
-            lua_settop(L, 2);
-            wrap(L);
-            lua_error(L);
-            return 0;
-        }
+    {
+        lua_pushvalue(L, lua_upvalueindex(2));
+        lua_call(L, 0, 0);
+        lua_settop(L, 2);
+        wrap(L);
+        lua_error(L);
+        return 0;
+    }
     else
         return lua_gettop(L);
 }
@@ -82,16 +82,16 @@ static int global_newtry(lua_State *L)
 static int unwrap(lua_State *L)
 {
     if (lua_istable(L, -1) && lua_getmetatable(L, -1))
+    {
+        int r = lua_rawequal(L, -1, lua_upvalueindex(1));
+        lua_pop(L, 1);
+        if (r)
         {
-            int r = lua_rawequal(L, -1, lua_upvalueindex(1));
-            lua_pop(L, 1);
-            if (r)
-                {
-                    lua_pushnil(L);
-                    lua_rawgeti(L, -2, 1);
-                    return 1;
-                }
+            lua_pushnil(L);
+            lua_rawgeti(L, -2, 1);
+            return 1;
         }
+    }
     return 0;
 }
 
@@ -99,12 +99,12 @@ static int protected_finish(lua_State *L, int status, lua_KContext ctx)
 {
     (void)ctx;
     if (status != 0 && status != LUA_YIELD)
-        {
-            if (unwrap(L))
-                return 2;
-            else
-                return lua_error(L);
-        }
+    {
+        if (unwrap(L))
+            return 2;
+        else
+            return lua_error(L);
+    }
     else
         return lua_gettop(L);
 }

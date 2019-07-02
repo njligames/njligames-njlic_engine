@@ -107,11 +107,11 @@ static int meth_send(lua_State *L)
     timeout_markstart(tm);
     err = socket_send(&un->sock, data, count, &sent, tm);
     if (err != IO_DONE)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, unixdgram_strerror(err));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, unixdgram_strerror(err));
+        return 2;
+    }
     lua_pushnumber(L, (lua_Number)sent);
     return 1;
 }
@@ -131,11 +131,11 @@ static int meth_sendto(lua_State *L)
     size_t len = strlen(path);
 
     if (len >= sizeof(remote.sun_path))
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, "path too long");
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, "path too long");
+        return 2;
+    }
 
     memset(&remote, 0, sizeof(remote));
     strcpy(remote.sun_path, path);
@@ -151,11 +151,11 @@ static int meth_sendto(lua_State *L)
                         sizeof(remote.sun_family) + len, tm);
 #endif
     if (err != IO_DONE)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, unixdgram_strerror(err));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, unixdgram_strerror(err));
+        return 2;
+    }
     lua_pushnumber(L, (lua_Number)sent);
     return 1;
 }
@@ -170,21 +170,21 @@ static int meth_receive(lua_State *L)
     p_timeout tm = &un->tm;
     timeout_markstart(tm);
     if (!dgram)
-        {
-            lua_pushnil(L);
-            lua_pushliteral(L, "out of memory");
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushliteral(L, "out of memory");
+        return 2;
+    }
     err = socket_recv(&un->sock, dgram, wanted, &got, tm);
     /* Unlike STREAM, recv() of zero is not closed, but a zero-length packet. */
     if (err != IO_DONE && err != IO_CLOSED)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, unixdgram_strerror(err));
-            if (wanted > sizeof(buf))
-                free(dgram);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, unixdgram_strerror(err));
+        if (wanted > sizeof(buf))
+            free(dgram);
+        return 2;
+    }
     lua_pushlstring(L, dgram, got);
     if (wanted > sizeof(buf))
         free(dgram);
@@ -206,22 +206,22 @@ static int meth_receivefrom(lua_State *L)
     p_timeout tm = &un->tm;
     timeout_markstart(tm);
     if (!dgram)
-        {
-            lua_pushnil(L);
-            lua_pushliteral(L, "out of memory");
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushliteral(L, "out of memory");
+        return 2;
+    }
     err = socket_recvfrom(&un->sock, dgram, wanted, &got, (SA *)&addr,
                           &addr_len, tm);
     /* Unlike STREAM, recv() of zero is not closed, but a zero-length packet. */
     if (err != IO_DONE && err != IO_CLOSED)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, unixdgram_strerror(err));
-            if (wanted > sizeof(buf))
-                free(dgram);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, unixdgram_strerror(err));
+        if (wanted > sizeof(buf))
+            free(dgram);
+        return 2;
+    }
 
     lua_pushlstring(L, dgram, got);
     /* the path may be empty, when client send without bind */
@@ -297,11 +297,11 @@ static int meth_bind(lua_State *L)
     const char *path = luaL_checkstring(L, 2);
     const char *err = unixdgram_trybind(un, path);
     if (err)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, err);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, err);
+        return 2;
+    }
     lua_pushnumber(L, 1);
     return 1;
 }
@@ -313,11 +313,11 @@ static int meth_getsockname(lua_State *L)
     socklen_t peer_len = sizeof(peer);
 
     if (getsockname(un->sock, (SA *)&peer, &peer_len) < 0)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, socket_strerror(errno));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, socket_strerror(errno));
+        return 2;
+    }
 
     lua_pushstring(L, peer.sun_path);
     return 1;
@@ -356,11 +356,11 @@ static int meth_connect(lua_State *L)
     const char *path = luaL_checkstring(L, 2);
     const char *err = unixdgram_tryconnect(un, path);
     if (err)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, err);
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, err);
+        return 2;
+    }
     /* turn unconnected object into a connected object */
     auxiliar_setclass(L, "unixdgram{connected}", 1);
     lua_pushnumber(L, 1);
@@ -405,24 +405,24 @@ static int global_create(lua_State *L)
     int err = socket_create(&sock, AF_UNIX, SOCK_DGRAM, 0);
     /* try to allocate a system socket */
     if (err == IO_DONE)
-        {
-            /* allocate unixdgram object */
-            p_unix un = (p_unix)lua_newuserdata(L, sizeof(t_unix));
-            /* set its type as master object */
-            auxiliar_setclass(L, "unixdgram{unconnected}", -1);
-            /* initialize remaining structure fields */
-            socket_setnonblocking(&sock);
-            un->sock = sock;
-            io_init(&un->io, (p_send)socket_send, (p_recv)socket_recv,
-                    (p_error)socket_ioerror, &un->sock);
-            timeout_init(&un->tm, -1, -1);
-            buffer_init(&un->buf, &un->io, &un->tm);
-            return 1;
-        }
+    {
+        /* allocate unixdgram object */
+        p_unix un = (p_unix)lua_newuserdata(L, sizeof(t_unix));
+        /* set its type as master object */
+        auxiliar_setclass(L, "unixdgram{unconnected}", -1);
+        /* initialize remaining structure fields */
+        socket_setnonblocking(&sock);
+        un->sock = sock;
+        io_init(&un->io, (p_send)socket_send, (p_recv)socket_recv,
+                (p_error)socket_ioerror, &un->sock);
+        timeout_init(&un->tm, -1, -1);
+        buffer_init(&un->buf, &un->io, &un->tm);
+        return 1;
+    }
     else
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, socket_strerror(err));
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, socket_strerror(err));
+        return 2;
+    }
 }

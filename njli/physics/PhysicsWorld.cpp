@@ -61,11 +61,11 @@ namespace njli
                                        btScalar timeStep)
     {
         if (world->getWorldUserInfo() != NULL)
-            {
-                PhysicsWorld *pw =
-                    static_cast<PhysicsWorld *>(world->getWorldUserInfo());
-                pw->applyFinalForces();
-            }
+        {
+            PhysicsWorld *pw =
+                static_cast<PhysicsWorld *>(world->getWorldUserInfo());
+            pw->applyFinalForces();
+        }
     }
 
     //    void MyNearCallback(btBroadphasePair& collisionPair,
@@ -90,81 +90,77 @@ namespace njli
             (btCollisionObject *)collisionPair.m_pProxy1->m_clientObject;
 
         if (dispatcher.needsCollision(pCollisionObject0, pCollisionObject1))
+        {
+            const btCollisionObjectWrapper *parent = 0;
+            btCollisionObjectWrapper obj0Wrap(
+                parent, pCollisionObject0->getCollisionShape(),
+                pCollisionObject0, pCollisionObject0->getWorldTransform(), 0,
+                0);
+            btCollisionObjectWrapper obj1Wrap(
+                parent, pCollisionObject1->getCollisionShape(),
+                pCollisionObject1, pCollisionObject1->getWorldTransform(), 0,
+                0);
+
+            // dispatcher will keep algorithms persistent in the collision
+            // pair
+            if (!collisionPair.m_algorithm)
             {
-                const btCollisionObjectWrapper *parent = 0;
-                btCollisionObjectWrapper obj0Wrap(
-                    parent, pCollisionObject0->getCollisionShape(),
-                    pCollisionObject0, pCollisionObject0->getWorldTransform(),
-                    0, 0);
-                btCollisionObjectWrapper obj1Wrap(
-                    parent, pCollisionObject1->getCollisionShape(),
-                    pCollisionObject1, pCollisionObject1->getWorldTransform(),
-                    0, 0);
+                // TODO: (error: too few arguments to function call,
+                // expected 4, have 2) collisionPair.m_algorithm =
+                // dispatcher.findAlgorithm(&obj0Wrap,&obj1Wrap);
 
-                // dispatcher will keep algorithms persistent in the collision
-                // pair
-                if (!collisionPair.m_algorithm)
-                    {
-                        // TODO: (error: too few arguments to function call,
-                        // expected 4, have 2) collisionPair.m_algorithm =
-                        // dispatcher.findAlgorithm(&obj0Wrap,&obj1Wrap);
-
-                        // This link helped:
-                        // https://andysomogyi.github.io/mechanica/bullet.html
-                        collisionPair.m_algorithm = dispatcher.findAlgorithm(
-                            &obj0Wrap, &obj1Wrap, 0,
-                            BT_CONTACT_POINT_ALGORITHMS);
-                    }
-
-                if (collisionPair.m_algorithm)
-                    {
-                        btManifoldResult contactPointResult(&obj0Wrap,
-                                                            &obj1Wrap);
-
-                        if (dispatchInfo.m_dispatchFunc ==
-                            btDispatcherInfo::DISPATCH_DISCRETE)
-                            {
-                                // discrete collision detection query
-
-                                if (collisionPair.m_algorithm != NULL)
-                                    collisionPair.m_algorithm->processCollision(
-                                        &obj0Wrap, &obj1Wrap, dispatchInfo,
-                                        &contactPointResult);
-                            }
-                        else
-                            {
-                                // continuous collision detection query, time of
-                                // impact (toi)
-                                btScalar toi =
-                                    collisionPair.m_algorithm
-                                        ->calculateTimeOfImpact(
-                                            pCollisionObject0,
-                                            pCollisionObject1, dispatchInfo,
-                                            &contactPointResult);
-                                if (dispatchInfo.m_timeOfImpact > toi)
-                                    dispatchInfo.m_timeOfImpact = toi;
-                            }
-
-                        Node *node0 = static_cast<Node *>(
-                            pCollisionObject0->getUserPointer());
-                        Node *node1 = static_cast<Node *>(
-                            pCollisionObject1->getUserPointer());
-                        PhysicsBody *body0 = NULL;
-                        PhysicsBody *body1 = NULL;
-
-                        if (node0)
-                            body0 = node0->getPhysicsBody();
-
-                        if (node1)
-                            body1 = node1->getPhysicsBody();
-
-                        if (body0 && body1)
-                            {
-                                body0->handleCollisionNear(body1, dispatchInfo);
-                                body1->handleCollisionNear(body0, dispatchInfo);
-                            }
-                    }
+                // This link helped:
+                // https://andysomogyi.github.io/mechanica/bullet.html
+                collisionPair.m_algorithm = dispatcher.findAlgorithm(
+                    &obj0Wrap, &obj1Wrap, 0, BT_CONTACT_POINT_ALGORITHMS);
             }
+
+            if (collisionPair.m_algorithm)
+            {
+                btManifoldResult contactPointResult(&obj0Wrap, &obj1Wrap);
+
+                if (dispatchInfo.m_dispatchFunc ==
+                    btDispatcherInfo::DISPATCH_DISCRETE)
+                {
+                    // discrete collision detection query
+
+                    if (collisionPair.m_algorithm != NULL)
+                        collisionPair.m_algorithm->processCollision(
+                            &obj0Wrap, &obj1Wrap, dispatchInfo,
+                            &contactPointResult);
+                }
+                else
+                {
+                    // continuous collision detection query, time of
+                    // impact (toi)
+                    btScalar toi =
+                        collisionPair.m_algorithm->calculateTimeOfImpact(
+                            pCollisionObject0, pCollisionObject1, dispatchInfo,
+                            &contactPointResult);
+                    if (dispatchInfo.m_timeOfImpact > toi)
+                        dispatchInfo.m_timeOfImpact = toi;
+                }
+
+                Node *node0 =
+                    static_cast<Node *>(pCollisionObject0->getUserPointer());
+                Node *node1 =
+                    static_cast<Node *>(pCollisionObject1->getUserPointer());
+                PhysicsBody *body0 = NULL;
+                PhysicsBody *body1 = NULL;
+
+                if (node0)
+                    body0 = node0->getPhysicsBody();
+
+                if (node1)
+                    body1 = node1->getPhysicsBody();
+
+                if (body0 && body1)
+                {
+                    body0->handleCollisionNear(body1, dispatchInfo);
+                    body1->handleCollisionNear(body0, dispatchInfo);
+                }
+            }
+        }
         //        dispatcher.defaultNearCallback(collisionPair, dispatcher,
         //        dispatchInfo);
     }
@@ -232,10 +228,10 @@ namespace njli
             body1 = node1->getPhysicsBody();
 
         if (body0 && body1)
-            {
-                body0->handleCollide(body1, cp);
-                body1->handleCollide(body0, cp);
-            }
+        {
+            body0->handleCollide(body1, cp);
+            body1->handleCollide(body0, cp);
+        }
 
         // this return value is currently ignored, but to be on the safe side:
         // return false if you don't calculate friction
@@ -459,20 +455,20 @@ namespace njli
         m_btOverlapFilterCallback = NULL;
 
         for (s32 i = m_dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+        {
+            btCollisionObject *obj =
+                m_dynamicsWorld->getCollisionObjectArray()[i];
+            btRigidBody *body = btRigidBody::upcast(obj);
+            if (body && body->getMotionState())
             {
-                btCollisionObject *obj =
-                    m_dynamicsWorld->getCollisionObjectArray()[i];
-                btRigidBody *body = btRigidBody::upcast(obj);
-                if (body && body->getMotionState())
-                    {
-                        btMotionState *ms = body->getMotionState();
-                        delete ms;
-                        ms = NULL;
-                    }
-                m_dynamicsWorld->removeCollisionObject(obj);
-                delete obj;
-                obj = NULL;
+                btMotionState *ms = body->getMotionState();
+                delete ms;
+                ms = NULL;
             }
+            m_dynamicsWorld->removeCollisionObject(obj);
+            delete obj;
+            obj = NULL;
+        }
 
         delete m_dynamicsWorld;
         m_dynamicsWorld = NULL;
@@ -489,9 +485,9 @@ namespace njli
     PhysicsWorld &PhysicsWorld::operator=(const PhysicsWorld &rhs)
     {
         if (this != &rhs)
-            {
-                // TODO:implement...
-            }
+        {
+            // TODO:implement...
+        }
         return *this;
     }
 
@@ -559,9 +555,9 @@ namespace njli
     void PhysicsWorld::destroy(PhysicsWorld *object)
     {
         if (object)
-            {
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+        {
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void PhysicsWorld::load(PhysicsWorld &object, lua_State *L, int index)
@@ -574,56 +570,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        PhysicsWorld::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                PhysicsWorld::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -698,16 +694,16 @@ namespace njli
         m_dynamicsWorld->rayTest(rayFromWorld, rayToWorld, rayCallback);
 
         if (rayCallback.hasHit())
-            {
-                //            Node *😀 = NULL;
-                Node *node = static_cast<Node *>(
-                    rayCallback.m_collisionObject->getUserPointer());
-                node->enableTouched();
-                rayContact.set(rayCallback.m_closestHitFraction,
-                               rayCallback.m_hitNormalWorld,
-                               rayCallback.m_hitPointWorld, node);
-                return true;
-            }
+        {
+            //            Node *😀 = NULL;
+            Node *node = static_cast<Node *>(
+                rayCallback.m_collisionObject->getUserPointer());
+            node->enableTouched();
+            rayContact.set(rayCallback.m_closestHitFraction,
+                           rayCallback.m_hitNormalWorld,
+                           rayCallback.m_hitPointWorld, node);
+            return true;
+        }
         return false;
     }
 
@@ -750,31 +746,30 @@ namespace njli
         m_dynamicsWorld->rayTest(rayFromWorld, rayToWorld, rayCallback);
 
         if (rayCallback.hasHit())
+        {
+            numContacts = rayCallback.m_collisionObjects.size();
+            for (s32 i = 0; i < numContacts; ++i)
             {
-                numContacts = rayCallback.m_collisionObjects.size();
-                for (s32 i = 0; i < numContacts; ++i)
-                    {
-                        if (i < rayContacts.size())
-                            {
-                                rayContacts.at(i)->set(
-                                    rayCallback.m_hitFractions[i],
-                                    rayCallback.m_hitNormalWorld[i],
-                                    rayCallback.m_hitPointWorld[i],
-                                    static_cast<Node *>(
-                                        rayCallback.m_collisionObjects[i]
-                                            ->getUserPointer()));
-                            }
-                        else
-                            {
-                                SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                                             "The btAlignedObjectArray is not "
-                                             "large enough (%d of %d)",
-                                             i, rayContacts.size());
-                            }
-                    }
-                // SDL_LogError(SDL_LOG_CATEGORY_TEST, "HIT - END\n");
-                return true;
+                if (i < rayContacts.size())
+                {
+                    rayContacts.at(i)->set(
+                        rayCallback.m_hitFractions[i],
+                        rayCallback.m_hitNormalWorld[i],
+                        rayCallback.m_hitPointWorld[i],
+                        static_cast<Node *>(rayCallback.m_collisionObjects[i]
+                                                ->getUserPointer()));
+                }
+                else
+                {
+                    SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                                 "The btAlignedObjectArray is not "
+                                 "large enough (%d of %d)",
+                                 i, rayContacts.size());
+                }
             }
+            // SDL_LogError(SDL_LOG_CATEGORY_TEST, "HIT - END\n");
+            return true;
+        }
         // SDL_LogError(SDL_LOG_CATEGORY_TEST, "MISSED\n");
         return false;
     }
@@ -788,39 +783,38 @@ namespace njli
     bool PhysicsWorld::addRigidBody(PhysicsBodyRigid *body)
     {
         if (body)
+        {
+            if (!body->isInWorld())
             {
-                if (!body->isInWorld())
-                    {
-                        m_dynamicsWorld->addRigidBody(
-                            body->getBody(), (int)body->getCollisionGroup(),
-                            (int)body->getCollisionMask());
+                m_dynamicsWorld->addRigidBody(body->getBody(),
+                                              (int)body->getCollisionGroup(),
+                                              (int)body->getCollisionMask());
 
-                        body->getCollisionObject()->setUserPointer(
-                            body->getParent());
+                body->getCollisionObject()->setUserPointer(body->getParent());
 
-                        m_RigidBodyVector.push_back(body);
-                    }
-                return true;
+                m_RigidBodyVector.push_back(body);
             }
+            return true;
+        }
         return false;
     }
     bool PhysicsWorld::removeRigidBody(PhysicsBodyRigid *body)
     {
         if (body && body->getBody())
+        {
+            if (body->isInWorld())
             {
-                if (body->isInWorld())
-                    {
-                        m_dynamicsWorld->removeRigidBody(body->getBody());
-                        body->getCollisionObject()->setUserPointer(NULL);
+                m_dynamicsWorld->removeRigidBody(body->getBody());
+                body->getCollisionObject()->setUserPointer(NULL);
 
-                        auto iter = std::find(m_RigidBodyVector.begin(),
-                                              m_RigidBodyVector.end(), body);
-                        if (iter != m_RigidBodyVector.end())
-                            m_RigidBodyVector.erase(iter);
+                auto iter = std::find(m_RigidBodyVector.begin(),
+                                      m_RigidBodyVector.end(), body);
+                if (iter != m_RigidBodyVector.end())
+                    m_RigidBodyVector.erase(iter);
 
-                        return true;
-                    }
+                return true;
             }
+        }
         return false;
     }
 
@@ -828,22 +822,22 @@ namespace njli
                                      bool disableCollisionsBetweenLinkedBodies)
     {
         if (constraint && constraint->getConstraint())
-            {
-                m_dynamicsWorld->addConstraint(
-                    constraint->getConstraint(),
-                    disableCollisionsBetweenLinkedBodies);
-                return true;
-            }
+        {
+            m_dynamicsWorld->addConstraint(
+                constraint->getConstraint(),
+                disableCollisionsBetweenLinkedBodies);
+            return true;
+        }
         return false;
     }
 
     bool PhysicsWorld::removeConstraint(PhysicsConstraint *constraint)
     {
         if (constraint && constraint->getConstraint())
-            {
-                m_dynamicsWorld->removeConstraint(constraint->getConstraint());
-                return true;
-            }
+        {
+            m_dynamicsWorld->removeConstraint(constraint->getConstraint());
+            return true;
+        }
         return false;
     }
 
@@ -863,82 +857,71 @@ namespace njli
         int size = m_GhostObjects->size();
 
         for (int ghostIndex = 0; ghostIndex < size; ghostIndex++)
+        {
+            btPairCachingGhostObject *pCurrentGhostObject =
+                (*m_GhostObjects)[ghostIndex];
+
+            // Prepare for getting all the contact manifolds for one
+            // Overlapping Pair
+            btManifoldArray manifoldArray;
+            // Get all the Overlapping Pair
+            btBroadphasePairArray &pairArray =
+                pCurrentGhostObject->getOverlappingPairCache()
+                    ->getOverlappingPairArray();
+            int numPairs = pairArray.size();
+
+            for (int pairIndex = 0; pairIndex < numPairs; pairIndex++)
             {
-                btPairCachingGhostObject *pCurrentGhostObject =
-                    (*m_GhostObjects)[ghostIndex];
+                manifoldArray.clear();
 
-                // Prepare for getting all the contact manifolds for one
+                const btBroadphasePair &pair = pairArray[pairIndex];
+
+                // unless we manually perform collision detection on
+                // this pair, the contacts are in the dynamics world
+                // paircache: The next line fetches the collision
+                // information for this Pair
+                btBroadphasePair *collisionPair =
+                    m_dynamicsWorld->getPairCache()->findPair(pair.m_pProxy0,
+                                                              pair.m_pProxy1);
+                if (!collisionPair)
+                    continue;
+
+                // Read out the all contact manifolds for this
                 // Overlapping Pair
-                btManifoldArray manifoldArray;
-                // Get all the Overlapping Pair
-                btBroadphasePairArray &pairArray =
-                    pCurrentGhostObject->getOverlappingPairCache()
-                        ->getOverlappingPairArray();
-                int numPairs = pairArray.size();
+                if (collisionPair->m_algorithm)
+                    collisionPair->m_algorithm->getAllContactManifolds(
+                        manifoldArray);
 
-                for (int pairIndex = 0; pairIndex < numPairs; pairIndex++)
+                for (int j = 0; j < manifoldArray.size(); j++)
+                {
+                    btPersistentManifold *manifold = manifoldArray[j];
+
+                    const btCollisionObject *pCollisionObject0 =
+                        (const btCollisionObject *)manifold->getBody0();
+                    const btCollisionObject *pCollisionObject1 =
+                        (const btCollisionObject *)manifold->getBody1();
+
+                    Node *node0 = static_cast<Node *>(
+                        pCollisionObject0->getUserPointer());
+                    Node *node1 = static_cast<Node *>(
+                        pCollisionObject1->getUserPointer());
+
+                    for (int p = 0; p < manifold->getNumContacts(); p++)
                     {
-                        manifoldArray.clear();
-
-                        const btBroadphasePair &pair = pairArray[pairIndex];
-
-                        // unless we manually perform collision detection on
-                        // this pair, the contacts are in the dynamics world
-                        // paircache: The next line fetches the collision
-                        // information for this Pair
-                        btBroadphasePair *collisionPair =
-                            m_dynamicsWorld->getPairCache()->findPair(
-                                pair.m_pProxy0, pair.m_pProxy1);
-                        if (!collisionPair)
-                            continue;
-
-                        // Read out the all contact manifolds for this
-                        // Overlapping Pair
-                        if (collisionPair->m_algorithm)
-                            collisionPair->m_algorithm->getAllContactManifolds(
-                                manifoldArray);
-
-                        for (int j = 0; j < manifoldArray.size(); j++)
-                            {
-                                btPersistentManifold *manifold =
-                                    manifoldArray[j];
-
-                                const btCollisionObject *pCollisionObject0 =
-                                    (const btCollisionObject *)
-                                        manifold->getBody0();
-                                const btCollisionObject *pCollisionObject1 =
-                                    (const btCollisionObject *)
-                                        manifold->getBody1();
-
-                                Node *node0 = static_cast<Node *>(
-                                    pCollisionObject0->getUserPointer());
-                                Node *node1 = static_cast<Node *>(
-                                    pCollisionObject1->getUserPointer());
-
-                                for (int p = 0; p < manifold->getNumContacts();
-                                     p++)
-                                    {
-                                        const btManifoldPoint &pt =
-                                            manifold->getContactPoint(p);
-                                        if (pt.getDistance() < 0.f)
-                                            {
-                                                if (pCollisionObject0 ==
-                                                    pCurrentGhostObject)
-                                                    node0->getPhysicsBody()
-                                                        ->handleCollide(
-                                                            node1
-                                                                ->getPhysicsBody(),
-                                                            pt);
-                                                else
-                                                    node1->getPhysicsBody()
-                                                        ->handleCollide(
-                                                            node0
-                                                                ->getPhysicsBody(),
-                                                            pt);
-                                            }
-                                    }
-                            }
+                        const btManifoldPoint &pt =
+                            manifold->getContactPoint(p);
+                        if (pt.getDistance() < 0.f)
+                        {
+                            if (pCollisionObject0 == pCurrentGhostObject)
+                                node0->getPhysicsBody()->handleCollide(
+                                    node1->getPhysicsBody(), pt);
+                            else
+                                node1->getPhysicsBody()->handleCollide(
+                                    node0->getPhysicsBody(), pt);
+                        }
                     }
+                }
             }
+        }
     }
 } // namespace njli

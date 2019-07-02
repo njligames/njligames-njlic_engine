@@ -20,29 +20,29 @@ namespace njli
     AbstractActionable::AbstractActionable()
     {
         for (s32 i = 0; i < 100; ++i)
-            {
-                m_ActionMemoryQueue.push(new ActionableAction());
-            }
+        {
+            m_ActionMemoryQueue.push(new ActionableAction());
+        }
         m_Actions.clear();
     }
     AbstractActionable::~AbstractActionable()
     {
         while (!m_ActionMemoryQueue.empty())
-            {
-                ActionableAction *actionable = m_ActionMemoryQueue.front();
-                delete actionable;
-                actionable = NULL;
-                m_ActionMemoryQueue.pop();
-            }
+        {
+            ActionableAction *actionable = m_ActionMemoryQueue.front();
+            delete actionable;
+            actionable = NULL;
+            m_ActionMemoryQueue.pop();
+        }
 
         for (std::vector<ActionableAction *>::iterator iter = m_Actions.begin();
              iter != m_Actions.end();)
-            {
-                ActionableAction *actionable = *iter;
-                delete actionable;
-                actionable = NULL;
-                iter = m_Actions.erase(iter);
-            }
+        {
+            ActionableAction *actionable = *iter;
+            delete actionable;
+            actionable = NULL;
+            iter = m_Actions.erase(iter);
+        }
     }
 
     void AbstractActionable::runAction(Action *action,
@@ -55,11 +55,11 @@ namespace njli
                                        bool callCompletionFunction)
     {
         if (m_ActionMemoryQueue.empty())
-            {
-                //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "memory is
-                //            running out");
-                return;
-            }
+        {
+            //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "memory is
+            //            running out");
+            return;
+        }
 
         ActionableAction *actionable = m_ActionMemoryQueue.front();
         m_ActionMemoryQueue.pop();
@@ -75,13 +75,13 @@ namespace njli
     {
         for (std::vector<ActionableAction *>::iterator iter = m_Actions.begin();
              iter != m_Actions.end(); ++iter)
+        {
+            ActionableAction *actionable = *iter;
+            if (actionable->key == std::string(key))
             {
-                ActionableAction *actionable = *iter;
-                if (actionable->key == std::string(key))
-                    {
-                        return actionable->action;
-                    }
+                return actionable->action;
             }
+        }
         return NULL;
     }
 
@@ -94,70 +94,69 @@ namespace njli
     {
         for (std::vector<ActionableAction *>::iterator iter = m_Actions.begin();
              iter != m_Actions.end(); ++iter)
+        {
+            ActionableAction *actionable = *iter;
+            if (actionable->key == std::string(key))
             {
-                ActionableAction *actionable = *iter;
-                if (actionable->key == std::string(key))
-                    {
-                        m_ActionMemoryQueue.push(*iter);
-                        iter = m_Actions.erase(iter);
-                        return true;
-                    }
+                m_ActionMemoryQueue.push(*iter);
+                iter = m_Actions.erase(iter);
+                return true;
             }
+        }
         return false;
     }
 
     void AbstractActionable::removeAllActions()
     {
         for (s32 i = 0; i < m_Actions.size(); ++i)
-            {
-                removeAction(m_Actions[i]->key.c_str());
-            }
+        {
+            removeAction(m_Actions[i]->key.c_str());
+        }
     }
 
     void AbstractActionable::update(f32 timeStep)
     {
         if (!World::getInstance()->isAnimationPaused())
+        {
+            for (std::vector<ActionableAction *>::iterator iter =
+                     m_Actions.begin();
+                 iter != m_Actions.end();)
             {
-                for (std::vector<ActionableAction *>::iterator iter =
-                         m_Actions.begin();
-                     iter != m_Actions.end();)
+                ActionableAction *actionable = *iter;
+                Action *currentAction = actionable->action;
+
+                currentAction->update(timeStep);
+
+                if (currentAction->isFinishedRepeating() &&
+                    currentAction->isFinished() &&
+                    currentAction->isChildrenFinished())
+                {
+                    m_ActionMemoryQueue.push(actionable);
+
+                    iter = m_Actions.erase(iter);
+
+                    if (actionable->callCompletion)
                     {
-                        ActionableAction *actionable = *iter;
-                        Action *currentAction = actionable->action;
-
-                        currentAction->update(timeStep);
-
-                        if (currentAction->isFinishedRepeating() &&
-                            currentAction->isFinished() &&
-                            currentAction->isChildrenFinished())
-                            {
-                                m_ActionMemoryQueue.push(actionable);
-
-                                iter = m_Actions.erase(iter);
-
-                                if (actionable->callCompletion)
-                                    {
-                                        char buffer[BUFFER_SIZE] =
-                                            "__NJLINodeActionComplete";
-                                        njli::World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->execute(buffer, currentAction);
-                                    }
-                            }
-                        else
-                            {
-                                ++iter;
-                            }
+                        char buffer[BUFFER_SIZE] = "__NJLINodeActionComplete";
+                        njli::World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->execute(buffer, currentAction);
                     }
+                }
+                else
+                {
+                    ++iter;
+                }
             }
+        }
     }
 
     void
     AbstractActionable::getAllActionNames(std::vector<std::string> &actionNames)
     {
         for (s32 i = 0; i < m_Actions.size(); ++i)
-            {
-                actionNames.push_back(m_Actions[i]->key);
-            }
+        {
+            actionNames.push_back(m_Actions[i]->key);
+        }
     }
 } // namespace njli

@@ -92,9 +92,9 @@ void printGLInfo()
     char *extension = strtok(extensions, " ");
     SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "\t%s\n", extension);
     while (NULL != (extension = strtok(NULL, " ")))
-        {
-            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "\t%s\n", extension);
-        }
+    {
+        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "\t%s\n", extension);
+    }
     delete[] extensions;
     extensions = NULL;
 

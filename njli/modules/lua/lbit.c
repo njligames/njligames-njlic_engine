@@ -85,9 +85,9 @@ static UBits barg(lua_State *L, int idx)
 #endif
 #if LUA_VERSION_NUM < 502
     if (b == 0 && !lua_isnumber(L, idx))
-        {
-            luaL_typerror(L, idx, "number");
-        }
+    {
+        luaL_typerror(L, idx, "number");
+    }
 #endif
     return b;
 }
@@ -146,17 +146,17 @@ static int bit_tohex(lua_State *L)
     char buf[8];
     int i;
     if (n < 0)
-        {
-            n = -n;
-            hexdigits = "0123456789ABCDEF";
-        }
+    {
+        n = -n;
+        hexdigits = "0123456789ABCDEF";
+    }
     if (n > 8)
         n = 8;
     for (i = (int)n; --i >= 0;)
-        {
-            buf[i] = hexdigits[b & 15];
-            b >>= 4;
-        }
+    {
+        buf[i] = hexdigits[b & 15];
+        b >>= 4;
+    }
     lua_pushlstring(L, buf, (size_t)n);
     return 1;
 }
@@ -187,20 +187,20 @@ LUALIB_API int luaopen_bit(lua_State *L)
     lua_pushnumber(L, (lua_Number)1437217655L);
     b = barg(L, -1);
     if (b != (UBits)1437217655L || BAD_SAR)
-        { /* Perform a simple self-test. */
-            const char *msg = "compiled with incompatible luaconf.h";
+    { /* Perform a simple self-test. */
+        const char *msg = "compiled with incompatible luaconf.h";
 #ifdef LUA_NUMBER_DOUBLE
 #ifdef _WIN32
-            if (b == (UBits)1610612736L)
-                msg = "use D3DCREATE_FPU_PRESERVE with DirectX";
+        if (b == (UBits)1610612736L)
+            msg = "use D3DCREATE_FPU_PRESERVE with DirectX";
 #endif
-            if (b == (UBits)1127743488L)
-                msg = "not compiled with SWAPPED_DOUBLE";
+        if (b == (UBits)1127743488L)
+            msg = "not compiled with SWAPPED_DOUBLE";
 #endif
-            if (BAD_SAR)
-                msg = "arithmetic right-shift broken";
-            luaL_error(L, "bit library self-test failed (%s)", msg);
-        }
+        if (BAD_SAR)
+            msg = "arithmetic right-shift broken";
+        luaL_error(L, "bit library self-test failed (%s)", msg);
+    }
 #if LUA_VERSION_NUM < 502
     luaL_register(L, "bit", bit_funcs);
 #else

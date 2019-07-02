@@ -60,11 +60,11 @@ namespace njli
     Image &Image::operator=(const Image &rhs)
     {
         if (this != &rhs)
-            {
-                copyData(rhs.getDataPtr(), rhs.getDataSize(), rhs.getWidth(),
-                         rhs.getHeight(), rhs.getNumberOfComponents(),
-                         rhs.getImageType(), rhs.getFilename());
-            }
+        {
+            copyData(rhs.getDataPtr(), rhs.getDataSize(), rhs.getWidth(),
+                     rhs.getHeight(), rhs.getNumberOfComponents(),
+                     rhs.getImageType(), rhs.getFilename());
+        }
         return *this;
     }
 
@@ -141,56 +141,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Image::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Image::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -213,32 +213,28 @@ namespace njli
     bool Image::setPixel(const btVector2 &position, const btVector4 &color)
     {
         if (!isPvr())
+        {
+            if ((m_RawData) && (position.x() < getWidth()) &&
+                (position.y() < getHeight()))
             {
-                if ((m_RawData) && (position.x() < getWidth()) &&
-                    (position.y() < getHeight()))
-                    {
-                        s32 x_indice = position.x() * getNumberOfComponents();
-                        s32 y_indice =
-                            position.y() * getNumberOfComponents() * getWidth();
+                s32 x_indice = position.x() * getNumberOfComponents();
+                s32 y_indice =
+                    position.y() * getNumberOfComponents() * getWidth();
 
-                        switch (getNumberOfComponents())
-                            {
-                            case 4:
-                                m_RawData[x_indice + y_indice + 3] =
-                                    (color.w() * 255.0f);
-                            case 3:
-                                m_RawData[x_indice + y_indice + 2] =
-                                    (color.z() * 255.0f);
-                            case 2:
-                                m_RawData[x_indice + y_indice + 1] =
-                                    (color.y() * 255.0f);
-                            case 1:
-                                m_RawData[x_indice + y_indice + 0] =
-                                    (color.x() * 255.0f);
-                            }
-                        return true;
-                    }
+                switch (getNumberOfComponents())
+                {
+                case 4:
+                    m_RawData[x_indice + y_indice + 3] = (color.w() * 255.0f);
+                case 3:
+                    m_RawData[x_indice + y_indice + 2] = (color.z() * 255.0f);
+                case 2:
+                    m_RawData[x_indice + y_indice + 1] = (color.y() * 255.0f);
+                case 1:
+                    m_RawData[x_indice + y_indice + 0] = (color.x() * 255.0f);
+                }
+                return true;
             }
+        }
 
         return false;
     }
@@ -253,38 +249,34 @@ namespace njli
     bool Image::getPixel(const btVector2 &position, btVector4 &pixel) const
     {
         if (!isPvr())
+        {
+            if ((m_RawData) && (position.x() < getWidth()) &&
+                (position.y() < getHeight()))
             {
-                if ((m_RawData) && (position.x() < getWidth()) &&
-                    (position.y() < getHeight()))
-                    {
-                        s32 x_indice = position.x() * getNumberOfComponents();
-                        s32 y_indice =
-                            position.y() * getNumberOfComponents() * getWidth();
-                        f32 red = 0.0f;
-                        f32 green = 0.0f;
-                        f32 blue = 0.0f;
-                        f32 alpha = 0.0f;
+                s32 x_indice = position.x() * getNumberOfComponents();
+                s32 y_indice =
+                    position.y() * getNumberOfComponents() * getWidth();
+                f32 red = 0.0f;
+                f32 green = 0.0f;
+                f32 blue = 0.0f;
+                f32 alpha = 0.0f;
 
-                        switch (getNumberOfComponents())
-                            {
-                            case 4:
-                                alpha =
-                                    m_RawData[x_indice + y_indice + 3] / 255.0f;
-                            case 3:
-                                blue =
-                                    m_RawData[x_indice + y_indice + 2] / 255.0f;
-                            case 2:
-                                green =
-                                    m_RawData[x_indice + y_indice + 1] / 255.0f;
-                            case 1:
-                                red =
-                                    m_RawData[x_indice + y_indice + 0] / 255.0f;
-                            }
+                switch (getNumberOfComponents())
+                {
+                case 4:
+                    alpha = m_RawData[x_indice + y_indice + 3] / 255.0f;
+                case 3:
+                    blue = m_RawData[x_indice + y_indice + 2] / 255.0f;
+                case 2:
+                    green = m_RawData[x_indice + y_indice + 1] / 255.0f;
+                case 1:
+                    red = m_RawData[x_indice + y_indice + 0] / 255.0f;
+                }
 
-                        pixel = btVector4(red, green, blue, alpha);
-                        return true;
-                    }
+                pixel = btVector4(red, green, blue, alpha);
+                return true;
             }
+        }
         pixel = btVector4(0, 0, 0, 0);
         return false;
     }
@@ -301,50 +293,49 @@ namespace njli
                           const btVector4 &color)
     {
         if (m_RawData)
+        {
+
+            u32 width = destinationDimensions.x();
+            u32 height = destinationDimensions.y();
+            u32 xOffset = destinationPosition.x();
+            u32 yOffset = destinationPosition.y();
+
+            if ((width > 0) && (height > 0) && (xOffset <= getWidth()) &&
+                (xOffset <= getWidth()))
             {
+                u8 *fillRow = createFillRow_createsmemory(0, getWidth(), color);
+                SDL_assert(fillRow);
 
-                u32 width = destinationDimensions.x();
-                u32 height = destinationDimensions.y();
-                u32 xOffset = destinationPosition.x();
-                u32 yOffset = destinationPosition.y();
+                if ((xOffset + width) > getWidth())
+                    width = getWidth() - xOffset;
+                if ((yOffset + height) > getHeight())
+                    height = getHeight() - yOffset;
 
-                if ((width > 0) && (height > 0) && (xOffset <= getWidth()) &&
-                    (xOffset <= getWidth()))
-                    {
-                        u8 *fillRow =
-                            createFillRow_createsmemory(0, getWidth(), color);
-                        SDL_assert(fillRow);
+                for (u32 y = yOffset; y < (yOffset + height); ++y)
+                {
+                    setPixelRow(fillRow, y, width, xOffset);
+                }
 
-                        if ((xOffset + width) > getWidth())
-                            width = getWidth() - xOffset;
-                        if ((yOffset + height) > getHeight())
-                            height = getHeight() - yOffset;
-
-                        for (u32 y = yOffset; y < (yOffset + height); ++y)
-                            {
-                                setPixelRow(fillRow, y, width, xOffset);
-                            }
-
-                        delete[] fillRow;
-                        fillRow = NULL;
-                    }
-                //            if(xOffset > getWidth())
-                //                return false;
-                //            if(yOffset > getHeight())
-                //                return false;
-                //
-                //            if((xOffset + width) > getWidth())
-                //                width = getWidth() - xOffset;
-                //            else if(width < 0)
-                //                return false;
-                //
-                //            if((yOffset + height) > getHeight())
-                //                height = getHeight() - yOffset;
-                //            else if(height < 0)
-                //                return false;
-
-                return true;
+                delete[] fillRow;
+                fillRow = NULL;
             }
+            //            if(xOffset > getWidth())
+            //                return false;
+            //            if(yOffset > getHeight())
+            //                return false;
+            //
+            //            if((xOffset + width) > getWidth())
+            //                width = getWidth() - xOffset;
+            //            else if(width < 0)
+            //                return false;
+            //
+            //            if((yOffset + height) > getHeight())
+            //                height = getHeight() - yOffset;
+            //            else if(height < 0)
+            //                return false;
+
+            return true;
+        }
 
         return false;
     }
@@ -358,30 +349,29 @@ namespace njli
 
         btVector2 fromPos, toPos;
         for (u32 x = 0; x < dimension.x(); ++x)
+        {
+            for (u32 y = 0; y < dimension.y(); ++y)
             {
-                for (u32 y = 0; y < dimension.y(); ++y)
-                    {
-                        fromPos = btVector2(x, y) + position;
-                        toPos = btVector2(x, y) + sourcePosition;
+                fromPos = btVector2(x, y) + position;
+                toPos = btVector2(x, y) + sourcePosition;
 
-                        if (imageSource.getPixel(fromPos, pixel))
-                            {
-                                if (!setPixel(toPos, pixel))
-                                    {
-                                        SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                                                     "error writing (%d, %d)",
-                                                     x, y);
-                                        error = true;
-                                    }
-                            }
-                        else
-                            {
-                                SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                                             "error reading (%d, %d)", x, y);
-                                error = true;
-                            }
+                if (imageSource.getPixel(fromPos, pixel))
+                {
+                    if (!setPixel(toPos, pixel))
+                    {
+                        SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                                     "error writing (%d, %d)", x, y);
+                        error = true;
                     }
+                }
+                else
+                {
+                    SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                                 "error reading (%d, %d)", x, y);
+                    error = true;
+                }
             }
+        }
 
         return error;
     }
@@ -411,35 +401,35 @@ namespace njli
                          const std::string &filename)
     {
         if (dataPtr != NULL && dataSize > 0)
-            {
-                m_RawDataSize = dataSize;
+        {
+            m_RawDataSize = dataSize;
 
-                if (m_RawData)
-                    delete[] m_RawData;
-                m_RawData = new u8[m_RawDataSize];
-                SDL_assert(m_RawData);
+            if (m_RawData)
+                delete[] m_RawData;
+            m_RawData = new u8[m_RawDataSize];
+            SDL_assert(m_RawData);
 
-                memcpy(m_RawData, dataPtr, m_RawDataSize);
+            memcpy(m_RawData, dataPtr, m_RawDataSize);
 
-                SDL_assert(width >= 0 && width <= 4096);
-                m_Width = width;
+            SDL_assert(width >= 0 && width <= 4096);
+            m_Width = width;
 
-                SDL_assert(height >= 0 && height <= 4096);
-                m_Height = height;
+            SDL_assert(height >= 0 && height <= 4096);
+            m_Height = height;
 
-                SDL_assert(components >= 0 && components <= 4);
-                m_Componenents = components;
+            SDL_assert(components >= 0 && components <= 4);
+            m_Componenents = components;
 
-                SDL_assert(imageType > JLI_IMAGE_TYPE_NONE &&
-                           imageType < JLI_IMAGE_TYPE_MAX);
-                m_njliImageType = imageType;
+            SDL_assert(imageType > JLI_IMAGE_TYPE_NONE &&
+                       imageType < JLI_IMAGE_TYPE_MAX);
+            m_njliImageType = imageType;
 
-                //            SDL_assert(njli::World::getInstance()->getWorldResourceLoader()->dataPtrSize(filename.c_str())
-                //            != 0);
-                m_Filename = filename;
+            //            SDL_assert(njli::World::getInstance()->getWorldResourceLoader()->dataPtrSize(filename.c_str())
+            //            != 0);
+            m_Filename = filename;
 
-                return true;
-            }
+            return true;
+        }
         return false;
     }
 
@@ -448,12 +438,12 @@ namespace njli
         bool retVal = false;
 
         if (fileData)
-            {
-                retVal = copyData(fileData->getBufferPtr(), fileData->getSize(),
-                                  fileData->getWidth(), fileData->getHeight(),
-                                  fileData->numberOfComponents(),
-                                  fileData->getType(), fileData->getFilename());
-            }
+        {
+            retVal = copyData(fileData->getBufferPtr(), fileData->getSize(),
+                              fileData->getWidth(), fileData->getHeight(),
+                              fileData->numberOfComponents(),
+                              fileData->getType(), fileData->getFilename());
+        }
 
         return retVal;
     }
@@ -467,22 +457,22 @@ namespace njli
     bool Image::isCompressed() const
     {
         if (isPvr())
-            {
-                SDL_assertPrint(true, "must implement pvr");
+        {
+            SDL_assertPrint(true, "must implement pvr");
 
-                //            PVRTextureHeaderV3 *header =
-                //            (PVRTextureHeaderV3*)getDataPtr();
-                //
-                //            PVRTuint64 PixelFormat = header->u64PixelFormat;
-                //
-                //            //Get the last 32 bits of the pixel format.
-                //            PVRTuint64 PixelFormatPartHigh =
-                //            PixelFormat&PVRTEX_PFHIGHMASK;
-                //
-                //            //Check for a compressed format (The first 8 bytes
-                //            will be 0, so the whole thing will be equal to the
-                //            last 32 bits). return (PixelFormatPartHigh==0);
-            }
+            //            PVRTextureHeaderV3 *header =
+            //            (PVRTextureHeaderV3*)getDataPtr();
+            //
+            //            PVRTuint64 PixelFormat = header->u64PixelFormat;
+            //
+            //            //Get the last 32 bits of the pixel format.
+            //            PVRTuint64 PixelFormatPartHigh =
+            //            PixelFormat&PVRTEX_PFHIGHMASK;
+            //
+            //            //Check for a compressed format (The first 8 bytes
+            //            will be 0, so the whole thing will be equal to the
+            //            last 32 bits). return (PixelFormatPartHigh==0);
+        }
         return false;
     }
 
@@ -554,70 +544,69 @@ namespace njli
                          const btVector4 &fillColor)
     {
         if (!isPvr())
+        {
+            SDL_assert(numberOfComponents > 0 && numberOfComponents < 5);
+
+            if (m_RawData)
+                delete[] m_RawData;
+            m_RawData = NULL;
+
+            m_Componenents = numberOfComponents;
+            m_Width = width;
+            m_Height = height;
+
+            m_RawData =
+                new u8[getNumberOfComponents() * getWidth() * getHeight()];
+            SDL_assert(m_RawData);
+
+            u8 *fillRow = createFillRow_createsmemory(0, getWidth(), fillColor);
+            SDL_assert(fillRow);
+
+            for (u32 y_current = 0; y_current < getHeight(); y_current++)
             {
-                SDL_assert(numberOfComponents > 0 && numberOfComponents < 5);
-
-                if (m_RawData)
-                    delete[] m_RawData;
-                m_RawData = NULL;
-
-                m_Componenents = numberOfComponents;
-                m_Width = width;
-                m_Height = height;
-
-                m_RawData =
-                    new u8[getNumberOfComponents() * getWidth() * getHeight()];
-                SDL_assert(m_RawData);
-
-                u8 *fillRow =
-                    createFillRow_createsmemory(0, getWidth(), fillColor);
-                SDL_assert(fillRow);
-
-                for (u32 y_current = 0; y_current < getHeight(); y_current++)
-                    {
-                        setPixelRow(fillRow, y_current, getWidth());
-                    }
-
-                delete[] fillRow;
-                fillRow = NULL;
-
-                char buffer[BUFFER_SIZE];
-                sprintf(buffer, "Generated Width:%d, Height:%d, Components:%d",
-                        width, height, numberOfComponents);
-                m_Filename = buffer;
+                setPixelRow(fillRow, y_current, getWidth());
             }
+
+            delete[] fillRow;
+            fillRow = NULL;
+
+            char buffer[BUFFER_SIZE];
+            sprintf(buffer, "Generated Width:%d, Height:%d, Components:%d",
+                    width, height, numberOfComponents);
+            m_Filename = buffer;
+        }
     }
 
     void Image::setPixelRow(u8 *data, u32 row, u32 width, u32 xOffset)
     {
         if (!isPvr())
-            {
-                SDL_assert(data);
-                SDL_assert(m_RawData);
-                SDL_assert((xOffset + width) <= getWidth());
+        {
+            SDL_assert(data);
+            SDL_assert(m_RawData);
+            SDL_assert((xOffset + width) <= getWidth());
 
-                s32 toIncrement = xOffset + (row * getWidth());
-                toIncrement *= getNumberOfComponents();
-                memcpy(m_RawData + toIncrement, data,
-                       getNumberOfComponents() * width);
-            }
+            s32 toIncrement = xOffset + (row * getWidth());
+            toIncrement *= getNumberOfComponents();
+            memcpy(m_RawData + toIncrement, data,
+                   getNumberOfComponents() * width);
+        }
     }
 
     void Image::getPixelRow(u8 *data, u32 row, u32 width)
     {
         if (!isPvr())
-            {
-                SDL_assert(data);
-                SDL_assert(m_RawData);
+        {
+            SDL_assert(data);
+            SDL_assert(m_RawData);
 
-                s32 x_indice = 0;
+            s32 x_indice = 0;
 
-                s32 fromIncrement = x_indice + (row * getWidth());
-                fromIncrement *= getNumberOfComponents();
+            s32 fromIncrement = x_indice + (row * getWidth());
+            fromIncrement *= getNumberOfComponents();
 
-                memcpy(data, m_RawData + fromIncrement,
-                       getNumberOfComponents() * width);
-            }
+            memcpy(data, m_RawData + fromIncrement,
+                   getNumberOfComponents() * width);
+        }
     }
 
     //    u8 *Image::createFillRow(u8 components, u32 width, const btVector4
@@ -626,37 +615,33 @@ namespace njli
                                            const btVector4 &fillColor)
     {
         if (!isPvr())
+        {
+            if ((xOffset + fillWidth) > getWidth())
+                fillWidth = getWidth() - xOffset;
+            else if (fillWidth < 0)
+                fillWidth = 0;
+
+            u8 *fillRow = new u8[getNumberOfComponents() * getWidth()];
+
+            for (s32 xx = xOffset; xx < fillWidth; ++xx)
             {
-                if ((xOffset + fillWidth) > getWidth())
-                    fillWidth = getWidth() - xOffset;
-                else if (fillWidth < 0)
-                    fillWidth = 0;
+                s32 x_indice = xx * getNumberOfComponents();
+                s32 y_indice = 0 * getNumberOfComponents() * getWidth();
 
-                u8 *fillRow = new u8[getNumberOfComponents() * getWidth()];
-
-                for (s32 xx = xOffset; xx < fillWidth; ++xx)
-                    {
-                        s32 x_indice = xx * getNumberOfComponents();
-                        s32 y_indice = 0 * getNumberOfComponents() * getWidth();
-
-                        switch (getNumberOfComponents())
-                            {
-                            case 4:
-                                fillRow[x_indice + y_indice + 3] =
-                                    (fillColor.w() * 255.0f);
-                            case 3:
-                                fillRow[x_indice + y_indice + 2] =
-                                    (fillColor.z() * 255.0f);
-                            case 2:
-                                fillRow[x_indice + y_indice + 1] =
-                                    (fillColor.y() * 255.0f);
-                            case 1:
-                                fillRow[x_indice + y_indice + 0] =
-                                    (fillColor.x() * 255.0f);
-                            }
-                    }
-                return fillRow;
+                switch (getNumberOfComponents())
+                {
+                case 4:
+                    fillRow[x_indice + y_indice + 3] = (fillColor.w() * 255.0f);
+                case 3:
+                    fillRow[x_indice + y_indice + 2] = (fillColor.z() * 255.0f);
+                case 2:
+                    fillRow[x_indice + y_indice + 1] = (fillColor.y() * 255.0f);
+                case 1:
+                    fillRow[x_indice + y_indice + 0] = (fillColor.x() * 255.0f);
+                }
             }
+            return fillRow;
+        }
         return NULL;
     }
 
@@ -689,33 +674,33 @@ namespace njli
         s32 shortest = std::abs(h);
 
         if (!(longest > shortest))
-            {
-                longest = std::abs(h);
-                shortest = std::abs(w);
-                if (h < 0)
-                    dy2 = -1;
-                else if (h > 0)
-                    dy2 = 1;
-                dx2 = 0;
-            }
+        {
+            longest = std::abs(h);
+            shortest = std::abs(w);
+            if (h < 0)
+                dy2 = -1;
+            else if (h > 0)
+                dy2 = 1;
+            dx2 = 0;
+        }
         s32 numerator = longest >> 1;
 
         for (s32 i = 0; i <= longest; i++)
+        {
+            setPixel(btVector2(x, y), color);
+            numerator += shortest;
+            if (!(numerator < longest))
             {
-                setPixel(btVector2(x, y), color);
-                numerator += shortest;
-                if (!(numerator < longest))
-                    {
-                        numerator -= longest;
-                        x += dx1;
-                        y += dy1;
-                    }
-                else
-                    {
-                        x += dx2;
-                        y += dy2;
-                    }
+                numerator -= longest;
+                x += dx1;
+                y += dy1;
             }
+            else
+            {
+                x += dx2;
+                y += dy2;
+            }
+        }
     }
 
     void Image::drawLine(const btVector2 &from, const btVector2 &to,
@@ -749,195 +734,185 @@ namespace njli
         s32 shortest = std::abs(h);
 
         if (!(longest > shortest))
-            {
-                longest = std::abs(h);
-                shortest = std::abs(w);
-                if (h < 0)
-                    dy2 = -1;
-                else if (h > 0)
-                    dy2 = 1;
-                dx2 = 0;
-            }
+        {
+            longest = std::abs(h);
+            shortest = std::abs(w);
+            if (h < 0)
+                dy2 = -1;
+            else if (h > 0)
+                dy2 = 1;
+            dx2 = 0;
+        }
         s32 numerator = longest >> 1;
 
         for (s32 i = 0; i <= longest; i++)
+        {
+            if (imageSource.getPixel(btVector2(x, y), pixel))
             {
-                if (imageSource.getPixel(btVector2(x, y), pixel))
-                    {
-                        if (!setPixel(btVector2(x, y), pixel))
-                            {
-                                SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                                             "error reading (%d, %d)", x, y);
-                            }
-                    }
-                else
-                    {
-                        SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                                     "error writing (%d, %d)", x, y);
-                    }
-
-                numerator += shortest;
-                if (!(numerator < longest))
-                    {
-                        numerator -= longest;
-                        x += dx1;
-                        y += dy1;
-                    }
-                else
-                    {
-                        x += dx2;
-                        y += dy2;
-                    }
+                if (!setPixel(btVector2(x, y), pixel))
+                {
+                    SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                                 "error reading (%d, %d)", x, y);
+                }
             }
+            else
+            {
+                SDL_LogError(SDL_LOG_CATEGORY_TEST, "error writing (%d, %d)", x,
+                             y);
+            }
+
+            numerator += shortest;
+            if (!(numerator < longest))
+            {
+                numerator -= longest;
+                x += dx1;
+                y += dy1;
+            }
+            else
+            {
+                x += dx2;
+                y += dy2;
+            }
+        }
     }
 
     void Image::blur()
     {
         if (!isPvr())
+        {
+            u32 x = 1, y, width = getWidth() - 1, height = getHeight() - 1,
+                bw = getWidth() * getNumberOfComponents();
+
+            if (getNumberOfComponents() < 3)
             {
-                u32 x = 1, y, width = getWidth() - 1, height = getHeight() - 1,
-                    bw = getWidth() * getNumberOfComponents();
-
-                if (getNumberOfComponents() < 3)
-                    {
-                        return;
-                    }
-
-                while (x != height)
-                    {
-                        y = 1;
-                        while (y < width)
-                            {
-                                u32 jb = y * getNumberOfComponents(),
-                                    jp = (y + 1) * getNumberOfComponents(),
-                                    jm = (y - 1) * getNumberOfComponents(),
-                                    ib = x * bw, im = (x - 1) * bw,
-                                    ip = (x + 1) * bw, ibjb = ib + jb;
-
-                                u8 *px1 = &m_RawData[ib + jb],
-                                   *px2 = &m_RawData[ib + jm],
-                                   *px3 = &m_RawData[ib + jp],
-                                   *px4 = &m_RawData[im + jb],
-                                   *px5 = &m_RawData[ip + jb],
-                                   *px6 = &m_RawData[im + jm],
-                                   *px7 = &m_RawData[im + jp],
-                                   *px8 = &m_RawData[ip + jm],
-                                   *px9 = &m_RawData[ip + jp];
-
-                                m_RawData[ibjb] =
-                                    ((px1[0] << 2) +
-                                     ((px2[0] + px3[0] + px4[0] + px5[0])
-                                      << 1) +
-                                     px6[0] + px7[0] + px8[0] + px9[0]) >>
-                                    4;
-
-                                m_RawData[ibjb + 1] =
-                                    ((px1[1] << 2) +
-                                     ((px2[1] + px3[1] + px4[1] + px5[1])
-                                      << 1) +
-                                     px6[1] + px7[1] + px8[1] + px9[1]) >>
-                                    4;
-
-                                m_RawData[ibjb + 2] =
-                                    ((px1[2] << 2) +
-                                     ((px2[2] + px3[2] + px4[2] + px5[2])
-                                      << 1) +
-                                     px6[2] + px7[2] + px8[2] + px9[2]) >>
-                                    4;
-                                ++y;
-                            }
-
-                        ++x;
-                    }
+                return;
             }
+
+            while (x != height)
+            {
+                y = 1;
+                while (y < width)
+                {
+                    u32 jb = y * getNumberOfComponents(),
+                        jp = (y + 1) * getNumberOfComponents(),
+                        jm = (y - 1) * getNumberOfComponents(), ib = x * bw,
+                        im = (x - 1) * bw, ip = (x + 1) * bw, ibjb = ib + jb;
+
+                    u8 *px1 = &m_RawData[ib + jb], *px2 = &m_RawData[ib + jm],
+                       *px3 = &m_RawData[ib + jp], *px4 = &m_RawData[im + jb],
+                       *px5 = &m_RawData[ip + jb], *px6 = &m_RawData[im + jm],
+                       *px7 = &m_RawData[im + jp], *px8 = &m_RawData[ip + jm],
+                       *px9 = &m_RawData[ip + jp];
+
+                    m_RawData[ibjb] =
+                        ((px1[0] << 2) +
+                         ((px2[0] + px3[0] + px4[0] + px5[0]) << 1) + px6[0] +
+                         px7[0] + px8[0] + px9[0]) >>
+                        4;
+
+                    m_RawData[ibjb + 1] =
+                        ((px1[1] << 2) +
+                         ((px2[1] + px3[1] + px4[1] + px5[1]) << 1) + px6[1] +
+                         px7[1] + px8[1] + px9[1]) >>
+                        4;
+
+                    m_RawData[ibjb + 2] =
+                        ((px1[2] << 2) +
+                         ((px2[2] + px3[2] + px4[2] + px5[2]) << 1) + px6[2] +
+                         px7[2] + px8[2] + px9[2]) >>
+                        4;
+                    ++y;
+                }
+
+                ++x;
+            }
+        }
     }
 
     bool Image::setAlpha(const Image &image)
     {
         if (!isPvr())
+        {
+            if (((getNumberOfComponents() == 3) ||
+                 (getNumberOfComponents() == 4)) &&
+                ((image.getNumberOfComponents() == 1) ||
+                 (image.getNumberOfComponents() == 4)) &&
+                getWidth() == image.getWidth() &&
+                getHeight() == image.getWidth())
             {
-                if (((getNumberOfComponents() == 3) ||
-                     (getNumberOfComponents() == 4)) &&
-                    ((image.getNumberOfComponents() == 1) ||
-                     (image.getNumberOfComponents() == 4)) &&
-                    getWidth() == image.getWidth() &&
-                    getHeight() == image.getWidth())
-                    {
-                        u32 i = 0, rgb = 0, a = 0, size;
+                u32 i = 0, rgb = 0, a = 0, size;
 
-                        u8 prevComponents = getNumberOfComponents();
+                u8 prevComponents = getNumberOfComponents();
 
-                        u8 *tex;
+                u8 *tex;
 
-                        m_Componenents = 4;
-                        size =
-                            getWidth() * getHeight() * getNumberOfComponents();
+                m_Componenents = 4;
+                size = getWidth() * getHeight() * getNumberOfComponents();
 
-                        tex = new u8[size];
+                tex = new u8[size];
 
-                        while (i != size)
-                            {
-                                tex[i] = m_RawData[rgb + 2];
-                                tex[i + 1] = m_RawData[rgb + 1];
-                                tex[i + 2] = m_RawData[rgb];
+                while (i != size)
+                {
+                    tex[i] = m_RawData[rgb + 2];
+                    tex[i + 1] = m_RawData[rgb + 1];
+                    tex[i + 2] = m_RawData[rgb];
 
-                                if (image.getNumberOfComponents() == 1)
-                                    tex[i + 3] = image.m_RawData[a];
-                                if (image.getNumberOfComponents() == 4)
-                                    tex[i + 3] = image.m_RawData[i + 3];
+                    if (image.getNumberOfComponents() == 1)
+                        tex[i + 3] = image.m_RawData[a];
+                    if (image.getNumberOfComponents() == 4)
+                        tex[i + 3] = image.m_RawData[i + 3];
 
-                                ++a;
-                                rgb += prevComponents;
-                                i += getNumberOfComponents();
-                            }
+                    ++a;
+                    rgb += prevComponents;
+                    i += getNumberOfComponents();
+                }
 
-                        delete[] m_RawData;
-                        m_RawData = NULL;
+                delete[] m_RawData;
+                m_RawData = NULL;
 
-                        m_RawData = tex;
+                m_RawData = tex;
 
-                        return true;
-                    }
+                return true;
             }
+        }
         return false;
     }
 
     bool Image::setAlpha(f32 alpha)
     {
         if (!isPvr())
+        {
+            if (((getNumberOfComponents() == 3) ||
+                 (getNumberOfComponents() == 4)))
             {
-                if (((getNumberOfComponents() == 3) ||
-                     (getNumberOfComponents() == 4)))
-                    {
-                        u32 i = 0, rgb = 0, a = 0, size;
-                        u8 prevComponents = getNumberOfComponents();
-                        u8 *tex = NULL;
+                u32 i = 0, rgb = 0, a = 0, size;
+                u8 prevComponents = getNumberOfComponents();
+                u8 *tex = NULL;
 
-                        m_Componenents = 4;
-                        size =
-                            getWidth() * getHeight() * getNumberOfComponents();
+                m_Componenents = 4;
+                size = getWidth() * getHeight() * getNumberOfComponents();
 
-                        tex = new u8[size];
-                        SDL_assert(tex);
+                tex = new u8[size];
+                SDL_assert(tex);
 
-                        while (i != size)
-                            {
-                                tex[i] = m_RawData[rgb + 2];
-                                tex[i + 1] = m_RawData[rgb + 1];
-                                tex[i + 2] = m_RawData[rgb];
-                                tex[i + 3] = alpha;
+                while (i != size)
+                {
+                    tex[i] = m_RawData[rgb + 2];
+                    tex[i + 1] = m_RawData[rgb + 1];
+                    tex[i + 2] = m_RawData[rgb];
+                    tex[i + 3] = alpha;
 
-                                ++a;
-                                rgb += prevComponents;
-                                i += getNumberOfComponents();
-                            }
+                    ++a;
+                    rgb += prevComponents;
+                    i += getNumberOfComponents();
+                }
 
-                        delete[] m_RawData;
-                        m_RawData = tex;
+                delete[] m_RawData;
+                m_RawData = tex;
 
-                        return true;
-                    }
+                return true;
             }
+        }
 
         return false;
     }
@@ -954,52 +929,50 @@ namespace njli
         f32 r, g, b, a;
 
         if (getNumberOfComponents() == 4)
+        {
+            for (u32 x = 0; x < getWidth(); ++x)
             {
-                for (u32 x = 0; x < getWidth(); ++x)
+                for (u32 y = 0; y < getHeight(); ++y)
+                {
+                    if (getPixel(btVector2(x, y), color))
                     {
-                        for (u32 y = 0; y < getHeight(); ++y)
-                            {
-                                if (getPixel(btVector2(x, y), color))
-                                    {
-                                        r = color.x();
-                                        g = color.y();
-                                        b = color.z();
-                                        a = color.w();
+                        r = color.x();
+                        g = color.y();
+                        b = color.z();
+                        a = color.w();
 
-                                        setPixel(
-                                            btVector2(x, y),
-                                            btVector4(r * a, g * a, b * a, a));
-                                    }
-                            }
+                        setPixel(btVector2(x, y),
+                                 btVector4(r * a, g * a, b * a, a));
                     }
+                }
             }
+        }
     }
 
     void Image::flip()
     {
         if (!isPvr())
+        {
+            u32 i = 0,
+                size = getWidth() * getHeight() * getNumberOfComponents(),
+
+                rows = getWidth() * getNumberOfComponents();
+
+            u8 *buf = new u8[size];
+            SDL_assert(buf);
+
+            while (i != getHeight())
             {
-                u32 i = 0,
-                    size = getWidth() * getHeight() * getNumberOfComponents(),
-
-                    rows = getWidth() * getNumberOfComponents();
-
-                u8 *buf = new u8[size];
-                SDL_assert(buf);
-
-                while (i != getHeight())
-                    {
-                        memcpy(buf + (i * rows),
-                               m_RawData + (((getHeight() - i) - 1) * rows),
-                               rows);
-                        ++i;
-                    }
-
-                memcpy(&m_RawData[0], &buf[0], size);
-
-                delete[] buf;
-                buf = NULL;
+                memcpy(buf + (i * rows),
+                       m_RawData + (((getHeight() - i) - 1) * rows), rows);
+                ++i;
             }
+
+            memcpy(&m_RawData[0], &buf[0], size);
+
+            delete[] buf;
+            buf = NULL;
+        }
     }
 
     void Image::rotate()
@@ -1007,35 +980,34 @@ namespace njli
         SDL_assertPrint(false, "must test");
 
         if (getHeight() == getWidth())
+        {
+            s32 n = getHeight();
+            for (int layer = 0; layer < n / 2; ++layer)
             {
-                s32 n = getHeight();
-                for (int layer = 0; layer < n / 2; ++layer)
-                    {
-                        int first = layer;
-                        int last = n - 1 - layer;
-                        for (int i = first; i < last; ++i)
-                            {
-                                int offset = i - first;
+                int first = layer;
+                int last = n - 1 - layer;
+                for (int i = first; i < last; ++i)
+                {
+                    int offset = i - first;
 
-                                // save top
-                                btVector4 top = (*this)[first][i];
+                    // save top
+                    btVector4 top = (*this)[first][i];
 
-                                // left -> top
-                                (*this)[first][i] =
-                                    (*this)[last - offset][first];
+                    // left -> top
+                    (*this)[first][i] = (*this)[last - offset][first];
 
-                                // bottom -> left
-                                (*this)[last - offset][first] =
-                                    (*this)[last][last - offset];
+                    // bottom -> left
+                    (*this)[last - offset][first] =
+                        (*this)[last][last - offset];
 
-                                // right -> bottom
-                                (*this)[last][last - offset] = (*this)[i][last];
+                    // right -> bottom
+                    (*this)[last][last - offset] = (*this)[i][last];
 
-                                // top -> right
-                                (*this)[i][last] = top;
-                            }
-                    }
+                    // top -> right
+                    (*this)[i][last] = top;
+                }
             }
+        }
     }
 
     std::vector<btVector4> Image::operator[](u32 row)
@@ -1061,10 +1033,10 @@ namespace njli
     u32 Image::getClosestValidGLDim(const u32 dim) const
     {
         for (s32 shift = 0; shift < 12; shift++)
-            {
-                if ((1 << shift) > dim)
-                    return 1 << (shift);
-            }
+        {
+            if ((1 << shift) > dim)
+                return 1 << (shift);
+        }
         return 1 << 11;
     }
 } // namespace njli

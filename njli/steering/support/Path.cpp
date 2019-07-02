@@ -55,12 +55,12 @@ namespace njli
     const Path &Path::operator=(const Path &rhs)
     {
         if (this != &rhs)
-            {
-                m_bLooped = rhs.m_bLooped;
-                m_WayPoints = rhs.m_WayPoints;
+        {
+            m_bLooped = rhs.m_bLooped;
+            m_WayPoints = rhs.m_WayPoints;
 
-                curWaypoint = m_WayPoints.begin();
-            }
+            curWaypoint = m_WayPoints.begin();
+        }
         return *this;
     }
 
@@ -78,9 +78,9 @@ namespace njli
     btVector3 Path::currentWaypoint() const
     {
         if (m_WayPoints.size() > 0)
-            {
-                return *curWaypoint;
-            }
+        {
+            return *curWaypoint;
+        }
         return btVector3(0, 0, 0);
     }
 
@@ -101,21 +101,21 @@ namespace njli
         double spacing = TwoPi / (double)NumWaypoints;
 
         for (int i = 0; i < NumWaypoints; ++i)
-            {
-                double RadialDist = RandInRange(smaller * 0.2f, smaller);
+        {
+            double RadialDist = RandInRange(smaller * 0.2f, smaller);
 
-                btVector3 temp(RadialDist, RadialDist, RadialDist);
+            btVector3 temp(RadialDist, RadialDist, RadialDist);
 
-                Vec3DRotateAroundOrigin(temp, i * spacing);
+            Vec3DRotateAroundOrigin(temp, i * spacing);
 
-                //        temp.x += midX;
-                temp.setX(temp.x() + midX);
-                //        temp.y += midY;
-                temp.setY(temp.y() + midY);
-                temp.setZ(temp.z() + midZ);
+            //        temp.x += midX;
+            temp.setX(temp.x() + midX);
+            //        temp.y += midY;
+            temp.setY(temp.y() + midY);
+            temp.setZ(temp.z() + midZ);
 
-                m_WayPoints.push_back(temp);
-            }
+            m_WayPoints.push_back(temp);
+        }
 
         curWaypoint = m_WayPoints.begin();
 
@@ -127,9 +127,9 @@ namespace njli
         m_WayPoints.push_back(new_point);
 
         if (m_WayPoints.size() == 1)
-            {
-                curWaypoint = m_WayPoints.begin();
-            }
+        {
+            curWaypoint = m_WayPoints.begin();
+        }
     }
 
     void Path::debugDraw() const
@@ -143,13 +143,13 @@ namespace njli
         njli::World::getInstance()->getDebugDrawer()->point(wp, color);
 
         while (it != m_WayPoints.end())
-            {
-                njli::World::getInstance()->getDebugDrawer()->drawLine(wp, *it,
-                                                                       color);
+        {
+            njli::World::getInstance()->getDebugDrawer()->drawLine(wp, *it,
+                                                                   color);
 
-                wp = *it++;
-                njli::World::getInstance()->getDebugDrawer()->point(wp, color);
-            }
+            wp = *it++;
+            njli::World::getInstance()->getDebugDrawer()->point(wp, color);
+        }
 
         if (m_bLooped)
             njli::World::getInstance()->getDebugDrawer()->drawLine(
@@ -167,29 +167,29 @@ namespace njli
         btScalar distance(0);
 
         if (m_WayPoints.size())
+        {
+
+            std::list<btVector3>::const_iterator i = m_WayPoints.begin();
+            btVector3 previousPoint(*i);
+            i++;
+
+            for (; i != m_WayPoints.end(); i++)
             {
-
-                std::list<btVector3>::const_iterator i = m_WayPoints.begin();
-                btVector3 previousPoint(*i);
-                i++;
-
-                for (; i != m_WayPoints.end(); i++)
-                    {
-                        distance += previousPoint.distance(*i);
-                        previousPoint = *i;
-                    }
-                if (m_bLooped)
-                    {
-                        i = m_WayPoints.begin();
-                        distance += previousPoint.distance(*i);
-
-                        distance /= (m_WayPoints.size() + 1);
-                    }
-                else
-                    {
-                        distance /= m_WayPoints.size();
-                    }
+                distance += previousPoint.distance(*i);
+                previousPoint = *i;
             }
+            if (m_bLooped)
+            {
+                i = m_WayPoints.begin();
+                distance += previousPoint.distance(*i);
+
+                distance /= (m_WayPoints.size() + 1);
+            }
+            else
+            {
+                distance /= m_WayPoints.size();
+            }
+        }
         return distance;
     }
 } // namespace njli

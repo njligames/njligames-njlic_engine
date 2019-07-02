@@ -37,11 +37,11 @@ int opt_meth_setoption(lua_State *L, p_opt opt, p_socket ps)
     while (opt->name && strcmp(name, opt->name))
         opt++;
     if (!opt->func)
-        {
-            char msg[45];
-            sprintf(msg, "unsupported option `%.35s'", name);
-            luaL_argerror(L, 2, msg);
-        }
+    {
+        char msg[45];
+        sprintf(msg, "unsupported option `%.35s'", name);
+        luaL_argerror(L, 2, msg);
+    }
     return opt->func(L, ps);
 }
 
@@ -51,11 +51,11 @@ int opt_meth_getoption(lua_State *L, p_opt opt, p_socket ps)
     while (opt->name && strcmp(name, opt->name))
         opt++;
     if (!opt->func)
-        {
-            char msg[45];
-            sprintf(msg, "unsupported option `%.35s'", name);
-            luaL_argerror(L, 2, msg);
-        }
+    {
+        char msg[45];
+        sprintf(msg, "unsupported option `%.35s'", name);
+        luaL_argerror(L, 2, msg);
+    }
     return opt->func(L, ps);
 }
 
@@ -216,11 +216,11 @@ int opt_get_ip_multicast_if(lua_State *L, p_socket ps)
     struct in_addr val;
     socklen_t len = sizeof(val);
     if (getsockopt(*ps, IPPROTO_IP, IP_MULTICAST_IF, (char *)&val, &len) < 0)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, "getsockopt failed");
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, "getsockopt failed");
+        return 2;
+    }
     lua_pushstring(L, inet_ntoa(val));
     return 1;
 }
@@ -299,14 +299,14 @@ static int opt_ip6_setmembership(lua_State *L, p_socket ps, int level, int name)
      * support either number, or name for it. Waiting for
      * windows port of if_nametoindex */
     if (!lua_isnil(L, -1))
+    {
+        if (lua_isnumber(L, -1))
         {
-            if (lua_isnumber(L, -1))
-                {
-                    val.ipv6mr_interface = (unsigned int)lua_tonumber(L, -1);
-                }
-            else
-                luaL_argerror(L, -1, "number 'interface' field expected");
+            val.ipv6mr_interface = (unsigned int)lua_tonumber(L, -1);
         }
+        else
+            luaL_argerror(L, -1, "number 'interface' field expected");
+    }
     return opt_set(L, ps, level, name, (char *)&val, sizeof(val));
 }
 
@@ -315,11 +315,11 @@ static int opt_get(lua_State *L, p_socket ps, int level, int name, void *val,
 {
     socklen_t socklen = *len;
     if (getsockopt(*ps, level, name, (char *)val, &socklen) < 0)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, "getsockopt failed");
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, "getsockopt failed");
+        return 2;
+    }
     *len = socklen;
     return 0;
 }
@@ -328,11 +328,11 @@ static int opt_set(lua_State *L, p_socket ps, int level, int name, void *val,
                    int len)
 {
     if (setsockopt(*ps, level, name, (char *)val, len) < 0)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, "setsockopt failed");
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, "setsockopt failed");
+        return 2;
+    }
     lua_pushnumber(L, 1);
     return 1;
 }
@@ -353,11 +353,11 @@ int opt_get_error(lua_State *L, p_socket ps)
     int val = 0;
     socklen_t len = sizeof(val);
     if (getsockopt(*ps, SOL_SOCKET, SO_ERROR, (char *)&val, &len) < 0)
-        {
-            lua_pushnil(L);
-            lua_pushstring(L, "getsockopt failed");
-            return 2;
-        }
+    {
+        lua_pushnil(L);
+        lua_pushstring(L, "getsockopt failed");
+        return 2;
+    }
     lua_pushstring(L, socket_strerror(val));
     return 1;
 }

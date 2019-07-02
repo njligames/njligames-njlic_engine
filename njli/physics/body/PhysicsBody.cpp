@@ -99,9 +99,9 @@ namespace njli
     PhysicsBody &PhysicsBody::operator=(const PhysicsBody &rhs)
     {
         if (this != &rhs)
-            {
-                // TODO:implement....
-            }
+        {
+            // TODO:implement....
+        }
         return *this;
     }
 
@@ -118,11 +118,11 @@ namespace njli
     void PhysicsBody::destroy(PhysicsBody *object)
     {
         if (object)
-            {
-                object->removePhysicsShape();
+        {
+            object->removePhysicsShape();
 
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void PhysicsBody::load(PhysicsBody &object, lua_State *L, int index)
@@ -135,56 +135,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        PhysicsBody::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                PhysicsBody::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -197,25 +197,22 @@ namespace njli
                                     const btManifoldPoint &pt)
     {
         if (body->getPhysicsShape() && m_PhysicsShape)
-            {
-                char buffer[BUFFER_SIZE] = "__NJLINodeCollide";
-                njli::World::getInstance()
-                    ->getWorldLuaVirtualMachine()
-                    ->execute(buffer, getParent(), body->getParent(), pt);
-            }
+        {
+            char buffer[BUFFER_SIZE] = "__NJLINodeCollide";
+            njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+                buffer, getParent(), body->getParent(), pt);
+        }
     }
 
     void PhysicsBody::handleCollisionNear(PhysicsBody *body,
                                           const btDispatcherInfo &dispatchInfo)
     {
         if (m_PhysicsShape)
-            {
-                char buffer[BUFFER_SIZE] = "__NJLINodeNear";
-                njli::World::getInstance()
-                    ->getWorldLuaVirtualMachine()
-                    ->execute(buffer, getParent(), body->getParent(),
-                              dispatchInfo);
-            }
+        {
+            char buffer[BUFFER_SIZE] = "__NJLINodeNear";
+            njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+                buffer, getParent(), body->getParent(), dispatchInfo);
+        }
     }
     //    void PhysicsBody::addPhysicsWorld(PhysicsWorld *world)
     //    {
@@ -280,9 +277,9 @@ namespace njli
     void PhysicsBody::removePhysicsShape()
     {
         if (getPhysicsShape())
-            {
-                removeChild(getPhysicsShape());
-            }
+        {
+            removeChild(getPhysicsShape());
+        }
 
         m_PhysicsShape = NULL;
     }
@@ -299,11 +296,11 @@ namespace njli
     {
         s32 idx = getChildIndex(m_PhysicsShape);
         if (idx != -1)
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            PhysicsShape*>(getChild(idx)));
-                return dynamic_cast<const PhysicsShape *>(getChild(idx));
-            }
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            PhysicsShape*>(getChild(idx)));
+            return dynamic_cast<const PhysicsShape *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -347,25 +344,25 @@ namespace njli
         SDL_assert(type > JLI_PHYSICS_TYPE_NONE && type < JLI_PHYSICS_TYPE_MAX);
 
         switch (type)
-            {
-            case JLI_PHYSICS_TYPE_Dynamic:
-                setDynamicPhysics();
-                break;
-            case JLI_PHYSICS_TYPE_Kinematic:
-                setKinematicPhysics();
-                break;
-            case JLI_PHYSICS_TYPE_Static:
-                setStaticPhysics();
-                break;
-            default:
-                break;
-            }
+        {
+        case JLI_PHYSICS_TYPE_Dynamic:
+            setDynamicPhysics();
+            break;
+        case JLI_PHYSICS_TYPE_Kinematic:
+            setKinematicPhysics();
+            break;
+        case JLI_PHYSICS_TYPE_Static:
+            setStaticPhysics();
+            break;
+        default:
+            break;
+        }
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
 
     njliPhysicsType PhysicsBody::getPhysicsType() const
@@ -386,10 +383,10 @@ namespace njli
     {
         m_CategoryBitMask = categoryBitMask;
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
 
     njliBitCategories PhysicsBody::getCollisionGroup() const
@@ -401,10 +398,10 @@ namespace njli
     {
         m_CollisionBitMask = categoryBitMask;
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
 
     njliBitCategories PhysicsBody::getCollisionMask() const
@@ -421,16 +418,16 @@ namespace njli
         m_ActivationState = ACTIVE_TAG;
 
         if (getCollisionObject())
-            {
-                getCollisionObject()->setCollisionFlags(m_CollisionFlags);
-                getCollisionObject()->setActivationState(m_ActivationState);
-            }
+        {
+            getCollisionObject()->setCollisionFlags(m_CollisionFlags);
+            getCollisionObject()->setActivationState(m_ActivationState);
+        }
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
     void PhysicsBody::setKinematicPhysics()
     {
@@ -441,16 +438,16 @@ namespace njli
         m_ActivationState = DISABLE_DEACTIVATION;
 
         if (getCollisionObject())
-            {
-                getCollisionObject()->setCollisionFlags(m_CollisionFlags);
-                getCollisionObject()->setActivationState(m_ActivationState);
-            }
+        {
+            getCollisionObject()->setCollisionFlags(m_CollisionFlags);
+            getCollisionObject()->setActivationState(m_ActivationState);
+        }
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
     void PhysicsBody::setDynamicPhysics()
     {
@@ -461,56 +458,54 @@ namespace njli
         m_ActivationState = ACTIVE_TAG;
 
         if (getCollisionObject())
-            {
-                getCollisionObject()->setCollisionFlags(m_CollisionFlags);
-                getCollisionObject()->setActivationState(m_ActivationState);
-            }
+        {
+            getCollisionObject()->setCollisionFlags(m_CollisionFlags);
+            getCollisionObject()->setActivationState(m_ActivationState);
+        }
 
         if (PhysicsBody::getParent() && getPhysicsShape())
-            {
-                btTransform t = getWorldTransform();
-                setTransform(t);
-            }
+        {
+            btTransform t = getWorldTransform();
+            setTransform(t);
+        }
     }
     void PhysicsBody::enableContactResponse(bool enable)
     {
         if (enable)
-            {
-                m_CollisionFlags =
-                    Off(m_CollisionFlags,
-                        btCollisionObject::CF_NO_CONTACT_RESPONSE);
-            }
+        {
+            m_CollisionFlags = Off(m_CollisionFlags,
+                                   btCollisionObject::CF_NO_CONTACT_RESPONSE);
+        }
         else
-            {
-                m_CollisionFlags =
-                    On(m_CollisionFlags,
-                       btCollisionObject::CF_NO_CONTACT_RESPONSE);
-            }
+        {
+            m_CollisionFlags =
+                On(m_CollisionFlags, btCollisionObject::CF_NO_CONTACT_RESPONSE);
+        }
 
         if (getCollisionObject())
-            {
-                getCollisionObject()->setCollisionFlags(m_CollisionFlags);
-            }
+        {
+            getCollisionObject()->setCollisionFlags(m_CollisionFlags);
+        }
     }
     void PhysicsBody::enableHandleCollideCallback(bool enable)
     {
         if (enable)
-            {
-                m_CollisionFlags =
-                    On(m_CollisionFlags,
-                       btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
-            }
+        {
+            m_CollisionFlags =
+                On(m_CollisionFlags,
+                   btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+        }
         else
-            {
-                m_CollisionFlags =
-                    Off(m_CollisionFlags,
-                        btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
-            }
+        {
+            m_CollisionFlags =
+                Off(m_CollisionFlags,
+                    btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
+        }
 
         if (getCollisionObject())
-            {
-                getCollisionObject()->setCollisionFlags(m_CollisionFlags);
-            }
+        {
+            getCollisionObject()->setCollisionFlags(m_CollisionFlags);
+        }
     }
 
     bool PhysicsBody::isStaticPhysics() const
@@ -559,20 +554,20 @@ namespace njli
                       m_PhysicsConstraintList.end(), constraint);
 
         if (iter == m_PhysicsConstraintList.end())
-            {
-                std::vector<PhysicsConstraint *>::iterator iter =
-                    std::find(m_PhysicsConstraintList.begin(),
-                              m_PhysicsConstraintList.end(), constraint);
+        {
+            std::vector<PhysicsConstraint *>::iterator iter =
+                std::find(m_PhysicsConstraintList.begin(),
+                          m_PhysicsConstraintList.end(), constraint);
 
-                if (iter != m_PhysicsConstraintList.end())
-                    removeChild(constraint);
+            if (iter != m_PhysicsConstraintList.end())
+                removeChild(constraint);
 
-                m_PhysicsConstraintList.push_back(constraint);
+            m_PhysicsConstraintList.push_back(constraint);
 
-                addChild(constraint);
-                //!!!TODO:
-                //!!!TODO: scene->addActivePhysicsConstraint(constraint);
-            }
+            addChild(constraint);
+            //!!!TODO:
+            //!!!TODO: scene->addActivePhysicsConstraint(constraint);
+        }
 
         return getPhysicsConstraintIndex(constraint);
     }
@@ -589,13 +584,13 @@ namespace njli
                       m_PhysicsConstraintList.end(), constraint);
 
         if (iter != m_PhysicsConstraintList.end())
-            {
-                removeChild(*iter);
-                //!!!TODO: scene->removeActivePhysicsConstraint(*iter);
+        {
+            removeChild(*iter);
+            //!!!TODO: scene->removeActivePhysicsConstraint(*iter);
 
-                m_PhysicsConstraintList.erase(iter);
-                return true;
-            }
+            m_PhysicsConstraintList.erase(iter);
+            return true;
+        }
         return false;
     }
 
@@ -604,9 +599,9 @@ namespace njli
         for (std::vector<PhysicsConstraint *>::iterator iter =
                  m_PhysicsConstraintList.begin();
              iter != m_PhysicsConstraintList.end(); ++iter)
-            {
-                removeChild(*iter);
-            }
+        {
+            removeChild(*iter);
+        }
         m_PhysicsConstraintList.clear();
     }
 
@@ -616,10 +611,10 @@ namespace njli
         for (std::vector<PhysicsConstraint *>::const_iterator iter =
                  m_PhysicsConstraintList.begin();
              iter != m_PhysicsConstraintList.end(); ++iter)
-            {
-                if (getChildIndex(*iter) != -1)
-                    particleEmitters.push_back(*iter);
-            }
+        {
+            if (getChildIndex(*iter) != -1)
+                particleEmitters.push_back(*iter);
+        }
     }
 
     s32 PhysicsBody::getPhysicsConstraintIndex(PhysicsConstraint *sound) const
@@ -629,20 +624,20 @@ namespace njli
                       m_PhysicsConstraintList.end(), sound);
 
         if (iter != m_PhysicsConstraintList.end())
-            {
-                return std::distance(m_PhysicsConstraintList.begin(), iter);
-            }
+        {
+            return std::distance(m_PhysicsConstraintList.begin(), iter);
+        }
         return -1;
     }
 
     PhysicsConstraint *PhysicsBody::getPhysicsConstraint(const u32 index)
     {
         if (index < m_PhysicsConstraintList.size())
-            {
-                s32 idx = getChildIndex(m_PhysicsConstraintList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<PhysicsConstraint *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_PhysicsConstraintList.at(index));
+            if (idx != -1)
+                return dynamic_cast<PhysicsConstraint *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -650,12 +645,11 @@ namespace njli
     PhysicsBody::getPhysicsConstraint(const u32 index) const
     {
         if (index < m_PhysicsConstraintList.size())
-            {
-                s32 idx = getChildIndex(m_PhysicsConstraintList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<const PhysicsConstraint *>(
-                        getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_PhysicsConstraintList.at(index));
+            if (idx != -1)
+                return dynamic_cast<const PhysicsConstraint *>(getChild(idx));
+        }
         return NULL;
     }
 

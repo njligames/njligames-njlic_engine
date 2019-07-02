@@ -14,19 +14,19 @@ WrapperWav::WrapperWav(int minProcesssLengthAtOnce)
     this->minProcesssLengthAtOnce = minProcesssLengthAtOnce;
 
     if (this->minProcesssLengthAtOnce == -1)
-        {
-            this->minProcesssLengthAtOnce = INT_MAX;
-        }
+    {
+        this->minProcesssLengthAtOnce = INT_MAX;
+    }
     else
+    {
+        if (this->minProcesssLengthAtOnce % WAV_BUFFER_SIZE != 0)
         {
-            if (this->minProcesssLengthAtOnce % WAV_BUFFER_SIZE != 0)
-                {
-                    SDL_Log("OGG buffer size and OpenAL buffer size are not "
-                            "modulable !!");
-                    SDL_Log("this->minProcesssLengthAtOnce %% WAV_BUFFER_SIZE "
-                            "!= 0");
-                }
+            SDL_Log("OGG buffer size and OpenAL buffer size are not "
+                    "modulable !!");
+            SDL_Log("this->minProcesssLengthAtOnce %% WAV_BUFFER_SIZE "
+                    "!= 0");
         }
+    }
 
     memset(&this->curChunk, 0, sizeof(WAV_CHUNK));
     memset(&this->t, 0, sizeof(wav_file));
@@ -72,14 +72,14 @@ void WrapperWav::ResetStream()
 {
 
     if (this->t.f != NULL)
-        {
-            fseek(this->t.f, sizeof(WAV_DESC) + sizeof(WAV_FORMAT), SEEK_SET);
-        }
+    {
+        fseek(this->t.f, sizeof(WAV_DESC) + sizeof(WAV_FORMAT), SEEK_SET);
+    }
     else
-        {
-            this->t.curPtr =
-                this->t.filePtr + sizeof(WAV_DESC) + sizeof(WAV_FORMAT);
-        }
+    {
+        this->t.curPtr =
+            this->t.filePtr + sizeof(WAV_DESC) + sizeof(WAV_FORMAT);
+    }
 
     this->curChunk.size = 0;
     this->t.processedSize = sizeof(WAV_DESC) + sizeof(WAV_FORMAT);
@@ -89,16 +89,16 @@ void WrapperWav::ReadData(void *dst, size_t size)
 {
 
     if (this->t.f != NULL)
-        {
-            // read from file directly
-            fread(dst, sizeof(u8), size, this->t.f);
-        }
+    {
+        // read from file directly
+        fread(dst, sizeof(u8), size, this->t.f);
+    }
     else
-        {
-            // read from memory stream
-            memcpy(dst, this->t.curPtr, size);
-            this->t.curPtr += size;
-        }
+    {
+        // read from memory stream
+        memcpy(dst, this->t.curPtr, size);
+        this->t.curPtr += size;
+    }
 
     this->t.processedSize += size;
 }
@@ -106,21 +106,21 @@ void WrapperWav::ReadData(void *dst, size_t size)
 void WrapperWav::Seek(size_t size, SEEK_POS start)
 {
     if (start == SEEK_POS::START)
-        {
-            this->ResetStream();
-        }
+    {
+        this->ResetStream();
+    }
 
     if (this->t.f != NULL)
-        {
-            // read from file directly
-            // fread(dst, sizeof(u8), size, this->t.f);
-            fseek(this->t.f, size, SEEK_CUR);
-        }
+    {
+        // read from file directly
+        // fread(dst, sizeof(u8), size, this->t.f);
+        fseek(this->t.f, size, SEEK_CUR);
+    }
     else
-        {
-            // read from memory stream
-            this->t.curPtr += size;
-        }
+    {
+        // read from memory stream
+        this->t.curPtr += size;
+    }
 
     this->t.processedSize += size;
 }
@@ -130,20 +130,20 @@ size_t WrapperWav::GetCurrentStreamPos() const
     long pos = 0;
 
     if (this->t.f != NULL)
-        {
-            pos = ftell(this->t.f);
-        }
+    {
+        pos = ftell(this->t.f);
+    }
     else
-        {
-            pos = (this->t.curPtr - this->t.filePtr);
-        }
+    {
+        pos = (this->t.curPtr - this->t.filePtr);
+    }
 
     pos -= sizeof(WAV_DESC) + sizeof(WAV_FORMAT);
 
     if (pos < 0)
-        {
-            pos = 0;
-        }
+    {
+        pos = 0;
+    }
 
     return pos;
 }
@@ -185,17 +185,17 @@ void WrapperWav::DecompressAll(std::vector<char> &decompressBuffer)
     // run fill data
 
     while (true)
+    {
+        this->DecompressStream(rawBuffer, false);
+
+        if (rawBuffer.size() == 0)
         {
-            this->DecompressStream(rawBuffer, false);
-
-            if (rawBuffer.size() == 0)
-                {
-                    break;
-                }
-
-            decompressBuffer.insert(decompressBuffer.end(), rawBuffer.begin(),
-                                    rawBuffer.end());
+            break;
         }
+
+        decompressBuffer.insert(decompressBuffer.end(), rawBuffer.begin(),
+                                rawBuffer.end());
+    }
 
     // restore backup
     this->Seek(pos, ISoundFileWrapper::SEEK_POS::START);
@@ -215,90 +215,81 @@ void WrapperWav::DecompressStream(std::vector<char> &decompressBuffer,
     int curBufSize = 0;
 
     do
+    {
+        do
         {
-            do
+
+            curBufSize = 0;
+
+            while (curBufSize < WAV_BUFFER_SIZE)
+            {
+
+                u64 remainToRead = WAV_BUFFER_SIZE - curBufSize;
+
+                if (this->curChunk.size <= 0)
                 {
-
-                    curBufSize = 0;
-
-                    while (curBufSize < WAV_BUFFER_SIZE)
-                        {
-
-                            u64 remainToRead = WAV_BUFFER_SIZE - curBufSize;
-
-                            if (this->curChunk.size <= 0)
-                                {
-                                    // need load chunk info
-                                    this->ReadData(&this->curChunk,
-                                                   sizeof(WAV_CHUNK));
-                                    // this->t.processedSize +=
-                                    // sizeof(WAV_CHUNK);
-                                }
-
-                            // Check for .WAV data chunk
-                            if ((this->curChunk.id[0] == 'd') &&
-                                (this->curChunk.id[1] == 'a') &&
-                                (this->curChunk.id[2] == 't') &&
-                                (this->curChunk.id[3] == 'a'))
-                                {
-
-                                    u64 readSize = std::min(
-                                        this->curChunk.size,
-                                        remainToRead); // how many data can we
-                                                       // read in current
-                                                       // chunk
-
-                                    this->ReadData(this->bufArray + curBufSize,
-                                                   readSize);
-
-                                    curBufSize +=
-                                        readSize; // buffer filled from
-                                                  // [0...curBufSize]
-                                    this->curChunk.size -=
-                                        readSize; // in current chunk, remain to
-                                                  // read
-
-                                    // this->t.processedSize += readSize;
-                                }
-                            else
-                                {
-                                    // not a "data" chunk - advance stream
-                                    this->Seek(this->curChunk.size,
-                                               SEEK_POS::CURRENT);
-
-                                    // this->t.processedSize +=
-                                    // this->curChunk.size;
-                                }
-
-                            if (this->t.processedSize >= this->t.fileSize)
-                                {
-                                    eof = true;
-                                    break;
-                                }
-                        }
-
-                    // Append to end of buffer
-                    decompressBuffer.insert(decompressBuffer.end(),
-                                            this->bufArray,
-                                            this->bufArray + curBufSize);
-
-                    if (static_cast<int>(decompressBuffer.size()) >=
-                        this->minProcesssLengthAtOnce)
-                        {
-                            return;
-                        }
-                }
-            while (!eof);
-
-            if (inLoop)
-                {
-                    this->ResetStream();
+                    // need load chunk info
+                    this->ReadData(&this->curChunk, sizeof(WAV_CHUNK));
+                    // this->t.processedSize +=
+                    // sizeof(WAV_CHUNK);
                 }
 
-            if (this->minProcesssLengthAtOnce == INT_MAX)
+                // Check for .WAV data chunk
+                if ((this->curChunk.id[0] == 'd') &&
+                    (this->curChunk.id[1] == 'a') &&
+                    (this->curChunk.id[2] == 't') &&
+                    (this->curChunk.id[3] == 'a'))
                 {
-                    return;
+
+                    u64 readSize = std::min(this->curChunk.size,
+                                            remainToRead); // how many data can
+                                                           // we read in current
+                                                           // chunk
+
+                    this->ReadData(this->bufArray + curBufSize, readSize);
+
+                    curBufSize += readSize;          // buffer filled from
+                                                     // [0...curBufSize]
+                    this->curChunk.size -= readSize; // in current chunk, remain
+                                                     // to read
+
+                    // this->t.processedSize += readSize;
                 }
+                else
+                {
+                    // not a "data" chunk - advance stream
+                    this->Seek(this->curChunk.size, SEEK_POS::CURRENT);
+
+                    // this->t.processedSize +=
+                    // this->curChunk.size;
+                }
+
+                if (this->t.processedSize >= this->t.fileSize)
+                {
+                    eof = true;
+                    break;
+                }
+            }
+
+            // Append to end of buffer
+            decompressBuffer.insert(decompressBuffer.end(), this->bufArray,
+                                    this->bufArray + curBufSize);
+
+            if (static_cast<int>(decompressBuffer.size()) >=
+                this->minProcesssLengthAtOnce)
+            {
+                return;
+            }
+        } while (!eof);
+
+        if (inLoop)
+        {
+            this->ResetStream();
         }
-    while (inLoop);
+
+        if (this->minProcesssLengthAtOnce == INT_MAX)
+        {
+            return;
+        }
+    } while (inLoop);
 }

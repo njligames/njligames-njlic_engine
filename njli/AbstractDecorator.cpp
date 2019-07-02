@@ -17,25 +17,39 @@
 #include <string>
 #include <vector>
 
+static unsigned long long sID = 0;
+
 static unsigned char random_char()
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 255);
-    return static_cast<unsigned char>(dis(gen));
+    char cch;
+    //    char ch;
+    //    unsigned seed= time(0);
+    //    srand(seed);
+    cch = 'a' + rand() % 26;
+    return cch;
+
+    //    std::random_device rd;
+    ////    std::map<int, int> hist;
+    //    std::uniform_int_distribution<int> dist(0, 255);
+    //    return static_cast<unsigned char>(dist(rd));
+
+    //    std::random_device rd;
+    //    std::mt19937 gen(rd());
+    //    std::uniform_int_distribution<> dis(0, 255);
+    //    return static_cast<unsigned char>(dis(gen));
 }
 
 static std::string generate_hex(const unsigned int len)
 {
     std::stringstream ss;
     for (auto i = 0; i < len; i++)
-        {
-            auto rc = random_char();
-            std::stringstream hexstream;
-            hexstream << std::hex << int(rc);
-            auto hex = hexstream.str();
-            ss << (hex.length() < 2 ? '0' + hex : hex);
-        }
+    {
+        auto rc = random_char();
+        std::stringstream hexstream;
+        hexstream << std::hex << int(rc);
+        auto hex = hexstream.str();
+        ss << (hex.length() < 2 ? '0' + hex : hex);
+    }
     return ss.str();
 }
 
@@ -104,32 +118,32 @@ namespace njli
             dynamic_cast<AbstractDecorator *>(getParent());
 
         if (parent && parent->hasChildren() && parent->hasChild(this))
-            {
-                parent->removeChild(this);
-                return true;
-            }
+        {
+            parent->removeChild(this);
+            return true;
+        }
         return false;
     }
 
     AbstractDecorator *AbstractDecorator::findChild(const char *name)
     {
         if (strcmp(getName(), name) == 0)
-            {
-                return this;
-            }
+        {
+            return this;
+        }
         else
+        {
+            for (std::vector<AbstractDecorator *>::const_iterator iter =
+                     m_Children.begin();
+                 iter != m_Children.end(); ++iter)
             {
-                for (std::vector<AbstractDecorator *>::const_iterator iter =
-                         m_Children.begin();
-                     iter != m_Children.end(); ++iter)
-                    {
-                        AbstractDecorator *n = (*iter)->findChild(name);
-                        if (NULL != n)
-                            {
-                                return n;
-                            }
-                    }
+                AbstractDecorator *n = (*iter)->findChild(name);
+                if (NULL != n)
+                {
+                    return n;
+                }
             }
+        }
         return NULL;
     }
 
@@ -137,22 +151,22 @@ namespace njli
     AbstractDecorator::findChild(const char *name) const
     {
         if (strcmp(getName(), name) == 0)
-            {
-                return this;
-            }
+        {
+            return this;
+        }
         else
+        {
+            for (std::vector<AbstractDecorator *>::const_iterator iter =
+                     m_Children.begin();
+                 iter != m_Children.end(); ++iter)
             {
-                for (std::vector<AbstractDecorator *>::const_iterator iter =
-                         m_Children.begin();
-                     iter != m_Children.end(); ++iter)
-                    {
-                        AbstractDecorator *n = (*iter)->findChild(name);
-                        if (NULL != n)
-                            {
-                                return n;
-                            }
-                    }
+                AbstractDecorator *n = (*iter)->findChild(name);
+                if (NULL != n)
+                {
+                    return n;
+                }
             }
+        }
         return NULL;
     }
 
@@ -179,19 +193,18 @@ namespace njli
     s32 AbstractDecorator::getChildIndex(AbstractDecorator *object) const
     {
         if (m_Children.size() > 0)
+        {
+            if (object)
             {
-                if (object)
-                    {
-                        std::vector<AbstractDecorator *>::const_iterator iter =
-                            std::find(m_Children.begin(), m_Children.end(),
-                                      object);
+                std::vector<AbstractDecorator *>::const_iterator iter =
+                    std::find(m_Children.begin(), m_Children.end(), object);
 
-                        if (iter != m_Children.end())
-                            {
-                                return std::distance(m_Children.begin(), iter);
-                            }
-                    }
+                if (iter != m_Children.end())
+                {
+                    return std::distance(m_Children.begin(), iter);
+                }
             }
+        }
 
         return -1;
     }
@@ -199,19 +212,18 @@ namespace njli
     s32 AbstractDecorator::getChildIndex(const AbstractDecorator *object) const
     {
         if (m_Children.size() > 0)
+        {
+            if (object)
             {
-                if (object)
-                    {
-                        std::vector<AbstractDecorator *>::const_iterator iter =
-                            std::find(m_Children.begin(), m_Children.end(),
-                                      object);
+                std::vector<AbstractDecorator *>::const_iterator iter =
+                    std::find(m_Children.begin(), m_Children.end(), object);
 
-                        if (iter != m_Children.end())
-                            {
-                                return std::distance(m_Children.begin(), iter);
-                            }
-                    }
+                if (iter != m_Children.end())
+                {
+                    return std::distance(m_Children.begin(), iter);
+                }
             }
+        }
 
         return -1;
     }
@@ -219,22 +231,21 @@ namespace njli
     bool AbstractDecorator::hasChild(AbstractDecorator *object) const
     {
         if (object && m_Children.size() > 0)
+        {
+            std::vector<AbstractDecorator *>::const_iterator iter =
+                std::find(m_Children.begin(), m_Children.end(), object);
+
+            if (m_Children.end() != iter)
+                return true;
+
+            for (iter = m_Children.begin(); iter != m_Children.end(); ++iter)
             {
-                std::vector<AbstractDecorator *>::const_iterator iter =
-                    std::find(m_Children.begin(), m_Children.end(), object);
-
-                if (m_Children.end() != iter)
+                if ((*iter)->hasChild(object))
+                {
                     return true;
-
-                for (iter = m_Children.begin(); iter != m_Children.end();
-                     ++iter)
-                    {
-                        if ((*iter)->hasChild(object))
-                            {
-                                return true;
-                            }
-                    }
+                }
             }
+        }
 
         return false;
     }
@@ -265,17 +276,17 @@ namespace njli
     void AbstractDecorator::removeChild(AbstractDecorator *object)
     {
         if (object && m_Children.size() > 0)
-            {
-                std::vector<AbstractDecorator *>::iterator iter =
-                    std::find(m_Children.begin(), m_Children.end(), object);
+        {
+            std::vector<AbstractDecorator *>::iterator iter =
+                std::find(m_Children.begin(), m_Children.end(), object);
 
-                if (iter != m_Children.end())
-                    {
-                        (*iter)->removeParent();
-                        m_Children.erase(iter);
-                    }
-                /// SDL_assert(iter != m_Children.end());
+            if (iter != m_Children.end())
+            {
+                (*iter)->removeParent();
+                m_Children.erase(iter);
             }
+            /// SDL_assert(iter != m_Children.end());
+        }
     }
 
     void AbstractDecorator::removeChildren() { m_Children.clear(); }

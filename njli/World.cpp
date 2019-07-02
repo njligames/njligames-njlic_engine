@@ -59,9 +59,9 @@ namespace njli
     void World::createInstance()
     {
         if (NULL == s_Instance)
-            {
-                s_Instance = new World();
-            }
+        {
+            s_Instance = new World();
+        }
         MaterialProperty::initReferences();
     }
 
@@ -167,19 +167,19 @@ namespace njli
         m_WorldFactory = NULL;
 
         if (m_DebugDrawMaterial)
-            {
-                Material::destroy(m_DebugDrawMaterial);
-                m_DebugDrawMaterial = NULL;
-            }
+        {
+            Material::destroy(m_DebugDrawMaterial);
+            m_DebugDrawMaterial = NULL;
+        }
 
         for (s32 i = 0; i < m_RayContacts.size(); ++i)
-            {
+        {
 
-                PhysicsRayContact *c = m_RayContacts.at(i);
-                if (World::getInstance()->getWorldFactory()->has(c))
-                    PhysicsRayContact::destroy(c);
-                removeChild(c);
-            }
+            PhysicsRayContact *c = m_RayContacts.at(i);
+            if (World::getInstance()->getWorldFactory()->has(c))
+                PhysicsRayContact::destroy(c);
+            removeChild(c);
+        }
         m_RayContacts.clear();
     }
 
@@ -235,16 +235,16 @@ namespace njli
     {
         s32 idx = getChildIndex(m_WorldLuaVirtualMachine);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return
-            //            dynamic_cast<WorldLuaVirtualMachine*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<WorldLuaVirtualMachine*>(getChild(idx)));
-                return dynamic_cast<WorldLuaVirtualMachine *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return
+        //            dynamic_cast<WorldLuaVirtualMachine*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<WorldLuaVirtualMachine*>(getChild(idx)));
+            return dynamic_cast<WorldLuaVirtualMachine *>(getChild(idx));
+        }
         //#endif
         return NULL;
     }
@@ -253,18 +253,17 @@ namespace njli
     {
         s32 idx = getChildIndex(m_WorldLuaVirtualMachine);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<const
-            //            WorldLuaVirtualMachine*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            WorldLuaVirtualMachine*>(getChild(idx)));
-                return dynamic_cast<const WorldLuaVirtualMachine *>(
-                    getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<const
+        //            WorldLuaVirtualMachine*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            WorldLuaVirtualMachine*>(getChild(idx)));
+            return dynamic_cast<const WorldLuaVirtualMachine *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -414,14 +413,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchDown(touch);
-            }
+        {
+            currentState->touchDown(touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Down";
         char buffer[BUFFER_SIZE] = "";
@@ -442,14 +441,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchUp(touch);
-            }
+        {
+            currentState->touchUp(touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Up";
         char buffer[BUFFER_SIZE] = "";
@@ -470,14 +469,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchMove(touch);
-            }
+        {
+            currentState->touchMove(touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Move";
         char buffer[BUFFER_SIZE] = "";
@@ -498,14 +497,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchCancelled(touch);
-            }
+        {
+            currentState->touchCancelled(touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Cancelled";
         char buffer[BUFFER_SIZE] = "";
@@ -527,14 +526,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchDown(touch);
-            }
+        {
+            currentState->touchDown(touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Down";
         char buffer[BUFFER_SIZE] = "";
@@ -555,14 +554,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchUp(touch);
-            }
+        {
+            currentState->touchUp(touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Up";
         char buffer[BUFFER_SIZE] = "";
@@ -583,14 +582,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchMove(touch);
-            }
+        {
+            currentState->touchMove(touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Move";
         char buffer[BUFFER_SIZE] = "";
@@ -611,14 +610,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->mouseDown(mouse);
-            }
+        {
+            currentState->mouseDown(mouse);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Down";
         char buffer[BUFFER_SIZE] = "";
@@ -641,14 +640,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->mouseUp(mouse);
-            }
+        {
+            currentState->mouseUp(mouse);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Up";
         char buffer[BUFFER_SIZE] = "";
@@ -671,14 +670,14 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->mouseMove(mouse);
-            }
+        {
+            currentState->mouseMove(mouse);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        WorldState\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        WorldState\n");
+        }
 
         char action[BUFFER_SIZE] = "Move";
         char buffer[BUFFER_SIZE] = "";
@@ -703,15 +702,15 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->keyUp(keycodeName, withCapsLock, withControl,
-                                    withShift, withAlt, withGui);
-            }
+        {
+            currentState->keyUp(keycodeName, withCapsLock, withControl,
+                                withShift, withAlt, withGui);
+        }
         else
-            {
-                //            SDL_LogDebug(SDL _LOG_CATEGORY_TEST, "There is no
-                //            WorldState\n");
-            }
+        {
+            //            SDL_LogDebug(SDL _LOG_CATEGORY_TEST, "There is no
+            //            WorldState\n");
+        }
 
         if (getScene())
             getScene()->keyUp(keycodeName, withCapsLock, withControl, withShift,
@@ -732,15 +731,15 @@ namespace njli
             dynamic_cast<WorldState *>(m_stateMachine->getState());
 
         if (currentState)
-            {
-                currentState->keyDown(keycodeName, withCapsLock, withControl,
-                                      withShift, withAlt, withGui);
-            }
+        {
+            currentState->keyDown(keycodeName, withCapsLock, withControl,
+                                  withShift, withAlt, withGui);
+        }
         else
-            {
-                //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //            WorldState\n");
-            }
+        {
+            //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //            WorldState\n");
+        }
 
         if (getScene())
             getScene()->keyDown(keycodeName, withCapsLock, withControl,
@@ -970,23 +969,23 @@ namespace njli
 
         Scene *currentScene = getScene();
         if (scene != currentScene)
+        {
+            if (currentScene)
             {
-                if (currentScene)
-                    {
-                        removeChild(currentScene);
+                removeChild(currentScene);
 
-                        SceneStateMachine *sm = currentScene->getStateMachine();
-                        if (sm)
-                            {
-                                sm->clear();
-                            }
-                    }
-
-                m_Scene = scene;
-                m_Scene->updateViewSize();
-
-                addChild(m_Scene);
+                SceneStateMachine *sm = currentScene->getStateMachine();
+                if (sm)
+                {
+                    sm->clear();
+                }
             }
+
+            m_Scene = scene;
+            m_Scene->updateViewSize();
+
+            addChild(m_Scene);
+        }
     }
 
     void World::removeScene()
@@ -1001,15 +1000,15 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Scene);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<Scene*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<Scene*>(getChild(idx)));
-                return dynamic_cast<Scene *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<Scene*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<Scene*>(getChild(idx)));
+            return dynamic_cast<Scene *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -1019,16 +1018,16 @@ namespace njli
     {
         s32 idx = getChildIndex(m_Scene);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<const Scene*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            Scene*>(getChild(idx)));
-                return dynamic_cast<const Scene *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<const Scene*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            Scene*>(getChild(idx)));
+            return dynamic_cast<const Scene *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -1037,15 +1036,15 @@ namespace njli
     void World::enableDebugDraw(Camera *camera)
     {
         if (camera)
-            {
-                m_enableDebugDraw = true;
-                m_DebugDrawCamera = camera;
-            }
+        {
+            m_enableDebugDraw = true;
+            m_DebugDrawCamera = camera;
+        }
         else
-            {
-                SDL_LogDebug(SDL_LOG_CATEGORY_TEST,
-                             "Unable to enableDebugDraw, camera is NULL\n");
-            }
+        {
+            SDL_LogDebug(SDL_LOG_CATEGORY_TEST,
+                         "Unable to enableDebugDraw, camera is NULL\n");
+        }
     }
 
     void World::disableDebugDraw()
@@ -1086,15 +1085,15 @@ namespace njli
         sprintf(buffer, "%d.%d.%d.%d", n0, n1, n2, n3);
         if ((n0 >= 0 && n0 <= 255) && (n1 >= 0 && n1 <= 255) &&
             (n2 >= 0 && n2 <= 255) && (n3 >= 0 && n3 <= 255))
-            {
-                m_SocketAddress = buffer;
-                m_SocketPort = port;
-                m_SocketEnabled = true;
-            }
+        {
+            m_SocketAddress = buffer;
+            m_SocketPort = port;
+            m_SocketEnabled = true;
+        }
         else
-            {
-                SDL_LogError(SDL_LOG_CATEGORY_TEST, "Invalid ip %s", buffer);
-            }
+        {
+            SDL_LogError(SDL_LOG_CATEGORY_TEST, "Invalid ip %s", buffer);
+        }
     }
 
     void World::startSocket(u16 port)
@@ -1168,28 +1167,26 @@ namespace njli
     void World::enablePauseGame(bool enable)
     {
         if (enable && !isPausedGame())
-            {
-                s8 buffer[BUFFER_SIZE];
-                sprintf(buffer, "%s", "__NJLIWorldGamePause");
-                njli::World::getInstance()
-                    ->getWorldLuaVirtualMachine()
-                    ->execute(buffer);
+        {
+            s8 buffer[BUFFER_SIZE];
+            sprintf(buffer, "%s", "__NJLIWorldGamePause");
+            njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+                buffer);
 
-                if (getScene())
-                    getScene()->pauseGame();
-            }
+            if (getScene())
+                getScene()->pauseGame();
+        }
 
         if (!enable && isPausedGame())
-            {
-                s8 buffer[BUFFER_SIZE];
-                sprintf(buffer, "%s", "__NJLIWorldGameUnPause");
-                njli::World::getInstance()
-                    ->getWorldLuaVirtualMachine()
-                    ->execute(buffer);
+        {
+            s8 buffer[BUFFER_SIZE];
+            sprintf(buffer, "%s", "__NJLIWorldGameUnPause");
+            njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(
+                buffer);
 
-                if (getScene())
-                    getScene()->unPauseGame();
-            }
+            if (getScene())
+                getScene()->unPauseGame();
+        }
 
         m_GamePaused = enable;
     }
@@ -1312,138 +1309,128 @@ namespace njli
         TiXmlNode *ele = NULL;
         while ((ele = document.FirstChildElement(delimeter.c_str())
                           ->IterateChildren(ele)) != 0)
+        {
+            TiXmlElement *e = ele->ToElement();
+
+            std::string contentType(e->Value());
+            std::transform(contentType.begin(), contentType.end(),
+                           contentType.begin(), ::tolower);
+
+            if (contentType == std::string("lua"))
             {
-                TiXmlElement *e = ele->ToElement();
+                std::string type(e->Attribute("type"));
+                std::string name(e->Attribute("name"));
 
-                std::string contentType(e->Value());
-                std::transform(contentType.begin(), contentType.end(),
-                               contentType.begin(), ::tolower);
+                //                std::string source;
+                //                const TiXmlNode* child =
+                //                e->FirstChild(); if ( child ) {
+                //                    source = child->Value();
+                ////                    const TiXmlText* childText =
+                /// child->ToText();
+                ////                    if ( childText ) {
+                ////                        TiXmlString s =
+                /// childText->ValueTStr(); / source = s.data();
+                //////                        return childText->Value();
+                ////                    }
+                //                }
 
-                if (contentType == std::string("lua"))
+                std::string source(e->GetText());
+                std::string filePath = DOCUMENT_PATH(name.c_str());
+                int numwrote = 0;
+
+                if (type == std::string("build") || type == std::string("run"))
+                {
+                    if (type == std::string("build"))
                     {
-                        std::string type(e->Attribute("type"));
-                        std::string name(e->Attribute("name"));
+                        bool wrote = false;
 
-                        //                std::string source;
-                        //                const TiXmlNode* child =
-                        //                e->FirstChild(); if ( child ) {
-                        //                    source = child->Value();
-                        ////                    const TiXmlText* childText =
-                        /// child->ToText();
-                        ////                    if ( childText ) {
-                        ////                        TiXmlString s =
-                        ///childText->ValueTStr(); / source = s.data();
-                        //////                        return childText->Value();
-                        ////                    }
-                        //                }
+                        if (access(filePath.c_str(), F_OK) != -1)
+                        {
+                            FILE *f = fopen(filePath.c_str(), "wb");
 
-                        std::string source(e->GetText());
-                        std::string filePath = DOCUMENT_PATH(name.c_str());
-                        int numwrote = 0;
-
-                        if (type == std::string("build") ||
-                            type == std::string("run"))
+                            if (f != NULL)
                             {
-                                if (type == std::string("build"))
-                                    {
-                                        bool wrote = false;
+                                numwrote = fwrite(source.c_str(), sizeof(char),
+                                                  source.length(), f);
 
-                                        if (access(filePath.c_str(), F_OK) !=
-                                            -1)
-                                            {
-                                                FILE *f = fopen(
-                                                    filePath.c_str(), "wb");
+                                fclose(f);
 
-                                                if (f != NULL)
-                                                    {
-                                                        numwrote = fwrite(
-                                                            source.c_str(),
-                                                            sizeof(char),
-                                                            source.length(), f);
-
-                                                        fclose(f);
-
-                                                        if (0 == ferror(f))
-                                                            wrote = true;
-                                                    }
-                                            }
-
-                                        if (!wrote)
-                                            SDL_LogVerbose(
-                                                SDL_LOG_CATEGORY_TEST,
-                                                "Couldn't write file %s - (%d "
-                                                "bytes of %lu)",
-                                                filePath.c_str(), numwrote,
-                                                source.length());
-                                        else
-                                            SDL_LogVerbose(
-                                                SDL_LOG_CATEGORY_TEST,
-                                                "Wrote file %s",
-                                                filePath.c_str());
-                                    }
-
-                                if (type == std::string("run"))
-                                    {
-                                        World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->reset();
-
-                                        World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->loadString(source.c_str());
-                                        World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->loadFile(DOCUMENT_PATH(
-                                                "scripts/main.lua"));
-                                        World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->compile();
-                                    }
-                                else
-                                    {
-                                        World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->loadString(source.c_str());
-                                        World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->compile();
-                                    }
+                                if (0 == ferror(f))
+                                    wrote = true;
                             }
-                    }
-                else if (contentType == std::string("vertex"))
-                    {
-                        std::string name(e->Attribute("name"));
+                        }
 
-                        //                    Log("%s\n%s\b%s", e->Value(),
-                        //                    name.c_str(), e->GetText());
+                        if (!wrote)
+                            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST,
+                                           "Couldn't write file %s - (%d "
+                                           "bytes of %lu)",
+                                           filePath.c_str(), numwrote,
+                                           source.length());
+                        else
+                            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST,
+                                           "Wrote file %s", filePath.c_str());
                     }
-                else if (contentType == std::string("fragment"))
-                    {
-                        std::string name(e->Attribute("name"));
 
-                        //                    Log("%s\n%s\b%s", e->Value(),
-                        //                    name.c_str(), e->GetText());
+                    if (type == std::string("run"))
+                    {
+                        World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->reset();
+
+                        World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->loadString(source.c_str());
+                        World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->loadFile(DOCUMENT_PATH("scripts/main.lua"));
+                        World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->compile();
                     }
+                    else
+                    {
+                        World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->loadString(source.c_str());
+                        World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->compile();
+                    }
+                }
             }
+            else if (contentType == std::string("vertex"))
+            {
+                std::string name(e->Attribute("name"));
+
+                //                    Log("%s\n%s\b%s", e->Value(),
+                //                    name.c_str(), e->GetText());
+            }
+            else if (contentType == std::string("fragment"))
+            {
+                std::string name(e->Attribute("name"));
+
+                //                    Log("%s\n%s\b%s", e->Value(),
+                //                    name.c_str(), e->GetText());
+            }
+        }
 #endif
     }
 
     void World::handleSocketMessage()
     {
         if (getWorldSocket()->hasMessage())
-            {
-                processMessage(getWorldSocket()->popMessage());
-            }
+        {
+            processMessage(getWorldSocket()->popMessage());
+        }
 
         if (getWorldSocket()->isConnected())
-            {
-                getWorldSocket()->parseMessage("root");
-            }
+        {
+            getWorldSocket()->parseMessage("root");
+        }
         else
-            {
-                getWorldSocket()->connectJLI(m_SocketAddress.c_str(),
-                                             m_SocketPort);
-            }
+        {
+            getWorldSocket()->connectJLI(m_SocketAddress.c_str(), m_SocketPort);
+        }
     }
 
     void World::checkRayCollision(DeviceTouch **m_CurrentTouches,
@@ -1452,144 +1439,119 @@ namespace njli
         Scene *scene = njli::World::getInstance()->getScene();
 
         if (scene)
+        {
+            Camera *camera = scene->getTouchCamera();
+            if (NULL != camera)
             {
-                Camera *camera = scene->getTouchCamera();
-                if (NULL != camera)
+                PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                if (physicsWorld)
+                {
+                    btAlignedObjectArray<Node *> untouchedNodes;
+                    untouchedNodes.clear();
+
+                    scene->getActiveNodes(untouchedNodes);
+
+                    bool touched = false;
+                    for (s32 i = 0; i < DeviceTouch::MAX_TOUCHES; ++i)
                     {
-                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-                        if (physicsWorld)
+                        if (m_CurrentTouches[i])
+                        {
+                            btVector2 touchPosition =
+                                m_CurrentTouches[i]->getPosition();
+                            btVector3 from, to;
+                            camera->getTouchRay(touchPosition, from, to);
+
+                            if (m_RayContacts.size() <= 0)
                             {
-                                btAlignedObjectArray<Node *> untouchedNodes;
-                                untouchedNodes.clear();
-
-                                scene->getActiveNodes(untouchedNodes);
-
-                                bool touched = false;
-                                for (s32 i = 0; i < DeviceTouch::MAX_TOUCHES;
-                                     ++i)
-                                    {
-                                        if (m_CurrentTouches[i])
-                                            {
-                                                btVector2 touchPosition =
-                                                    m_CurrentTouches[i]
-                                                        ->getPosition();
-                                                btVector3 from, to;
-                                                camera->getTouchRay(
-                                                    touchPosition, from, to);
-
-                                                if (m_RayContacts.size() <= 0)
-                                                    {
-                                                        for (s32 i = 0;
-                                                             i < MAX_CONTACTS;
-                                                             ++i)
-                                                            {
-                                                                PhysicsRayContact
-                                                                    *contact =
-                                                                        PhysicsRayContact::
-                                                                            create();
-                                                                m_RayContacts
-                                                                    .push_back(
-                                                                        contact);
-                                                            }
-                                                    }
-                                                s32 numContacts = 0;
-                                                if (physicsWorld->rayTestAll(
-                                                        from, to, m_RayContacts,
-                                                        numContacts))
-                                                    {
-                                                        for (s32 i = 0;
-                                                             i < numContacts;
-                                                             ++i)
-                                                            {
-                                                                PhysicsRayContact
-                                                                    *contact =
-                                                                        m_RayContacts
-                                                                            .at(i);
-
-                                                                if (disableNodeTouched)
-                                                                    {
-                                                                        contact
-                                                                            ->getHitNode()
-                                                                            ->enableTouched(
-                                                                                false);
-                                                                    }
-                                                                untouchedNodes.remove(
-                                                                    contact
-                                                                        ->getHitNode());
-                                                                contact->screenPosition(
-                                                                    btVector2(
-                                                                        from.x(),
-                                                                        from.y()));
-                                                                char buffer
-                                                                    [BUFFER_SIZE];
-                                                                sprintf(buffer,
-                                                                        "%s%s",
-                                                                        "__"
-                                                                        "NJLINo"
-                                                                        "deRay",
-                                                                        code);
-                                                                njli::World::getInstance()
-                                                                    ->getWorldLuaVirtualMachine()
-                                                                    ->execute(
-                                                                        buffer,
-                                                                        *contact);
-                                                                touched = true;
-                                                            }
-                                                    }
-                                                //                        if(physicsWorld->rayTestClosest(from,
-                                                //                        to,
-                                                //                        *m_RayContact))
-                                                //                        {
-                                                //                            if
-                                                //                            (disableNodeTouched)
-                                                //                            {
-                                                //                                m_RayContact->getHitNode()->enableTouched(false);
-                                                //                            }
-                                                //                            m_RayContact->screenPosition(btVector2(from.x(),
-                                                //                            from.y()));
-                                                //                            char
-                                                //                            buffer[BUFFER_SIZE];
-                                                //                            sprintf(buffer,
-                                                //                            "%s%s",
-                                                //                            code,
-                                                //                            "Ray");
-                                                //                            njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
-                                                //                            *m_RayContact);
-                                                //                            touched
-                                                //                            =
-                                                //                            true;
-                                                //                        }
-                                            }
-                                    }
-
-                                for (unsigned int i = 0;
-                                     i < untouchedNodes.size(); i++)
-                                    {
-                                        Node *n = untouchedNodes[i];
-
-                                        char buffer[BUFFER_SIZE];
-                                        sprintf(buffer, "%s",
-                                                "__NJLINodeRayTouchesMissed");
-                                        njli::World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->execute(buffer, n);
-                                    }
-                                //                if (!touched)
-                                //                {
-                                //                    char buffer[BUFFER_SIZE];
-                                //                    sprintf(buffer, "%s%s",
-                                //                    code, "RayMissed");
-                                //                    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
-                                //                }
+                                for (s32 i = 0; i < MAX_CONTACTS; ++i)
+                                {
+                                    PhysicsRayContact *contact =
+                                        PhysicsRayContact::create();
+                                    m_RayContacts.push_back(contact);
+                                }
                             }
+                            s32 numContacts = 0;
+                            if (physicsWorld->rayTestAll(
+                                    from, to, m_RayContacts, numContacts))
+                            {
+                                for (s32 i = 0; i < numContacts; ++i)
+                                {
+                                    PhysicsRayContact *contact =
+                                        m_RayContacts.at(i);
+
+                                    if (disableNodeTouched)
+                                    {
+                                        contact->getHitNode()->enableTouched(
+                                            false);
+                                    }
+                                    untouchedNodes.remove(
+                                        contact->getHitNode());
+                                    contact->screenPosition(
+                                        btVector2(from.x(), from.y()));
+                                    char buffer[BUFFER_SIZE];
+                                    sprintf(buffer, "%s%s",
+                                            "__"
+                                            "NJLINo"
+                                            "deRay",
+                                            code);
+                                    njli::World::getInstance()
+                                        ->getWorldLuaVirtualMachine()
+                                        ->execute(buffer, *contact);
+                                    touched = true;
+                                }
+                            }
+                            //                        if(physicsWorld->rayTestClosest(from,
+                            //                        to,
+                            //                        *m_RayContact))
+                            //                        {
+                            //                            if
+                            //                            (disableNodeTouched)
+                            //                            {
+                            //                                m_RayContact->getHitNode()->enableTouched(false);
+                            //                            }
+                            //                            m_RayContact->screenPosition(btVector2(from.x(),
+                            //                            from.y()));
+                            //                            char
+                            //                            buffer[BUFFER_SIZE];
+                            //                            sprintf(buffer,
+                            //                            "%s%s",
+                            //                            code,
+                            //                            "Ray");
+                            //                            njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer,
+                            //                            *m_RayContact);
+                            //                            touched
+                            //                            =
+                            //                            true;
+                            //                        }
+                        }
                     }
-                else
+
+                    for (unsigned int i = 0; i < untouchedNodes.size(); i++)
                     {
-                        //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        //                        "setTouchCamera() must be
-                        //                        called on the scene\n");
+                        Node *n = untouchedNodes[i];
+
+                        char buffer[BUFFER_SIZE];
+                        sprintf(buffer, "%s", "__NJLINodeRayTouchesMissed");
+                        njli::World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->execute(buffer, n);
                     }
+                    //                if (!touched)
+                    //                {
+                    //                    char buffer[BUFFER_SIZE];
+                    //                    sprintf(buffer, "%s%s",
+                    //                    code, "RayMissed");
+                    //                    njli::World::getInstance()->getWorldLuaVirtualMachine()->execute(buffer);
+                    //                }
+                }
             }
+            else
+            {
+                //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                //                        "setTouchCamera() must be
+                //                        called on the scene\n");
+            }
+        }
     }
 
     void World::checkRayCollision(const DeviceTouch &touch, const char *code,
@@ -1598,100 +1560,88 @@ namespace njli
         Scene *scene = njli::World::getInstance()->getScene();
 
         if (scene)
+        {
+            Camera *camera = scene->getTouchCamera();
+            if (NULL != camera)
             {
-                Camera *camera = scene->getTouchCamera();
-                if (NULL != camera)
+                PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                if (physicsWorld)
+                {
+                    btAlignedObjectArray<Node *> untouchedNodes;
+                    untouchedNodes.clear();
+
+                    scene->getActiveNodes(untouchedNodes);
+
+                    bool touched = false;
+                    btVector2 touchPosition = touch.getPosition();
+                    btVector3 from, to;
+                    camera->getTouchRay(touchPosition, from, to);
+
+                    if (m_RayContacts.size() <= 0)
                     {
-                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-                        if (physicsWorld)
+                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
+                        {
+                            PhysicsRayContact *contact =
+                                PhysicsRayContact::create();
+                            m_RayContacts.push_back(contact);
+                        }
+                    }
+
+                    if (m_RayContacts.size() <= 0)
+                    {
+                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
+                        {
+                            PhysicsRayContact *contact =
+                                PhysicsRayContact::create();
+                            m_RayContacts.push_back(contact);
+                        }
+                    }
+
+                    s32 numContacts = 0;
+                    if (physicsWorld->rayTestAll(from, to, m_RayContacts,
+                                                 numContacts))
+                    {
+                        for (s32 i = 0; i < numContacts; ++i)
+                        {
+                            PhysicsRayContact *contact = m_RayContacts.at(i);
+
+                            if (disableNodeTouched)
                             {
-                                btAlignedObjectArray<Node *> untouchedNodes;
-                                untouchedNodes.clear();
-
-                                scene->getActiveNodes(untouchedNodes);
-
-                                bool touched = false;
-                                btVector2 touchPosition = touch.getPosition();
-                                btVector3 from, to;
-                                camera->getTouchRay(touchPosition, from, to);
-
-                                if (m_RayContacts.size() <= 0)
-                                    {
-                                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
-                                            {
-                                                PhysicsRayContact *contact =
-                                                    PhysicsRayContact::create();
-                                                m_RayContacts.push_back(
-                                                    contact);
-                                            }
-                                    }
-
-                                if (m_RayContacts.size() <= 0)
-                                    {
-                                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
-                                            {
-                                                PhysicsRayContact *contact =
-                                                    PhysicsRayContact::create();
-                                                m_RayContacts.push_back(
-                                                    contact);
-                                            }
-                                    }
-
-                                s32 numContacts = 0;
-                                if (physicsWorld->rayTestAll(
-                                        from, to, m_RayContacts, numContacts))
-                                    {
-                                        for (s32 i = 0; i < numContacts; ++i)
-                                            {
-                                                PhysicsRayContact *contact =
-                                                    m_RayContacts.at(i);
-
-                                                if (disableNodeTouched)
-                                                    {
-                                                        contact->getHitNode()
-                                                            ->enableTouched(
-                                                                false);
-                                                    }
-                                                untouchedNodes.remove(
-                                                    contact->getHitNode());
-                                                contact->screenPosition(
-                                                    btVector2(from.x(),
-                                                              from.y()));
-                                                char buffer[BUFFER_SIZE];
-                                                sprintf(buffer, "%s%s",
-                                                        "__NJLINodeRay", code);
-                                                njli::World::getInstance()
-                                                    ->getWorldLuaVirtualMachine()
-                                                    ->execute(buffer, *contact);
-                                                touched = true;
-                                            }
-                                    }
-
-                                for (unsigned int i = 0;
-                                     i < untouchedNodes.size(); i++)
-                                    {
-                                        Node *n = untouchedNodes[i];
-
-                                        if (n->getPhysicsBody() != NULL)
-                                            {
-                                                char buffer[BUFFER_SIZE];
-                                                sprintf(
-                                                    buffer, "%s",
-                                                    "__NJLINodeRayTouchMissed");
-                                                njli::World::getInstance()
-                                                    ->getWorldLuaVirtualMachine()
-                                                    ->execute(buffer, n);
-                                            }
-                                    }
+                                contact->getHitNode()->enableTouched(false);
                             }
+                            untouchedNodes.remove(contact->getHitNode());
+                            contact->screenPosition(
+                                btVector2(from.x(), from.y()));
+                            char buffer[BUFFER_SIZE];
+                            sprintf(buffer, "%s%s", "__NJLINodeRay", code);
+                            njli::World::getInstance()
+                                ->getWorldLuaVirtualMachine()
+                                ->execute(buffer, *contact);
+                            touched = true;
+                        }
                     }
-                else
+
+                    for (unsigned int i = 0; i < untouchedNodes.size(); i++)
                     {
-                        SDL_LogWarn(
-                            SDL_LOG_CATEGORY_TEST,
-                            "setTouchCamera() must be called on the scene\n");
+                        Node *n = untouchedNodes[i];
+
+                        if (n->getPhysicsBody() != NULL)
+                        {
+                            char buffer[BUFFER_SIZE];
+                            sprintf(buffer, "%s", "__NJLINodeRayTouchMissed");
+                            njli::World::getInstance()
+                                ->getWorldLuaVirtualMachine()
+                                ->execute(buffer, n);
+                        }
                     }
+                }
             }
+            else
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "setTouchCamera() must be called on the scene\n");
+            }
+        }
     }
 
     void World::checkRayCollision(const DeviceMouse &mouse, const char *code,
@@ -1700,126 +1650,111 @@ namespace njli
         Scene *scene = njli::World::getInstance()->getScene();
 
         if (scene)
+        {
+            Camera *camera = scene->getTouchCamera();
+            if (NULL != camera)
             {
-                Camera *camera = scene->getTouchCamera();
-                if (NULL != camera)
+                PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                if (physicsWorld)
+                {
+                    btAlignedObjectArray<Node *> untouchedNodes;
+                    untouchedNodes.clear();
+
+                    scene->getActiveNodes(untouchedNodes);
+
+                    bool touched = false;
+                    btVector2 touchPosition = mouse.getPosition();
+                    btVector3 from, to;
+                    camera->getTouchRay(touchPosition, from, to);
+
+                    if (m_RayContacts.size() <= 0)
                     {
-                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-                        if (physicsWorld)
+                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
+                        {
+                            PhysicsRayContact *contact =
+                                PhysicsRayContact::create();
+                            m_RayContacts.push_back(contact);
+                        }
+                    }
+
+                    PhysicsRayContact *contact = m_RayContacts.at(0);
+                    s32 numContacts = 0;
+                    if (physicsWorld->rayTestAll(from, to, m_RayContacts,
+                                                 numContacts))
+                    {
+                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
+                        //                                  "RayTest
+                        //                                  Hit
+                        //                                  (all).\n");
+                        for (s32 i = 0; i < numContacts; ++i)
+                        {
+                            contact = m_RayContacts.at(i);
+
+                            if (disableNodeTouched)
                             {
-                                btAlignedObjectArray<Node *> untouchedNodes;
-                                untouchedNodes.clear();
-
-                                scene->getActiveNodes(untouchedNodes);
-
-                                bool touched = false;
-                                btVector2 touchPosition = mouse.getPosition();
-                                btVector3 from, to;
-                                camera->getTouchRay(touchPosition, from, to);
-
-                                if (m_RayContacts.size() <= 0)
-                                    {
-                                        for (s32 i = 0; i < MAX_CONTACTS; ++i)
-                                            {
-                                                PhysicsRayContact *contact =
-                                                    PhysicsRayContact::create();
-                                                m_RayContacts.push_back(
-                                                    contact);
-                                            }
-                                    }
-
-                                PhysicsRayContact *contact =
-                                    m_RayContacts.at(0);
-                                s32 numContacts = 0;
-                                if (physicsWorld->rayTestAll(
-                                        from, to, m_RayContacts, numContacts))
-                                    {
-                                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
-                                        //                                  "RayTest
-                                        //                                  Hit
-                                        //                                  (all).\n");
-                                        for (s32 i = 0; i < numContacts; ++i)
-                                            {
-                                                contact = m_RayContacts.at(i);
-
-                                                if (disableNodeTouched)
-                                                    {
-                                                        contact->getHitNode()
-                                                            ->enableTouched(
-                                                                false);
-                                                    }
-                                                untouchedNodes.remove(
-                                                    contact->getHitNode());
-                                                contact->screenPosition(
-                                                    btVector2(from.x(),
-                                                              from.y()));
-                                                char buffer[BUFFER_SIZE];
-                                                sprintf(buffer, "%s%s",
-                                                        "__NJLINodeRay", code);
-                                                njli::World::getInstance()
-                                                    ->getWorldLuaVirtualMachine()
-                                                    ->execute(buffer, *contact);
-                                                touched = true;
-                                            }
-                                    }
-                                else if (physicsWorld->rayTestClosest(from, to,
-                                                                      *contact))
-                                    {
-                                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
-                                        //                                  "RayTest
-                                        //                                  Hit
-                                        //                                  (closest).\n");
-
-                                        if (disableNodeTouched)
-                                            {
-                                                contact->getHitNode()
-                                                    ->enableTouched(false);
-                                            }
-                                        untouchedNodes.remove(
-                                            contact->getHitNode());
-                                        contact->screenPosition(
-                                            btVector2(from.x(), from.y()));
-                                        char buffer[BUFFER_SIZE];
-                                        sprintf(buffer, "%s%s", "__NJLINodeRay",
-                                                code);
-                                        njli::World::getInstance()
-                                            ->getWorldLuaVirtualMachine()
-                                            ->execute(buffer, *contact);
-                                        touched = true;
-                                    }
-                                else
-                                    {
-                                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
-                                        //                                  "RayTest
-                                        //                                  Missed.\n");
-                                    }
-
-                                for (unsigned int i = 0;
-                                     i < untouchedNodes.size(); i++)
-                                    {
-                                        Node *n = untouchedNodes[i];
-                                        std::string name = n->getName();
-
-                                        if (n->getPhysicsBody() != NULL)
-                                            {
-                                                char buffer[BUFFER_SIZE];
-                                                sprintf(
-                                                    buffer, "%s",
-                                                    "__NJLINodeRayMouseMissed");
-                                                njli::World::getInstance()
-                                                    ->getWorldLuaVirtualMachine()
-                                                    ->execute(buffer, n);
-                                            }
-                                    }
+                                contact->getHitNode()->enableTouched(false);
                             }
+                            untouchedNodes.remove(contact->getHitNode());
+                            contact->screenPosition(
+                                btVector2(from.x(), from.y()));
+                            char buffer[BUFFER_SIZE];
+                            sprintf(buffer, "%s%s", "__NJLINodeRay", code);
+                            njli::World::getInstance()
+                                ->getWorldLuaVirtualMachine()
+                                ->execute(buffer, *contact);
+                            touched = true;
+                        }
                     }
-                else
+                    else if (physicsWorld->rayTestClosest(from, to, *contact))
                     {
-                        //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        //                        "setTouchCamera() must be
-                        //                        called on the scene\n");
+                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
+                        //                                  "RayTest
+                        //                                  Hit
+                        //                                  (closest).\n");
+
+                        if (disableNodeTouched)
+                        {
+                            contact->getHitNode()->enableTouched(false);
+                        }
+                        untouchedNodes.remove(contact->getHitNode());
+                        contact->screenPosition(btVector2(from.x(), from.y()));
+                        char buffer[BUFFER_SIZE];
+                        sprintf(buffer, "%s%s", "__NJLINodeRay", code);
+                        njli::World::getInstance()
+                            ->getWorldLuaVirtualMachine()
+                            ->execute(buffer, *contact);
+                        touched = true;
                     }
+                    else
+                    {
+                        //                      SDL_LogInfo(SDL_LOG_CATEGORY_TEST,
+                        //                                  "RayTest
+                        //                                  Missed.\n");
+                    }
+
+                    for (unsigned int i = 0; i < untouchedNodes.size(); i++)
+                    {
+                        Node *n = untouchedNodes[i];
+                        std::string name = n->getName();
+
+                        if (n->getPhysicsBody() != NULL)
+                        {
+                            char buffer[BUFFER_SIZE];
+                            sprintf(buffer, "%s", "__NJLINodeRayMouseMissed");
+                            njli::World::getInstance()
+                                ->getWorldLuaVirtualMachine()
+                                ->execute(buffer, n);
+                        }
+                    }
+                }
             }
+            else
+            {
+                //            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                //                        "setTouchCamera() must be
+                //                        called on the scene\n");
+            }
+        }
     }
 
     void World::renderInternal(bool is_left)
@@ -1840,87 +1775,87 @@ namespace njli
 #if !defined(MINSIZEREL)
 
         if (m_enableDebugDraw)
+        {
+            getDebugDrawer()->beginDraw();
+
+            if (scene)
             {
-                getDebugDrawer()->beginDraw();
-
-                if (scene)
-                    {
-                        PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
-                        if (physicsWorld)
-                            {
-                                physicsWorld->debugDrawWorld();
-                            }
-                        else
-                            {
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                                "Debug draw is
-                                //                                enabled
-                                //                                without a
-                                //                                physics
-                                //                                World.");
-                            }
-                    }
+                PhysicsWorld *physicsWorld = scene->getPhysicsWorld();
+                if (physicsWorld)
+                {
+                    physicsWorld->debugDrawWorld();
+                }
                 else
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Debug draw is enabled without a scene.");
-                    }
-
-                if (m_DebugDrawCamera)
-                    {
-                        getDebugDrawer()->draw(m_DebugDrawCamera);
-                    }
-                else
-                    {
-                        //                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                        //                "Debug draw is enabled without a
-                        //                camera.");
-                    }
-
-                //            // 1. Show a simple window
-                //            // Tip: if we don't call
-                //            ImGui::Begin()/ImGui::End() the widgets appears in
-                //            a window automatically called "Debug"
-                //                        {
-                //                            static float f = 0.0f;
-                //                            ImGui::Text("Hello, world!");
-                //                            ImGui::SliderFloat("float", &f,
-                //                            0.0f, 1.0f);
-                //                            ImGui::ColorEdit3("clear color",
-                //                            (float*)&clear_color); if
-                //                            (ImGui::Button("Test Window"))
-                //                            show_test_window ^= 1; if
-                //                            (ImGui::Button("Another Window"))
-                //                            show_another_window ^= 1;
-                //                            ImGui::Text("Application average
-                //                            %.3f ms/frame (%.1f FPS)", 1000.0f
-                //                            / ImGui::GetIO().Framerate,
-                //                            ImGui::GetIO().Framerate);
-                //                        }
-                //
-                //            // 2. Show another simple window, this time using
-                //            an explicit Begin/End pair
-                //                        if (show_another_window)
-                //                        {
-                //                            ImGui::SetNextWindowSize(ImVec2(200,100),
-                //                            ImGuiSetCond_FirstUseEver);
-                //                            ImGui::Begin("Another Window",
-                //                            &show_another_window);
-                //                            ImGui::Text("Hello");
-                //                            ImGui::End();
-                //                        }
-                //
-                //            // 3. Show the ImGui test window. Most of the
-                //            sample code is in ImGui::ShowTestWindow()
-                //                        if (show_test_window)
-                //                        {
-                //                            ImGui::SetNextWindowPos(ImVec2(650,
-                //                            20), ImGuiSetCond_FirstUseEver);
-                //                            ImGui::ShowTestWindow(&show_test_window);
-                //                        }
-
-                getDebugDrawer()->endDraw();
+                {
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                                "Debug draw is
+                    //                                enabled
+                    //                                without a
+                    //                                physics
+                    //                                World.");
+                }
             }
+            else
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Debug draw is enabled without a scene.");
+            }
+
+            if (m_DebugDrawCamera)
+            {
+                getDebugDrawer()->draw(m_DebugDrawCamera);
+            }
+            else
+            {
+                //                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                //                "Debug draw is enabled without a
+                //                camera.");
+            }
+
+            //            // 1. Show a simple window
+            //            // Tip: if we don't call
+            //            ImGui::Begin()/ImGui::End() the widgets appears in
+            //            a window automatically called "Debug"
+            //                        {
+            //                            static float f = 0.0f;
+            //                            ImGui::Text("Hello, world!");
+            //                            ImGui::SliderFloat("float", &f,
+            //                            0.0f, 1.0f);
+            //                            ImGui::ColorEdit3("clear color",
+            //                            (float*)&clear_color); if
+            //                            (ImGui::Button("Test Window"))
+            //                            show_test_window ^= 1; if
+            //                            (ImGui::Button("Another Window"))
+            //                            show_another_window ^= 1;
+            //                            ImGui::Text("Application average
+            //                            %.3f ms/frame (%.1f FPS)", 1000.0f
+            //                            / ImGui::GetIO().Framerate,
+            //                            ImGui::GetIO().Framerate);
+            //                        }
+            //
+            //            // 2. Show another simple window, this time using
+            //            an explicit Begin/End pair
+            //                        if (show_another_window)
+            //                        {
+            //                            ImGui::SetNextWindowSize(ImVec2(200,100),
+            //                            ImGuiSetCond_FirstUseEver);
+            //                            ImGui::Begin("Another Window",
+            //                            &show_another_window);
+            //                            ImGui::Text("Hello");
+            //                            ImGui::End();
+            //                        }
+            //
+            //            // 3. Show the ImGui test window. Most of the
+            //            sample code is in ImGui::ShowTestWindow()
+            //                        if (show_test_window)
+            //                        {
+            //                            ImGui::SetNextWindowPos(ImVec2(650,
+            //                            20), ImGuiSetCond_FirstUseEver);
+            //                            ImGui::ShowTestWindow(&show_test_window);
+            //                        }
+
+            getDebugDrawer()->endDraw();
+        }
 #endif
         m_WorldFactory->collectGarbage_GPU();
     }
@@ -2511,19 +2446,19 @@ namespace njli
 
         /* Base cases */
         if (len == 0)
-            {
-                fprintf(stderr, "empty string\n");
-                delete[] buffer;
-                delete[] num;
-                return std::string(num);
-            }
+        {
+            fprintf(stderr, "empty string\n");
+            delete[] buffer;
+            delete[] num;
+            return std::string(num);
+        }
         if (len > 4)
-            {
-                fprintf(stderr, "Length more than 4 is not supported\n");
-                delete[] buffer;
-                delete[] num;
-                return std::string(num);
-            }
+        {
+            fprintf(stderr, "Length more than 4 is not supported\n");
+            delete[] buffer;
+            delete[] num;
+            return std::string(num);
+        }
         if (number < 0)
             ret = "negative ";
 
@@ -2552,78 +2487,75 @@ namespace njli
 
         /* For single digit number */
         if (len == 1)
-            {
-                sprintf(buffer, "%s", single_digits[*num - '0']);
-                ret = ret + buffer;
-                delete[] buffer;
-                delete[] num;
-                return ret;
-            }
+        {
+            sprintf(buffer, "%s", single_digits[*num - '0']);
+            ret = ret + buffer;
+            delete[] buffer;
+            delete[] num;
+            return ret;
+        }
 
         /* Iterate while num is not '\0' */
         while (*num != '\0')
+        {
+
+            /* Code path for first 2 digits */
+            if (len >= 3)
             {
-
-                /* Code path for first 2 digits */
-                if (len >= 3)
-                    {
-                        if (*num - '0' != 0)
-                            {
-                                sprintf(buffer, "%s ",
-                                        single_digits[*num - '0']);
-                                ret = ret + std::string(buffer);
-                                sprintf(buffer, "%s ",
-                                        tens_power[len - 3]); // here len can be
-                                                              // 3 or 4
-                                ret = ret + std::string(buffer);
-                            }
-                        --len;
-                    }
-
-                /* Code path for last 2 digits */
-                else
-                    {
-                        /* Need to explicitly handle 10-19. Sum of the two
-                         digits is used as index of "two_digits" array of
-                         strings */
-                        if (*num == '1')
-                            {
-                                int sum = *num - '0' + *(num + 1) - '0';
-                                sprintf(buffer, "%s", two_digits[sum]);
-                                ret = ret + std::string(buffer);
-                                delete[] buffer;
-                                delete[] num;
-                                return ret;
-                            }
-
-                        /* Need to explicitely handle 20 */
-                        else if (*num == '2' && *(num + 1) == '0')
-                            {
-                                sprintf(buffer, "twenty");
-                                ret = ret + std::string(buffer);
-                                delete[] buffer;
-                                delete[] num;
-                                return ret;
-                            }
-
-                        /* Rest of the two digit numbers i.e., 21 to 99 */
-                        else
-                            {
-                                int i = *num - '0';
-                                sprintf(buffer, "%s ",
-                                        i ? tens_multiple[i] : "");
-                                ret = ret + std::string(buffer);
-                                ++num;
-                                if (*num != '0')
-                                    {
-                                        sprintf(buffer, "%s ",
-                                                single_digits[*num - '0']);
-                                        ret = ret + std::string(buffer);
-                                    }
-                            }
-                    }
-                ++num;
+                if (*num - '0' != 0)
+                {
+                    sprintf(buffer, "%s ", single_digits[*num - '0']);
+                    ret = ret + std::string(buffer);
+                    sprintf(buffer, "%s ",
+                            tens_power[len - 3]); // here len can be
+                                                  // 3 or 4
+                    ret = ret + std::string(buffer);
+                }
+                --len;
             }
+
+            /* Code path for last 2 digits */
+            else
+            {
+                /* Need to explicitly handle 10-19. Sum of the two
+                 digits is used as index of "two_digits" array of
+                 strings */
+                if (*num == '1')
+                {
+                    int sum = *num - '0' + *(num + 1) - '0';
+                    sprintf(buffer, "%s", two_digits[sum]);
+                    ret = ret + std::string(buffer);
+                    delete[] buffer;
+                    delete[] num;
+                    return ret;
+                }
+
+                /* Need to explicitely handle 20 */
+                else if (*num == '2' && *(num + 1) == '0')
+                {
+                    sprintf(buffer, "twenty");
+                    ret = ret + std::string(buffer);
+                    delete[] buffer;
+                    delete[] num;
+                    return ret;
+                }
+
+                /* Rest of the two digit numbers i.e., 21 to 99 */
+                else
+                {
+                    int i = *num - '0';
+                    sprintf(buffer, "%s ", i ? tens_multiple[i] : "");
+                    ret = ret + std::string(buffer);
+                    ++num;
+                    if (*num != '0')
+                    {
+                        sprintf(buffer, "%s ", single_digits[*num - '0']);
+                        ret = ret + std::string(buffer);
+                    }
+                }
+            }
+            ++num;
+        }
         delete[] buffer;
         delete[] num;
 

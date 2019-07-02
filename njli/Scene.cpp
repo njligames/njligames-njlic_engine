@@ -123,9 +123,9 @@ namespace njli
     Scene &Scene::operator=(const Scene &rhs)
     {
         if (this != &rhs)
-            {
-                // TODO:implement...
-            }
+        {
+            // TODO:implement...
+        }
         return *this;
     }
 
@@ -190,19 +190,19 @@ namespace njli
     void Scene::destroy(Scene *object)
     {
         if (object)
-            {
-                Material *m = object->getBackground();
-                if (World::getInstance()->getWorldFactory()->has(m))
-                    Material::destroy(m);
-                object->removeBackground();
+        {
+            Material *m = object->getBackground();
+            if (World::getInstance()->getWorldFactory()->has(m))
+                Material::destroy(m);
+            object->removeBackground();
 
-                SceneStateMachine *sm = object->getStateMachine();
-                if (World::getInstance()->getWorldFactory()->has(sm))
-                    SceneStateMachine::destroy(sm);
-                object->removeStateMachine();
+            SceneStateMachine *sm = object->getStateMachine();
+            if (World::getInstance()->getWorldFactory()->has(sm))
+                SceneStateMachine::destroy(sm);
+            object->removeStateMachine();
 
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void Scene::load(Scene &object, lua_State *L, int index)
@@ -215,56 +215,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Scene::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Scene::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -283,22 +283,21 @@ namespace njli
         m_ActiveGeometries.clear();
 
         for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
+        {
+            Node *node = (*m_ActiveNodes).at(i);
+
+            node->update(timeStep);
+
+            Geometry *geometry = node->getGeometry();
+            if (geometry)
             {
-                Node *node = (*m_ActiveNodes).at(i);
+                PhysicsBody *physicsBody = node->getPhysicsBody();
+                if (physicsBody && geometry->shouldApplyShape(node))
+                    geometry->applyShape(node, physicsBody->getPhysicsShape());
 
-                node->update(timeStep);
-
-                Geometry *geometry = node->getGeometry();
-                if (geometry)
-                    {
-                        PhysicsBody *physicsBody = node->getPhysicsBody();
-                        if (physicsBody && geometry->shouldApplyShape(node))
-                            geometry->applyShape(
-                                node, physicsBody->getPhysicsShape());
-
-                        //                node->updateGeometry(geometry);
-                    }
+                //                node->updateGeometry(geometry);
             }
+        }
 
         //        for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
         //        {
@@ -316,14 +315,14 @@ namespace njli
         //        }
 
         for (s32 i = 0; i < (*m_ActiveParticleEmitters).size(); ++i)
-            {
-                (*m_ActiveParticleEmitters).at(i)->update(timeStep);
-            }
+        {
+            (*m_ActiveParticleEmitters).at(i)->update(timeStep);
+        }
 
         for (s32 i = 0; i < (*m_ActiveClocks).size(); ++i)
-            {
-                (*m_ActiveClocks).at(i)->update(timeStep);
-            }
+        {
+            (*m_ActiveClocks).at(i)->update(timeStep);
+        }
 
         SceneStateMachine *sm = getStateMachine();
         if (sm)
@@ -333,54 +332,52 @@ namespace njli
     void Scene::render(bool is_left)
     {
         for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
+        {
+            Camera *camera = (*m_ActiveCameras).at(i);
+            //            btVector3
+            //            cameraOrigin(camera->getParent()->getWorldTransform().getOrigin());
+
+            m_ActiveGeometries.clear();
+
+            for (s32 k = 0; k < (*m_ActiveNodes).size(); ++k)
             {
-                Camera *camera = (*m_ActiveCameras).at(i);
-                //            btVector3
-                //            cameraOrigin(camera->getParent()->getWorldTransform().getOrigin());
+                Node *node = (*m_ActiveNodes).at(k);
 
-                m_ActiveGeometries.clear();
+                Geometry *geometry = node->getGeometry();
+                if (geometry)
+                {
 
-                for (s32 k = 0; k < (*m_ActiveNodes).size(); ++k)
-                    {
-                        Node *node = (*m_ActiveNodes).at(k);
+                    node->updateGeometry(geometry, node->isHidden(camera));
 
-                        Geometry *geometry = node->getGeometry();
-                        if (geometry)
-                            {
-
-                                node->updateGeometry(geometry,
-                                                     node->isHidden(camera));
-
-                                //                geometry->setHidden(node,
-                                //                camera);
-                                //                    geometry->setHidden(node,
-                                //                    node->isHidden(camera));
-                                if (m_ActiveGeometries.end() ==
-                                    std::find(m_ActiveGeometries.begin(),
-                                              m_ActiveGeometries.end(),
-                                              geometry))
-                                    m_ActiveGeometries.push_back(geometry);
-                            }
-                    }
-
-                for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
-                    {
-                        Geometry *geometry = m_ActiveGeometries.at(j);
-
-                        if (geometry) // && !geometry->isHidden(camera))
-                            {
-                                //                    geometry->sort(cameraOrigin);
-                                geometry->render(camera);
-                            }
-                    }
-
-                //            for (s32 j = 0; j <
-                //            (*m_ActiveParticleEmitters).size();
-                //            ++j)
-                //            {
-                //                (*m_ActiveParticleEmitters).at(j)->render((*m_ActiveCameras).at(i));
-                //            }
+                    //                geometry->setHidden(node,
+                    //                camera);
+                    //                    geometry->setHidden(node,
+                    //                    node->isHidden(camera));
+                    if (m_ActiveGeometries.end() ==
+                        std::find(m_ActiveGeometries.begin(),
+                                  m_ActiveGeometries.end(), geometry))
+                        m_ActiveGeometries.push_back(geometry);
+                }
             }
+
+            for (s32 j = 0; j < m_ActiveGeometries.size(); ++j)
+            {
+                Geometry *geometry = m_ActiveGeometries.at(j);
+
+                if (geometry) // && !geometry->isHidden(camera))
+                {
+                    //                    geometry->sort(cameraOrigin);
+                    geometry->render(camera);
+                }
+            }
+
+            //            for (s32 j = 0; j <
+            //            (*m_ActiveParticleEmitters).size();
+            //            ++j)
+            //            {
+            //                (*m_ActiveParticleEmitters).at(j)->render((*m_ActiveCameras).at(i));
+            //            }
+        }
     }
 
     //  void Scene::update(f32 timeStep, const u32 numSubSteps)
@@ -632,10 +629,10 @@ namespace njli
         Node *root = getRootNode();
 
         if (root != NULL)
-            {
-                removeActiveNode(root);
-                removeChild(root);
-            }
+        {
+            removeActiveNode(root);
+            removeChild(root);
+        }
 
         m_RootNode = NULL;
     }
@@ -676,10 +673,10 @@ namespace njli
     {
         SceneStateMachine *sm = getStateMachine();
         if (sm != NULL)
-            {
-                removeChild(sm);
-                m_SceneStateMachine = NULL;
-            }
+        {
+            removeChild(sm);
+            m_SceneStateMachine = NULL;
+        }
     }
 
     //    s32 Scene::addParticleEmitter(ParticleEmitter *particleEmitter)
@@ -841,9 +838,9 @@ namespace njli
     void Scene::removePhysicsWorld()
     {
         if (getPhysicsWorld())
-            {
-                removeChild(getPhysicsWorld());
-            }
+        {
+            removeChild(getPhysicsWorld());
+        }
 
         m_PhysicsWorld = NULL;
     }
@@ -852,15 +849,15 @@ namespace njli
     {
         s32 idx = getChildIndex(m_PhysicsWorld);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<PhysicsWorld*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<PhysicsWorld*>(getChild(idx)));
-                return dynamic_cast<PhysicsWorld *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<PhysicsWorld*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<PhysicsWorld*>(getChild(idx)));
+            return dynamic_cast<PhysicsWorld *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -870,17 +867,17 @@ namespace njli
     {
         s32 idx = getChildIndex(m_PhysicsWorld);
         if (idx != -1)
-            //#if !(defined(NDEBUG))
-            //        {
-            //            return dynamic_cast<const
-            //            PhysicsWorld*>(getChild(idx));
-            //        }
-            //#else
-            {
-                //            SDL_assert(dynamic_cast<const
-                //            PhysicsWorld*>(getChild(idx)));
-                return dynamic_cast<const PhysicsWorld *>(getChild(idx));
-            }
+        //#if !(defined(NDEBUG))
+        //        {
+        //            return dynamic_cast<const
+        //            PhysicsWorld*>(getChild(idx));
+        //        }
+        //#else
+        {
+            //            SDL_assert(dynamic_cast<const
+            //            PhysicsWorld*>(getChild(idx)));
+            return dynamic_cast<const PhysicsWorld *>(getChild(idx));
+        }
         //#endif
 
         return NULL;
@@ -894,18 +891,18 @@ namespace njli
             std::find(m_ClockList.begin(), m_ClockList.end(), clock);
 
         if (iter == m_ClockList.end())
-            {
-                std::vector<Clock *>::iterator iter =
-                    std::find(m_ClockList.begin(), m_ClockList.end(), clock);
+        {
+            std::vector<Clock *>::iterator iter =
+                std::find(m_ClockList.begin(), m_ClockList.end(), clock);
 
-                if (iter != m_ClockList.end())
-                    removeChild(clock);
+            if (iter != m_ClockList.end())
+                removeChild(clock);
 
-                m_ClockList.push_back(clock);
+            m_ClockList.push_back(clock);
 
-                addChild(clock);
-                addActiveClock(clock);
-            }
+            addChild(clock);
+            addActiveClock(clock);
+        }
 
         return getClockIndex(clock);
     }
@@ -918,13 +915,13 @@ namespace njli
             std::find(m_ClockList.begin(), m_ClockList.end(), clock);
 
         if (iter != m_ClockList.end())
-            {
-                removeChild(*iter);
-                removeActiveClock(*iter);
+        {
+            removeChild(*iter);
+            removeActiveClock(*iter);
 
-                m_ClockList.erase(iter);
-                return true;
-            }
+            m_ClockList.erase(iter);
+            return true;
+        }
         return false;
     }
 
@@ -932,9 +929,9 @@ namespace njli
     {
         for (std::vector<Clock *>::iterator iter = m_ClockList.begin();
              iter != m_ClockList.end(); ++iter)
-            {
-                removeChild(*iter);
-            }
+        {
+            removeChild(*iter);
+        }
         m_ClockList.clear();
     }
 
@@ -942,10 +939,10 @@ namespace njli
     {
         for (std::vector<Clock *>::const_iterator iter = m_ClockList.begin();
              iter != m_ClockList.end(); ++iter)
-            {
-                if (getChildIndex(*iter) != -1)
-                    clocks.push_back(*iter);
-            }
+        {
+            if (getChildIndex(*iter) != -1)
+                clocks.push_back(*iter);
+        }
     }
 
     s32 Scene::getClockIndex(Clock *clock) const
@@ -954,31 +951,31 @@ namespace njli
             std::find(m_ClockList.begin(), m_ClockList.end(), clock);
 
         if (iter != m_ClockList.end())
-            {
-                return std::distance(m_ClockList.begin(), iter);
-            }
+        {
+            return std::distance(m_ClockList.begin(), iter);
+        }
         return -1;
     }
 
     Clock *Scene::getClock(const u32 index)
     {
         if (index < m_ClockList.size())
-            {
-                s32 idx = getChildIndex(m_ClockList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<Clock *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_ClockList.at(index));
+            if (idx != -1)
+                return dynamic_cast<Clock *>(getChild(idx));
+        }
         return NULL;
     }
 
     const Clock *Scene::getClock(const u32 index) const
     {
         if (index < m_ClockList.size())
-            {
-                s32 idx = getChildIndex(m_ClockList.at(index));
-                if (idx != -1)
-                    return dynamic_cast<const Clock *>(getChild(idx));
-            }
+        {
+            s32 idx = getChildIndex(m_ClockList.at(index));
+            if (idx != -1)
+                return dynamic_cast<const Clock *>(getChild(idx));
+        }
         return NULL;
     }
 
@@ -988,14 +985,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchDown(this, m_CurrentTouches);
-            }
+        {
+            currentState->touchDown(this, m_CurrentTouches);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in touchDown\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in touchDown\n");
+        }
     }
 
     void Scene::touchUp(DeviceTouch **m_CurrentTouches)
@@ -1004,14 +1001,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchUp(this, m_CurrentTouches);
-            }
+        {
+            currentState->touchUp(this, m_CurrentTouches);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in touchUp\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in touchUp\n");
+        }
     }
 
     void Scene::touchMove(DeviceTouch **m_CurrentTouches)
@@ -1020,14 +1017,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchMove(this, m_CurrentTouches);
-            }
+        {
+            currentState->touchMove(this, m_CurrentTouches);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in touchMove\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in touchMove\n");
+        }
     }
 
     void Scene::touchCancelled(DeviceTouch **m_CurrentTouches)
@@ -1036,14 +1033,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchCancelled(this, m_CurrentTouches);
-            }
+        {
+            currentState->touchCancelled(this, m_CurrentTouches);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in touchCancelled\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in touchCancelled\n");
+        }
     }
 
     void Scene::touchDown(const DeviceTouch &touch)
@@ -1052,14 +1049,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchDown(this, touch);
-            }
+        {
+            currentState->touchDown(this, touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in touchDown\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in touchDown\n");
+        }
     }
 
     void Scene::touchUp(const DeviceTouch &touch)
@@ -1068,14 +1065,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchUp(this, touch);
-            }
+        {
+            currentState->touchUp(this, touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in touchUp\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in touchUp\n");
+        }
     }
 
     void Scene::touchMove(const DeviceTouch &touch)
@@ -1084,14 +1081,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchMove(this, touch);
-            }
+        {
+            currentState->touchMove(this, touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in touchMove\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in touchMove\n");
+        }
     }
 
     void Scene::mouseDown(const DeviceMouse &mouse)
@@ -1100,14 +1097,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->mouseDown(this, mouse);
-            }
+        {
+            currentState->mouseDown(this, mouse);
+        }
         else
-            {
-                // SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState
-                // in mouseDown\n");
-            }
+        {
+            // SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no SceneState
+            // in mouseDown\n");
+        }
     }
 
     void Scene::mouseUp(const DeviceMouse &mouse)
@@ -1116,14 +1113,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->mouseUp(this, mouse);
-            }
+        {
+            currentState->mouseUp(this, mouse);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in mouseUp\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in mouseUp\n");
+        }
     }
 
     void Scene::mouseMove(const DeviceMouse &mouse)
@@ -1132,14 +1129,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->mouseMove(this, mouse);
-            }
+        {
+            currentState->mouseMove(this, mouse);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in mouseMove\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in mouseMove\n");
+        }
     }
 
     void Scene::keyUp(const char *keycodeName, bool withCapsLock,
@@ -1150,15 +1147,15 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->keyUp(this, keycodeName, withCapsLock,
-                                    withControl, withShift, withAlt, withGui);
-            }
+        {
+            currentState->keyUp(this, keycodeName, withCapsLock, withControl,
+                                withShift, withAlt, withGui);
+        }
         else
-            {
-                //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //            SceneState in keyUp\n");
-            }
+        {
+            //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //            SceneState in keyUp\n");
+        }
     }
 
     void Scene::keyDown(const char *keycodeName, bool withCapsLock,
@@ -1169,15 +1166,15 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->keyDown(this, keycodeName, withCapsLock,
-                                      withControl, withShift, withAlt, withGui);
-            }
+        {
+            currentState->keyDown(this, keycodeName, withCapsLock, withControl,
+                                  withShift, withAlt, withGui);
+        }
         else
-            {
-                //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //            SceneState in keyDown\n");
-            }
+        {
+            //            SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //            SceneState in keyDown\n");
+        }
     }
 
     void Scene::touchCancelled(const DeviceTouch &touch)
@@ -1186,14 +1183,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->touchCancelled(this, touch);
-            }
+        {
+            currentState->touchCancelled(this, touch);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in touchCancelled\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in touchCancelled\n");
+        }
     }
 
     void Scene::keyboardShow()
@@ -1202,14 +1199,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->keyboardShow(this);
-            }
+        {
+            currentState->keyboardShow(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in keyboardShow\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in keyboardShow\n");
+        }
     }
 
     void Scene::keyboardCancel()
@@ -1218,14 +1215,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->keyboardCancel(this);
-            }
+        {
+            currentState->keyboardCancel(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in keyboardCancel\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in keyboardCancel\n");
+        }
     }
 
     void Scene::keyboardReturn(const char *text)
@@ -1234,14 +1231,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->keyboardReturn(this, text);
-            }
+        {
+            currentState->keyboardReturn(this, text);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in keyboardReturn\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in keyboardReturn\n");
+        }
     }
 
     void Scene::renderHUD()
@@ -1250,14 +1247,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->renderHUD(this);
-            }
+        {
+            currentState->renderHUD(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in renderHUD\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in renderHUD\n");
+        }
     }
 
     void Scene::pauseGame()
@@ -1266,14 +1263,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->pauseGame(this);
-            }
+        {
+            currentState->pauseGame(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in pauseGame\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in pauseGame\n");
+        }
     }
 
     void Scene::unPauseGame()
@@ -1282,14 +1279,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->unPauseGame(this);
-            }
+        {
+            currentState->unPauseGame(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in unPauseGame\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in unPauseGame\n");
+        }
     }
 
     void Scene::willResignActive()
@@ -1298,14 +1295,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->willResignActive(this);
-            }
+        {
+            currentState->willResignActive(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in willResignActive\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in willResignActive\n");
+        }
     }
 
     void Scene::didBecomeActive()
@@ -1314,14 +1311,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->didBecomeActive(this);
-            }
+        {
+            currentState->didBecomeActive(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in didBecomeActive\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in didBecomeActive\n");
+        }
     }
 
     void Scene::didEnterBackground()
@@ -1330,14 +1327,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->didEnterBackground(this);
-            }
+        {
+            currentState->didEnterBackground(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in didEnterBackground\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in didEnterBackground\n");
+        }
     }
 
     void Scene::willEnterForeground()
@@ -1346,14 +1343,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->willEnterForeground(this);
-            }
+        {
+            currentState->willEnterForeground(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in willEnterForeground\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in willEnterForeground\n");
+        }
     }
 
     void Scene::willTerminate()
@@ -1362,14 +1359,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->willTerminate(this);
-            }
+        {
+            currentState->willTerminate(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in willTerminate\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in willTerminate\n");
+        }
     }
 
     void Scene::interrupt()
@@ -1378,14 +1375,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->interrupt(this);
-            }
+        {
+            currentState->interrupt(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in interrupt\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in interrupt\n");
+        }
     }
 
     void Scene::resumeInterrupt()
@@ -1394,14 +1391,14 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->resumeInterrupt(this);
-            }
+        {
+            currentState->resumeInterrupt(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in resumeInterrupt\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in resumeInterrupt\n");
+        }
     }
 
     void Scene::receivedMemoryWarning()
@@ -1410,50 +1407,49 @@ namespace njli
             dynamic_cast<SceneState *>(m_SceneStateMachine->getState());
 
         if (currentState)
-            {
-                currentState->receivedMemoryWarning(this);
-            }
+        {
+            currentState->receivedMemoryWarning(this);
+        }
         else
-            {
-                //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
-                //        SceneState in receivedMemoryWarning\n");
-            }
+        {
+            //        SDL_LogDebug(SDL_LOG_CATEGORY_TEST, "There is no
+            //        SceneState in receivedMemoryWarning\n");
+        }
     }
 
     void Scene::updateViewSize()
     {
         for (s32 i = 0; i < (*m_ActiveCameras).size(); ++i)
-            {
-                Camera *camera = (*m_ActiveCameras).at(i);
-                camera->updateViewSize();
-            }
+        {
+            Camera *camera = (*m_ActiveCameras).at(i);
+            camera->updateViewSize();
+        }
     }
 
     void Scene::addCameraNode(Node *cameraNode, bool touchCamera)
     {
         getRootNode()->addChildNode(cameraNode);
         if (touchCamera)
+        {
+            Camera *camera = cameraNode->getCamera();
+            if (camera)
             {
-                Camera *camera = cameraNode->getCamera();
-                if (camera)
-                    {
-                        if (camera->isOrthographic())
-                            {
-                                setTouchCamera(camera);
-                            }
-                        else
-                            {
-                                SDL_LogWarn(
-                                    SDL_LOG_CATEGORY_TEST,
-                                    "The camera must be orthographic\n");
-                            }
-                    }
+                if (camera->isOrthographic())
+                {
+                    setTouchCamera(camera);
+                }
                 else
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "There must be a camera set to the node\n");
-                    }
+                {
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "The camera must be orthographic\n");
+                }
             }
+            else
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "There must be a camera set to the node\n");
+            }
+        }
     }
 
     /**
@@ -1521,11 +1517,11 @@ namespace njli
         SDL_assert(NULL != node);
 
         if ((*m_ActiveNodes).size() == (*m_ActiveNodes).findLinearSearch(node))
-            {
-                (*m_ActiveNodes).push_back(node);
-                node->setCurrentScene(this);
-                addChild(node);
-            }
+        {
+            (*m_ActiveNodes).push_back(node);
+            node->setCurrentScene(this);
+            addChild(node);
+        }
         for (unsigned int i = 0; i < node->numberOfChildrenNodes(); i++)
             this->addActiveNode(node->getChildNode(i));
     }
@@ -1543,10 +1539,10 @@ namespace njli
     void Scene::getActiveNodes(btAlignedObjectArray<Node *> &activeNodes) const
     {
         for (unsigned int i = 0; i < m_ActiveNodes->size(); i++)
-            {
-                Node *n = (*m_ActiveNodes)[i];
-                activeNodes.push_back(n);
-            }
+        {
+            Node *n = (*m_ActiveNodes)[i];
+            activeNodes.push_back(n);
+        }
     }
     void Scene::addActiveParticleEmitter(ParticleEmitter *particleEmitter)
     {
@@ -1598,9 +1594,9 @@ namespace njli
     void Scene::clearNodeTouches()
     {
         for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
-            {
-                (*m_ActiveNodes).at(i)->enableTouched(false);
-            }
+        {
+            (*m_ActiveNodes).at(i)->enableTouched(false);
+        }
     }
 
     void Scene::clearAllStates()
@@ -1610,14 +1606,14 @@ namespace njli
         if (sm)
             sm->clear();
         for (s32 i = 0; i < (*m_ActiveNodes).size(); ++i)
+        {
+            Node *node = (*m_ActiveNodes).at(i);
+            if (node)
             {
-                Node *node = (*m_ActiveNodes).at(i);
-                if (node)
-                    {
-                        NodeStateMachine *nsm = node->getStateMachine();
-                        if (nsm)
-                            nsm->clear();
-                    }
+                NodeStateMachine *nsm = node->getStateMachine();
+                if (nsm)
+                    nsm->clear();
             }
+        }
     }
 } // namespace njli

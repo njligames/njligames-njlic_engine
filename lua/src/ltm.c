@@ -42,11 +42,10 @@ void luaT_init(lua_State *L)
         "__unm",   "__bnot",     "__lt",  "__le",   "__concat", "__call"};
     int i;
     for (i = 0; i < TM_N; i++)
-        {
-            G(L)->tmname[i] = luaS_new(L, luaT_eventname[i]);
-            luaC_fix(L,
-                     obj2gco(G(L)->tmname[i])); /* never collect these names */
-        }
+    {
+        G(L)->tmname[i] = luaS_new(L, luaT_eventname[i]);
+        luaC_fix(L, obj2gco(G(L)->tmname[i])); /* never collect these names */
+    }
 }
 
 /*
@@ -58,10 +57,10 @@ const TValue *luaT_gettm(Table *events, TMS event, TString *ename)
     const TValue *tm = luaH_getshortstr(events, ename);
     lua_assert(event <= TM_EQ);
     if (ttisnil(tm))
-        {                                            /* no tag method? */
-            events->flags |= cast_byte(1u << event); /* cache this fact */
-            return NULL;
-        }
+    {                                            /* no tag method? */
+        events->flags |= cast_byte(1u << event); /* cache this fact */
+        return NULL;
+    }
     else
         return tm;
 }
@@ -70,16 +69,16 @@ const TValue *luaT_gettmbyobj(lua_State *L, const TValue *o, TMS event)
 {
     Table *mt;
     switch (ttnov(o))
-        {
-        case LUA_TTABLE:
-            mt = hvalue(o)->metatable;
-            break;
-        case LUA_TUSERDATA:
-            mt = uvalue(o)->metatable;
-            break;
-        default:
-            mt = G(L)->mt[ttnov(o)];
-        }
+    {
+    case LUA_TTABLE:
+        mt = hvalue(o)->metatable;
+        break;
+    case LUA_TUSERDATA:
+        mt = uvalue(o)->metatable;
+        break;
+    default:
+        mt = G(L)->mt[ttnov(o)];
+    }
     return (mt ? luaH_getshortstr(mt, G(L)->tmname[event]) : luaO_nilobject);
 }
 
@@ -100,10 +99,10 @@ void luaT_callTM(lua_State *L, const TValue *f, const TValue *p1,
     else
         luaD_callnoyield(L, func, hasres);
     if (hasres)
-        { /* if has result, move it to its place */
-            p3 = restorestack(L, result);
-            setobjs2s(L, p3, --L->top);
-        }
+    { /* if has result, move it to its place */
+        p3 = restorestack(L, result);
+        setobjs2s(L, p3, --L->top);
+    }
 }
 
 int luaT_callbinTM(lua_State *L, const TValue *p1, const TValue *p2, StkId res,
@@ -122,33 +121,32 @@ void luaT_trybinTM(lua_State *L, const TValue *p1, const TValue *p2, StkId res,
                    TMS event)
 {
     if (!luaT_callbinTM(L, p1, p2, res, event))
+    {
+        switch (event)
         {
-            switch (event)
-                {
-                case TM_CONCAT:
-                    luaG_concaterror(L, p1, p2);
-                /* call never returns, but to avoid warnings: */ /* FALLTHROUGH
-                                                                  */
-                case TM_BAND:
-                case TM_BOR:
-                case TM_BXOR:
-                case TM_SHL:
-                case TM_SHR:
-                case TM_BNOT:
-                    {
-                        lua_Number dummy;
-                        if (tonumber(p1, &dummy) && tonumber(p2, &dummy))
-                            luaG_tointerror(L, p1, p2);
-                        else
-                            luaG_opinterror(L, p1, p2,
-                                            "perform bitwise operation on");
-                    }
-                /* calls never return, but to avoid warnings: */ /* FALLTHROUGH
-                                                                  */
-                default:
-                    luaG_opinterror(L, p1, p2, "perform arithmetic on");
-                }
+        case TM_CONCAT:
+            luaG_concaterror(L, p1, p2);
+        /* call never returns, but to avoid warnings: */ /* FALLTHROUGH
+                                                          */
+        case TM_BAND:
+        case TM_BOR:
+        case TM_BXOR:
+        case TM_SHL:
+        case TM_SHR:
+        case TM_BNOT:
+        {
+            lua_Number dummy;
+            if (tonumber(p1, &dummy) && tonumber(p2, &dummy))
+                luaG_tointerror(L, p1, p2);
+            else
+                luaG_opinterror(L, p1, p2, "perform bitwise operation on");
         }
+        /* calls never return, but to avoid warnings: */ /* FALLTHROUGH
+                                                          */
+        default:
+            luaG_opinterror(L, p1, p2, "perform arithmetic on");
+        }
+    }
 }
 
 int luaT_callorderTM(lua_State *L, const TValue *p1, const TValue *p2,

@@ -147,31 +147,30 @@ namespace njli
     {
         SDL_RWops *rw = SDL_RWFromFile(ASSET_PATH(filePath), "rb");
         if (rw)
+        {
+            m_fileSize = SDL_RWsize(rw);
+            if (m_buffer)
+                free(m_buffer);
+            m_buffer = (char *)malloc(m_fileSize + 1);
+
+            Sint64 nb_read_total = 0, nb_read = 1;
+            char *buf = (char *)m_buffer;
+            while (nb_read_total < m_fileSize && nb_read != 0)
             {
-                m_fileSize = SDL_RWsize(rw);
-                if (m_buffer)
-                    free(m_buffer);
-                m_buffer = (char *)malloc(m_fileSize + 1);
-
-                Sint64 nb_read_total = 0, nb_read = 1;
-                char *buf = (char *)m_buffer;
-                while (nb_read_total < m_fileSize && nb_read != 0)
-                    {
-                        nb_read = SDL_RWread(rw, buf, 1,
-                                             (m_fileSize - nb_read_total));
-                        nb_read_total += nb_read;
-                        buf += nb_read;
-                    }
-                SDL_RWclose(rw);
-                if (nb_read_total != m_fileSize)
-                    {
-                        free(m_buffer);
-                        return false;
-                    }
-
-                //        buf[nb_read_total - 1] = '\0';
-                return true;
+                nb_read = SDL_RWread(rw, buf, 1, (m_fileSize - nb_read_total));
+                nb_read_total += nb_read;
+                buf += nb_read;
             }
+            SDL_RWclose(rw);
+            if (nb_read_total != m_fileSize)
+            {
+                free(m_buffer);
+                return false;
+            }
+
+            //        buf[nb_read_total - 1] = '\0';
+            return true;
+        }
 
         return false;
     }
@@ -378,35 +377,33 @@ namespace njli
             (extension == "bmp") || (extension == "gif") ||
             (extension == "psd") || (extension == "pic") ||
             (extension == "hdr") || (extension == "tga"))
-            {
-                if (m_buffer)
-                    free(m_buffer);
+        {
+            if (m_buffer)
+                free(m_buffer);
 
-                m_buffer = (void *)stbi_load(ASSET_PATH(filePath), &m_width,
-                                             &m_height, &m_components, 0);
+            m_buffer = (void *)stbi_load(ASSET_PATH(filePath), &m_width,
+                                         &m_height, &m_components, 0);
 
-                SDL_assertPrint(m_buffer,
-                                "Failed to load file (%s). Reason: %s",
-                                ASSET_PATH(filePath), stbi_failure_reason());
+            SDL_assertPrint(m_buffer, "Failed to load file (%s). Reason: %s",
+                            ASSET_PATH(filePath), stbi_failure_reason());
 
-                m_fileSize = (m_width * m_height * m_components);
-            }
+            m_fileSize = (m_width * m_height * m_components);
+        }
         else if (extension == "pvr")
+        {
+            if (FileData::load(filePath))
             {
-                if (FileData::load(filePath))
-                    {
-                        SDL_assertPrint(true,
-                                        "Need to implement the PVR loading...");
-                        //                PVRTextureHeaderV3 *header =
-                        //                (PVRTextureHeaderV3*)m_buffer;
-                        //                m_fileSize =
-                        //                PVRTGetTextureDataSize(*header);
-                        //                m_components =
-                        //                GetNumberOfComponents(*header);
-                        //                m_width = header->u32Width;
-                        //                m_height = header->u32Height;
-                    }
+                SDL_assertPrint(true, "Need to implement the PVR loading...");
+                //                PVRTextureHeaderV3 *header =
+                //                (PVRTextureHeaderV3*)m_buffer;
+                //                m_fileSize =
+                //                PVRTGetTextureDataSize(*header);
+                //                m_components =
+                //                GetNumberOfComponents(*header);
+                //                m_width = header->u32Width;
+                //                m_height = header->u32Height;
             }
+        }
 
         setFilename(filePath);
 
@@ -457,7 +454,7 @@ namespace njli
     ////        {
     ////            PVRTextureHeaderV3 *header = (PVRTextureHeaderV3*)content;
     ////            img.setPVRData((u8*)content,
-    ///PVRTGetTextureDataSize(*header),
+    /// PVRTGetTextureDataSize(*header),
     /// filePath);
     ////
     ////            return true;
@@ -478,13 +475,13 @@ namespace njli
     long WorldResourceLoader::dataPtrSize(const char *filePath) const
     {
         if (filePath)
+        {
+            FileData *fileData = getFileData(filePath);
+            if (fileData)
             {
-                FileData *fileData = getFileData(filePath);
-                if (fileData)
-                    {
-                        return fileData->getSize();
-                    }
+                return fileData->getSize();
             }
+        }
         return 0;
     }
 
@@ -520,29 +517,29 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            ImageFileData *fileData = loadImageFileData(filePath);
+
+            void *fileContent = fileData->getBufferPtr();
+
+            if (fileContent)
             {
-                ImageFileData *fileData = loadImageFileData(filePath);
+                //                retVal = image->setData(fileData);
+                retVal = image->copyData(fileData);
 
-                void *fileContent = fileData->getBufferPtr();
+                //            image->flip();
 
-                if (fileContent)
-                    {
-                        //                retVal = image->setData(fileData);
-                        retVal = image->copyData(fileData);
+                removeFileData(filePath);
 
-                        //            image->flip();
-
-                        removeFileData(filePath);
-
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -639,34 +636,33 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        if (object->parseFileData(fileContent))
-                            {
-                                removeFileData(filePath);
-                                retVal = true;
-                            }
-                        else
-                            {
-                                SDL_LogWarn(
-                                    SDL_LOG_CATEGORY_TEST,
-                                    "Unable to parse the ParticleEmitter file");
-                            }
-                    }
+                if (object->parseFileData(fileContent))
+                {
+                    removeFileData(filePath);
+                    retVal = true;
+                }
                 else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "Particle file content is empty.");
-                    }
+                {
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "Unable to parse the ParticleEmitter file");
+                }
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "Particle file content is empty.");
+            }
+        }
 
         return retVal;
     }
@@ -679,51 +675,48 @@ namespace njli
         bool retVal = false;
 
         if (shader && vertexFile && fragmentFile)
+        {
+            FileData *vertexFileData = loadFileData(vertexFile);
+            FileData *fragmentFileData = loadFileData(fragmentFile);
+
+            char *vertexFileContent = (char *)vertexFileData->getBufferPtr();
+            long vertexFileSize = vertexFileData->getSize();
+            vertexFileContent[vertexFileSize] = '\0';
+
+            char *fragmentFileContent =
+                (char *)fragmentFileData->getBufferPtr();
+            long fragmentFileSize = fragmentFileData->getSize();
+            fragmentFileContent[fragmentFileSize] = '\0';
+
+            if (vertexFileContent != NULL && fragmentFileContent != NULL)
             {
-                FileData *vertexFileData = loadFileData(vertexFile);
-                FileData *fragmentFileData = loadFileData(fragmentFile);
+                retVal = shader->load((char *)vertexFileData->getBufferPtr(),
+                                      (char *)fragmentFileData->getBufferPtr());
 
-                char *vertexFileContent =
-                    (char *)vertexFileData->getBufferPtr();
-                long vertexFileSize = vertexFileData->getSize();
-                vertexFileContent[vertexFileSize] = '\0';
-
-                char *fragmentFileContent =
-                    (char *)fragmentFileData->getBufferPtr();
-                long fragmentFileSize = fragmentFileData->getSize();
-                fragmentFileContent[fragmentFileSize] = '\0';
-
-                if (vertexFileContent != NULL && fragmentFileContent != NULL)
-                    {
-                        retVal = shader->load(
-                            (char *)vertexFileData->getBufferPtr(),
-                            (char *)fragmentFileData->getBufferPtr());
-
-                        removeFileData(vertexFile);
-                        removeFileData(fragmentFile);
-                    }
-                else
-                    {
-                        if (!vertexFileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "Vertex file content is empty.");
-                        if (!fragmentFileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "Fragment file content is empty.");
-                    }
+                removeFileData(vertexFile);
+                removeFileData(fragmentFile);
             }
+            else
+            {
+                if (!vertexFileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "Vertex file content is empty.");
+                if (!fragmentFileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "Fragment file content is empty.");
+            }
+        }
         else
-            {
-                if (!shader)
-                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "shader is null.");
+        {
+            if (!shader)
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "shader is null.");
 
-                if (!vertexFile)
-                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                "Vertex filename is empty.");
-                if (!fragmentFile)
-                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                "Fragment filename is empty.");
-            }
+            if (!vertexFile)
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Vertex filename is empty.");
+            if (!fragmentFile)
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Fragment filename is empty.");
+        }
 
         return retVal;
     }
@@ -742,34 +735,33 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-
-                if (fileContent)
-                    {
-                        if (njli::World::getInstance()
-                                ->getWorldSound()
-                                ->loadSound(fileContent, fileSize, *object))
-                            {
-                                removeFileData(filePath);
-                                retVal = true;
-                            }
-                        else
-                            {
-                                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                            "Unable to create the Sound file");
-                            }
-                    }
+                if (njli::World::getInstance()->getWorldSound()->loadSound(
+                        fileContent, fileSize, *object))
+                {
+                    removeFileData(filePath);
+                    retVal = true;
+                }
                 else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                {
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "Unable to create the Sound file");
+                }
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -780,26 +772,26 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        //!!!TODO: load the Light object...
-                        removeFileData(filePath);
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                //!!!TODO: load the Light object...
+                removeFileData(filePath);
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -810,26 +802,26 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        //!!!TODO: load the Geometry object...
-                        removeFileData(filePath);
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                //!!!TODO: load the Geometry object...
+                removeFileData(filePath);
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -840,26 +832,26 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        //!!!TODO: load the Font object...
-                        removeFileData(filePath);
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                //!!!TODO: load the Font object...
+                removeFileData(filePath);
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -902,26 +894,26 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        //!!!TODO: load the Xml object...
-                        removeFileData(filePath);
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                //!!!TODO: load the Xml object...
+                removeFileData(filePath);
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -932,26 +924,26 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        //!!!TODO: load the JsonJLI object...
-                        removeFileData(filePath);
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                //!!!TODO: load the JsonJLI object...
+                removeFileData(filePath);
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -962,26 +954,26 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        //!!!TODO: load the Material object...
-                        removeFileData(filePath);
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                //!!!TODO: load the Material object...
+                removeFileData(filePath);
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -992,26 +984,26 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        //!!!TODO: load the Skinner object...
-                        removeFileData(filePath);
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                //!!!TODO: load the Skinner object...
+                removeFileData(filePath);
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -1022,26 +1014,26 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            long fileSize = fileData->getSize();
+            fileContent[fileSize] = '\0';
+
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
-
-                char *fileContent = (char *)fileData->getBufferPtr();
-                long fileSize = fileData->getSize();
-                fileContent[fileSize] = '\0';
-
-                if (fileContent)
-                    {
-                        //!!!TODO: load the Camera object...
-                        removeFileData(filePath);
-                        retVal = true;
-                    }
-                else
-                    {
-                        if (!fileContent)
-                            SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                    }
+                //!!!TODO: load the Camera object...
+                removeFileData(filePath);
+                retVal = true;
             }
+            else
+            {
+                if (!fileContent)
+                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                "filename is empty for the sound.");
+            }
+        }
 
         return retVal;
     }
@@ -1159,30 +1151,29 @@ namespace njli
         bool retVal = false;
 
         if (filePath)
+        {
+            FileData *fileData = loadFileData(filePath);
+
+            char *fileContent = (char *)fileData->getBufferPtr();
+            if (fileContent)
             {
-                FileData *fileData = loadFileData(filePath);
+                long fileSize = fileData->getSize();
+                fileContent[fileSize] = '\0';
 
-                char *fileContent = (char *)fileData->getBufferPtr();
                 if (fileContent)
-                    {
-                        long fileSize = fileData->getSize();
-                        fileContent[fileSize] = '\0';
-
-                        if (fileContent)
-                            {
-                                *object = std::string(fileContent);
-                                removeFileData(filePath);
-                                retVal = true;
-                            }
-                        else
-                            {
-                                if (!fileContent)
-                                    SDL_LogWarn(
-                                        SDL_LOG_CATEGORY_TEST,
-                                        "filename is empty for the sound.");
-                            }
-                    }
+                {
+                    *object = std::string(fileContent);
+                    removeFileData(filePath);
+                    retVal = true;
+                }
+                else
+                {
+                    if (!fileContent)
+                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                                    "filename is empty for the sound.");
+                }
             }
+        }
 
         return retVal;
     }
@@ -1196,15 +1187,15 @@ namespace njli
     {
         for (FileDataMap::iterator i = m_FileDataMap.begin();
              i != m_FileDataMap.end();)
-            {
-                FileData *fileData = i->second;
+        {
+            FileData *fileData = i->second;
 
-                if (fileData)
-                    delete fileData;
-                fileData = NULL;
+            if (fileData)
+                delete fileData;
+            fileData = NULL;
 
-                i = m_FileDataMap.erase(i);
-            }
+            i = m_FileDataMap.erase(i);
+        }
         m_FileDataMap.clear();
 
         return true;
@@ -1232,13 +1223,13 @@ namespace njli
     {
         ImageFileData *fileData = (ImageFileData *)getFileData(filePath);
         if (NULL == fileData)
-            {
-                fileData = new ImageFileData(filePath);
+        {
+            fileData = new ImageFileData(filePath);
 
-                SDL_assert(fileData);
+            SDL_assert(fileData);
 
-                m_FileDataMap.insert(FileDataPair(filePath, fileData));
-            }
+            m_FileDataMap.insert(FileDataPair(filePath, fileData));
+        }
         return fileData;
     }
 
@@ -1247,13 +1238,13 @@ namespace njli
     {
         FileData *fileData = getFileData(filePath);
         if (NULL == fileData)
-            {
-                fileData = new FileData(filePath);
+        {
+            fileData = new FileData(filePath);
 
-                SDL_assert(fileData);
+            SDL_assert(fileData);
 
-                m_FileDataMap.insert(FileDataPair(filePath, fileData));
-            }
+            m_FileDataMap.insert(FileDataPair(filePath, fileData));
+        }
         return fileData;
     }
 
@@ -1261,17 +1252,17 @@ namespace njli
     {
         FileDataMap::iterator m = m_FileDataMap.find(filePath);
         if (m != m_FileDataMap.end())
-            {
-                FileData *fileData = m->second;
+        {
+            FileData *fileData = m->second;
 
-                SDL_assert(fileData);
+            SDL_assert(fileData);
 
-                delete fileData;
-                fileData = NULL;
+            delete fileData;
+            fileData = NULL;
 
-                m_FileDataMap.erase(m);
-                return true;
-            }
+            m_FileDataMap.erase(m);
+            return true;
+        }
         return false;
     }
 
@@ -1280,13 +1271,13 @@ namespace njli
     {
         FileDataMap::const_iterator m = m_FileDataMap.find(filePath);
         if (m != m_FileDataMap.end())
-            {
-                FileData *cachedFileContent = m->second;
+        {
+            FileData *cachedFileContent = m->second;
 
-                SDL_assert(cachedFileContent);
+            SDL_assert(cachedFileContent);
 
-                return cachedFileContent;
-            }
+            return cachedFileContent;
+        }
         return NULL;
     }
 
@@ -1295,10 +1286,10 @@ namespace njli
     {
         FileData *fileData = getFileData(filePath);
         if (NULL == fileData)
-            {
-                fileData = addFileData(filePath);
-                SDL_assert(fileData);
-            }
+        {
+            fileData = addFileData(filePath);
+            SDL_assert(fileData);
+        }
         return fileData;
     }
 
@@ -1307,10 +1298,10 @@ namespace njli
     {
         ImageFileData *fileData = (ImageFileData *)getFileData(filePath);
         if (NULL == fileData)
-            {
-                fileData = addImageFileData(filePath);
-                SDL_assert(fileData);
-            }
+        {
+            fileData = addImageFileData(filePath);
+            SDL_assert(fileData);
+        }
         return fileData;
     }
 } // namespace njli

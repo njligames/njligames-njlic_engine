@@ -47,16 +47,16 @@ namespace njli
     Rect &Rect::operator=(const Rect &rhs)
     {
         if (this != &rhs)
-            {
-                *offset = *(rhs.offset);
-                *dimension = *(rhs.dimension);
-                *dimensionFile = *(rhs.dimensionFile);
-                *pivotPoint = *(rhs.pivotPoint);
-                trimmedname = rhs.trimmedname;
+        {
+            *offset = *(rhs.offset);
+            *dimension = *(rhs.dimension);
+            *dimensionFile = *(rhs.dimensionFile);
+            *pivotPoint = *(rhs.pivotPoint);
+            trimmedname = rhs.trimmedname;
 
-                *sourcePosition = *(rhs.sourcePosition);
-                *sourceDimension = *(rhs.sourceDimension);
-            }
+            *sourcePosition = *(rhs.sourcePosition);
+            *sourceDimension = *(rhs.sourceDimension);
+        }
         return *this;
     }
     Rect::~Rect()
@@ -250,9 +250,9 @@ namespace njli
     SpriteFrameAtlas &SpriteFrameAtlas::operator=(const SpriteFrameAtlas &rhs)
     {
         if (this != &rhs)
-            {
-                // TODO: implement...
-            }
+        {
+            // TODO: implement...
+        }
         return *this;
     }
 
@@ -334,9 +334,9 @@ namespace njli
     void SpriteFrameAtlas::destroy(SpriteFrameAtlas *object)
     {
         if (object)
-            {
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+        {
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     //    s32 SpriteFrameAtlas::countParameters = 0;
@@ -353,261 +353,251 @@ namespace njli
         // stack now contains: -1 => nil; -2 => table
 
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            //            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                //            const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        //                SDL_assert(countParameters == 0 ||
-                        //                countParameters
-                        //                == 7 || countParameters == 11);
-                        //
-                        if (rect.finishedPopulating())
-                            {
-                                object.addFrame(rect);
-                                rect.resetPopulation();
-                            }
-                        //                if(countParameters == 7)// ||
-                        //                countParameters == 11)
-                        //                    object.addFrame(rect);
-                        //                countParameters = 0;
-
-                        SpriteFrameAtlas::load(object, L, -2);
-                    }
-                else
-                    {
-                        std::string key(lua_tostring(L, -1));
-                        std::transform(key.begin(), key.end(), key.begin(),
-                                       ::tolower);
-
-                        if (strcmp(key.c_str(), "sheetcontentwidth") == 0)
-                            {
-                                double number = lua_tonumber(L, index);
-                                object.setSheetContentWidth(number);
-                            }
-                        else if (strcmp(key.c_str(), "sheetcontentheight") == 0)
-                            {
-                                double number = lua_tonumber(L, index);
-                                object.setSheetContentHeight(number);
-                            }
-                        else if (strcmp(key.c_str(), "filename") == 0)
-                            {
-                                const char *value = lua_tostring(L, index);
-                                object.setSourceFilename(value);
-                            }
-
-                        else if (strcmp(key.c_str(), "scale") == 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "shapepadding") == 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "borderpadding") == 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "commondivisorx") == 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "commondivisory") == 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "extrude") == 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "basefactor") == 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "maxtexturesizewidth") ==
-                                 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "maxtexturesizeheight") ==
-                                 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(), "fixedtexturesizewidth") ==
-                                 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-                        else if (strcmp(key.c_str(),
-                                        "fixedtexturesizeheight") == 0)
-                            {
-                                // TODO: implement...
-                                //                    double number =
-                                //                    lua_tonumber(L, index);
-                                //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                //                    "TODO - %s => %f\n",
-                                //                    key.c_str(), number);
-                            }
-
-                        else
-                            {
-                                //                    ++countParameters;
-
-                                if (strcmp(key.c_str(), "x") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setX(number);
-                                    }
-                                else if (strcmp(key.c_str(), "y") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setY(number);
-                                    }
-                                else if (strcmp(key.c_str(), "width") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setWidth(number);
-                                    }
-                                else if (strcmp(key.c_str(), "height") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setHeight(number);
-                                    }
-                                else if (strcmp(key.c_str(), "widthfile") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setWidthFile(number);
-                                    }
-                                else if (strcmp(key.c_str(), "heightfile") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setHeightFile(number);
-                                    }
-                                else if (strcmp(key.c_str(), "pivotx") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setPivotX(number);
-                                    }
-                                else if (strcmp(key.c_str(), "pivoty") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setPivotY(number);
-                                    }
-                                else if (strcmp(key.c_str(), "trimmedname") ==
-                                         0)
-                                    {
-                                        const char *value =
-                                            lua_tostring(L, index);
-                                        rect.setTrimmedName(value);
-                                    }
-                                else if (strcmp(key.c_str(), "sourcex") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setSouceX(number);
-                                        //                        rect.setTrimmedName(value);
-                                    }
-                                else if (strcmp(key.c_str(), "sourcey") == 0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setSourceY(number);
-                                        //                        rect.setTrimmedName(value);
-                                    }
-                                else if (strcmp(key.c_str(), "sourcewidth") ==
-                                         0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setSourceWidth(number);
-                                        //                        rect.setTrimmedName(value);
-                                    }
-                                else if (strcmp(key.c_str(), "sourceheight") ==
-                                         0)
-                                    {
-                                        double number = lua_tonumber(L, index);
-                                        rect.setSourceHeight(number);
-                                        //                        rect.setTrimmedName(value);
-                                    }
-                                else
-                                    {
-                                        SDL_LogError(SDL_LOG_CATEGORY_TEST,
-                                                     "invalid key: %s\n",
-                                                     key.c_str());
-                                        SDL_assert(false);
-                                    }
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-
-                //            if(countParameters == 11)
-                //            {
-                //                object.addFrame(rect);
-                //                countParameters = 0;
-                //            }
-                // stack now contains: -1 => key; -2 => table
-
+                //                SDL_assert(countParameters == 0 ||
+                //                countParameters
+                //                == 7 || countParameters == 11);
+                //
                 if (rect.finishedPopulating())
-                    {
-                        object.addFrame(rect);
-                        rect.resetPopulation();
-                    }
+                {
+                    object.addFrame(rect);
+                    rect.resetPopulation();
+                }
+                //                if(countParameters == 7)// ||
+                //                countParameters == 11)
+                //                    object.addFrame(rect);
+                //                countParameters = 0;
+
+                SpriteFrameAtlas::load(object, L, -2);
             }
+            else
+            {
+                std::string key(lua_tostring(L, -1));
+                std::transform(key.begin(), key.end(), key.begin(), ::tolower);
+
+                if (strcmp(key.c_str(), "sheetcontentwidth") == 0)
+                {
+                    double number = lua_tonumber(L, index);
+                    object.setSheetContentWidth(number);
+                }
+                else if (strcmp(key.c_str(), "sheetcontentheight") == 0)
+                {
+                    double number = lua_tonumber(L, index);
+                    object.setSheetContentHeight(number);
+                }
+                else if (strcmp(key.c_str(), "filename") == 0)
+                {
+                    const char *value = lua_tostring(L, index);
+                    object.setSourceFilename(value);
+                }
+
+                else if (strcmp(key.c_str(), "scale") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "shapepadding") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "borderpadding") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "commondivisorx") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "commondivisory") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "extrude") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "basefactor") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "maxtexturesizewidth") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "maxtexturesizeheight") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "fixedtexturesizewidth") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+                else if (strcmp(key.c_str(), "fixedtexturesizeheight") == 0)
+                {
+                    // TODO: implement...
+                    //                    double number =
+                    //                    lua_tonumber(L, index);
+                    //                    SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                    //                    "TODO - %s => %f\n",
+                    //                    key.c_str(), number);
+                }
+
+                else
+                {
+                    //                    ++countParameters;
+
+                    if (strcmp(key.c_str(), "x") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setX(number);
+                    }
+                    else if (strcmp(key.c_str(), "y") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setY(number);
+                    }
+                    else if (strcmp(key.c_str(), "width") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setWidth(number);
+                    }
+                    else if (strcmp(key.c_str(), "height") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setHeight(number);
+                    }
+                    else if (strcmp(key.c_str(), "widthfile") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setWidthFile(number);
+                    }
+                    else if (strcmp(key.c_str(), "heightfile") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setHeightFile(number);
+                    }
+                    else if (strcmp(key.c_str(), "pivotx") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setPivotX(number);
+                    }
+                    else if (strcmp(key.c_str(), "pivoty") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setPivotY(number);
+                    }
+                    else if (strcmp(key.c_str(), "trimmedname") == 0)
+                    {
+                        const char *value = lua_tostring(L, index);
+                        rect.setTrimmedName(value);
+                    }
+                    else if (strcmp(key.c_str(), "sourcex") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setSouceX(number);
+                        //                        rect.setTrimmedName(value);
+                    }
+                    else if (strcmp(key.c_str(), "sourcey") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setSourceY(number);
+                        //                        rect.setTrimmedName(value);
+                    }
+                    else if (strcmp(key.c_str(), "sourcewidth") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setSourceWidth(number);
+                        //                        rect.setTrimmedName(value);
+                    }
+                    else if (strcmp(key.c_str(), "sourceheight") == 0)
+                    {
+                        double number = lua_tonumber(L, index);
+                        rect.setSourceHeight(number);
+                        //                        rect.setTrimmedName(value);
+                    }
+                    else
+                    {
+                        SDL_LogError(SDL_LOG_CATEGORY_TEST, "invalid key: %s\n",
+                                     key.c_str());
+                        SDL_assert(false);
+                    }
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+
+            //            if(countParameters == 11)
+            //            {
+            //                object.addFrame(rect);
+            //                countParameters = 0;
+            //            }
+            // stack now contains: -1 => key; -2 => table
+
+            if (rect.finishedPopulating())
+            {
+                object.addFrame(rect);
+                rect.resetPopulation();
+            }
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -645,13 +635,13 @@ namespace njli
         SDL_assert(name);
 
         for (s32 i = 0; i < m_Frames.size(); ++i)
+        {
+            const char *s = m_Frames.at(i).getTrimmedName().c_str();
+            if (std::strcmp(s, name) == 0)
             {
-                const char *s = m_Frames.at(i).getTrimmedName().c_str();
-                if (std::strcmp(s, name) == 0)
-                    {
-                        return true;
-                    }
+                return true;
             }
+        }
 
         return false;
     }
@@ -661,13 +651,13 @@ namespace njli
         SDL_assert(name);
 
         for (s32 i = 0; i < m_Frames.size(); ++i)
+        {
+            const char *s = m_Frames.at(i).getTrimmedName().c_str();
+            if (std::strcmp(s, name) == 0)
             {
-                const char *s = m_Frames.at(i).getTrimmedName().c_str();
-                if (std::strcmp(s, name) == 0)
-                    {
-                        return m_Frames.at(i);
-                    }
+                return m_Frames.at(i);
             }
+        }
 
         SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Unable to find frame name (%s)",
                     name);

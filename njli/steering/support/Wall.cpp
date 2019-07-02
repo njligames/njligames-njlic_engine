@@ -32,10 +32,10 @@ namespace njli
     const Wall &Wall::operator=(const Wall &copy)
     {
         if (this != &copy)
-            {
-                *m_planePoint = *(copy.m_planePoint);
-                *m_planeNormal = *(copy.m_planeNormal);
-            }
+        {
+            *m_planePoint = *(copy.m_planePoint);
+            *m_planeNormal = *(copy.m_planeNormal);
+        }
         return *this;
     }
 
@@ -74,9 +74,9 @@ namespace njli
                                 const btVector3 &lineDirection) const
     {
         if (m_planeNormal->dot(lineDirection.normalized()) == 0)
-            {
-                return false;
-            }
+        {
+            return false;
+        }
         return true;
     }
     // http://geomalgorithms.com/a05-_intersect-1.html
@@ -116,13 +116,13 @@ namespace njli
                                           const btVector3 &lineDirection) const
     {
         if (lineIntersection(linePoint, lineDirection))
-            {
-                btScalar t = (m_planeNormal->dot(*m_planePoint) -
-                              m_planeNormal->dot(linePoint)) /
-                             m_planeNormal->dot(lineDirection.normalized());
+        {
+            btScalar t = (m_planeNormal->dot(*m_planePoint) -
+                          m_planeNormal->dot(linePoint)) /
+                         m_planeNormal->dot(lineDirection.normalized());
 
-                return linePoint + btVector3(lineDirection.normalized() * t);
-            }
+            return linePoint + btVector3(lineDirection.normalized() * t);
+        }
         return linePoint;
     }
 
@@ -136,12 +136,12 @@ namespace njli
         float N(-m_planeNormal->dot(w));
         float smallest = std::numeric_limits<float>::min();
         if (fabs(D) < 0.00001)
-            {
-                if (N == 0)
-                    return 2;
-                else
-                    return 0;
-            }
+        {
+            if (N == 0)
+                return 2;
+            else
+                return 0;
+        }
 
         // they are not parallel
         // compute intersect param
@@ -158,9 +158,9 @@ namespace njli
     {
         btVector3 intersectionPoint;
         if (segmentIntersection(p0, p1, intersectionPoint) > 0)
-            {
-                return intersectionPoint;
-            }
+        {
+            return intersectionPoint;
+        }
         return btVector3(0, 0, 0);
     }
 

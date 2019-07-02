@@ -103,7 +103,7 @@ namespace njli
 
         // initialize a counter so we know if we are "pinging" or "ponging"
         //(i.e. if counter is even then FBO A is current, if odd, FBO B is
-        //current.)
+        // current.)
         m_counter = 0;
     }
 

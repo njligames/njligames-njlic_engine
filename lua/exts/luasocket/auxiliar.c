@@ -36,11 +36,11 @@ void auxiliar_newclass(lua_State *L, const char *classname, luaL_Reg *func)
     /* pass all methods that start with _ to the metatable, and all others
      * to the index table */
     for (; func->name; func++)
-        { /* mt,"__index",it */
-            lua_pushstring(L, func->name);
-            lua_pushcfunction(L, func->func);
-            lua_rawset(L, func->name[0] == '_' ? -5 : -3);
-        }
+    { /* mt,"__index",it */
+        lua_pushstring(L, func->name);
+        lua_pushcfunction(L, func->func);
+        lua_rawset(L, func->name[0] == '_' ? -5 : -3);
+    }
     lua_rawset(L, -3); /* mt */
     lua_pop(L, 1);
 }
@@ -101,11 +101,11 @@ void *auxiliar_checkclass(lua_State *L, const char *classname, int objidx)
 {
     void *data = auxiliar_getclassudata(L, classname, objidx);
     if (!data)
-        {
-            char msg[45];
-            sprintf(msg, "%.35s expected", classname);
-            luaL_argerror(L, objidx, msg);
-        }
+    {
+        char msg[45];
+        sprintf(msg, "%.35s expected", classname);
+        luaL_argerror(L, objidx, msg);
+    }
     return data;
 }
 
@@ -117,11 +117,11 @@ void *auxiliar_checkgroup(lua_State *L, const char *groupname, int objidx)
 {
     void *data = auxiliar_getgroupudata(L, groupname, objidx);
     if (!data)
-        {
-            char msg[45];
-            sprintf(msg, "%.35s expected", groupname);
-            luaL_argerror(L, objidx, msg);
-        }
+    {
+        char msg[45];
+        sprintf(msg, "%.35s expected", groupname);
+        luaL_argerror(L, objidx, msg);
+    }
     return data;
 }
 
@@ -147,15 +147,15 @@ void *auxiliar_getgroupudata(lua_State *L, const char *groupname, int objidx)
     lua_pushstring(L, groupname);
     lua_rawget(L, -2);
     if (lua_isnil(L, -1))
-        {
-            lua_pop(L, 2);
-            return NULL;
-        }
+    {
+        lua_pop(L, 2);
+        return NULL;
+    }
     else
-        {
-            lua_pop(L, 2);
-            return lua_touserdata(L, objidx);
-        }
+    {
+        lua_pop(L, 2);
+        return lua_touserdata(L, objidx);
+    }
 }
 
 /*-------------------------------------------------------------------------*\

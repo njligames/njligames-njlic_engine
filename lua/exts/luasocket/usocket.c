@@ -35,11 +35,10 @@ int socket_waitfd(p_socket ps, int sw, p_timeout tm)
     if (timeout_iszero(tm))
         return IO_TIMEOUT; /* optimize timeout == 0 case */
     do
-        {
-            int t = (int)(timeout_getretry(tm) * 1e3);
-            ret = poll(&pfd, 1, t >= 0 ? t : -1);
-        }
-    while (ret == -1 && errno == EINTR);
+    {
+        int t = (int)(timeout_getretry(tm) * 1e3);
+        ret = poll(&pfd, 1, t >= 0 ? t : -1);
+    } while (ret == -1 && errno == EINTR);
     if (ret == -1)
         return errno;
     if (ret == 0)
@@ -65,33 +64,32 @@ int socket_waitfd(p_socket ps, int sw, p_timeout tm)
     if (timeout_iszero(tm))
         return IO_TIMEOUT; /* optimize timeout == 0 case */
     do
+    {
+        /* must set bits within loop, because select may have modifed them
+         */
+        rp = wp = NULL;
+        if (sw & WAITFD_R)
         {
-            /* must set bits within loop, because select may have modifed them
-             */
-            rp = wp = NULL;
-            if (sw & WAITFD_R)
-                {
-                    FD_ZERO(&rfds);
-                    FD_SET(*ps, &rfds);
-                    rp = &rfds;
-                }
-            if (sw & WAITFD_W)
-                {
-                    FD_ZERO(&wfds);
-                    FD_SET(*ps, &wfds);
-                    wp = &wfds;
-                }
-            t = timeout_getretry(tm);
-            tp = NULL;
-            if (t >= 0.0)
-                {
-                    tv.tv_sec = (int)t;
-                    tv.tv_usec = (int)((t - tv.tv_sec) * 1.0e6);
-                    tp = &tv;
-                }
-            ret = select(*ps + 1, rp, wp, NULL, tp);
+            FD_ZERO(&rfds);
+            FD_SET(*ps, &rfds);
+            rp = &rfds;
         }
-    while (ret == -1 && errno == EINTR);
+        if (sw & WAITFD_W)
+        {
+            FD_ZERO(&wfds);
+            FD_SET(*ps, &wfds);
+            wp = &wfds;
+        }
+        t = timeout_getretry(tm);
+        tp = NULL;
+        if (t >= 0.0)
+        {
+            tv.tv_sec = (int)t;
+            tv.tv_usec = (int)((t - tv.tv_sec) * 1.0e6);
+            tp = &tv;
+        }
+        ret = select(*ps + 1, rp, wp, NULL, tp);
+    } while (ret == -1 && errno == EINTR);
     if (ret == -1)
         return errno;
     if (ret == 0)
@@ -123,10 +121,10 @@ int socket_close(void) { return 1; }
 void socket_destroy(p_socket ps)
 {
     if (*ps != SOCKET_INVALID)
-        {
-            close(*ps);
-            *ps = SOCKET_INVALID;
-        }
+    {
+        close(*ps);
+        *ps = SOCKET_INVALID;
+    }
 }
 
 /*-------------------------------------------------------------------------*\
@@ -137,15 +135,14 @@ int socket_select(t_socket n, fd_set *rfds, fd_set *wfds, fd_set *efds,
 {
     int ret;
     do
-        {
-            struct timeval tv;
-            double t = timeout_getretry(tm);
-            tv.tv_sec = (int)t;
-            tv.tv_usec = (int)((t - tv.tv_sec) * 1.0e6);
-            /* timeout = 0 means no wait */
-            ret = select(n, rfds, wfds, efds, t >= 0.0 ? &tv : NULL);
-        }
-    while (ret < 0 && errno == EINTR);
+    {
+        struct timeval tv;
+        double t = timeout_getretry(tm);
+        tv.tv_sec = (int)t;
+        tv.tv_usec = (int)((t - tv.tv_sec) * 1.0e6);
+        /* timeout = 0 means no wait */
+        ret = select(n, rfds, wfds, efds, t >= 0.0 ? &tv : NULL);
+    } while (ret < 0 && errno == EINTR);
     return ret;
 }
 
@@ -213,12 +210,12 @@ int socket_connect(p_socket ps, SA *addr, socklen_t len, p_timeout tm)
     /* wait until we have the result of the connection attempt or timeout */
     err = socket_waitfd(ps, WAITFD_C, tm);
     if (err == IO_CLOSED)
-        {
-            if (recv(*ps, (char *)&err, 0, 0) == 0)
-                return IO_DONE;
-            else
-                return errno;
-        }
+    {
+        if (recv(*ps, (char *)&err, 0, 0) == 0)
+            return IO_DONE;
+        else
+            return errno;
+    }
     else
         return err;
 }
@@ -232,18 +229,18 @@ int socket_accept(p_socket ps, p_socket pa, SA *addr, socklen_t *len,
     if (*ps == SOCKET_INVALID)
         return IO_CLOSED;
     for (;;)
-        {
-            int err;
-            if ((*pa = accept(*ps, addr, len)) != SOCKET_INVALID)
-                return IO_DONE;
-            err = errno;
-            if (err == EINTR)
-                continue;
-            if (err != EAGAIN && err != ECONNABORTED)
-                return err;
-            if ((err = socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE)
-                return err;
-        }
+    {
+        int err;
+        if ((*pa = accept(*ps, addr, len)) != SOCKET_INVALID)
+            return IO_DONE;
+        err = errno;
+        if (err == EINTR)
+            continue;
+        if (err != EAGAIN && err != ECONNABORTED)
+            return err;
+        if ((err = socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE)
+            return err;
+    }
     /* can't reach here */
     return IO_UNKNOWN;
 }
@@ -261,31 +258,31 @@ int socket_send(p_socket ps, const char *data, size_t count, size_t *sent,
         return IO_CLOSED;
     /* loop until we send something or we give up on error */
     for (;;)
+    {
+        long put = (long)send(*ps, data, count, 0);
+        /* if we sent anything, we are done */
+        if (put >= 0)
         {
-            long put = (long)send(*ps, data, count, 0);
-            /* if we sent anything, we are done */
-            if (put >= 0)
-                {
-                    *sent = put;
-                    return IO_DONE;
-                }
-            err = errno;
-            /* EPIPE means the connection was closed */
-            if (err == EPIPE)
-                return IO_CLOSED;
-            /* EPROTOTYPE means the connection is being closed (on Yosemite!)*/
-            if (err == EPROTOTYPE)
-                continue;
-            /* we call was interrupted, just try again */
-            if (err == EINTR)
-                continue;
-            /* if failed fatal reason, report error */
-            if (err != EAGAIN)
-                return err;
-            /* wait until we can send something or we timeout */
-            if ((err = socket_waitfd(ps, WAITFD_W, tm)) != IO_DONE)
-                return err;
+            *sent = put;
+            return IO_DONE;
         }
+        err = errno;
+        /* EPIPE means the connection was closed */
+        if (err == EPIPE)
+            return IO_CLOSED;
+        /* EPROTOTYPE means the connection is being closed (on Yosemite!)*/
+        if (err == EPROTOTYPE)
+            continue;
+        /* we call was interrupted, just try again */
+        if (err == EINTR)
+            continue;
+        /* if failed fatal reason, report error */
+        if (err != EAGAIN)
+            return err;
+        /* wait until we can send something or we timeout */
+        if ((err = socket_waitfd(ps, WAITFD_W, tm)) != IO_DONE)
+            return err;
+    }
     /* can't reach here */
     return IO_UNKNOWN;
 }
@@ -301,25 +298,25 @@ int socket_sendto(p_socket ps, const char *data, size_t count, size_t *sent,
     if (*ps == SOCKET_INVALID)
         return IO_CLOSED;
     for (;;)
+    {
+        long put = (long)sendto(*ps, data, count, 0, addr, len);
+        if (put >= 0)
         {
-            long put = (long)sendto(*ps, data, count, 0, addr, len);
-            if (put >= 0)
-                {
-                    *sent = put;
-                    return IO_DONE;
-                }
-            err = errno;
-            if (err == EPIPE)
-                return IO_CLOSED;
-            if (err == EPROTOTYPE)
-                continue;
-            if (err == EINTR)
-                continue;
-            if (err != EAGAIN)
-                return err;
-            if ((err = socket_waitfd(ps, WAITFD_W, tm)) != IO_DONE)
-                return err;
+            *sent = put;
+            return IO_DONE;
         }
+        err = errno;
+        if (err == EPIPE)
+            return IO_CLOSED;
+        if (err == EPROTOTYPE)
+            continue;
+        if (err == EINTR)
+            continue;
+        if (err != EAGAIN)
+            return err;
+        if ((err = socket_waitfd(ps, WAITFD_W, tm)) != IO_DONE)
+            return err;
+    }
     return IO_UNKNOWN;
 }
 
@@ -334,23 +331,23 @@ int socket_recv(p_socket ps, char *data, size_t count, size_t *got,
     if (*ps == SOCKET_INVALID)
         return IO_CLOSED;
     for (;;)
+    {
+        long taken = (long)recv(*ps, data, count, 0);
+        if (taken > 0)
         {
-            long taken = (long)recv(*ps, data, count, 0);
-            if (taken > 0)
-                {
-                    *got = taken;
-                    return IO_DONE;
-                }
-            err = errno;
-            if (taken == 0)
-                return IO_CLOSED;
-            if (err == EINTR)
-                continue;
-            if (err != EAGAIN)
-                return err;
-            if ((err = socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE)
-                return err;
+            *got = taken;
+            return IO_DONE;
         }
+        err = errno;
+        if (taken == 0)
+            return IO_CLOSED;
+        if (err == EINTR)
+            continue;
+        if (err != EAGAIN)
+            return err;
+        if ((err = socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE)
+            return err;
+    }
     return IO_UNKNOWN;
 }
 
@@ -365,23 +362,23 @@ int socket_recvfrom(p_socket ps, char *data, size_t count, size_t *got,
     if (*ps == SOCKET_INVALID)
         return IO_CLOSED;
     for (;;)
+    {
+        long taken = (long)recvfrom(*ps, data, count, 0, addr, len);
+        if (taken > 0)
         {
-            long taken = (long)recvfrom(*ps, data, count, 0, addr, len);
-            if (taken > 0)
-                {
-                    *got = taken;
-                    return IO_DONE;
-                }
-            err = errno;
-            if (taken == 0)
-                return IO_CLOSED;
-            if (err == EINTR)
-                continue;
-            if (err != EAGAIN)
-                return err;
-            if ((err = socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE)
-                return err;
+            *got = taken;
+            return IO_DONE;
         }
+        err = errno;
+        if (taken == 0)
+            return IO_CLOSED;
+        if (err == EINTR)
+            continue;
+        if (err != EAGAIN)
+            return err;
+        if ((err = socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE)
+            return err;
+    }
     return IO_UNKNOWN;
 }
 
@@ -402,31 +399,31 @@ int socket_write(p_socket ps, const char *data, size_t count, size_t *sent,
         return IO_CLOSED;
     /* loop until we send something or we give up on error */
     for (;;)
+    {
+        long put = (long)write(*ps, data, count);
+        /* if we sent anything, we are done */
+        if (put >= 0)
         {
-            long put = (long)write(*ps, data, count);
-            /* if we sent anything, we are done */
-            if (put >= 0)
-                {
-                    *sent = put;
-                    return IO_DONE;
-                }
-            err = errno;
-            /* EPIPE means the connection was closed */
-            if (err == EPIPE)
-                return IO_CLOSED;
-            /* EPROTOTYPE means the connection is being closed (on Yosemite!)*/
-            if (err == EPROTOTYPE)
-                continue;
-            /* we call was interrupted, just try again */
-            if (err == EINTR)
-                continue;
-            /* if failed fatal reason, report error */
-            if (err != EAGAIN)
-                return err;
-            /* wait until we can send something or we timeout */
-            if ((err = socket_waitfd(ps, WAITFD_W, tm)) != IO_DONE)
-                return err;
+            *sent = put;
+            return IO_DONE;
         }
+        err = errno;
+        /* EPIPE means the connection was closed */
+        if (err == EPIPE)
+            return IO_CLOSED;
+        /* EPROTOTYPE means the connection is being closed (on Yosemite!)*/
+        if (err == EPROTOTYPE)
+            continue;
+        /* we call was interrupted, just try again */
+        if (err == EINTR)
+            continue;
+        /* if failed fatal reason, report error */
+        if (err != EAGAIN)
+            return err;
+        /* wait until we can send something or we timeout */
+        if ((err = socket_waitfd(ps, WAITFD_W, tm)) != IO_DONE)
+            return err;
+    }
     /* can't reach here */
     return IO_UNKNOWN;
 }
@@ -443,23 +440,23 @@ int socket_read(p_socket ps, char *data, size_t count, size_t *got,
     if (*ps == SOCKET_INVALID)
         return IO_CLOSED;
     for (;;)
+    {
+        long taken = (long)read(*ps, data, count);
+        if (taken > 0)
         {
-            long taken = (long)read(*ps, data, count);
-            if (taken > 0)
-                {
-                    *got = taken;
-                    return IO_DONE;
-                }
-            err = errno;
-            if (taken == 0)
-                return IO_CLOSED;
-            if (err == EINTR)
-                continue;
-            if (err != EAGAIN)
-                return err;
-            if ((err = socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE)
-                return err;
+            *got = taken;
+            return IO_DONE;
         }
+        err = errno;
+        if (taken == 0)
+            return IO_CLOSED;
+        if (err == EINTR)
+            continue;
+        if (err != EAGAIN)
+            return err;
+        if ((err = socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE)
+            return err;
+    }
     return IO_UNKNOWN;
 }
 
@@ -521,12 +518,12 @@ const char *socket_hoststrerror(int err)
     if (err <= 0)
         return io_strerror(err);
     switch (err)
-        {
-        case HOST_NOT_FOUND:
-            return PIE_HOST_NOT_FOUND;
-        default:
-            return hstrerror(err);
-        }
+    {
+    case HOST_NOT_FOUND:
+        return PIE_HOST_NOT_FOUND;
+    default:
+        return hstrerror(err);
+    }
 }
 
 const char *socket_strerror(int err)
@@ -534,26 +531,26 @@ const char *socket_strerror(int err)
     if (err <= 0)
         return io_strerror(err);
     switch (err)
-        {
-        case EADDRINUSE:
-            return PIE_ADDRINUSE;
-        case EISCONN:
-            return PIE_ISCONN;
-        case EACCES:
-            return PIE_ACCESS;
-        case ECONNREFUSED:
-            return PIE_CONNREFUSED;
-        case ECONNABORTED:
-            return PIE_CONNABORTED;
-        case ECONNRESET:
-            return PIE_CONNRESET;
-        case ETIMEDOUT:
-            return PIE_TIMEDOUT;
-        default:
-            {
-                return strerror(err);
-            }
-        }
+    {
+    case EADDRINUSE:
+        return PIE_ADDRINUSE;
+    case EISCONN:
+        return PIE_ISCONN;
+    case EACCES:
+        return PIE_ACCESS;
+    case ECONNREFUSED:
+        return PIE_CONNREFUSED;
+    case ECONNABORTED:
+        return PIE_CONNABORTED;
+    case ECONNRESET:
+        return PIE_CONNRESET;
+    case ETIMEDOUT:
+        return PIE_TIMEDOUT;
+    default:
+    {
+        return strerror(err);
+    }
+    }
 }
 
 const char *socket_ioerror(p_socket ps, int err)
@@ -567,36 +564,36 @@ const char *socket_gaistrerror(int err)
     if (err == 0)
         return NULL;
     switch (err)
-        {
-        case EAI_AGAIN:
-            return PIE_AGAIN;
-        case EAI_BADFLAGS:
-            return PIE_BADFLAGS;
+    {
+    case EAI_AGAIN:
+        return PIE_AGAIN;
+    case EAI_BADFLAGS:
+        return PIE_BADFLAGS;
 #ifdef EAI_BADHINTS
-        case EAI_BADHINTS:
-            return PIE_BADHINTS;
+    case EAI_BADHINTS:
+        return PIE_BADHINTS;
 #endif
-        case EAI_FAIL:
-            return PIE_FAIL;
-        case EAI_FAMILY:
-            return PIE_FAMILY;
-        case EAI_MEMORY:
-            return PIE_MEMORY;
-        case EAI_NONAME:
-            return PIE_NONAME;
-        case EAI_OVERFLOW:
-            return PIE_OVERFLOW;
+    case EAI_FAIL:
+        return PIE_FAIL;
+    case EAI_FAMILY:
+        return PIE_FAMILY;
+    case EAI_MEMORY:
+        return PIE_MEMORY;
+    case EAI_NONAME:
+        return PIE_NONAME;
+    case EAI_OVERFLOW:
+        return PIE_OVERFLOW;
 #ifdef EAI_PROTOCOL
-        case EAI_PROTOCOL:
-            return PIE_PROTOCOL;
+    case EAI_PROTOCOL:
+        return PIE_PROTOCOL;
 #endif
-        case EAI_SERVICE:
-            return PIE_SERVICE;
-        case EAI_SOCKTYPE:
-            return PIE_SOCKTYPE;
-        case EAI_SYSTEM:
-            return strerror(errno);
-        default:
-            return gai_strerror(err);
-        }
+    case EAI_SERVICE:
+        return PIE_SERVICE;
+    case EAI_SOCKTYPE:
+        return PIE_SOCKTYPE;
+    case EAI_SYSTEM:
+        return strerror(errno);
+    default:
+        return gai_strerror(err);
+    }
 }

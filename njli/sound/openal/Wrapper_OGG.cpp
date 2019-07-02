@@ -25,9 +25,9 @@ size_t AR_readOgg(void *dst, size_t size1, size_t size2, void *fh)
     ogg_file *of = reinterpret_cast<ogg_file *>(fh);
     size_t len = size1 * size2;
     if (of->curPtr + len > of->filePtr + of->fileSize)
-        {
-            len = of->filePtr + of->fileSize - of->curPtr;
-        }
+    {
+        len = of->filePtr + of->fileSize - of->curPtr;
+    }
     memcpy(dst, of->curPtr, len);
     of->curPtr += len;
     return len;
@@ -38,29 +38,29 @@ int AR_seekOgg(void *fh, ogg_int64_t to, int type)
     ogg_file *of = reinterpret_cast<ogg_file *>(fh);
 
     switch (type)
-        {
-        case SEEK_CUR:
-            of->curPtr += to;
-            break;
-        case SEEK_END:
-            of->curPtr = of->filePtr + of->fileSize - to;
-            break;
-        case SEEK_SET:
-            of->curPtr = of->filePtr + to;
-            break;
-        default:
-            return -1;
-        }
+    {
+    case SEEK_CUR:
+        of->curPtr += to;
+        break;
+    case SEEK_END:
+        of->curPtr = of->filePtr + of->fileSize - to;
+        break;
+    case SEEK_SET:
+        of->curPtr = of->filePtr + to;
+        break;
+    default:
+        return -1;
+    }
     if (of->curPtr < of->filePtr)
-        {
-            of->curPtr = of->filePtr;
-            return -1;
-        }
+    {
+        of->curPtr = of->filePtr;
+        return -1;
+    }
     if (of->curPtr > of->filePtr + of->fileSize)
-        {
-            of->curPtr = of->filePtr + of->fileSize;
-            return -1;
-        }
+    {
+        of->curPtr = of->filePtr + of->fileSize;
+        return -1;
+    }
     return 0;
 }
 
@@ -84,19 +84,19 @@ WrapperOgg::WrapperOgg(int minDecompressLengthAtOnce)
     this->ov = NULL;
     this->minDecompressLengthAtOnce = minDecompressLengthAtOnce;
     if (this->minDecompressLengthAtOnce == -1)
-        {
-            this->minDecompressLengthAtOnce = INT_MAX;
-        }
+    {
+        this->minDecompressLengthAtOnce = INT_MAX;
+    }
     else
+    {
+        if (this->minDecompressLengthAtOnce % OGG_BUFFER_SIZE != 0)
         {
-            if (this->minDecompressLengthAtOnce % OGG_BUFFER_SIZE != 0)
-                {
-                    SDL_Log("OGG buffer size and OpenAL buffer size are not "
-                            "modulable !!");
-                    SDL_Log("this->minDecompressLengthAtOnce %% "
-                            "OGG_BUFFER_SIZE != 0");
-                }
+            SDL_Log("OGG buffer size and OpenAL buffer size are not "
+                    "modulable !!");
+            SDL_Log("this->minDecompressLengthAtOnce %% "
+                    "OGG_BUFFER_SIZE != 0");
         }
+    }
 }
 
 WrapperOgg::~WrapperOgg()
@@ -130,16 +130,16 @@ void WrapperOgg::LoadFromMemory(char *data, int dataSize, SoundInfo *soundInfo)
     soundInfo->bitsPerChannel = 16;
 
     if (ov_seekable(this->ov) == 0)
-        {
-            // Disable seeking
-            soundInfo->seekable = false;
-            this->seekable = false;
-        }
+    {
+        // Disable seeking
+        soundInfo->seekable = false;
+        this->seekable = false;
+    }
     else
-        {
-            soundInfo->seekable = true;
-            this->seekable = true;
-        }
+    {
+        soundInfo->seekable = true;
+        this->seekable = true;
+    }
 }
 
 void WrapperOgg::LoadFromFile(FILE *f, SoundInfo *soundInfo)
@@ -163,48 +163,48 @@ void WrapperOgg::LoadFromFile(FILE *f, SoundInfo *soundInfo)
     soundInfo->bitsPerChannel = 16;
 
     if (ov_seekable(this->ov) == 0)
-        {
-            // Disable seeking
-            soundInfo->seekable = false;
-            this->seekable = false;
-        }
+    {
+        // Disable seeking
+        soundInfo->seekable = false;
+        this->seekable = false;
+    }
     else
-        {
-            soundInfo->seekable = true;
-            this->seekable = true;
-        }
+    {
+        soundInfo->seekable = true;
+        this->seekable = true;
+    }
 }
 
 void WrapperOgg::ResetStream()
 {
 
     if (this->seekable)
+    {
+        int err = ov_raw_seek(this->ov, 0);
+        if (err != 0)
         {
-            int err = ov_raw_seek(this->ov, 0);
-            if (err != 0)
-                {
-                    SDL_Log("ov_raw_seek err: %i", err);
-                }
+            SDL_Log("ov_raw_seek err: %i", err);
         }
+    }
 }
 
 void WrapperOgg::Seek(size_t pos, SEEK_POS start)
 {
     if (this->seekable == false)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if (start == SEEK_POS::START)
-        {
-            this->ResetStream();
-        }
+    {
+        this->ResetStream();
+    }
 
     int err = ov_raw_seek(this->ov, pos);
     if (err != 0)
-        {
-            SDL_Log("ov_raw_seek err: %i", err);
-        }
+    {
+        SDL_Log("ov_raw_seek err: %i", err);
+    }
 }
 
 size_t WrapperOgg::GetCurrentStreamPos() const { return ov_raw_tell(this->ov); }
@@ -235,22 +235,21 @@ void WrapperOgg::DecompressAll(std::vector<char> &decompressBuffer)
     // int c = 0;
 
     do
+    {
+        // Read up to a buffer's worth of decoded sound data
+        bytes = ov_read(this->ov, this->bufArray, OGG_BUFFER_SIZE, endian, 2, 1,
+                        &bitStream);
+
+        if (bytes < 0)
         {
-            // Read up to a buffer's worth of decoded sound data
-            bytes = ov_read(this->ov, this->bufArray, OGG_BUFFER_SIZE, endian,
-                            2, 1, &bitStream);
-
-            if (bytes < 0)
-                {
-                    SDL_Log("OGG stream ov_read error - returned %li", bytes);
-                    continue;
-                }
-
-            // Append to end of buffer
-            decompressBuffer.insert(decompressBuffer.end(), this->bufArray,
-                                    this->bufArray + bytes);
+            SDL_Log("OGG stream ov_read error - returned %li", bytes);
+            continue;
         }
-    while (bytes > 0);
+
+        // Append to end of buffer
+        decompressBuffer.insert(decompressBuffer.end(), this->bufArray,
+                                this->bufArray + bytes);
+    } while (bytes > 0);
 
     this->Seek(pos, ISoundFileWrapper::SEEK_POS::START);
 
@@ -268,42 +267,38 @@ void WrapperOgg::DecompressStream(std::vector<char> &decompressBuffer,
     // int c = 0;
 
     do
+    {
+        do
         {
-            do
-                {
-                    // Read up to a buffer's worth of decoded sound data
-                    bytes = ov_read(this->ov, this->bufArray, OGG_BUFFER_SIZE,
-                                    endian, 2, 1, &bitStream);
+            // Read up to a buffer's worth of decoded sound data
+            bytes = ov_read(this->ov, this->bufArray, OGG_BUFFER_SIZE, endian,
+                            2, 1, &bitStream);
 
-                    if (bytes < 0)
-                        {
-                            SDL_Log("OGG stream ov_read error - returned %li",
-                                    bytes);
-                            continue;
-                        }
+            if (bytes < 0)
+            {
+                SDL_Log("OGG stream ov_read error - returned %li", bytes);
+                continue;
+            }
 
-                    // Append to end of buffer
-                    decompressBuffer.insert(decompressBuffer.end(),
-                                            this->bufArray,
-                                            this->bufArray + bytes);
+            // Append to end of buffer
+            decompressBuffer.insert(decompressBuffer.end(), this->bufArray,
+                                    this->bufArray + bytes);
 
-                    if (static_cast<int>(decompressBuffer.size()) >=
-                        this->minDecompressLengthAtOnce)
-                        {
-                            return;
-                        }
-                }
-            while (bytes > 0);
+            if (static_cast<int>(decompressBuffer.size()) >=
+                this->minDecompressLengthAtOnce)
+            {
+                return;
+            }
+        } while (bytes > 0);
 
-            if (inLoop)
-                {
-                    this->ResetStream();
-                }
-
-            if (this->minDecompressLengthAtOnce == INT_MAX)
-                {
-                    return;
-                }
+        if (inLoop)
+        {
+            this->ResetStream();
         }
-    while (inLoop);
+
+        if (this->minDecompressLengthAtOnce == INT_MAX)
+        {
+            return;
+        }
+    } while (inLoop);
 }

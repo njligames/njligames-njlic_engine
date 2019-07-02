@@ -89,17 +89,17 @@ static TString *LoadString(LoadState *S)
     if (size == 0)
         return NULL;
     else if (--size <= LUAI_MAXSHORTLEN)
-        { /* short string? */
-            char buff[LUAI_MAXSHORTLEN];
-            LoadVector(S, buff, size);
-            return luaS_newlstr(S->L, buff, size);
-        }
+    { /* short string? */
+        char buff[LUAI_MAXSHORTLEN];
+        LoadVector(S, buff, size);
+        return luaS_newlstr(S->L, buff, size);
+    }
     else
-        { /* long string */
-            TString *ts = luaS_createlngstrobj(S->L, size);
-            LoadVector(S, getstr(ts), size); /* load directly in final place */
-            return ts;
-        }
+    { /* long string */
+        TString *ts = luaS_createlngstrobj(S->L, size);
+        LoadVector(S, getstr(ts), size); /* load directly in final place */
+        return ts;
+    }
 }
 
 static void LoadCode(LoadState *S, Proto *f)
@@ -121,31 +121,31 @@ static void LoadConstants(LoadState *S, Proto *f)
     for (i = 0; i < n; i++)
         setnilvalue(&f->k[i]);
     for (i = 0; i < n; i++)
+    {
+        TValue *o = &f->k[i];
+        int t = LoadByte(S);
+        switch (t)
         {
-            TValue *o = &f->k[i];
-            int t = LoadByte(S);
-            switch (t)
-                {
-                case LUA_TNIL:
-                    setnilvalue(o);
-                    break;
-                case LUA_TBOOLEAN:
-                    setbvalue(o, LoadByte(S));
-                    break;
-                case LUA_TNUMFLT:
-                    setfltvalue(o, LoadNumber(S));
-                    break;
-                case LUA_TNUMINT:
-                    setivalue(o, LoadInteger(S));
-                    break;
-                case LUA_TSHRSTR:
-                case LUA_TLNGSTR:
-                    setsvalue2n(S->L, o, LoadString(S));
-                    break;
-                default:
-                    lua_assert(0);
-                }
+        case LUA_TNIL:
+            setnilvalue(o);
+            break;
+        case LUA_TBOOLEAN:
+            setbvalue(o, LoadByte(S));
+            break;
+        case LUA_TNUMFLT:
+            setfltvalue(o, LoadNumber(S));
+            break;
+        case LUA_TNUMINT:
+            setivalue(o, LoadInteger(S));
+            break;
+        case LUA_TSHRSTR:
+        case LUA_TLNGSTR:
+            setsvalue2n(S->L, o, LoadString(S));
+            break;
+        default:
+            lua_assert(0);
         }
+    }
 }
 
 static void LoadProtos(LoadState *S, Proto *f)
@@ -157,10 +157,10 @@ static void LoadProtos(LoadState *S, Proto *f)
     for (i = 0; i < n; i++)
         f->p[i] = NULL;
     for (i = 0; i < n; i++)
-        {
-            f->p[i] = luaF_newproto(S->L);
-            LoadFunction(S, f->p[i], f->source);
-        }
+    {
+        f->p[i] = luaF_newproto(S->L);
+        LoadFunction(S, f->p[i], f->source);
+    }
 }
 
 static void LoadUpvalues(LoadState *S, Proto *f)
@@ -172,10 +172,10 @@ static void LoadUpvalues(LoadState *S, Proto *f)
     for (i = 0; i < n; i++)
         f->upvalues[i].name = NULL;
     for (i = 0; i < n; i++)
-        {
-            f->upvalues[i].instack = LoadByte(S);
-            f->upvalues[i].idx = LoadByte(S);
-        }
+    {
+        f->upvalues[i].instack = LoadByte(S);
+        f->upvalues[i].idx = LoadByte(S);
+    }
 }
 
 static void LoadDebug(LoadState *S, Proto *f)
@@ -191,11 +191,11 @@ static void LoadDebug(LoadState *S, Proto *f)
     for (i = 0; i < n; i++)
         f->locvars[i].varname = NULL;
     for (i = 0; i < n; i++)
-        {
-            f->locvars[i].varname = LoadString(S);
-            f->locvars[i].startpc = LoadInt(S);
-            f->locvars[i].endpc = LoadInt(S);
-        }
+    {
+        f->locvars[i].varname = LoadString(S);
+        f->locvars[i].startpc = LoadInt(S);
+        f->locvars[i].endpc = LoadInt(S);
+    }
     n = LoadInt(S);
     for (i = 0; i < n; i++)
         f->upvalues[i].name = LoadString(S);

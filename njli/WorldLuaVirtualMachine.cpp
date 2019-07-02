@@ -266,11 +266,11 @@ static void l_message(const char *pname, const char *msg)
 static int report(lua_State *L, int status)
 {
     if (status != LUA_OK)
-        {
-            const char *msg = lua_tostring(L, -1);
-            l_message(progname, msg);
-            lua_pop(L, 1); /* remove message */
-        }
+    {
+        const char *msg = lua_tostring(L, -1);
+        l_message(progname, msg);
+        lua_pop(L, 1); /* remove message */
+    }
     return status;
 }
 
@@ -281,15 +281,14 @@ static int _msghandler(lua_State *L)
 {
     const char *msg = lua_tostring(L, 1);
     if (msg == NULL)
-        { /* is error object not a string? */
-            if (luaL_callmeta(L, 1,
-                              "__tostring") &&  /* does it have a metamethod */
-                lua_type(L, -1) == LUA_TSTRING) /* that produces a string? */
-                return 1;                       /* that is the message */
-            else
-                msg = lua_pushfstring(L, "(error object is a %s value)",
-                                      luaL_typename(L, 1));
-        }
+    { /* is error object not a string? */
+        if (luaL_callmeta(L, 1, "__tostring") && /* does it have a metamethod */
+            lua_type(L, -1) == LUA_TSTRING)      /* that produces a string? */
+            return 1;                            /* that is the message */
+        else
+            msg = lua_pushfstring(L, "(error object is a %s value)",
+                                  luaL_typename(L, 1));
+    }
     luaL_traceback(L, L, msg, 1); /* append a standard traceback */
     return 1;                     /* return the traceback */
 }
@@ -421,35 +420,32 @@ static void stackDump(lua_State *L)
                    "\n\n\n ----------------  Stack Dump ----------------\n");
     SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s", "\n"); /* end the listing */
     for (i = 1; i <= top; i++)
-        { /* repeat for each level */
-            int t = lua_type(L, i);
-            switch (t)
-                {
+    { /* repeat for each level */
+        int t = lua_type(L, i);
+        switch (t)
+        {
 
-                case LUA_TSTRING: /* strings */
-                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "'%s'\n",
-                                   lua_tostring(L, i));
-                    break;
+        case LUA_TSTRING: /* strings */
+            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "'%s'\n", lua_tostring(L, i));
+            break;
 
-                case LUA_TBOOLEAN: /* booleans */
-                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s",
-                                   lua_toboolean(L, i) ? "true\n" : "false\n");
-                    break;
+        case LUA_TBOOLEAN: /* booleans */
+            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s",
+                           lua_toboolean(L, i) ? "true\n" : "false\n");
+            break;
 
-                case LUA_TNUMBER: /* numbers */
-                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%g\n",
-                                   lua_tonumber(L, i));
-                    break;
+        case LUA_TNUMBER: /* numbers */
+            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%g\n", lua_tonumber(L, i));
+            break;
 
-                default: /* other values */
-                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s\n",
-                                   lua_typename(L, t));
-                    break;
-                }
-            //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "  ");  /* put a
-            //        separator
-            //        */
+        default: /* other values */
+            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s\n", lua_typename(L, t));
+            break;
         }
+        //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "  ");  /* put a
+        //        separator
+        //        */
+    }
     SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s", "\n"); /* end the listing */
     SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "%s",
                    " --------------- Stack Dump Finished ---------------\n");
@@ -1119,16 +1115,15 @@ namespace njli
     {
         // luaL_loadfile
         if (m_lua_State)
-            {
-                int error_code =
-                    luaL_loadfile(m_lua_State, ASSET_PATH(filePath));
+        {
+            int error_code = luaL_loadfile(m_lua_State, ASSET_PATH(filePath));
 
-                if (LUA_OK == error_code)
-                    {
-                        return true;
-                    }
-                getError(filePath, error_code);
+            if (LUA_OK == error_code)
+            {
+                return true;
             }
+            getError(filePath, error_code);
+        }
         return false;
 
         //        if(m_lua_State)
@@ -1152,64 +1147,63 @@ namespace njli
     bool WorldLuaVirtualMachine::loadString(const char *code)
     {
         if (m_lua_State)
-            {
-                int error_code = luaL_loadstring(m_lua_State, code);
+        {
+            int error_code = luaL_loadstring(m_lua_State, code);
 
-                if (LUA_OK == error_code)
-                    return true;
-                getError(code, error_code);
-            }
+            if (LUA_OK == error_code)
+                return true;
+            getError(code, error_code);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::doFile(const char *filePath)
     {
         if (m_lua_State)
-            {
-                int error_code = luaL_dofile(m_lua_State, filePath);
+        {
+            int error_code = luaL_dofile(m_lua_State, filePath);
 
-                if (LUA_OK == error_code)
-                    return true;
-                getError("", error_code);
-            }
+            if (LUA_OK == error_code)
+                return true;
+            getError("", error_code);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::doString(const char *code)
     {
         if (m_lua_State)
-            {
-                int error_code = luaL_dostring(m_lua_State, code);
+        {
+            int error_code = luaL_dostring(m_lua_State, code);
 
-                if (LUA_OK == error_code)
-                    return true;
-                getError(code, error_code);
-            }
+            if (LUA_OK == error_code)
+                return true;
+            getError(code, error_code);
+        }
         return false;
     }
 
     void WorldLuaVirtualMachine::reset()
     {
         if (m_lua_State)
+        {
+            int count = 0;
+            int previous_count = count;
+
+            lua_settop(m_lua_State, 0);
+            count = lua_gc(m_lua_State, LUA_GCCOLLECT, 0);
+
+            do
             {
-                int count = 0;
-                int previous_count = count;
+                previous_count = count;
+                count = lua_gc(m_lua_State, LUA_GCCOUNT, 0);
+            } while (count != previous_count);
 
-                lua_settop(m_lua_State, 0);
-                count = lua_gc(m_lua_State, LUA_GCCOLLECT, 0);
+            World::getInstance()->getWorldFactory()->destroyAll();
 
-                do
-                    {
-                        previous_count = count;
-                        count = lua_gc(m_lua_State, LUA_GCCOUNT, 0);
-                    }
-                while (count != previous_count);
-
-                World::getInstance()->getWorldFactory()->destroyAll();
-
-                unInit();
-                init();
-            }
+            unInit();
+            init();
+        }
     }
 
     double WorldLuaVirtualMachine::getMaxNumber() const
@@ -1273,21 +1267,21 @@ namespace njli
         };
 
         for (s32 i = 0; i < 2; ++i)
-            {
-                std::string bundlePath = BUNDLE_PATH();
-                bundlePath.append(paths[i]);
-                bundlePath.append("/?.lua");
-                appendLuaPath(m_lua_State, bundlePath.c_str());
-            }
+        {
+            std::string bundlePath = BUNDLE_PATH();
+            bundlePath.append(paths[i]);
+            bundlePath.append("/?.lua");
+            appendLuaPath(m_lua_State, bundlePath.c_str());
+        }
 
         for (s32 i = 0; i < 2; ++i)
-            {
-                std::string bundlePath = DOCUMENT_BASEPATH();
-                bundlePath.append("/");
-                bundlePath.append(paths[i]);
-                bundlePath.append("/?.lua");
-                appendLuaPath(m_lua_State, bundlePath.c_str());
-            }
+        {
+            std::string bundlePath = DOCUMENT_BASEPATH();
+            bundlePath.append("/");
+            bundlePath.append(paths[i]);
+            bundlePath.append("/?.lua");
+            appendLuaPath(m_lua_State, bundlePath.c_str());
+        }
 
 #if !(defined(NDEBUG))
         printWrappedClasses(m_lua_State);
@@ -1297,12 +1291,12 @@ namespace njli
     void WorldLuaVirtualMachine::unInit()
     {
         if (m_lua_State)
-            {
-                lua_gc(m_lua_State, LUA_GCCOLLECT, 0);
-                lua_close(m_lua_State);
+        {
+            lua_gc(m_lua_State, LUA_GCCOLLECT, 0);
+            lua_close(m_lua_State);
 
-                m_lua_State = NULL;
-            }
+            m_lua_State = NULL;
+        }
     }
 
     bool WorldLuaVirtualMachine::error(const char *desc)
@@ -1320,182 +1314,181 @@ namespace njli
     {
         std::string value;
         switch (error)
-            {
-            case LUA_YIELD:
-                value = "(LUA_YIELD)";
-                break;
-            case LUA_ERRRUN:
-                value = "(LUA_ERRRUN - a runtime error)";
-                break;
-            case LUA_ERRSYNTAX:
-                value = "LUA_ERRSYNTAX";
-                break;
-            case LUA_ERRMEM:
-                value = "(LUA_ERRMEM - memory allocation error. For such "
-                        "errors, Lua "
-                        "does not call the error handler function)";
-                break;
-            case LUA_ERRGCMM:
-                value = "(LUA_ERRGCMM)";
-                break;
-            case LUA_ERRERR:
-                value = "(LUA_ERRERR - error while running the error handler "
-                        "function)";
-                break;
-            default:
-                break;
-            }
+        {
+        case LUA_YIELD:
+            value = "(LUA_YIELD)";
+            break;
+        case LUA_ERRRUN:
+            value = "(LUA_ERRRUN - a runtime error)";
+            break;
+        case LUA_ERRSYNTAX:
+            value = "LUA_ERRSYNTAX";
+            break;
+        case LUA_ERRMEM:
+            value = "(LUA_ERRMEM - memory allocation error. For such "
+                    "errors, Lua "
+                    "does not call the error handler function)";
+            break;
+        case LUA_ERRGCMM:
+            value = "(LUA_ERRGCMM)";
+            break;
+        case LUA_ERRERR:
+            value = "(LUA_ERRERR - error while running the error handler "
+                    "function)";
+            break;
+        default:
+            break;
+        }
 
         if (m_lua_State)
+        {
+            //            const char *msg = lua_tostring(m_lua_State, -1);
+
+            std::string theerror = "\n\t<ERROR>\n\t";
+            theerror += value.c_str();
+            theerror += "\n\t</ERROR>\n";
+
+            std::string theerrordescription = "\t<DESCRIPTION>\n\t";
+            const char *s = lua_tostring(m_lua_State, -1);
+            if (s)
             {
-                //            const char *msg = lua_tostring(m_lua_State, -1);
-
-                std::string theerror = "\n\t<ERROR>\n\t";
-                theerror += value.c_str();
-                theerror += "\n\t</ERROR>\n";
-
-                std::string theerrordescription = "\t<DESCRIPTION>\n\t";
-                const char *s = lua_tostring(m_lua_State, -1);
-                if (s)
-                    {
-                        std::string desc(s);
-                        theerrordescription += desc;
-                    }
-                else
-                    {
-                        theerrordescription += "Unknown.";
-                    }
-
-                theerrordescription += "\n\t</DESCRIPTION>\n";
-
-                //        std::string thecode = "\t<CODE>\n\t";
-                //        thecode += code;
-                //        thecode += "\n\t</CODE>\n";
-
-                SDL_LogError(SDL_LOG_CATEGORY_TEST, "\n<LUA>%s%s</LUA>\n",
-                             theerror.c_str(), theerrordescription.c_str());
-                lua_pop(m_lua_State, 1); /* remove message */
+                std::string desc(s);
+                theerrordescription += desc;
             }
+            else
+            {
+                theerrordescription += "Unknown.";
+            }
+
+            theerrordescription += "\n\t</DESCRIPTION>\n";
+
+            //        std::string thecode = "\t<CODE>\n\t";
+            //        thecode += code;
+            //        thecode += "\n\t</CODE>\n";
+
+            SDL_LogError(SDL_LOG_CATEGORY_TEST, "\n<LUA>%s%s</LUA>\n",
+                         theerror.c_str(), theerrordescription.c_str());
+            lua_pop(m_lua_State, 1); /* remove message */
+        }
     }
 
     bool WorldLuaVirtualMachine::compile()
     {
         if (m_lua_State)
-            {
-                //            int error_code = lua_pcall( m_lua_State, 0,
-                //            LUA_MULTRET, 0
-                //            );
-                int status = docall(m_lua_State, 0, LUA_MULTRET);
+        {
+            //            int error_code = lua_pcall( m_lua_State, 0,
+            //            LUA_MULTRET, 0
+            //            );
+            int status = docall(m_lua_State, 0, LUA_MULTRET);
 
-                if (LUA_OK == status)
-                    return true;
-                getError("", status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError("", status);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::compileString(const char *code)
     {
         if (loadString(code))
-            {
-                return doString(code);
-            }
+        {
+            return doString(code);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::compileFile(const char *filePath)
     {
         if (m_lua_State)
+        {
+            std::string script;
+            if (njli::World::getInstance()->getWorldResourceLoader()->load(
+                    filePath, &script))
             {
-                std::string script;
-                if (njli::World::getInstance()->getWorldResourceLoader()->load(
-                        filePath, &script))
-                    {
-                        return compileString(script.c_str());
-                    }
-                else
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Unable to load script file (%s)",
-                                    filePath);
-                    }
+                return compileString(script.c_str());
             }
+            else
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Unable to load script file (%s)", filePath);
+            }
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::execute(const char *code)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                //            int error_code = lua_pcall(m_lua_State, 0, 0, 0);
-                int status = docall(m_lua_State, 0, 0);
+            //            int error_code = lua_pcall(m_lua_State, 0, 0, 0);
+            int status = docall(m_lua_State, 0, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::execute(const char *code, const char *_char)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                /* the first argument */
-                lua_pushstring(m_lua_State, _char);
+            /* the first argument */
+            lua_pushstring(m_lua_State, _char);
 
-                /* call the function with 1 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* call the function with 1 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::execute(const char *code, s32 _s32)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                /* the first argument */
-                lua_pushnumber(m_lua_State, _s32);
+            /* the first argument */
+            lua_pushnumber(m_lua_State, _s32);
 
-                /* call the function with 1 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* call the function with 1 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::execute(const char *code, f32 _btScalar)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                /* the first argument */
-                lua_pushnumber(m_lua_State, _btScalar);
+            /* the first argument */
+            lua_pushnumber(m_lua_State, _btScalar);
 
-                /* call the function with 1 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* call the function with 1 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -1505,26 +1498,26 @@ namespace njli
                                          bool &returnValue)
     {
         if (m_lua_State)
+        {
+            lua_getglobal(m_lua_State, code);
+
+            swig_type_info *telegramTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Telegram");
+            SWIG_NewPointerObj(m_lua_State, (void *)&telegram, telegramTypeInfo,
+                               0);
+
+            /* do the call (1 arguments, 1 result) */
+            //            int error_code = lua_pcall(m_lua_State, 1, 1, 0);
+            int status = docall(m_lua_State, 1, 1);
+
+            if (LUA_OK == status)
             {
-                lua_getglobal(m_lua_State, code);
-
-                swig_type_info *telegramTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Telegram");
-                SWIG_NewPointerObj(m_lua_State, (void *)&telegram,
-                                   telegramTypeInfo, 0);
-
-                /* do the call (1 arguments, 1 result) */
-                //            int error_code = lua_pcall(m_lua_State, 1, 1, 0);
-                int status = docall(m_lua_State, 1, 1);
-
-                if (LUA_OK == status)
-                    {
-                        returnValue = lua_toboolean(m_lua_State, -1);
-                        lua_pop(m_lua_State, 1);
-                        return true;
-                    }
-                getError(code, status);
+                returnValue = lua_toboolean(m_lua_State, -1);
+                lua_pop(m_lua_State, 1);
+                return true;
             }
+            getError(code, status);
+        }
 
         return false;
     }
@@ -1532,22 +1525,21 @@ namespace njli
     bool WorldLuaVirtualMachine::execute(const char *code, Scene *pEntity)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
 
-                /* do the call (1 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* do the call (1 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -1556,24 +1548,23 @@ namespace njli
                                          const char *str)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
-                SWIG_NewPointerObj(m_lua_State, (void *)scene, sceneTypeInfo,
-                                   0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
+            SWIG_NewPointerObj(m_lua_State, (void *)scene, sceneTypeInfo, 0);
 
-                lua_pushstring(m_lua_State, str);
+            lua_pushstring(m_lua_State, str);
 
-                /* do the call (1 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* do the call (1 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -1582,23 +1573,22 @@ namespace njli
                                          f32 _btScalar)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
-                lua_pushnumber(m_lua_State, _btScalar);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
+            lua_pushnumber(m_lua_State, _btScalar);
 
-                /* do the call (2 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* do the call (2 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -1608,52 +1598,50 @@ namespace njli
                                          bool &returnValue)
     {
         if (m_lua_State)
+        {
+            lua_getglobal(m_lua_State, code);
+
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
+            swig_type_info *telegramTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Telegram");
+            SWIG_NewPointerObj(m_lua_State, (void *)&telegram, telegramTypeInfo,
+                               0);
+
+            /* do the call (2 arguments, 1 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 1, 0);
+            int status = docall(m_lua_State, 2, 1);
+
+            if (LUA_OK == status)
             {
-                lua_getglobal(m_lua_State, code);
-
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
-                swig_type_info *telegramTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Telegram");
-                SWIG_NewPointerObj(m_lua_State, (void *)&telegram,
-                                   telegramTypeInfo, 0);
-
-                /* do the call (2 arguments, 1 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 1, 0);
-                int status = docall(m_lua_State, 2, 1);
-
-                if (LUA_OK == status)
-                    {
-                        returnValue = lua_toboolean(m_lua_State, -1);
-                        lua_pop(m_lua_State, 1);
-                        return true;
-                    }
-                getError(code, status);
+                returnValue = lua_toboolean(m_lua_State, -1);
+                lua_pop(m_lua_State, 1);
+                return true;
             }
+            getError(code, status);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::execute(const char *code, Node *pEntity)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *nodeTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, nodeTypeInfo,
-                                   0);
+            swig_type_info *nodeTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, nodeTypeInfo, 0);
 
-                /* do the call (1 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* do the call (1 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -1662,23 +1650,22 @@ namespace njli
                                          f32 _btScalar)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *nodeTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, nodeTypeInfo,
-                                   0);
-                lua_pushnumber(m_lua_State, _btScalar);
+            swig_type_info *nodeTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, nodeTypeInfo, 0);
+            lua_pushnumber(m_lua_State, _btScalar);
 
-                /* do the call (2 arguments, 1 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* do the call (2 arguments, 1 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -1688,31 +1675,30 @@ namespace njli
                                          bool &returnValue)
     {
         if (m_lua_State)
+        {
+            lua_getglobal(m_lua_State, code);
+
+            swig_type_info *nodeTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, nodeTypeInfo, 0);
+            swig_type_info *telegramTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Telegram");
+            SWIG_NewPointerObj(m_lua_State, (void *)&telegram, telegramTypeInfo,
+                               0);
+
+            /* do the call (2 arguments, 1 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 1, 0);
+            int status = docall(m_lua_State, 2, 1);
+
+            if (LUA_OK == status)
             {
-                lua_getglobal(m_lua_State, code);
-
-                swig_type_info *nodeTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, nodeTypeInfo,
-                                   0);
-                swig_type_info *telegramTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Telegram");
-                SWIG_NewPointerObj(m_lua_State, (void *)&telegram,
-                                   telegramTypeInfo, 0);
-
-                /* do the call (2 arguments, 1 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 1, 0);
-                int status = docall(m_lua_State, 2, 1);
-
-                if (LUA_OK == status)
-                    {
-                        returnValue = lua_toboolean(m_lua_State, -1);
-                        lua_pop(m_lua_State, 1);
-                        return true;
-                    }
-
-                getError(code, status);
+                returnValue = lua_toboolean(m_lua_State, -1);
+                lua_pop(m_lua_State, 1);
+                return true;
             }
+
+            getError(code, status);
+        }
         return false;
     }
 
@@ -1754,60 +1740,59 @@ namespace njli
         //        "WorldLuaVirtualMachine::execute(%s)\n", code);
 
         if (m_lua_State)
+        {
+            lua_getglobal(m_lua_State, code);
+
+            s32 i;
+            lua_newtable(m_lua_State);
+            for (i = 0; i < DeviceTouch::MAX_TOUCHES; i++)
             {
-                lua_getglobal(m_lua_State, code);
-
-                s32 i;
-                lua_newtable(m_lua_State);
-                for (i = 0; i < DeviceTouch::MAX_TOUCHES; i++)
-                    {
-                        swig_type_info *deviceTouchTypeInfo =
-                            SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
-                        SWIG_NewPointerObj(m_lua_State, (void *)touches[i],
-                                           deviceTouchTypeInfo, 0);
-                        lua_rawseti(
-                            m_lua_State, -2,
+                swig_type_info *deviceTouchTypeInfo =
+                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
+                SWIG_NewPointerObj(m_lua_State, (void *)touches[i],
+                                   deviceTouchTypeInfo, 0);
+                lua_rawseti(m_lua_State, -2,
                             i + 1); /* -1 is the number, -2 is the table*/
-                    }
-
-                /* call the function with 1 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
-
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
             }
+
+            /* call the function with 1 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
+
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::execute(const char *code, DeviceKey **keys)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                s32 i;
-                lua_newtable(m_lua_State);
-                //            for( i = 0; i < numStates; i++)
-                //            {
-                //                lua_pushboolean(m_lua_State, states[i]);
-                ////                lua_rawseti(m_lua_State, -2, i + 1); /* -1
-                ///is the
-                /// number, -2 is the table*/
-                //                lua_setfield(m_lua_State, -2,
-                //                SDL_GetScancodeName(states[i]));  /*
-                //                table["name"] = row->name. Pops key value */
-                //            }
+            s32 i;
+            lua_newtable(m_lua_State);
+            //            for( i = 0; i < numStates; i++)
+            //            {
+            //                lua_pushboolean(m_lua_State, states[i]);
+            ////                lua_rawseti(m_lua_State, -2, i + 1); /* -1
+            /// is the
+            /// number, -2 is the table*/
+            //                lua_setfield(m_lua_State, -2,
+            //                SDL_GetScancodeName(states[i]));  /*
+            //                table["name"] = row->name. Pops key value */
+            //            }
 
-                /* call the function with 1 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* call the function with 1 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -1815,22 +1800,22 @@ namespace njli
                                          const DeviceTouch &touch)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *deviceTouchTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
-                SWIG_NewPointerObj(m_lua_State, (void *)&touch,
-                                   deviceTouchTypeInfo, 0);
+            swig_type_info *deviceTouchTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
+            SWIG_NewPointerObj(m_lua_State, (void *)&touch, deviceTouchTypeInfo,
+                               0);
 
-                /* do the call (1 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* do the call (1 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -1838,22 +1823,22 @@ namespace njli
                                          const DeviceMouse &mouse)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *deviceTouchTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceMouse");
-                SWIG_NewPointerObj(m_lua_State, (void *)&mouse,
-                                   deviceTouchTypeInfo, 0);
+            swig_type_info *deviceTouchTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceMouse");
+            SWIG_NewPointerObj(m_lua_State, (void *)&mouse, deviceTouchTypeInfo,
+                               0);
 
-                /* do the call (1 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* do the call (1 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -1864,35 +1849,33 @@ namespace njli
         //        "WorldLuaVirtualMachine::execute(%s)\n", code);
 
         if (m_lua_State)
+        {
+            lua_getglobal(m_lua_State, code);
+
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
+
+            s32 i;
+            lua_newtable(m_lua_State);
+            for (i = 0; i < DeviceTouch::MAX_TOUCHES; i++)
             {
-                lua_getglobal(m_lua_State, code);
-
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
-
-                s32 i;
-                lua_newtable(m_lua_State);
-                for (i = 0; i < DeviceTouch::MAX_TOUCHES; i++)
-                    {
-                        swig_type_info *deviceTouchTypeInfo =
-                            SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
-                        SWIG_NewPointerObj(m_lua_State, (void *)touches[i],
-                                           deviceTouchTypeInfo, 0);
-                        lua_rawseti(
-                            m_lua_State, -2,
+                swig_type_info *deviceTouchTypeInfo =
+                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
+                SWIG_NewPointerObj(m_lua_State, (void *)touches[i],
+                                   deviceTouchTypeInfo, 0);
+                lua_rawseti(m_lua_State, -2,
                             i + 1); /* -1 is the number, -2 is the table*/
-                    }
-
-                /* call the function with 2 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
-
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
             }
+
+            /* call the function with 2 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
+
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -1900,27 +1883,26 @@ namespace njli
                                          const DeviceTouch &touch)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
 
-                swig_type_info *deviceTouchTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
-                SWIG_NewPointerObj(m_lua_State, (void *)&touch,
-                                   deviceTouchTypeInfo, 0);
+            swig_type_info *deviceTouchTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
+            SWIG_NewPointerObj(m_lua_State, (void *)&touch, deviceTouchTypeInfo,
+                               0);
 
-                /* call the function with 2 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* call the function with 2 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -1928,27 +1910,26 @@ namespace njli
                                          const DeviceMouse &mouse)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
 
-                swig_type_info *deviceTouchTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceMouse");
-                SWIG_NewPointerObj(m_lua_State, (void *)&mouse,
-                                   deviceTouchTypeInfo, 0);
+            swig_type_info *deviceTouchTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceMouse");
+            SWIG_NewPointerObj(m_lua_State, (void *)&mouse, deviceTouchTypeInfo,
+                               0);
 
-                /* call the function with 2 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* call the function with 2 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -1956,27 +1937,26 @@ namespace njli
                                          Node *node2, const btManifoldPoint &pt)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *nodeTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                swig_type_info *manifoldTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_btManifoldPoint");
+            swig_type_info *nodeTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            swig_type_info *manifoldTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_btManifoldPoint");
 
-                SWIG_NewPointerObj(m_lua_State, (void *)node1, nodeTypeInfo, 0);
-                SWIG_NewPointerObj(m_lua_State, (void *)node2, nodeTypeInfo, 0);
-                SWIG_NewPointerObj(m_lua_State, (void *)&pt, manifoldTypeInfo,
-                                   0);
+            SWIG_NewPointerObj(m_lua_State, (void *)node1, nodeTypeInfo, 0);
+            SWIG_NewPointerObj(m_lua_State, (void *)node2, nodeTypeInfo, 0);
+            SWIG_NewPointerObj(m_lua_State, (void *)&pt, manifoldTypeInfo, 0);
 
-                /* do the call (3 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 3, 0, 0);
-                int status = docall(m_lua_State, 3, 0);
+            /* do the call (3 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 3, 0, 0);
+            int status = docall(m_lua_State, 3, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -1985,27 +1965,27 @@ namespace njli
                                          const btDispatcherInfo &dispatchInfo)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *nodeTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                swig_type_info *dispatcherInfoTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_btDispatcherInfo");
+            swig_type_info *nodeTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            swig_type_info *dispatcherInfoTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_btDispatcherInfo");
 
-                SWIG_NewPointerObj(m_lua_State, (void *)node1, nodeTypeInfo, 0);
-                SWIG_NewPointerObj(m_lua_State, (void *)node2, nodeTypeInfo, 0);
-                SWIG_NewPointerObj(m_lua_State, (void *)&dispatchInfo,
-                                   dispatcherInfoTypeInfo, 0);
+            SWIG_NewPointerObj(m_lua_State, (void *)node1, nodeTypeInfo, 0);
+            SWIG_NewPointerObj(m_lua_State, (void *)node2, nodeTypeInfo, 0);
+            SWIG_NewPointerObj(m_lua_State, (void *)&dispatchInfo,
+                               dispatcherInfoTypeInfo, 0);
 
-                /* do the call (3 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 3, 0, 0);
-                int status = docall(m_lua_State, 3, 0);
+            /* do the call (3 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 3, 0, 0);
+            int status = docall(m_lua_State, 3, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -2014,21 +1994,21 @@ namespace njli
                                          const PhysicsRayContact &rayContact)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
-                swig_type_info *physicsRayContactTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__PhysicsRayContact");
-                SWIG_NewPointerObj(m_lua_State, (void *)&rayContact,
-                                   physicsRayContactTypeInfo, 0);
+        {
+            lua_getglobal(m_lua_State, code);
+            swig_type_info *physicsRayContactTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__PhysicsRayContact");
+            SWIG_NewPointerObj(m_lua_State, (void *)&rayContact,
+                               physicsRayContactTypeInfo, 0);
 
-                /* do the call (1 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* do the call (1 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -2037,31 +2017,29 @@ namespace njli
         const btAlignedObjectArray<njli::PhysicsRayContact *> &rayContacts)
     {
         if (m_lua_State)
+        {
+            lua_getglobal(m_lua_State, code);
+
+            s32 i;
+            lua_newtable(m_lua_State);
+            for (i = 0; i < rayContacts.size(); i++)
             {
-                lua_getglobal(m_lua_State, code);
-
-                s32 i;
-                lua_newtable(m_lua_State);
-                for (i = 0; i < rayContacts.size(); i++)
-                    {
-                        swig_type_info *physicsRayContactTypeInfo =
-                            SWIG_TypeQuery(m_lua_State,
-                                           "_p_njli__PhysicsRayContact");
-                        SWIG_NewPointerObj(m_lua_State, (void *)rayContacts[i],
-                                           physicsRayContactTypeInfo, 0);
-                        lua_rawseti(
-                            m_lua_State, -2,
+                swig_type_info *physicsRayContactTypeInfo =
+                    SWIG_TypeQuery(m_lua_State, "_p_njli__PhysicsRayContact");
+                SWIG_NewPointerObj(m_lua_State, (void *)rayContacts[i],
+                                   physicsRayContactTypeInfo, 0);
+                lua_rawseti(m_lua_State, -2,
                             i + 1); /* -1 is the number, -2 is the table*/
-                    }
-
-                /* call the function with 1 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
-
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
             }
+
+            /* call the function with 1 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
+
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -2069,52 +2047,51 @@ namespace njli
                                          s32 height, s32 orientation)
     {
         if (m_lua_State)
-            {
-                int top = lua_gettop(m_lua_State);
+        {
+            int top = lua_gettop(m_lua_State);
 
-                lua_getglobal(m_lua_State, code);
-                top = lua_gettop(m_lua_State);
+            lua_getglobal(m_lua_State, code);
+            top = lua_gettop(m_lua_State);
 
-                lua_pushinteger(m_lua_State, width);
-                top = lua_gettop(m_lua_State);
+            lua_pushinteger(m_lua_State, width);
+            top = lua_gettop(m_lua_State);
 
-                lua_pushinteger(m_lua_State, height);
-                top = lua_gettop(m_lua_State);
+            lua_pushinteger(m_lua_State, height);
+            top = lua_gettop(m_lua_State);
 
-                lua_pushinteger(m_lua_State, orientation);
-                top = lua_gettop(m_lua_State);
+            lua_pushinteger(m_lua_State, orientation);
+            top = lua_gettop(m_lua_State);
 
-                /* do the call (2 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 3, 0, 0);
-                int status = docall(m_lua_State, 3, 0);
+            /* do the call (2 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 3, 0, 0);
+            int status = docall(m_lua_State, 3, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
     bool WorldLuaVirtualMachine::execute(const char *code, Action *action)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *actionTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Action");
-                SWIG_NewPointerObj(m_lua_State, (void *)action, actionTypeInfo,
-                                   0);
+            swig_type_info *actionTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Action");
+            SWIG_NewPointerObj(m_lua_State, (void *)action, actionTypeInfo, 0);
 
-                /* do the call (1 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
-                int status = docall(m_lua_State, 1, 0);
+            /* do the call (1 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+            int status = docall(m_lua_State, 1, 0);
 
-                if (LUA_OK == status)
-                    return true;
+            if (LUA_OK == status)
+                return true;
 
-                getError(code, status);
-            }
+            getError(code, status);
+        }
 
         return false;
     }
@@ -2123,24 +2100,23 @@ namespace njli
                                          f32 _btScalar)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *actionTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Action");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, actionTypeInfo,
-                                   0);
+            swig_type_info *actionTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Action");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, actionTypeInfo, 0);
 
-                lua_pushnumber(m_lua_State, _btScalar);
+            lua_pushnumber(m_lua_State, _btScalar);
 
-                /* do the call (2 arguments, 1 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* do the call (2 arguments, 1 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -2151,35 +2127,33 @@ namespace njli
         //        "WorldLuaVirtualMachine::execute(%s)\n", code);
 
         if (m_lua_State)
+        {
+            lua_getglobal(m_lua_State, code);
+
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
+
+            s32 i;
+            lua_newtable(m_lua_State);
+            for (i = 0; i < DeviceTouch::MAX_TOUCHES; i++)
             {
-                lua_getglobal(m_lua_State, code);
-
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
-
-                s32 i;
-                lua_newtable(m_lua_State);
-                for (i = 0; i < DeviceTouch::MAX_TOUCHES; i++)
-                    {
-                        swig_type_info *deviceTouchTypeInfo =
-                            SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
-                        SWIG_NewPointerObj(m_lua_State, (void *)touches[i],
-                                           deviceTouchTypeInfo, 0);
-                        lua_rawseti(
-                            m_lua_State, -2,
+                swig_type_info *deviceTouchTypeInfo =
+                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
+                SWIG_NewPointerObj(m_lua_State, (void *)touches[i],
+                                   deviceTouchTypeInfo, 0);
+                lua_rawseti(m_lua_State, -2,
                             i + 1); /* -1 is the number, -2 is the table*/
-                    }
-
-                /* call the function with 2 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
-
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
             }
+
+            /* call the function with 2 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
+
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -2187,27 +2161,26 @@ namespace njli
                                          const DeviceTouch &touch)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
 
-                swig_type_info *deviceTouchTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
-                SWIG_NewPointerObj(m_lua_State, (void *)&touch,
-                                   deviceTouchTypeInfo, 0);
+            swig_type_info *deviceTouchTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
+            SWIG_NewPointerObj(m_lua_State, (void *)&touch, deviceTouchTypeInfo,
+                               0);
 
-                /* call the function with 2 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* call the function with 2 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -2215,27 +2188,26 @@ namespace njli
                                          const DeviceMouse &mouse)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
 
-                swig_type_info *deviceTouchTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceMouse");
-                SWIG_NewPointerObj(m_lua_State, (void *)&mouse,
-                                   deviceTouchTypeInfo, 0);
+            swig_type_info *deviceTouchTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceMouse");
+            SWIG_NewPointerObj(m_lua_State, (void *)&mouse, deviceTouchTypeInfo,
+                               0);
 
-                /* call the function with 2 arguments, return 0 result */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* call the function with 2 arguments, return 0 result */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
         return false;
     }
 
@@ -2243,23 +2215,23 @@ namespace njli
                                          const char *str)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                SWIG_NewPointerObj(m_lua_State, (void *)node, sceneTypeInfo, 0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            SWIG_NewPointerObj(m_lua_State, (void *)node, sceneTypeInfo, 0);
 
-                lua_pushstring(m_lua_State, str);
+            lua_pushstring(m_lua_State, str);
 
-                /* do the call (2 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 2, 0);
+            /* do the call (2 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 2, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -2271,29 +2243,29 @@ namespace njli
                                          bool withGui)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                //            swig_type_info *sceneTypeInfo =
-                //            SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                //            SWIG_NewPointerObj(m_lua_State, (void *)node,
-                //            sceneTypeInfo, 0);
+            //            swig_type_info *sceneTypeInfo =
+            //            SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            //            SWIG_NewPointerObj(m_lua_State, (void *)node,
+            //            sceneTypeInfo, 0);
 
-                lua_pushstring(m_lua_State, keycodeName);
-                lua_pushboolean(m_lua_State, withCapsLock);
-                lua_pushboolean(m_lua_State, withControl);
-                lua_pushboolean(m_lua_State, withShift);
-                lua_pushboolean(m_lua_State, withAlt);
-                lua_pushboolean(m_lua_State, withGui);
+            lua_pushstring(m_lua_State, keycodeName);
+            lua_pushboolean(m_lua_State, withCapsLock);
+            lua_pushboolean(m_lua_State, withControl);
+            lua_pushboolean(m_lua_State, withShift);
+            lua_pushboolean(m_lua_State, withAlt);
+            lua_pushboolean(m_lua_State, withGui);
 
-                /* do the call (2 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 6, 0);
+            /* do the call (2 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 6, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -2305,28 +2277,28 @@ namespace njli
                                          bool withGui)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
-                SWIG_NewPointerObj(m_lua_State, (void *)node, sceneTypeInfo, 0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+            SWIG_NewPointerObj(m_lua_State, (void *)node, sceneTypeInfo, 0);
 
-                lua_pushstring(m_lua_State, keycodeName);
-                lua_pushboolean(m_lua_State, withCapsLock);
-                lua_pushboolean(m_lua_State, withControl);
-                lua_pushboolean(m_lua_State, withShift);
-                lua_pushboolean(m_lua_State, withAlt);
-                lua_pushboolean(m_lua_State, withGui);
+            lua_pushstring(m_lua_State, keycodeName);
+            lua_pushboolean(m_lua_State, withCapsLock);
+            lua_pushboolean(m_lua_State, withControl);
+            lua_pushboolean(m_lua_State, withShift);
+            lua_pushboolean(m_lua_State, withAlt);
+            lua_pushboolean(m_lua_State, withGui);
 
-                /* do the call (2 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 7, 0);
+            /* do the call (2 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 7, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }
@@ -2338,29 +2310,28 @@ namespace njli
                                          bool withGui)
     {
         if (m_lua_State)
-            {
-                lua_getglobal(m_lua_State, code);
+        {
+            lua_getglobal(m_lua_State, code);
 
-                swig_type_info *sceneTypeInfo =
-                    SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
-                SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo,
-                                   0);
+            swig_type_info *sceneTypeInfo =
+                SWIG_TypeQuery(m_lua_State, "_p_njli__Scene");
+            SWIG_NewPointerObj(m_lua_State, (void *)pEntity, sceneTypeInfo, 0);
 
-                lua_pushstring(m_lua_State, keycodeName);
-                lua_pushboolean(m_lua_State, withCapsLock);
-                lua_pushboolean(m_lua_State, withControl);
-                lua_pushboolean(m_lua_State, withShift);
-                lua_pushboolean(m_lua_State, withAlt);
-                lua_pushboolean(m_lua_State, withGui);
+            lua_pushstring(m_lua_State, keycodeName);
+            lua_pushboolean(m_lua_State, withCapsLock);
+            lua_pushboolean(m_lua_State, withControl);
+            lua_pushboolean(m_lua_State, withShift);
+            lua_pushboolean(m_lua_State, withAlt);
+            lua_pushboolean(m_lua_State, withGui);
 
-                /* do the call (2 arguments, 0 result) */
-                //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
-                int status = docall(m_lua_State, 7, 0);
+            /* do the call (2 arguments, 0 result) */
+            //            int error_code = lua_pcall(m_lua_State, 2, 0, 0);
+            int status = docall(m_lua_State, 7, 0);
 
-                if (LUA_OK == status)
-                    return true;
-                getError(code, status);
-            }
+            if (LUA_OK == status)
+                return true;
+            getError(code, status);
+        }
 
         return false;
     }

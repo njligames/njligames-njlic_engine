@@ -256,8 +256,8 @@ namespace njli
     Geometry &Geometry::operator=(const Geometry &rhs)
     {
         if (this != &rhs)
-            {
-            }
+        {
+        }
         return *this;
     }
 
@@ -292,13 +292,13 @@ namespace njli
     void Geometry::destroy(Geometry *object)
     {
         if (object)
-            {
-                //            object->removeMaterial();
-                //            object->removeShaderProgram();
-                //            object->removeAllLevelOfDetails();
+        {
+            //            object->removeMaterial();
+            //            object->removeShaderProgram();
+            //            object->removeAllLevelOfDetails();
 
-                World::getInstance()->getWorldFactory()->destroy(object);
-            }
+            World::getInstance()->getWorldFactory()->destroy(object);
+        }
     }
 
     void Geometry::load(Geometry &object, lua_State *L, int index)
@@ -311,56 +311,56 @@ namespace njli
         lua_pushnil(L);
         // stack now contains: -1 => nil; -2 => table
         while (lua_next(L, -2))
+        {
+            // stack now contains: -1 => value; -2 => key; -3 => table
+            // copy the key so that lua_tostring does not modify the
+            // original
+            lua_pushvalue(L, -2);
+            // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
+            // table
+            const char *key = lua_tostring(L, -1);
+            //            const char *value = lua_tostring(L, -2);
+            if (lua_istable(L, -2))
             {
-                // stack now contains: -1 => value; -2 => key; -3 => table
-                // copy the key so that lua_tostring does not modify the
-                // original
-                lua_pushvalue(L, -2);
-                // stack now contains: -1 => key; -2 => value; -3 => key; -4 =>
-                // table
-                const char *key = lua_tostring(L, -1);
-                //            const char *value = lua_tostring(L, -2);
-                if (lua_istable(L, -2))
-                    {
-                        Geometry::load(object, L, -2);
-                    }
-                else
-                    {
-                        if (lua_isnumber(L, index))
-                            {
-                                double number = lua_tonumber(L, index);
-                                printf("%s => %f\n", key, number);
-                            }
-                        else if (lua_isstring(L, index))
-                            {
-                                const char *v = lua_tostring(L, index);
-                                printf("%s => %s\n", key, v);
-                            }
-                        else if (lua_isboolean(L, index))
-                            {
-                                bool v = lua_toboolean(L, index);
-                                printf("%s => %d\n", key, v);
-                            }
-                        else if (lua_isuserdata(L, index))
-                            {
-                                //                    swig_lua_userdata *usr;
-                                //                    swig_type_info *type;
-                                //                    assert(lua_isuserdata(L,index));
-                                //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
-                                //                    /* get data */
-                                //                    type = usr->type;
-                                //                    njli::AbstractFactoryObject
-                                //                    *object =
-                                //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
-                                //                    printf("%s => %d:%s\n",
-                                //                    key, object->getType(),
-                                //                    object->getClassName());
-                            }
-                    }
-                // pop value + copy of key, leaving original key
-                lua_pop(L, 2);
-                // stack now contains: -1 => key; -2 => table
+                Geometry::load(object, L, -2);
             }
+            else
+            {
+                if (lua_isnumber(L, index))
+                {
+                    double number = lua_tonumber(L, index);
+                    printf("%s => %f\n", key, number);
+                }
+                else if (lua_isstring(L, index))
+                {
+                    const char *v = lua_tostring(L, index);
+                    printf("%s => %s\n", key, v);
+                }
+                else if (lua_isboolean(L, index))
+                {
+                    bool v = lua_toboolean(L, index);
+                    printf("%s => %d\n", key, v);
+                }
+                else if (lua_isuserdata(L, index))
+                {
+                    //                    swig_lua_userdata *usr;
+                    //                    swig_type_info *type;
+                    //                    assert(lua_isuserdata(L,index));
+                    //                    usr=(swig_lua_userdata*)lua_touserdata(L,index);
+                    //                    /* get data */
+                    //                    type = usr->type;
+                    //                    njli::AbstractFactoryObject
+                    //                    *object =
+                    //                    static_cast<njli::AbstractFactoryObject*>(usr->ptr);
+                    //                    printf("%s => %d:%s\n",
+                    //                    key, object->getType(),
+                    //                    object->getClassName());
+                }
+            }
+            // pop value + copy of key, leaving original key
+            lua_pop(L, 2);
+            // stack now contains: -1 => key; -2 => table
+        }
         // stack now contains: -1 => table (when lua_next returns 0 it pops the
         // key but does not push anything.) Pop table
         lua_pop(L, 1);
@@ -622,10 +622,10 @@ namespace njli
         m_ModelViewBuffer = 0;
 
         if (m_VertexArray)
-            {
+        {
 
-                glDeleteVertexArrays_NJLIC(1, &m_VertexArray);
-            }
+            glDeleteVertexArrays_NJLIC(1, &m_VertexArray);
+        }
         m_VertexArray = 0;
     }
 
@@ -643,258 +643,243 @@ namespace njli
     {
         ShaderProgram *shader = getShader();
         if (shader && camera)
+        {
+            shader->use();
+            m_ShaderChanged = true;
+            camera->render(shader, m_ShaderChanged);
+
+            struct LightSourceParameters
             {
-                shader->use();
-                m_ShaderChanged = true;
-                camera->render(shader, m_ShaderChanged);
+                btVector4 ambient;
+                btVector4 diffuse;
+                btVector4 specular;
+                btVector4 position;
+                btVector4 halfVector;
+                btVector3 spotDirection;
+                float spotExponent;
+                float spotCutoff;
+                float spotCosCutoff;
+                float constantAttenuation;
+                float linearAttenuation;
+                float quadraticAttenuation;
+            };
 
-                struct LightSourceParameters
-                {
-                    btVector4 ambient;
-                    btVector4 diffuse;
-                    btVector4 specular;
-                    btVector4 position;
-                    btVector4 halfVector;
-                    btVector3 spotDirection;
-                    float spotExponent;
-                    float spotCutoff;
-                    float spotCosCutoff;
-                    float constantAttenuation;
-                    float linearAttenuation;
-                    float quadraticAttenuation;
-                };
+            struct MaterialParameters
+            {
+                btVector4 emission;
+                btVector4 ambient;
+                btVector4 diffuse;
+                btVector4 specular;
+                float shininess;
+            };
 
-                struct MaterialParameters
-                {
-                    btVector4 emission;
-                    btVector4 ambient;
-                    btVector4 diffuse;
-                    btVector4 specular;
-                    float shininess;
-                };
-
-                Material *material = getMaterial();
-                if (material)
-                    {
-                        material->bind(shader);
-                    }
-                //            glActiveTexture(GL_TEXTURE0 + 0);
-                //            glBindTexture(GL_TEXTURE_2D, m_AmbientTexture);
-                //            shader->setUniformValue("tAmbientColor",
-                //            m_AmbientTexture);
-                //
-                //            glActiveTexture(GL_TEXTURE0 + 1);
-                //            glBindTexture(GL_TEXTURE_2D, m_DiffuseTexture);
-                //            shader->setUniformValue("tDiffuseColor",
-                //            m_DiffuseTexture);
-                //
-                //            glActiveTexture(GL_TEXTURE0 + 2);
-                //            glBindTexture(GL_TEXTURE_2D, m_NormalTexture);
-                //            shader->setUniformValue("tNormal",
-                //            m_NormalTexture);
-                //
-                //            glActiveTexture(GL_TEXTURE0 + 3);
-                //            glBindTexture(GL_TEXTURE_2D, m_SpecularTexture);
-                //            shader->setUniformValue("tSpecularColor",
-                //            m_SpecularTexture);
-
-                if (!shader->setUniformValue("RimLightColor",
-                                             getRimLightColor()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set RimLightColor\n");
-                    }
-                if (!shader->setUniformValue("RimLightStart",
-                                             getRimLightStart()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set RimLightStart\n");
-                    }
-                if (!shader->setUniformValue("RimLightEnd", getRimLightEnd()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set RimLightEnd\n");
-                    }
-                if (!shader->setUniformValue("RimLightCoefficient",
-                                             getRimLightCoefficient()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set RimLightCoefficient\n");
-                    }
-
-                if (!shader->setUniformValue("LightSourceAmbientColor",
-                                             getLightSourceAmbientColor()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set LightSourceAmbientColor\n");
-                    }
-                if (!shader->setUniformValue("LightSourceDiffuseColor",
-                                             getLightSourceDiffuseColor()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set LightSourceDiffuseColor\n");
-                    }
-                if (!shader->setUniformValue("LightSourceSpecularColor",
-                                             getLightSourceSpecularColor()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set LightSourceSpecularColor\n");
-                    }
-
-                if (!shader->setUniformValue("LightSourcePosition_worldspace",
-                                             getLightSourcePosition()))
-                    {
-                        SDL_LogWarn(
-                            SDL_LOG_CATEGORY_TEST,
-                            "Couldn't set LightSourcePosition_worldspace\n");
-                    }
-
-                if (!shader->setUniformValue("LightSourceSpotDirection",
-                                             getLightSourceSpotDirection()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set LightSourceSpotDirection\n");
-                    }
-                if (!shader->setUniformValue("LightSourceSpotExponent",
-                                             getLightSourceSpotExponent()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set LightSourceSpotExponent\n");
-                    }
-
-                if (!shader->setUniformValue("LightSourceSpotCutoff",
-                                             getLightSourceSpotCutoff()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set LightSourceSpotCutoff\n");
-                    }
-                if (!shader->setUniformValue("LightSourceSpotCosCutoff",
-                                             getLightSourceSpotCosCutoff()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set LightSourceSpotCosCutoff\n");
-                    }
-
-                if (!shader->setUniformValue(
-                        "LightSourceConstantAttenuation",
-                        getLightSourceConstantAttenuation()))
-                    {
-                        SDL_LogWarn(
-                            SDL_LOG_CATEGORY_TEST,
-                            "Couldn't set LightSourceConstantAttenuation\n");
-                    }
-                if (!shader->setUniformValue("LightSourceLinearAttenuation",
-                                             getLightSourceLinearAttenuation()))
-                    {
-                        SDL_LogWarn(
-                            SDL_LOG_CATEGORY_TEST,
-                            "Couldn't set LightSourceLinearAttenuation\n");
-                    }
-                if (!shader->setUniformValue(
-                        "LightSourceQuadraticAttenuation",
-                        getLightSourceQuadraticAttenuation()))
-                    {
-                        SDL_LogWarn(
-                            SDL_LOG_CATEGORY_TEST,
-                            "Couldn't set LightSourceQuadraticAttenuation\n");
-                    }
-
-                if (!shader->setUniformValue("LightAmbientColor",
-                                             getLightAmbientColor()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set LightAmbientColor\n");
-                    }
-
-                if (!shader->setUniformValue("MaterialShininess",
-                                             getMaterialShininess()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set MaterialShininess\n");
-                    }
-
-                if (!shader->setUniformValue("FogMaxDistance",
-                                             getFogMaxDistance()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set FogMaxDistance\n");
-                    }
-                if (!shader->setUniformValue("FogMinDistance",
-                                             getFogMinDistance()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set FogMinDistance\n");
-                    }
-                if (!shader->setUniformValue("FogColor", getFogColor()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set FogColor\n");
-                    }
-                if (!shader->setUniformValue("FogDensity", getFogDensity()))
-                    {
-                        SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
-                                    "Couldn't set FogDensity\n");
-                    }
-
-                m_ShaderChanged = false;
-
-                glBindVertexArray_NJLIC(m_VertexArray);
-
-                if (isModelViewBufferChanged())
-                    {
-                        glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer);
-                        glBufferSubData(GL_ARRAY_BUFFER, 0,
-                                        getModelViewTransformArrayBufferSize(),
-                                        getModelViewTransformArrayBufferPtr());
-                        enableModelViewBufferChanged(false);
-                    }
-
-                if (isNormalMatrixBufferChanged())
-                    {
-                        glBindBuffer(GL_ARRAY_BUFFER,
-                                     m_NormalMatrixTransformBuffer);
-                        glBufferSubData(
-                            GL_ARRAY_BUFFER, 0,
-                            getNormalMatrixTransformArrayBufferSize(),
-                            getNormalMatrixTransformArrayBufferPtr());
-                        enableNormalMatrixBufferChanged(false);
-                    }
-
-                if (isVertexArrayBufferChanged())
-                    {
-                        glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer);
-                        glBufferSubData(GL_ARRAY_BUFFER, 0,
-                                        getVertexArrayBufferSize(),
-                                        getVertexArrayBufferPtr());
-                        enableVertexArrayBufferChanged(false);
-                    }
-
-                if (isIndiceArrayBufferChanged())
-                    {
-                        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
-                        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0,
-                                        getElementArrayBufferSize(),
-                                        getElementArrayBufferPtr());
-                        enableIndiceArrayBufferChanged(false);
-                    }
-
-                glDrawElements(GL_TRIANGLES,
-                               maxNumberOfInstances() * numberOfIndices(),
-                               getElementIndexType(), (const GLvoid *)0);
-                //            glDrawElements(GL_LINE_LOOP,
-                //            maxNumberOfInstances() * numberOfIndices(),
-                //            getElementIndexType(), (const GLvoid*)0);
-                //            glDrawElements(GL_POINTS, maxNumberOfInstances() *
-                //            numberOfIndices(), getElementIndexType(), (const
-                //            GLvoid*)0);
-
-                glBindVertexArray_NJLIC(0);
-
-                if (material)
-                    {
-                        material->unBind();
-                    }
+            Material *material = getMaterial();
+            if (material)
+            {
+                material->bind(shader);
             }
+            //            glActiveTexture(GL_TEXTURE0 + 0);
+            //            glBindTexture(GL_TEXTURE_2D, m_AmbientTexture);
+            //            shader->setUniformValue("tAmbientColor",
+            //            m_AmbientTexture);
+            //
+            //            glActiveTexture(GL_TEXTURE0 + 1);
+            //            glBindTexture(GL_TEXTURE_2D, m_DiffuseTexture);
+            //            shader->setUniformValue("tDiffuseColor",
+            //            m_DiffuseTexture);
+            //
+            //            glActiveTexture(GL_TEXTURE0 + 2);
+            //            glBindTexture(GL_TEXTURE_2D, m_NormalTexture);
+            //            shader->setUniformValue("tNormal",
+            //            m_NormalTexture);
+            //
+            //            glActiveTexture(GL_TEXTURE0 + 3);
+            //            glBindTexture(GL_TEXTURE_2D, m_SpecularTexture);
+            //            shader->setUniformValue("tSpecularColor",
+            //            m_SpecularTexture);
+
+            if (!shader->setUniformValue("RimLightColor", getRimLightColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightColor\n");
+            }
+            if (!shader->setUniformValue("RimLightStart", getRimLightStart()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightStart\n");
+            }
+            if (!shader->setUniformValue("RimLightEnd", getRimLightEnd()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightEnd\n");
+            }
+            if (!shader->setUniformValue("RimLightCoefficient",
+                                         getRimLightCoefficient()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set RimLightCoefficient\n");
+            }
+
+            if (!shader->setUniformValue("LightSourceAmbientColor",
+                                         getLightSourceAmbientColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceAmbientColor\n");
+            }
+            if (!shader->setUniformValue("LightSourceDiffuseColor",
+                                         getLightSourceDiffuseColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceDiffuseColor\n");
+            }
+            if (!shader->setUniformValue("LightSourceSpecularColor",
+                                         getLightSourceSpecularColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpecularColor\n");
+            }
+
+            if (!shader->setUniformValue("LightSourcePosition_worldspace",
+                                         getLightSourcePosition()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourcePosition_worldspace\n");
+            }
+
+            if (!shader->setUniformValue("LightSourceSpotDirection",
+                                         getLightSourceSpotDirection()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotDirection\n");
+            }
+            if (!shader->setUniformValue("LightSourceSpotExponent",
+                                         getLightSourceSpotExponent()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotExponent\n");
+            }
+
+            if (!shader->setUniformValue("LightSourceSpotCutoff",
+                                         getLightSourceSpotCutoff()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotCutoff\n");
+            }
+            if (!shader->setUniformValue("LightSourceSpotCosCutoff",
+                                         getLightSourceSpotCosCutoff()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceSpotCosCutoff\n");
+            }
+
+            if (!shader->setUniformValue("LightSourceConstantAttenuation",
+                                         getLightSourceConstantAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceConstantAttenuation\n");
+            }
+            if (!shader->setUniformValue("LightSourceLinearAttenuation",
+                                         getLightSourceLinearAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceLinearAttenuation\n");
+            }
+            if (!shader->setUniformValue("LightSourceQuadraticAttenuation",
+                                         getLightSourceQuadraticAttenuation()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightSourceQuadraticAttenuation\n");
+            }
+
+            if (!shader->setUniformValue("LightAmbientColor",
+                                         getLightAmbientColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set LightAmbientColor\n");
+            }
+
+            if (!shader->setUniformValue("MaterialShininess",
+                                         getMaterialShininess()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set MaterialShininess\n");
+            }
+
+            if (!shader->setUniformValue("FogMaxDistance", getFogMaxDistance()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogMaxDistance\n");
+            }
+            if (!shader->setUniformValue("FogMinDistance", getFogMinDistance()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST,
+                            "Couldn't set FogMinDistance\n");
+            }
+            if (!shader->setUniformValue("FogColor", getFogColor()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Couldn't set FogColor\n");
+            }
+            if (!shader->setUniformValue("FogDensity", getFogDensity()))
+            {
+                SDL_LogWarn(SDL_LOG_CATEGORY_TEST, "Couldn't set FogDensity\n");
+            }
+
+            m_ShaderChanged = false;
+
+            glBindVertexArray_NJLIC(m_VertexArray);
+
+            if (isModelViewBufferChanged())
+            {
+                glBindBuffer(GL_ARRAY_BUFFER, m_ModelViewBuffer);
+                glBufferSubData(GL_ARRAY_BUFFER, 0,
+                                getModelViewTransformArrayBufferSize(),
+                                getModelViewTransformArrayBufferPtr());
+                enableModelViewBufferChanged(false);
+            }
+
+            if (isNormalMatrixBufferChanged())
+            {
+                glBindBuffer(GL_ARRAY_BUFFER, m_NormalMatrixTransformBuffer);
+                glBufferSubData(GL_ARRAY_BUFFER, 0,
+                                getNormalMatrixTransformArrayBufferSize(),
+                                getNormalMatrixTransformArrayBufferPtr());
+                enableNormalMatrixBufferChanged(false);
+            }
+
+            if (isVertexArrayBufferChanged())
+            {
+                glBindBuffer(GL_ARRAY_BUFFER, m_VerticesBuffer);
+                glBufferSubData(GL_ARRAY_BUFFER, 0, getVertexArrayBufferSize(),
+                                getVertexArrayBufferPtr());
+                enableVertexArrayBufferChanged(false);
+            }
+
+            if (isIndiceArrayBufferChanged())
+            {
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+                glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0,
+                                getElementArrayBufferSize(),
+                                getElementArrayBufferPtr());
+                enableIndiceArrayBufferChanged(false);
+            }
+
+            glDrawElements(GL_TRIANGLES,
+                           maxNumberOfInstances() * numberOfIndices(),
+                           getElementIndexType(), (const GLvoid *)0);
+            //            glDrawElements(GL_LINE_LOOP,
+            //            maxNumberOfInstances() * numberOfIndices(),
+            //            getElementIndexType(), (const GLvoid*)0);
+            //            glDrawElements(GL_POINTS, maxNumberOfInstances() *
+            //            numberOfIndices(), getElementIndexType(), (const
+            //            GLvoid*)0);
+
+            glBindVertexArray_NJLIC(0);
+
+            if (material)
+            {
+                material->unBind();
+            }
+        }
     }
 
     GLsizei Geometry::maxNumberOfInstances() const { return m_NumberInstances; }
@@ -929,61 +914,61 @@ namespace njli
         bitangents.resize(vertices.size());
 
         for (unsigned int i = 0; i < vertices.size(); i += 3)
-            {
+        {
 
-                // Shortcuts for vertices
-                btVector3 v0 = vertices[i + 0];
-                btVector3 v1 = vertices[i + 1];
-                btVector3 v2 = vertices[i + 2];
+            // Shortcuts for vertices
+            btVector3 v0 = vertices[i + 0];
+            btVector3 v1 = vertices[i + 1];
+            btVector3 v2 = vertices[i + 2];
 
-                // Shortcuts for UVs
-                btVector2 uv0 = uvs[i + 0];
-                btVector2 uv1 = uvs[i + 1];
-                btVector2 uv2 = uvs[i + 2];
+            // Shortcuts for UVs
+            btVector2 uv0 = uvs[i + 0];
+            btVector2 uv1 = uvs[i + 1];
+            btVector2 uv2 = uvs[i + 2];
 
-                // Edges of the triangle : postion delta
-                btVector3 deltaPos1 = v1 - v0;
-                btVector3 deltaPos2 = v2 - v0;
+            // Edges of the triangle : postion delta
+            btVector3 deltaPos1 = v1 - v0;
+            btVector3 deltaPos2 = v2 - v0;
 
-                // UV delta
-                btVector2 deltaUV1 = uv1 - uv0;
-                btVector2 deltaUV2 = uv2 - uv0;
+            // UV delta
+            btVector2 deltaUV1 = uv1 - uv0;
+            btVector2 deltaUV2 = uv2 - uv0;
 
-                float r = 1.0f / (deltaUV1.x() * deltaUV2.y() -
-                                  deltaUV1.y() * deltaUV2.x());
-                btVector3 tangent =
-                    (deltaPos1 * deltaUV2.y() - deltaPos2 * deltaUV1.y()) * r;
-                btVector3 bitangent =
-                    (deltaPos2 * deltaUV1.x() - deltaPos1 * deltaUV2.x()) * r;
+            float r = 1.0f / (deltaUV1.x() * deltaUV2.y() -
+                              deltaUV1.y() * deltaUV2.x());
+            btVector3 tangent =
+                (deltaPos1 * deltaUV2.y() - deltaPos2 * deltaUV1.y()) * r;
+            btVector3 bitangent =
+                (deltaPos2 * deltaUV1.x() - deltaPos1 * deltaUV2.x()) * r;
 
-                // Set the same tangent for all three vertices of the triangle.
-                // They will be merged later, in vboindexer.cpp
-                tangents[i] = tangent;
-                tangents[i + 1] = tangent;
-                tangents[i + 2] = tangent;
+            // Set the same tangent for all three vertices of the triangle.
+            // They will be merged later, in vboindexer.cpp
+            tangents[i] = tangent;
+            tangents[i + 1] = tangent;
+            tangents[i + 2] = tangent;
 
-                // Same thing for binormals
-                bitangents[i] = bitangent;
-                bitangents[i + 1] = bitangent;
-                bitangents[i + 2] = bitangent;
-            }
+            // Same thing for binormals
+            bitangents[i] = bitangent;
+            bitangents[i + 1] = bitangent;
+            bitangents[i + 2] = bitangent;
+        }
 
         // See "Going Further"
         for (unsigned int i = 0; i < vertices.size(); i += 1)
+        {
+            btVector3 n = normals[i];
+            btVector3 t = tangents[i];
+            btVector3 b = bitangents[i];
+
+            // Gram-Schmidt orthogonalize
+            t = (t - n * n.dot(t)).normalized();
+
+            // Calculate handedness
+            if (n.cross(t).dot(b) < 0.0f)
             {
-                btVector3 n = normals[i];
-                btVector3 t = tangents[i];
-                btVector3 b = bitangents[i];
-
-                // Gram-Schmidt orthogonalize
-                t = (t - n * n.dot(t)).normalized();
-
-                // Calculate handedness
-                if (n.cross(t).dot(b) < 0.0f)
-                    {
-                        t = t * -1.0f;
-                    }
+                t = t * -1.0f;
             }
+        }
     }
 
     void Geometry::setRimLightColor(const btVector3 &color)
@@ -1165,14 +1150,14 @@ namespace njli
     {
         //        SDL_assert(camera);
         if (camera)
-            {
-                m_RenderCategory = (njliBitCategories)Off(
-                    m_RenderCategory, camera->getRenderCategory());
-            }
+        {
+            m_RenderCategory = (njliBitCategories)Off(
+                m_RenderCategory, camera->getRenderCategory());
+        }
         else
-            {
-                SDL_Log("Hiding geometry with a NULL camera");
-            }
+        {
+            SDL_Log("Hiding geometry with a NULL camera");
+        }
     }
 
     void Geometry::show(Camera *camera)
@@ -1180,14 +1165,14 @@ namespace njli
         SDL_assert(camera);
 
         if (camera)
-            {
-                m_RenderCategory = (njliBitCategories)On(
-                    m_RenderCategory, camera->getRenderCategory());
-            }
+        {
+            m_RenderCategory = (njliBitCategories)On(
+                m_RenderCategory, camera->getRenderCategory());
+        }
         else
-            {
-                SDL_Log("Hiding geometry with a NULL camera");
-            }
+        {
+            SDL_Log("Hiding geometry with a NULL camera");
+        }
     }
 
     bool Geometry::isHidden(Camera *camera) const
@@ -1333,14 +1318,14 @@ namespace njli
     void Geometry::addReference(Node *node)
     {
         for (unsigned long i = 0; i < m_References.size(); ++i)
+        {
+            if (!m_References[i])
             {
-                if (!m_References[i])
-                    {
-                        m_References[i] = true;
-                        node->setGeometryIndex(i);
-                        return;
-                    }
+                m_References[i] = true;
+                node->setGeometryIndex(i);
+                return;
             }
+        }
     }
 
     void Geometry::removeReference(Node *node)
@@ -1348,58 +1333,56 @@ namespace njli
         unsigned long index = getGeometryIndex(node);
 
         if (index < m_References.size())
-            {
-                m_References[index] = false;
+        {
+            m_References[index] = false;
 
-                setHidden(node);
-            }
+            setHidden(node);
+        }
     }
 
     void Geometry::setTransform(const unsigned long index,
                                 const btTransform &transform)
     {
         if (index < maxNumberOfInstances())
+        {
+            const unsigned long STRIDE = 16 * numberOfVertices();
+
+            transform.getOpenGLMatrix(m_MatrixBuffer);
+
+            for (int currentVertex = 0; currentVertex < numberOfVertices();
+                 currentVertex++)
             {
-                const unsigned long STRIDE = 16 * numberOfVertices();
+                unsigned long p = ((index * STRIDE) + (16 * currentVertex));
+                int cmp = memcmp(m_ModelViewTransformData + p, m_MatrixBuffer,
+                                 sizeof(GLfloat) * 16);
 
-                transform.getOpenGLMatrix(m_MatrixBuffer);
-
-                for (int currentVertex = 0; currentVertex < numberOfVertices();
-                     currentVertex++)
-                    {
-                        unsigned long p =
-                            ((index * STRIDE) + (16 * currentVertex));
-                        int cmp = memcmp(m_ModelViewTransformData + p,
-                                         m_MatrixBuffer, sizeof(GLfloat) * 16);
-
-                        if (0 != cmp)
-                            {
-                                memcpy(m_ModelViewTransformData + p,
-                                       m_MatrixBuffer, sizeof(GLfloat) * 16);
-                            }
-                    }
-                enableModelViewBufferChanged(true);
+                if (0 != cmp)
+                {
+                    memcpy(m_ModelViewTransformData + p, m_MatrixBuffer,
+                           sizeof(GLfloat) * 16);
+                }
             }
+            enableModelViewBufferChanged(true);
+        }
     }
 
     btTransform Geometry::getTransform(const unsigned long index)
     {
         btTransform transform(btTransform::getIdentity());
         if (index < maxNumberOfInstances())
+        {
+            const unsigned long STRIDE = 16 * numberOfVertices();
+
+            for (int currentVertex = 0; currentVertex < numberOfVertices();
+                 currentVertex++)
             {
-                const unsigned long STRIDE = 16 * numberOfVertices();
-
-                for (int currentVertex = 0; currentVertex < numberOfVertices();
-                     currentVertex++)
-                    {
-                        unsigned long p =
-                            ((index * STRIDE) + (16 * currentVertex));
-                        memcpy(m_MatrixBuffer, m_ModelViewTransformData + p,
-                               sizeof(GLfloat) * 16);
-                    }
-
-                transform.setFromOpenGLMatrix(m_MatrixBuffer);
+                unsigned long p = ((index * STRIDE) + (16 * currentVertex));
+                memcpy(m_MatrixBuffer, m_ModelViewTransformData + p,
+                       sizeof(GLfloat) * 16);
             }
+
+            transform.setFromOpenGLMatrix(m_MatrixBuffer);
+        }
         return transform;
     }
 
@@ -1457,48 +1440,46 @@ namespace njli
                                             const btTransform &transform)
     {
         if (index < maxNumberOfInstances())
+        {
+            const unsigned long STRIDE = 16 * numberOfVertices();
+
+            transform.getOpenGLMatrix(m_MatrixBuffer);
+
+            for (int currentVertex = 0; currentVertex < numberOfVertices();
+                 currentVertex++)
             {
-                const unsigned long STRIDE = 16 * numberOfVertices();
+                unsigned long p = ((index * STRIDE) + (16 * currentVertex));
 
-                transform.getOpenGLMatrix(m_MatrixBuffer);
+                int cmp = memcmp(m_NormalMatrixTransformData + p,
+                                 m_MatrixBuffer, sizeof(GLfloat) * 16);
 
-                for (int currentVertex = 0; currentVertex < numberOfVertices();
-                     currentVertex++)
-                    {
-                        unsigned long p =
-                            ((index * STRIDE) + (16 * currentVertex));
-
-                        int cmp = memcmp(m_NormalMatrixTransformData + p,
-                                         m_MatrixBuffer, sizeof(GLfloat) * 16);
-
-                        if (0 != cmp)
-                            {
-                                memcpy(m_NormalMatrixTransformData + p,
-                                       m_MatrixBuffer, sizeof(GLfloat) * 16);
-                            }
-                    }
-                enableNormalMatrixBufferChanged(true);
+                if (0 != cmp)
+                {
+                    memcpy(m_NormalMatrixTransformData + p, m_MatrixBuffer,
+                           sizeof(GLfloat) * 16);
+                }
             }
+            enableNormalMatrixBufferChanged(true);
+        }
     }
 
     btTransform Geometry::getNormalMatrixTransform(const unsigned long index)
     {
         btTransform transform(btTransform::getIdentity());
         if (index < maxNumberOfInstances())
+        {
+            const unsigned long STRIDE = 16 * numberOfVertices();
+
+            for (int currentVertex = 0; currentVertex < numberOfVertices();
+                 currentVertex++)
             {
-                const unsigned long STRIDE = 16 * numberOfVertices();
-
-                for (int currentVertex = 0; currentVertex < numberOfVertices();
-                     currentVertex++)
-                    {
-                        unsigned long p =
-                            ((index * STRIDE) + (16 * currentVertex));
-                        memcpy(m_MatrixBuffer, m_NormalMatrixTransformData + p,
-                               sizeof(GLfloat) * 16);
-                    }
-
-                transform.setFromOpenGLMatrix(m_MatrixBuffer);
+                unsigned long p = ((index * STRIDE) + (16 * currentVertex));
+                memcpy(m_MatrixBuffer, m_NormalMatrixTransformData + p,
+                       sizeof(GLfloat) * 16);
             }
+
+            transform.setFromOpenGLMatrix(m_MatrixBuffer);
+        }
         return transform;
     }
 
@@ -1513,36 +1494,35 @@ namespace njli
         addChild(m_Material);
 
         if (img)
+        {
+            bool hasAlpha = img->getNumberOfComponents() == 4 ||
+                            img->getNumberOfComponents() == 2;
+            bool premultiplied = img->getNumberOfComponents() != 1 && hasAlpha;
+
+            m_OpacityModifyRGB = false;
+            if (m_blendFuncSource == GL_ONE &&
+                m_blendFuncDestination == GL_ONE_MINUS_SRC_ALPHA)
             {
-                bool hasAlpha = img->getNumberOfComponents() == 4 ||
-                                img->getNumberOfComponents() == 2;
-                bool premultiplied =
-                    img->getNumberOfComponents() != 1 && hasAlpha;
-
-                m_OpacityModifyRGB = false;
-                if (m_blendFuncSource == GL_ONE &&
-                    m_blendFuncDestination == GL_ONE_MINUS_SRC_ALPHA)
-                    {
-                        if (premultiplied)
-                            m_OpacityModifyRGB = true;
-                        else
-                            {
-                                m_blendFuncSource = GL_SRC_ALPHA;
-                                m_blendFuncDestination = GL_ONE_MINUS_SRC_ALPHA;
-                            }
-                    }
-
                 if (premultiplied)
-                    img->preMultiplyAlpha();
+                    m_OpacityModifyRGB = true;
+                else
+                {
+                    m_blendFuncSource = GL_SRC_ALPHA;
+                    m_blendFuncDestination = GL_ONE_MINUS_SRC_ALPHA;
+                }
             }
+
+            if (premultiplied)
+                img->preMultiplyAlpha();
+        }
     }
 
     void Geometry::removeMaterial()
     {
         if (getMaterial())
-            {
-                removeChild(getMaterial());
-            }
+        {
+            removeChild(getMaterial());
+        }
 
         m_Material = NULL;
     }
