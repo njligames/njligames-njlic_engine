@@ -537,14 +537,15 @@ namespace njli
                       njli::World::getInstance()->getViewportDimensions().y());
   }
 
-  void WorldDebugDrawer::axisTriad(const glm::mat4 &transform, float size,
-                                   float length, int durationMillis,
-                                   bool depthEnabled)
+  void WorldDebugDrawer::axisTriad(const btTransform &transform,
+                   float size, float length,
+                   int durationMillis,
+                   bool depthEnabled)
   {
 
-    glmToBullet(transform).getOpenGLMatrix(m_mat4Buffer);
+    // glmToBullet(transform).getOpenGLMatrix(m_mat4Buffer);
 
-    dd::axisTriad(m_mat4Buffer, size, length, durationMillis, depthEnabled);
+    // dd::axisTriad(m_mat4Buffer, size, length, durationMillis, depthEnabled);
   }
 
   void WorldDebugDrawer::arrow(const btVector3 &from, const btVector3 &to,
@@ -664,14 +665,15 @@ namespace njli
     dd::aabb(_mins, _maxs, _color, durationMillis, depthEnabled);
   }
 
-  void WorldDebugDrawer::frustum(const glm::mat4 &invClipMatrix,
-                                 const btVector3 &color, int durationMillis,
-                                 bool depthEnabled)
+  void WorldDebugDrawer::frustum(const btTransform &view, const btTransform &proj,
+                 const btVector3 &color,
+                 int durationMillis,
+                 bool depthEnabled)
   {
-    glmToBullet(invClipMatrix).getOpenGLMatrix(m_mat4Buffer);
-    const float _color[] = {color.x(), color.y(), color.z()};
+    // glmToBullet(invClipMatrix).getOpenGLMatrix(m_mat4Buffer);
+    // const float _color[] = {color.x(), color.y(), color.z()};
 
-    dd::frustum(m_mat4Buffer, _color);
+    // dd::frustum(m_mat4Buffer, _color);
   }
 
   void WorldDebugDrawer::vertexNormal(const btVector3 &origin,
