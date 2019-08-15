@@ -7,22 +7,17 @@
 {
     const char *__str__()
     {
-        static char axisBuffer[1024];
-        sprintf(axisBuffer,
-                "{\"btVector3\":[{\"x\":\"%f\", \"y\":\"%f\", \"z\":\"%f\"}]}",
-                self->getAxis().x(), self->getAxis().y(), self->getAxis().z());
-        
-        static char buffer[2048];
-        sprintf(buffer,"{\"btQuaternion\":[{\"angle\":\"%f\", \"axis\":%s}]}",
-                self->getAngle(),
-                axisBuffer);
+        std::string temp = btQuaternionDecorator(self);
+        static char buffer[1024];
+        sprintf(buffer, "%s", temp.c_str());
         return buffer;
     }
-    btQuaternion(const btQuaternion &rhs)
-    {
-        btQuaternion *v = new btQuaternion(rhs);
-        return v;
-    }
+    
+//    btQuaternion(const btQuaternion &rhs)
+//    {
+//        btQuaternion *v = new btQuaternion(rhs);
+//        return v;
+//    }
     
     btQuaternion __add__(const btQuaternion& b){return *self + b;}
     btQuaternion __sub__(const btQuaternion& b){return *self - b;}
@@ -33,17 +28,16 @@
     
     const char *__concat__(const char *s)
     {
-        static char axisBuffer[1024];
-        sprintf(axisBuffer,
-                "{\"btVector3\":[{\"x\":\"%f\", \"y\":\"%f\", \"z\":\"%f\"}]}",
-                self->getAxis().x(), self->getAxis().y(), self->getAxis().z());
+        std::string _temp = btQuaternionDecorator(self);
+        static char buffer[1024];
+        sprintf(buffer, "%s", _temp.c_str());
         
-        static char bufferA[2048];
-        sprintf(bufferA,"{\"btQuaternion\":[{\"angle\":\"%f\", \"axis\":%s}]}",
-                self->getAngle(),
-                axisBuffer);
+        static std::string temp;
+        std::string t1(buffer);
+        std::string t2(s);
         
-        return strcat(bufferA, s);
+        temp = string_format("[%s,%s]", t1.c_str(), t2.c_str());
+        return temp.c_str();
     }
 };
 

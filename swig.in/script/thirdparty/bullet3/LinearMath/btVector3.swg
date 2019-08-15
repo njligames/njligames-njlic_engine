@@ -9,15 +9,16 @@
 {
     const char *__str__()
     {
+        std::string temp = btVector3Decorator(self);
         static char buffer[1024];
-        sprintf(buffer,"{\"btVector3\":[{\"x\":\"%f\", \"y\":\"%f\", \"z\":\"%f\"}]}", self->x(), self->y(), self->z());
+        sprintf(buffer, "%s", temp.c_str());
         return buffer;
     }
-    btVector3(const btVector3 &rhs) {
-        btVector3 *v = new btVector3(rhs);
-        return v;
-    }
-    
+//    btVector3(const btVector3 &rhs) {
+//        btVector3 *v = new btVector3(rhs);
+//        return v;
+//    }
+
     
     btVector3 __add__(const btVector3& b){return *self + b;}
     btVector3 __sub__(const btVector3& b){return *self - b;}
@@ -30,14 +31,15 @@
     btVector3 __neg__(){return -(*self);}
     
     const char *__concat__(const char *s) {
-        static char tmp[1024];
-        sprintf(tmp,"btVector3(%f,%f,%f)", self->x(),self->y(),self->z());
+        std::string _temp = btVector3Decorator(self);
+        static char buffer[1024];
+        sprintf(buffer, "%s", _temp.c_str());
         
         static std::string temp;
-        std::string t1(tmp);
+        std::string t1(buffer);
         std::string t2(s);
         
-        temp = (t1 + t2);
+        temp = string_format("[%s,%s]", t1.c_str(), t2.c_str());
         return temp.c_str();
     }
     
@@ -57,8 +59,9 @@
 {
     const char *__str__()
     {
+        std::string temp = btVector4Decorator(self);
         static char buffer[1024];
-        sprintf(buffer,"{\"btVector4\":[{\"x\":\"%f\", \"y\":\"%f\", \"z\":\"%f\", \"w\":\"%f\"}]}", self->x(), self->y(), self->z(), self->w());
+        sprintf(buffer, "%s", temp.c_str());
         return buffer;
     }
     
@@ -69,14 +72,16 @@
     }
     
     const char *__concat__(const char *s) {
-        static char tmp[1024];
-        sprintf(tmp,"btVector4(%f,%f,%f,%f)", self->x(),self->y(),self->z(),self->w());
+        std::string _temp = btVector4Decorator(self);
+        static char buffer[1024];
+        sprintf(buffer, "%s", _temp.c_str());
         
         static std::string temp;
-        std::string t1(tmp);
+        std::string t1(buffer);
         std::string t2(s);
         
-        temp = (t1 + t2);
+//        temp = (t1 + t2);
+        temp = string_format("[%s,%s]", t1.c_str(), t2.c_str());
         return temp.c_str();
     }
     

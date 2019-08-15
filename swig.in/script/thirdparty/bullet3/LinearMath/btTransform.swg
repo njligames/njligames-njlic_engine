@@ -7,28 +7,9 @@
 {
     const char *__str__()
     {
+        std::string temp = btTransformDecorator(self);
         static char buffer[1024];
-        btScalar *m = new btScalar[16];
-        self->getOpenGLMatrix(m);
-        sprintf(buffer,"{\"btTransform\":[{\"xx\":\"%f\", \"xy\":\"%f\", \"xz\":\"%f\", \"xw\":\"%f\", \"yx\":\"%f\", \"yy\":\"%f\", \"yz\":\"%f\", \"yw\":\"%f\", \"zx\":\"%f\", \"zy\":\"%f\", \"zz\":\"%f\", \"zw\":\"%f\", \"wx\":\"%f\", \"wy\":\"%f\", \"wz\":\"%f\", \"ww\":\"%f\"}]}",
-                m[0],
-                m[1],
-                m[2],
-                m[3],
-                m[4],
-                m[5],
-                m[6],
-                m[7],
-                m[8],
-                m[9],
-                m[10],
-                m[11],
-                m[12],
-                m[13],
-                m[14],
-                m[15]);
-        
-        delete [] m;
+        sprintf(buffer, "%s", temp.c_str());
         return buffer;
     }
     
@@ -38,30 +19,15 @@
     bool __eq__(const btTransform& b){return *self == b;}
     
     const char *__concat__(const char *s) {
+        std::string _temp = btTransformDecorator(self);
         static char buffer[1024];
-        btScalar *m = new btScalar[16];
-        self->getOpenGLMatrix(m);
-        sprintf(buffer,"{\"btTransform\":[{\"xx\":\"%f\", \"xy\":\"%f\", \"xz\":\"%f\", \"xw\":\"%f\", \"yx\":\"%f\", \"yy\":\"%f\", \"yz\":\"%f\", \"yw\":\"%f\", \"zx\":\"%f\", \"zy\":\"%f\", \"zz\":\"%f\", \"zw\":\"%f\", \"wx\":\"%f\", \"wy\":\"%f\", \"wz\":\"%f\", \"ww\":\"%f\"}]}",
-                m[0],
-                m[1],
-                m[2],
-                m[3],
-                m[4],
-                m[5],
-                m[6],
-                m[7],
-                m[8],
-                m[9],
-                m[10],
-                m[11],
-                m[12],
-                m[13],
-                m[14],
-                m[15]);
+        sprintf(buffer, "%s", _temp.c_str());
         
-        delete [] m;
-        return buffer;
+        static std::string temp;
+        std::string t1(buffer);
+        std::string t2(s);
         
-        strcat(buffer, s);
+        temp = string_format("[%s,%s]", t1.c_str(), t2.c_str());
+        return temp.c_str();
     }
 };

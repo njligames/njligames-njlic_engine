@@ -32,6 +32,16 @@
 
 #define BT_INFINITY
 %{
+    #include "btCollisionObjectDecorator.h"
+    #include "btManifoldPointDecorator.h"
+    #include "btMatrix3x3Decorator.h"
+    #include "btQuaternionDecorator.h"
+    #include "btRigidBodyDecorator.h"
+    #include "btTransformDecorator.h"
+    #include "btVector2Decorator.h"
+    #include "btVector3Decorator.h"
+    #include "btVector4Decorator.h"
+    
     #include "btPrint.h"
     #include "btVector2.h"
     //#include "btClock.h"
@@ -229,6 +239,15 @@
 //#########################################################################################################
 
 %include "btPrint.h"
+%include "btCollisionObjectDecorator.h"
+%include "btManifoldPointDecorator.h"
+%include "btMatrix3x3Decorator.h"
+%include "btQuaternionDecorator.h"
+%include "btRigidBodyDecorator.h"
+%include "btTransformDecorator.h"
+%include "btVector2Decorator.h"
+%include "btVector3Decorator.h"
+
 %include "btVector2.h"
 //%include "btClock.h"
 %include "BulletCollision/BroadphaseCollision/btBroadphaseInterface.h"

@@ -2930,9 +2930,9 @@ if (lua_gettop(L)<a || lua_gettop(L)>b) \
 goto fail;}
     
 
-//    #define GLM_ENABLE_EXPERIMENTAL
-//    #include "glm/gtx/quaternion.hpp"
-//    #include "glm/glm.hpp"
+    #define GLM_ENABLE_EXPERIMENTAL
+    #include "glm/gtx/quaternion.hpp"
+    #include "glm/glm.hpp"
 
 #ifdef __cplusplus
 extern "C" {

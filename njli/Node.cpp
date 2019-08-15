@@ -29,7 +29,12 @@
 #include "Material.h"
 #include "PhysicsConstraint.h"
 #include "PhysicsShape.h"
-#define FORMATSTRING "{\"njli::Node\":[{\"name\":\"%s\"}]}"
+//#define FORMATSTRING "{\"njli::Node\":[{\"name\":\"%s\"}]}"
+static const std::string FORMATSTRING = R"(
+{"njli::Node": { "name": "%s", "transform": "%s" }}
+)";
+#include "btTransformDecorator.h"
+
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -177,7 +182,10 @@ namespace njli
 
     Node::operator std::string() const
     {
-        std::string temp(string_format(FORMATSTRING, getName()));
+//        std::string _origin((std::string)getOrigin());
+        
+        std::string _transform = btTransformDecorator(m_Transform);
+        std::string temp(string_format(FORMATSTRING.c_str(), getName(), _transform.c_str()));
         return temp;
         //      const char *temp = string_format(FORMATSTRING, getName());
         //    return njli::JsonJLI::parse(temp);
@@ -381,10 +389,10 @@ namespace njli
         //        }
     }
 
-    void Node::setTransform(const glm::mat4 &transform)
-    {
-        setTransform(glmToBullet(transform));
-    }
+//    void Node::setTransform(const glm::mat4 &transform)
+//    {
+//        setTransform(glmToBullet(transform));
+//    }
 
     btVector3 Node::getOrigin() const
     {

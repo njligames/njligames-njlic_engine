@@ -3,6 +3,288 @@ set(${CMAKE_PROJECT_NAME}_LUA_SWIG ${${CMAKE_PROJECT_NAME}_LUA_SWIG_ENABLED_BY_D
 
 list(APPEND CMAKE_MODULE_PATH "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/cmake")
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+macro(LUA_GLM_SWIG)
+  if(NOT CMAKE_PROJECT_NAME)
+    MESSAGE(FATAL_ERROR "CMAKE_PROJECT_NAME variable is empty.")
+  endif()
+  if(NOT ${CMAKE_PROJECT_NAME}_REPO_DIRECTORY)
+    MESSAGE(FATAL_ERROR "${CMAKE_PROJECT_NAME}_REPO_DIRECTORY variable is empty.")
+  endif()
+
+  set(GLM_SWIG_DIRECTORY "${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/thirdparty/glm")
+
+  if(NOT GLM_SWIG_DIRECTORY)
+      MESSAGE(FATAL_ERROR "GLM_SWIG_DIRECTORY variable is empty.")
+  endif()
+  if(NOT GLM_INCLUDE_DIR)
+      MESSAGE(FATAL_ERROR "GLM_INCLUDE_DIR variable is empty.")
+  endif()
+
+  if(NOT EXISTS "${GLM_SWIG_DIRECTORY}")
+      MESSAGE(FATAL_ERROR "Path doesn't exist: ${GLM_SWIG_DIRECTORY}")
+  endif()
+  if(NOT EXISTS "${GLM_INCLUDE_DIR}")
+      MESSAGE(FATAL_ERROR "Path doesn't exist: ${GLM_INCLUDE_DIR}")
+  endif()
+  if(NOT EXISTS "${GLM_SWIG_DIRECTORY}/glm.i")
+      MESSAGE(FATAL_ERROR "Path doesn't exist: ${GLM_SWIG_DIRECTORY}/glm.i")
+  endif()
+
+  set(CMAKE_SWIG_FLAGS "")
+
+  file(GLOB_RECURSE LUA_SWIG_SOURCE_FILES
+      "${GLM_SWIG_DIRECTORY}/*.swg"
+      "${GLM_INCLUDE_DIR}" 
+    )
+
+  list(APPEND LUA_SWIG_SOURCE_FILES
+      "${GLM_SWIG_DIRECTORY}/glm.i" 
+  )
+
+  SUBDIRLIST(SUBDIRS "${GLM_SWIG_DIRECTORY}" SWIGIN_SCRIPTS_INCLUDE_DIRS)
+
+  set(${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-includeall")
+  # list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-fcompact")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-fvirtual")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-v")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w201")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-w312")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-ignoremissing")
+  # list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-cpperraswarn")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-DBT_INFINITY")
+  list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-DSWIG_TYPE_TABLE=myprojectname")
+  if(GL_ES2)
+    list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-D__GL_ES2__")
+  elseif(GL_ES3)
+    list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-D__GL_ES3__")
+  elseif(GL_2)
+    list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-D__GL_2__")
+  elseif(GL_3)
+    list(APPEND ${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS "-D__GL_3__")
+  endif()
+
+  foreach(_SWIG_SOURCE_FILE ${LUA_SWIG_SOURCE_FILES})
+    set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_FLAGS ${${CMAKE_PROJECT_NAME}_LUA_SWIG_FLAGS})
+    set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY CPLUSPLUS ON)
+    set_property(SOURCE ${_SWIG_SOURCE_FILE} PROPERTY SWIG_INCLUDE_DIRECTORIES "${SWIGIN_SCRIPTS_INCLUDE_DIRS}")
+  endforeach()
+
+
+  # include_directories("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic" 
+  #   ${SWIGIN_SCRIPTS_INCLUDE_DIRS} 
+  #   ${GLM_INCLUDE_DIR} 
+  #   ${GLM_INCLUDE_DIRS}
+  #   )
+  include_directories("${${CMAKE_PROJECT_NAME}_REPO_DIRECTORY}/swig.in/script/njlic" 
+    ${SWIGIN_SCRIPTS_INCLUDE_DIRS} 
+    )
+
+  get_property(_INCLUDE_DIRECTORIES DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+  #  foreach(_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORIES})
+  #    MESSAGE(STATUS "BULLET_SWIG_INCLUDE_DIRECTORY ${_INCLUDE_DIRECTORY}")
+  #  endforeach()
+  list(REMOVE_ITEM _INCLUDE_DIRECTORIES "/usr/include")
+  set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES ${_INCLUDE_DIRECTORIES} )
+
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS GLM_SWIG=1 BT_INFINITY)
+
+
+
+  if(${CMAKE_VERSION} VERSION_LESS "3.8")
+    swig_add_module(
+      ${CMAKE_PROJECT_NAME}-lua-swig-glm-static
+      lua
+      "${LUA_SWIG_SOURCE_FILES}"
+      )
+  else()
+    swig_add_library(
+      ${CMAKE_PROJECT_NAME}-lua-swig-glm-static
+      TYPE STATIC
+      LANGUAGE lua
+      SOURCES "${LUA_SWIG_SOURCE_FILES}"
+      )
+  endif()
+
+  if(ANDROID)
+    if(TARGET main)
+      add_dependencies(main ${CMAKE_PROJECT_NAME}-lua-swig-glm-static)
+    endif()
+  else()
+    if(TARGET ${CMAKE_PROJECT_NAME}-exe)
+      add_dependencies(${CMAKE_PROJECT_NAME}-exe ${CMAKE_PROJECT_NAME}-lua-swig-glm-static)
+    endif()
+  endif()
+
+  if(TARGET ${CMAKE_PROJECT_NAME}-static)
+    add_dependencies(${CMAKE_PROJECT_NAME}-static ${CMAKE_PROJECT_NAME}-lua-swig-glm-static)
+  endif()
+  if(TARGET ${CMAKE_PROJECT_NAME})
+    add_dependencies(${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME}-lua-swig-glm-static)
+  endif()
+
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-glm-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+
+  if(APPLE)
+    if(IOS OR TVOS)
+      SET_TARGET_PROPERTIES (
+        ${CMAKE_PROJECT_NAME}-lua-swig-glm-static PROPERTIES
+        XCODE_PRODUCT_TYPE "com.apple.product-type.library.static"
+        )
+    endif(IOS OR TVOS)
+  endif()
+
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-glm-static ${CMAKE_PROJECT_NAME}-static)
+  foreach(EXTRA_LIB ${EXTRA_LIBS})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-glm-static optimized ${EXTRA_LIB})
+  endforeach()
+  target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-glm-static ${EXTRA_LDFLAGS})
+  foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
+    target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-glm-static debug ${EXTRA_DEBUG_LIB})
+  endforeach()
+
+  if(ANDROID)
+    # target_link_libraries( main ${CMAKE_PROJECT_NAME}-lua-swig-glm-static)
+    # target_compile_definitions(main PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  endif()
+
+  list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-glm-static)
+  list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
+
+  set(_INSTALL_LIBS "${CMAKE_PROJECT_NAME}-lua-swig-glm-static" ${_INSTALL_LIBS})
+  target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-glm-static
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
+    PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
+    )
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-glm-static PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+
+  if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
+
+    if(${CMAKE_VERSION} VERSION_LESS "3.8")
+      swig_add_module(
+        ${CMAKE_PROJECT_NAME}-lua-swig-glm
+        lua
+        "${LUA_SWIG_SOURCE_FILES}"
+        )
+    else()
+      swig_add_library(
+        ${CMAKE_PROJECT_NAME}-lua-swig-glm
+        TYPE SHARED
+        LANGUAGE lua
+        SOURCES "${LUA_SWIG_SOURCE_FILES}"
+        )
+    endif()
+
+    # if(APPLE)
+    #   if(IOS OR TVOS)
+    #     SET_TARGET_PROPERTIES (
+    #       ${CMAKE_PROJECT_NAME}-lua-swig-glm PROPERTIES
+    #       XCODE_PRODUCT_TYPE "com.apple.product-type.library.dynamic"
+    #       )
+    #   endif(IOS OR TVOS)
+    # endif()
+    target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-glm PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+
+    if(MSVC AND NOT LIBC)
+      list(APPEND EXTRA_LIBS "msvcrt.lib")
+      # Don't try to link with the default set of libraries.
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-glm PROPERTIES LINK_FLAGS_RELEASE "/NODEFAULTLIB:LIBCMT")
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-glm PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT")
+      target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-glm ${EXTRA_LDFLAGS} debug "msvcrtd.lib")
+    endif()
+
+    target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-glm ${CMAKE_PROJECT_NAME}-static )
+    foreach(EXTRA_LIB ${EXTRA_LIBS})
+      target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-glm optimized ${EXTRA_LIB})
+    endforeach()
+    target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-glm ${EXTRA_LDFLAGS})
+    foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
+      target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-glm debug ${EXTRA_DEBUG_LIB})
+    endforeach()
+  endif()
+
+  if(NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID AND NOT LINUX)
+    #So... non-mobile (WINDOWS, LINUX, MAC
+
+    if(${CMAKE_VERSION} VERSION_LESS "3.8")
+      MESSAGE(FATAL_ERROR "Cannot make a swig module with a version less than 3.8")
+    else()
+      swig_add_library(
+        ${CMAKE_PROJECT_NAME}-lua-swig-glm-module
+        TYPE MODULE
+        LANGUAGE lua
+        SOURCES "${LUA_SWIG_SOURCE_FILES}"
+        )
+    endif()
+
+    target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-glm-module PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+
+    if(MSVC AND NOT LIBC)
+      list(APPEND EXTRA_LIBS "msvcrt.lib")
+      # Don't try to link with the default set of libraries.
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-glm-module PROPERTIES LINK_FLAGS_RELEASE "/NODEFAULTLIB:LIBCMT")
+      set_target_properties(${CMAKE_PROJECT_NAME}-lua-swig-glm-module PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT")
+      target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-glm-module ${EXTRA_LDFLAGS} debug "msvcrtd.lib")
+    endif()
+
+    target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-glm-module ${CMAKE_PROJECT_NAME}-static )
+    foreach(EXTRA_LIB ${EXTRA_LIBS})
+      target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-glm-module optimized ${EXTRA_LIB})
+    endforeach()
+    target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-glm-module ${EXTRA_LDFLAGS})
+    foreach(EXTRA_DEBUG_LIB ${EXTRA_DEBUG_LIBS})
+      target_link_libraries( ${CMAKE_PROJECT_NAME}-lua-swig-glm-module debug ${EXTRA_DEBUG_LIB})
+    endforeach()
+  endif()
+
+endmacro()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 macro(LUA_BULLET3_SWIG)
   if(NOT CMAKE_PROJECT_NAME)
     MESSAGE(FATAL_ERROR "CMAKE_PROJECT_NAME variable is empty.")
@@ -554,6 +836,7 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
 
       LUA_NJLIC_SWIG()
       LUA_BULLET3_SWIG()
+      LUA_GLM_SWIG()
 
       file(GLOB_RECURSE LUA_SWIG_GENERATED_FILES
         "${SWIG_OUTFILE_DIR}/*.c*"
