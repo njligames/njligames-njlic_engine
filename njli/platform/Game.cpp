@@ -407,25 +407,25 @@ namespace njli
             njli::World::getInstance()->getScene()->resumeInterrupt();
     }
 
-    // void NJLIGameEngine::pauseGame()
-    //{
-    //    njli::World::getInstance()->enablePauseGame();
-    //}
-    //
-    // void NJLIGameEngine::unpauseGame()
-    //{
-    //    njli::World::getInstance()->enablePauseGame(false);
-    //}
+     void NJLIGameEngine::pauseGame()
+    {
+        njli::World::getInstance()->enablePauseGame();
+    }
+    
+     void NJLIGameEngine::unpauseGame()
+    {
+        njli::World::getInstance()->enablePauseGame(false);
+    }
 
-    // void NJLIGameEngine::pauseSound()
-    //{
-    //    njli::World::getInstance()->getWorldSound()->enablePause();
-    //}
-    //
-    // void NJLIGameEngine::unpauseSound()
-    //{
-    //    njli::World::getInstance()->getWorldSound()->enablePause(false);
-    //}
+     void NJLIGameEngine::pauseSound()
+    {
+        njli::World::getInstance()->getWorldSound()->enablePause();
+    }
+    
+     void NJLIGameEngine::unpauseSound()
+    {
+        njli::World::getInstance()->getWorldSound()->enablePause(false);
+    }
 
     void NJLIGameEngine::keyboardShow()
     {

@@ -67,11 +67,11 @@ namespace njli
     static void interrupt();
     static void resumeInterrupt();
 
-    //    static void pauseGame();
-    //    static void unpauseGame();
+        static void pauseGame();
+        static void unpauseGame();
     //
-    //    static void pauseSound();
-    //    static void unpauseSound();
+        static void pauseSound();
+        static void unpauseSound();
 
     static void keyboardShow();
     static void keyboardCancel();
