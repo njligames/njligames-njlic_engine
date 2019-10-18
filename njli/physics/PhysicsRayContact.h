@@ -20,6 +20,7 @@ namespace njli
 {
   class PhysicsRayContactBuilder;
   class Node;
+class DeviceTouch;
 
   /**
        *  <#Description#>
@@ -185,6 +186,9 @@ namespace njli
          *  @return <#return value description#>
          */
     const btVector2 &getTouchPosition() const;
+      
+      void setDeviceTouch(const DeviceTouch &touch);
+      const DeviceTouch &getDeviceTouch()const;
 
   protected:
     void screenPosition(const btVector2 &pos);
@@ -197,6 +201,7 @@ namespace njli
     btVector3 *m_hitPointWorld;
     Node *m_node;
     btVector2 *m_touchPosition;
+      DeviceTouch *mDeviceTouch;
   };
 }
 

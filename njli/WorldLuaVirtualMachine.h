@@ -259,6 +259,7 @@ namespace njli
          *  @return <#return value description#>
          */
     bool execute(const char *code, Node *node);
+      bool execute(const char *code, Node *node, DeviceTouch *touch);
 
     /**
          *  @author James Folk, 16-02-11 18:02:31
@@ -540,6 +541,11 @@ namespace njli
     void getError(const char *code, int error);
 
     lua_State *m_lua_State;
+      
+  public:
+      static void getError(lua_State *L, const char *code, int error);
+      static bool doString(lua_State *L, const char *code);
+      static bool loadString(lua_State *L, const char *code);
 
   private:
     WorldLuaVirtualMachine(const WorldLuaVirtualMachine &);

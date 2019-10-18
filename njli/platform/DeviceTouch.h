@@ -94,8 +94,8 @@ namespace njli
     {
       return btVector2(m_prev_xpos, m_prev_ypos);
     }
-    unsigned int getAddress() const { return m_address; }
-    unsigned int getTapCount() const { return m_tapCount; }
+    const unsigned long getAddress() const { return m_address; }
+    unsigned long getTapCount() const { return m_tapCount; }
     unsigned int getTouchIndex() const { return m_touchIndex; }
     unsigned int getTouchTotal() const { return m_touchTotal; }
 

@@ -14,6 +14,8 @@
 #include "btHashMap.h"
 #include <map>
 #include <vector>
+#include <mutex>
+#include <thread>
 
 class File;
 
@@ -55,13 +57,17 @@ namespace njli
       void setFilename(const char *filename);
       const char *getFilename() const;
 
+        bool load(const char *filePath);
     protected:
       FileData &operator=(const FileData &rhs);
-      bool load(const char *filePath);
+      
+        bool _load(const char *filePath);
 
       void *m_buffer;
       long m_fileSize;
       std::string m_fileName;
+        std::thread *m_LoadHandle;
+        std::mutex m_Mutex;
     };
 
     struct ImageFileData : public FileData

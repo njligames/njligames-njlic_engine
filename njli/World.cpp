@@ -1633,7 +1633,7 @@ namespace njli
                             sprintf(buffer, "%s", "__NJLINodeRayTouchMissed");
                             njli::World::getInstance()
                                 ->getWorldLuaVirtualMachine()
-                                ->execute(buffer, n);
+                                ->execute(buffer, n, touch);
                         }
                     }
                 }

@@ -49,10 +49,13 @@
 #include "emscripten/emscripten.h"
 #endif
 
+#include <thread>
+#include <mutex>
+
 namespace njli
 {
     WorldResourceLoader::FileData::FileData()
-        : m_buffer(NULL), m_fileSize(0), m_fileName("")
+        : m_buffer(NULL), m_fileSize(0), m_fileName(""), m_LoadHandle(nullptr)
     {
     }
     //    WorldResourceLoader::FileData::FileData(const FileData &rhs):
@@ -70,13 +73,14 @@ namespace njli
     //    }
 
     WorldResourceLoader::FileData::FileData(const char *filePath)
-        : m_buffer(NULL), m_fileSize(0), m_fileName("")
+        : m_buffer(NULL), m_fileSize(0), m_fileName(""), m_LoadHandle(nullptr)
     {
         load(filePath);
     }
 
     WorldResourceLoader::FileData::~FileData()
     {
+        
         if (m_buffer)
             free(m_buffer);
         m_buffer = NULL;
@@ -101,6 +105,7 @@ namespace njli
 
     void WorldResourceLoader::FileData::setFilename(const char *filename)
     {
+        std::lock_guard<std::mutex> lock(m_Mutex);
         m_fileName = filename;
     }
 
@@ -143,8 +148,21 @@ namespace njli
     //    return false;
     //  }
 
-    bool WorldResourceLoader::FileData::load(const char *filePath)
+
+bool WorldResourceLoader::FileData::load(const char *filePath)
+{
+    m_LoadHandle = new std::thread(&WorldResourceLoader::FileData::_load, this, filePath);
+    
+    m_LoadHandle->join();
+    delete m_LoadHandle;
+    m_LoadHandle = nullptr;
+    
+    return true;
+}
+    bool WorldResourceLoader::FileData::_load(const char *filePath)
     {
+        std::lock_guard<std::mutex> lock(m_Mutex);
+        
         SDL_RWops *rw = SDL_RWFromFile(ASSET_PATH(filePath), "rb");
         if (rw)
         {

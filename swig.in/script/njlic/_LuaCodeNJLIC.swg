@@ -1146,4 +1146,52 @@ end
 function __NJLINodeKeyUp(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui)
 for k, v in pairs(Runtime.NodeKeyUp) do v(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
 end
+
+function enableDebugFunctionCalls(enable)
+    local _enable = enable
+    if enable == nil then
+        _enable = true
+    end
+    _G['debug_call'] = _enable
+end
+
+function isDebugFunctionCallEnabled()
+    if nil == _G['debug_call'] then
+        enableDebugFunctionCalls(false)
+    end
+
+    local enabled = _G['debug_call']
+    return enabled
+end
+
+function toggleFunctionCallEnabled()
+    enableDebugFunctionCalls(isDebugFunctionCallEnabled())
+end
+
+function checkEnableDebugFunctions(x, y)
+    if x < 200 and y < 200 then
+
+        if _G['enableTouchCount'] == nil then
+            _G['enableTouchCount'] = 0
+        end
+
+        if _G['enableTouchCount'] >= 10 then
+            enableDebugFunctionCalls(true)
+            _G['enableTouchCount'] = 0
+        end
+
+        _G['enableTouchCount'] = _G['enableTouchCount'] + 1
+        print('debug print in', 10 - _G['enableTouchCount'])
+    else
+        _G['enableTouchCount'] = 0
+    end
+
+    if x > 2200 and y < 200 then
+        enableDebugFunctionCalls(false)
+    end
+end
+
+
 %}
+
+

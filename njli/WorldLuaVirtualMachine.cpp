@@ -247,6 +247,39 @@ static void laction(int i)
     lua_sethook(globalL, lstop, LUA_MASKCALL | LUA_MASKRET | LUA_MASKCOUNT, 1);
 }
 
+static void hook(lua_State *L, lua_Debug *ar)
+{
+    lua_getstack(L, 1, ar);
+    lua_getinfo(L, "nSl", ar);
+    
+    static const std::string code = R"(
+    local enabled = _G['debug_call'] or false
+    if enabled then
+        local previous_print = _G['previous_print'] or ""
+        local current_print = debug.traceback()
+        if previous_print ~= current_print then
+            print(current_print)
+            _G['previous_print'] = previous_print
+        else
+            print('.')
+        end
+    end
+    )";
+    
+    if (njli::WorldLuaVirtualMachine::loadString(L, code.c_str()))
+    {
+        if( njli::WorldLuaVirtualMachine::doString(L, code.c_str()) )
+        {
+//            printf("(%s:%d) in %s\n", ar->short_src, ar->currentline, ar->name);
+        }
+    }
+    
+}
+
+static void sethook(lua_State *L)
+{
+    lua_sethook(L, hook, LUA_MASKCALL, 1);
+}
 /*
  ** Prints an error message, adding the program name in front of it
  ** (if present)
@@ -306,7 +339,12 @@ static int s_docall(lua_State *L, int narg, int nres)
     lua_insert(L, base);               /* put it under function and args */
     globalL = L;                       /* to be available to 'laction' */
                                        //#if !defined(__EMSCRIPTEN__)
-    //  signal(SIGINT, laction); /* set C-signal handler */
+
+#if defined(LUA_WRAPPER_LOGGING)
+    sethook(L);
+#endif
+    
+    signal(SIGINT, laction); /* set C-signal handler */
     //#endif
     //  status = lua_pcall(L, narg, nres, base);
     status = lua_pcall(L, narg, nres, base);
@@ -1146,15 +1184,7 @@ namespace njli
 
     bool WorldLuaVirtualMachine::loadString(const char *code)
     {
-        if (m_lua_State)
-        {
-            int error_code = luaL_loadstring(m_lua_State, code);
-
-            if (LUA_OK == error_code)
-                return true;
-            getError(code, error_code);
-        }
-        return false;
+        return WorldLuaVirtualMachine::loadString(m_lua_State, code);
     }
 
     bool WorldLuaVirtualMachine::doFile(const char *filePath)
@@ -1172,15 +1202,7 @@ namespace njli
 
     bool WorldLuaVirtualMachine::doString(const char *code)
     {
-        if (m_lua_State)
-        {
-            int error_code = luaL_dostring(m_lua_State, code);
-
-            if (LUA_OK == error_code)
-                return true;
-            getError(code, error_code);
-        }
-        return false;
+        return WorldLuaVirtualMachine::doString(m_lua_State, code);
     }
 
     void WorldLuaVirtualMachine::reset()
@@ -1312,66 +1334,96 @@ namespace njli
 
     void WorldLuaVirtualMachine::getError(const char *code, int error)
     {
-        std::string value;
-        switch (error)
-        {
-        case LUA_YIELD:
-            value = "(LUA_YIELD)";
-            break;
-        case LUA_ERRRUN:
-            value = "(LUA_ERRRUN - a runtime error)";
-            break;
-        case LUA_ERRSYNTAX:
-            value = "LUA_ERRSYNTAX";
-            break;
-        case LUA_ERRMEM:
-            value = "(LUA_ERRMEM - memory allocation error. For such "
-                    "errors, Lua "
-                    "does not call the error handler function)";
-            break;
-        case LUA_ERRGCMM:
-            value = "(LUA_ERRGCMM)";
-            break;
-        case LUA_ERRERR:
-            value = "(LUA_ERRERR - error while running the error handler "
-                    "function)";
-            break;
-        default:
-            break;
-        }
-
-        if (m_lua_State)
-        {
-            //            const char *msg = lua_tostring(m_lua_State, -1);
-
-            std::string theerror = "\n\t<ERROR>\n\t";
-            theerror += value.c_str();
-            theerror += "\n\t</ERROR>\n";
-
-            std::string theerrordescription = "\t<DESCRIPTION>\n\t";
-            const char *s = lua_tostring(m_lua_State, -1);
-            if (s)
-            {
-                std::string desc(s);
-                theerrordescription += desc;
-            }
-            else
-            {
-                theerrordescription += "Unknown.";
-            }
-
-            theerrordescription += "\n\t</DESCRIPTION>\n";
-
-            //        std::string thecode = "\t<CODE>\n\t";
-            //        thecode += code;
-            //        thecode += "\n\t</CODE>\n";
-
-            SDL_LogError(SDL_LOG_CATEGORY_TEST, "\n<LUA>%s%s</LUA>\n",
-                         theerror.c_str(), theerrordescription.c_str());
-            lua_pop(m_lua_State, 1); /* remove message */
-        }
+        WorldLuaVirtualMachine::getError(m_lua_State, code, error);
     }
 
+void WorldLuaVirtualMachine::getError(lua_State *L, const char *code, int error)
+{
+    std::string value;
+    switch (error)
+    {
+    case LUA_YIELD:
+        value = "(LUA_YIELD)";
+        break;
+    case LUA_ERRRUN:
+        value = "(LUA_ERRRUN - a runtime error)";
+        break;
+    case LUA_ERRSYNTAX:
+        value = "LUA_ERRSYNTAX";
+        break;
+    case LUA_ERRMEM:
+        value = "(LUA_ERRMEM - memory allocation error. For such "
+                "errors, Lua "
+                "does not call the error handler function)";
+        break;
+    case LUA_ERRGCMM:
+        value = "(LUA_ERRGCMM)";
+        break;
+    case LUA_ERRERR:
+        value = "(LUA_ERRERR - error while running the error handler "
+                "function)";
+        break;
+    default:
+        break;
+    }
+
+    if (L)
+    {
+        //            const char *msg = lua_tostring(L, -1);
+
+        std::string theerror = "\n\t<ERROR>\n\t";
+        theerror += value.c_str();
+        theerror += "\n\t</ERROR>\n";
+
+        std::string theerrordescription = "\t<DESCRIPTION>\n\t";
+        const char *s = lua_tostring(L, -1);
+        if (s)
+        {
+            std::string desc(s);
+            theerrordescription += desc;
+        }
+        else
+        {
+            theerrordescription += "Unknown.";
+        }
+
+        theerrordescription += "\n\t</DESCRIPTION>\n";
+
+        //        std::string thecode = "\t<CODE>\n\t";
+        //        thecode += code;
+        //        thecode += "\n\t</CODE>\n";
+
+        SDL_LogError(SDL_LOG_CATEGORY_TEST, "\n<LUA>%s%s</LUA>\n",
+                     theerror.c_str(), theerrordescription.c_str());
+        lua_pop(L, 1); /* remove message */
+    }
+}
+
+bool WorldLuaVirtualMachine::doString(lua_State *L, const char *code)
+{
+    if (L)
+    {
+        int error_code = luaL_dostring(L, code);
+
+        if (LUA_OK == error_code)
+            return true;
+        WorldLuaVirtualMachine::getError(L, code, error_code);
+    }
+    return false;
+}
+
+bool WorldLuaVirtualMachine::loadString(lua_State *L, const char *code)
+{
+    if (L)
+    {
+        int error_code = luaL_loadstring(L, code);
+
+        if (LUA_OK == error_code)
+            return true;
+        WorldLuaVirtualMachine::getError(L, code, error_code);
+    }
+    return false;
+}
     bool WorldLuaVirtualMachine::compile()
     {
         if (m_lua_State)
@@ -1645,6 +1697,33 @@ namespace njli
 
         return false;
     }
+
+bool WorldLuaVirtualMachine::execute(const char *code, Node *pEntity, DeviceTouch *touch)
+{
+    if (m_lua_State)
+    {
+        lua_getglobal(m_lua_State, code);
+
+        swig_type_info *nodeTypeInfo =
+            SWIG_TypeQuery(m_lua_State, "_p_njli__Node");
+        SWIG_NewPointerObj(m_lua_State, (void *)pEntity, nodeTypeInfo, 0);
+        
+        swig_type_info *touchTypeInfo =
+            SWIG_TypeQuery(m_lua_State, "_p_njli__DeviceTouch");
+        SWIG_NewPointerObj(m_lua_State, (void *)&touch, touchTypeInfo,
+                           0);
+        
+        /* do the call (1 arguments, 0 result) */
+        //            int error_code = lua_pcall(m_lua_State, 1, 0, 0);
+        int status = docall(m_lua_State, 2, 0);
+
+        if (LUA_OK == status)
+            return true;
+        getError(code, status);
+    }
+
+    return false;
+}
 
     bool WorldLuaVirtualMachine::execute(const char *code, Node *pEntity,
                                          f32 _btScalar)
