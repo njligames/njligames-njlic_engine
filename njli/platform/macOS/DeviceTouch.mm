@@ -15,69 +15,72 @@ namespace njli
 {
   int DeviceTouch::eventFilter(void *userdata, SDL_Event *event)
   {
-    dispatch_block_t block = ^{
-      //            njli::NJLIGameEngine::handleEvent(&event);
-      //    SDLTest_PrintEvent(event);
-
-      Uint32 eventType = event->type;
-
-      switch (eventType)
-        {
-        case SDL_JOYDEVICEMOTION:
-          {
-
-            NJLI_HandleVRCameraRotationYPR(
-                static_cast<float>(event->jmotion.yaw),
-                static_cast<float>(event->jmotion.pitch),
-                static_cast<float>(event->jmotion.roll));
-          }
-          break;
-        case SDL_FINGERMOTION:
-        case SDL_FINGERDOWN:
-        case SDL_FINGERUP:
-          NJLI_HandleTouch(
-              (int)event->tfinger.touchId, (int)event->tfinger.fingerId,
-              event->type, event->tfinger.x, event->tfinger.y,
-              event->tfinger.dx, event->tfinger.dy, event->tfinger.pressure);
-          break;
-        default:
-          break;
-        }
-      NJLI_HandleFinishTouches();
-    };
-
-    if ([NSThread isMainThread])
-      {
-        block();
-      }
-    else
-      {
-        dispatch_async(dispatch_get_main_queue(), block);
-      }
+//    dispatch_block_t block = ^{
+//      //            njli::NJLIGameEngine::handleEvent(&event);
+//      //    SDLTest_PrintEvent(event);
+//
+//      Uint32 eventType = event->type;
+//
+//      switch (eventType)
+//        {
+//        case SDL_JOYDEVICEMOTION:
+//          {
+//
+//            NJLI_HandleVRCameraRotationYPR(
+//                static_cast<float>(event->jmotion.yaw),
+//                static_cast<float>(event->jmotion.pitch),
+//                static_cast<float>(event->jmotion.roll));
+//          }
+//          break;
+//        case SDL_FINGERMOTION:
+//        case SDL_FINGERDOWN:
+//        case SDL_FINGERUP:
+//          NJLI_HandleTouch(
+//              (int)event->tfinger.touchId, (int)event->tfinger.fingerId,
+//              event->type, event->tfinger.x, event->tfinger.y,
+//              event->tfinger.dx, event->tfinger.dy, event->tfinger.pressure);
+//          break;
+//        default:
+//          break;
+//        }
+//      NJLI_HandleFinishTouches();
+//    };
+//
+//    if ([NSThread isMainThread])
+//      {
+//        block();
+//      }
+//    else
+//      {
+//        dispatch_async(dispatch_get_main_queue(), block);
+//      }
   }
 
   int DeviceTouch::screenPPI()
   {
-    static const int CONVERSION(
-        ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
-    CGFloat ns = [[UIScreen mainScreen] nativeScale];
-    return ns * CONVERSION;
+//    static const int CONVERSION(
+//        ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+//    CGFloat ns = [[UIScreen mainScreen] nativeScale];
+//    return ns * CONVERSION;
+      return 1;
   }
 
   int DeviceTouch::pointToPixel(const int point)
   {
-    static const int CONVERSION(
-        ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
-    static const int DPI(DeviceTouch::screenPPI());
-    return static_cast<int>((point * DPI) / CONVERSION);
+//    static const int CONVERSION(
+//        ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+//    static const int DPI(DeviceTouch::screenPPI());
+//    return static_cast<int>((point * DPI) / CONVERSION);
+      return 1;
   }
 
   int DeviceTouch::pixelToPoint(const int pixel)
   {
-    static const int CONVERSION(
-        ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
-    static const int DPI(DeviceTouch::screenPPI());
-    return ((CONVERSION * pixel) / DPI);
+//    static const int CONVERSION(
+//        ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+//    static const int DPI(DeviceTouch::screenPPI());
+//    return ((CONVERSION * pixel) / DPI);
+      return 1;
   }
   const u8 DeviceTouch::MAX_TOUCHES = 5;
 
