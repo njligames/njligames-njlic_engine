@@ -2,3 +2,4 @@
 _Defines.swg
 .swig/
 
+lua/src/luaconf.h

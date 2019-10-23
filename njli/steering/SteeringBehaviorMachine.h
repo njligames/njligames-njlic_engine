@@ -675,7 +675,9 @@ namespace njli
                   
               }
           }
-//
+
+		  return btVector3(0, 0, 0);
+          //
 //          std::vector<BaseGameEntity*>::const_iterator curOb = obstacles.begin();
 //
 //          while(curOb != obstacles.end())

@@ -13,6 +13,7 @@
 #include <map>
 #include <vector>
 #include "glm/glm.hpp"
+#include <string>
 
 extern std::vector<SDL_Joystick *> gGameJoysticks;
 typedef std::map<int, SDL_Joystick *> JoystickMap;

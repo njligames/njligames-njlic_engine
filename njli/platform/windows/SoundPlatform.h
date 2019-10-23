@@ -9,3 +9,5 @@
 #else
 #error Unsupported choice setting
 #endif
+
+bool setupSoundPlatform();

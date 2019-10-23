@@ -26,6 +26,10 @@
 #include <GL/GL.h>
 #include <GL/GLU.h>
 
+#define glGenVertexArrays_NJLIC glGenVertexArrays
+#define glBindVertexArray_NJLIC glBindVertexArray
+#define glDeleteVertexArrays_NJLIC glDeleteVertexArrays
+
 #define NANOVG_GL2_IMPLEMENTATION
 
 #elif defined(__GL_3__)
