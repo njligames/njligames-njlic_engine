@@ -1153,7 +1153,11 @@ namespace njli
         for (int i = 0; i < numberOfParticleEmitters(); ++i)
         {
             ParticleEmitter *pe = getParticleEmitter(i);
-            pe->setRenderCategory(this);
+            if (NULL != pe)
+            {
+                pe->setRenderCategory(this);
+            }
+            
         }
     }
 

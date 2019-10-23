@@ -636,230 +636,211 @@ for k, v in pairs(Runtime.Create) do v() end
 end
 
 function __NJLIDestroy()
-for k, v in pairs(Runtime.Destroy) do v() end
+for k, __NJLIDestroy in pairs(Runtime.Destroy) do __NJLIDestroy() end
 end
 
 function __NJLIUpdate(timeStep)
-for k, v in pairs(Runtime.Update) do v(timeStep) end
+for k, __NJLIUpdate in pairs(Runtime.Update) do __NJLIUpdate(timeStep) end
 end
 
 function __NJLIRender()
-for k, v in pairs(Runtime.Render) do v() end
+for k, __NJLIRender in pairs(Runtime.Render) do __NJLIRender() end
 end
 
 function __NJLIResize(width, height, orientation)
-for k, v in pairs(Runtime.Resize) do v(width, height, orientation) end
+for k, __NJLIResize in pairs(Runtime.Resize) do __NJLIResize(width, height, orientation) end
 end
 
 function __NJLITouchesDown(touches)
-for k, v in pairs(Runtime.TouchesDown) do v(touches) end
+for k, __NJLITouchesDown in pairs(Runtime.TouchesDown) do __NJLITouchesDown(touches) end
 end
 
 function __NJLITouchesUp(touches)
-for k, v in pairs(Runtime.TouchesUp) do v(touches) end
+for k, __NJLITouchesUp in pairs(Runtime.TouchesUp) do __NJLITouchesUp(touches) end
 end
 
 function __NJLITouchesMove(touches)
-for k, v in pairs(Runtime.TouchesMove) do v(touches) end
+for k, __NJLITouchesMove in pairs(Runtime.TouchesMove) do __NJLITouchesMove(touches) end
 end
 
 function __NJLITouchesCancelled(touches)
-for k, v in pairs(Runtime.TouchesCancelled) do v(touches) end
+for k, __NJLITouchesCancelled in pairs(Runtime.TouchesCancelled) do __NJLITouchesCancelled(touches) end
 end
 
 function __NJLITouchDown(touch)
-for k, v in pairs(Runtime.TouchDown) do v(touch) end
+for k, __NJLITouchDown in pairs(Runtime.TouchDown) do __NJLITouchDown(touch) end
 end
 
 function __NJLITouchUp(touch)
-for k, v in pairs(Runtime.TouchUp) do v(touch) end
+for k, __NJLITouchUp in pairs(Runtime.TouchUp) do __NJLITouchUp(touch) end
 end
 
 function __NJLITouchMove(touch)
-for k, v in pairs(Runtime.TouchMove) do v(touch) end
+for k, __NJLITouchMove in pairs(Runtime.TouchMove) do __NJLITouchMove(touch) end
 end
 
 function __NJLITouchCancelled(touch)
-for k, v in pairs(Runtime.TouchCancelled) do v(touch) end
+for k, __NJLITouchCancelled in pairs(Runtime.TouchCancelled) do __NJLITouchCancelled(touch) end
 end
 
 function __NJLIMouseDown(mouse)
-for k, v in pairs(Runtime.MouseDown) do v(mouse) end
+for k, __NJLIMouseDown in pairs(Runtime.MouseDown) do __NJLIMouseDown(mouse) end
 end
 
 function __NJLIMouseUp(mouse)
-for k, v in pairs(Runtime.MouseUp) do v(mouse) end
+for k, __NJLIMouseUp in pairs(Runtime.MouseUp) do __NJLIMouseUp(mouse) end
 end
 
 function __NJLIMouseMove(mouse)
-for k, v in pairs(Runtime.MouseMove) do v(mouse) end
+for k, __NJLIMouseMove in pairs(Runtime.MouseMove) do __NJLIMouseMove(mouse) end
 end
 
 function __NJLIKeyDown(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui)
-for k, v in pairs(Runtime.KeyDown) do v(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
+for k, __NJLIKeyDown in pairs(Runtime.KeyDown) do __NJLIKeyDown(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
 end
 
 function __NJLIKeyUp(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui)
-for k, v in pairs(Runtime.KeyUp) do v(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
+for k, __NJLIKeyUp in pairs(Runtime.KeyUp) do __NJLIKeyUp(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
 end
 
-
-
-
-
-
-
 function __NJLIWorldEnterState()
-for k, v in pairs(Runtime.WorldEnterState) do v() end
+for k, __NJLIWorldEnterState in pairs(Runtime.WorldEnterState) do __NJLIWorldEnterState() end
 end
 
 function __NJLIWorldUpdateState(timeStep)
-for k, v in pairs(Runtime.WorldUpdateState) do v(timeStep) end
+for k, __NJLIWorldUpdateState in pairs(Runtime.WorldUpdateState) do __NJLIWorldUpdateState(timeStep) end
 end
 
 function __NJLIWorldExitState()
-for k, v in pairs(Runtime.WorldExitState) do v() end
+for k, __NJLIWorldExitState in pairs(Runtime.WorldExitState) do __NJLIWorldExitState() end
 end
 
 function __NJLIWorldOnMessage(message)
-for k, v in pairs(Runtime.WorldOnMessage) do v(message) end
+for k, __NJLIWorldOnMessage in pairs(Runtime.WorldOnMessage) do __NJLIWorldOnMessage(message) end
 end
 
 function __NJLIWorldKeyboardShow()
-for k, v in pairs(Runtime.WorldKeyboardShow) do v() end
+for k, __NJLIWorldKeyboardShow in pairs(Runtime.WorldKeyboardShow) do __NJLIWorldKeyboardShow() end
 end
 
 function __NJLIWorldKeyboardCancel()
-for k, v in pairs(Runtime.WorldKeyboardCancel) do v() end
+for k, __NJLIWorldKeyboardCancel in pairs(Runtime.WorldKeyboardCancel) do __NJLIWorldKeyboardCancel() end
 end
 
 function __NJLIWorldKeyboardReturn(text)
-for k, v in pairs(Runtime.WorldKeyboardReturn) do v(text) end
+for k, __NJLIWorldKeyboardReturn in pairs(Runtime.WorldKeyboardReturn) do __NJLIWorldKeyboardReturn(text) end
 end
 
 function __NJLIWorldReceivedMemoryWarning()
-for k, v in pairs(Runtime.WorldReceivedMemoryWarning) do v() end
+for k, __NJLIWorldReceivedMemoryWarning in pairs(Runtime.WorldReceivedMemoryWarning) do __NJLIWorldReceivedMemoryWarning() end
 end
 
 function __NJLIWorldGamePause()
-for k, v in pairs(Runtime.WorldGamePause) do v() end
+for k, __NJLIWorldGamePause in pairs(Runtime.WorldGamePause) do __NJLIWorldGamePause() end
 end
 
 function __NJLIWorldGameUnPause()
-for k, v in pairs(Runtime.WorldGameUnPause) do v() end
+for k, __NJLIWorldGameUnPause in pairs(Runtime.WorldGameUnPause) do __NJLIWorldGameUnPause() end
 end
 
 function __NJLIWorldRenderHUD()
-for k, v in pairs(Runtime.WorldRenderHUD) do v() end
+for k, __NJLIWorldRenderHUD in pairs(Runtime.WorldRenderHUD) do __NJLIWorldRenderHUD() end
 end
 
 function __NJLIWorldTouchesDown(touches)
-for k, v in pairs(Runtime.WorldTouchesDown) do v(touches) end
+for k, __NJLIWorldTouchesDown in pairs(Runtime.WorldTouchesDown) do __NJLIWorldTouchesDown(touches) end
 end
 
 function __NJLIWorldTouchesUp(touches)
-for k, v in pairs(Runtime.WorldTouchesUp) do v(touches) end
+for k, __NJLIWorldTouchesUp in pairs(Runtime.WorldTouchesUp) do __NJLIWorldTouchesUp(touches) end
 end
 
 function __NJLIWorldTouchesMove(touches)
-for k, v in pairs(Runtime.WorldTouchesMove) do v(touches) end
+for k, __NJLIWorldTouchesMove in pairs(Runtime.WorldTouchesMove) do __NJLIWorldTouchesMove(touches) end
 end
 
 function __NJLIWorldTouchesCancelled(touches)
-for k, v in pairs(Runtime.WorldTouchesCancelled) do v(touches) end
+for k, __NJLIWorldTouchesCancelled in pairs(Runtime.WorldTouchesCancelled) do __NJLIWorldTouchesCancelled(touches) end
 end
 
 function __NJLIWorldTouchDown(touches)
-for k, v in pairs(Runtime.WorldTouchDown) do v(touches) end
+for k, __NJLIWorldTouchDown in pairs(Runtime.WorldTouchDown) do __NJLIWorldTouchDown(touches) end
 end
 
 function __NJLIWorldTouchUp(touches)
-for k, v in pairs(Runtime.WorldTouchUp) do v(touches) end
+for k, __NJLIWorldTouchUp in pairs(Runtime.WorldTouchUp) do __NJLIWorldTouchUp(touches) end
 end
 
 function __NJLIWorldTouchMove(touches)
-for k, v in pairs(Runtime.WorldTouchMove) do v(touches) end
+for k, __NJLIWorldTouchMove in pairs(Runtime.WorldTouchMove) do __NJLIWorldTouchMove(touches) end
 end
 
 function __NJLIWorldTouchCancelled(touches)
-for k, v in pairs(Runtime.WorldTouchCancelled) do v(touches) end
+for k, __NJLIWorldTouchCancelled in pairs(Runtime.WorldTouchCancelled) do __NJLIWorldTouchCancelled(touches) end
 end
 
 function __NJLIWorldMouseDown(mouse)
-for k, v in pairs(Runtime.WorldMouseDown) do v(mouse) end
+for k, __NJLIWorldMouseDown in pairs(Runtime.WorldMouseDown) do __NJLIWorldMouseDown(mouse) end
 end
 
 function __NJLIWorldMouseUp(mouse)
-for k, v in pairs(Runtime.WorldMouseUp) do v(mouse) end
+for k, __NJLIWorldMouseUp in pairs(Runtime.WorldMouseUp) do __NJLIWorldMouseUp(mouse) end
 end
 
 function __NJLIWorldMouseMove(mouse)
-for k, v in pairs(Runtime.WorldMouseMove) do v(mouse) end
+for k, __NJLIWorldMouseMove in pairs(Runtime.WorldMouseMove) do __NJLIWorldMouseMove(mouse) end
 end
 
-
-
-
-
-
-
-
-
-
-
-
 function __NJLIWorldKeyDown(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui)
-for k, v in pairs(Runtime.WorldKeyDown) do v(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
+for k, __NJLIWorldKeyDown in pairs(Runtime.WorldKeyDown) do __NJLIWorldKeyDown(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
 end
 
 function __NJLIWorldKeyUp(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui)
-for k, v in pairs(Runtime.WorldKeyUp) do v(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
+for k, __NJLIWorldKeyUp in pairs(Runtime.WorldKeyUp) do __NJLIWorldKeyUp(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
 end
 
-
-
 function __NJLIWorldWillResignActive()
-for k, v in pairs(Runtime.WorldWillResignActive) do v() end
+for k, __NJLIWorldWillResignActive in pairs(Runtime.WorldWillResignActive) do __NJLIWorldWillResignActive() end
 end
 
 function __NJLIWorldDidBecomeActive()
-for k, v in pairs(Runtime.WorldDidBecomeActive) do v() end
+for k, __NJLIWorldDidBecomeActive in pairs(Runtime.WorldDidBecomeActive) do __NJLIWorldDidBecomeActive() end
 end
 
 function __NJLIWorldDidEnterBackground()
-for k, v in pairs(Runtime.WorldDidEnterBackground) do v() end
+for k, __NJLIWorldDidEnterBackground in pairs(Runtime.WorldDidEnterBackground) do __NJLIWorldDidEnterBackground() end
 end
 
 function __NJLIWorldWillEnterForeground()
-for k, v in pairs(Runtime.WorldWillEnterForeground) do v() end
+for k, __NJLIWorldDidEnterBackground in pairs(Runtime.WorldWillEnterForeground) do __NJLIWorldDidEnterBackground() end
 end
 
 function __NJLIWorldWillTerminate()
-for k, v in pairs(Runtime.WorldWillTerminate) do v() end
+for k, __NJLIWorldWillTerminate in pairs(Runtime.WorldWillTerminate) do __NJLIWorldWillTerminate() end
 end
 
 function __NJLIWorldInterrupt()
-for k, v in pairs(Runtime.WorldInterrupt) do v() end
+for k, __NJLIWorldInterrupt in pairs(Runtime.WorldInterrupt) do __NJLIWorldInterrupt() end
 end
 
 function __NJLIWorldResumeInterrupt()
-for k, v in pairs(Runtime.WorldResumeInterrupt) do v() end
+for k, __NJLIWorldResumeInterrupt in pairs(Runtime.WorldResumeInterrupt) do __NJLIWorldResumeInterrupt() end
 end
 
 function __NJLISceneEnterState(scene)
-for k, v in pairs(Runtime.SceneEnterState) do v(scene) end
+for k, __NJLISceneEnterState in pairs(Runtime.SceneEnterState) do __NJLISceneEnterState(scene) end
 end
 
 function __NJLISceneUpdateState(scene, timeStep)
-for k, v in pairs(Runtime.SceneUpdateState) do v(scene, timeStep) end
+for k, __NJLISceneUpdateState in pairs(Runtime.SceneUpdateState) do __NJLISceneUpdateState(scene, timeStep) end
 end
 
 function __NJLISceneExitState(scene)
-for k, v in pairs(Runtime.SceneExitState) do v(scene) end
+for k, __NJLISceneExitState in pairs(Runtime.SceneExitState) do __NJLISceneExitState(scene) end
 end
 
 function __NJLISceneOnMessage(scene, message)
-for k, v in pairs(Runtime.SceneOnMessage) do v(scene, message) end
+for k, __NJLISceneOnMessage in pairs(Runtime.SceneOnMessage) do __NJLISceneOnMessage(scene, message) end
 end
 
 function __NJLISceneKeyboardShow(scene)
@@ -930,9 +911,6 @@ function __NJLISceneMouseMove(scene, mouse)
 for k, v in pairs(Runtime.SceneMouseMove) do v(scene, mouse) end
 end
 
-
-
-
 function __NJLISceneKeyDown(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui)
 for k, v in pairs(Runtime.SceneKeyDown) do v(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
 end
@@ -940,12 +918,6 @@ end
 function __NJLISceneKeyUp(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui)
 for k, v in pairs(Runtime.SceneKeyUp) do v(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end
 end
-
-
-
-
-
-
 
 function __NJLISceneReceivedMemoryWarning(scene)
 for k, v in pairs(Runtime.SceneReceivedMemoryWarning) do v(scene) end
@@ -1134,10 +1106,6 @@ end
 function __NJLINodeMouseMove(node, mouse)
 for k, v in pairs(Runtime.NodeMouseMove) do v(node, mouse) end
 end
-
-
-
-
 
 function __NJLINodeKeyDown(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui)
 for k, v in pairs(Runtime.NodeKeyDown) do v(keycodeName, withCapsLock, withControl, withShift, withAlt, withGui) end

@@ -247,30 +247,26 @@ static void laction(int i)
     lua_sethook(globalL, lstop, LUA_MASKCALL | LUA_MASKRET | LUA_MASKCOUNT, 1);
 }
 
+static const std::string DEBUG_CODE = R"(
+local enabled = _G['debug_call'] or false
+if enabled then
+    print(debug.traceback())
+end
+)";
+
 static void hook(lua_State *L, lua_Debug *ar)
 {
     lua_getstack(L, 1, ar);
     lua_getinfo(L, "nSl", ar);
     
-    static const std::string code = R"(
-    local enabled = _G['debug_call'] or false
-    if enabled then
-        local previous_print = _G['previous_print'] or ""
-        local current_print = debug.traceback()
-        if previous_print ~= current_print then
-            print(current_print)
-            _G['previous_print'] = previous_print
-        else
-            print('.')
-        end
-    end
-    )";
     
-    if (njli::WorldLuaVirtualMachine::loadString(L, code.c_str()))
+    
+    if (njli::WorldLuaVirtualMachine::loadString(L, DEBUG_CODE.c_str()))
     {
-        if( njli::WorldLuaVirtualMachine::doString(L, code.c_str()) )
+        if( njli::WorldLuaVirtualMachine::doString(L, DEBUG_CODE.c_str()) )
         {
-//            printf("(%s:%d) in %s\n", ar->short_src, ar->currentline, ar->name);
+//            if(ar->currentline > 0 && ar->name != NULL)
+//                printf("(%s:%d) in %s\n", ar->short_src, ar->currentline, ar->name);
         }
     }
     
@@ -340,8 +336,10 @@ static int s_docall(lua_State *L, int narg, int nres)
     globalL = L;                       /* to be available to 'laction' */
                                        //#if !defined(__EMSCRIPTEN__)
 
+#if !defined(NDEBUG)
 #if defined(LUA_WRAPPER_LOGGING)
     sethook(L);
+#endif
 #endif
     
     signal(SIGINT, laction); /* set C-signal handler */

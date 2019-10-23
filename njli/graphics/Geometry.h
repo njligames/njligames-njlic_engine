@@ -466,6 +466,8 @@ namespace njli
         void show(Camera * camera);
         bool isHidden(Camera * camera) const;
         
+        Node *getParent();
+        const Node *getParent() const;
     protected:
         
         const void *getModelViewTransformArrayBufferPtr()const;
@@ -492,6 +494,8 @@ namespace njli
         void enableIndiceArrayBufferChanged(bool changed = true);
         
         virtual GLenum getElementIndexType()const = 0;
+        
+        
         
         void addReference(Node *node);
         void removeReference(Node *node);
