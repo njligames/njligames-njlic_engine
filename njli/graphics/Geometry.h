@@ -466,8 +466,8 @@ namespace njli
         void show(Camera * camera);
         bool isHidden(Camera * camera) const;
         
-        Node *getParent();
-        const Node *getParent() const;
+//        Node *getParent(){return dynamic_cast<Node *>(AbstractDecorator::getParent());}
+//        const Node *getParent() const{return dynamic_cast<const Node *>(AbstractDecorator::getParent());}
     protected:
         
         const void *getModelViewTransformArrayBufferPtr()const;

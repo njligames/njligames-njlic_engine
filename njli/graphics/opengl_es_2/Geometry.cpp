@@ -1315,15 +1315,15 @@ namespace njli
         m_ElementBufferChanged = changed;
     }
 
-    Node *Geometry::getParent()
-    {
-        return dynamic_cast<Node *>(AbstractDecorator::getParent());
-    }
-
-    const Node *Geometry::getParent() const
-    {
-        return dynamic_cast<const Node *>(AbstractDecorator::getParent());
-    }
+//    Node *Geometry::getParent()
+//    {
+//        return dynamic_cast<Node *>(AbstractDecorator::getParent());
+//    }
+//
+//    const Node *Geometry::getParent() const
+//    {
+//        return dynamic_cast<const Node *>(AbstractDecorator::getParent());
+//    }
 
     void Geometry::addReference(Node *node)
     {
