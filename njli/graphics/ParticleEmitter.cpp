@@ -18,7 +18,7 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
-#include "tinyxml.h"
+#include "tinyxml2.h"
 
 #include "btVector3.h"
 

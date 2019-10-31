@@ -151,13 +151,14 @@ namespace njli
 
 bool WorldResourceLoader::FileData::load(const char *filePath)
 {
-    m_LoadHandle = new std::thread(&WorldResourceLoader::FileData::_load, this, filePath);
-    
-    m_LoadHandle->join();
-    delete m_LoadHandle;
-    m_LoadHandle = nullptr;
-    
-    return true;
+    // m_LoadHandle = new std::thread(&WorldResourceLoader::FileData::_load, this, filePath);
+    // 
+    // m_LoadHandle->join();
+    // delete m_LoadHandle;
+    // m_LoadHandle = nullptr;
+    // 
+    // return true;
+    return WorldResourceLoader::FileData::_load(filePath);
 }
     bool WorldResourceLoader::FileData::_load(const char *filePath)
     {
