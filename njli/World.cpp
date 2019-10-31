@@ -12,7 +12,9 @@
 #include "SceneStateMachine.h"
 #include "btVector2.h"
 
-#include "tinyxml.h"
+#if defined(USE_TINYXML2_LIBRARY)
+#include "tinyxml2.h"
+#endif
 
 #include "Log.h"
 #define TAG "World.cpp"
@@ -1304,7 +1306,7 @@ namespace njli
     {
 
 #if !defined(_WIN32)
-
+#if defined(USE_TINYXML2_LIBRARY)
         TiXmlDocument document;
         document.Parse(socketMessage.c_str());
 
@@ -1415,6 +1417,7 @@ namespace njli
                 //                    name.c_str(), e->GetText());
             }
         }
+#endif
 #endif
     }
 

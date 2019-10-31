@@ -507,7 +507,7 @@ namespace njli
     {
         btHingeConstraint *constraint =
             dynamic_cast<btHingeConstraint *>(getConstraint());
-        return constraint->getMotorTargetVelosity();
+        return constraint->getMotorTargetVelocity();
     }
 
     f32 PhysicsConstraintHinge::getMaxMotorImpulse()
