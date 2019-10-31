@@ -18,7 +18,9 @@
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#if defined(USE_TINYXML2_LIBRARY)
 #include "tinyxml2.h"
+#endif
 
 #include "btVector3.h"
 
@@ -339,6 +341,8 @@ namespace njli
 
     bool ParticleEmitter::parseFileData(const char *source, const f32 z)
     {
+        int i = 0;
+#if defined(USE_TINYXML2_LIBRARY)
         TiXmlDocument document;
         document.Parse(source);
 
@@ -567,6 +571,7 @@ namespace njli
                                ele->Value());
             }
         }
+#endif
 
         return (i >= 37);
     }
