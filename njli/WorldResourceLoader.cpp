@@ -49,8 +49,8 @@
 #include "emscripten/emscripten.h"
 #endif
 
-#include <thread>
 #include <mutex>
+#include <thread>
 
 namespace njli
 {
@@ -80,7 +80,7 @@ namespace njli
 
     WorldResourceLoader::FileData::~FileData()
     {
-        
+
         if (m_buffer)
             free(m_buffer);
         m_buffer = NULL;
@@ -148,22 +148,22 @@ namespace njli
     //    return false;
     //  }
 
-
-bool WorldResourceLoader::FileData::load(const char *filePath)
-{
-    // m_LoadHandle = new std::thread(&WorldResourceLoader::FileData::_load, this, filePath);
-    // 
-    // m_LoadHandle->join();
-    // delete m_LoadHandle;
-    // m_LoadHandle = nullptr;
-    // 
-    // return true;
-    return WorldResourceLoader::FileData::_load(filePath);
-}
+    bool WorldResourceLoader::FileData::load(const char *filePath)
+    {
+        // m_LoadHandle = new std::thread(&WorldResourceLoader::FileData::_load,
+        // this, filePath);
+        //
+        // m_LoadHandle->join();
+        // delete m_LoadHandle;
+        // m_LoadHandle = nullptr;
+        //
+        // return true;
+        return WorldResourceLoader::FileData::_load(filePath);
+    }
     bool WorldResourceLoader::FileData::_load(const char *filePath)
     {
         std::lock_guard<std::mutex> lock(m_Mutex);
-        
+
         SDL_RWops *rw = SDL_RWFromFile(ASSET_PATH(filePath), "rb");
         if (rw)
         {

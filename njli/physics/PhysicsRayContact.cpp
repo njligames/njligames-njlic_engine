@@ -25,14 +25,16 @@ namespace njli
     PhysicsRayContact::PhysicsRayContact()
         : AbstractFactoryObject(this), m_closestHitFraction(0),
           m_hitNormalWorld(new btVector3()), m_hitPointWorld(new btVector3()),
-          m_node(NULL), m_touchPosition(new btVector2()), mDeviceTouch(new DeviceTouch())
+          m_node(NULL), m_touchPosition(new btVector2()),
+          mDeviceTouch(new DeviceTouch())
     {
     }
 
     PhysicsRayContact::PhysicsRayContact(const AbstractBuilder &builder)
         : AbstractFactoryObject(this), m_closestHitFraction(0),
           m_hitNormalWorld(new btVector3()), m_hitPointWorld(new btVector3()),
-          m_node(NULL), m_touchPosition(new btVector2()), mDeviceTouch(new DeviceTouch())
+          m_node(NULL), m_touchPosition(new btVector2()),
+          mDeviceTouch(new DeviceTouch())
     {
     }
 
@@ -49,7 +51,7 @@ namespace njli
     {
         delete mDeviceTouch;
         mDeviceTouch = NULL;
-        
+
         delete m_touchPosition;
         m_touchPosition = NULL;
         delete m_hitPointWorld;
@@ -236,14 +238,14 @@ namespace njli
         return *m_touchPosition;
     }
 
-void PhysicsRayContact::setDeviceTouch(const DeviceTouch &touch)
-{
-    *mDeviceTouch = touch;
-}
-const DeviceTouch &PhysicsRayContact::getDeviceTouch()const
-{
-    return *mDeviceTouch;
-}
+    void PhysicsRayContact::setDeviceTouch(const DeviceTouch &touch)
+    {
+        *mDeviceTouch = touch;
+    }
+    const DeviceTouch &PhysicsRayContact::getDeviceTouch() const
+    {
+        return *mDeviceTouch;
+    }
     void PhysicsRayContact::screenPosition(const btVector2 &pos)
     {
         *m_touchPosition = pos;

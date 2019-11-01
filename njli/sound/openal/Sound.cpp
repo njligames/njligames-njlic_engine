@@ -647,7 +647,7 @@ namespace njli
         if (mSettings.fileName.substr(mSettings.fileName.find_last_of(".") +
                                       1) == "ogg")
         {
-            mSoundFileWrapper = new WrapperOgg();//this->SINGLE_BUFFER_SIZE);
+            mSoundFileWrapper = new WrapperOgg(); // this->SINGLE_BUFFER_SIZE);
         }
         else if (mSettings.fileName.substr(
                      mSettings.fileName.find_last_of(".") + 1) == "wav")
@@ -914,10 +914,10 @@ namespace njli
         {
             //                SDL_Log("Ran out of buffers");
             this->Stop();
-                            if (mSettings.loop)
-                                {
-                                    this->Play();
-                                }
+            if (mSettings.loop)
+            {
+                this->Play();
+            }
         }
     }
 
