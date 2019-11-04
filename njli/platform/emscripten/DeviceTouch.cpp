@@ -15,6 +15,39 @@
 namespace njli
 {
     const u8 DeviceTouch::MAX_TOUCHES = 1;
+int DeviceTouch::eventFilter(void *userdata, SDL_Event *event)
+{
+    return 0;
+}
+
+
+
+int DeviceTouch::screenPPI()
+{
+//   static const int CONVERSION(
+//       ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+//   CGFloat ns = [[UIScreen mainScreen] nativeScale];
+//   return ns * CONVERSION;
+    return 1;
+}
+
+int DeviceTouch::pointToPixel(const int point)
+{
+//   static const int CONVERSION(
+//       ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+//   static const int DPI(DeviceTouch::screenPPI());
+//   return static_cast<int>((point * DPI) / CONVERSION);
+    return point;
+}
+
+int DeviceTouch::pixelToPoint(const int pixel)
+{
+//   static const int CONVERSION(
+//       ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
+//   static const int DPI(DeviceTouch::screenPPI());
+//   return ((CONVERSION * pixel) / DPI);
+    return pixel;
+}
     
     void DeviceTouch::convert(DeviceTouch &t, const void *_touch)
     {
