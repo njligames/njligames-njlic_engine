@@ -5,7 +5,8 @@
 
 btRigidBodyDecorator::btRigidBodyDecorator(btRigidBody *p) : m_btRigidBody(p) {}
 
-btRigidBodyDecorator::operator std::string() const {
+btRigidBodyDecorator::operator std::string() const
+{
     std::string temp(string_format(FORMATSTRING));
     return temp;
 }

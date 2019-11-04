@@ -39,9 +39,9 @@ void NJLI_HandleLowMemory() { njli::NJLIGameEngine::receivedMemoryWarning(); }
 
 void NJLI_HandleQuit() { gDone = 1; }
 
-void NJLI_HandlePause() {njli::NJLIGameEngine::pauseGame();}
+void NJLI_HandlePause() { njli::NJLIGameEngine::pauseGame(); }
 
-void NJLI_HandleResume() {njli::NJLIGameEngine::unpauseGame();}
+void NJLI_HandleResume() { njli::NJLIGameEngine::unpauseGame(); }
 
 void NJLI_HandleDropFile(const char *filename) { SDL_Log("%s", filename); }
 

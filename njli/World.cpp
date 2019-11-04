@@ -871,7 +871,7 @@ namespace njli
         m_WorldClock->update(timeStep);
 
         bool isPaused = isPausedGame();
-        
+
         if (getScene() && !isPaused)
             getScene()->update(timeStep, numSubSteps);
 

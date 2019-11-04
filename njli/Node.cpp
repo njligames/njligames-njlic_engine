@@ -182,10 +182,11 @@ namespace njli
 
     Node::operator std::string() const
     {
-//        std::string _origin((std::string)getOrigin());
-        
+        //        std::string _origin((std::string)getOrigin());
+
         std::string _transform = btTransformDecorator(m_Transform);
-        std::string temp(string_format(FORMATSTRING.c_str(), getName(), _transform.c_str()));
+        std::string temp(
+            string_format(FORMATSTRING.c_str(), getName(), _transform.c_str()));
         return temp;
         //      const char *temp = string_format(FORMATSTRING, getName());
         //    return njli::JsonJLI::parse(temp);
@@ -389,10 +390,10 @@ namespace njli
         //        }
     }
 
-//    void Node::setTransform(const glm::mat4 &transform)
-//    {
-//        setTransform(glmToBullet(transform));
-//    }
+    //    void Node::setTransform(const glm::mat4 &transform)
+    //    {
+    //        setTransform(glmToBullet(transform));
+    //    }
 
     btVector3 Node::getOrigin() const
     {
@@ -1157,7 +1158,6 @@ namespace njli
             {
                 pe->setRenderCategory(this);
             }
-            
         }
     }
 

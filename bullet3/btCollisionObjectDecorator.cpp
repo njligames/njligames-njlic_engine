@@ -3,9 +3,13 @@
 
 #define FORMATSTRING "{\"njli::btCollisionObject\":[]}"
 
-btCollisionObjectDecorator::btCollisionObjectDecorator(btCollisionObject *p) : m_btCollisionObject(p) {}
+btCollisionObjectDecorator::btCollisionObjectDecorator(btCollisionObject *p)
+    : m_btCollisionObject(p)
+{
+}
 
-btCollisionObjectDecorator::operator std::string() const {
+btCollisionObjectDecorator::operator std::string() const
+{
     std::string temp(string_format(FORMATSTRING));
     return temp;
 }

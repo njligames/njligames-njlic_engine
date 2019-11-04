@@ -129,6 +129,9 @@ namespace njli
 
     bool NJLIGameEngine::start(int argc, char **argv)
     {
+        njli::World::getInstance()->getWorldResourceLoader()->loadZip(
+            "assets.zip");
+
         std::string main_file("scripts/main.lua");
         bool found_project_file = false;
         for (int i = 0; i < argc; ++i)
@@ -407,22 +410,22 @@ namespace njli
             njli::World::getInstance()->getScene()->resumeInterrupt();
     }
 
-     void NJLIGameEngine::pauseGame()
+    void NJLIGameEngine::pauseGame()
     {
         njli::World::getInstance()->enablePauseGame();
     }
-    
-     void NJLIGameEngine::unpauseGame()
+
+    void NJLIGameEngine::unpauseGame()
     {
         njli::World::getInstance()->enablePauseGame(false);
     }
 
-     void NJLIGameEngine::pauseSound()
+    void NJLIGameEngine::pauseSound()
     {
         njli::World::getInstance()->getWorldSound()->enablePause();
     }
-    
-     void NJLIGameEngine::unpauseSound()
+
+    void NJLIGameEngine::unpauseSound()
     {
         njli::World::getInstance()->getWorldSound()->enablePause(false);
     }

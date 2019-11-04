@@ -32,7 +32,8 @@
 
 #include "Log.h"
 
-//#include "unzip.h"
+#include "unzip.h"
+#include <sys/stat.h>
 
 #define TAG "WORLDRESOURCELOADER.CPP"
 #define FORMATSTRING "{\"njli::WorldResourceLoader\":[]}"
@@ -49,8 +50,8 @@
 #include "emscripten/emscripten.h"
 #endif
 
-#include <thread>
 #include <mutex>
+#include <thread>
 
 namespace njli
 {
@@ -80,7 +81,7 @@ namespace njli
 
     WorldResourceLoader::FileData::~FileData()
     {
-        
+
         if (m_buffer)
             free(m_buffer);
         m_buffer = NULL;
@@ -148,21 +149,21 @@ namespace njli
     //    return false;
     //  }
 
+    bool WorldResourceLoader::FileData::load(const char *filePath)
+    {
+        m_LoadHandle = new std::thread(&WorldResourceLoader::FileData::_load,
+                                       this, filePath);
 
-bool WorldResourceLoader::FileData::load(const char *filePath)
-{
-    m_LoadHandle = new std::thread(&WorldResourceLoader::FileData::_load, this, filePath);
-    
-    m_LoadHandle->join();
-    delete m_LoadHandle;
-    m_LoadHandle = nullptr;
-    
-    return true;
-}
+        m_LoadHandle->join();
+        delete m_LoadHandle;
+        m_LoadHandle = nullptr;
+
+        return true;
+    }
     bool WorldResourceLoader::FileData::_load(const char *filePath)
     {
         std::lock_guard<std::mutex> lock(m_Mutex);
-        
+
         SDL_RWops *rw = SDL_RWFromFile(ASSET_PATH(filePath), "rb");
         if (rw)
         {
@@ -1055,88 +1056,84 @@ bool WorldResourceLoader::FileData::load(const char *filePath)
 
         return retVal;
     }
-    /*
-    bool WorldResourceLoader::loadZip(const char *filePath, const char
-    *password)
+
+    bool WorldResourceLoader::loadZip(const char *filePath,
+                                      const char *password)
     {
-        static const char *RESOURCE_PATH[] =
-        {
-            "cameras",
-            "curves",
-            "fonts",
-            "images",
-            "lamps",
-            "materials",
-            "meshes",
-            "particles",
-            "scripts",
-            "shaders",
-            "sounds",
-            "strings"
-        };
+        static const char *RESOURCE_PATH[] = {
+            "cameras", "curves",    "fonts",   "images",  "lamps",  "materials",
+            "meshes",  "particles", "scripts", "shaders", "sounds", "strings"};
 
         unz_global_info gi;
         unz_file_info fi;
-        unzFile uf = unzOpen( ASSET_PATH(filePath) );
-        unzGetGlobalInfo( uf, &gi );
-        unzGoToFirstFile( uf );
+        unzFile uf = unzOpen(ASSET_PATH(filePath));
+        unzGetGlobalInfo(uf, &gi);
+        unzGoToFirstFile(uf);
 
-        int i=0;
-        while( i != gi.number_entry )
+        int i = 0;
+        unsigned long number_entry = gi.number_entry;
+        while (i != number_entry)
         {
-            char name[ 1024 ] = {""};
-            unzGetCurrentFileInfo( uf, &fi, name, 1024, NULL, 0, NULL, 0 );
+            char name[1024] = {""};
+            unzGetCurrentFileInfo(uf, &fi, name, 1024, NULL, 0, NULL, 0);
 
-            if( fi.uncompressed_size > 0 )
+            char *base_path = SDL_GetBasePath();
+            std::string full_path(std::string(base_path) + "assets/");
+            full_path += name;
+
+            if (fi.uncompressed_size <= 0)
             {
-                if( unzOpenCurrentFilePassword( uf, password ) == UNZ_OK )
+                int ret = mkdir(full_path.c_str(), 0777);
+            }
+            else
+            {
+                if (unzOpenCurrentFilePassword(uf, password) == UNZ_OK)
                 {
-                    void *_buffer = malloc( fi.uncompressed_size + 1);
+                    void *_buffer = malloc(fi.uncompressed_size + 1);
                     SDL_assert(_buffer);
-    //                    buffer[ fi.uncompressed_size ] = 0;
+                    //                    buffer[ fi.uncompressed_size ] = 0;
                     uLong _size = fi.uncompressed_size;
 
                     int error = UNZ_OK;
 
                     do
                     {
-                        error = unzReadCurrentFile( uf, _buffer,
-    fi.uncompressed_size );
-                        if ( error < 0 )
+                        error = unzReadCurrentFile(uf, _buffer,
+                                                   fi.uncompressed_size);
+                        if (error < 0)
                         {
-    //                            SDL_LogError(SDL_LOG_CATEGORY_TEST, "error
-    %d\n", error);
-    //                            return false;
                             continue;
                         }
 
-                    } while ( error > 0 );
+                    } while (error > 0);
 
-                    unzCloseCurrentFile( uf );
+                    unzCloseCurrentFile(uf);
 
                     int j = 0;
-                    while(j != 12)
+                    while (j != 12)
                     {
                         char directory[1024];
                         strcpy(directory, name);
-                        char * pch = strtok (directory, "/");
-                        if(0 == strcmp(RESOURCE_PATH[j], pch) && (strstr(name,
-    "/.DS_Store") == NULL))
+                        char *pch = strtok(directory, "/");
+                        if (0 == strcmp(RESOURCE_PATH[j], pch) &&
+                            (strstr(name, "/.DS_Store") == NULL))
                         {
-
-    //                            void *p = NULL;
-    //                            bool exists = getFileData(name, &p, &_size);
-
-                            if(getFileData(name) != NULL)
+                            // Open file for reading in binary
+                            SDL_RWops *file =
+                                SDL_RWFromFile(full_path.c_str(), "r+b");
+                            // File does not exist
+                            if (file == NULL)
                             {
-                                addFileData(name);
-                                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Added
-    file: %s - size: %lu\n", name, _size);
-                            }
-                            else
-                            {
-                                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "File
-    exists: %s - size: %lu\n", name, _size);
+                                // Create file for writing
+                                file = SDL_RWFromFile(full_path.c_str(), "w+b");
+
+                                if (file != NULL)
+                                {
+                                    SDL_RWwrite(file, _buffer, _size, 1);
+
+                                    // Close file handler
+                                    SDL_RWclose(file);
+                                }
                             }
                         }
                         ++j;
@@ -1148,21 +1145,21 @@ bool WorldResourceLoader::FileData::load(const char *filePath)
                 else
                 {
                     SDL_LogError(SDL_LOG_CATEGORY_TEST, "Invalid password %s\n",
-    "");
+                                 "");
                     return false;
                 }
             }
 
-            unzGoToNextFile( uf );
+            unzGoToNextFile(uf);
 
             ++i;
         }
 
-        unzClose( uf );
+        unzClose(uf);
 
         return true;
     }
-    */
+
     bool WorldResourceLoader::load(const char *filePath, std::string *object)
     {
         SDL_assert(object);
