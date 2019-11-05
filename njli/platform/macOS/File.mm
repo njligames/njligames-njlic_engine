@@ -179,8 +179,8 @@ void sleepThread(float milliseconds) { usleep(milliseconds); }
 
 const char *DOCUMENT_BASEPATH()
 {
-  static char tempBuffer[512];
-  strcpy(tempBuffer, MAC_PATH);
+  static char tempBuffer[2048];
+  strcpy(tempBuffer, SDL_GetBasePath());
   return tempBuffer;
 }
 
