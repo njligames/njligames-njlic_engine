@@ -1148,6 +1148,7 @@ namespace njli
 
                                 if (file != NULL)
                                 {
+                                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s", full_path.c_str());
                                     SDL_RWwrite(file, _buffer, _size, 1);
 
                                     // Close file handler
