@@ -1291,8 +1291,7 @@ namespace njli
 
         for (s32 i = 0; i < 2; ++i)
         {
-            std::string bundlePath = DOCUMENT_BASEPATH();
-            bundlePath.append("/");
+            std::string bundlePath = std::string(DOCUMENT_BASEPATH()) + "assets/";
             bundlePath.append(paths[i]);
             bundlePath.append("/?.lua");
             appendLuaPath(m_lua_State, bundlePath.c_str());

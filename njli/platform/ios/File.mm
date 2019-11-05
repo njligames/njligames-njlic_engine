@@ -14,6 +14,15 @@ const char *RESOURCE_PATH()
 
 const char *ASSET_PATH(const char *file)
 {
+    NSString *filePath = [[NSString alloc] initWithFormat:@"%s%@%s", DOCUMENT_BASEPATH(), @"assets/", file];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        strcpy(s_Buffer, [filePath UTF8String]);
+        return s_Buffer;
+    }
+    
+    
   NSMutableString *adjusted_relative_path =
       [[NSMutableString alloc] initWithString:@"assets/"];
   [adjusted_relative_path
@@ -64,7 +73,9 @@ const char *DOCUMENT_BASEPATH()
                                                        NSUserDomainMask, YES);
   NSString *documentsDirectory =
       [paths objectAtIndex:0]; // Get documents folder
-  return [documentsDirectory UTF8String];
+//  return [documentsDirectory UTF8String];
+    
+    return [[NSString stringWithFormat:@"%@/",documentsDirectory] UTF8String];
 }
 
 void sleepThread(float milliseconds)

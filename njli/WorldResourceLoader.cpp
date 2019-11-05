@@ -1090,8 +1090,11 @@ namespace njli
             char name[ 1024 ] = {""};
             unzGetCurrentFileInfo( uf, &fi, name, 1024, NULL, 0, NULL, 0 );
 
-            char *base_path = SDL_GetBasePath();
+            const char *base_path = DOCUMENT_BASEPATH();
             std::string full_path(std::string(base_path) + "assets/");
+            
+            int ret = mkdir(full_path.c_str(), 0777);
+            
             full_path += name;
 
             if (fi.uncompressed_size <= 0)
@@ -1136,6 +1139,7 @@ namespace njli
                             // Open file for reading in binary
                             SDL_RWops *file =
                                 SDL_RWFromFile(full_path.c_str(), "r+b");
+                            
                             // File does not exist
                             if (file == NULL)
                             {
