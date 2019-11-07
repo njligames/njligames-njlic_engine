@@ -8,6 +8,8 @@
 #include <string>
 #include <unistd.h>
 
+#import <Foundation/Foundation.h>
+
 //#define MAC_PATH "/Users/jamesfolk/NJLI/GameEngine/COMMON/assets/"
 //#define MAC_PATH
 //"/Users/jamesfolk/Dropbox/Developer/NJLI/Engine/cmake.in/Platform.in/common/assets/"
@@ -97,7 +99,18 @@ static bool isScriptFile(const char *file, char *dir)
 
 const char *ASSET_PATH(const char *file)
 {
-  static char tempBuffer[4096];
+    
+    static char tempBuffer[4096];
+    
+    NSString *filePath = [[NSString alloc] initWithFormat:@"%s%@%s", DOCUMENT_BASEPATH(), @"assets/", file];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        strcpy(tempBuffer, [filePath UTF8String]);
+        return tempBuffer;
+    }
+    
+  
   char *data_path = NULL;
 
   if (!isScriptFile(file, tempBuffer))

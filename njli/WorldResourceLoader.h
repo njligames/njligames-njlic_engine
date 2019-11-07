@@ -48,6 +48,7 @@ namespace njli
       //        FileData(const FileData &rhs);
       //        FileData(const void* buffer, long size);
       FileData(const char *filePath);
+        FileData(const char *filePath, void *buffer, size_t size);
 
       virtual ~FileData();
 
@@ -58,15 +59,16 @@ namespace njli
       const char *getFilename() const;
 
         bool load(const char *filePath);
+        bool load(const char *filePath, void *buffer, size_t size);
     protected:
       FileData &operator=(const FileData &rhs);
       
         bool _load(const char *filePath);
+        bool _load(const char *filePath, void *buffer, size_t size);
 
       void *m_buffer;
       long m_fileSize;
       std::string m_fileName;
-        std::thread *m_LoadHandle;
         std::mutex m_Mutex;
     };
 
@@ -375,12 +377,15 @@ namespace njli
 
   protected:
     FileData *loadFileData(const char *filePath);
+      FileData *loadFileData(const char *filePath, void *buffer, size_t size);
     ImageFileData *loadImageFileData(const char *filePath);
     //    bool setPvrImage(const char *filePath, Image &img);
     bool isLoaded(const char *file);
     njliFileType getType(const char *file) const;
 
     FileData *addFileData(const char *filePath);
+      FileData *addFileData(const char *filePath, void *buffer, size_t size);
+      
     ImageFileData *addImageFileData(const char *filePath);
     FileData *createFileData(const char *filePath, const void *buffer,
                              s32 size);

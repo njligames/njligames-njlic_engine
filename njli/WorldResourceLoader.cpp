@@ -56,7 +56,7 @@
 namespace njli
 {
     WorldResourceLoader::FileData::FileData()
-        : m_buffer(NULL), m_fileSize(0), m_fileName(""), m_LoadHandle(nullptr)
+        : m_buffer(NULL), m_fileSize(0), m_fileName("")
     {
     }
     //    WorldResourceLoader::FileData::FileData(const FileData &rhs):
@@ -74,10 +74,16 @@ namespace njli
     //    }
 
     WorldResourceLoader::FileData::FileData(const char *filePath)
-        : m_buffer(NULL), m_fileSize(0), m_fileName(""), m_LoadHandle(nullptr)
+        : m_buffer(NULL), m_fileSize(0), m_fileName("")
     {
         load(filePath);
     }
+
+    WorldResourceLoader::FileData::FileData(const char *filePath, void *buffer, size_t size)
+    : m_buffer(NULL), m_fileSize(0), m_fileName("")
+{
+    load(filePath, buffer, size);
+}
 
     WorldResourceLoader::FileData::~FileData()
     {
@@ -115,52 +121,16 @@ namespace njli
         return m_fileName.c_str();
     }
 
-    //  bool WorldResourceLoader::FileData::load(const char *filePath)
-    //  {
-    //    // SDL_Log("filePath %s", ASSET_PATH(filePath));
-    //    FILE *file = mobile__fopen(ASSET_PATH(filePath), "rb");
-    //
-    //    if (file)
-    //      {
-    //        fseek(file, 0, SEEK_END);
-    //        m_fileSize = ftell(file);
-    //        fseek(file, 0, SEEK_SET);
-    //
-    //        if (m_buffer)
-    //          free(m_buffer);
-    //        m_buffer = malloc(m_fileSize + 1);
-    //        SDL_assert(m_buffer);
-    //
-    //        fread(m_buffer, 1, m_fileSize, file);
-    //        unsigned char *t = (unsigned char*)m_buffer;
-    //        t[m_fileSize] = 0;
-    //
-    //        fclose(file);
-    //
-    //        m_fileName = filePath;
-    //
-    //        return true;
-    //      }
-    //    else
-    //      {
-    //        SDL_LogError(SDL_LOG_CATEGORY_TEST, "Unable to open the file: %s",
-    //                     ASSET_PATH(filePath));
-    //      }
-    //    return false;
-    //  }
 
     bool WorldResourceLoader::FileData::load(const char *filePath)
     {
-        // m_LoadHandle = new std::thread(&WorldResourceLoader::FileData::_load,
-        // this, filePath);
-        //
-        // m_LoadHandle->join();
-        // delete m_LoadHandle;
-        // m_LoadHandle = nullptr;
-        //
-        // return true;
         return WorldResourceLoader::FileData::_load(filePath);
     }
+
+bool WorldResourceLoader::FileData::load(const char *filePath, void *buffer, size_t size)
+{
+    return WorldResourceLoader::FileData::_load(filePath, buffer, size);
+}
     bool WorldResourceLoader::FileData::_load(const char *filePath)
     {
         std::lock_guard<std::mutex> lock(m_Mutex);
@@ -194,6 +164,19 @@ namespace njli
 
         return false;
     }
+bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, size_t size)
+{
+    m_fileSize = size;
+    if (NULL !=m_buffer)
+        free(m_buffer);
+    m_buffer = (char *)malloc(m_fileSize + 1);
+    
+    memcpy(m_buffer, buffer, size);
+    
+    setFilename(filePath);
+    
+    return true;
+}
 
     //    static u8 GetNumberOfComponents(const PVRTextureHeaderV3&
     //    sTextureHeader)
@@ -564,90 +547,6 @@ namespace njli
         return retVal;
     }
 
-    //    bool WorldResourceLoader::load(const char *filePath, Image &img)
-    //    {
-    //        char buffer[2048] = "";
-    //        sprintf(buffer, "%s", filePath);
-    //
-    //        char *s = strtok(buffer, "%");
-    //        char *end = strtok(NULL, "%");
-    //        if (end)
-    //        {
-    //            char buffer2[8];
-    //            strcpy(buffer2, end);
-    //            sprintf(buffer, "%s", s);
-    //            f32 aspect =
-    //            ROUND(njli::World::getInstance()->getAspectRatio(), 1); f32
-    //            ratio1 = ROUND(3.0f/2.0f, 1); f32 ratio2 = ROUND(16.0f/9.0f,
-    //            1); f32 ratio3 = ROUND(4.0f/3.0f, 1);
-    //
-    //            //8:5
-    //            //128 : 75
-    //            //5 : 3
-    //
-    //            if(aspect == ratio1)
-    //            {
-    //                strcat(buffer, "_3_2_");
-    //            }
-    //            else if(aspect == ratio2)
-    //            {
-    //                strcat(buffer, "_16_9_");
-    //            }
-    //            else if(aspect == ratio3)
-    //            {
-    //                strcat(buffer, "_4_3_");
-    //            }
-    //
-    //            strcat(buffer, buffer2);
-    //        }
-    //
-    //        {
-    //            s32 req_comp = 0;
-    //            s32 x, y, components;
-    //            unsigned char *fileContent = stbi_load(ASSET_PATH(buffer), &x,
-    //            &y, &components, 0);
-    //
-    //            u32 pixel_count = x * y;
-    //            bool hasAlpha = false;
-    //            if(comp == 4)
-    //            {
-    //                for (s32 i = 0, color = 0; i < pixel_count && !hasAlpha;
-    //                ++i,color+=4)
-    //                {
-    //                    unsigned char alpha = fileContent[color + 3];
-    //                    if (alpha != 0xFF)
-    //                    {
-    //                        hasAlpha = true;
-    //                    }
-    //                }
-    //            }
-    //            img.m_hasAlpha = hasAlpha;
-    //
-    //            `
-    //            if(fileContent)
-    //            {
-    //                img.setDataRawFromWorldResourceLoader(fileContent, x, y,
-    //                comp, buffer);
-    //                stbi_image_free(fileContent);
-    //
-    //                return true;
-    //            }
-    //            else
-    //            {
-    //                if(!setPvrImage(filePath, img))
-    //                {
-    //                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Error (%s) :
-    //                    %s", stbi_failure_reason(), buffer); img.generate(256,
-    //                    256, 4, btVector4(1.0, 0.0, 1.0, 1.0));
-    //                    stbi_image_free(fileContent);
-    //                    return true;
-    //                }
-    //            }
-    //            return false;
-    //        }
-    //
-    //        return true;
-    //    }
 
     bool WorldResourceLoader::load(const char *filePath,
                                    ParticleEmitter *object)
@@ -1136,25 +1035,48 @@ namespace njli
                         if(0 == strcmp(RESOURCE_PATH[j], pch) && (strstr(name,
     "/.DS_Store") == NULL))
                         {
-                            // Open file for reading in binary
-                            SDL_RWops *file =
-                                SDL_RWFromFile(full_path.c_str(), "r+b");
                             
-                            // File does not exist
-                            if (file == NULL)
+                            FileData *fileData = loadFileData(name, _buffer, _size);
+                            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Loaded file %s, %zu bytes ", fileData->getFilename(), fileData->getSize());
+                            
+                            SDL_RWops *file = SDL_RWFromFile(full_path.c_str(), "w+b");
+                            if (file != NULL)
                             {
-                                // Create file for writing
-                                file = SDL_RWFromFile(full_path.c_str(), "w+b");
+                                FileData *fileData = loadFileData(full_path.c_str());
 
-                                if (file != NULL)
-                                {
-                                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s", full_path.c_str());
-                                    SDL_RWwrite(file, _buffer, _size, 1);
+                                size_t s = SDL_RWwrite(file, _buffer, _size, 1);
+                                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s, size (%zu bytes) ", full_path.c_str(), s);
 
-                                    // Close file handler
-                                    SDL_RWclose(file);
-                                }
+                                // Close file handler
+                                SDL_RWclose(file);
                             }
+                            
+                            
+//                            // Open file for reading in binary
+//                            SDL_RWops *file =
+//                                SDL_RWFromFile(full_path.c_str(), "r+b");
+//
+//                            // File does not exist
+//                            if (file == NULL)
+//                            {
+//
+//                                FileData *fileData = loadFileData(full_path.c_str(), _buffer, _size);
+//
+////                                // Create file for writing
+////                                file = SDL_RWFromFile(full_path.c_str(), "w+b");
+////
+//                                if (file != NULL)
+//                                {
+//
+//                                    FileData *fileData = loadFileData(full_path.c_str());
+//
+//                                    size_t s = SDL_RWwrite(file, _buffer, _size, 1);
+//                                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s, size (%zu bytes) ", full_path.c_str(), s);
+//
+//                                    // Close file handler
+//                                    SDL_RWclose(file);
+//                                }
+//                            }
                         }
                         ++j;
                     }
@@ -1283,6 +1205,21 @@ namespace njli
         return fileData;
     }
 
+WorldResourceLoader::FileData *
+WorldResourceLoader::addFileData(const char *filePath, void *buffer, size_t size)
+    {
+        FileData *fileData = getFileData(filePath);
+        if (NULL == fileData)
+        {
+            fileData = new FileData(filePath, buffer, size);
+
+            SDL_assert(fileData);
+
+            m_FileDataMap.insert(FileDataPair(filePath, fileData));
+        }
+        return fileData;
+    }
+
     bool WorldResourceLoader::removeFileData(const char *filePath)
     {
         FileDataMap::iterator m = m_FileDataMap.find(filePath);
@@ -1327,6 +1264,18 @@ namespace njli
         }
         return fileData;
     }
+
+    WorldResourceLoader::FileData *
+        WorldResourceLoader::loadFileData(const char *filePath, void *buffer, size_t size)
+        {
+            FileData *fileData = getFileData(filePath);
+            if (NULL == fileData)
+            {
+                fileData = addFileData(filePath, buffer, size);
+                SDL_assert(fileData);
+            }
+            return fileData;
+        }
 
     WorldResourceLoader::ImageFileData *
     WorldResourceLoader::loadImageFileData(const char *filePath)
