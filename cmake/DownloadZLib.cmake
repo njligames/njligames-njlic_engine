@@ -2,10 +2,10 @@ set(LIBRARY_NAME "zlib")
 
 set(INCLUDE_URL "https://www.dropbox.com/s/9r6ej0lupnzkkpe/libzlib_include.tar.gz?dl=0")
 
-set(EMSCRIPTEN_DEBUG_URL "")
-set(EMSCRIPTEN_RELEASE_URL "")
-set(EMSCRIPTEN_MINSIZEREL_URL "")
-set(EMSCRIPTEN_RELWITHDEBINFO_URL "")
+set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/b6qzjqwm4gniew1/libzlib_emscripten_Debug.tar.gz?dl=0")
+set(EMSCRIPTEN_MINSIZEREL_URL "https://www.dropbox.com/s/u5o7sxbkw3nfi0m/libzlib_emscripten_MinSizeRel.tar.gz?dl=0")
+set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/nhqvlwrbug69fz3/libzlib_emscripten_Release.tar.gz?dl=0")
+set(EMSCRIPTEN_RELWITHDEBINFO_URL "https://www.dropbox.com/s/nlu8mdh7r9qys1q/libzlib_emscripten_RelWithDebugInfo.tar.gz?dl=0")
 
 set(WINDOWS32_DEBUG_URL "")
 set(WINDOWS32_MINSIZEREL_URL "")

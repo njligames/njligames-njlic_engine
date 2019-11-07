@@ -87,6 +87,6 @@ void sleepThread(float milliseconds)
 const char *DOCUMENT_BASEPATH()
 {
     static char tempBuffer[512];
-    strcpy(tempBuffer, EMSCRIPTEN_PATH);
+    strcpy(tempBuffer, SDL_GetPrefPath("My Company", "My Awesome SDL 2 Game"));
     return tempBuffer;
 }
