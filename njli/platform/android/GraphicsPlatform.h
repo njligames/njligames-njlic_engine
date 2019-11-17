@@ -1,5 +1,9 @@
 
 #if defined(__GL_ES2__)
+    #define glGenVertexArrays_NJLIC glGenVertexArraysOES
+    #define glBindVertexArray_NJLIC glBindVertexArrayOES
+    #define glDeleteVertexArrays_NJLIC glDeleteVertexArraysOES
+
     // #define GL_GLEXT_PROTOTYPES
     #include <GLES2/gl2.h>
     #include <GLES2/gl2ext.h>

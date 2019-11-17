@@ -55,15 +55,15 @@ set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")
 set(UNIX_RELWITHDEBINFO_URL "")
 
-set(ANDROID_arm64-v8a_DEBUG_URL     "")
-set(ANDROID_armeabi-v7a_DEBUG_URL   "")
-set(ANDROID_x86_64_DEBUG_URL        "")
-set(ANDROID_x86_DEBUG_URL           "")
+set(ANDROID_arm64-v8a_DEBUG_URL     "https://www.dropbox.com/s/pvlugafuhmns73x/libzlib_android_Debug-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_armeabi-v7a_DEBUG_URL   "https://www.dropbox.com/s/ygg005e6unw9uvx/libzlib_android_Debug-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_x86_64_DEBUG_URL        "https://www.dropbox.com/s/30o2sqa00i77roz/libzlib_android_Debug-x86_64.tar.gz?dl=0")
+set(ANDROID_x86_DEBUG_URL           "https://www.dropbox.com/s/3iembua3jsyzmdt/libzlib_android_Debug-x86.tar.gz?dl=0")
 
-set(ANDROID_arm64-v8a_RELEASE_URL   "")
-set(ANDROID_armeabi-v7a_RELEASE_URL "")
-set(ANDROID_x86_64_RELEASE_URL      "")
-set(ANDROID_x86_RELEASE_URL         "")
+set(ANDROID_arm64-v8a_RELEASE_URL   "https://www.dropbox.com/s/cqmm1k2rem70pzs/libzlib_android_Release-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_armeabi-v7a_RELEASE_URL "https://www.dropbox.com/s/umqskhehtv1inab/libzlib_android_Release-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_x86_64_RELEASE_URL      "https://www.dropbox.com/s/1cergox3zyy2r46/libzlib_android_Release-x86_64.tar.gz?dl=0")
+set(ANDROID_x86_RELEASE_URL         "https://www.dropbox.com/s/x22ex2mze9niggs/libzlib_android_Release-x86.tar.gz?dl=0")
 
 ###########################################################################################################################
 
