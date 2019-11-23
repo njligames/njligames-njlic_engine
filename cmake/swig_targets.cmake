@@ -888,7 +888,6 @@ macro(LUA_SWIG INTERFACE_NAME )
   set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES ${_INCLUDE_DIRECTORIES} )
 
   list(APPEND ${CMAKE_PROJECT_NAME}_DEFINITIONS ${INTERFACE_NAME}_SWIG=1 BT_INFINITY)
-
   
   if(${CMAKE_VERSION} VERSION_LESS "3.8")
     swig_add_module(
@@ -935,9 +934,18 @@ macro(LUA_SWIG INTERFACE_NAME )
     if(IOS OR TVOS)
       SET_TARGET_PROPERTIES (
           ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PROPERTIES
-        XCODE_PRODUCT_TYPE "com.apple.product-type.library.static"
-        )
-    endif(IOS OR TVOS)
+          XCODE_PRODUCT_TYPE "com.apple.product-type.library.static"
+          )
+    endif()
+  endif()
+  if(ANDROID)
+      if(IS_SHARED)
+          # target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} ${CMAKE_PROJECT_NAME})
+          SET_TARGET_PROPERTIES (
+              ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PROPERTIES
+              POSITION_INDEPENDENT_CODE ON
+              )
+      endif()
   endif()
 
   target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
