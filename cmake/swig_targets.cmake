@@ -801,6 +801,11 @@ macro(LUA_SWIG INTERFACE_NAME )
         list(GET extra_macro_args 1 BASE_PATH)
     endif ()
 
+    set(WRAPPER_LANGUAGE "lua")
+    if (${num_extra_args} GREATER 2)
+        list(GET extra_macro_args 1 WRAPPER_LANGUAGE)
+    endif ()
+
     set(TARGET_EXTENSION "-static")
     if(IS_SHARED)
         set(TARGET_EXTENSION "")
@@ -891,23 +896,23 @@ macro(LUA_SWIG INTERFACE_NAME )
   
   if(${CMAKE_VERSION} VERSION_LESS "3.8")
     swig_add_module(
-        ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}
-      lua
+        ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}
+      ${WRAPPER_LANGUAGE}
       "${LUA_SWIG_SOURCE_FILES}"
       )
   else()
       if(IS_SHARED)
           swig_add_library(
-              ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}
+              ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}
               TYPE SHARED
-              LANGUAGE lua
+              LANGUAGE ${WRAPPER_LANGUAGE}
               SOURCES "${LUA_SWIG_SOURCE_FILES}"
               )
       else()
           swig_add_library(
-              ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}
+              ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}
               TYPE STATIC
-              LANGUAGE lua
+              LANGUAGE ${WRAPPER_LANGUAGE}
               SOURCES "${LUA_SWIG_SOURCE_FILES}"
               )
       endif()
@@ -915,61 +920,55 @@ macro(LUA_SWIG INTERFACE_NAME )
 
   if(ANDROID)
     if(TARGET main)
-        add_dependencies(main ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
+        add_dependencies(main ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
     endif()
   else()
     if(TARGET ${CMAKE_PROJECT_NAME}-exe)
-        add_dependencies(${CMAKE_PROJECT_NAME}-exe ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
+        add_dependencies(${CMAKE_PROJECT_NAME}-exe ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
     endif()
   endif()
 
   if(TARGET ${CMAKE_PROJECT_NAME}-static)
-      add_dependencies(${CMAKE_PROJECT_NAME}-static ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
+      add_dependencies(${CMAKE_PROJECT_NAME}-static ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
   endif()
   if(TARGET ${CMAKE_PROJECT_NAME})
-      add_dependencies(${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
+      add_dependencies(${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
   endif()
 
   if(APPLE)
     if(IOS OR TVOS)
       SET_TARGET_PROPERTIES (
-          ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PROPERTIES
+          ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PROPERTIES
           XCODE_PRODUCT_TYPE "com.apple.product-type.library.static"
           )
     endif()
   endif()
   if(ANDROID)
       if(IS_SHARED)
-          # target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} ${CMAKE_PROJECT_NAME})
+          # target_link_libraries(${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} ${CMAKE_PROJECT_NAME})
           SET_TARGET_PROPERTIES (
-              ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PROPERTIES
+              ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PROPERTIES
               POSITION_INDEPENDENT_CODE ON
               )
       endif()
   endif()
 
-  target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+  target_compile_definitions(${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
   # Had to comment this out for windows... 
-  # target_link_libraries(${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} ${CMAKE_PROJECT_NAME}-static)
+  # target_link_libraries(${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} ${CMAKE_PROJECT_NAME}-static)
   if(ANDROID)
-      # target_link_libraries( main ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
+      # target_link_libraries( main ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
     # target_compile_definitions(main PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
   endif()
-  list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
+  list(APPEND EXTRA_LIBS ${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION})
   list(APPEND INTERFACE_FILES ${LUA_SWIG_SOURCE_FILES})
 
-
-
-
-
-
-
-  set(_INSTALL_LIBS "${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}" ${_INSTALL_LIBS})
-  target_include_directories(${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}
+  set(_INSTALL_LIBS "${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}" ${_INSTALL_LIBS})
+  target_include_directories(${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION}
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_THIRDPARTY_INCLUDE_DIRS}>
     PRIVATE $<BUILD_INTERFACE:${${CMAKE_PROJECT_NAME}_PROJECT_INCLUDE_DIRECTORES}>
     )
-target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
+target_compile_definitions(${CMAKE_PROJECT_NAME}-${WRAPPER_LANGUAGE}-swig-${INTERFACE_NAME_LOWER}${TARGET_EXTENSION} PUBLIC ${${CMAKE_PROJECT_NAME}_DEFINITIONS})
 
   #                    if(NOT LINUX AND NOT EMSCRIPTEN AND NOT IOS AND NOT TVOS AND NOT ANDROID)
 
@@ -1080,63 +1079,6 @@ target_compile_definitions(${CMAKE_PROJECT_NAME}-lua-swig-${INTERFACE_NAME_LOWER
 
 endmacro()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
   if(${CMAKE_VERSION} VERSION_LESS "3.6")
     message("Please consider to switch to CMake 3.6 in order to use SWIG")
@@ -1198,9 +1140,16 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
       # LUA_BULLET3_SWIG()
       # LUA_GLM_SWIG()
 
-      LUA_SWIG(NJLIC TRUE)
-      LUA_SWIG(BULLET3 TRUE "thirdparty")
-      # LUA_SWIG(GLM "thirdparty")
+      if(ANDROID)
+          LUA_SWIG(NJLIC TRUE)
+          LUA_SWIG(BULLET3 TRUE "thirdparty")
+          # LUA_SWIG(GLM "thirdparty")
+      else()
+          LUA_SWIG(NJLIC FALSE)
+          LUA_SWIG(BULLET3 FALSE "thirdparty")
+          # LUA_SWIG(GLM "thirdparty")
+      endif()
+
 
       file(GLOB_RECURSE LUA_SWIG_GENERATED_FILES
         "${SWIG_OUTFILE_DIR}/*.c*"
