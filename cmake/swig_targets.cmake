@@ -1198,9 +1198,16 @@ if(${CMAKE_PROJECT_NAME}_LUA_SWIG)
       # LUA_BULLET3_SWIG()
       # LUA_GLM_SWIG()
 
-      LUA_SWIG(NJLIC TRUE)
-      LUA_SWIG(BULLET3 TRUE "thirdparty")
-      # LUA_SWIG(GLM "thirdparty")
+      if(ANDROID)
+          LUA_SWIG(NJLIC TRUE)
+          LUA_SWIG(BULLET3 TRUE "thirdparty")
+          # LUA_SWIG(GLM "thirdparty")
+      else()
+          LUA_SWIG(NJLIC FALSE)
+          LUA_SWIG(BULLET3 FALSE "thirdparty")
+          # LUA_SWIG(GLM "thirdparty")
+      endif()
+
 
       file(GLOB_RECURSE LUA_SWIG_GENERATED_FILES
         "${SWIG_OUTFILE_DIR}/*.c*"
