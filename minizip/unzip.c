@@ -1055,7 +1055,7 @@ local int unz64local_GetCurrentFileInfoInternal(
             /* ZIP64 extra fields */
             if (headerId == 0x0001)
             {
-                uLong uL;
+                // uLong uL;
 
                 if (file_info.uncompressed_size == MAXU32)
                 {

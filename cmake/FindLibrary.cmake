@@ -3,225 +3,231 @@ string(TOUPPER ${LIBRARY_NAME} LIBRARY_NAME_UPPER)
 
 set(${LIBRARY_NAME_UPPER}_BASE_PATH "thirdparty/${LIBRARY_NAME}")
 
-if(EMSCRIPTEN)
-  set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/emscripten")
-elseif(WINDOWS)
-  if(ARCH_64)
-    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/windows64")
-  else()
-    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/windows32")
-  endif()
-elseif(APPLE)
-  if(IOS)
-    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/ios")
-  elseif(TVOS)
-    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/appletv")
-  else()
-    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/macos")
-  endif()
-elseif(UNIX AND NOT APPLE AND NOT ANDROID)
-  if(LINUX)
-	if(RASPBERRYPI)
-	    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/raspberrypi")
-	else()
-	    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/linux")
-	endif()
-  elseif(UNIX)
-    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/unix")
-  endif()
-elseif(ANDROID)
+if (EMSCRIPTEN)
+    set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/emscripten")
+elseif (WINDOWS)
+    if (ARCH_64)
+        set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/windows64")
+    else ()
+        set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/windows32")
+    endif ()
+elseif (APPLE)
+    if (IOS)
+        set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/ios")
+    elseif (TVOS)
+        set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/appletv")
+    else ()
+        set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/macos")
+    endif ()
+elseif (UNIX AND NOT APPLE AND NOT ANDROID)
+    if (LINUX)
+        if (RASPBERRYPI)
+            set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/raspberrypi")
+        else ()
+            set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/linux")
+        endif ()
+    elseif (UNIX)
+        set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/unix")
+    endif ()
+elseif (ANDROID)
     set(${LIBRARY_NAME_UPPER}_BASE_PATH "${${LIBRARY_NAME_UPPER}_BASE_PATH}/lib/android")
-endif()
+endif ()
 
-if(EMSCRIPTEN OR ANDROID)
-  set(${LIBRARY_NAME_UPPER}_INCLUDE_DIR "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}")
-else()
-  find_path(${LIBRARY_NAME_UPPER}_INCLUDE_DIR ${INCLUDE_FILE}
-    PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include" "${PACKAGE_INCLUDE_PATH}"
-    PATH_SUFFIXES ${LIBRARY_NAME} include
-    )
-endif()
+if (EMSCRIPTEN OR ANDROID)
+    set(${LIBRARY_NAME_UPPER}_INCLUDE_DIR "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}")
+else ()
+    find_path(${LIBRARY_NAME_UPPER}_INCLUDE_DIR ${INCLUDE_FILE}
+            PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include" "${PACKAGE_INCLUDE_PATH}"
+            PATH_SUFFIXES ${LIBRARY_NAME} include
+            )
+endif ()
 
-if(NOT EXISTS "${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}")
-  MESSAGE(FATAL_ERROR "Cannot find the include directory for ${LIBRARY_NAME} '${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}' PATHS='${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include'")
-else()
-  MESSAGE(STATUS "Include dir for ${LIBRARY_NAME_UPPER}_INCLUDE_DIR '${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}'")
-endif()
+if (NOT EXISTS "${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}")
+    MESSAGE(FATAL_ERROR "Cannot find the include directory for ${LIBRARY_NAME} '${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}' PATHS='${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/include'")
+else ()
+    MESSAGE(STATUS "Include dir for ${LIBRARY_NAME_UPPER}_INCLUDE_DIR '${${LIBRARY_NAME_UPPER}_INCLUDE_DIR}'")
+endif ()
 
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" AND NOT EXISTS "${PACKAGE_INCLUDE_PATH}")
-  MESSAGE(FATAL_ERROR "Cannot find the include directory for ${LIBRARY_NAME} '${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}' '${PACKAGE_INCLUDE_PATH}'")
-else()
-  MESSAGE(STATUS "${LIBRARY_NAME_UPPER} Library Path: '${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}'")
-endif()
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" AND NOT EXISTS "${PACKAGE_INCLUDE_PATH}")
+    MESSAGE(FATAL_ERROR "Cannot find the include directory for ${LIBRARY_NAME} '${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}' '${PACKAGE_INCLUDE_PATH}'")
+else ()
+    MESSAGE(STATUS "${LIBRARY_NAME_UPPER} Library Path: '${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}'")
+endif ()
 
-if(EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
+if (EMSCRIPTEN OR IOS OR TVOS OR ANDROID)
 
-  set(DEBUG_SUFFIX "Debug")
-  set(RELEASE_SUFFIX "Release")
-  set(MINSIZEREL_SUFFIX "MinsizeRel")
-  set(RELWITHDEBINFO_SUFFIX "RelWithDebInfo")
+    set(DEBUG_SUFFIX "Debug")
+    set(RELEASE_SUFFIX "Release")
+    set(MINSIZEREL_SUFFIX "MinsizeRel")
+    set(RELWITHDEBINFO_SUFFIX "RelWithDebInfo")
 
-  if(IOS OR TVOS)
-    set(DEBUG_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
-    set(RELEASE_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
-    set(MINSIZEREL_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
-    set(RELWITHDEBINFO_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
-  elseif(ANDROID)
-    set(DEBUG_SUFFIX "${ANDROID_ABI}/Debug")
-    set(RELEASE_SUFFIX "${ANDROID_ABI}/Release")
-    set(MINSIZEREL_SUFFIX "${ANDROID_ABI}/MinsizeRel")
-    set(RELWITHDEBINFO_SUFFIX "${ANDROID_ABI}/RelWithDebInfo")
-  endif()
-
-  set(LIBRARY_EXTENSION "a")
-  if(ANDROID)
-    set(LIBRARY_EXTENSION "so")
-  endif()
-
-  foreach(LIB ${SUB_LIBRARY_NAMES})
-
-    set(${LIB}_LIBRARY_DEBUG "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${DEBUG_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
-    set(${LIB}_LIBRARY_RELEASE "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELEASE_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
-    set(${LIB}_LIBRARY_MINSIZEREL "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${MINSIZEREL_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
-    set(${LIB}_LIBRARY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELWITHDEBINFO_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
-
-    if(EMSCRIPTEN AND NOT ANDROID)
-      if(NOT EXISTS "${${LIB}_LIBRARY_DEBUG}")
-        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_DEBUG}")
-      endif()
-    endif()
-
-    if(EMSCRIPTEN AND NOT ANDROID)
-      if(NOT EXISTS "${${LIB}_LIBRARY_RELEASE}")
-        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELEASE}")
-      endif()
-    endif()
-
-    if(EMSCRIPTEN AND NOT ANDROID)
-      if(NOT EXISTS "${${LIB}_LIBRARY_MINSIZEREL}")
-        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_MINSIZEREL}")
-      endif()
-    endif()
-
-    if(EMSCRIPTEN AND NOT ANDROID)
-      if(NOT EXISTS "${${LIB}_LIBRARY_RELWITHDEBINFO}")
-        MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELWITHDEBINFO}")
-      endif()
-    endif()
-
-    list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
-
-    if (NOT TARGET ${LIB})
-      add_library(${LIB} UNKNOWN IMPORTED)
-
-      set_target_properties(${LIB} PROPERTIES 
-        INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}"
-        )
-
-      set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
-      set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_DEBUG "${${LIB}_LIBRARY_DEBUG}")
-
-      set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-      set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELEASE "${${LIB}_LIBRARY_RELEASE}")
-
-      if(NOT ANDROID)
-        set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS MINSIZEREL)
-        set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_MINSIZEREL "${${LIB}_LIBRARY_MINSIZEREL}")
-
-        set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELWITHDEBINFO)
-        set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELWITHDEBINFO "${${LIB}_LIBRARY_RELWITHDEBINFO}")
-      endif()
-
-      list(APPEND ${LIBRARY_NAME_UPPER}_TARGETS ${LIB})
-    endif()
-
-  endforeach()
-
-else()
-  include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
-  include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
-
-  foreach(LIB ${SUB_LIBRARY_NAMES})
-
-    if(NOT ${LIB}_LIBRARY)
-
-      find_library(${LIB}_LIBRARY_DEBUG
-        NAMES ${LIB} ${LIB}_Debug
-        PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" "${PACKAGE_PATHS}"
-        PATH_SUFFIXES Debug lib
-        NO_DEFAULT_PATH
-        )
-
-      find_library(${LIB}_LIBRARY_RELEASE
-        NAMES ${LIB}
-        PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" "${PACKAGE_PATHS}"
-        PATH_SUFFIXES Release lib
-        NO_DEFAULT_PATH
-        )
-
-      find_library(${LIB}_LIBRARY_MINSIZEREL
-        NAMES ${LIB}
-        PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" "${PACKAGE_PATHS}"
-        PATH_SUFFIXES MinSizeRel lib
-        NO_DEFAULT_PATH
-        )
-
-      find_library(${LIB}_LIBRARY_RELWITHDEBINFO
-        NAMES ${LIB}
-        PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" "${PACKAGE_PATHS}"
-        PATH_SUFFIXES RelWithDebInfo lib
-        NO_DEFAULT_PATH
-        )
-
-      select_library_configurations(${LIB})
+    if (IOS OR TVOS)
+        set(DEBUG_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+        set(RELEASE_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+        set(MINSIZEREL_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+        set(RELWITHDEBINFO_SUFFIX "\$(CONFIGURATION)\$(EFFECTIVE_PLATFORM_NAME)")
+    elseif (ANDROID)
+        set(DEBUG_SUFFIX "${ANDROID_ABI}/Debug")
+        set(RELEASE_SUFFIX "${ANDROID_ABI}/Release")
+        set(MINSIZEREL_SUFFIX "${ANDROID_ABI}/MinsizeRel")
+        set(RELWITHDEBINFO_SUFFIX "${ANDROID_ABI}/RelWithDebInfo")
     endif ()
 
-    find_package_handle_standard_args(${LIB}
-      REQUIRED_VARS ${LIBRARY_NAME_UPPER}_INCLUDE_DIR ${LIB}_LIBRARY)
+    set(LIBRARY_EXTENSION "a")
+    if (ANDROID)
+        set(LIBRARY_EXTENSION "so")
+    endif ()
 
-    if(${LIB}_FOUND)
+    foreach (LIB ${SUB_LIBRARY_NAMES})
 
-      set(${LIB}_INCLUDE_DIRS ${${LIBRARY_NAME_UPPER}_INCLUDE_DIR})
+        set(${LIB}_LIBRARY_DEBUG "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${DEBUG_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
+        set(${LIB}_LIBRARY_RELEASE "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELEASE_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
+        set(${LIB}_LIBRARY_MINSIZEREL "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${MINSIZEREL_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
+        set(${LIB}_LIBRARY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/${RELWITHDEBINFO_SUFFIX}/lib${LIB}.${LIBRARY_EXTENSION}")
 
-      list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
+        if (EMSCRIPTEN AND NOT ANDROID)
+            if (NOT EXISTS "${${LIB}_LIBRARY_DEBUG}")
+                MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_DEBUG}")
+            endif ()
+        endif ()
 
-      if (NOT TARGET ${LIB})
-        add_library(${LIB} UNKNOWN IMPORTED)
-        set_target_properties(${LIB} PROPERTIES
-          INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}")
+        if (EMSCRIPTEN AND NOT ANDROID)
+            if (NOT EXISTS "${${LIB}_LIBRARY_RELEASE}")
+                MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELEASE}")
+            endif ()
+        endif ()
 
-        if(${LIB}_LIBRARY_DEBUG)
-          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
-          set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_DEBUG "${${LIB}_LIBRARY_DEBUG}")
-        endif()
+        if (EMSCRIPTEN AND NOT ANDROID)
+            if (NOT EXISTS "${${LIB}_LIBRARY_MINSIZEREL}")
+                MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_MINSIZEREL}")
+            endif ()
+        endif ()
 
-        if(${LIB}_LIBRARY_RELEASE)
-          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-          set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELEASE "${${LIB}_LIBRARY_RELEASE}")
-        endif()
+        if (EMSCRIPTEN AND NOT ANDROID)
+            if (NOT EXISTS "${${LIB}_LIBRARY_RELWITHDEBINFO}")
+                MESSAGE(FATAL_ERROR "Unable to find the library for ${${LIB}_LIBRARY_RELWITHDEBINFO}")
+            endif ()
+        endif ()
 
-        if(${LIB}_LIBRARY_MINSIZEREL)
-          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS MINSIZEREL)
-          set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_MINSIZEREL "${${LIB}_LIBRARY_MINSIZEREL}")
-        endif()
+        list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
 
-        if(${LIB}_LIBRARY_RELWITHDEBINFO)
-          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELWITHDEBINFO)
-          set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELWITHDEBINFO "${${LIB}_LIBRARY_RELWITHDEBINFO}")
-        endif()
+        if (NOT TARGET ${LIB})
+            add_library(${LIB} UNKNOWN IMPORTED)
 
-        if(NOT ${LIB}_LIBRARY_RELEASE AND 
-            NOT ${LIB}_LIBRARY_DEBUG AND
-            NOT ${LIB}_LIBRARY_MINSIZEREL AND 
-            NOT ${LIB}_LIBRARY_RELWITHDEBINFO)
-          set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_LOCATION "${${LIB}_LIBRARY}")
-        endif()
+            set_target_properties(${LIB} PROPERTIES
+                    INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}"
+                    )
 
-        list(APPEND ${LIBRARY_NAME_UPPER}_TARGETS ${LIB})
-      endif()
-    endif()
-  endforeach()
-endif()
+            set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+            set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_DEBUG "${${LIB}_LIBRARY_DEBUG}")
+
+            set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+            set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELEASE "${${LIB}_LIBRARY_RELEASE}")
+
+            if (NOT ANDROID)
+                set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS MINSIZEREL)
+                set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_MINSIZEREL "${${LIB}_LIBRARY_MINSIZEREL}")
+
+                set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELWITHDEBINFO)
+                set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELWITHDEBINFO "${${LIB}_LIBRARY_RELWITHDEBINFO}")
+            endif ()
+
+            list(APPEND ${LIBRARY_NAME_UPPER}_TARGETS ${LIB})
+        endif ()
+
+    endforeach ()
+
+else ()
+    include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
+    include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+
+    foreach (LIB ${SUB_LIBRARY_NAMES})
+
+        if (NOT ${LIB}_LIBRARY)
+
+            find_library(${LIB}_LIBRARY_DEBUG
+                    NAMES ${LIB} ${LIB}_Debug
+                    PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" "${PACKAGE_PATHS}"
+                    PATH_SUFFIXES Debug lib
+                    NO_DEFAULT_PATH
+                    )
+
+            find_library(${LIB}_LIBRARY_RELEASE
+                    NAMES ${LIB}
+                    PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" "${PACKAGE_PATHS}"
+                    PATH_SUFFIXES Release lib
+                    NO_DEFAULT_PATH
+                    )
+
+            find_library(${LIB}_LIBRARY_MINSIZEREL
+                    NAMES ${LIB}
+                    PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" "${PACKAGE_PATHS}"
+                    PATH_SUFFIXES MinsizeRel lib
+                    NO_DEFAULT_PATH
+                    )
+
+            find_library(${LIB}_LIBRARY_RELWITHDEBINFO
+                    NAMES ${LIB}
+                    PATHS "${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}" "${PACKAGE_PATHS}"
+                    PATH_SUFFIXES RelWithDebInfo lib
+                    NO_DEFAULT_PATH
+                    )
+
+            select_library_configurations(${LIB})
+        endif ()
+
+        find_package_handle_standard_args(${LIB}
+                REQUIRED_VARS ${LIBRARY_NAME_UPPER}_INCLUDE_DIR ${LIB}_LIBRARY)
+
+        if (${LIB}_FOUND)
+
+            set(${LIB}_INCLUDE_DIRS ${${LIBRARY_NAME_UPPER}_INCLUDE_DIR})
+
+            list(APPEND ${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIB}_LIBRARY})
+
+            if (NOT TARGET ${LIB})
+
+                add_library(${LIB} UNKNOWN IMPORTED)
+                set_target_properties(${LIB} PROPERTIES
+                        INTERFACE_INCLUDE_DIRECTORIES "${${LIB}_INCLUDE_DIRS}")
+
+                if (${LIB}_LIBRARY_DEBUG)
+                    set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+                    set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_DEBUG "${${LIB}_LIBRARY_DEBUG}")
+                    # SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wl,-rpath -Wl,${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/Debug")
+                endif ()
+
+                if (${LIB}_LIBRARY_RELEASE)
+                    set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+                    set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELEASE "${${LIB}_LIBRARY_RELEASE}")
+                    # SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,-rpath -Wl,${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/Release")
+                endif ()
+
+                if (${LIB}_LIBRARY_MINSIZEREL)
+                    set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS MINSIZEREL)
+                    set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_MINSIZEREL "${${LIB}_LIBRARY_MINSIZEREL}")
+                    # SET(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "${CMAKE_EXE_LINKER_FLAGS_MINSIZEREL} -Wl,-rpath -Wl,${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/MinsizeRel")
+                endif ()
+
+                if (${LIB}_LIBRARY_RELWITHDEBINFO)
+                    set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELWITHDEBINFO)
+                    set_target_properties(${LIB} PROPERTIES IMPORTED_LOCATION_RELWITHDEBINFO "${${LIB}_LIBRARY_RELWITHDEBINFO}")
+                    # SET(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO} -Wl,-rpath -Wl,${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/RelWithDebInfo")
+                endif ()
+
+                if (NOT ${LIB}_LIBRARY_RELEASE AND
+                        NOT ${LIB}_LIBRARY_DEBUG AND
+                        NOT ${LIB}_LIBRARY_MINSIZEREL AND
+                        NOT ${LIB}_LIBRARY_RELWITHDEBINFO)
+                    set_property(TARGET ${LIB} APPEND PROPERTY IMPORTED_LOCATION "${${LIB}_LIBRARY}")
+                    # SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath -Wl,${CMAKE_BINARY_DIR}/${${LIBRARY_NAME_UPPER}_BASE_PATH}/MinsizeRel")
+                endif ()
+
+                list(APPEND ${LIBRARY_NAME_UPPER}_TARGETS ${LIB})
+            endif ()
+        endif ()
+    endforeach ()
+endif ()
 
 mark_as_advanced(${LIBRARY_NAME_UPPER}_INCLUDE_DIR)
 
@@ -229,3 +235,12 @@ MESSAGE(STATUS "${LIBRARY_NAME_UPPER}_INCLUDE_DIR ${${LIBRARY_NAME_UPPER}_INCLUD
 MESSAGE(STATUS "${LIBRARY_NAME_UPPER}_LIBRARIES ${${LIBRARY_NAME_UPPER}_LIBRARIES}")
 MESSAGE(STATUS "${LIBRARY_NAME_UPPER}_TARGETS ${${LIBRARY_NAME_UPPER}_TARGETS}")
 
+
+foreach (LIB ${${LIBRARY_NAME_UPPER}_TARGETS})
+    echo_target_property(${LIB} INTERFACE_INCLUDE_DIRECTORIES)
+    echo_target_property(${LIB} IMPORTED_LOCATION_DEBUG)
+    echo_target_property(${LIB} IMPORTED_LOCATION_RELEASE)
+    echo_target_property(${LIB} IMPORTED_LOCATION_MINSIZEREL)
+    echo_target_property(${LIB} IMPORTED_LOCATION_RELWITHDEBINFO)
+    echo_target_property(${LIB} IMPORTED_LOCATION)
+endforeach ()

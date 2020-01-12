@@ -1,8 +1,8 @@
 
 set(LIBRARY_NAME "stbimages")
 set(SUB_LIBRARY_NAMES
-  ""
-  )
+        ""
+        )
 
 set(INCLUDE_FILE "stb_image.h")
 

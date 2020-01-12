@@ -1,8 +1,8 @@
 
 set(LIBRARY_NAME "imgui")
 set(SUB_LIBRARY_NAMES
-  "imgui"
-  )
+        "imgui"
+        )
 
 set(INCLUDE_FILE "imgui.h")
 

@@ -1,8 +1,8 @@
 
 set(LIBRARY_NAME "openal")
 set(SUB_LIBRARY_NAMES
-  "openal"
-  )
+        "openal"
+        )
 
 set(INCLUDE_FILE "AL/al.h")
 

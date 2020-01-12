@@ -51,15 +51,15 @@ set(RASPBERRY_RELWITHDEBINFO_URL "https://www.dropbox.com/s/wwbymbdbiywe4id/libo
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")
 
-set(ANDROID_arm64-v8a_DEBUG_URL     "https://www.dropbox.com/s/tsvsd2rofoea8fx/libogg_android_Debug-arm64-v8a.tar.gz?dl=0")
-set(ANDROID_armeabi-v7a_DEBUG_URL   "https://www.dropbox.com/s/8w8fkvliei2avnm/libogg_android_Debug-armeabi-v7a.tar.gz?dl=0")
-set(ANDROID_x86_64_DEBUG_URL        "https://www.dropbox.com/s/1l50ovdpiyxn76e/libogg_android_Debug-x86_64.tar.gz?dl=0")
-set(ANDROID_x86_DEBUG_URL           "https://www.dropbox.com/s/ce1td0yhkos7uon/libogg_android_Debug-x86.tar.gz?dl=0")
+set(ANDROID_arm64-v8a_DEBUG_URL "https://www.dropbox.com/s/tsvsd2rofoea8fx/libogg_android_Debug-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_armeabi-v7a_DEBUG_URL "https://www.dropbox.com/s/8w8fkvliei2avnm/libogg_android_Debug-armeabi-v7a.tar.gz?dl=0")
+set(ANDROID_x86_64_DEBUG_URL "https://www.dropbox.com/s/1l50ovdpiyxn76e/libogg_android_Debug-x86_64.tar.gz?dl=0")
+set(ANDROID_x86_DEBUG_URL "https://www.dropbox.com/s/ce1td0yhkos7uon/libogg_android_Debug-x86.tar.gz?dl=0")
 
-set(ANDROID_arm64-v8a_RELEASE_URL   "https://www.dropbox.com/s/jgta28e592joinc/libogg_android_Release-arm64-v8a.tar.gz?dl=0")
+set(ANDROID_arm64-v8a_RELEASE_URL "https://www.dropbox.com/s/jgta28e592joinc/libogg_android_Release-arm64-v8a.tar.gz?dl=0")
 set(ANDROID_armeabi-v7a_RELEASE_URL "https://www.dropbox.com/s/ee45lqxjptpnxoc/libogg_android_Release-armeabi-v7a.tar.gz?dl=0")
-set(ANDROID_x86_64_RELEASE_URL      "https://www.dropbox.com/s/xfe1rdpw61e3qpn/libogg_android_Release-x86_64.tar.gz?dl=0")
-set(ANDROID_x86_RELEASE_URL         "https://www.dropbox.com/s/uo73f6knofeparb/libogg_android_Release-x86.tar.gz?dl=0")
+set(ANDROID_x86_64_RELEASE_URL "https://www.dropbox.com/s/xfe1rdpw61e3qpn/libogg_android_Release-x86_64.tar.gz?dl=0")
+set(ANDROID_x86_RELEASE_URL "https://www.dropbox.com/s/uo73f6knofeparb/libogg_android_Release-x86.tar.gz?dl=0")
 
 ###########################################################################################################################
 

@@ -1,8 +1,8 @@
 
 set(LIBRARY_NAME "ImGuizmo")
 set(SUB_LIBRARY_NAMES
-  "ImGuizmo"
-  )
+        "ImGuizmo"
+        )
 
 set(INCLUDE_FILE "ImGuizmo.h")
 

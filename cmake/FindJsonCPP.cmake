@@ -1,8 +1,8 @@
 
 set(LIBRARY_NAME "jsoncpp")
 set(SUB_LIBRARY_NAMES
-  "jsoncpp"
-  )
+        "jsoncpp"
+        )
 
 set(INCLUDE_FILE "json/json.h")
 

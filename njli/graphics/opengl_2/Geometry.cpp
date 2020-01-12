@@ -1245,7 +1245,7 @@ namespace njli
             new GLfloat[16 * maxNumberOfInstances() * numberOfVertices() *
                         subdivisionBufferSize()];
         assert(m_ModelViewTransformData);
-        memset(m_ModelViewTransformData, std::numeric_limits<float>::max(),
+        memset(m_ModelViewTransformData, std::numeric_limits<GLfloat>::max(),
                getModelViewTransformArrayBufferSize() *
                    subdivisionBufferSize());
 
@@ -1253,7 +1253,7 @@ namespace njli
             new GLfloat[16 * maxNumberOfInstances() * numberOfVertices() *
                         subdivisionBufferSize()];
         assert(m_NormalMatrixTransformData);
-        memset(m_NormalMatrixTransformData, std::numeric_limits<float>::max(),
+        memset(m_NormalMatrixTransformData, std::numeric_limits<GLfloat>::max(),
                getNormalMatrixTransformArrayBufferSize() *
                    subdivisionBufferSize());
 

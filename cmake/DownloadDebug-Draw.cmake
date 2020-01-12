@@ -53,15 +53,15 @@ set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")
 set(UNIX_RELWITHDEBINFO_URL "")
 
-set(ANDROID_arm64-v8a_DEBUG_URL     "")
-set(ANDROID_armeabi-v7a_DEBUG_URL   "")
-set(ANDROID_x86_64_DEBUG_URL        "")
-set(ANDROID_x86_DEBUG_URL           "")
+set(ANDROID_arm64-v8a_DEBUG_URL "")
+set(ANDROID_armeabi-v7a_DEBUG_URL "")
+set(ANDROID_x86_64_DEBUG_URL "")
+set(ANDROID_x86_DEBUG_URL "")
 
-set(ANDROID_arm64-v8a_RELEASE_URL   "")
+set(ANDROID_arm64-v8a_RELEASE_URL "")
 set(ANDROID_armeabi-v7a_RELEASE_URL "")
-set(ANDROID_x86_64_RELEASE_URL      "")
-set(ANDROID_x86_RELEASE_URL         "")
+set(ANDROID_x86_64_RELEASE_URL "")
+set(ANDROID_x86_RELEASE_URL "")
 
 ###########################################################################################################################
 

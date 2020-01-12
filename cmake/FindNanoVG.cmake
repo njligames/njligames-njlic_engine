@@ -1,8 +1,8 @@
 
 set(LIBRARY_NAME "nanovg")
 set(SUB_LIBRARY_NAMES
-  "nanovg"
-  )
+        "nanovg"
+        )
 
 set(INCLUDE_FILE "nanovg.h")
 
