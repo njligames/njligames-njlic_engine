@@ -269,8 +269,12 @@ namespace njli
                                    const btVector3 &vehicleVelocity,
                                    const float vehicleMaxSpeed)
       {
+          float speed(vehicleMaxSpeed);
+          if(isinf(vehicleMaxSpeed))
+              speed = std::numeric_limits<float>::max();
+              
           const btVector3 diffPosition(targetPos - vehiclePos);
-          const btVector3 desiredVelocity(diffPosition.normalized() * vehicleMaxSpeed);
+          const btVector3 desiredVelocity(diffPosition.normalized() * speed);
           const btVector3 seek(desiredVelocity - vehicleVelocity);
           return seek;
       }
@@ -298,6 +302,10 @@ namespace njli
       {
           if(deceleration > 0)
           {
+              float speed(vehicleMaxSpeed);
+              if(isinf(vehicleMaxSpeed))
+                  speed = std::numeric_limits<float>::max();
+              
               btVector3 toTarget(targetPos - vehiclePos);
               btScalar dist(toTarget.length());
               
@@ -307,7 +315,7 @@ namespace njli
                   assert(decelerationDenominator != 0);
                   
                   btScalar speed(dist / decelerationDenominator);
-                  speed = fmin(speed, vehicleMaxSpeed);
+                  speed = fmin(speed, speed);
                   
                   const btVector3 desiredVelocity(toTarget * speed / dist);
                   
@@ -381,7 +389,7 @@ namespace njli
               
               if(!path.finished())
               {
-                  seek(path.currentWaypoint(), vehiclePos, vehicleVelocity, vehicleMaxSpeed);
+                  return seek(path.currentWaypoint(), vehiclePos, vehicleVelocity, vehicleMaxSpeed);
               }
               return arrive(path.currentWaypoint(), vehiclePos, vehicleVelocity, vehicleMaxSpeed, deceleration);
           }

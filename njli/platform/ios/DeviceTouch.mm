@@ -62,7 +62,7 @@ namespace njli
   {
     static const int CONVERSION(
         ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 132 : 163));
-    CGFloat ns = [[UIScreen mainScreen] nativeScale];
+    CGFloat ns = screenScale();
     return ns * CONVERSION;
   }
 
@@ -81,6 +81,11 @@ namespace njli
     static const int DPI(DeviceTouch::screenPPI());
     return ((CONVERSION * pixel) / DPI);
   }
+
+float DeviceTouch::screenScale()
+{
+    return [[UIScreen mainScreen] nativeScale];
+}
 
   const u8 DeviceTouch::MAX_TOUCHES = 5;
 

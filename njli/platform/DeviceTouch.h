@@ -26,6 +26,7 @@ namespace njli
       static int screenPPI();
       static int pointToPixel(const int point);
       static int pixelToPoint(const int pixel);
+      static float screenScale();
   public:
     DeviceTouch()
         : m_xpos(0), m_ypos(0), m_prev_xpos(0), m_prev_ypos(0), m_address(0),

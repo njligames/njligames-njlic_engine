@@ -552,10 +552,22 @@ namespace njli
 
   inline btVector2 SCREEN()
   {
+      
     if (njli::World::getInstance())
       return njli::World::getInstance()->getViewportDimensions();
     return btVector2(0, 0);
   }
+
+inline float RATIO()
+{
+    btVector2 v(SCREEN());
+    
+    float r = 1.0;
+  if (njli::World::getInstance())
+    r = njli::World::getInstance()->getAspectRatio();
+    
+    return r;
+}
     
     std::string convertToWords(const int number);
     

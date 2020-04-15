@@ -950,7 +950,7 @@ namespace njli
 
     f32 World::getAspectRatio() const
     {
-        return fabsf(m_ViewPortDimensions->x() / m_ViewPortDimensions->y());
+        return fabsf((m_ViewPortDimensions->x() / DeviceTouch::screenScale()) / (m_ViewPortDimensions->y() / DeviceTouch::screenScale()));
     }
 
     const char *World::getClassName() const { return "World"; }
@@ -2437,11 +2437,15 @@ namespace njli
 
      */
 
+
+
     std::string convertToWords(const int number)
     /* A function that prints given number in words */
     //    void convert_to_words(char *num)
     {
         char *num = new char[1024];
+        char *numPtr = num;
+        
         char *buffer = new char[1024];
 
         SDL_itoa(abs(number), num, 10);
@@ -2454,14 +2458,14 @@ namespace njli
         {
             fprintf(stderr, "empty string\n");
             delete[] buffer;
-            delete[] num;
+            delete[] numPtr;
             return std::string(num);
         }
         if (len > 4)
         {
             fprintf(stderr, "Length more than 4 is not supported\n");
             delete[] buffer;
-            delete[] num;
+            delete[] numPtr;
             return std::string(num);
         }
         if (number < 0)
@@ -2496,7 +2500,7 @@ namespace njli
             sprintf(buffer, "%s", single_digits[*num - '0']);
             ret = ret + buffer;
             delete[] buffer;
-            delete[] num;
+            delete[] numPtr;
             return ret;
         }
 
@@ -2531,7 +2535,7 @@ namespace njli
                     sprintf(buffer, "%s", two_digits[sum]);
                     ret = ret + std::string(buffer);
                     delete[] buffer;
-                    delete[] num;
+                    delete[] numPtr;
                     return ret;
                 }
 
@@ -2541,7 +2545,7 @@ namespace njli
                     sprintf(buffer, "twenty");
                     ret = ret + std::string(buffer);
                     delete[] buffer;
-                    delete[] num;
+                    delete[] numPtr;
                     return ret;
                 }
 
@@ -2562,8 +2566,9 @@ namespace njli
             ++num;
         }
         delete[] buffer;
-        delete[] num;
+        delete[] numPtr;
 
         return ret;
     }
+
 } // namespace njli
