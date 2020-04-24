@@ -48,8 +48,8 @@ namespace njli
 
     SteeringBehaviorWander::~SteeringBehaviorWander() { delete m_WanderTarget; }
 
-    SteeringBehaviorWander &SteeringBehaviorWander::
-    operator=(const SteeringBehaviorWander &rhs)
+    SteeringBehaviorWander &
+    SteeringBehaviorWander::operator=(const SteeringBehaviorWander &rhs)
     {
         if (this != &rhs)
         {

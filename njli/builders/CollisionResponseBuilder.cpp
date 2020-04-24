@@ -25,8 +25,8 @@ namespace njli
 
     CollisionResponseBuilder::~CollisionResponseBuilder() {}
 
-    CollisionResponseBuilder &CollisionResponseBuilder::
-    operator=(const CollisionResponseBuilder &rhs)
+    CollisionResponseBuilder &
+    CollisionResponseBuilder::operator=(const CollisionResponseBuilder &rhs)
     {
         if (this != &rhs)
         {

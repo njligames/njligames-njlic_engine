@@ -23,8 +23,8 @@ namespace njli
 
     TextboxHUDBuilder::~TextboxHUDBuilder() {}
 
-    TextboxHUDBuilder &TextboxHUDBuilder::
-    operator=(const TextboxHUDBuilder &rhs)
+    TextboxHUDBuilder &
+    TextboxHUDBuilder::operator=(const TextboxHUDBuilder &rhs)
     {
         if (this != &rhs)
         {

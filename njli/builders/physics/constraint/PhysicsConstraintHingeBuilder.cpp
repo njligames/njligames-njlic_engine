@@ -27,8 +27,8 @@ namespace njli
 
     PhysicsConstraintHingeBuilder::~PhysicsConstraintHingeBuilder() {}
 
-    PhysicsConstraintHingeBuilder &PhysicsConstraintHingeBuilder::
-    operator=(const PhysicsConstraintHingeBuilder &rhs)
+    PhysicsConstraintHingeBuilder &PhysicsConstraintHingeBuilder::operator=(
+        const PhysicsConstraintHingeBuilder &rhs)
     {
         if (this != &rhs)
         {

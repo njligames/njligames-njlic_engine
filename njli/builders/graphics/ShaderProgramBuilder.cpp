@@ -23,8 +23,8 @@ namespace njli
 
     ShaderProgramBuilder::~ShaderProgramBuilder() {}
 
-    ShaderProgramBuilder &ShaderProgramBuilder::
-    operator=(const ShaderProgramBuilder &rhs)
+    ShaderProgramBuilder &
+    ShaderProgramBuilder::operator=(const ShaderProgramBuilder &rhs)
     {
         if (this != &rhs)
         {

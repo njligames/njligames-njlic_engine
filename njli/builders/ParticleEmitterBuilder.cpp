@@ -24,8 +24,8 @@ namespace njli
 
     ParticleEmitterBuilder::~ParticleEmitterBuilder() {}
 
-    ParticleEmitterBuilder &ParticleEmitterBuilder::
-    operator=(const ParticleEmitterBuilder &rhs)
+    ParticleEmitterBuilder &
+    ParticleEmitterBuilder::operator=(const ParticleEmitterBuilder &rhs)
     {
         if (this != &rhs)
         {

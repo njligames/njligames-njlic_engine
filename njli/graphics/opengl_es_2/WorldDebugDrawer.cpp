@@ -1364,16 +1364,14 @@ namespace njli
         ImGuiIO &io = ImGui::GetIO();
         switch (event->type)
         {
-        case SDL_MOUSEWHEEL:
-        {
+        case SDL_MOUSEWHEEL: {
             if (event->wheel.y > 0)
                 g_MouseWheel = 1;
             if (event->wheel.y < 0)
                 g_MouseWheel = -1;
             return true;
         }
-        case SDL_MOUSEBUTTONDOWN:
-        {
+        case SDL_MOUSEBUTTONDOWN: {
             if (event->button.button == SDL_BUTTON_LEFT)
                 g_MousePressed[0] = true;
             if (event->button.button == SDL_BUTTON_RIGHT)
@@ -1383,39 +1381,34 @@ namespace njli
             return true;
         }
 
-        case SDL_FINGERMOTION:
-        {
+        case SDL_FINGERMOTION: {
             g_MousePressed[0] = true;
             float x = event->tfinger.x * gDisplayMode.w;
             float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
             io.MousePos = ImVec2(x, y);
         }
             return true;
-        case SDL_FINGERDOWN:
-        {
+        case SDL_FINGERDOWN: {
             g_MousePressed[0] = true;
             float x = event->tfinger.x * gDisplayMode.w;
             float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
             io.MousePos = ImVec2(x, y);
         }
             return true;
-        case SDL_FINGERUP:
-        {
+        case SDL_FINGERUP: {
             g_MousePressed[0] = false;
             float x = event->tfinger.x * gDisplayMode.w;
             float y = gDisplayMode.h - (event->tfinger.y * gDisplayMode.h);
             io.MousePos = ImVec2(x, y);
         }
             return true;
-        case SDL_TEXTINPUT:
-        {
+        case SDL_TEXTINPUT: {
             ImGuiIO &io = ImGui::GetIO();
             io.AddInputCharactersUTF8(event->text.text);
             return true;
         }
         case SDL_KEYDOWN:
-        case SDL_KEYUP:
-        {
+        case SDL_KEYUP: {
             int key = event->key.keysym.sym & ~SDLK_SCANCODE_MASK;
             io.KeysDown[key] = (event->type == SDL_KEYDOWN);
             io.KeyShift = ((SDL_GetModState() & KMOD_SHIFT) != 0);

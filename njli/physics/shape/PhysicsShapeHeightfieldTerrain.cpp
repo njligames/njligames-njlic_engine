@@ -54,8 +54,8 @@ namespace njli
         m_btHeightfieldTerrainShape = NULL;
     }
 
-    PhysicsShapeHeightfieldTerrain &PhysicsShapeHeightfieldTerrain::
-    operator=(const PhysicsShapeHeightfieldTerrain &rhs)
+    PhysicsShapeHeightfieldTerrain &PhysicsShapeHeightfieldTerrain::operator=(
+        const PhysicsShapeHeightfieldTerrain &rhs)
     {
         if (this != &rhs)
         {

@@ -739,21 +739,18 @@ static void field(LexState *ls, struct ConsControl *cc)
     /* field -> listfield | recfield */
     switch (ls->t.token)
     {
-    case TK_NAME:
-    {                                  /* may be 'listfield' or 'recfield' */
+    case TK_NAME: {                    /* may be 'listfield' or 'recfield' */
         if (luaX_lookahead(ls) != '=') /* expression? */
             listfield(ls, cc);
         else
             recfield(ls, cc);
         break;
     }
-    case '[':
-    {
+    case '[': {
         recfield(ls, cc);
         break;
     }
-    default:
-    {
+    default: {
         listfield(ls, cc);
         break;
     }
@@ -803,14 +800,12 @@ static void parlist(LexState *ls)
         {
             switch (ls->t.token)
             {
-            case TK_NAME:
-            { /* param -> NAME */
+            case TK_NAME: { /* param -> NAME */
                 new_localvar(ls, str_checkname(ls));
                 nparams++;
                 break;
             }
-            case TK_DOTS:
-            { /* param -> '...' */
+            case TK_DOTS: { /* param -> '...' */
                 luaX_next(ls);
                 f->is_vararg = 2; /* declared vararg */
                 break;
@@ -869,8 +864,7 @@ static void funcargs(LexState *ls, expdesc *f, int line)
     int base, nparams;
     switch (ls->t.token)
     {
-    case '(':
-    { /* funcargs -> '(' [ explist ] ')' */
+    case '(': { /* funcargs -> '(' [ explist ] ')' */
         luaX_next(ls);
         if (ls->t.token == ')') /* arg list is empty? */
             args.k = VVOID;
@@ -882,19 +876,16 @@ static void funcargs(LexState *ls, expdesc *f, int line)
         check_match(ls, ')', '(', line);
         break;
     }
-    case '{':
-    { /* funcargs -> constructor */
+    case '{': { /* funcargs -> constructor */
         constructor(ls, &args);
         break;
     }
-    case TK_STRING:
-    { /* funcargs -> STRING */
+    case TK_STRING: { /* funcargs -> STRING */
         codestring(ls, &args, ls->t.seminfo.ts);
         luaX_next(ls); /* must use 'seminfo' before 'next' */
         break;
     }
-    default:
-    {
+    default: {
         luaX_syntaxerror(ls, "function arguments expected");
     }
     }
@@ -925,8 +916,7 @@ static void primaryexp(LexState *ls, expdesc *v)
     /* primaryexp -> NAME | '(' expr ')' */
     switch (ls->t.token)
     {
-    case '(':
-    {
+    case '(': {
         int line = ls->linenumber;
         luaX_next(ls);
         expr(ls, v);
@@ -934,13 +924,11 @@ static void primaryexp(LexState *ls, expdesc *v)
         luaK_dischargevars(ls->fs, v);
         return;
     }
-    case TK_NAME:
-    {
+    case TK_NAME: {
         singlevar(ls, v);
         return;
     }
-    default:
-    {
+    default: {
         luaX_syntaxerror(ls, "unexpected symbol");
     }
     }
@@ -957,21 +945,18 @@ static void suffixedexp(LexState *ls, expdesc *v)
     {
         switch (ls->t.token)
         {
-        case '.':
-        { /* fieldsel */
+        case '.': { /* fieldsel */
             fieldsel(ls, v);
             break;
         }
-        case '[':
-        { /* '[' exp1 ']' */
+        case '[': { /* '[' exp1 ']' */
             expdesc key;
             luaK_exp2anyregup(fs, v);
             yindex(ls, &key);
             luaK_indexed(fs, v, &key);
             break;
         }
-        case ':':
-        { /* ':' NAME funcargs */
+        case ':': { /* ':' NAME funcargs */
             expdesc key;
             luaX_next(ls);
             checkname(ls, &key);
@@ -981,8 +966,7 @@ static void suffixedexp(LexState *ls, expdesc *v)
         }
         case '(':
         case TK_STRING:
-        case '{':
-        { /* funcargs */
+        case '{': { /* funcargs */
             luaK_exp2nextreg(fs, v);
             funcargs(ls, v, line);
             break;
@@ -999,40 +983,33 @@ static void simpleexp(LexState *ls, expdesc *v)
                     constructor | FUNCTION body | suffixedexp */
     switch (ls->t.token)
     {
-    case TK_FLT:
-    {
+    case TK_FLT: {
         init_exp(v, VKFLT, 0);
         v->u.nval = ls->t.seminfo.r;
         break;
     }
-    case TK_INT:
-    {
+    case TK_INT: {
         init_exp(v, VKINT, 0);
         v->u.ival = ls->t.seminfo.i;
         break;
     }
-    case TK_STRING:
-    {
+    case TK_STRING: {
         codestring(ls, v, ls->t.seminfo.ts);
         break;
     }
-    case TK_NIL:
-    {
+    case TK_NIL: {
         init_exp(v, VNIL, 0);
         break;
     }
-    case TK_TRUE:
-    {
+    case TK_TRUE: {
         init_exp(v, VTRUE, 0);
         break;
     }
-    case TK_FALSE:
-    {
+    case TK_FALSE: {
         init_exp(v, VFALSE, 0);
         break;
     }
-    case TK_DOTS:
-    { /* vararg */
+    case TK_DOTS: { /* vararg */
         FuncState *fs = ls->fs;
         check_condition(ls, fs->f->is_vararg,
                         "cannot use '...' outside a vararg function");
@@ -1040,19 +1017,16 @@ static void simpleexp(LexState *ls, expdesc *v)
         init_exp(v, VVARARG, luaK_codeABC(fs, OP_VARARG, 0, 1, 0));
         break;
     }
-    case '{':
-    { /* constructor */
+    case '{': { /* constructor */
         constructor(ls, v);
         return;
     }
-    case TK_FUNCTION:
-    {
+    case TK_FUNCTION: {
         luaX_next(ls);
         body(ls, v, 0, ls->linenumber);
         return;
     }
-    default:
-    {
+    default: {
         suffixedexp(ls, v);
         return;
     }
@@ -1688,45 +1662,37 @@ static void statement(LexState *ls)
     enterlevel(ls);
     switch (ls->t.token)
     {
-    case ';':
-    {                  /* stat -> ';' (empty statement) */
+    case ';': {        /* stat -> ';' (empty statement) */
         luaX_next(ls); /* skip ';' */
         break;
     }
-    case TK_IF:
-    { /* stat -> ifstat */
+    case TK_IF: { /* stat -> ifstat */
         ifstat(ls, line);
         break;
     }
-    case TK_WHILE:
-    { /* stat -> whilestat */
+    case TK_WHILE: { /* stat -> whilestat */
         whilestat(ls, line);
         break;
     }
-    case TK_DO:
-    {                  /* stat -> DO block END */
+    case TK_DO: {      /* stat -> DO block END */
         luaX_next(ls); /* skip DO */
         block(ls);
         check_match(ls, TK_END, TK_DO, line);
         break;
     }
-    case TK_FOR:
-    { /* stat -> forstat */
+    case TK_FOR: { /* stat -> forstat */
         forstat(ls, line);
         break;
     }
-    case TK_REPEAT:
-    { /* stat -> repeatstat */
+    case TK_REPEAT: { /* stat -> repeatstat */
         repeatstat(ls, line);
         break;
     }
-    case TK_FUNCTION:
-    { /* stat -> funcstat */
+    case TK_FUNCTION: { /* stat -> funcstat */
         funcstat(ls, line);
         break;
     }
-    case TK_LOCAL:
-    {                                  /* stat -> localstat */
+    case TK_LOCAL: {                   /* stat -> localstat */
         luaX_next(ls);                 /* skip LOCAL */
         if (testnext(ls, TK_FUNCTION)) /* local function? */
             localfunc(ls);
@@ -1734,26 +1700,22 @@ static void statement(LexState *ls)
             localstat(ls);
         break;
     }
-    case TK_DBCOLON:
-    {                  /* stat -> label */
+    case TK_DBCOLON: { /* stat -> label */
         luaX_next(ls); /* skip double colon */
         labelstat(ls, str_checkname(ls), line);
         break;
     }
-    case TK_RETURN:
-    {                  /* stat -> retstat */
+    case TK_RETURN: {  /* stat -> retstat */
         luaX_next(ls); /* skip RETURN */
         retstat(ls);
         break;
     }
-    case TK_BREAK: /* stat -> breakstat */
-    case TK_GOTO:
-    { /* stat -> 'goto' NAME */
+    case TK_BREAK:  /* stat -> breakstat */
+    case TK_GOTO: { /* stat -> 'goto' NAME */
         gotostat(ls, luaK_jump(ls->fs));
         break;
     }
-    default:
-    { /* stat -> func | assignment */
+    default: { /* stat -> func | assignment */
         exprstat(ls);
         break;
     }

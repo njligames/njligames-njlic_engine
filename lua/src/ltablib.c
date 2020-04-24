@@ -83,13 +83,11 @@ static int tinsert(lua_State *L)
     lua_Integer pos; /* where to insert new element */
     switch (lua_gettop(L))
     {
-    case 2:
-    {            /* called with only 2 arguments */
+    case 2: {    /* called with only 2 arguments */
         pos = e; /* insert new element at the end */
         break;
     }
-    case 3:
-    {
+    case 3: {
         lua_Integer i;
         pos = luaL_checkinteger(L, 2); /* 2nd argument is the position */
         luaL_argcheck(L, 1 <= pos && pos <= e, 2, "position out of bounds");
@@ -100,8 +98,7 @@ static int tinsert(lua_State *L)
         }
         break;
     }
-    default:
-    {
+    default: {
         return luaL_error(L, "wrong number of arguments to 'insert'");
     }
     }

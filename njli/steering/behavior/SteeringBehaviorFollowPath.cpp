@@ -47,8 +47,8 @@ namespace njli
 
     SteeringBehaviorFollowPath::~SteeringBehaviorFollowPath() { delete m_Path; }
 
-    SteeringBehaviorFollowPath &SteeringBehaviorFollowPath::
-    operator=(const SteeringBehaviorFollowPath &rhs)
+    SteeringBehaviorFollowPath &
+    SteeringBehaviorFollowPath::operator=(const SteeringBehaviorFollowPath &rhs)
     {
         if (this != &rhs)
         {

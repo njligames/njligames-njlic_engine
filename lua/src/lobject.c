@@ -136,8 +136,7 @@ static lua_Number numarith(lua_State *L, int op, lua_Number v1, lua_Number v2)
         return luai_numidiv(L, v1, v2);
     case LUA_OPUNM:
         return luai_numunm(L, v1);
-    case LUA_OPMOD:
-    {
+    case LUA_OPMOD: {
         lua_Number m;
         luai_nummod(L, v1, v2, m);
         return m;
@@ -158,8 +157,7 @@ void luaO_arith(lua_State *L, int op, const TValue *p1, const TValue *p2,
     case LUA_OPBXOR:
     case LUA_OPSHL:
     case LUA_OPSHR:
-    case LUA_OPBNOT:
-    { /* operate only on integers */
+    case LUA_OPBNOT: { /* operate only on integers */
         lua_Integer i1;
         lua_Integer i2;
         if (tointeger(p1, &i1) && tointeger(p2, &i2))
@@ -171,8 +169,7 @@ void luaO_arith(lua_State *L, int op, const TValue *p1, const TValue *p2,
             break; /* go to the end */
     }
     case LUA_OPDIV:
-    case LUA_OPPOW:
-    { /* operate only on floats */
+    case LUA_OPPOW: { /* operate only on floats */
         lua_Number n1;
         lua_Number n2;
         if (tonumber(p1, &n1) && tonumber(p2, &n2))
@@ -183,8 +180,7 @@ void luaO_arith(lua_State *L, int op, const TValue *p1, const TValue *p2,
         else
             break; /* go to the end */
     }
-    default:
-    { /* other operations */
+    default: { /* other operations */
         lua_Number n1;
         lua_Number n2;
         if (ttisinteger(p1) && ttisinteger(p2))
@@ -445,16 +441,14 @@ const char *luaO_pushvfstring(lua_State *L, const char *fmt, va_list argp)
         pushstr(L, fmt, e - fmt);
         switch (*(e + 1))
         {
-        case 's':
-        {
+        case 's': {
             const char *s = va_arg(argp, char *);
             if (s == NULL)
                 s = "(null)";
             pushstr(L, s, strlen(s));
             break;
         }
-        case 'c':
-        {
+        case 'c': {
             char buff = cast(char, va_arg(argp, int));
             if (lisprint(cast_uchar(buff)))
                 pushstr(L, &buff, 1);
@@ -462,46 +456,39 @@ const char *luaO_pushvfstring(lua_State *L, const char *fmt, va_list argp)
                 luaO_pushfstring(L, "<\\%d>", cast_uchar(buff));
             break;
         }
-        case 'd':
-        {
+        case 'd': {
             setivalue(L->top, va_arg(argp, int));
             goto top2str;
         }
-        case 'I':
-        {
+        case 'I': {
             setivalue(L->top, cast(lua_Integer, va_arg(argp, l_uacInt)));
             goto top2str;
         }
-        case 'f':
-        {
+        case 'f': {
             setfltvalue(L->top, cast_num(va_arg(argp, l_uacNumber)));
         top2str:
             luaD_inctop(L);
             luaO_tostring(L, L->top - 1);
             break;
         }
-        case 'p':
-        {
+        case 'p': {
             char buff[4 * sizeof(void *) +
                       8]; /* should be enough space for a '%p' */
             int l = l_sprintf(buff, sizeof(buff), "%p", va_arg(argp, void *));
             pushstr(L, buff, l);
             break;
         }
-        case 'U':
-        {
+        case 'U': {
             char buff[UTF8BUFFSZ];
             int l = luaO_utf8esc(buff, cast(long, va_arg(argp, long)));
             pushstr(L, buff + UTF8BUFFSZ - l, l);
             break;
         }
-        case '%':
-        {
+        case '%': {
             pushstr(L, "%", 1);
             break;
         }
-        default:
-        {
+        default: {
             luaG_runerror(L, "invalid option '%%%c' to 'lua_pushfstring'",
                           *(e + 1));
         }

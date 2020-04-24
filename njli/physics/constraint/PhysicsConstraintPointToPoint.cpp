@@ -48,8 +48,8 @@ namespace njli
         //        removeConstraint();
     }
 
-    PhysicsConstraintPointToPoint &PhysicsConstraintPointToPoint::
-    operator=(const PhysicsConstraintPointToPoint &rhs)
+    PhysicsConstraintPointToPoint &PhysicsConstraintPointToPoint::operator=(
+        const PhysicsConstraintPointToPoint &rhs)
     {
         if (this != &rhs)
         {

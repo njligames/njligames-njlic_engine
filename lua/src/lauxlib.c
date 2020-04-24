@@ -857,8 +857,7 @@ LUALIB_API const char *luaL_tolstring(lua_State *L, int idx, size_t *len)
     { /* no metafield? */
         switch (lua_type(L, idx))
         {
-        case LUA_TNUMBER:
-        {
+        case LUA_TNUMBER: {
             if (lua_isinteger(L, idx))
                 lua_pushfstring(L, "%I", lua_tointeger(L, idx));
             else

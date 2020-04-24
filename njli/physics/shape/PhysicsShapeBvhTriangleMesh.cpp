@@ -51,8 +51,8 @@ namespace njli
         m_btBvhTriangleMeshShape = NULL;
     }
 
-    PhysicsShapeBvhTriangleMesh &PhysicsShapeBvhTriangleMesh::
-    operator=(const PhysicsShapeBvhTriangleMesh &rhs)
+    PhysicsShapeBvhTriangleMesh &PhysicsShapeBvhTriangleMesh::operator=(
+        const PhysicsShapeBvhTriangleMesh &rhs)
     {
         if (this != &rhs)
         {

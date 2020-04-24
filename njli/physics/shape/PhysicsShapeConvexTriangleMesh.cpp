@@ -51,8 +51,8 @@ namespace njli
         m_btConvexTriangleMeshShape = NULL;
     }
 
-    PhysicsShapeConvexTriangleMesh &PhysicsShapeConvexTriangleMesh::
-    operator=(const PhysicsShapeConvexTriangleMesh &rhs)
+    PhysicsShapeConvexTriangleMesh &PhysicsShapeConvexTriangleMesh::operator=(
+        const PhysicsShapeConvexTriangleMesh &rhs)
     {
         if (this != &rhs)
         {

@@ -43,8 +43,8 @@ namespace njli
 
     PhysicsConstraintSlider::~PhysicsConstraintSlider() { removeConstraint(); }
 
-    PhysicsConstraintSlider &PhysicsConstraintSlider::
-    operator=(const PhysicsConstraintSlider &rhs)
+    PhysicsConstraintSlider &
+    PhysicsConstraintSlider::operator=(const PhysicsConstraintSlider &rhs)
     {
         if (this != &rhs)
         {

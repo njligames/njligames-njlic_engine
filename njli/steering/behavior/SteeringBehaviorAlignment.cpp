@@ -39,8 +39,8 @@ namespace njli
 
     SteeringBehaviorAlignment::~SteeringBehaviorAlignment() {}
 
-    SteeringBehaviorAlignment &SteeringBehaviorAlignment::
-    operator=(const SteeringBehaviorAlignment &rhs)
+    SteeringBehaviorAlignment &
+    SteeringBehaviorAlignment::operator=(const SteeringBehaviorAlignment &rhs)
     {
         if (this != &rhs)
         {

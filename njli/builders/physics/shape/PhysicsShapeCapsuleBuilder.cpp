@@ -27,8 +27,8 @@ namespace njli
 
     PhysicsShapeCapsuleBuilder::~PhysicsShapeCapsuleBuilder() {}
 
-    PhysicsShapeCapsuleBuilder &PhysicsShapeCapsuleBuilder::
-    operator=(const PhysicsShapeCapsuleBuilder &rhs)
+    PhysicsShapeCapsuleBuilder &
+    PhysicsShapeCapsuleBuilder::operator=(const PhysicsShapeCapsuleBuilder &rhs)
     {
         if (this != &rhs)
         {

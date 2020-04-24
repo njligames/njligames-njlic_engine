@@ -27,8 +27,8 @@ namespace njli
 
     PhysicsShapeStaticPlaneBuilder::~PhysicsShapeStaticPlaneBuilder() {}
 
-    PhysicsShapeStaticPlaneBuilder &PhysicsShapeStaticPlaneBuilder::
-    operator=(const PhysicsShapeStaticPlaneBuilder &rhs)
+    PhysicsShapeStaticPlaneBuilder &PhysicsShapeStaticPlaneBuilder::operator=(
+        const PhysicsShapeStaticPlaneBuilder &rhs)
     {
         if (this != &rhs)
         {

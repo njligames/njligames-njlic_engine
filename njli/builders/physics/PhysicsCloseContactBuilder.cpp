@@ -24,8 +24,8 @@ namespace njli
 
     PhysicsCloseContactBuilder::~PhysicsCloseContactBuilder() {}
 
-    PhysicsCloseContactBuilder &PhysicsCloseContactBuilder::
-    operator=(const PhysicsCloseContactBuilder &rhs)
+    PhysicsCloseContactBuilder &
+    PhysicsCloseContactBuilder::operator=(const PhysicsCloseContactBuilder &rhs)
     {
         if (this != &rhs)
         {

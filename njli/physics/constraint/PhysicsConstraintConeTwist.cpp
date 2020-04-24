@@ -46,8 +46,8 @@ namespace njli
         removeConstraint();
     }
 
-    PhysicsConstraintConeTwist &PhysicsConstraintConeTwist::
-    operator=(const PhysicsConstraintConeTwist &rhs)
+    PhysicsConstraintConeTwist &
+    PhysicsConstraintConeTwist::operator=(const PhysicsConstraintConeTwist &rhs)
     {
         if (this != &rhs)
         {

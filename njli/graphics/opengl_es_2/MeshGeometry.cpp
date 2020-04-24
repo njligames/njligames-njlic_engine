@@ -644,8 +644,7 @@ namespace njli
                     switch (mode)
                     {
                     case v:
-                    case vn:
-                    {
+                    case vn: {
                         switch (tokencount)
                         {
                         case 1:
@@ -662,8 +661,7 @@ namespace njli
                         }
                     }
                     break;
-                    case vt:
-                    {
+                    case vt: {
                         switch (tokencount)
                         {
                         case 1:
@@ -677,8 +675,7 @@ namespace njli
                         }
                     }
                     break;
-                    case f:
-                    {
+                    case f: {
                         faces.push_back(token);
                     }
                     break;
@@ -705,8 +702,7 @@ namespace njli
             case vt:
                 texture.push_back(vec2);
                 break;
-            case f:
-            {
+            case f: {
             }
             break;
 

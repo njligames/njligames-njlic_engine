@@ -46,8 +46,8 @@ namespace njli
         m_btCapsuleShape = NULL;
     }
 
-    PhysicsShapeCapsule &PhysicsShapeCapsule::
-    operator=(const PhysicsShapeCapsule &rhs)
+    PhysicsShapeCapsule &
+    PhysicsShapeCapsule::operator=(const PhysicsShapeCapsule &rhs)
     {
         if (this != &rhs)
         {

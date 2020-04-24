@@ -199,20 +199,17 @@ static int luaB_collectgarbage(lua_State *L)
     int res = lua_gc(L, o, ex);
     switch (o)
     {
-    case LUA_GCCOUNT:
-    {
+    case LUA_GCCOUNT: {
         int b = lua_gc(L, LUA_GCCOUNTB, 0);
         lua_pushnumber(L, (lua_Number)res + ((lua_Number)b / 1024));
         return 1;
     }
     case LUA_GCSTEP:
-    case LUA_GCISRUNNING:
-    {
+    case LUA_GCISRUNNING: {
         lua_pushboolean(L, res);
         return 1;
     }
-    default:
-    {
+    default: {
         lua_pushinteger(L, res);
         return 1;
     }

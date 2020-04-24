@@ -53,38 +53,38 @@ namespace njli
 
     u64 AbstractFactoryObject::getPointerValue() const { return m_pointerVal; }
 
-    bool AbstractFactoryObject::
-    operator==(const AbstractFactoryObject &rhs) const
+    bool
+    AbstractFactoryObject::operator==(const AbstractFactoryObject &rhs) const
     {
         return getPointer() == rhs.getPointer();
     }
 
-    bool AbstractFactoryObject::
-    operator<(const AbstractFactoryObject &rhs) const
+    bool
+    AbstractFactoryObject::operator<(const AbstractFactoryObject &rhs) const
     {
         return getPointer() < rhs.getPointer();
     }
 
-    bool AbstractFactoryObject::
-    operator>(const AbstractFactoryObject &rhs) const
+    bool
+    AbstractFactoryObject::operator>(const AbstractFactoryObject &rhs) const
     {
         return getPointer() > rhs.getPointer();
     }
 
-    bool AbstractFactoryObject::
-    operator!=(const AbstractFactoryObject &rhs) const
+    bool
+    AbstractFactoryObject::operator!=(const AbstractFactoryObject &rhs) const
     {
         return !(*this == rhs);
     }
 
-    bool AbstractFactoryObject::
-    operator<=(const AbstractFactoryObject &rhs) const
+    bool
+    AbstractFactoryObject::operator<=(const AbstractFactoryObject &rhs) const
     {
         return (*this < rhs) || (*this == rhs);
     }
 
-    bool AbstractFactoryObject::
-    operator>=(const AbstractFactoryObject &rhs) const
+    bool
+    AbstractFactoryObject::operator>=(const AbstractFactoryObject &rhs) const
     {
         return (*this > rhs) || (*this == rhs);
     }

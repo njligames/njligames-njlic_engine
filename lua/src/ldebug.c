@@ -249,18 +249,15 @@ static int auxgetinfo(lua_State *L, const char *what, lua_Debug *ar, Closure *f,
     {
         switch (*what)
         {
-        case 'S':
-        {
+        case 'S': {
             funcinfo(ar, f);
             break;
         }
-        case 'l':
-        {
+        case 'l': {
             ar->currentline = (ci && isLua(ci)) ? currentline(ci) : -1;
             break;
         }
-        case 'u':
-        {
+        case 'u': {
             ar->nups = (f == NULL) ? 0 : f->c.nupvalues;
             if (noLuaClosure(f))
             {
@@ -274,13 +271,11 @@ static int auxgetinfo(lua_State *L, const char *what, lua_Debug *ar, Closure *f,
             }
             break;
         }
-        case 't':
-        {
+        case 't': {
             ar->istailcall = (ci) ? ci->callstatus & CIST_TAIL : 0;
             break;
         }
-        case 'n':
-        {
+        case 'n': {
             /* calling function is a known Lua function? */
             if (ci && !(ci->callstatus & CIST_TAIL) && isLua(ci->previous))
                 ar->namewhat = getfuncname(L, ci->previous, &ar->name);
@@ -397,28 +392,24 @@ static int findsetreg(Proto *p, int lastpc, int reg)
         int a = GETARG_A(i);
         switch (op)
         {
-        case OP_LOADNIL:
-        {
+        case OP_LOADNIL: {
             int b = GETARG_B(i);
             if (a <= reg && reg <= a + b) /* set registers from 'a' to 'a+b' */
                 setreg = filterpc(pc, jmptarget);
             break;
         }
-        case OP_TFORCALL:
-        {
+        case OP_TFORCALL: {
             if (reg >= a + 2) /* affect all regs above its base */
                 setreg = filterpc(pc, jmptarget);
             break;
         }
         case OP_CALL:
-        case OP_TAILCALL:
-        {
+        case OP_TAILCALL: {
             if (reg >= a) /* affect all registers above base */
                 setreg = filterpc(pc, jmptarget);
             break;
         }
-        case OP_JMP:
-        {
+        case OP_JMP: {
             int b = GETARG_sBx(i);
             int dest = pc + 1 + b;
             /* jump is forward and do not skip 'lastpc'? */
@@ -452,16 +443,14 @@ static const char *getobjname(Proto *p, int lastpc, int reg, const char **name)
         OpCode op = GET_OPCODE(i);
         switch (op)
         {
-        case OP_MOVE:
-        {
+        case OP_MOVE: {
             int b = GETARG_B(i); /* move from 'b' to 'a' */
             if (b < GETARG_A(i))
                 return getobjname(p, pc, b, name); /* get name for 'b' */
             break;
         }
         case OP_GETTABUP:
-        case OP_GETTABLE:
-        {
+        case OP_GETTABLE: {
             int k = GETARG_C(i);                 /* key index */
             int t = GETARG_B(i);                 /* table index */
             const char *vn = (op == OP_GETTABLE) /* name of indexed variable */
@@ -470,14 +459,12 @@ static const char *getobjname(Proto *p, int lastpc, int reg, const char **name)
             kname(p, pc, k, name);
             return (vn && strcmp(vn, LUA_ENV) == 0) ? "global" : "field";
         }
-        case OP_GETUPVAL:
-        {
+        case OP_GETUPVAL: {
             *name = upvalname(p, GETARG_B(i));
             return "upvalue";
         }
         case OP_LOADK:
-        case OP_LOADKX:
-        {
+        case OP_LOADKX: {
             int b =
                 (op == OP_LOADK) ? GETARG_Bx(i) : GETARG_Ax(p->code[pc + 1]);
             if (ttisstring(&p->k[b]))
@@ -487,8 +474,7 @@ static const char *getobjname(Proto *p, int lastpc, int reg, const char **name)
             }
             break;
         }
-        case OP_SELF:
-        {
+        case OP_SELF: {
             int k = GETARG_C(i); /* key index */
             kname(p, pc, k, name);
             return "method";
@@ -516,8 +502,7 @@ static const char *getfuncname(lua_State *L, CallInfo *ci, const char **name)
     case OP_CALL:
     case OP_TAILCALL: /* get function name */
         return getobjname(p, pc, GETARG_A(i), name);
-    case OP_TFORCALL:
-    { /* for iterator */
+    case OP_TFORCALL: { /* for iterator */
         *name = "for iterator";
         return "for iterator";
     }
@@ -542,8 +527,7 @@ static const char *getfuncname(lua_State *L, CallInfo *ci, const char **name)
     case OP_BOR:
     case OP_BXOR:
     case OP_SHL:
-    case OP_SHR:
-    {
+    case OP_SHR: {
         int offset = cast_int(GET_OPCODE(i)) - cast_int(OP_ADD); /* ORDER OP */
         tm = cast(TMS, offset + cast_int(TM_ADD));               /* ORDER TM */
         break;

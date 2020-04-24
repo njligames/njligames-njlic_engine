@@ -27,8 +27,8 @@ namespace njli
 
     PhysicsShapeConvexHullBuilder::~PhysicsShapeConvexHullBuilder() {}
 
-    PhysicsShapeConvexHullBuilder &PhysicsShapeConvexHullBuilder::
-    operator=(const PhysicsShapeConvexHullBuilder &rhs)
+    PhysicsShapeConvexHullBuilder &PhysicsShapeConvexHullBuilder::operator=(
+        const PhysicsShapeConvexHullBuilder &rhs)
     {
         if (this != &rhs)
         {

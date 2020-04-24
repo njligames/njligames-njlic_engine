@@ -43,8 +43,8 @@ namespace njli
 
     PhysicsConstraintHinge::~PhysicsConstraintHinge() { removeConstraint(); }
 
-    PhysicsConstraintHinge &PhysicsConstraintHinge::
-    operator=(const PhysicsConstraintHinge &rhs)
+    PhysicsConstraintHinge &
+    PhysicsConstraintHinge::operator=(const PhysicsConstraintHinge &rhs)
     {
         if (this != &rhs)
         {

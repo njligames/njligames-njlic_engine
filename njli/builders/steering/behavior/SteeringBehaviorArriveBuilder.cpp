@@ -27,8 +27,8 @@ namespace njli
 
     SteeringBehaviorArriveBuilder::~SteeringBehaviorArriveBuilder() {}
 
-    SteeringBehaviorArriveBuilder &SteeringBehaviorArriveBuilder::
-    operator=(const SteeringBehaviorArriveBuilder &rhs)
+    SteeringBehaviorArriveBuilder &SteeringBehaviorArriveBuilder::operator=(
+        const SteeringBehaviorArriveBuilder &rhs)
     {
         if (this != &rhs)
         {

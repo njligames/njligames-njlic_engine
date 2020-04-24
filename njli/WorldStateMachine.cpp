@@ -30,8 +30,8 @@ namespace njli
 
     WorldStateMachine::~WorldStateMachine() {}
 
-    WorldStateMachine &WorldStateMachine::
-    operator=(const WorldStateMachine &rhs)
+    WorldStateMachine &
+    WorldStateMachine::operator=(const WorldStateMachine &rhs)
     {
         if (this != &rhs)
         {

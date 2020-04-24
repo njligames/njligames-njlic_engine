@@ -111,10 +111,11 @@ namespace njli
           m_SocketEnabled(false), m_SocketAddress("192.168.1.10"),
           m_SocketPort(2223), m_BackgroundColor(new btVector4(.5, .5, .5, .5)),
           m_DeviceName("NOT - SET"), m_AnimationPaused(false),
-          m_GamePaused(false)
+          m_GamePaused(false), mWorldAd(new WorldAd())
     {
         //    m_WorldDebugDrawer->init();
 
+        addChild(mWorldAd);
         addChild(m_WorldSound);
         addChild(m_WorldInput);
 #ifdef USE_NANOVG_LIBRARY
@@ -147,6 +148,9 @@ namespace njli
         m_WorldDebugDrawer = NULL;
         delete m_WorldSound;
         m_WorldSound = NULL;
+
+        delete mWorldAd;
+        mWorldAd = NULL;
         delete m_WorldInput;
         m_WorldInput = NULL;
 #if defined(USE_NANOVG_LIBRARY)
@@ -368,6 +372,21 @@ namespace njli
         s32 idx = getChildIndex(m_WorldSound);
         if (idx != -1)
             return dynamic_cast<const WorldSound *>(getChild(idx));
+        return NULL;
+    }
+
+    WorldAd *World::getWorldAd()
+    {
+        s32 idx = getChildIndex(mWorldAd);
+        if (idx != -1)
+            return dynamic_cast<WorldAd *>(getChild(idx));
+        return NULL;
+    }
+    const WorldAd *World::getWorldAd() const
+    {
+        s32 idx = getChildIndex(mWorldAd);
+        if (idx != -1)
+            return dynamic_cast<const WorldAd *>(getChild(idx));
         return NULL;
     }
 
@@ -903,6 +922,7 @@ namespace njli
 
         //        SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "There were (%lld)
         //        objects before and (%lld) objects after", before, after);
+        mWorldAd->update();
     }
 
     void World::render()
@@ -950,7 +970,8 @@ namespace njli
 
     f32 World::getAspectRatio() const
     {
-        return fabsf((m_ViewPortDimensions->x() / DeviceTouch::screenScale()) / (m_ViewPortDimensions->y() / DeviceTouch::screenScale()));
+        return fabsf((m_ViewPortDimensions->x() / DeviceTouch::screenScale()) /
+                     (m_ViewPortDimensions->y() / DeviceTouch::screenScale()));
     }
 
     const char *World::getClassName() const { return "World"; }
@@ -2437,15 +2458,13 @@ namespace njli
 
      */
 
-
-
     std::string convertToWords(const int number)
     /* A function that prints given number in words */
     //    void convert_to_words(char *num)
     {
         char *num = new char[1024];
         char *numPtr = num;
-        
+
         char *buffer = new char[1024];
 
         SDL_itoa(abs(number), num, 10);

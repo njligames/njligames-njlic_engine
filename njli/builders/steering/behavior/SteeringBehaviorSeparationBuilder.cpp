@@ -27,8 +27,9 @@ namespace njli
 
     SteeringBehaviorSeparationBuilder::~SteeringBehaviorSeparationBuilder() {}
 
-    SteeringBehaviorSeparationBuilder &SteeringBehaviorSeparationBuilder::
-    operator=(const SteeringBehaviorSeparationBuilder &rhs)
+    SteeringBehaviorSeparationBuilder &
+    SteeringBehaviorSeparationBuilder::operator=(
+        const SteeringBehaviorSeparationBuilder &rhs)
     {
         if (this != &rhs)
         {

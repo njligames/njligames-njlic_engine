@@ -102,7 +102,7 @@ void NJLI_HandleKeyboardFinish(const unsigned char *state, int numStates)
      *  }
      */
 }
-
+#include "SDL.h"
 void NJLI_HandleMouse(int button, int eventType, float x, float y, int clicks)
 {
     int w, h;
@@ -112,6 +112,8 @@ void NJLI_HandleMouse(int button, int eventType, float x, float y, int clicks)
 
     float sw, sh;
     SDL_RenderGetScale(gRenderer, &sw, &sh);
+
+    //    auto view = gWindow->driverdata;//->views[0];
 
     float pointSizeScale = (float)dw / (float)w;
 

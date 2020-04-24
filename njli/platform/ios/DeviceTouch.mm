@@ -25,8 +25,7 @@ namespace njli
 
       switch (eventType)
         {
-        case SDL_JOYDEVICEMOTION:
-          {
+          case SDL_JOYDEVICEMOTION: {
 
             NJLI_HandleVRCameraRotationYPR(
                 static_cast<float>(event->jmotion.yaw),
@@ -82,10 +81,10 @@ namespace njli
     return ((CONVERSION * pixel) / DPI);
   }
 
-float DeviceTouch::screenScale()
-{
+  float DeviceTouch::screenScale()
+  {
     return [[UIScreen mainScreen] nativeScale];
-}
+  }
 
   const u8 DeviceTouch::MAX_TOUCHES = 5;
 

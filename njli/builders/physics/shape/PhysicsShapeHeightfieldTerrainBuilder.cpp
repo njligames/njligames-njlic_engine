@@ -35,8 +35,8 @@ namespace njli
     }
 
     PhysicsShapeHeightfieldTerrainBuilder &
-    PhysicsShapeHeightfieldTerrainBuilder::
-    operator=(const PhysicsShapeHeightfieldTerrainBuilder &rhs)
+    PhysicsShapeHeightfieldTerrainBuilder::operator=(
+        const PhysicsShapeHeightfieldTerrainBuilder &rhs)
     {
         if (this != &rhs)
         {

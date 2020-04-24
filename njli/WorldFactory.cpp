@@ -460,8 +460,7 @@ namespace njli
 
         switch (type)
         {
-        case JLI_OBJECT_TYPE_Action:
-        {
+        case JLI_OBJECT_TYPE_Action: {
             Action **_obj = new Action *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -470,8 +469,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ActionBuilder:
-        {
+        case JLI_OBJECT_TYPE_ActionBuilder: {
             ActionBuilder **_obj = new ActionBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -481,8 +479,7 @@ namespace njli
         }
         break;
 #if defined(USE_NANOVG_LIBRARY)
-        case JLI_OBJECT_TYPE_ButtonHUD:
-        {
+        case JLI_OBJECT_TYPE_ButtonHUD: {
             ButtonHUD **_obj = new ButtonHUD *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -491,8 +488,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ButtonHUDBuilder:
-        {
+        case JLI_OBJECT_TYPE_ButtonHUDBuilder: {
             ButtonHUDBuilder **_obj = new ButtonHUDBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -502,8 +498,7 @@ namespace njli
         }
         break;
 #endif
-        case JLI_OBJECT_TYPE_Camera:
-        {
+        case JLI_OBJECT_TYPE_Camera: {
             Camera **_obj = new Camera *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -512,8 +507,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_CameraBuilder:
-        {
+        case JLI_OBJECT_TYPE_CameraBuilder: {
             CameraBuilder **_obj = new CameraBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -523,8 +517,7 @@ namespace njli
         }
         break;
 #if defined(USE_NANOVG_LIBRARY)
-        case JLI_OBJECT_TYPE_CheckboxHUD:
-        {
+        case JLI_OBJECT_TYPE_CheckboxHUD: {
             CheckboxHUD **_obj = new CheckboxHUD *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -533,8 +526,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_CheckboxHUDBuilder:
-        {
+        case JLI_OBJECT_TYPE_CheckboxHUDBuilder: {
             CheckboxHUDBuilder **_obj = new CheckboxHUDBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -544,8 +536,7 @@ namespace njli
         }
         break;
 #endif
-        case JLI_OBJECT_TYPE_Clock:
-        {
+        case JLI_OBJECT_TYPE_Clock: {
             Clock **_obj = new Clock *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -554,8 +545,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ClockBuilder:
-        {
+        case JLI_OBJECT_TYPE_ClockBuilder: {
             ClockBuilder **_obj = new ClockBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -564,8 +554,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_CollisionResponse:
-        {
+        case JLI_OBJECT_TYPE_CollisionResponse: {
             CollisionResponse **_obj = new CollisionResponse *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -574,8 +563,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_CollisionResponseBuilder:
-        {
+        case JLI_OBJECT_TYPE_CollisionResponseBuilder: {
             CollisionResponseBuilder **_obj =
                 new CollisionResponseBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -585,8 +573,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Cube:
-        {
+        case JLI_OBJECT_TYPE_Cube: {
             Cube **_obj = new Cube *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -595,8 +582,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_CubeBuilder:
-        {
+        case JLI_OBJECT_TYPE_CubeBuilder: {
             CubeBuilder **_obj = new CubeBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -606,8 +592,7 @@ namespace njli
         }
         break;
 #if defined(USE_NANOVG_LIBRARY)
-        case JLI_OBJECT_TYPE_DropdownHUD:
-        {
+        case JLI_OBJECT_TYPE_DropdownHUD: {
             DropdownHUD **_obj = new DropdownHUD *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -616,8 +601,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_DropdownHUDBuilder:
-        {
+        case JLI_OBJECT_TYPE_DropdownHUDBuilder: {
             DropdownHUDBuilder **_obj = new DropdownHUDBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -627,8 +611,7 @@ namespace njli
         }
         break;
 #endif
-        case JLI_OBJECT_TYPE_Font:
-        {
+        case JLI_OBJECT_TYPE_Font: {
             Font **_obj = new Font *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -637,8 +620,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_FontBuilder:
-        {
+        case JLI_OBJECT_TYPE_FontBuilder: {
             FontBuilder **_obj = new FontBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -647,8 +629,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Image:
-        {
+        case JLI_OBJECT_TYPE_Image: {
             Image **_obj = new Image *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -657,8 +638,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ImageBuilder:
-        {
+        case JLI_OBJECT_TYPE_ImageBuilder: {
             ImageBuilder **_obj = new ImageBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -667,8 +647,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_JsonJLI:
-        {
+        case JLI_OBJECT_TYPE_JsonJLI: {
             JsonJLI **_obj = new JsonJLI *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -677,8 +656,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_JsonJLIBuilder:
-        {
+        case JLI_OBJECT_TYPE_JsonJLIBuilder: {
             JsonJLIBuilder **_obj = new JsonJLIBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -688,8 +666,7 @@ namespace njli
         }
         break;
 #if defined(USE_NANOVG_LIBRARY)
-        case JLI_OBJECT_TYPE_LabelHUD:
-        {
+        case JLI_OBJECT_TYPE_LabelHUD: {
             LabelHUD **_obj = new LabelHUD *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -698,8 +675,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_LabelHUDBuilder:
-        {
+        case JLI_OBJECT_TYPE_LabelHUDBuilder: {
             LabelHUDBuilder **_obj = new LabelHUDBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -709,8 +685,7 @@ namespace njli
         }
         break;
 #endif
-        case JLI_OBJECT_TYPE_Light:
-        {
+        case JLI_OBJECT_TYPE_Light: {
             Light **_obj = new Light *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -719,8 +694,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_LightBuilder:
-        {
+        case JLI_OBJECT_TYPE_LightBuilder: {
             LightBuilder **_obj = new LightBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -729,8 +703,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_LevelOfDetail:
-        {
+        case JLI_OBJECT_TYPE_LevelOfDetail: {
             LevelOfDetail **_obj = new LevelOfDetail *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -739,8 +712,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_LevelOfDetailBuilder:
-        {
+        case JLI_OBJECT_TYPE_LevelOfDetailBuilder: {
             LevelOfDetailBuilder **_obj = new LevelOfDetailBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -769,8 +741,7 @@ namespace njli
         //                obj = (AbstractFactoryObject**)_obj;
         //            }
         //                break;
-        case JLI_OBJECT_TYPE_Material:
-        {
+        case JLI_OBJECT_TYPE_Material: {
             Material **_obj = new Material *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -779,8 +750,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_MaterialBuilder:
-        {
+        case JLI_OBJECT_TYPE_MaterialBuilder: {
             MaterialBuilder **_obj = new MaterialBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -789,8 +759,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_MaterialProperty:
-        {
+        case JLI_OBJECT_TYPE_MaterialProperty: {
             MaterialProperty **_obj = new MaterialProperty *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -799,8 +768,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_MaterialPropertyBuilder:
-        {
+        case JLI_OBJECT_TYPE_MaterialPropertyBuilder: {
             MaterialPropertyBuilder **_obj =
                 new MaterialPropertyBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -811,8 +779,7 @@ namespace njli
         }
         break;
 
-        case JLI_OBJECT_TYPE_MeshGeometry:
-        {
+        case JLI_OBJECT_TYPE_MeshGeometry: {
             MeshGeometry **_obj = new MeshGeometry *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -821,8 +788,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_MeshGeometryBuilder:
-        {
+        case JLI_OBJECT_TYPE_MeshGeometryBuilder: {
             MeshGeometryBuilder **_obj = new MeshGeometryBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -832,8 +798,7 @@ namespace njli
         }
         break;
 
-        case JLI_OBJECT_TYPE_Node:
-        {
+        case JLI_OBJECT_TYPE_Node: {
             Node **_obj = new Node *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -842,8 +807,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_NodeBuilder:
-        {
+        case JLI_OBJECT_TYPE_NodeBuilder: {
             NodeBuilder **_obj = new NodeBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -852,8 +816,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_NodeState:
-        {
+        case JLI_OBJECT_TYPE_NodeState: {
             NodeState **_obj = new NodeState *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -862,8 +825,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_NodeStateBuilder:
-        {
+        case JLI_OBJECT_TYPE_NodeStateBuilder: {
             NodeStateBuilder **_obj = new NodeStateBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -872,8 +834,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_NodeStateMachine:
-        {
+        case JLI_OBJECT_TYPE_NodeStateMachine: {
             NodeStateMachine **_obj = new NodeStateMachine *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -882,8 +843,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_NodeStateMachineBuilder:
-        {
+        case JLI_OBJECT_TYPE_NodeStateMachineBuilder: {
             NodeStateMachineBuilder **_obj =
                 new NodeStateMachineBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -893,8 +853,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ParticleEmitter:
-        {
+        case JLI_OBJECT_TYPE_ParticleEmitter: {
             ParticleEmitter **_obj = new ParticleEmitter *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -903,8 +862,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ParticleEmitterBuilder:
-        {
+        case JLI_OBJECT_TYPE_ParticleEmitterBuilder: {
             ParticleEmitterBuilder **_obj = new ParticleEmitterBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -913,8 +871,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsBodyGhost:
-        {
+        case JLI_OBJECT_TYPE_PhysicsBodyGhost: {
             PhysicsBodyGhost **_obj = new PhysicsBodyGhost *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -923,8 +880,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsBodyGhostBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsBodyGhostBuilder: {
             PhysicsBodyGhostBuilder **_obj =
                 new PhysicsBodyGhostBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -934,8 +890,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsBodyRigid:
-        {
+        case JLI_OBJECT_TYPE_PhysicsBodyRigid: {
             PhysicsBodyRigid **_obj = new PhysicsBodyRigid *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -944,8 +899,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsBodyRigidBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsBodyRigidBuilder: {
             PhysicsBodyRigidBuilder **_obj =
                 new PhysicsBodyRigidBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -955,8 +909,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsBodySoft:
-        {
+        case JLI_OBJECT_TYPE_PhysicsBodySoft: {
             PhysicsBodySoft **_obj = new PhysicsBodySoft *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -965,8 +918,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsBodySoftBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsBodySoftBuilder: {
             PhysicsBodySoftBuilder **_obj = new PhysicsBodySoftBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -975,8 +927,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraint:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraint: {
             PhysicsConstraint **_obj = new PhysicsConstraint *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -985,8 +936,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintBuilder: {
             PhysicsConstraintBuilder **_obj =
                 new PhysicsConstraintBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -996,8 +946,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintHinge:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintHinge: {
             PhysicsConstraintHinge **_obj = new PhysicsConstraintHinge *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1006,8 +955,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintHingeBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintHingeBuilder: {
             PhysicsConstraintHingeBuilder **_obj =
                 new PhysicsConstraintHingeBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1017,8 +965,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintPointToPoint:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintPointToPoint: {
             PhysicsConstraintPointToPoint **_obj =
                 new PhysicsConstraintPointToPoint *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1028,8 +975,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintPointToPointBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintPointToPointBuilder: {
             PhysicsConstraintPointToPointBuilder **_obj =
                 new PhysicsConstraintPointToPointBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1040,8 +986,7 @@ namespace njli
         }
         break;
 
-        case JLI_OBJECT_TYPE_PhysicsConstraintSlider:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintSlider: {
             PhysicsConstraintSlider **_obj =
                 new PhysicsConstraintSlider *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1051,8 +996,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintSliderBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintSliderBuilder: {
             PhysicsConstraintSliderBuilder **_obj =
                 new PhysicsConstraintSliderBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1062,8 +1006,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintConeTwist:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintConeTwist: {
             PhysicsConstraintConeTwist **_obj =
                 new PhysicsConstraintConeTwist *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1073,8 +1016,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintConeTwistBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintConeTwistBuilder: {
             PhysicsConstraintConeTwistBuilder **_obj =
                 new PhysicsConstraintConeTwistBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1084,8 +1026,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintFixed:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintFixed: {
             PhysicsConstraintFixed **_obj = new PhysicsConstraintFixed *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1094,8 +1035,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintFixedBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintFixedBuilder: {
             PhysicsConstraintFixedBuilder **_obj =
                 new PhysicsConstraintFixedBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1105,8 +1045,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintGeneric6Dof:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintGeneric6Dof: {
             PhysicsConstraintGeneric6Dof **_obj =
                 new PhysicsConstraintGeneric6Dof *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1116,8 +1055,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofBuilder: {
             PhysicsConstraintGeneric6DofBuilder **_obj =
                 new PhysicsConstraintGeneric6DofBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1127,8 +1065,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofSpring:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofSpring: {
             PhysicsConstraintGeneric6DofSpring **_obj =
                 new PhysicsConstraintGeneric6DofSpring *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1138,8 +1075,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofSpringBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofSpringBuilder: {
             PhysicsConstraintGeneric6DofSpringBuilder **_obj =
                 new PhysicsConstraintGeneric6DofSpringBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1149,8 +1085,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsContact:
-        {
+        case JLI_OBJECT_TYPE_PhysicsContact: {
             PhysicsContact **_obj = new PhysicsContact *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1159,8 +1094,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsContactBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsContactBuilder: {
             PhysicsContactBuilder **_obj = new PhysicsContactBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1169,8 +1103,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsCloseContact:
-        {
+        case JLI_OBJECT_TYPE_PhysicsCloseContact: {
             PhysicsCloseContact **_obj = new PhysicsCloseContact *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1179,8 +1112,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsCloseContactBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsCloseContactBuilder: {
             PhysicsCloseContactBuilder **_obj =
                 new PhysicsCloseContactBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1190,8 +1122,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsField:
-        {
+        case JLI_OBJECT_TYPE_PhysicsField: {
             PhysicsField **_obj = new PhysicsField *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1200,8 +1131,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsFieldBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsFieldBuilder: {
             PhysicsFieldBuilder **_obj = new PhysicsFieldBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1210,8 +1140,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsRayContact:
-        {
+        case JLI_OBJECT_TYPE_PhysicsRayContact: {
             PhysicsRayContact **_obj = new PhysicsRayContact *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1220,8 +1149,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsRayContactBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsRayContactBuilder: {
             PhysicsRayContactBuilder **_obj =
                 new PhysicsRayContactBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1231,8 +1159,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeBox:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeBox: {
             PhysicsShapeBox **_obj = new PhysicsShapeBox *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1241,8 +1168,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeBoxBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeBoxBuilder: {
             PhysicsShapeBoxBuilder **_obj = new PhysicsShapeBoxBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1251,8 +1177,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeBox2D:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeBox2D: {
             PhysicsShapeBox2D **_obj = new PhysicsShapeBox2D *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1261,8 +1186,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeBox2DBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeBox2DBuilder: {
             PhysicsShapeBox2DBuilder **_obj =
                 new PhysicsShapeBox2DBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1272,8 +1196,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeSphere:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeSphere: {
             PhysicsShapeSphere **_obj = new PhysicsShapeSphere *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1282,8 +1205,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeSphereBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeSphereBuilder: {
             PhysicsShapeSphereBuilder **_obj =
                 new PhysicsShapeSphereBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1293,8 +1215,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeCylinder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeCylinder: {
             PhysicsShapeCylinder **_obj = new PhysicsShapeCylinder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1303,8 +1224,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeCylinderBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeCylinderBuilder: {
             PhysicsShapeCylinderBuilder **_obj =
                 new PhysicsShapeCylinderBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1314,8 +1234,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeCapsule:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeCapsule: {
             PhysicsShapeCapsule **_obj = new PhysicsShapeCapsule *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1324,8 +1243,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeCapsuleBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeCapsuleBuilder: {
             PhysicsShapeCapsuleBuilder **_obj =
                 new PhysicsShapeCapsuleBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1335,8 +1253,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeCone:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeCone: {
             PhysicsShapeCone **_obj = new PhysicsShapeCone *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1345,8 +1262,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeConeBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeConeBuilder: {
             PhysicsShapeConeBuilder **_obj =
                 new PhysicsShapeConeBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1356,8 +1272,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeMultiSphere:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeMultiSphere: {
             PhysicsShapeMultiSphere **_obj =
                 new PhysicsShapeMultiSphere *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1367,8 +1282,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeMultiSphereBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeMultiSphereBuilder: {
             PhysicsShapeMultiSphereBuilder **_obj =
                 new PhysicsShapeMultiSphereBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1378,8 +1292,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeConvexHull:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeConvexHull: {
             PhysicsShapeConvexHull **_obj = new PhysicsShapeConvexHull *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1388,8 +1301,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeConvexHullBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeConvexHullBuilder: {
             PhysicsShapeConvexHullBuilder **_obj =
                 new PhysicsShapeConvexHullBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1399,8 +1311,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeConvexTriangleMesh:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeConvexTriangleMesh: {
             PhysicsShapeConvexTriangleMesh **_obj =
                 new PhysicsShapeConvexTriangleMesh *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1410,8 +1321,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeConvexTriangleMeshBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeConvexTriangleMeshBuilder: {
             PhysicsShapeConvexTriangleMeshBuilder **_obj =
                 new PhysicsShapeConvexTriangleMeshBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1421,8 +1331,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeBvhTriangleMesh:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeBvhTriangleMesh: {
             PhysicsShapeBvhTriangleMesh **_obj =
                 new PhysicsShapeBvhTriangleMesh *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1432,8 +1341,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeBvhTriangleMeshBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeBvhTriangleMeshBuilder: {
             PhysicsShapeBvhTriangleMeshBuilder **_obj =
                 new PhysicsShapeBvhTriangleMeshBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1443,8 +1351,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeHeightfieldTerrain:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeHeightfieldTerrain: {
             PhysicsShapeHeightfieldTerrain **_obj =
                 new PhysicsShapeHeightfieldTerrain *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1454,8 +1361,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeHeightfieldTerrainBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeHeightfieldTerrainBuilder: {
             PhysicsShapeHeightfieldTerrainBuilder **_obj =
                 new PhysicsShapeHeightfieldTerrainBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1465,8 +1371,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeStaticPlane:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeStaticPlane: {
             PhysicsShapeStaticPlane **_obj =
                 new PhysicsShapeStaticPlane *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1476,8 +1381,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsShapeStaticPlaneBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsShapeStaticPlaneBuilder: {
             PhysicsShapeStaticPlaneBuilder **_obj =
                 new PhysicsShapeStaticPlaneBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1487,8 +1391,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsWorld:
-        {
+        case JLI_OBJECT_TYPE_PhysicsWorld: {
             PhysicsWorld **_obj = new PhysicsWorld *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1497,8 +1400,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PhysicsWorldBuilder:
-        {
+        case JLI_OBJECT_TYPE_PhysicsWorldBuilder: {
             PhysicsWorldBuilder **_obj = new PhysicsWorldBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1507,8 +1409,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Plane:
-        {
+        case JLI_OBJECT_TYPE_Plane: {
             Plane **_obj = new Plane *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1517,8 +1418,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_PlaneBuilder:
-        {
+        case JLI_OBJECT_TYPE_PlaneBuilder: {
             PlaneBuilder **_obj = new PlaneBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1527,8 +1427,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Scene:
-        {
+        case JLI_OBJECT_TYPE_Scene: {
             Scene **_obj = new Scene *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1537,8 +1436,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SceneBuilder:
-        {
+        case JLI_OBJECT_TYPE_SceneBuilder: {
             SceneBuilder **_obj = new SceneBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1548,8 +1446,7 @@ namespace njli
         }
         break;
 
-        case JLI_OBJECT_TYPE_SceneFBO:
-        {
+        case JLI_OBJECT_TYPE_SceneFBO: {
             SceneFBO **_obj = new SceneFBO *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1558,8 +1455,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SceneFBOBuilder:
-        {
+        case JLI_OBJECT_TYPE_SceneFBOBuilder: {
             SceneFBOBuilder **_obj = new SceneFBOBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1569,8 +1465,7 @@ namespace njli
         }
         break;
 
-        case JLI_OBJECT_TYPE_SceneState:
-        {
+        case JLI_OBJECT_TYPE_SceneState: {
             SceneState **_obj = new SceneState *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1579,8 +1474,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SceneStateBuilder:
-        {
+        case JLI_OBJECT_TYPE_SceneStateBuilder: {
             SceneStateBuilder **_obj = new SceneStateBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1589,8 +1483,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SceneStateMachine:
-        {
+        case JLI_OBJECT_TYPE_SceneStateMachine: {
             SceneStateMachine **_obj = new SceneStateMachine *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1599,8 +1492,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SceneStateMachineBuilder:
-        {
+        case JLI_OBJECT_TYPE_SceneStateMachineBuilder: {
             SceneStateMachineBuilder **_obj =
                 new SceneStateMachineBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1610,8 +1502,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ShaderProgram:
-        {
+        case JLI_OBJECT_TYPE_ShaderProgram: {
             ShaderProgram **_obj = new ShaderProgram *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1620,8 +1511,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ShaderProgramBuilder:
-        {
+        case JLI_OBJECT_TYPE_ShaderProgramBuilder: {
             ShaderProgramBuilder **_obj = new ShaderProgramBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1630,8 +1520,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Skinner:
-        {
+        case JLI_OBJECT_TYPE_Skinner: {
             Skinner **_obj = new Skinner *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1640,8 +1529,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SkinnerBuilder:
-        {
+        case JLI_OBJECT_TYPE_SkinnerBuilder: {
             SkinnerBuilder **_obj = new SkinnerBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1651,8 +1539,7 @@ namespace njli
         }
         break;
 #if defined(USE_NANOVG_LIBRARY)
-        case JLI_OBJECT_TYPE_SliderHUD:
-        {
+        case JLI_OBJECT_TYPE_SliderHUD: {
             SliderHUD **_obj = new SliderHUD *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1661,8 +1548,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SliderHUDBuilder:
-        {
+        case JLI_OBJECT_TYPE_SliderHUDBuilder: {
             SliderHUDBuilder **_obj = new SliderHUDBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1672,8 +1558,7 @@ namespace njli
         }
         break;
 #endif
-        case JLI_OBJECT_TYPE_Sound:
-        {
+        case JLI_OBJECT_TYPE_Sound: {
             Sound **_obj = new Sound *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1682,8 +1567,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SoundBuilder:
-        {
+        case JLI_OBJECT_TYPE_SoundBuilder: {
             SoundBuilder **_obj = new SoundBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1692,8 +1576,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Sprite2D:
-        {
+        case JLI_OBJECT_TYPE_Sprite2D: {
             Sprite2D **_obj = new Sprite2D *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1702,8 +1585,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Sprite2DBuilder:
-        {
+        case JLI_OBJECT_TYPE_Sprite2DBuilder: {
             Sprite2DBuilder **_obj = new Sprite2DBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1712,8 +1594,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SpriteFrameAtlas:
-        {
+        case JLI_OBJECT_TYPE_SpriteFrameAtlas: {
             SpriteFrameAtlas **_obj = new SpriteFrameAtlas *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1722,8 +1603,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SpriteFrameAtlasBuilder:
-        {
+        case JLI_OBJECT_TYPE_SpriteFrameAtlasBuilder: {
             SpriteFrameAtlasBuilder **_obj =
                 new SpriteFrameAtlasBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1733,8 +1613,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehavior:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehavior: {
             SteeringBehavior **_obj = new SteeringBehavior *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1743,8 +1622,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorBuilder: {
             SteeringBehaviorBuilder **_obj =
                 new SteeringBehaviorBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1754,8 +1632,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorAlignment:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorAlignment: {
             SteeringBehaviorAlignment **_obj =
                 new SteeringBehaviorAlignment *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1765,8 +1642,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorAlignmentBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorAlignmentBuilder: {
             SteeringBehaviorAlignmentBuilder **_obj =
                 new SteeringBehaviorAlignmentBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1776,8 +1652,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorArrive:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorArrive: {
             SteeringBehaviorArrive **_obj = new SteeringBehaviorArrive *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1786,8 +1661,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorArriveBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorArriveBuilder: {
             SteeringBehaviorArriveBuilder **_obj =
                 new SteeringBehaviorArriveBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1797,8 +1671,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorCohesion:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorCohesion: {
             SteeringBehaviorCohesion **_obj =
                 new SteeringBehaviorCohesion *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1808,8 +1681,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorCohesionBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorCohesionBuilder: {
             SteeringBehaviorCohesionBuilder **_obj =
                 new SteeringBehaviorCohesionBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1819,8 +1691,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorEvade:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorEvade: {
             SteeringBehaviorEvade **_obj = new SteeringBehaviorEvade *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1829,8 +1700,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorEvadeBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorEvadeBuilder: {
             SteeringBehaviorEvadeBuilder **_obj =
                 new SteeringBehaviorEvadeBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1840,8 +1710,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorFlee:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorFlee: {
             SteeringBehaviorFlee **_obj = new SteeringBehaviorFlee *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1850,8 +1719,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorFleeBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorFleeBuilder: {
             SteeringBehaviorFleeBuilder **_obj =
                 new SteeringBehaviorFleeBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1861,8 +1729,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorFollowPath:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorFollowPath: {
             SteeringBehaviorFollowPath **_obj =
                 new SteeringBehaviorFollowPath *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1872,8 +1739,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorFollowPathBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorFollowPathBuilder: {
             SteeringBehaviorFollowPathBuilder **_obj =
                 new SteeringBehaviorFollowPathBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1883,8 +1749,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorHide:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorHide: {
             SteeringBehaviorHide **_obj = new SteeringBehaviorHide *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -1893,8 +1758,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorHideBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorHideBuilder: {
             SteeringBehaviorHideBuilder **_obj =
                 new SteeringBehaviorHideBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1904,8 +1768,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorInterpose:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorInterpose: {
             SteeringBehaviorInterpose **_obj =
                 new SteeringBehaviorInterpose *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1915,8 +1778,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorInterposeBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorInterposeBuilder: {
             SteeringBehaviorInterposeBuilder **_obj =
                 new SteeringBehaviorInterposeBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1926,8 +1788,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorMachine:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorMachine: {
             SteeringBehaviorMachine **_obj =
                 new SteeringBehaviorMachine *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1937,8 +1798,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorMachineBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorMachineBuilder: {
             SteeringBehaviorMachineBuilder **_obj =
                 new SteeringBehaviorMachineBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1948,8 +1808,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorMachineDithered:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorMachineDithered: {
             SteeringBehaviorMachineDithered **_obj =
                 new SteeringBehaviorMachineDithered *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1959,8 +1818,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorMachineDitheredBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorMachineDitheredBuilder: {
             SteeringBehaviorMachineDitheredBuilder **_obj =
                 new SteeringBehaviorMachineDitheredBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1970,8 +1828,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorMachinePrioritized:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorMachinePrioritized: {
             SteeringBehaviorMachinePrioritized **_obj =
                 new SteeringBehaviorMachinePrioritized *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1981,8 +1838,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorMachinePrioritizedBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorMachinePrioritizedBuilder: {
             SteeringBehaviorMachinePrioritizedBuilder **_obj =
                 new SteeringBehaviorMachinePrioritizedBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -1992,8 +1848,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorMachineWeighted:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorMachineWeighted: {
             SteeringBehaviorMachineWeighted **_obj =
                 new SteeringBehaviorMachineWeighted *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2003,8 +1858,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorMachineWeightedBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorMachineWeightedBuilder: {
             SteeringBehaviorMachineWeightedBuilder **_obj =
                 new SteeringBehaviorMachineWeightedBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2014,8 +1868,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorObstacleAvoidance:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorObstacleAvoidance: {
             SteeringBehaviorObstacleAvoidance **_obj =
                 new SteeringBehaviorObstacleAvoidance *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2025,8 +1878,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorObstacleAvoidanceBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorObstacleAvoidanceBuilder: {
             SteeringBehaviorObstacleAvoidanceBuilder **_obj =
                 new SteeringBehaviorObstacleAvoidanceBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2036,8 +1888,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuit:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuit: {
             SteeringBehaviorOffsetPursuit **_obj =
                 new SteeringBehaviorOffsetPursuit *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2047,8 +1898,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuitBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuitBuilder: {
             SteeringBehaviorOffsetPursuitBuilder **_obj =
                 new SteeringBehaviorOffsetPursuitBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2058,8 +1908,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorPursuit:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorPursuit: {
             SteeringBehaviorPursuit **_obj =
                 new SteeringBehaviorPursuit *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2069,8 +1918,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorPursuitBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorPursuitBuilder: {
             SteeringBehaviorPursuitBuilder **_obj =
                 new SteeringBehaviorPursuitBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2080,8 +1928,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorSeek:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorSeek: {
             SteeringBehaviorSeek **_obj = new SteeringBehaviorSeek *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2090,8 +1937,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorSeekBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorSeekBuilder: {
             SteeringBehaviorSeekBuilder **_obj =
                 new SteeringBehaviorSeekBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2101,8 +1947,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorSeparation:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorSeparation: {
             SteeringBehaviorSeparation **_obj =
                 new SteeringBehaviorSeparation *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2112,8 +1957,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorSeparationBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorSeparationBuilder: {
             SteeringBehaviorSeparationBuilder **_obj =
                 new SteeringBehaviorSeparationBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2123,8 +1967,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidance:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidance: {
             SteeringBehaviorWallAvoidance **_obj =
                 new SteeringBehaviorWallAvoidance *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2134,8 +1977,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidanceBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidanceBuilder: {
             SteeringBehaviorWallAvoidanceBuilder **_obj =
                 new SteeringBehaviorWallAvoidanceBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2145,8 +1987,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorWander:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorWander: {
             SteeringBehaviorWander **_obj = new SteeringBehaviorWander *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2155,8 +1996,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_SteeringBehaviorWanderBuilder:
-        {
+        case JLI_OBJECT_TYPE_SteeringBehaviorWanderBuilder: {
             SteeringBehaviorWanderBuilder **_obj =
                 new SteeringBehaviorWanderBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2166,8 +2006,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_StopWatch:
-        {
+        case JLI_OBJECT_TYPE_StopWatch: {
             StopWatch **_obj = new StopWatch *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2176,8 +2015,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_StopWatchBuilder:
-        {
+        case JLI_OBJECT_TYPE_StopWatchBuilder: {
             StopWatchBuilder **_obj = new StopWatchBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2187,8 +2025,7 @@ namespace njli
         }
         break;
 #if defined(USE_NANOVG_LIBRARY)
-        case JLI_OBJECT_TYPE_TextboxHUD:
-        {
+        case JLI_OBJECT_TYPE_TextboxHUD: {
             TextboxHUD **_obj = new TextboxHUD *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2197,8 +2034,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_TextboxHUDBuilder:
-        {
+        case JLI_OBJECT_TYPE_TextboxHUDBuilder: {
             TextboxHUDBuilder **_obj = new TextboxHUDBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2208,8 +2044,7 @@ namespace njli
         }
         break;
 #endif
-        case JLI_OBJECT_TYPE_Timer:
-        {
+        case JLI_OBJECT_TYPE_Timer: {
             Timer **_obj = new Timer *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2218,8 +2053,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_TimerBuilder:
-        {
+        case JLI_OBJECT_TYPE_TimerBuilder: {
             TimerBuilder **_obj = new TimerBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2228,8 +2062,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Thread:
-        {
+        case JLI_OBJECT_TYPE_Thread: {
             Thread **_obj = new Thread *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2238,8 +2071,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_ThreadBuilder:
-        {
+        case JLI_OBJECT_TYPE_ThreadBuilder: {
             ThreadBuilder **_obj = new ThreadBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2248,8 +2080,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_WorldState:
-        {
+        case JLI_OBJECT_TYPE_WorldState: {
             WorldState **_obj = new WorldState *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2258,8 +2089,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_WorldStateBuilder:
-        {
+        case JLI_OBJECT_TYPE_WorldStateBuilder: {
             WorldStateBuilder **_obj = new WorldStateBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2268,8 +2098,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_WorldStateMachine:
-        {
+        case JLI_OBJECT_TYPE_WorldStateMachine: {
             WorldStateMachine **_obj = new WorldStateMachine *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2278,8 +2107,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_WorldStateMachineBuilder:
-        {
+        case JLI_OBJECT_TYPE_WorldStateMachineBuilder: {
             WorldStateMachineBuilder **_obj =
                 new WorldStateMachineBuilder *[size];
             for (s32 i = 0; i < size; ++i)
@@ -2289,8 +2117,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_Xml:
-        {
+        case JLI_OBJECT_TYPE_Xml: {
             Xml **_obj = new Xml *[size];
             for (s32 i = 0; i < size; ++i)
             {
@@ -2299,8 +2126,7 @@ namespace njli
             obj = (AbstractFactoryObject **)_obj;
         }
         break;
-        case JLI_OBJECT_TYPE_XmlBuilder:
-        {
+        case JLI_OBJECT_TYPE_XmlBuilder: {
             XmlBuilder **_obj = new XmlBuilder *[size];
             for (s32 i = 0; i < size; ++i)
             {

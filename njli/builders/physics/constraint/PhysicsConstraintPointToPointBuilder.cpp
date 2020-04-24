@@ -32,8 +32,9 @@ namespace njli
     {
     }
 
-    PhysicsConstraintPointToPointBuilder &PhysicsConstraintPointToPointBuilder::
-    operator=(const PhysicsConstraintPointToPointBuilder &rhs)
+    PhysicsConstraintPointToPointBuilder &
+    PhysicsConstraintPointToPointBuilder::operator=(
+        const PhysicsConstraintPointToPointBuilder &rhs)
     {
         if (this != &rhs)
         {

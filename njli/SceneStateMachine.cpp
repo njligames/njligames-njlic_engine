@@ -30,8 +30,8 @@ namespace njli
 
     SceneStateMachine::~SceneStateMachine() {}
 
-    SceneStateMachine &SceneStateMachine::
-    operator=(const SceneStateMachine &rhs)
+    SceneStateMachine &
+    SceneStateMachine::operator=(const SceneStateMachine &rhs)
     {
         if (this != &rhs)
         {

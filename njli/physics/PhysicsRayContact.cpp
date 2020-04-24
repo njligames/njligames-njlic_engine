@@ -60,8 +60,8 @@ namespace njli
         m_hitNormalWorld = NULL;
     }
 
-    PhysicsRayContact &PhysicsRayContact::
-    operator=(const PhysicsRayContact &rhs)
+    PhysicsRayContact &
+    PhysicsRayContact::operator=(const PhysicsRayContact &rhs)
     {
         if (this != &rhs)
         {

@@ -28,8 +28,8 @@ namespace njli
 
     PhysicsConstraintBuilder::~PhysicsConstraintBuilder() {}
 
-    PhysicsConstraintBuilder &PhysicsConstraintBuilder::
-    operator=(const PhysicsConstraintBuilder &rhs)
+    PhysicsConstraintBuilder &
+    PhysicsConstraintBuilder::operator=(const PhysicsConstraintBuilder &rhs)
     {
         if (this != &rhs)
         {

@@ -21,8 +21,8 @@ namespace njli
 
     SceneStateBuilder::~SceneStateBuilder() {}
 
-    SceneStateBuilder &SceneStateBuilder::
-    operator=(const SceneStateBuilder &rhs)
+    SceneStateBuilder &
+    SceneStateBuilder::operator=(const SceneStateBuilder &rhs)
     {
         if (this != &rhs)
         {

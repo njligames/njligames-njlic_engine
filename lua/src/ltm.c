@@ -133,8 +133,7 @@ void luaT_trybinTM(lua_State *L, const TValue *p1, const TValue *p2, StkId res,
         case TM_BXOR:
         case TM_SHL:
         case TM_SHR:
-        case TM_BNOT:
-        {
+        case TM_BNOT: {
             lua_Number dummy;
             if (tonumber(p1, &dummy) && tonumber(p2, &dummy))
                 luaG_tointerror(L, p1, p2);

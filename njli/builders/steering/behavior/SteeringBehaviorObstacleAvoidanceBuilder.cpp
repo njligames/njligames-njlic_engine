@@ -35,8 +35,8 @@ namespace njli
     }
 
     SteeringBehaviorObstacleAvoidanceBuilder &
-    SteeringBehaviorObstacleAvoidanceBuilder::
-    operator=(const SteeringBehaviorObstacleAvoidanceBuilder &rhs)
+    SteeringBehaviorObstacleAvoidanceBuilder::operator=(
+        const SteeringBehaviorObstacleAvoidanceBuilder &rhs)
     {
         if (this != &rhs)
         {

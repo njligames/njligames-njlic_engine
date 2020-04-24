@@ -51,8 +51,8 @@ namespace njli
         m_btMultiSphereShape = NULL;
     }
 
-    PhysicsShapeMultiSphere &PhysicsShapeMultiSphere::
-    operator=(const PhysicsShapeMultiSphere &rhs)
+    PhysicsShapeMultiSphere &
+    PhysicsShapeMultiSphere::operator=(const PhysicsShapeMultiSphere &rhs)
     {
         if (this != &rhs)
         {

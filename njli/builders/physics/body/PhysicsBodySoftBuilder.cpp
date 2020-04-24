@@ -24,8 +24,8 @@ namespace njli
 
     PhysicsBodySoftBuilder::~PhysicsBodySoftBuilder() {}
 
-    PhysicsBodySoftBuilder &PhysicsBodySoftBuilder::
-    operator=(const PhysicsBodySoftBuilder &rhs)
+    PhysicsBodySoftBuilder &
+    PhysicsBodySoftBuilder::operator=(const PhysicsBodySoftBuilder &rhs)
     {
         if (this != &rhs)
         {

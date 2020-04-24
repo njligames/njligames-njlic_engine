@@ -23,8 +23,8 @@ namespace njli
 
     CheckboxHUDBuilder::~CheckboxHUDBuilder() {}
 
-    CheckboxHUDBuilder &CheckboxHUDBuilder::
-    operator=(const CheckboxHUDBuilder &rhs)
+    CheckboxHUDBuilder &
+    CheckboxHUDBuilder::operator=(const CheckboxHUDBuilder &rhs)
     {
         if (this != &rhs)
         {

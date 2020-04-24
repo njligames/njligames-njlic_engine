@@ -108,18 +108,15 @@ static void seterrorobj(lua_State *L, int errcode, StkId oldtop)
 {
     switch (errcode)
     {
-    case LUA_ERRMEM:
-    {                                            /* memory error? */
+    case LUA_ERRMEM: {                           /* memory error? */
         setsvalue2s(L, oldtop, G(L)->memerrmsg); /* reuse preregistered msg. */
         break;
     }
-    case LUA_ERRERR:
-    {
+    case LUA_ERRERR: {
         setsvalue2s(L, oldtop, luaS_newliteral(L, "error in error handling"));
         break;
     }
-    default:
-    {
+    default: {
         setobjs2s(L, oldtop, L->top - 1); /* error message on current top */
         break;
     }
@@ -380,8 +377,7 @@ int luaD_precall(lua_State *L, StkId func, int nresults)
         goto Cfunc;
     case LUA_TLCF: /* light C function */
         f = fvalue(func);
-    Cfunc:
-    {
+    Cfunc : {
         int n;                              /* number of returns */
         checkstackp(L, LUA_MINSTACK, func); /* ensure minimum stack size */
         ci = next_ci(L);                    /* now 'enter' new function */
@@ -399,8 +395,7 @@ int luaD_precall(lua_State *L, StkId func, int nresults)
         luaD_poscall(L, ci, L->top - n, n);
         return 1;
     }
-    case LUA_TLCL:
-    { /* Lua function: prepare its call */
+    case LUA_TLCL: { /* Lua function: prepare its call */
         StkId base;
         Proto *p = clLvalue(func)->p;
         int n = cast_int(L->top - func) - 1; /* number of real arguments */
@@ -426,8 +421,7 @@ int luaD_precall(lua_State *L, StkId func, int nresults)
             callhook(L, ci);
         return 0;
     }
-    default:
-    {                            /* not a function */
+    default: {                   /* not a function */
         checkstackp(L, 1, func); /* ensure space for metamethod */
         tryfuncTM(L, func);      /* try to get '__call' metamethod */
         return luaD_precall(L, func, nresults); /* now it must be a function */
@@ -447,24 +441,21 @@ static int moveresults(lua_State *L, const TValue *firstResult, StkId res,
     switch (wanted)
     { /* handle typical cases separately */
     case 0:
-        break; /* nothing to move */
-    case 1:
-    {                                     /* one result needed */
+        break;                            /* nothing to move */
+    case 1: {                             /* one result needed */
         if (nres == 0)                    /* no results? */
             firstResult = luaO_nilobject; /* adjust with nil */
         setobjs2s(L, res, firstResult);   /* move it to proper place */
         break;
     }
-    case LUA_MULTRET:
-    {
+    case LUA_MULTRET: {
         int i;
         for (i = 0; i < nres; i++) /* move all results to correct place */
             setobjs2s(L, res + i, firstResult + i);
         L->top = res + nres;
         return 0; /* wanted == LUA_MULTRET */
     }
-    default:
-    {
+    default: {
         int i;
         if (wanted <= nres)
         { /* enough results? */

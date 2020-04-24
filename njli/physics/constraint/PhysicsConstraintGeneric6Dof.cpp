@@ -46,8 +46,8 @@ namespace njli
         removeConstraint();
     }
 
-    PhysicsConstraintGeneric6Dof &PhysicsConstraintGeneric6Dof::
-    operator=(const PhysicsConstraintGeneric6Dof &rhs)
+    PhysicsConstraintGeneric6Dof &PhysicsConstraintGeneric6Dof::operator=(
+        const PhysicsConstraintGeneric6Dof &rhs)
     {
         if (this != &rhs)
         {

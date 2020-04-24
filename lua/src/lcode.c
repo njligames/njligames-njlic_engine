@@ -430,19 +430,16 @@ void luaK_dischargevars(FuncState *fs, expdesc *e)
 {
     switch (e->k)
     {
-    case VLOCAL:
-    {
+    case VLOCAL: {
         e->k = VNONRELOC;
         break;
     }
-    case VUPVAL:
-    {
+    case VUPVAL: {
         e->u.info = luaK_codeABC(fs, OP_GETUPVAL, 0, e->u.info, 0);
         e->k = VRELOCABLE;
         break;
     }
-    case VINDEXED:
-    {
+    case VINDEXED: {
         OpCode op = OP_GETTABUP; /* assume 't' is in an upvalue */
         freereg(fs, e->u.ind.idx);
         if (e->u.ind.vt == VLOCAL)
@@ -455,8 +452,7 @@ void luaK_dischargevars(FuncState *fs, expdesc *e)
         break;
     }
     case VVARARG:
-    case VCALL:
-    {
+    case VCALL: {
         luaK_setoneret(fs, e);
         break;
     }
@@ -476,46 +472,38 @@ static void discharge2reg(FuncState *fs, expdesc *e, int reg)
     luaK_dischargevars(fs, e);
     switch (e->k)
     {
-    case VNIL:
-    {
+    case VNIL: {
         luaK_nil(fs, reg, 1);
         break;
     }
     case VFALSE:
-    case VTRUE:
-    {
+    case VTRUE: {
         luaK_codeABC(fs, OP_LOADBOOL, reg, e->k == VTRUE, 0);
         break;
     }
-    case VK:
-    {
+    case VK: {
         luaK_codek(fs, reg, e->u.info);
         break;
     }
-    case VKFLT:
-    {
+    case VKFLT: {
         luaK_codek(fs, reg, luaK_numberK(fs, e->u.nval));
         break;
     }
-    case VKINT:
-    {
+    case VKINT: {
         luaK_codek(fs, reg, luaK_intK(fs, e->u.ival));
         break;
     }
-    case VRELOCABLE:
-    {
+    case VRELOCABLE: {
         Instruction *pc = &getcode(fs, e);
         SETARG_A(*pc, reg);
         break;
     }
-    case VNONRELOC:
-    {
+    case VNONRELOC: {
         if (reg != e->u.info)
             luaK_codeABC(fs, OP_MOVE, reg, e->u.info, 0);
         break;
     }
-    default:
-    {
+    default: {
         lua_assert(e->k == VVOID || e->k == VJMP);
         return; /* nothing to do... */
     }
@@ -605,8 +593,7 @@ int luaK_exp2RK(FuncState *fs, expdesc *e)
     {
     case VTRUE:
     case VFALSE:
-    case VNIL:
-    {
+    case VNIL: {
         if (fs->nk <= MAXINDEXRK)
         { /* constant fits in RK operand? */
             e->u.info = (e->k == VNIL) ? nilK(fs) : boolK(fs, (e->k == VTRUE));
@@ -616,20 +603,17 @@ int luaK_exp2RK(FuncState *fs, expdesc *e)
         else
             break;
     }
-    case VKINT:
-    {
+    case VKINT: {
         e->u.info = luaK_intK(fs, e->u.ival);
         e->k = VK;
         goto vk;
     }
-    case VKFLT:
-    {
+    case VKFLT: {
         e->u.info = luaK_numberK(fs, e->u.nval);
         e->k = VK;
     }
     /* FALLTHROUGH */
-    case VK:
-    {
+    case VK: {
     vk:
         if (e->u.info <= MAXINDEXRK) /* constant fits in 'argC'? */
             return RKASK(e->u.info);
@@ -647,27 +631,23 @@ void luaK_storevar(FuncState *fs, expdesc *var, expdesc *ex)
 {
     switch (var->k)
     {
-    case VLOCAL:
-    {
+    case VLOCAL: {
         freeexp(fs, ex);
         exp2reg(fs, ex, var->u.info);
         return;
     }
-    case VUPVAL:
-    {
+    case VUPVAL: {
         int e = luaK_exp2anyreg(fs, ex);
         luaK_codeABC(fs, OP_SETUPVAL, e, var->u.info, 0);
         break;
     }
-    case VINDEXED:
-    {
+    case VINDEXED: {
         OpCode op = (var->u.ind.vt == VLOCAL) ? OP_SETTABLE : OP_SETTABUP;
         int e = luaK_exp2RK(fs, ex);
         luaK_codeABC(fs, op, var->u.ind.t, var->u.ind.idx, e);
         break;
     }
-    default:
-    {
+    default: {
         lua_assert(0); /* invalid var kind to store */
         break;
     }
@@ -719,8 +699,7 @@ void luaK_goiftrue(FuncState *fs, expdesc *e)
     luaK_dischargevars(fs, e);
     switch (e->k)
     {
-    case VJMP:
-    {
+    case VJMP: {
         invertjump(fs, e);
         pc = e->u.info;
         break;
@@ -728,13 +707,11 @@ void luaK_goiftrue(FuncState *fs, expdesc *e)
     case VK:
     case VKFLT:
     case VKINT:
-    case VTRUE:
-    {
+    case VTRUE: {
         pc = NO_JUMP; /* always true; do nothing */
         break;
     }
-    default:
-    {
+    default: {
         pc = jumponcond(fs, e, 0);
         break;
     }
@@ -750,19 +727,16 @@ void luaK_goiffalse(FuncState *fs, expdesc *e)
     luaK_dischargevars(fs, e);
     switch (e->k)
     {
-    case VJMP:
-    {
+    case VJMP: {
         pc = e->u.info;
         break;
     }
     case VNIL:
-    case VFALSE:
-    {
+    case VFALSE: {
         pc = NO_JUMP; /* always false; do nothing */
         break;
     }
-    default:
-    {
+    default: {
         pc = jumponcond(fs, e, 1);
         break;
     }
@@ -778,35 +752,30 @@ static void codenot(FuncState *fs, expdesc *e)
     switch (e->k)
     {
     case VNIL:
-    case VFALSE:
-    {
+    case VFALSE: {
         e->k = VTRUE;
         break;
     }
     case VK:
     case VKFLT:
     case VKINT:
-    case VTRUE:
-    {
+    case VTRUE: {
         e->k = VFALSE;
         break;
     }
-    case VJMP:
-    {
+    case VJMP: {
         invertjump(fs, e);
         break;
     }
     case VRELOCABLE:
-    case VNONRELOC:
-    {
+    case VNONRELOC: {
         discharge2anyreg(fs, e);
         freeexp(fs, e);
         e->u.info = luaK_codeABC(fs, OP_NOT, 0, e->u.info, 0);
         e->k = VRELOCABLE;
         break;
     }
-    default:
-    {
+    default: {
         lua_assert(0); /* cannot happen */
         break;
     }
@@ -843,8 +812,7 @@ static int validop(int op, TValue *v1, TValue *v2)
     case LUA_OPBXOR:
     case LUA_OPSHL:
     case LUA_OPSHR:
-    case LUA_OPBNOT:
-    { /* conversion errors */
+    case LUA_OPBNOT: { /* conversion errors */
         lua_Integer i;
         return (tointeger(v1, &i) && tointeger(v2, &i));
     }
@@ -954,8 +922,7 @@ void luaK_prefix(FuncState *fs, UnOpr op, expdesc *e, int line)
     {
     case OPR_MINUS:
     case OPR_BNOT:
-    case OPR_LEN:
-    {
+    case OPR_LEN: {
         codeexpval(fs, cast(OpCode, (op - OPR_MINUS) + OP_UNM), e, &e2, line);
         break;
     }
@@ -971,18 +938,15 @@ void luaK_infix(FuncState *fs, BinOpr op, expdesc *v)
 {
     switch (op)
     {
-    case OPR_AND:
-    {
+    case OPR_AND: {
         luaK_goiftrue(fs, v);
         break;
     }
-    case OPR_OR:
-    {
+    case OPR_OR: {
         luaK_goiffalse(fs, v);
         break;
     }
-    case OPR_CONCAT:
-    {
+    case OPR_CONCAT: {
         luaK_exp2nextreg(fs, v); /* operand must be on the 'stack' */
         break;
     }
@@ -997,14 +961,12 @@ void luaK_infix(FuncState *fs, BinOpr op, expdesc *v)
     case OPR_BOR:
     case OPR_BXOR:
     case OPR_SHL:
-    case OPR_SHR:
-    {
+    case OPR_SHR: {
         if (!tonumeral(v, NULL))
             luaK_exp2RK(fs, v);
         break;
     }
-    default:
-    {
+    default: {
         luaK_exp2RK(fs, v);
         break;
     }
@@ -1015,24 +977,21 @@ void luaK_posfix(FuncState *fs, BinOpr op, expdesc *e1, expdesc *e2, int line)
 {
     switch (op)
     {
-    case OPR_AND:
-    {
+    case OPR_AND: {
         lua_assert(e1->t == NO_JUMP); /* list must be closed */
         luaK_dischargevars(fs, e2);
         luaK_concat(fs, &e2->f, e1->f);
         *e1 = *e2;
         break;
     }
-    case OPR_OR:
-    {
+    case OPR_OR: {
         lua_assert(e1->f == NO_JUMP); /* list must be closed */
         luaK_dischargevars(fs, e2);
         luaK_concat(fs, &e2->t, e1->t);
         *e1 = *e2;
         break;
     }
-    case OPR_CONCAT:
-    {
+    case OPR_CONCAT: {
         luaK_exp2val(fs, e2);
         if (e2->k == VRELOCABLE && GET_OPCODE(getcode(fs, e2)) == OP_CONCAT)
         {
@@ -1060,22 +1019,19 @@ void luaK_posfix(FuncState *fs, BinOpr op, expdesc *e1, expdesc *e2, int line)
     case OPR_BOR:
     case OPR_BXOR:
     case OPR_SHL:
-    case OPR_SHR:
-    {
+    case OPR_SHR: {
         codeexpval(fs, cast(OpCode, (op - OPR_ADD) + OP_ADD), e1, e2, line);
         break;
     }
     case OPR_EQ:
     case OPR_LT:
-    case OPR_LE:
-    {
+    case OPR_LE: {
         codecomp(fs, cast(OpCode, (op - OPR_EQ) + OP_EQ), 1, e1, e2);
         break;
     }
     case OPR_NE:
     case OPR_GT:
-    case OPR_GE:
-    {
+    case OPR_GE: {
         codecomp(fs, cast(OpCode, (op - OPR_NE) + OP_EQ), 0, e1, e2);
         break;
     }

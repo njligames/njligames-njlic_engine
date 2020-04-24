@@ -45,8 +45,8 @@ namespace njli
         m_btBox2dShape = NULL;
     }
 
-    PhysicsShapeBox2D &PhysicsShapeBox2D::
-    operator=(const PhysicsShapeBox2D &rhs)
+    PhysicsShapeBox2D &
+    PhysicsShapeBox2D::operator=(const PhysicsShapeBox2D &rhs)
     {
         if (this != &rhs)
         {

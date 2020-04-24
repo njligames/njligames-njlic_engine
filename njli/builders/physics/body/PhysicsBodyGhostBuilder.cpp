@@ -24,8 +24,8 @@ namespace njli
 
     PhysicsBodyGhostBuilder::~PhysicsBodyGhostBuilder() {}
 
-    PhysicsBodyGhostBuilder &PhysicsBodyGhostBuilder::
-    operator=(const PhysicsBodyGhostBuilder &rhs)
+    PhysicsBodyGhostBuilder &
+    PhysicsBodyGhostBuilder::operator=(const PhysicsBodyGhostBuilder &rhs)
     {
         if (this != &rhs)
         {

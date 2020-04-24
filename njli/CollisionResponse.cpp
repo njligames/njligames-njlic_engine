@@ -31,8 +31,8 @@ namespace njli
 
     CollisionResponse::~CollisionResponse() {}
 
-    CollisionResponse &CollisionResponse::
-    operator=(const CollisionResponse &rhs)
+    CollisionResponse &
+    CollisionResponse::operator=(const CollisionResponse &rhs)
     {
         if (this != &rhs)
         {

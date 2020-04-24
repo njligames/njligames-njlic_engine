@@ -48,8 +48,8 @@ namespace njli
         m_btConvexHullShape = NULL;
     }
 
-    PhysicsShapeConvexHull &PhysicsShapeConvexHull::
-    operator=(const PhysicsShapeConvexHull &rhs)
+    PhysicsShapeConvexHull &
+    PhysicsShapeConvexHull::operator=(const PhysicsShapeConvexHull &rhs)
     {
         if (this != &rhs)
         {

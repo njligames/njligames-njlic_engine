@@ -35,8 +35,8 @@ namespace njli
     }
 
     SteeringBehaviorMachinePrioritizedBuilder &
-    SteeringBehaviorMachinePrioritizedBuilder::
-    operator=(const SteeringBehaviorMachinePrioritizedBuilder &rhs)
+    SteeringBehaviorMachinePrioritizedBuilder::operator=(
+        const SteeringBehaviorMachinePrioritizedBuilder &rhs)
     {
         if (this != &rhs)
         {

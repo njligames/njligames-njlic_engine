@@ -129,9 +129,9 @@ namespace njli
 
     bool NJLIGameEngine::start(int argc, char **argv)
     {
-//        const char *zip = "assets.zip";
-//        njli::World::getInstance()->getWorldResourceLoader()->loadZip(
-//            ASSET_PATH(zip));
+        //        const char *zip = "assets.zip";
+        //        njli::World::getInstance()->getWorldResourceLoader()->loadZip(
+        //            ASSET_PATH(zip));
 
         std::string main_file("scripts/main.lua");
         bool found_project_file = false;
@@ -169,8 +169,8 @@ namespace njli
         //        njli::World::getInstance()->createScript();
         //      }
         //    return ret;
-        
-//        World::getInstance()->getWorldLuaVirtualMachine()->doFile(ASSET_PATH("scripts/luac.out"));
+
+        //        World::getInstance()->getWorldLuaVirtualMachine()->doFile(ASSET_PATH("scripts/luac.out"));
         bool ret =
             World::getInstance()->getWorldLuaVirtualMachine()->compileFile(
                 main_file.c_str());

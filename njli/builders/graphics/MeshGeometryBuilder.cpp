@@ -21,8 +21,8 @@ namespace njli
 
     MeshGeometryBuilder::~MeshGeometryBuilder() {}
 
-    MeshGeometryBuilder &MeshGeometryBuilder::
-    operator=(const MeshGeometryBuilder &rhs)
+    MeshGeometryBuilder &
+    MeshGeometryBuilder::operator=(const MeshGeometryBuilder &rhs)
     {
         if (this != &rhs)
         {

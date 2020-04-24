@@ -27,8 +27,8 @@ namespace njli
 
     SteeringBehaviorPursuitBuilder::~SteeringBehaviorPursuitBuilder() {}
 
-    SteeringBehaviorPursuitBuilder &SteeringBehaviorPursuitBuilder::
-    operator=(const SteeringBehaviorPursuitBuilder &rhs)
+    SteeringBehaviorPursuitBuilder &SteeringBehaviorPursuitBuilder::operator=(
+        const SteeringBehaviorPursuitBuilder &rhs)
     {
         if (this != &rhs)
         {

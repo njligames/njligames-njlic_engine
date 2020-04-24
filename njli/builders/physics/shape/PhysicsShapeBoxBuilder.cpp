@@ -24,8 +24,8 @@ namespace njli
 
     PhysicsShapeBoxBuilder::~PhysicsShapeBoxBuilder() {}
 
-    PhysicsShapeBoxBuilder &PhysicsShapeBoxBuilder::
-    operator=(const PhysicsShapeBoxBuilder &rhs)
+    PhysicsShapeBoxBuilder &
+    PhysicsShapeBoxBuilder::operator=(const PhysicsShapeBoxBuilder &rhs)
     {
         if (this != &rhs)
         {

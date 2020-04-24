@@ -454,8 +454,7 @@ int luaV_equalobj(lua_State *L, const TValue *t1, const TValue *t2)
         return eqshrstr(tsvalue(t1), tsvalue(t2));
     case LUA_TLNGSTR:
         return luaS_eqlngstr(tsvalue(t1), tsvalue(t2));
-    case LUA_TUSERDATA:
-    {
+    case LUA_TUSERDATA: {
         if (uvalue(t1) == uvalue(t2))
             return 1;
         else if (L == NULL)
@@ -465,8 +464,7 @@ int luaV_equalobj(lua_State *L, const TValue *t1, const TValue *t2)
             tm = fasttm(L, uvalue(t2)->metatable, TM_EQ);
         break; /* will try TM */
     }
-    case LUA_TTABLE:
-    {
+    case LUA_TTABLE: {
         if (hvalue(t1) == hvalue(t2))
             return 1;
         else if (L == NULL)
@@ -563,8 +561,7 @@ void luaV_objlen(lua_State *L, StkId ra, const TValue *rb)
     const TValue *tm;
     switch (ttype(rb))
     {
-    case LUA_TTABLE:
-    {
+    case LUA_TTABLE: {
         Table *h = hvalue(rb);
         tm = fasttm(L, h->metatable, TM_LEN);
         if (tm)
@@ -572,18 +569,15 @@ void luaV_objlen(lua_State *L, StkId ra, const TValue *rb)
         setivalue(ra, luaH_getn(h)); /* else primitive len */
         return;
     }
-    case LUA_TSHRSTR:
-    {
+    case LUA_TSHRSTR: {
         setivalue(ra, tsvalue(rb)->shrlen);
         return;
     }
-    case LUA_TLNGSTR:
-    {
+    case LUA_TLNGSTR: {
         setivalue(ra, tsvalue(rb)->u.lnglen);
         return;
     }
-    default:
-    { /* try metamethod */
+    default: { /* try metamethod */
         tm = luaT_gettmbyobj(L, rb, TM_LEN);
         if (ttisnil(tm)) /* no metamethod? */
             luaG_typeerror(L, rb, "get length of");
@@ -742,15 +736,13 @@ void luaV_finishOp(lua_State *L)
     case OP_LEN:
     case OP_GETTABUP:
     case OP_GETTABLE:
-    case OP_SELF:
-    {
+    case OP_SELF: {
         setobjs2s(L, base + GETARG_A(inst), --L->top);
         break;
     }
     case OP_LE:
     case OP_LT:
-    case OP_EQ:
-    {
+    case OP_EQ: {
         int res = !l_isfalse(L->top - 1);
         L->top--;
         if (ci->callstatus & CIST_LEQ)
@@ -764,8 +756,7 @@ void luaV_finishOp(lua_State *L)
             ci->u.l.savedpc++;     /* skip jump instruction */
         break;
     }
-    case OP_CONCAT:
-    {
+    case OP_CONCAT: {
         StkId top = L->top - 1; /* top when 'luaT_trybinTM' was called */
         int b = GETARG_B(inst); /* first element to concatenate */
         int total = cast_int(top - 1 - (base + b)); /* yet to concatenate */
@@ -780,14 +771,12 @@ void luaV_finishOp(lua_State *L)
         L->top = ci->top; /* restore top */
         break;
     }
-    case OP_TFORCALL:
-    {
+    case OP_TFORCALL: {
         lua_assert(GET_OPCODE(*ci->u.l.savedpc) == OP_TFORLOOP);
         L->top = ci->top; /* correct top */
         break;
     }
-    case OP_CALL:
-    {
+    case OP_CALL: {
         if (GETARG_C(inst) - 1 >= 0) /* nresults >= 0? */
             L->top = ci->top;        /* adjust results */
         break;

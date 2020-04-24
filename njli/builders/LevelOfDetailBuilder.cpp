@@ -23,8 +23,8 @@ namespace njli
 
     LevelOfDetailBuilder::~LevelOfDetailBuilder() {}
 
-    LevelOfDetailBuilder &LevelOfDetailBuilder::
-    operator=(const LevelOfDetailBuilder &rhs)
+    LevelOfDetailBuilder &
+    LevelOfDetailBuilder::operator=(const LevelOfDetailBuilder &rhs)
     {
         if (this != &rhs)
         {

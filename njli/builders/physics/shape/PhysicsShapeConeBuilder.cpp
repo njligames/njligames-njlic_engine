@@ -27,8 +27,8 @@ namespace njli
 
     PhysicsShapeConeBuilder::~PhysicsShapeConeBuilder() {}
 
-    PhysicsShapeConeBuilder &PhysicsShapeConeBuilder::
-    operator=(const PhysicsShapeConeBuilder &rhs)
+    PhysicsShapeConeBuilder &
+    PhysicsShapeConeBuilder::operator=(const PhysicsShapeConeBuilder &rhs)
     {
         if (this != &rhs)
         {

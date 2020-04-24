@@ -49,8 +49,8 @@ namespace njli
         m_btCylinderShape = NULL;
     }
 
-    PhysicsShapeCylinder &PhysicsShapeCylinder::
-    operator=(const PhysicsShapeCylinder &rhs)
+    PhysicsShapeCylinder &
+    PhysicsShapeCylinder::operator=(const PhysicsShapeCylinder &rhs)
     {
         if (this != &rhs)
         {

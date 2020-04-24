@@ -1,6 +1,7 @@
 #include "File.h"
 #include "Log.h"
 #import <UIKit/UIKit.h>
+
 #include <string>
 #include <vector>
 
@@ -14,15 +15,15 @@ const char *RESOURCE_PATH()
 
 const char *ASSET_PATH(const char *file)
 {
-    NSString *filePath = [[NSString alloc] initWithFormat:@"%s%@%s", DOCUMENT_BASEPATH(), @"assets/", file];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+  NSString *filePath = [[NSString alloc]
+      initWithFormat:@"%s%@%s", DOCUMENT_BASEPATH(), @"assets/", file];
+
+  if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
     {
-        strcpy(s_Buffer, [filePath UTF8String]);
-        return s_Buffer;
+      strcpy(s_Buffer, [filePath UTF8String]);
+      return s_Buffer;
     }
-    
-    
+
   NSMutableString *adjusted_relative_path =
       [[NSMutableString alloc] initWithString:@"assets/"];
   [adjusted_relative_path
@@ -73,9 +74,9 @@ const char *DOCUMENT_BASEPATH()
                                                        NSUserDomainMask, YES);
   NSString *documentsDirectory =
       [paths objectAtIndex:0]; // Get documents folder
-//  return [documentsDirectory UTF8String];
-    
-    return [[NSString stringWithFormat:@"%@/",documentsDirectory] UTF8String];
+                               //  return [documentsDirectory UTF8String];
+
+  return [[NSString stringWithFormat:@"%@/", documentsDirectory] UTF8String];
 }
 
 void sleepThread(float milliseconds)
@@ -378,4 +379,105 @@ void setupFileSystem()
   //    contentsOfDirectoryAtPath:documentsDirectory error:nil];
   //
   //    NSLog(@"%@", files);
+}
+
+#include "firebase/admob/banner_view.h"
+
+void initBanner()
+{
+  UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+  UIView *my_ad_parent = [window.subviews objectAtIndex:0];
+
+#if defined(__ANDROID__)
+  // Android ad unit IDs
+  const char *kBannerAdUnit = "ca-app-pub-3940256099942544/6300978111";
+  //        const char* kInterstitialAdUnit =
+  //        "ca-app-pub-3940256099942544/1033173712";
+#else
+  // iOS ad unit IDs
+  const char *kBannerAdUnit = "ca-app-pub-7116197939810801/5324920939";
+  //        const char* kInterstitialAdUnit =
+  //        "ca-app-pub-3940256099942544/4411468910";
+#endif
+
+  firebase::admob::BannerView *banner_view;
+  banner_view = new firebase::admob::BannerView();
+
+  firebase::admob::AdSize ad_size;
+  ad_size.ad_size_type = firebase::admob::kAdSizeStandard;
+  ad_size.width = 320;
+  ad_size.height = 50;
+  // my_ad_parent is a reference to an iOS UIView or an Android Activity.
+  // This is the parent UIView or Activity of the banner view.
+  banner_view->Initialize(static_cast<firebase::admob::AdParent>(my_ad_parent),
+                          kBannerAdUnit, ad_size);
+
+  //        if (banner_view->InitializeLastResult().status() ==
+  //            firebase::kFutureStatusComplete &&
+  //            banner_view->InitializeLastResult().error() ==
+  //            firebase::admob::kAdMobErrorNone) {
+  //
+  //            int i = 0;
+  ////          banner_view->Show();
+  //
+  //        }
+
+  //    if(banner_view->InitializeLastResult().status() ==
+  //       firebase::kFutureStatusComplete) {
+  //        bool complete = true;
+  //        if(banner_view->InitializeLastResult().error() ==
+  //           firebase::admob::kAdMobErrorNone) {
+  //            bool noerror = true;
+  //        }
+  //    }
+
+  // Initialize all the AdRequest struct member values to zero.
+  firebase::admob::AdRequest my_ad_request = {};
+
+  // If the app is aware of the user's gender, it can be added to the
+  // targeting information. Otherwise, "unknown" should be used.
+  my_ad_request.gender = firebase::admob::kGenderUnknown;
+
+  // The user's birthday, if known. Note that months are indexed from one.
+  my_ad_request.birthday_day = 10;
+  my_ad_request.birthday_month = 11;
+  my_ad_request.birthday_year = 1976;
+
+  // Additional keywords to be used in targeting.
+  static const char *kKeywords[] = {"AdMob", "C++", "Fun"};
+  my_ad_request.keyword_count = sizeof(kKeywords) / sizeof(kKeywords[0]);
+  my_ad_request.keywords = kKeywords;
+
+  // "Extra" key value pairs can be added to the request as well.
+  static const firebase::admob::KeyValuePair kRequestExtras[] = {
+      {"the_name_of_an_extra", "the_value_for_that_extra"}};
+  my_ad_request.extras_count =
+      sizeof(kRequestExtras) / sizeof(kRequestExtras[0]);
+  my_ad_request.extras = kRequestExtras;
+
+  //    // Register the device IDs associated with any devices that will be used
+  //    to
+  //    // test your app. Below are sample test device IDs used for making the
+  //    ad request. static const char* kTestDeviceIDs[] =
+  //        {"2077ef9a63d2b398840261c8221a0c9b",
+  //         "098fe087d987c9a878965454a65654d7"};
+  //    my_ad_request.test_device_id_count =
+  //        sizeof(kTestDeviceIDs) / sizeof(kTestDeviceIDs[0]);
+  //    my_ad_request.test_device_ids = kTestDeviceIDs;
+
+  banner_view->LoadAd(my_ad_request);
+
+  //    if (banner_view->InitializeLastResult().status() ==
+  //        firebase::kFutureStatusComplete &&
+  //        banner_view->InitializeLastResult().error() ==
+  //        firebase::admob::kAdMobErrorNone) {
+  //      banner_view->Show();
+  //    }
+
+  //    if (banner_view->ShowLastResult().status() ==
+  //        firebase::kFutureStatusComplete &&
+  //        banner_view->ShowLastResult().error() ==
+  //        firebase::admob::kAdMobErrorNone) {
+  //      banner_view->LoadAd(my_ad_request);
+  //    }
 }

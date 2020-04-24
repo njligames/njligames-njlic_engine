@@ -37,8 +37,8 @@ namespace njli
 
     SteeringBehaviorHide::~SteeringBehaviorHide() {}
 
-    SteeringBehaviorHide &SteeringBehaviorHide::
-    operator=(const SteeringBehaviorHide &rhs)
+    SteeringBehaviorHide &
+    SteeringBehaviorHide::operator=(const SteeringBehaviorHide &rhs)
     {
         if (this != &rhs)
         {

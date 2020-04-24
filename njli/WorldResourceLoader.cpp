@@ -50,8 +50,8 @@
 #include "emscripten/emscripten.h"
 #endif
 
-#include <thread>
 #include <mutex>
+#include <thread>
 
 namespace njli
 {
@@ -79,15 +79,16 @@ namespace njli
         load(filePath);
     }
 
-    WorldResourceLoader::FileData::FileData(const char *filePath, void *buffer, size_t size)
-    : m_buffer(NULL), m_fileSize(0), m_fileName("")
-{
-    load(filePath, buffer, size);
-}
+    WorldResourceLoader::FileData::FileData(const char *filePath, void *buffer,
+                                            size_t size)
+        : m_buffer(NULL), m_fileSize(0), m_fileName("")
+    {
+        load(filePath, buffer, size);
+    }
 
     WorldResourceLoader::FileData::~FileData()
     {
-        
+
         if (m_buffer)
             free(m_buffer);
         m_buffer = NULL;
@@ -121,20 +122,20 @@ namespace njli
         return m_fileName.c_str();
     }
 
-
     bool WorldResourceLoader::FileData::load(const char *filePath)
     {
         return WorldResourceLoader::FileData::_load(filePath);
     }
 
-bool WorldResourceLoader::FileData::load(const char *filePath, void *buffer, size_t size)
-{
-    return WorldResourceLoader::FileData::_load(filePath, buffer, size);
-}
+    bool WorldResourceLoader::FileData::load(const char *filePath, void *buffer,
+                                             size_t size)
+    {
+        return WorldResourceLoader::FileData::_load(filePath, buffer, size);
+    }
     bool WorldResourceLoader::FileData::_load(const char *filePath)
     {
         std::lock_guard<std::mutex> lock(m_Mutex);
-        
+
         SDL_RWops *rw = SDL_RWFromFile(ASSET_PATH(filePath), "rb");
         if (rw)
         {
@@ -164,19 +165,20 @@ bool WorldResourceLoader::FileData::load(const char *filePath, void *buffer, siz
 
         return false;
     }
-bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, size_t size)
-{
-    m_fileSize = size;
-    if (NULL !=m_buffer)
-        free(m_buffer);
-    m_buffer = (char *)malloc(m_fileSize + 1);
-    
-    memcpy(m_buffer, buffer, size);
-    
-    setFilename(filePath);
-    
-    return true;
-}
+    bool WorldResourceLoader::FileData::_load(const char *filePath,
+                                              void *buffer, size_t size)
+    {
+        m_fileSize = size;
+        if (NULL != m_buffer)
+            free(m_buffer);
+        m_buffer = (char *)malloc(m_fileSize + 1);
+
+        memcpy(m_buffer, buffer, size);
+
+        setFilename(filePath);
+
+        return true;
+    }
 
     //    static u8 GetNumberOfComponents(const PVRTextureHeaderV3&
     //    sTextureHeader)
@@ -546,7 +548,6 @@ bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, si
 
         return retVal;
     }
-
 
     bool WorldResourceLoader::load(const char *filePath,
                                    ParticleEmitter *object)
@@ -960,21 +961,9 @@ bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, si
     bool WorldResourceLoader::loadZip(const char *filePath,
                                       const char *password)
     {
-        static const char *RESOURCE_PATH[] =
-        {
-            "cameras",
-            "curves",
-            "fonts",
-            "images",
-            "lamps",
-            "materials",
-            "meshes",
-            "particles",
-            "scripts",
-            "shaders",
-            "sounds",
-            "strings"
-        };
+        static const char *RESOURCE_PATH[] = {
+            "cameras", "curves",    "fonts",   "images",  "lamps",  "materials",
+            "meshes",  "particles", "scripts", "shaders", "sounds", "strings"};
 
         unz_global_info gi;
         unz_file_info fi;
@@ -986,14 +975,14 @@ bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, si
         unsigned long number_entry = gi.number_entry;
         while (i != number_entry)
         {
-            char name[ 1024 ] = {""};
-            unzGetCurrentFileInfo( uf, &fi, name, 1024, NULL, 0, NULL, 0 );
+            char name[1024] = {""};
+            unzGetCurrentFileInfo(uf, &fi, name, 1024, NULL, 0, NULL, 0);
 
             const char *base_path = DOCUMENT_BASEPATH();
             std::string full_path(std::string(base_path) + "assets/");
-            
+
             int ret = mkdir(full_path.c_str(), 0777);
-            
+
             full_path += name;
 
             if (fi.uncompressed_size <= 0)
@@ -1004,79 +993,105 @@ bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, si
             {
                 if (unzOpenCurrentFilePassword(uf, password) == UNZ_OK)
                 {
-                    void *_buffer = malloc( fi.uncompressed_size + 1);
+                    void *_buffer = malloc(fi.uncompressed_size + 1);
                     SDL_assert(_buffer);
-    //                    buffer[ fi.uncompressed_size ] = 0;
+                    //                    buffer[ fi.uncompressed_size ] = 0;
                     uLong _size = fi.uncompressed_size;
 
                     int error = UNZ_OK;
 
                     do
                     {
-                        error = unzReadCurrentFile( uf, _buffer,
-    fi.uncompressed_size );
-                        if ( error < 0 )
+                        error = unzReadCurrentFile(uf, _buffer,
+                                                   fi.uncompressed_size);
+                        if (error < 0)
                         {
-    //                            SDL_LogError(SDL_LOG_CATEGORY_TEST, "error %d\n", error);
-    //                            return false;
+                            //                            SDL_LogError(SDL_LOG_CATEGORY_TEST,
+                            //                            "error %d\n", error);
+                            //                            return false;
                             continue;
                         }
 
-                    } while ( error > 0 );
+                    } while (error > 0);
 
                     unzCloseCurrentFile(uf);
 
                     int j = 0;
-                    while(j != 12)
+                    while (j != 12)
                     {
                         char directory[1024];
                         strcpy(directory, name);
-                        char * pch = strtok (directory, "/");
-                        if(0 == strcmp(RESOURCE_PATH[j], pch) && (strstr(name,
-    "/.DS_Store") == NULL))
+                        char *pch = strtok(directory, "/");
+                        if (0 == strcmp(RESOURCE_PATH[j], pch) &&
+                            (strstr(name, "/.DS_Store") == NULL))
                         {
-                            
-                            FileData *fileData = loadFileData(name, _buffer, _size);
-                            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Loaded file %s, %zu bytes ", fileData->getFilename(), fileData->getSize());
-                            
-                            SDL_RWops *file = SDL_RWFromFile(full_path.c_str(), "w+b");
+
+                            FileData *fileData =
+                                loadFileData(name, _buffer, _size);
+                            SDL_LogVerbose(SDL_LOG_CATEGORY_TEST,
+                                           "Loaded file %s, %zu bytes ",
+                                           fileData->getFilename(),
+                                           fileData->getSize());
+
+                            SDL_RWops *file =
+                                SDL_RWFromFile(full_path.c_str(), "w+b");
                             if (file != NULL)
                             {
-                                FileData *fileData = loadFileData(full_path.c_str());
+                                FileData *fileData =
+                                    loadFileData(full_path.c_str());
 
                                 size_t s = SDL_RWwrite(file, _buffer, _size, 1);
-                                SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s, size (%zu bytes) ", full_path.c_str(), s);
+                                SDL_LogVerbose(
+                                    SDL_LOG_CATEGORY_TEST,
+                                    "Wrote file %s, size (%zu bytes) ",
+                                    full_path.c_str(), s);
 
                                 // Close file handler
                                 SDL_RWclose(file);
                             }
-                            
-                            
-//                            // Open file for reading in binary
-//                            SDL_RWops *file =
-//                                SDL_RWFromFile(full_path.c_str(), "r+b");
-//
-//                            // File does not exist
-//                            if (file == NULL)
-//                            {
-//
-//                                FileData *fileData = loadFileData(full_path.c_str(), _buffer, _size);
-//
-////                                // Create file for writing
-////                                file = SDL_RWFromFile(full_path.c_str(), "w+b");
-////
-//                                if (file != NULL)
-//                                {
-//
-//                                    FileData *fileData = loadFileData(full_path.c_str());
-//
-//                                    size_t s = SDL_RWwrite(file, _buffer, _size, 1);
-//                                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST, "Wrote file %s, size (%zu bytes) ", full_path.c_str(), s);
-//
-//                                    // Close file handler
-//                                    SDL_RWclose(file);
-//                                }
-//                            }
+
+                            //                            // Open file for
+                            //                            reading in binary
+                            //                            SDL_RWops *file =
+                            //                                SDL_RWFromFile(full_path.c_str(),
+                            //                                "r+b");
+                            //
+                            //                            // File does not exist
+                            //                            if (file == NULL)
+                            //                            {
+                            //
+                            //                                FileData *fileData
+                            //                                =
+                            //                                loadFileData(full_path.c_str(),
+                            //                                _buffer, _size);
+                            //
+                            ////                                // Create file
+                            /// for writing / file =
+                            /// SDL_RWFromFile(full_path.c_str(), "w+b");
+                            ////
+                            //                                if (file != NULL)
+                            //                                {
+                            //
+                            //                                    FileData
+                            //                                    *fileData =
+                            //                                    loadFileData(full_path.c_str());
+                            //
+                            //                                    size_t s =
+                            //                                    SDL_RWwrite(file,
+                            //                                    _buffer,
+                            //                                    _size, 1);
+                            //                                    SDL_LogVerbose(SDL_LOG_CATEGORY_TEST,
+                            //                                    "Wrote file
+                            //                                    %s, size (%zu
+                            //                                    bytes) ",
+                            //                                    full_path.c_str(),
+                            //                                    s);
+                            //
+                            //                                    // Close file
+                            //                                    handler
+                            //                                    SDL_RWclose(file);
+                            //                                }
+                            //                            }
                         }
                         ++j;
                     }
@@ -1087,7 +1102,7 @@ bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, si
                 else
                 {
                     SDL_LogError(SDL_LOG_CATEGORY_TEST, "Invalid password %s\n",
-    "");
+                                 "");
                     return false;
                 }
             }
@@ -1101,7 +1116,7 @@ bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, si
 
         return true;
     }
-    
+
     bool WorldResourceLoader::load(const char *filePath, std::string *object)
     {
         SDL_assert(object);
@@ -1205,8 +1220,9 @@ bool WorldResourceLoader::FileData::_load(const char *filePath, void *buffer, si
         return fileData;
     }
 
-WorldResourceLoader::FileData *
-WorldResourceLoader::addFileData(const char *filePath, void *buffer, size_t size)
+    WorldResourceLoader::FileData *
+    WorldResourceLoader::addFileData(const char *filePath, void *buffer,
+                                     size_t size)
     {
         FileData *fileData = getFileData(filePath);
         if (NULL == fileData)
@@ -1266,16 +1282,17 @@ WorldResourceLoader::addFileData(const char *filePath, void *buffer, size_t size
     }
 
     WorldResourceLoader::FileData *
-        WorldResourceLoader::loadFileData(const char *filePath, void *buffer, size_t size)
+    WorldResourceLoader::loadFileData(const char *filePath, void *buffer,
+                                      size_t size)
+    {
+        FileData *fileData = getFileData(filePath);
+        if (NULL == fileData)
         {
-            FileData *fileData = getFileData(filePath);
-            if (NULL == fileData)
-            {
-                fileData = addFileData(filePath, buffer, size);
-                SDL_assert(fileData);
-            }
-            return fileData;
+            fileData = addFileData(filePath, buffer, size);
+            SDL_assert(fileData);
         }
+        return fileData;
+    }
 
     WorldResourceLoader::ImageFileData *
     WorldResourceLoader::loadImageFileData(const char *filePath)

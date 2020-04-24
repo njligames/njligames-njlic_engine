@@ -41,8 +41,8 @@ namespace njli
 
     SteeringBehaviorInterpose::~SteeringBehaviorInterpose() {}
 
-    SteeringBehaviorInterpose &SteeringBehaviorInterpose::
-    operator=(const SteeringBehaviorInterpose &rhs)
+    SteeringBehaviorInterpose &
+    SteeringBehaviorInterpose::operator=(const SteeringBehaviorInterpose &rhs)
     {
         if (this != &rhs)
         {

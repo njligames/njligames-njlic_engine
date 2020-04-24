@@ -43,8 +43,8 @@ namespace njli
 
     SteeringBehaviorSeparation::~SteeringBehaviorSeparation() {}
 
-    SteeringBehaviorSeparation &SteeringBehaviorSeparation::
-    operator=(const SteeringBehaviorSeparation &rhs)
+    SteeringBehaviorSeparation &
+    SteeringBehaviorSeparation::operator=(const SteeringBehaviorSeparation &rhs)
     {
         if (this != &rhs)
         {

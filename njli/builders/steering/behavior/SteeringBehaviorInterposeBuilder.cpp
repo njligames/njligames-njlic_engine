@@ -27,8 +27,9 @@ namespace njli
 
     SteeringBehaviorInterposeBuilder::~SteeringBehaviorInterposeBuilder() {}
 
-    SteeringBehaviorInterposeBuilder &SteeringBehaviorInterposeBuilder::
-    operator=(const SteeringBehaviorInterposeBuilder &rhs)
+    SteeringBehaviorInterposeBuilder &
+    SteeringBehaviorInterposeBuilder::operator=(
+        const SteeringBehaviorInterposeBuilder &rhs)
     {
         if (this != &rhs)
         {

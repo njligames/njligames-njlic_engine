@@ -21,8 +21,8 @@ namespace njli
 
     PhysicsWorldBuilder::~PhysicsWorldBuilder() {}
 
-    PhysicsWorldBuilder &PhysicsWorldBuilder::
-    operator=(const PhysicsWorldBuilder &rhs)
+    PhysicsWorldBuilder &
+    PhysicsWorldBuilder::operator=(const PhysicsWorldBuilder &rhs)
     {
         if (this != &rhs)
         {

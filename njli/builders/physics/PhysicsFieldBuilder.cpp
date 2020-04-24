@@ -21,8 +21,8 @@ namespace njli
 
     PhysicsFieldBuilder::~PhysicsFieldBuilder() {}
 
-    PhysicsFieldBuilder &PhysicsFieldBuilder::
-    operator=(const PhysicsFieldBuilder &rhs)
+    PhysicsFieldBuilder &
+    PhysicsFieldBuilder::operator=(const PhysicsFieldBuilder &rhs)
     {
         if (this != &rhs)
         {

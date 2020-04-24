@@ -418,16 +418,14 @@ const char *inet_trydisconnect(p_socket ps, int family, p_timeout tm)
 {
     switch (family)
     {
-    case AF_INET:
-    {
+    case AF_INET: {
         struct sockaddr_in sin;
         memset((char *)&sin, 0, sizeof(sin));
         sin.sin_family = AF_UNSPEC;
         sin.sin_addr.s_addr = INADDR_ANY;
         return socket_strerror(socket_connect(ps, (SA *)&sin, sizeof(sin), tm));
     }
-    case AF_INET6:
-    {
+    case AF_INET6: {
         struct sockaddr_in6 sin6;
         struct in6_addr addrany = IN6ADDR_ANY_INIT;
         memset((char *)&sin6, 0, sizeof(sin6));

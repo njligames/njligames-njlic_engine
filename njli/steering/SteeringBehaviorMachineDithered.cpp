@@ -43,8 +43,8 @@ namespace njli
 
     SteeringBehaviorMachineDithered::~SteeringBehaviorMachineDithered() {}
 
-    SteeringBehaviorMachineDithered &SteeringBehaviorMachineDithered::
-    operator=(const SteeringBehaviorMachineDithered &rhs)
+    SteeringBehaviorMachineDithered &SteeringBehaviorMachineDithered::operator=(
+        const SteeringBehaviorMachineDithered &rhs)
     {
         if (this != &rhs)
         {

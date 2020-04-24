@@ -51,8 +51,8 @@ namespace njli
         m_btStaticPlaneShape = NULL;
     }
 
-    PhysicsShapeStaticPlane &PhysicsShapeStaticPlane::
-    operator=(const PhysicsShapeStaticPlane &rhs)
+    PhysicsShapeStaticPlane &
+    PhysicsShapeStaticPlane::operator=(const PhysicsShapeStaticPlane &rhs)
     {
         if (this != &rhs)
         {

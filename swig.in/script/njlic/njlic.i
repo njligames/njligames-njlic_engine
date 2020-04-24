@@ -995,8 +995,7 @@
 
         switch (arg1)
         {
-        case njli::JLI_OBJECT_TYPE_Action:
-        {
+        case njli::JLI_OBJECT_TYPE_Action: {
             njli::Action *result = njli::Action::create();
             lua_pop(L, 1);
             njli::Action::load(*result, L, -1);
@@ -1004,8 +1003,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_ActionBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_ActionBuilder: {
             njli::ActionBuilder *result = njli::ActionBuilder::create();
             lua_pop(L, 1);
             njli::ActionBuilder::load(*result, L, -1);
@@ -1013,8 +1011,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Camera:
-        {
+        case njli::JLI_OBJECT_TYPE_Camera: {
             njli::Camera *result = njli::Camera::create();
             lua_pop(L, 1);
             njli::Camera::load(*result, L, -1);
@@ -1022,8 +1019,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_CameraBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_CameraBuilder: {
             njli::CameraBuilder *result = njli::CameraBuilder::create();
             lua_pop(L, 1);
             njli::CameraBuilder::load(*result, L, -1);
@@ -1031,8 +1027,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Clock:
-        {
+        case njli::JLI_OBJECT_TYPE_Clock: {
             njli::Clock *result = njli::Clock::create();
             lua_pop(L, 1);
             njli::Clock::load(*result, L, -1);
@@ -1040,8 +1035,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_ClockBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_ClockBuilder: {
             njli::ClockBuilder *result = njli::ClockBuilder::create();
             lua_pop(L, 1);
             njli::ClockBuilder::load(*result, L, -1);
@@ -1049,8 +1043,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_CollisionResponse:
-        {
+        case njli::JLI_OBJECT_TYPE_CollisionResponse: {
             njli::CollisionResponse *result = njli::CollisionResponse::create();
             lua_pop(L, 1);
             njli::CollisionResponse::load(*result, L, -1);
@@ -1059,8 +1052,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_CollisionResponseBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_CollisionResponseBuilder: {
             njli::CollisionResponseBuilder *result =
                 njli::CollisionResponseBuilder::create();
             lua_pop(L, 1);
@@ -1070,8 +1062,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Font:
-        {
+        case njli::JLI_OBJECT_TYPE_Font: {
             njli::Font *result = njli::Font::create();
             lua_pop(L, 1);
             njli::Font::load(*result, L, -1);
@@ -1079,8 +1070,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_FontBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_FontBuilder: {
             njli::FontBuilder *result = njli::FontBuilder::create();
             lua_pop(L, 1);
             njli::FontBuilder::load(*result, L, -1);
@@ -1088,8 +1078,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Image:
-        {
+        case njli::JLI_OBJECT_TYPE_Image: {
             njli::Image *result = njli::Image::create();
             lua_pop(L, 1);
             njli::Image::load(*result, L, -1);
@@ -1097,8 +1086,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_ImageBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_ImageBuilder: {
             njli::ImageBuilder *result = njli::ImageBuilder::create();
             lua_pop(L, 1);
             njli::ImageBuilder::load(*result, L, -1);
@@ -1106,8 +1094,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_JsonJLI:
-        {
+        case njli::JLI_OBJECT_TYPE_JsonJLI: {
             njli::JsonJLI *result = njli::JsonJLI::create();
             lua_pop(L, 1);
             njli::JsonJLI::load(*result, L, -1);
@@ -1115,8 +1102,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_JsonJLIBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_JsonJLIBuilder: {
             njli::JsonJLIBuilder *result = njli::JsonJLIBuilder::create();
             lua_pop(L, 1);
             njli::JsonJLIBuilder::load(*result, L, -1);
@@ -1124,8 +1110,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Light:
-        {
+        case njli::JLI_OBJECT_TYPE_Light: {
             njli::Light *result = njli::Light::create();
             lua_pop(L, 1);
             njli::Light::load(*result, L, -1);
@@ -1133,8 +1118,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_LightBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_LightBuilder: {
             njli::LightBuilder *result = njli::LightBuilder::create();
             lua_pop(L, 1);
             njli::LightBuilder::load(*result, L, -1);
@@ -1142,8 +1126,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_LevelOfDetail:
-        {
+        case njli::JLI_OBJECT_TYPE_LevelOfDetail: {
             njli::LevelOfDetail *result = njli::LevelOfDetail::create();
             lua_pop(L, 1);
             njli::LevelOfDetail::load(*result, L, -1);
@@ -1151,8 +1134,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_LevelOfDetailBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_LevelOfDetailBuilder: {
             njli::LevelOfDetailBuilder *result =
                 njli::LevelOfDetailBuilder::create();
             lua_pop(L, 1);
@@ -1180,8 +1162,7 @@
             //            SWIGTYPE_p_njli__LuaBuilder, 0); SWIG_arg++;
             //        }
             //            break;
-        case njli::JLI_OBJECT_TYPE_Material:
-        {
+        case njli::JLI_OBJECT_TYPE_Material: {
             njli::Material *result = njli::Material::create();
             lua_pop(L, 1);
             njli::Material::load(*result, L, -1);
@@ -1189,8 +1170,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_MaterialBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_MaterialBuilder: {
             njli::MaterialBuilder *result = njli::MaterialBuilder::create();
             lua_pop(L, 1);
             njli::MaterialBuilder::load(*result, L, -1);
@@ -1198,8 +1178,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_MaterialProperty:
-        {
+        case njli::JLI_OBJECT_TYPE_MaterialProperty: {
             njli::MaterialProperty *result = njli::MaterialProperty::create();
             lua_pop(L, 1);
             njli::MaterialProperty::load(*result, L, -1);
@@ -1207,8 +1186,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_MaterialPropertyBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_MaterialPropertyBuilder: {
             njli::MaterialPropertyBuilder *result =
                 njli::MaterialPropertyBuilder::create();
             lua_pop(L, 1);
@@ -1218,8 +1196,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Node:
-        {
+        case njli::JLI_OBJECT_TYPE_Node: {
             njli::Node *result = njli::Node::create();
             lua_pop(L, 1);
             njli::Node::load(*result, L, -1);
@@ -1227,8 +1204,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_NodeBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_NodeBuilder: {
             njli::NodeBuilder *result = njli::NodeBuilder::create();
             lua_pop(L, 1);
             njli::NodeBuilder::load(*result, L, -1);
@@ -1236,8 +1212,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_NodeState:
-        {
+        case njli::JLI_OBJECT_TYPE_NodeState: {
             njli::NodeState *result = njli::NodeState::create();
             lua_pop(L, 1);
             njli::NodeState::load(*result, L, -1);
@@ -1245,8 +1220,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_NodeStateBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_NodeStateBuilder: {
             njli::NodeStateBuilder *result = njli::NodeStateBuilder::create();
             lua_pop(L, 1);
             njli::NodeStateBuilder::load(*result, L, -1);
@@ -1254,8 +1228,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_NodeStateMachine:
-        {
+        case njli::JLI_OBJECT_TYPE_NodeStateMachine: {
             njli::NodeStateMachine *result = njli::NodeStateMachine::create();
             lua_pop(L, 1);
             njli::NodeStateMachine::load(*result, L, -1);
@@ -1263,8 +1236,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_NodeStateMachineBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_NodeStateMachineBuilder: {
             njli::NodeStateMachineBuilder *result =
                 njli::NodeStateMachineBuilder::create();
             lua_pop(L, 1);
@@ -1274,8 +1246,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_ParticleEmitter:
-        {
+        case njli::JLI_OBJECT_TYPE_ParticleEmitter: {
             njli::ParticleEmitter *result = njli::ParticleEmitter::create();
             lua_pop(L, 1);
             njli::ParticleEmitter::load(*result, L, -1);
@@ -1283,8 +1254,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_ParticleEmitterBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_ParticleEmitterBuilder: {
             njli::ParticleEmitterBuilder *result =
                 njli::ParticleEmitterBuilder::create();
             lua_pop(L, 1);
@@ -1294,8 +1264,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsBodyGhost:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsBodyGhost: {
             njli::PhysicsBodyGhost *result = njli::PhysicsBodyGhost::create();
             lua_pop(L, 1);
             njli::PhysicsBodyGhost::load(*result, L, -1);
@@ -1303,8 +1272,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsBodyGhostBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsBodyGhostBuilder: {
             njli::PhysicsBodyGhostBuilder *result =
                 njli::PhysicsBodyGhostBuilder::create();
             lua_pop(L, 1);
@@ -1314,8 +1282,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsBodyRigid:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsBodyRigid: {
             njli::PhysicsBodyRigid *result = njli::PhysicsBodyRigid::create();
             lua_pop(L, 1);
             njli::PhysicsBodyRigid::load(*result, L, -1);
@@ -1323,8 +1290,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsBodyRigidBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsBodyRigidBuilder: {
             njli::PhysicsBodyRigidBuilder *result =
                 njli::PhysicsBodyRigidBuilder::create();
             lua_pop(L, 1);
@@ -1334,8 +1300,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsBodySoft:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsBodySoft: {
             njli::PhysicsBodySoft *result = njli::PhysicsBodySoft::create();
             lua_pop(L, 1);
             njli::PhysicsBodySoft::load(*result, L, -1);
@@ -1343,8 +1308,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsBodySoftBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsBodySoftBuilder: {
             njli::PhysicsBodySoftBuilder *result =
                 njli::PhysicsBodySoftBuilder::create();
             lua_pop(L, 1);
@@ -1354,8 +1318,7 @@
             SWIG_arg++;
         }
 
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraint:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraint: {
             njli::PhysicsConstraint *result = njli::PhysicsConstraint::create();
             lua_pop(L, 1);
             njli::PhysicsConstraint::load(*result, L, -1);
@@ -1364,8 +1327,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintBuilder: {
             njli::PhysicsConstraintBuilder *result =
                 njli::PhysicsConstraintBuilder::create();
             lua_pop(L, 1);
@@ -1375,8 +1337,7 @@
             SWIG_arg++;
         }
 
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintHinge:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintHinge: {
             njli::PhysicsConstraintHinge *result =
                 njli::PhysicsConstraintHinge::create();
             lua_pop(L, 1);
@@ -1386,8 +1347,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintHingeBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintHingeBuilder: {
             njli::PhysicsConstraintHingeBuilder *result =
                 njli::PhysicsConstraintHingeBuilder::create();
             lua_pop(L, 1);
@@ -1397,8 +1357,7 @@
             SWIG_arg++;
         }
 
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintPointToPoint:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintPointToPoint: {
             njli::PhysicsConstraintPointToPoint *result =
                 njli::PhysicsConstraintPointToPoint::create();
             lua_pop(L, 1);
@@ -1408,8 +1367,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintPointToPointBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintPointToPointBuilder: {
             njli::PhysicsConstraintPointToPointBuilder *result =
                 njli::PhysicsConstraintPointToPointBuilder::create();
             lua_pop(L, 1);
@@ -1420,8 +1378,7 @@
             SWIG_arg++;
         }
 
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintSlider:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintSlider: {
             njli::PhysicsConstraintSlider *result =
                 njli::PhysicsConstraintSlider::create();
             lua_pop(L, 1);
@@ -1431,8 +1388,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintSliderBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintSliderBuilder: {
             njli::PhysicsConstraintSliderBuilder *result =
                 njli::PhysicsConstraintSliderBuilder::create();
             lua_pop(L, 1);
@@ -1442,8 +1398,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintConeTwist:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintConeTwist: {
             njli::PhysicsConstraintConeTwist *result =
                 njli::PhysicsConstraintConeTwist::create();
             lua_pop(L, 1);
@@ -1453,8 +1408,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintConeTwistBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintConeTwistBuilder: {
             njli::PhysicsConstraintConeTwistBuilder *result =
                 njli::PhysicsConstraintConeTwistBuilder::create();
             lua_pop(L, 1);
@@ -1465,8 +1419,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintFixed:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintFixed: {
             njli::PhysicsConstraintFixed *result =
                 njli::PhysicsConstraintFixed::create();
             lua_pop(L, 1);
@@ -1476,8 +1429,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintFixedBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintFixedBuilder: {
             njli::PhysicsConstraintFixedBuilder *result =
                 njli::PhysicsConstraintFixedBuilder::create();
             lua_pop(L, 1);
@@ -1487,8 +1439,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintGeneric6Dof:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintGeneric6Dof: {
             njli::PhysicsConstraintGeneric6Dof *result =
                 njli::PhysicsConstraintGeneric6Dof::create();
             lua_pop(L, 1);
@@ -1498,8 +1449,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofBuilder: {
             njli::PhysicsConstraintGeneric6DofBuilder *result =
                 njli::PhysicsConstraintGeneric6DofBuilder::create();
             lua_pop(L, 1);
@@ -1510,8 +1460,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofSpring:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofSpring: {
             njli::PhysicsConstraintGeneric6DofSpring *result =
                 njli::PhysicsConstraintGeneric6DofSpring::create();
             lua_pop(L, 1);
@@ -1522,8 +1471,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofSpringBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsConstraintGeneric6DofSpringBuilder: {
             njli::PhysicsConstraintGeneric6DofSpringBuilder *result =
                 njli::PhysicsConstraintGeneric6DofSpringBuilder::create();
             lua_pop(L, 1);
@@ -1537,8 +1485,7 @@
         break;
 
             break;
-        case njli::JLI_OBJECT_TYPE_PhysicsCloseContact:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsCloseContact: {
             njli::PhysicsCloseContact *result =
                 njli::PhysicsCloseContact::create();
             lua_pop(L, 1);
@@ -1548,8 +1495,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsCloseContactBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsCloseContactBuilder: {
             njli::PhysicsCloseContactBuilder *result =
                 njli::PhysicsCloseContactBuilder::create();
             lua_pop(L, 1);
@@ -1559,8 +1505,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsContact:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsContact: {
             njli::PhysicsContact *result = njli::PhysicsContact::create();
             lua_pop(L, 1);
             njli::PhysicsContact::load(*result, L, -1);
@@ -1568,8 +1513,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsContactBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsContactBuilder: {
             njli::PhysicsContactBuilder *result =
                 njli::PhysicsContactBuilder::create();
             lua_pop(L, 1);
@@ -1579,8 +1523,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsField:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsField: {
             njli::PhysicsField *result = njli::PhysicsField::create();
             lua_pop(L, 1);
             njli::PhysicsField::load(*result, L, -1);
@@ -1588,8 +1531,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsFieldBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsFieldBuilder: {
             njli::PhysicsFieldBuilder *result =
                 njli::PhysicsFieldBuilder::create();
             lua_pop(L, 1);
@@ -1599,8 +1541,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsRayContact:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsRayContact: {
             njli::PhysicsRayContact *result = njli::PhysicsRayContact::create();
             lua_pop(L, 1);
             njli::PhysicsRayContact::load(*result, L, -1);
@@ -1609,8 +1550,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsRayContactBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsRayContactBuilder: {
             njli::PhysicsRayContactBuilder *result =
                 njli::PhysicsRayContactBuilder::create();
             lua_pop(L, 1);
@@ -1620,8 +1560,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeBox:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeBox: {
             njli::PhysicsShapeBox *result = njli::PhysicsShapeBox::create();
             lua_pop(L, 1);
             njli::PhysicsShapeBox::load(*result, L, -1);
@@ -1629,8 +1568,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeBoxBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeBoxBuilder: {
             njli::PhysicsShapeBoxBuilder *result =
                 njli::PhysicsShapeBoxBuilder::create();
             lua_pop(L, 1);
@@ -1641,8 +1579,7 @@
         }
         break;
 
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeBox2D:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeBox2D: {
             njli::PhysicsShapeBox2D *result = njli::PhysicsShapeBox2D::create();
             lua_pop(L, 1);
             njli::PhysicsShapeBox2D::load(*result, L, -1);
@@ -1651,8 +1588,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeBox2DBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeBox2DBuilder: {
             njli::PhysicsShapeBox2DBuilder *result =
                 njli::PhysicsShapeBox2DBuilder::create();
             lua_pop(L, 1);
@@ -1663,8 +1599,7 @@
         }
         break;
 
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeSphere:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeSphere: {
             njli::PhysicsShapeSphere *result =
                 njli::PhysicsShapeSphere::create();
             lua_pop(L, 1);
@@ -1674,8 +1609,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeSphereBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeSphereBuilder: {
             njli::PhysicsShapeSphereBuilder *result =
                 njli::PhysicsShapeSphereBuilder::create();
             lua_pop(L, 1);
@@ -1685,8 +1619,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeCylinder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeCylinder: {
             njli::PhysicsShapeCylinder *result =
                 njli::PhysicsShapeCylinder::create();
             lua_pop(L, 1);
@@ -1696,8 +1629,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeCylinderBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeCylinderBuilder: {
             njli::PhysicsShapeCylinderBuilder *result =
                 njli::PhysicsShapeCylinderBuilder::create();
             lua_pop(L, 1);
@@ -1707,8 +1639,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeCapsule:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeCapsule: {
             njli::PhysicsShapeCapsule *result =
                 njli::PhysicsShapeCapsule::create();
             lua_pop(L, 1);
@@ -1718,8 +1649,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeCapsuleBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeCapsuleBuilder: {
             njli::PhysicsShapeCapsuleBuilder *result =
                 njli::PhysicsShapeCapsuleBuilder::create();
             lua_pop(L, 1);
@@ -1729,8 +1659,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeCone:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeCone: {
             njli::PhysicsShapeCone *result = njli::PhysicsShapeCone::create();
             lua_pop(L, 1);
             njli::PhysicsShapeCone::load(*result, L, -1);
@@ -1738,8 +1667,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeConeBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeConeBuilder: {
             njli::PhysicsShapeConeBuilder *result =
                 njli::PhysicsShapeConeBuilder::create();
             lua_pop(L, 1);
@@ -1749,8 +1677,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeMultiSphere:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeMultiSphere: {
             njli::PhysicsShapeMultiSphere *result =
                 njli::PhysicsShapeMultiSphere::create();
             lua_pop(L, 1);
@@ -1760,8 +1687,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeMultiSphereBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeMultiSphereBuilder: {
             njli::PhysicsShapeMultiSphereBuilder *result =
                 njli::PhysicsShapeMultiSphereBuilder::create();
             lua_pop(L, 1);
@@ -1771,8 +1697,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeConvexHull:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeConvexHull: {
             njli::PhysicsShapeConvexHull *result =
                 njli::PhysicsShapeConvexHull::create();
             lua_pop(L, 1);
@@ -1782,8 +1707,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeConvexHullBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeConvexHullBuilder: {
             njli::PhysicsShapeConvexHullBuilder *result =
                 njli::PhysicsShapeConvexHullBuilder::create();
             lua_pop(L, 1);
@@ -1793,8 +1717,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeConvexTriangleMesh:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeConvexTriangleMesh: {
             njli::PhysicsShapeConvexTriangleMesh *result =
                 njli::PhysicsShapeConvexTriangleMesh::create();
             lua_pop(L, 1);
@@ -1804,8 +1727,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeConvexTriangleMeshBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeConvexTriangleMeshBuilder: {
             njli::PhysicsShapeConvexTriangleMeshBuilder *result =
                 njli::PhysicsShapeConvexTriangleMeshBuilder::create();
             lua_pop(L, 1);
@@ -1816,8 +1738,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeBvhTriangleMesh:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeBvhTriangleMesh: {
             njli::PhysicsShapeBvhTriangleMesh *result =
                 njli::PhysicsShapeBvhTriangleMesh::create();
             lua_pop(L, 1);
@@ -1827,8 +1748,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeBvhTriangleMeshBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeBvhTriangleMeshBuilder: {
             njli::PhysicsShapeBvhTriangleMeshBuilder *result =
                 njli::PhysicsShapeBvhTriangleMeshBuilder::create();
             lua_pop(L, 1);
@@ -1839,8 +1759,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeHeightfieldTerrain:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeHeightfieldTerrain: {
             njli::PhysicsShapeHeightfieldTerrain *result =
                 njli::PhysicsShapeHeightfieldTerrain::create();
             lua_pop(L, 1);
@@ -1850,8 +1769,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeHeightfieldTerrainBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeHeightfieldTerrainBuilder: {
             njli::PhysicsShapeHeightfieldTerrainBuilder *result =
                 njli::PhysicsShapeHeightfieldTerrainBuilder::create();
             lua_pop(L, 1);
@@ -1862,8 +1780,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeStaticPlane:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeStaticPlane: {
             njli::PhysicsShapeStaticPlane *result =
                 njli::PhysicsShapeStaticPlane::create();
             lua_pop(L, 1);
@@ -1873,8 +1790,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsShapeStaticPlaneBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsShapeStaticPlaneBuilder: {
             njli::PhysicsShapeStaticPlaneBuilder *result =
                 njli::PhysicsShapeStaticPlaneBuilder::create();
             lua_pop(L, 1);
@@ -1885,8 +1801,7 @@
         }
         break;
 
-        case njli::JLI_OBJECT_TYPE_PhysicsWorld:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsWorld: {
             njli::PhysicsWorld *result = njli::PhysicsWorld::create();
             lua_pop(L, 1);
             njli::PhysicsWorld::load(*result, L, -1);
@@ -1894,8 +1809,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PhysicsWorldBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PhysicsWorldBuilder: {
             njli::PhysicsWorldBuilder *result =
                 njli::PhysicsWorldBuilder::create();
             lua_pop(L, 1);
@@ -1905,8 +1819,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Plane:
-        {
+        case njli::JLI_OBJECT_TYPE_Plane: {
             njli::Plane *result = njli::Plane::create();
             lua_pop(L, 1);
             njli::Plane::load(*result, L, -1);
@@ -1914,8 +1827,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_PlaneBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_PlaneBuilder: {
             njli::PlaneBuilder *result = njli::PlaneBuilder::create();
             lua_pop(L, 1);
             njli::PlaneBuilder::load(*result, L, -1);
@@ -1923,8 +1835,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Scene:
-        {
+        case njli::JLI_OBJECT_TYPE_Scene: {
             njli::Scene *result = njli::Scene::create();
             lua_pop(L, 1);
             njli::Scene::load(*result, L, -1);
@@ -1932,8 +1843,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SceneBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SceneBuilder: {
             njli::SceneBuilder *result = njli::SceneBuilder::create();
             lua_pop(L, 1);
             njli::SceneBuilder::load(*result, L, -1);
@@ -1941,8 +1851,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SceneState:
-        {
+        case njli::JLI_OBJECT_TYPE_SceneState: {
             njli::SceneState *result = njli::SceneState::create();
             lua_pop(L, 1);
             njli::SceneState::load(*result, L, -1);
@@ -1950,8 +1859,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SceneStateBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SceneStateBuilder: {
             njli::SceneStateBuilder *result = njli::SceneStateBuilder::create();
             lua_pop(L, 1);
             njli::SceneStateBuilder::load(*result, L, -1);
@@ -1960,8 +1868,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SceneStateMachine:
-        {
+        case njli::JLI_OBJECT_TYPE_SceneStateMachine: {
             njli::SceneStateMachine *result = njli::SceneStateMachine::create();
             lua_pop(L, 1);
             njli::SceneStateMachine::load(*result, L, -1);
@@ -1970,8 +1877,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SceneStateMachineBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SceneStateMachineBuilder: {
             njli::SceneStateMachineBuilder *result =
                 njli::SceneStateMachineBuilder::create();
             lua_pop(L, 1);
@@ -1981,8 +1887,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_ShaderProgram:
-        {
+        case njli::JLI_OBJECT_TYPE_ShaderProgram: {
             njli::ShaderProgram *result = njli::ShaderProgram::create();
             lua_pop(L, 1);
             njli::ShaderProgram::load(*result, L, -1);
@@ -1990,8 +1895,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_ShaderProgramBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_ShaderProgramBuilder: {
             njli::ShaderProgramBuilder *result =
                 njli::ShaderProgramBuilder::create();
             lua_pop(L, 1);
@@ -2001,8 +1905,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Skinner:
-        {
+        case njli::JLI_OBJECT_TYPE_Skinner: {
             njli::Skinner *result = njli::Skinner::create();
             lua_pop(L, 1);
             njli::Skinner::load(*result, L, -1);
@@ -2010,8 +1913,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SkinnerBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SkinnerBuilder: {
             njli::SkinnerBuilder *result = njli::SkinnerBuilder::create();
             lua_pop(L, 1);
             njli::SkinnerBuilder::load(*result, L, -1);
@@ -2019,8 +1921,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Sound:
-        {
+        case njli::JLI_OBJECT_TYPE_Sound: {
             njli::Sound *result = njli::Sound::create();
             lua_pop(L, 1);
             njli::Sound::load(*result, L, -1);
@@ -2028,8 +1929,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SoundBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SoundBuilder: {
             njli::SoundBuilder *result = njli::SoundBuilder::create();
             lua_pop(L, 1);
             njli::SoundBuilder::load(*result, L, -1);
@@ -2037,8 +1937,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Sprite2D:
-        {
+        case njli::JLI_OBJECT_TYPE_Sprite2D: {
             njli::Sprite2D *result = njli::Sprite2D::create();
             lua_pop(L, 1);
             njli::Sprite2D::load(*result, L, -1);
@@ -2046,8 +1945,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Sprite2DBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_Sprite2DBuilder: {
             njli::Sprite2DBuilder *result = njli::Sprite2DBuilder::create();
             lua_pop(L, 1);
             njli::Sprite2DBuilder::load(*result, L, -1);
@@ -2055,8 +1953,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SpriteFrameAtlas:
-        {
+        case njli::JLI_OBJECT_TYPE_SpriteFrameAtlas: {
             njli::SpriteFrameAtlas *result = njli::SpriteFrameAtlas::create();
             lua_pop(L, 1);
             njli::SpriteFrameAtlas::load(*result, L, -1);
@@ -2064,8 +1961,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SpriteFrameAtlasBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SpriteFrameAtlasBuilder: {
             njli::SpriteFrameAtlasBuilder *result =
                 njli::SpriteFrameAtlasBuilder::create();
             lua_pop(L, 1);
@@ -2076,8 +1972,7 @@
         }
         break;
 
-        case njli::JLI_OBJECT_TYPE_SteeringBehavior:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehavior: {
             njli::SteeringBehavior *result = njli::SteeringBehavior::create();
             lua_pop(L, 1);
             njli::SteeringBehavior::load(*result, L, -1);
@@ -2085,8 +1980,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorBuilder: {
             njli::SteeringBehaviorBuilder *result =
                 njli::SteeringBehaviorBuilder::create();
             lua_pop(L, 1);
@@ -2096,8 +1990,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorAlignment:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorAlignment: {
             njli::SteeringBehaviorAlignment *result =
                 njli::SteeringBehaviorAlignment::create();
             lua_pop(L, 1);
@@ -2107,8 +2000,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorAlignmentBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorAlignmentBuilder: {
             njli::SteeringBehaviorAlignmentBuilder *result =
                 njli::SteeringBehaviorAlignmentBuilder::create();
             lua_pop(L, 1);
@@ -2119,8 +2011,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorArrive:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorArrive: {
             njli::SteeringBehaviorArrive *result =
                 njli::SteeringBehaviorArrive::create();
             lua_pop(L, 1);
@@ -2130,8 +2021,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorArriveBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorArriveBuilder: {
             njli::SteeringBehaviorArriveBuilder *result =
                 njli::SteeringBehaviorArriveBuilder::create();
             lua_pop(L, 1);
@@ -2141,8 +2031,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorCohesion:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorCohesion: {
             njli::SteeringBehaviorCohesion *result =
                 njli::SteeringBehaviorCohesion::create();
             lua_pop(L, 1);
@@ -2152,8 +2041,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorCohesionBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorCohesionBuilder: {
             njli::SteeringBehaviorCohesionBuilder *result =
                 njli::SteeringBehaviorCohesionBuilder::create();
             lua_pop(L, 1);
@@ -2163,8 +2051,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorEvade:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorEvade: {
             njli::SteeringBehaviorEvade *result =
                 njli::SteeringBehaviorEvade::create();
             lua_pop(L, 1);
@@ -2174,8 +2061,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorEvadeBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorEvadeBuilder: {
             njli::SteeringBehaviorEvadeBuilder *result =
                 njli::SteeringBehaviorEvadeBuilder::create();
             lua_pop(L, 1);
@@ -2185,8 +2071,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorFlee:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorFlee: {
             njli::SteeringBehaviorFlee *result =
                 njli::SteeringBehaviorFlee::create();
             lua_pop(L, 1);
@@ -2196,8 +2081,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorFleeBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorFleeBuilder: {
             njli::SteeringBehaviorFleeBuilder *result =
                 njli::SteeringBehaviorFleeBuilder::create();
             lua_pop(L, 1);
@@ -2207,8 +2091,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorFollowPath:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorFollowPath: {
             njli::SteeringBehaviorFollowPath *result =
                 njli::SteeringBehaviorFollowPath::create();
             lua_pop(L, 1);
@@ -2218,8 +2101,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorFollowPathBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorFollowPathBuilder: {
             njli::SteeringBehaviorFollowPathBuilder *result =
                 njli::SteeringBehaviorFollowPathBuilder::create();
             lua_pop(L, 1);
@@ -2230,8 +2112,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorHide:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorHide: {
             njli::SteeringBehaviorHide *result =
                 njli::SteeringBehaviorHide::create();
             lua_pop(L, 1);
@@ -2241,8 +2122,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorHideBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorHideBuilder: {
             njli::SteeringBehaviorHideBuilder *result =
                 njli::SteeringBehaviorHideBuilder::create();
             lua_pop(L, 1);
@@ -2252,8 +2132,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorInterpose:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorInterpose: {
             njli::SteeringBehaviorInterpose *result =
                 njli::SteeringBehaviorInterpose::create();
             lua_pop(L, 1);
@@ -2263,8 +2142,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorInterposeBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorInterposeBuilder: {
             njli::SteeringBehaviorInterposeBuilder *result =
                 njli::SteeringBehaviorInterposeBuilder::create();
             lua_pop(L, 1);
@@ -2275,8 +2153,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachine:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachine: {
             njli::SteeringBehaviorMachine *result =
                 njli::SteeringBehaviorMachine::create();
             lua_pop(L, 1);
@@ -2286,8 +2163,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineBuilder: {
             njli::SteeringBehaviorMachineBuilder *result =
                 njli::SteeringBehaviorMachineBuilder::create();
             lua_pop(L, 1);
@@ -2297,8 +2173,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineDithered:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineDithered: {
             njli::SteeringBehaviorMachineDithered *result =
                 njli::SteeringBehaviorMachineDithered::create();
             lua_pop(L, 1);
@@ -2308,8 +2183,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineDitheredBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineDitheredBuilder: {
             njli::SteeringBehaviorMachineDitheredBuilder *result =
                 njli::SteeringBehaviorMachineDitheredBuilder::create();
             lua_pop(L, 1);
@@ -2320,8 +2194,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachinePrioritized:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachinePrioritized: {
             njli::SteeringBehaviorMachinePrioritized *result =
                 njli::SteeringBehaviorMachinePrioritized::create();
             lua_pop(L, 1);
@@ -2332,8 +2205,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachinePrioritizedBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachinePrioritizedBuilder: {
             njli::SteeringBehaviorMachinePrioritizedBuilder *result =
                 njli::SteeringBehaviorMachinePrioritizedBuilder::create();
             lua_pop(L, 1);
@@ -2345,8 +2217,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineWeighted:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineWeighted: {
             njli::SteeringBehaviorMachineWeighted *result =
                 njli::SteeringBehaviorMachineWeighted::create();
             lua_pop(L, 1);
@@ -2356,8 +2227,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineWeightedBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorMachineWeightedBuilder: {
             njli::SteeringBehaviorMachineWeightedBuilder *result =
                 njli::SteeringBehaviorMachineWeightedBuilder::create();
             lua_pop(L, 1);
@@ -2368,8 +2238,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorObstacleAvoidance:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorObstacleAvoidance: {
             njli::SteeringBehaviorObstacleAvoidance *result =
                 njli::SteeringBehaviorObstacleAvoidance::create();
             lua_pop(L, 1);
@@ -2380,8 +2249,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorObstacleAvoidanceBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorObstacleAvoidanceBuilder: {
             njli::SteeringBehaviorObstacleAvoidanceBuilder *result =
                 njli::SteeringBehaviorObstacleAvoidanceBuilder::create();
             lua_pop(L, 1);
@@ -2393,8 +2261,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuit:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuit: {
             njli::SteeringBehaviorOffsetPursuit *result =
                 njli::SteeringBehaviorOffsetPursuit::create();
             lua_pop(L, 1);
@@ -2404,8 +2271,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuitBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuitBuilder: {
             njli::SteeringBehaviorOffsetPursuitBuilder *result =
                 njli::SteeringBehaviorOffsetPursuitBuilder::create();
             lua_pop(L, 1);
@@ -2416,8 +2282,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorPursuit:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorPursuit: {
             njli::SteeringBehaviorPursuit *result =
                 njli::SteeringBehaviorPursuit::create();
             lua_pop(L, 1);
@@ -2427,8 +2292,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorPursuitBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorPursuitBuilder: {
             njli::SteeringBehaviorPursuitBuilder *result =
                 njli::SteeringBehaviorPursuitBuilder::create();
             lua_pop(L, 1);
@@ -2438,8 +2302,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorSeek:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorSeek: {
             njli::SteeringBehaviorSeek *result =
                 njli::SteeringBehaviorSeek::create();
             lua_pop(L, 1);
@@ -2449,8 +2312,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorSeekBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorSeekBuilder: {
             njli::SteeringBehaviorSeekBuilder *result =
                 njli::SteeringBehaviorSeekBuilder::create();
             lua_pop(L, 1);
@@ -2460,8 +2322,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorSeparation:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorSeparation: {
             njli::SteeringBehaviorSeparation *result =
                 njli::SteeringBehaviorSeparation::create();
             lua_pop(L, 1);
@@ -2471,8 +2332,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorSeparationBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorSeparationBuilder: {
             njli::SteeringBehaviorSeparationBuilder *result =
                 njli::SteeringBehaviorSeparationBuilder::create();
             lua_pop(L, 1);
@@ -2483,8 +2343,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidance:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidance: {
             njli::SteeringBehaviorWallAvoidance *result =
                 njli::SteeringBehaviorWallAvoidance::create();
             lua_pop(L, 1);
@@ -2494,8 +2353,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidanceBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorWallAvoidanceBuilder: {
             njli::SteeringBehaviorWallAvoidanceBuilder *result =
                 njli::SteeringBehaviorWallAvoidanceBuilder::create();
             lua_pop(L, 1);
@@ -2506,8 +2364,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorWander:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorWander: {
             njli::SteeringBehaviorWander *result =
                 njli::SteeringBehaviorWander::create();
             lua_pop(L, 1);
@@ -2517,8 +2374,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_SteeringBehaviorWanderBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_SteeringBehaviorWanderBuilder: {
             njli::SteeringBehaviorWanderBuilder *result =
                 njli::SteeringBehaviorWanderBuilder::create();
             lua_pop(L, 1);
@@ -2529,8 +2385,7 @@
         }
         break;
 
-        case njli::JLI_OBJECT_TYPE_StopWatch:
-        {
+        case njli::JLI_OBJECT_TYPE_StopWatch: {
             njli::StopWatch *result = njli::StopWatch::create();
             lua_pop(L, 1);
             njli::StopWatch::load(*result, L, -1);
@@ -2538,8 +2393,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_StopWatchBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_StopWatchBuilder: {
             njli::StopWatchBuilder *result = njli::StopWatchBuilder::create();
             lua_pop(L, 1);
             njli::StopWatchBuilder::load(*result, L, -1);
@@ -2547,8 +2401,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Timer:
-        {
+        case njli::JLI_OBJECT_TYPE_Timer: {
             njli::Timer *result = njli::Timer::create();
             lua_pop(L, 1);
             njli::Timer::load(*result, L, -1);
@@ -2556,8 +2409,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_TimerBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_TimerBuilder: {
             njli::TimerBuilder *result = njli::TimerBuilder::create();
             lua_pop(L, 1);
             njli::TimerBuilder::load(*result, L, -1);
@@ -2566,8 +2418,7 @@
         }
         break;
 
-        case njli::JLI_OBJECT_TYPE_Thread:
-        {
+        case njli::JLI_OBJECT_TYPE_Thread: {
             njli::Thread *result = njli::Thread::create();
             lua_pop(L, 1);
             njli::Thread::load(*result, L, -1);
@@ -2575,8 +2426,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_ThreadBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_ThreadBuilder: {
             njli::ThreadBuilder *result = njli::ThreadBuilder::create();
             lua_pop(L, 1);
             njli::ThreadBuilder::load(*result, L, -1);
@@ -2584,8 +2434,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_WorldState:
-        {
+        case njli::JLI_OBJECT_TYPE_WorldState: {
             njli::WorldState *result = njli::WorldState::create();
             lua_pop(L, 1);
             njli::WorldState::load(*result, L, -1);
@@ -2593,8 +2442,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_WorldStateBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_WorldStateBuilder: {
             njli::WorldStateBuilder *result = njli::WorldStateBuilder::create();
             lua_pop(L, 1);
             njli::WorldStateBuilder::load(*result, L, -1);
@@ -2603,8 +2451,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_WorldStateMachine:
-        {
+        case njli::JLI_OBJECT_TYPE_WorldStateMachine: {
             njli::WorldStateMachine *result = njli::WorldStateMachine::create();
             lua_pop(L, 1);
             njli::WorldStateMachine::load(*result, L, -1);
@@ -2613,8 +2460,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_WorldStateMachineBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_WorldStateMachineBuilder: {
             njli::WorldStateMachineBuilder *result =
                 njli::WorldStateMachineBuilder::create();
             lua_pop(L, 1);
@@ -2624,8 +2470,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_Xml:
-        {
+        case njli::JLI_OBJECT_TYPE_Xml: {
             njli::Xml *result = njli::Xml::create();
             lua_pop(L, 1);
             njli::Xml::load(*result, L, -1);
@@ -2633,8 +2478,7 @@
             SWIG_arg++;
         }
         break;
-        case njli::JLI_OBJECT_TYPE_XmlBuilder:
-        {
+        case njli::JLI_OBJECT_TYPE_XmlBuilder: {
             njli::XmlBuilder *result = njli::XmlBuilder::create();
             lua_pop(L, 1);
             njli::XmlBuilder::load(*result, L, -1);

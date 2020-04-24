@@ -42,8 +42,8 @@ namespace njli
 
     SteeringBehaviorArrive::~SteeringBehaviorArrive() {}
 
-    SteeringBehaviorArrive &SteeringBehaviorArrive::
-    operator=(const SteeringBehaviorArrive &rhs)
+    SteeringBehaviorArrive &
+    SteeringBehaviorArrive::operator=(const SteeringBehaviorArrive &rhs)
     {
         if (this != &rhs)
         {

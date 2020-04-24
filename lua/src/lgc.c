@@ -240,20 +240,17 @@ reentry:
     white2gray(o);
     switch (o->tt)
     {
-    case LUA_TSHRSTR:
-    {
+    case LUA_TSHRSTR: {
         gray2black(o);
         g->GCmemtrav += sizelstring(gco2ts(o)->shrlen);
         break;
     }
-    case LUA_TLNGSTR:
-    {
+    case LUA_TLNGSTR: {
         gray2black(o);
         g->GCmemtrav += sizelstring(gco2ts(o)->u.lnglen);
         break;
     }
-    case LUA_TUSERDATA:
-    {
+    case LUA_TUSERDATA: {
         TValue uvalue;
         markobjectN(g, gco2u(o)->metatable); /* mark its metatable */
         gray2black(o);
@@ -266,28 +263,23 @@ reentry:
         }
         break;
     }
-    case LUA_TLCL:
-    {
+    case LUA_TLCL: {
         linkgclist(gco2lcl(o), g->gray);
         break;
     }
-    case LUA_TCCL:
-    {
+    case LUA_TCCL: {
         linkgclist(gco2ccl(o), g->gray);
         break;
     }
-    case LUA_TTABLE:
-    {
+    case LUA_TTABLE: {
         linkgclist(gco2t(o), g->gray);
         break;
     }
-    case LUA_TTHREAD:
-    {
+    case LUA_TTHREAD: {
         linkgclist(gco2th(o), g->gray);
         break;
     }
-    case LUA_TPROTO:
-    {
+    case LUA_TPROTO: {
         linkgclist(gco2p(o), g->gray);
         break;
     }
@@ -596,29 +588,25 @@ static void propagatemark(global_State *g)
     gray2black(o);
     switch (o->tt)
     {
-    case LUA_TTABLE:
-    {
+    case LUA_TTABLE: {
         Table *h = gco2t(o);
         g->gray = h->gclist; /* remove from 'gray' list */
         size = traversetable(g, h);
         break;
     }
-    case LUA_TLCL:
-    {
+    case LUA_TLCL: {
         LClosure *cl = gco2lcl(o);
         g->gray = cl->gclist; /* remove from 'gray' list */
         size = traverseLclosure(g, cl);
         break;
     }
-    case LUA_TCCL:
-    {
+    case LUA_TCCL: {
         CClosure *cl = gco2ccl(o);
         g->gray = cl->gclist; /* remove from 'gray' list */
         size = traverseCclosure(g, cl);
         break;
     }
-    case LUA_TTHREAD:
-    {
+    case LUA_TTHREAD: {
         lua_State *th = gco2th(o);
         g->gray = th->gclist;         /* remove from 'gray' list */
         linkgclist(th, g->grayagain); /* insert into 'grayagain' list */
@@ -626,8 +614,7 @@ static void propagatemark(global_State *g)
         size = traversethread(g, th);
         break;
     }
-    case LUA_TPROTO:
-    {
+    case LUA_TPROTO: {
         Proto *p = gco2p(o);
         g->gray = p->gclist; /* remove from 'gray' list */
         size = traverseproto(g, p);
@@ -752,13 +739,11 @@ static void freeobj(lua_State *L, GCObject *o)
     case LUA_TPROTO:
         luaF_freeproto(L, gco2p(o));
         break;
-    case LUA_TLCL:
-    {
+    case LUA_TLCL: {
         freeLclosure(L, gco2lcl(o));
         break;
     }
-    case LUA_TCCL:
-    {
+    case LUA_TCCL: {
         luaM_freemem(L, o, sizeCclosure(gco2ccl(o)->nupvalues));
         break;
     }
@@ -775,8 +760,7 @@ static void freeobj(lua_State *L, GCObject *o)
         luaS_remove(L, gco2ts(o)); /* remove it from hash table */
         luaM_freemem(L, o, sizelstring(gco2ts(o)->shrlen));
         break;
-    case LUA_TLNGSTR:
-    {
+    case LUA_TLNGSTR: {
         luaM_freemem(L, o, sizelstring(gco2ts(o)->u.lnglen));
         break;
     }
@@ -1130,15 +1114,13 @@ static lu_mem singlestep(lua_State *L)
     global_State *g = G(L);
     switch (g->gcstate)
     {
-    case GCSpause:
-    {
+    case GCSpause: {
         g->GCmemtrav = g->strt.size * sizeof(GCObject *);
         restartcollection(g);
         g->gcstate = GCSpropagate;
         return g->GCmemtrav;
     }
-    case GCSpropagate:
-    {
+    case GCSpropagate: {
         g->GCmemtrav = 0;
         lua_assert(g->gray);
         propagatemark(g);
@@ -1146,8 +1128,7 @@ static lu_mem singlestep(lua_State *L)
             g->gcstate = GCSatomic; /* finish propagate phase */
         return g->GCmemtrav;        /* memory traversed in this step */
     }
-    case GCSatomic:
-    {
+    case GCSatomic: {
         lu_mem work;
         int sw;
         propagateall(g);  /* make sure gray list is empty */
@@ -1157,27 +1138,22 @@ static lu_mem singlestep(lua_State *L)
         ;
         return work + sw * GCSWEEPCOST;
     }
-    case GCSswpallgc:
-    { /* sweep "regular" objects */
+    case GCSswpallgc: { /* sweep "regular" objects */
         return sweepstep(L, g, GCSswpfinobj, &g->finobj);
     }
-    case GCSswpfinobj:
-    { /* sweep objects with finalizers */
+    case GCSswpfinobj: { /* sweep objects with finalizers */
         return sweepstep(L, g, GCSswptobefnz, &g->tobefnz);
     }
-    case GCSswptobefnz:
-    { /* sweep objects to be finalized */
+    case GCSswptobefnz: { /* sweep objects to be finalized */
         return sweepstep(L, g, GCSswpend, NULL);
     }
-    case GCSswpend:
-    {                                /* finish sweeps */
+    case GCSswpend: {                /* finish sweeps */
         makewhite(g, g->mainthread); /* sweep main thread */
         checkSizes(L, g);
         g->gcstate = GCScallfin;
         return 0;
     }
-    case GCScallfin:
-    { /* call remaining finalizers */
+    case GCScallfin: { /* call remaining finalizers */
         if (g->tobefnz && g->gckind != KGC_EMERGENCY)
         {
             int n = runafewfinalizers(L);

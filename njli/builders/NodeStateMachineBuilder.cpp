@@ -24,8 +24,8 @@ namespace njli
 
     NodeStateMachineBuilder::~NodeStateMachineBuilder() {}
 
-    NodeStateMachineBuilder &NodeStateMachineBuilder::
-    operator=(const NodeStateMachineBuilder &rhs)
+    NodeStateMachineBuilder &
+    NodeStateMachineBuilder::operator=(const NodeStateMachineBuilder &rhs)
     {
         if (this != &rhs)
         {

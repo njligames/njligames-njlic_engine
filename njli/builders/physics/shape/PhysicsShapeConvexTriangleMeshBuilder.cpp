@@ -35,8 +35,8 @@ namespace njli
     }
 
     PhysicsShapeConvexTriangleMeshBuilder &
-    PhysicsShapeConvexTriangleMeshBuilder::
-    operator=(const PhysicsShapeConvexTriangleMeshBuilder &rhs)
+    PhysicsShapeConvexTriangleMeshBuilder::operator=(
+        const PhysicsShapeConvexTriangleMeshBuilder &rhs)
     {
         if (this != &rhs)
         {

@@ -35,8 +35,8 @@ namespace njli
     }
 
     PhysicsConstraintGeneric6DofSpringBuilder &
-    PhysicsConstraintGeneric6DofSpringBuilder::
-    operator=(const PhysicsConstraintGeneric6DofSpringBuilder &rhs)
+    PhysicsConstraintGeneric6DofSpringBuilder::operator=(
+        const PhysicsConstraintGeneric6DofSpringBuilder &rhs)
     {
         if (this != &rhs)
         {

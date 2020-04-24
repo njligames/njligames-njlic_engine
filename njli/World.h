@@ -29,6 +29,7 @@
 #include "WorldState.h"
 #include "WorldStateMachine.h"
 #include <string>
+#include "WorldAd.h"
 //#include "WorldFacebook.h"
 
 namespace njli
@@ -54,6 +55,7 @@ namespace njli
     virtual ~World();
 
   public:
+      void showAd(){mWorldAd->show();}
     /**
          *  <#Description#>
          *
@@ -186,6 +188,20 @@ namespace njli
          *  @return <#return value description#>
          */
     const WorldSound *getWorldSound() const;
+      
+      
+      /**
+           *  <#Description#>
+           *
+           *  @return <#return value description#>
+           */
+      WorldAd *getWorldAd();
+      /**
+           *  <#Description#>
+           *
+           *  @return <#return value description#>
+           */
+      const WorldAd *getWorldAd() const;
 
     /**
          *  <#Description#>
@@ -547,6 +563,7 @@ namespace njli
     bool m_AnimationPaused;
     bool m_GamePaused;
       
+      WorldAd *mWorldAd;
       
   };
 

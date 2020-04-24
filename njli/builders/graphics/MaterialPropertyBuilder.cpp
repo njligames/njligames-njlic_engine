@@ -24,8 +24,8 @@ namespace njli
 
     MaterialPropertyBuilder::~MaterialPropertyBuilder() {}
 
-    MaterialPropertyBuilder &MaterialPropertyBuilder::
-    operator=(const MaterialPropertyBuilder &rhs)
+    MaterialPropertyBuilder &
+    MaterialPropertyBuilder::operator=(const MaterialPropertyBuilder &rhs)
     {
         if (this != &rhs)
         {

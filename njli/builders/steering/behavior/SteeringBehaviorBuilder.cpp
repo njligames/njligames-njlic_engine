@@ -27,8 +27,8 @@ namespace njli
 
     SteeringBehaviorBuilder::~SteeringBehaviorBuilder() {}
 
-    SteeringBehaviorBuilder &SteeringBehaviorBuilder::
-    operator=(const SteeringBehaviorBuilder &rhs)
+    SteeringBehaviorBuilder &
+    SteeringBehaviorBuilder::operator=(const SteeringBehaviorBuilder &rhs)
     {
         if (this != &rhs)
         {

@@ -37,8 +37,8 @@ namespace njli
 
     SteeringBehaviorFlee::~SteeringBehaviorFlee() {}
 
-    SteeringBehaviorFlee &SteeringBehaviorFlee::
-    operator=(const SteeringBehaviorFlee &rhs)
+    SteeringBehaviorFlee &
+    SteeringBehaviorFlee::operator=(const SteeringBehaviorFlee &rhs)
     {
         if (this != &rhs)
         {

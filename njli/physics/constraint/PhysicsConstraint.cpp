@@ -39,8 +39,8 @@ namespace njli
 
     PhysicsConstraint::~PhysicsConstraint() {}
 
-    PhysicsConstraint &PhysicsConstraint::
-    operator=(const PhysicsConstraint &rhs)
+    PhysicsConstraint &
+    PhysicsConstraint::operator=(const PhysicsConstraint &rhs)
     {
         if (this != &rhs)
         {

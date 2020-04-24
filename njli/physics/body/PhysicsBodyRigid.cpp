@@ -672,8 +672,9 @@ namespace njli
     {
     }
 
-    PhysicsBodyRigid::ForceAndPosition &PhysicsBodyRigid::ForceAndPosition::
-    operator=(const PhysicsBodyRigid::ForceAndPosition &rhs)
+    PhysicsBodyRigid::ForceAndPosition &
+    PhysicsBodyRigid::ForceAndPosition::operator=(
+        const PhysicsBodyRigid::ForceAndPosition &rhs)
     {
         if (this != &rhs)
         {

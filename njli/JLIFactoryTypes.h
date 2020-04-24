@@ -265,6 +265,7 @@ namespace njli
     JLI_OBJECT_TYPE_WorldHUD,
     JLI_OBJECT_TYPE_WorldInput,
     JLI_OBJECT_TYPE_WorldClock,
+      JLI_OBJECT_TYPE_WorldAd,
     JLI_OBJECT_TYPE_WorldSound,
     JLI_OBJECT_TYPE_WorldDebugDrawer,
 

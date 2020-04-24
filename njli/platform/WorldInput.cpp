@@ -80,8 +80,7 @@ namespace njli
 
         switch (action)
         {
-        case 0:
-        {
+        case 0: {
             std::unordered_map<int, DeviceTouch *>::iterator iter =
                 m_FingerDownMap.find(pointerFingerId);
             if (iter == m_FingerDownMap.end())
@@ -99,8 +98,7 @@ namespace njli
             njli::World::getInstance()->touchDown(*touch);
         }
         break;
-        case 1:
-        {
+        case 1: {
             std::unordered_map<int, DeviceTouch *>::iterator iter =
                 m_FingerUpMap.find(pointerFingerId);
             if (iter == m_FingerUpMap.end())
@@ -118,8 +116,7 @@ namespace njli
             njli::World::getInstance()->touchUp(*touch);
         }
         break;
-        case 2:
-        {
+        case 2: {
             std::unordered_map<int, DeviceTouch *>::iterator iter =
                 m_FingerMoveMap.find(pointerFingerId);
             if (iter == m_FingerMoveMap.end())

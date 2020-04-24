@@ -546,8 +546,7 @@ const char *socket_strerror(int err)
         return PIE_CONNRESET;
     case ETIMEDOUT:
         return PIE_TIMEDOUT;
-    default:
-    {
+    default: {
         return strerror(err);
     }
     }

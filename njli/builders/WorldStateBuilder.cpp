@@ -21,8 +21,8 @@ namespace njli
 
     WorldStateBuilder::~WorldStateBuilder() {}
 
-    WorldStateBuilder &WorldStateBuilder::
-    operator=(const WorldStateBuilder &rhs)
+    WorldStateBuilder &
+    WorldStateBuilder::operator=(const WorldStateBuilder &rhs)
     {
         if (this != &rhs)
         {

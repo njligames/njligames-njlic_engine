@@ -27,8 +27,9 @@ namespace njli
 
     PhysicsShapeBvhTriangleMeshBuilder::~PhysicsShapeBvhTriangleMeshBuilder() {}
 
-    PhysicsShapeBvhTriangleMeshBuilder &PhysicsShapeBvhTriangleMeshBuilder::
-    operator=(const PhysicsShapeBvhTriangleMeshBuilder &rhs)
+    PhysicsShapeBvhTriangleMeshBuilder &
+    PhysicsShapeBvhTriangleMeshBuilder::operator=(
+        const PhysicsShapeBvhTriangleMeshBuilder &rhs)
     {
         if (this != &rhs)
         {

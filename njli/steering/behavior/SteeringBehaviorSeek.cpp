@@ -37,8 +37,8 @@ namespace njli
 
     SteeringBehaviorSeek::~SteeringBehaviorSeek() {}
 
-    SteeringBehaviorSeek &SteeringBehaviorSeek::
-    operator=(const SteeringBehaviorSeek &rhs)
+    SteeringBehaviorSeek &
+    SteeringBehaviorSeek::operator=(const SteeringBehaviorSeek &rhs)
     {
         if (this != &rhs)
         {

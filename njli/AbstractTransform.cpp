@@ -40,8 +40,8 @@ namespace njli
         m_WorldTransform = NULL;
     }
 
-    AbstractTransform &AbstractTransform::
-    operator=(const AbstractTransform &rhs)
+    AbstractTransform &
+    AbstractTransform::operator=(const AbstractTransform &rhs)
     {
         if (this != &rhs)
         {

@@ -27,8 +27,8 @@ namespace njli
 
     SteeringBehaviorCohesionBuilder::~SteeringBehaviorCohesionBuilder() {}
 
-    SteeringBehaviorCohesionBuilder &SteeringBehaviorCohesionBuilder::
-    operator=(const SteeringBehaviorCohesionBuilder &rhs)
+    SteeringBehaviorCohesionBuilder &SteeringBehaviorCohesionBuilder::operator=(
+        const SteeringBehaviorCohesionBuilder &rhs)
     {
         if (this != &rhs)
         {

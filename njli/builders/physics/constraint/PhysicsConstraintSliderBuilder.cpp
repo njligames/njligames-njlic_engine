@@ -27,8 +27,8 @@ namespace njli
 
     PhysicsConstraintSliderBuilder::~PhysicsConstraintSliderBuilder() {}
 
-    PhysicsConstraintSliderBuilder &PhysicsConstraintSliderBuilder::
-    operator=(const PhysicsConstraintSliderBuilder &rhs)
+    PhysicsConstraintSliderBuilder &PhysicsConstraintSliderBuilder::operator=(
+        const PhysicsConstraintSliderBuilder &rhs)
     {
         if (this != &rhs)
         {

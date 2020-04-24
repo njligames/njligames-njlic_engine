@@ -23,8 +23,8 @@ namespace njli
 
     DropdownHUDBuilder::~DropdownHUDBuilder() {}
 
-    DropdownHUDBuilder &DropdownHUDBuilder::
-    operator=(const DropdownHUDBuilder &rhs)
+    DropdownHUDBuilder &
+    DropdownHUDBuilder::operator=(const DropdownHUDBuilder &rhs)
     {
         if (this != &rhs)
         {

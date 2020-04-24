@@ -26,8 +26,8 @@ namespace njli
 
     SpriteFrameAtlasBuilder::~SpriteFrameAtlasBuilder() {}
 
-    SpriteFrameAtlasBuilder &SpriteFrameAtlasBuilder::
-    operator=(const SpriteFrameAtlasBuilder &rhs)
+    SpriteFrameAtlasBuilder &
+    SpriteFrameAtlasBuilder::operator=(const SpriteFrameAtlasBuilder &rhs)
     {
         if (this != &rhs)
         {

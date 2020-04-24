@@ -39,8 +39,8 @@ namespace njli
 
     SteeringBehaviorCohesion::~SteeringBehaviorCohesion() {}
 
-    SteeringBehaviorCohesion &SteeringBehaviorCohesion::
-    operator=(const SteeringBehaviorCohesion &rhs)
+    SteeringBehaviorCohesion &
+    SteeringBehaviorCohesion::operator=(const SteeringBehaviorCohesion &rhs)
     {
         if (this != &rhs)
         {

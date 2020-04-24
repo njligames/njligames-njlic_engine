@@ -43,8 +43,8 @@ namespace njli
 
     PhysicsConstraintFixed::~PhysicsConstraintFixed() { removeConstraint(); }
 
-    PhysicsConstraintFixed &PhysicsConstraintFixed::
-    operator=(const PhysicsConstraintFixed &rhs)
+    PhysicsConstraintFixed &
+    PhysicsConstraintFixed::operator=(const PhysicsConstraintFixed &rhs)
     {
         if (this != &rhs)
         {

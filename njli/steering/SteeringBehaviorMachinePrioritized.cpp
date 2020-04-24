@@ -44,8 +44,9 @@ namespace njli
 
     SteeringBehaviorMachinePrioritized::~SteeringBehaviorMachinePrioritized() {}
 
-    SteeringBehaviorMachinePrioritized &SteeringBehaviorMachinePrioritized::
-    operator=(const SteeringBehaviorMachinePrioritized &rhs)
+    SteeringBehaviorMachinePrioritized &
+    SteeringBehaviorMachinePrioritized::operator=(
+        const SteeringBehaviorMachinePrioritized &rhs)
     {
         if (this != &rhs)
         {

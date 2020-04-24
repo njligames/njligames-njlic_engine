@@ -27,8 +27,9 @@ namespace njli
 
     PhysicsConstraintConeTwistBuilder::~PhysicsConstraintConeTwistBuilder() {}
 
-    PhysicsConstraintConeTwistBuilder &PhysicsConstraintConeTwistBuilder::
-    operator=(const PhysicsConstraintConeTwistBuilder &rhs)
+    PhysicsConstraintConeTwistBuilder &
+    PhysicsConstraintConeTwistBuilder::operator=(
+        const PhysicsConstraintConeTwistBuilder &rhs)
     {
         if (this != &rhs)
         {

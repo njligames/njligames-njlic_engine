@@ -38,8 +38,8 @@ namespace njli
 
     SteeringBehaviorEvade::~SteeringBehaviorEvade() {}
 
-    SteeringBehaviorEvade &SteeringBehaviorEvade::
-    operator=(const SteeringBehaviorEvade &rhs)
+    SteeringBehaviorEvade &
+    SteeringBehaviorEvade::operator=(const SteeringBehaviorEvade &rhs)
     {
         if (this != &rhs)
         {

@@ -36,15 +36,24 @@ namespace njli
     {
       private:
         SDL_Window *_window;
+        bool _inBackground;
 
       public:
-        Graphics(SDL_Window *window) { _window = window; }
+        Graphics(SDL_Window *window)
+        {
+            _window = window;
+            _inBackground = false;
+        }
 
+        void enableInBackground(bool enable = true) { _inBackground = enable; }
         void update()
         {
-            njli::NJLIGameEngine::render();
+            if (!_inBackground)
+            {
+                njli::NJLIGameEngine::render();
 
-            SDL_GL_SwapWindow(_window);
+                SDL_GL_SwapWindow(_window);
+            }
         }
     };
 
@@ -119,8 +128,7 @@ namespace njli
 
         switch (event->type)
         {
-        case SDL_JOYDEVICEMOTION:
-        {
+        case SDL_JOYDEVICEMOTION: {
             SDL_Log("Joystick device %d motion. [%f, %f, %f, %f, %f, "
                     "%f, %f, %f, "
                     "%f]\n",
@@ -250,8 +258,7 @@ namespace njli
                     event->wheel.x, event->wheel.y, event->wheel.direction,
                     event->wheel.windowID);
             break;
-        case SDL_JOYDEVICEADDED:
-        {
+        case SDL_JOYDEVICEADDED: {
             SDL_Log("SDL EVENT: Joystick index %d attached",
                     event->jdevice.which);
 
@@ -271,8 +278,7 @@ namespace njli
             }
         }
         break;
-        case SDL_JOYDEVICEREMOVED:
-        {
+        case SDL_JOYDEVICEREMOVED: {
 
             SDL_Log("SDL EVENT: Joystick %d removed", event->jdevice.which);
 
@@ -290,14 +296,12 @@ namespace njli
                     event->jball.which, event->jball.ball, event->jball.xrel,
                     event->jball.yrel);
             break;
-        case SDL_JOYAXISMOTION:
-        {
+        case SDL_JOYAXISMOTION: {
             SDL_Log("SDL EVENT: Joystick %d: axis %d, value %d",
                     event->jaxis.which, event->jaxis.axis, event->jaxis.value);
         }
         break;
-        case SDL_JOYHATMOTION:
-        {
+        case SDL_JOYHATMOTION: {
             const char *position = "UNKNOWN";
             switch (event->jhat.value)
             {
@@ -629,12 +633,14 @@ namespace njli
             case SDL_APP_DIDENTERFOREGROUND:
                 SDL_Log("SDL_APP_DIDENTERFOREGROUND");
 
-#if (defined(__IPHONEOS__) && __IPHONEOS__)
-                SDL_iPhoneSetAnimationCallback(gWindow, 1, UpdateFrame,
-                                               gGraphics.get());
-                SDL_iPhoneSetEventPump(SDL_TRUE);
-#endif
-                NJLI_HandleResume();
+                gGraphics->enableInBackground(false);
+                //#if (defined(__IPHONEOS__) && __IPHONEOS__)
+                //                SDL_iPhoneSetAnimationCallback(gWindow, 1,
+                //                UpdateFrame,
+                //                                               gGraphics.get());
+                //                SDL_iPhoneSetEventPump(SDL_TRUE);
+                //#endif
+                //                NJLI_HandleResume();
                 break;
 
             case SDL_APP_DIDENTERBACKGROUND:
@@ -656,11 +662,13 @@ namespace njli
 
             case SDL_APP_WILLENTERBACKGROUND:
                 SDL_Log("SDL_APP_WILLENTERBACKGROUND");
-#if (defined(__IPHONEOS__) && __IPHONEOS__)
-                SDL_iPhoneSetAnimationCallback(gWindow, 1, NULL,
-                                               gGraphics.get());
-#endif
-                NJLI_HandlePause();
+                gGraphics->enableInBackground(true);
+                //#if (defined(__IPHONEOS__) && __IPHONEOS__)
+                //                SDL_iPhoneSetAnimationCallback(gWindow, 1,
+                //                NULL,
+                //                                               gGraphics.get());
+                //#endif
+                //                NJLI_HandlePause();
                 break;
 
             case SDL_APP_WILLENTERFOREGROUND:
@@ -679,8 +687,7 @@ namespace njli
                     NJLI_HandlePause();
                     break;
                 case SDL_WINDOWEVENT_RESIZED:
-                case SDL_WINDOWEVENT_SIZE_CHANGED:
-                {
+                case SDL_WINDOWEVENT_SIZE_CHANGED: {
                     int w, h;
 #if defined(__MACOSX__)
                     SDL_GetWindowSize(gWindow, &w, &h);
@@ -691,8 +698,7 @@ namespace njli
                                       gDisplayMode.refresh_rate);
                 }
                 break;
-                case SDL_WINDOWEVENT_CLOSE:
-                {
+                case SDL_WINDOWEVENT_CLOSE: {
                     SDL_Window *window =
                         SDL_GetWindowFromID(event.window.windowID);
                     if (window)
@@ -708,8 +714,7 @@ namespace njli
                 break;
                 }
                 break;
-            case SDL_KEYUP:
-            {
+            case SDL_KEYUP: {
                 callFinishKeys = true;
                 int temp = SDL_GetModState();
                 temp = temp & KMOD_CAPS;
@@ -725,8 +730,7 @@ namespace njli
                                  withGui);
             }
             break;
-            case SDL_KEYDOWN:
-            {
+            case SDL_KEYDOWN: {
                 callFinishKeys = true;
                 int temp = SDL_GetModState();
                 temp = temp & KMOD_CAPS;
@@ -744,8 +748,7 @@ namespace njli
                 switch (event.key.keysym.sym)
                 {
                 /* Add hotkeys here */
-                case SDLK_PRINTSCREEN:
-                {
+                case SDLK_PRINTSCREEN: {
                     SDL_Window *window =
                         SDL_GetWindowFromID(event.key.windowID);
                     if (window)
@@ -1057,19 +1060,18 @@ namespace njli
                 case SDLK_ESCAPE:
                     gDone = 1;
                     break;
-                case SDLK_SPACE:
-                { /*
-                   char message[256];
-                   SDL_Window *window =
-                       SDL_GetWindowFromID(event.key.windowID);
+                case SDLK_SPACE: { /*
+                                    char message[256];
+                                    SDL_Window *window =
+                                        SDL_GetWindowFromID(event.key.windowID);
 
-                   SDL_snprintf(message, sizeof(message),
-                                "(%i, %i), rel (%i, %i)\n",
-                   gLastEvent.x, gLastEvent.y,
-                   gLastEvent.xrel, gLastEvent.yrel);
-                   SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
-                                            "Last mouse
-                   position", message, window);*/
+                                    SDL_snprintf(message, sizeof(message),
+                                                 "(%i, %i), rel (%i, %i)\n",
+                                    gLastEvent.x, gLastEvent.y,
+                                    gLastEvent.xrel, gLastEvent.yrel);
+                                    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,
+                                                             "Last mouse
+                                    position", message, window);*/
                     break;
                 }
                 default:
@@ -1098,28 +1100,24 @@ namespace njli
                 // SDL_MouseWheelEvent wheel = event.wheel;
 
                 break;
-            case SDL_DROPFILE:
-            {
+            case SDL_DROPFILE: {
                 char *dropped_filedir = event.drop.file;
                 NJLI_HandleDropFile(dropped_filedir);
                 SDL_free(dropped_filedir);
             }
             break;
 #if !defined(__LINUX__)
-            case SDL_DROPTEXT:
-            {
+            case SDL_DROPTEXT: {
                 char *dropped_filedir = event.drop.file;
                 NJLI_HandleDropFile(dropped_filedir);
                 SDL_free(dropped_filedir);
             }
             break;
-            case SDL_DROPBEGIN:
-            {
+            case SDL_DROPBEGIN: {
                 printf("Dropped file begin: %u\n", event.drop.windowID);
             }
             break;
-            case SDL_DROPCOMPLETE:
-            {
+            case SDL_DROPCOMPLETE: {
                 printf("Dropped file begin: %u\n", event.drop.windowID);
             }
 #endif
@@ -1781,6 +1779,11 @@ namespace njli
         emscripten_set_main_loop(mainloop, 0, 0);
 #else
 
+#if (defined(__IPHONEOS__) && __IPHONEOS__)
+        SDL_iPhoneSetAnimationCallback(gWindow, 1, UpdateFrame,
+                                       gGraphics.get());
+        SDL_iPhoneSetEventPump(SDL_TRUE);
+#endif
         while (!gDone)
         {
 #if defined(__IPHONEOS__) && __IPHONEOS__

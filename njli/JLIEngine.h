@@ -37,6 +37,7 @@
 #include "WorldSocket.h"
 //#include "WorldFacebook.h"
 //#include "WorldInput.h"
+#include "WorldAd.h"
 
 #pragma mark Start AbstractFactoryObjects includes
 

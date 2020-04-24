@@ -907,8 +907,7 @@ LUA_API int lua_setmetatable(lua_State *L, int objindex)
     }
     switch (ttnov(obj))
     {
-    case LUA_TTABLE:
-    {
+    case LUA_TTABLE: {
         hvalue(obj)->metatable = mt;
         if (mt)
         {
@@ -917,8 +916,7 @@ LUA_API int lua_setmetatable(lua_State *L, int objindex)
         }
         break;
     }
-    case LUA_TUSERDATA:
-    {
+    case LUA_TUSERDATA: {
         uvalue(obj)->metatable = mt;
         if (mt)
         {
@@ -927,8 +925,7 @@ LUA_API int lua_setmetatable(lua_State *L, int objindex)
         }
         break;
     }
-    default:
-    {
+    default: {
         G(L)->mt[ttnov(obj)] = mt;
         break;
     }
@@ -1101,35 +1098,29 @@ LUA_API int lua_gc(lua_State *L, int what, int data)
     g = G(L);
     switch (what)
     {
-    case LUA_GCSTOP:
-    {
+    case LUA_GCSTOP: {
         g->gcrunning = 0;
         break;
     }
-    case LUA_GCRESTART:
-    {
+    case LUA_GCRESTART: {
         luaE_setdebt(g, 0);
         g->gcrunning = 1;
         break;
     }
-    case LUA_GCCOLLECT:
-    {
+    case LUA_GCCOLLECT: {
         luaC_fullgc(L, 0);
         break;
     }
-    case LUA_GCCOUNT:
-    {
+    case LUA_GCCOUNT: {
         /* GC values are expressed in Kbytes: #bytes/2^10 */
         res = cast_int(gettotalbytes(g) >> 10);
         break;
     }
-    case LUA_GCCOUNTB:
-    {
+    case LUA_GCCOUNTB: {
         res = cast_int(gettotalbytes(g) & 0x3ff);
         break;
     }
-    case LUA_GCSTEP:
-    {
+    case LUA_GCSTEP: {
         l_mem debt = 1; /* =1 to signal that it did an actual step */
         lu_byte oldrunning = g->gcrunning;
         g->gcrunning = 1; /* allow GC to run */
@@ -1149,22 +1140,19 @@ LUA_API int lua_gc(lua_State *L, int what, int data)
             res = 1;                            /* signal it */
         break;
     }
-    case LUA_GCSETPAUSE:
-    {
+    case LUA_GCSETPAUSE: {
         res = g->gcpause;
         g->gcpause = data;
         break;
     }
-    case LUA_GCSETSTEPMUL:
-    {
+    case LUA_GCSETSTEPMUL: {
         res = g->gcstepmul;
         if (data < 40)
             data = 40; /* avoid ridiculous low values (and 0) */
         g->gcstepmul = data;
         break;
     }
-    case LUA_GCISRUNNING:
-    {
+    case LUA_GCISRUNNING: {
         res = g->gcrunning;
         break;
     }
@@ -1270,8 +1258,7 @@ static const char *aux_upvalue(StkId fi, int n, TValue **val, CClosure **owner,
 {
     switch (ttype(fi))
     {
-    case LUA_TCCL:
-    { /* C closure */
+    case LUA_TCCL: { /* C closure */
         CClosure *f = clCvalue(fi);
         if (!(1 <= n && n <= f->nupvalues))
             return NULL;
@@ -1280,8 +1267,7 @@ static const char *aux_upvalue(StkId fi, int n, TValue **val, CClosure **owner,
             *owner = f;
         return "";
     }
-    case LUA_TLCL:
-    { /* Lua closure */
+    case LUA_TLCL: { /* Lua closure */
         LClosure *f = clLvalue(fi);
         TString *name;
         Proto *p = f->p;
@@ -1358,18 +1344,15 @@ LUA_API void *lua_upvalueid(lua_State *L, int fidx, int n)
     StkId fi = index2addr(L, fidx);
     switch (ttype(fi))
     {
-    case LUA_TLCL:
-    { /* lua closure */
+    case LUA_TLCL: { /* lua closure */
         return *getupvalref(L, fidx, n, NULL);
     }
-    case LUA_TCCL:
-    { /* C closure */
+    case LUA_TCCL: { /* C closure */
         CClosure *f = clCvalue(fi);
         api_check(L, 1 <= n && n <= f->nupvalues, "invalid upvalue index");
         return &f->upvalue[n - 1];
     }
-    default:
-    {
+    default: {
         api_check(L, 0, "closure expected");
         return NULL;
     }

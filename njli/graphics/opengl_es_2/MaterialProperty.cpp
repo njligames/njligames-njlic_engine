@@ -574,27 +574,23 @@ namespace njli
 
         switch (m_NumberOfComponents)
         {
-        case 1:
-        {
+        case 1: {
             internalformat = GL_LUMINANCE;
             format = GL_LUMINANCE;
         }
         break;
 
-        case 2:
-        {
+        case 2: {
             internalformat = GL_LUMINANCE_ALPHA;
             format = GL_LUMINANCE_ALPHA;
         }
         break;
-        case 3:
-        {
+        case 3: {
             internalformat = GL_RGB;
             format = GL_RGB;
         }
         break;
-        case 4:
-        {
+        case 4: {
             internalformat = GL_RGBA;
             format = GL_RGBA;
         }
@@ -643,27 +639,23 @@ namespace njli
 
         switch (m_NumberOfComponents)
         {
-        case 1:
-        {
+        case 1: {
             internalformat = GL_LUMINANCE;
             format = GL_LUMINANCE;
         }
         break;
 
-        case 2:
-        {
+        case 2: {
             internalformat = GL_LUMINANCE_ALPHA;
             format = GL_LUMINANCE_ALPHA;
         }
         break;
-        case 3:
-        {
+        case 3: {
             internalformat = GL_RGB;
             format = GL_RGB;
         }
         break;
-        case 4:
-        {
+        case 4: {
             internalformat = GL_RGBA;
             format = GL_RGBA;
         }

@@ -25,6 +25,8 @@ void setScriptDir(const char *path);
     
     void setAssetPath(const char *path);
 
+void initBanner();
+
 #ifdef __cplusplus
 }
 #endif

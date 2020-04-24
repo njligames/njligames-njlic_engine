@@ -124,8 +124,7 @@ static int luaB_costatus(lua_State *L)
         case LUA_YIELD:
             lua_pushliteral(L, "suspended");
             break;
-        case LUA_OK:
-        {
+        case LUA_OK: {
             lua_Debug ar;
             if (lua_getstack(co, 0, &ar) > 0) /* does it have frames? */
                 lua_pushliteral(L, "normal"); /* it is running */

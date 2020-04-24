@@ -30,8 +30,8 @@ namespace njli
 
     PhysicsCloseContact::~PhysicsCloseContact() {}
 
-    PhysicsCloseContact &PhysicsCloseContact::
-    operator=(const PhysicsCloseContact &rhs)
+    PhysicsCloseContact &
+    PhysicsCloseContact::operator=(const PhysicsCloseContact &rhs)
     {
         if (this != &rhs)
         {

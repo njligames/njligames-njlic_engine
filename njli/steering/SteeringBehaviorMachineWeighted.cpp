@@ -42,8 +42,8 @@ namespace njli
 
     SteeringBehaviorMachineWeighted::~SteeringBehaviorMachineWeighted() {}
 
-    SteeringBehaviorMachineWeighted &SteeringBehaviorMachineWeighted::
-    operator=(const SteeringBehaviorMachineWeighted &rhs)
+    SteeringBehaviorMachineWeighted &SteeringBehaviorMachineWeighted::operator=(
+        const SteeringBehaviorMachineWeighted &rhs)
     {
         if (this != &rhs)
         {

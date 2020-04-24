@@ -27,8 +27,8 @@ namespace njli
 
     PhysicsShapeCylinderBuilder::~PhysicsShapeCylinderBuilder() {}
 
-    PhysicsShapeCylinderBuilder &PhysicsShapeCylinderBuilder::
-    operator=(const PhysicsShapeCylinderBuilder &rhs)
+    PhysicsShapeCylinderBuilder &PhysicsShapeCylinderBuilder::operator=(
+        const PhysicsShapeCylinderBuilder &rhs)
     {
         if (this != &rhs)
         {

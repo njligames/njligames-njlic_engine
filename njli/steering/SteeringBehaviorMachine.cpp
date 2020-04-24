@@ -74,8 +74,8 @@ namespace njli
         m_CurrentForce = NULL;
     }
 
-    SteeringBehaviorMachine &SteeringBehaviorMachine::
-    operator=(const SteeringBehaviorMachine &rhs)
+    SteeringBehaviorMachine &
+    SteeringBehaviorMachine::operator=(const SteeringBehaviorMachine &rhs)
     {
         if (this != &rhs)
         {

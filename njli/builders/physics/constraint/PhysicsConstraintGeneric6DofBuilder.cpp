@@ -31,8 +31,9 @@ namespace njli
     {
     }
 
-    PhysicsConstraintGeneric6DofBuilder &PhysicsConstraintGeneric6DofBuilder::
-    operator=(const PhysicsConstraintGeneric6DofBuilder &rhs)
+    PhysicsConstraintGeneric6DofBuilder &
+    PhysicsConstraintGeneric6DofBuilder::operator=(
+        const PhysicsConstraintGeneric6DofBuilder &rhs)
     {
         if (this != &rhs)
         {

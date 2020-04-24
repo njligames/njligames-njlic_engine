@@ -46,8 +46,8 @@ namespace njli
 
     SteeringBehaviorOffsetPursuit::~SteeringBehaviorOffsetPursuit() {}
 
-    SteeringBehaviorOffsetPursuit &SteeringBehaviorOffsetPursuit::
-    operator=(const SteeringBehaviorOffsetPursuit &rhs)
+    SteeringBehaviorOffsetPursuit &SteeringBehaviorOffsetPursuit::operator=(
+        const SteeringBehaviorOffsetPursuit &rhs)
     {
         if (this != &rhs)
         {

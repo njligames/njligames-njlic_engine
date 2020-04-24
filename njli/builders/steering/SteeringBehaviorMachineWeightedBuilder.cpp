@@ -35,8 +35,8 @@ namespace njli
     }
 
     SteeringBehaviorMachineWeightedBuilder &
-    SteeringBehaviorMachineWeightedBuilder::
-    operator=(const SteeringBehaviorMachineWeightedBuilder &rhs)
+    SteeringBehaviorMachineWeightedBuilder::operator=(
+        const SteeringBehaviorMachineWeightedBuilder &rhs)
     {
         if (this != &rhs)
         {
