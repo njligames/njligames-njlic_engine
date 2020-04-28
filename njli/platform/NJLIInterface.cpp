@@ -28,6 +28,24 @@ int gXOffset = 0;
 int gYOffset = 0;
 int gNumTouches = 1;
 
+Graphics::Graphics(SDL_Window *window)
+{
+    _window = window;
+    _inBackground = false;
+}
+
+void Graphics::enableInBackground(bool enable) { _inBackground = enable; }
+void Graphics::update()
+{
+    if (!_inBackground)
+    {
+
+        njli::NJLIGameEngine::render();
+
+        SDL_GL_SwapWindow(_window);
+    }
+}
+
 void NJLI_HandleUpdate(double timeStep)
 {
     njli::NJLIGameEngine::update(timeStep);
@@ -210,4 +228,12 @@ void NJLI_HandleVRCameraRotationYPR(float yaw, float pitch, float roll)
 void NJLI_HandleVRCameraLocation(float x, float y, float z)
 {
     njli::NJLIGameEngine::setVRCameraLocation(x, y, z);
+}
+class Graphics;
+void UpdateFrame(void *param)
+{
+    njli::NJLIGameEngine::update(1.0f / ((float)gDisplayMode.refresh_rate));
+
+    Graphics *graphics = (Graphics *)param;
+    graphics->update();
 }

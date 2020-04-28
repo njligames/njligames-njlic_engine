@@ -15,6 +15,19 @@
 #include "glm/glm.hpp"
 #include <string>
 
+class Graphics
+{
+  private:
+    SDL_Window *_window;
+    bool _inBackground;
+
+  public:
+    Graphics(SDL_Window *window);
+
+    void enableInBackground(bool enable = true);
+    void update();
+};
+
 extern std::vector<SDL_Joystick *> gGameJoysticks;
 typedef std::map<int, SDL_Joystick *> JoystickMap;
 typedef std::pair<int, SDL_Joystick *> JoystickPair;
@@ -86,6 +99,8 @@ void NJLI_HandleSetComposingText(const char *text, int newCursorPosition);
   
   void NJLI_HandleVRCameraLocation(float x, float y, float z);
 
+
+void UpdateFrame(void *param);
 #ifdef __cplusplus
 }
 #endif

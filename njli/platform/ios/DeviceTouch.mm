@@ -14,7 +14,7 @@
 
 namespace njli
 {
-
+  class Graphics;
   int DeviceTouch::eventFilter(void *userdata, SDL_Event *event)
   {
     dispatch_block_t block = ^{
@@ -22,9 +22,40 @@ namespace njli
       //    SDLTest_PrintEvent(event);
 
       Uint32 eventType = event->type;
+      Graphics *graphics = (Graphics *)userdata;
 
       switch (eventType)
         {
+          case SDL_APP_WILLENTERBACKGROUND: {
+            SDL_Log("SDL_APP_WILLENTERBACKGROUND");
+
+            //                #if (defined(__IPHONEOS__) && __IPHONEOS__)
+            SDL_iPhoneSetAnimationCallback(gWindow, 0, NULL, NULL);
+            //                #endif
+            //                NJLI_HandlePause();
+          }
+          break;
+
+        case SDL_APP_DIDENTERFOREGROUND:
+          SDL_Log("SDL_APP_DIDENTERFOREGROUND");
+          {
+
+#if (defined(__IPHONEOS__) && __IPHONEOS__)
+            SDL_iPhoneSetAnimationCallback(
+                gWindow, 0, UpdateFrame,
+                //                                                                               NULL,
+                graphics);
+            int status = SDL_GL_MakeCurrent(gWindow, gGlContext);
+            if (status)
+              {
+                SDL_Log("SDL_GL_MakeCurrent(): %s\n", SDL_GetError());
+              }
+              //                                SDL_iPhoneSetEventPump(SDL_TRUE);
+#endif
+            //                NJLI_HandleResume();
+          }
+          break;
+
           case SDL_JOYDEVICEMOTION: {
 
             NJLI_HandleVRCameraRotationYPR(

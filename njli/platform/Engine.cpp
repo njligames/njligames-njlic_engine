@@ -32,31 +32,6 @@ using namespace std;
 namespace njli
 {
 
-    class Graphics
-    {
-      private:
-        SDL_Window *_window;
-        bool _inBackground;
-
-      public:
-        Graphics(SDL_Window *window)
-        {
-            _window = window;
-            _inBackground = false;
-        }
-
-        void enableInBackground(bool enable = true) { _inBackground = enable; }
-        void update()
-        {
-            if (!_inBackground)
-            {
-                njli::NJLIGameEngine::render();
-
-                SDL_GL_SwapWindow(_window);
-            }
-        }
-    };
-
     static unique_ptr<Graphics> gGraphics;
 
     static const char *ControllerAxisName(const SDL_GameControllerAxis axis)
@@ -414,14 +389,6 @@ namespace njli
             SDL_Log("Unknown event %04x", event->type);
             break;
         }
-    }
-
-    static void UpdateFrame(void *param)
-    {
-        njli::NJLIGameEngine::update(1.0f / ((float)gDisplayMode.refresh_rate));
-
-        Graphics *graphics = (Graphics *)param;
-        graphics->update();
     }
 
 #if (defined(__IPHONEOS__) && __IPHONEOS__)
@@ -1711,7 +1678,7 @@ namespace njli
         gGraphics = unique_ptr<Graphics>(new Graphics(gWindow));
 
 #if (defined(__IPHONEOS__) && __IPHONEOS__)
-        SDL_AddEventWatch(EventFilter, NULL);
+        SDL_AddEventWatch(EventFilter, (void *)gGraphics.get());
 #endif
 
         //    int drawableW, drawableH;
@@ -1766,7 +1733,7 @@ namespace njli
         //      bool vsynch = true;
         //      if(vsynch)
         //      {
-        //          SDL_GL_SetSwapInterval(1);
+        //                  SDL_GL_SetSwapInterval(-1);
         //      }
         //      else
         //      {
