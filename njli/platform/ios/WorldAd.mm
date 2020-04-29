@@ -12,6 +12,8 @@
 #include "firebase/admob/banner_view.h"
 #include "firebase/admob/interstitial_ad.h"
 
+#include "firebase/analytics.h"
+
 namespace njli
 {
   // A simple listener that logs changes to an InterstitialAd.
@@ -145,7 +147,9 @@ namespace njli
 #if defined(__ANDROID__)
     // Create the Firebase app.
     firebase::App *app = firebase::App::Create(
-        firebase::AppOptions(), your_jni_env, your_android_activity);
+        firebase::AppOptions(), GetJniEnv(), GetActivity());
+      
+      
 
     // Your Android AdMob app ID.
     const char *kAdMobAppID = "ca-app-pub-XXXXXXXXXXXXXXXX~NNNNNNNNNN";
@@ -159,6 +163,9 @@ namespace njli
 
     // Initialize the AdMob library with your AdMob app ID.
     firebase::admob::Initialize(*app, kAdMobAppID);
+      
+      ::firebase::analytics::Initialize(*app);
+      
 
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIView *my_ad_parent = [window.subviews objectAtIndex:0];
@@ -179,7 +186,11 @@ namespace njli
 #endif
 
 #endif
+      
+      
 
+    
+      
     interstitial_ad = new firebase::admob::InterstitialAd();
 
     // my_ad_parent is a reference to an iOS UIView or an Android Activity.
