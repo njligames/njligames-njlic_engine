@@ -201,4 +201,11 @@ namespace njli
     {
         return m_btClock->getTimeMicroseconds();
     }
+
+    unsigned long long int Clock::getTimeNanoseconds()
+    {
+        return m_btClock->getTimeNanoseconds();
+    }
+
+    btScalar Clock::getTimeSeconds() { return m_btClock->getTimeSeconds(); }
 } // namespace njli

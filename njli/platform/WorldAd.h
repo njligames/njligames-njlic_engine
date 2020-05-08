@@ -29,6 +29,12 @@ namespace njli
     operator std::string() const;
 
       void show();
+      
+      void addKeyword(const std::string &keyword);
+      void clearKeywords();
+      
+      int numKeyWords()const;
+      const char **getKeyWords();
   protected:
       void update();
 
@@ -38,7 +44,7 @@ namespace njli
       std::queue<AdUnit*> *mAdUnitQueue;
       AdUnit *mCurrenAdUnit;
       bool mShow;
-      
+      std::vector<const char*> mKeyWords;
   };
 }
 

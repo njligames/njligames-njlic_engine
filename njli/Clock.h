@@ -160,6 +160,12 @@ namespace njli
     /// Returns the time in us since the last call to reset or since
     /// the Clock was created.
     unsigned long int getTimeMicroseconds();
+      
+      unsigned long long int getTimeNanoseconds();
+
+      /// Returns the time in s since the last call to reset or since
+      /// the Clock was created.
+      btScalar getTimeSeconds();
 
   protected:
   private:

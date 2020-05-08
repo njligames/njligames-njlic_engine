@@ -62,7 +62,7 @@ namespace njli
     bool mIsDone;
 
   public:
-    AdUnit();
+    AdUnit(WorldAd *);
     virtual ~AdUnit();
     void update();
 
@@ -80,11 +80,14 @@ namespace njli
     bool isLoaded() const;
 
     bool isShown() const;
+    //      std::vector<const char*> mKeyWords;
+    WorldAd *mWorldAd;
   };
 
-  AdUnit::AdUnit()
+  AdUnit::AdUnit(WorldAd *worldAdUnit)
       : interstitial_ad(nullptr), interstitial_listener(nullptr),
-        mIsLoadedCalled(false), mShouldShow(false), mIsDone(false)
+        mIsLoadedCalled(false), mShouldShow(false), mIsDone(false),
+        mWorldAd(worldAdUnit)
   {
   }
   AdUnit::~AdUnit()
@@ -146,10 +149,8 @@ namespace njli
   {
 #if defined(__ANDROID__)
     // Create the Firebase app.
-    firebase::App *app = firebase::App::Create(
-        firebase::AppOptions(), GetJniEnv(), GetActivity());
-      
-      
+    firebase::App *app = firebase::App::Create(firebase::AppOptions(),
+                                               GetJniEnv(), GetActivity());
 
     // Your Android AdMob app ID.
     const char *kAdMobAppID = "ca-app-pub-XXXXXXXXXXXXXXXX~NNNNNNNNNN";
@@ -163,9 +164,8 @@ namespace njli
 
     // Initialize the AdMob library with your AdMob app ID.
     firebase::admob::Initialize(*app, kAdMobAppID);
-      
-      ::firebase::analytics::Initialize(*app);
-      
+
+    ::firebase::analytics::Initialize(*app);
 
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIView *my_ad_parent = [window.subviews objectAtIndex:0];
@@ -186,11 +186,7 @@ namespace njli
 #endif
 
 #endif
-      
-      
 
-    
-      
     interstitial_ad = new firebase::admob::InterstitialAd();
 
     // my_ad_parent is a reference to an iOS UIView or an Android Activity.
@@ -214,22 +210,47 @@ namespace njli
         // targeting information. Otherwise, "unknown" should be used.
         my_ad_request.gender = firebase::admob::kGenderUnknown;
 
+        time_t theTime = time(NULL);
+        struct tm *aTime = localtime(&theTime);
+
+        int day = aTime->tm_mday;
+        int month = aTime->tm_mon +
+                    1; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
+        int year = aTime->tm_year + 1900; // Year is # years since 1900
+
         // The user's birthday, if known. Note that months are indexed from one.
-        my_ad_request.birthday_day = 10;
-        my_ad_request.birthday_month = 11;
-        my_ad_request.birthday_year = 1976;
+        my_ad_request.birthday_day = day;
+        my_ad_request.birthday_month = month;
+        my_ad_request.birthday_year = year - 10;
 
         // Additional keywords to be used in targeting.
-        static const char *kKeywords[] = {"AdMob", "C++", "Fun"};
-        my_ad_request.keyword_count = sizeof(kKeywords) / sizeof(kKeywords[0]);
-        my_ad_request.keywords = kKeywords;
+        //          static const char *kKeywords[] = &mKeyWords[0];//{"AdMob",
+        //          "C++", "Fun"};
+        //        my_ad_request.keyword_count = sizeof(kKeywords) /
+        //        sizeof(kKeywords[0]); my_ad_request.keywords = &mKeyWords;
+
+        mWorldAd->clearKeywords();
+
+        mWorldAd->addKeyword("bird");
+        mWorldAd->addKeyword("dog");
+        mWorldAd->addKeyword("balloon");
+        mWorldAd->addKeyword("wack a mole");
+        mWorldAd->addKeyword("game");
+        mWorldAd->addKeyword("win");
+        mWorldAd->addKeyword("play");
+        mWorldAd->addKeyword("fun");
+        mWorldAd->addKeyword("country");
+
+        my_ad_request.keyword_count = mWorldAd->numKeyWords();
+        my_ad_request.keywords = mWorldAd->getKeyWords();
 
         // "Extra" key value pairs can be added to the request as well.
-        static const firebase::admob::KeyValuePair kRequestExtras[] = {
-            {"the_name_of_an_extra", "the_value_for_that_extra"}};
-        my_ad_request.extras_count =
-            sizeof(kRequestExtras) / sizeof(kRequestExtras[0]);
-        my_ad_request.extras = kRequestExtras;
+        //        static const firebase::admob::KeyValuePair kRequestExtras[] =
+        //        {
+        //            {"the_name_of_an_extra", "the_value_for_that_extra"}};
+        //        my_ad_request.extras_count =
+        //            sizeof(kRequestExtras) / sizeof(kRequestExtras[0]);
+        //        my_ad_request.extras = kRequestExtras;
 
         // Register the device IDs associated with any devices that will be used
         // to test your app. Below are sample test device IDs used for making
@@ -304,8 +325,8 @@ namespace njli
   WorldAd::WorldAd()
       : mAdUnitQueue(new std::queue<AdUnit *>()) //: mAdData(new AdData())
   {
-    mAdUnitQueue->push(new AdUnit());
-    mAdUnitQueue->push(new AdUnit());
+    mAdUnitQueue->push(new AdUnit(this));
+    mAdUnitQueue->push(new AdUnit(this));
 
     mCurrenAdUnit = mAdUnitQueue->front();
   }
@@ -354,4 +375,27 @@ namespace njli
       }
     mCurrenAdUnit->update();
   }
+
+  void WorldAd::addKeyword(const std::string &keyword)
+  {
+    char *pKeyword = new char[keyword.size()];
+    strcpy(pKeyword, keyword.c_str());
+    mKeyWords.push_back((const char *)pKeyword);
+  }
+  void WorldAd::clearKeywords()
+  {
+    while (mKeyWords.size() > 0)
+      {
+        char *pKeyword = (char *)mKeyWords.back();
+        delete[] pKeyword;
+        mKeyWords.pop_back();
+      }
+  }
+
+  int WorldAd::numKeyWords() const { return (int)mKeyWords.size(); }
+  const char **WorldAd::getKeyWords()
+  {
+    return reinterpret_cast<const char **>(mKeyWords.data());
+  }
+
 }
