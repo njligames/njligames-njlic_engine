@@ -108,78 +108,71 @@ namespace njli
     return m_fileName.c_str();
   }
 
-//  bool WorldResourceLoader::FileData::load(const char *filePath)
-//  {
-//    // SDL_Log("filePath %s", ASSET_PATH(filePath));
-//    FILE *file = mobile__fopen(ASSET_PATH(filePath), "rb");
-//
-//    if (file)
-//      {
-//        fseek(file, 0, SEEK_END);
-//        m_fileSize = ftell(file);
-//        fseek(file, 0, SEEK_SET);
-//
-//        if (m_buffer)
-//          free(m_buffer);
-//        m_buffer = malloc(m_fileSize + 1);
-//        SDL_assert(m_buffer);
-//
-//        fread(m_buffer, 1, m_fileSize, file);
-//        unsigned char *t = (unsigned char*)m_buffer;
-//        t[m_fileSize] = 0;
-//
-//        fclose(file);
-//
-//        m_fileName = filePath;
-//
-//        return true;
-//      }
-//    else
-//      {
-//        SDL_LogError(SDL_LOG_CATEGORY_TEST, "Unable to open the file: %s",
-//                     ASSET_PATH(filePath));
-//      }
-//    return false;
-//  }
+  //  bool WorldResourceLoader::FileData::load(const char *filePath)
+  //  {
+  //    // SDL_Log("filePath %s", ASSET_PATH(filePath));
+  //    FILE *file = mobile__fopen(ASSET_PATH(filePath), "rb");
+  //
+  //    if (file)
+  //      {
+  //        fseek(file, 0, SEEK_END);
+  //        m_fileSize = ftell(file);
+  //        fseek(file, 0, SEEK_SET);
+  //
+  //        if (m_buffer)
+  //          free(m_buffer);
+  //        m_buffer = malloc(m_fileSize + 1);
+  //        SDL_assert(m_buffer);
+  //
+  //        fread(m_buffer, 1, m_fileSize, file);
+  //        unsigned char *t = (unsigned char*)m_buffer;
+  //        t[m_fileSize] = 0;
+  //
+  //        fclose(file);
+  //
+  //        m_fileName = filePath;
+  //
+  //        return true;
+  //      }
+  //    else
+  //      {
+  //        SDL_LogError(SDL_LOG_CATEGORY_TEST, "Unable to open the file: %s",
+  //                     ASSET_PATH(filePath));
+  //      }
+  //    return false;
+  //  }
 
-
-
-
-
-
-
-
-    bool WorldResourceLoader::FileData::load(const char *filePath)
-    {
-      SDL_RWops *rw = SDL_RWFromFile(ASSET_PATH(filePath), "rb");
-      if(rw)
+  bool WorldResourceLoader::FileData::load(const char *filePath)
+  {
+    SDL_RWops *rw = SDL_RWFromFile(ASSET_PATH(filePath), "rb");
+    if (rw)
       {
         m_fileSize = SDL_RWsize(rw);
         if (m_buffer)
           free(m_buffer);
-        m_buffer = (char*)malloc(m_fileSize + 1);
+        m_buffer = (char *)malloc(m_fileSize + 1);
 
         Sint64 nb_read_total = 0, nb_read = 1;
-        char* buf = (char*)m_buffer;
+        char *buf = (char *)m_buffer;
         while (nb_read_total < m_fileSize && nb_read != 0)
-        {
-          nb_read = SDL_RWread(rw, buf, 1, (m_fileSize - nb_read_total));
-          nb_read_total += nb_read;
-          buf += nb_read;
-        }
+          {
+            nb_read = SDL_RWread(rw, buf, 1, (m_fileSize - nb_read_total));
+            nb_read_total += nb_read;
+            buf += nb_read;
+          }
         SDL_RWclose(rw);
         if (nb_read_total != m_fileSize)
-        {
-          free(m_buffer);
-          return false;
-        }
+          {
+            free(m_buffer);
+            return false;
+          }
 
-//        buf[nb_read_total - 1] = '\0';
-          return true;
+        //        buf[nb_read_total - 1] = '\0';
+        return true;
       }
 
-      return false;
-    }
+    return false;
+  }
 
   //    static u8 GetNumberOfComponents(const PVRTextureHeaderV3&
   //    sTextureHeader)
@@ -385,10 +378,10 @@ namespace njli
       {
         if (m_buffer)
           free(m_buffer);
-          
+
         m_buffer = (void *)stbi_load(ASSET_PATH(filePath), &m_width, &m_height,
                                      &m_components, 0);
-          
+
         SDL_assertPrint(m_buffer, "Failed to load file (%s). Reason: %s",
                         ASSET_PATH(filePath), stbi_failure_reason());
 
@@ -525,7 +518,7 @@ namespace njli
             //                retVal = image->setData(fileData);
             retVal = image->copyData(fileData);
 
-//            image->flip();
+            //            image->flip();
 
             removeFileData(filePath);
 
@@ -689,7 +682,7 @@ namespace njli
         if (vertexFileContent != NULL && fragmentFileContent != NULL)
           {
             retVal = shader->load((char *)vertexFileData->getBufferPtr(),
-                               (char *)fragmentFileData->getBufferPtr());
+                                  (char *)fragmentFileData->getBufferPtr());
 
             removeFileData(vertexFile);
             removeFileData(fragmentFile);

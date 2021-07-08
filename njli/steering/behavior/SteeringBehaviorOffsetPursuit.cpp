@@ -15,30 +15,39 @@
 
 #define TAG "SteeringBehaviorOffsetPursuit.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorOffsetPursuit\":[]}"
+#define FORMATSTRING                                                           \
+  "{\"njli::SteeringBehaviorOffsetPursuit\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
+
+#include "SteeringBehaviorMachine.h"
 
 namespace njli
 {
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit()
-      : SteeringBehavior()
+      : SteeringBehavior(),
+    m_OffsetPosition(0,0,0),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit(
       const AbstractBuilder &builder)
-      : SteeringBehavior(builder)
+      : SteeringBehavior(builder),
+    m_OffsetPosition(0,0,0),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
   SteeringBehaviorOffsetPursuit::SteeringBehaviorOffsetPursuit(
       const SteeringBehaviorOffsetPursuit &copy)
-      : SteeringBehavior(copy)
+      : SteeringBehavior(copy),
+    m_OffsetPosition(copy.m_OffsetPosition),
+    m_VehichleDeceleration(0.3f)
   {
   }
 
-  SteeringBehaviorOffsetPursuit::~SteeringBehaviorOffsetPursuit() {}
+    SteeringBehaviorOffsetPursuit::~SteeringBehaviorOffsetPursuit() {}
 
   SteeringBehaviorOffsetPursuit &SteeringBehaviorOffsetPursuit::
   operator=(const SteeringBehaviorOffsetPursuit &rhs)
@@ -73,15 +82,8 @@ namespace njli
 
   SteeringBehaviorOffsetPursuit::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorOffsetPursuit **
@@ -206,9 +208,43 @@ namespace njli
     return JLI_OBJECT_TYPE_SteeringBehaviorOffsetPursuit;
   }
 
+    void SteeringBehaviorOffsetPursuit::setOffsetPosition(const btVector3 &offsetPosition)
+    {
+        m_OffsetPosition = offsetPosition;
+    }
+    const btVector3 &SteeringBehaviorOffsetPursuit::getOffsetPosition()const
+    {
+        return m_OffsetPosition;
+    }
   const btVector3 &SteeringBehaviorOffsetPursuit::calculateForce()
   {
-    SDL_assertPrint(false, "TODO");
-    return *m_CurrentForce;
+      SteeringBehaviorMachine *machine = getParent();
+      const Node *vehicleNode = machine->getParent();
+      const btVector3 vehiclePos(vehicleNode->getOrigin());
+      const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
+      const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
+      
+      *m_CurrentForce = btVector3(0,0,0);
+      for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
+      {
+          const Node *leader = *i;
+          
+          const btVector3 leaderPos(leader->getOrigin());
+          
+          btVector3 leaderVelocity(0,0,0);
+          btVector3 leaderSide(1.0, 0.0, 0.0);
+          float leaderSpeed(0);
+          
+          if(leader->getSteeringBehaviorMachine() != NULL)
+          {
+              leaderVelocity = leader->getSteeringBehaviorMachine()->getCurrentVelocity();
+              leaderSide = leader->getSteeringBehaviorMachine()->getSideVector();
+              leaderSpeed = leader->getSteeringBehaviorMachine()->getCurrentVelocity().length();
+          }
+          
+          *m_CurrentForce += SteeringBehaviorMachine::offsetPursuit(m_OffsetPosition, leaderPos, leaderVelocity, leaderSide, leaderSpeed, vehiclePos, vehicleVelocity, vehicleMaxSpeed, m_VehichleDeceleration);
+      }
+      
+      return *m_CurrentForce;
   }
 } // namespace njli

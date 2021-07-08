@@ -15,9 +15,12 @@
 
 #define TAG "SteeringBehaviorSeparation.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorSeparation\":[]}"
+#define FORMATSTRING                                                           \
+  "{\"njli::SteeringBehaviorSeparation\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
+
+#include "SteeringBehaviorMachine.h"
 
 namespace njli
 {
@@ -72,15 +75,8 @@ namespace njli
 
   SteeringBehaviorSeparation::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorSeparation **
@@ -204,9 +200,130 @@ namespace njli
     return JLI_OBJECT_TYPE_SteeringBehaviorSeparation;
   }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    s32 SteeringBehaviorSeparation::addNeighbor(Node *Neighbor)
+//    {
+//        SDL_assert(NULL != Neighbor);
+//        
+//        if(Neighbor != getParent()->getParent())
+//        {
+//            std::vector<Node *>::const_iterator iter =
+//            std::find(m_NeighborList.begin(), m_NeighborList.end(), Neighbor);
+//            
+//            if (iter == m_NeighborList.end())
+//            {
+//                m_NeighborList.push_back(Neighbor);
+//                
+//                addChild(Neighbor);
+//            }
+//        }
+//        return getNeighborIndex(Neighbor);
+//    }
+//    
+//    bool SteeringBehaviorSeparation::removeNeighbor(Node *Neighbor)
+//    {
+//        SDL_assert(NULL != Neighbor);
+//        
+//        std::vector<Node *>::iterator iter =
+//        std::find(m_NeighborList.begin(), m_NeighborList.end(), Neighbor);
+//        
+//        if (iter != m_NeighborList.end())
+//        {
+//            removeChild(*iter);
+//            m_NeighborList.erase(iter);
+//            return true;
+//        }
+//        return false;
+//    }
+//    
+//    void SteeringBehaviorSeparation::removeAllNeighbors()
+//    {
+//        for (std::vector<Node *>::iterator iter = m_NeighborList.begin();
+//             iter != m_NeighborList.end(); ++iter)
+//        {
+//            removeChild(*iter);
+//        }
+//        m_NeighborList.clear();
+//    }
+//    
+//    s32 SteeringBehaviorSeparation::numberOfNeighbors() const { return m_NeighborList.size(); }
+//    
+//    void SteeringBehaviorSeparation::getNeighbors(std::vector<Node *> &Neighbors) const
+//    {
+//        for (std::vector<Node *>::const_iterator iter = m_NeighborList.begin();
+//             iter != m_NeighborList.end(); ++iter)
+//        {
+//            if (getChildIndex(*iter) != -1)
+//                Neighbors.push_back(*iter);
+//        }
+//    }
+//    
+//    s32 SteeringBehaviorSeparation::getNeighborIndex(Node *Neighbor) const
+//    {
+//        std::vector<Node *>::const_iterator iter =
+//        std::find(m_NeighborList.begin(), m_NeighborList.end(), Neighbor);
+//        
+//        if (iter != m_NeighborList.end())
+//        {
+//            return std::distance(m_NeighborList.begin(), iter);
+//        }
+//        return -1;
+//    }
+//    
+//    Node *SteeringBehaviorSeparation::getNeighbor(const u32 index)
+//    {
+//        if (index < m_NeighborList.size())
+//        {
+//            s32 idx = getChildIndex(m_NeighborList.at(index));
+//            if (idx != -1)
+//                return dynamic_cast<Node *>(getChild(idx));
+//        }
+//        return NULL;
+//    }
+//    
+//    const Node *SteeringBehaviorSeparation::getNeighbor(const u32 index) const
+//    {
+//        if (index < m_NeighborList.size())
+//        {
+//            s32 idx = getChildIndex(m_NeighborList.at(index));
+//            if (idx != -1)
+//                return dynamic_cast<const Node *>(getChild(idx));
+//        }
+//        return NULL;
+//    }
+    
+    
+    
+    
   const btVector3 &SteeringBehaviorSeparation::calculateForce()
   {
-    SDL_assertPrint(false, "TODO");
-    return *m_CurrentForce;
+      SteeringBehaviorMachine *machine = getParent();
+      Node *vehicleNode = machine->getParent();
+      
+//      *m_CurrentForce = btVector3(0,0,0);
+//      for (std::vector<Node *>::const_iterator i = m_NeighborList.begin(); i != m_NeighborList.end(); i++)
+//      {
+//          Node *leader = *i;
+          *m_CurrentForce = SteeringBehaviorMachine::separation(vehicleNode, m_TargetList);
+//      }
+      
+      return *m_CurrentForce;
   }
 } // namespace njli

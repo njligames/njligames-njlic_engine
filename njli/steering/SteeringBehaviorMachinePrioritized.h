@@ -153,6 +153,59 @@ namespace njli
     virtual const btVector3 &calculateSteeringForce();
 
   protected:
+      static inline bool accumulateForce(btVector3 &runningTot,
+                                         const btVector3 &forceToAdd,
+                                         float maxForce)
+      {
+          
+          const btScalar magnitudeSoFar(runningTot.length());
+          const btScalar magnitudeRemaining(maxForce - magnitudeSoFar);
+          if(magnitudeRemaining)
+          {
+              return false;
+          }
+          btScalar magnitudeToAdd(forceToAdd.length());
+          
+          if(magnitudeToAdd < magnitudeRemaining)
+          {
+              runningTot += forceToAdd;
+          }
+          else
+          {
+              runningTot += (forceToAdd.normalized() * magnitudeRemaining);
+          }
+          return true;
+          
+//          //calculate how much steering force the vehicle has used so far
+//          double MagnitudeSoFar = RunningTot.Length();
+//
+//          //calculate how much steering force remains to be used by this vehicle
+//          double MagnitudeRemaining = m_pVehicle->MaxForce() - MagnitudeSoFar;
+//
+//          //return false if there is no more force left to use
+//          if (MagnitudeRemaining <= 0.0) return false;
+//
+//          //calculate the magnitude of the force we want to add
+//          double MagnitudeToAdd = ForceToAdd.Length();
+//
+//          //if the magnitude of the sum of ForceToAdd and the running total
+//          //does not exceed the maximum force available to this vehicle, just
+//          //add together. Otherwise add as much of the ForceToAdd vector is
+//          //possible without going over the max.
+//          if (MagnitudeToAdd < MagnitudeRemaining)
+//          {
+//              RunningTot += ForceToAdd;
+//          }
+//
+//          else
+//          {
+//              //add it to the steering force
+//              RunningTot += (Vec2DNormalize(ForceToAdd) * MagnitudeRemaining);
+//          }
+//
+//          return true;
+      }
+
   private:
   };
 }

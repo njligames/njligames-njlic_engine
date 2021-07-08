@@ -240,8 +240,6 @@ namespace njli
 
   protected:
   private:
-    btVector3 *m_CurrentForce;
-    std::vector<Node *> m_TargetList;
   };
 }
 

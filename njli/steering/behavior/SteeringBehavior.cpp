@@ -17,26 +17,37 @@
 
 #include "SteeringBehaviorMachine.h"
 
-#define FORMATSTRING "{\"jli::SteeringBehavior\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehavior\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
 namespace njli
 {
   SteeringBehavior::SteeringBehavior()
-      : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0))
+    : AbstractFactoryObject(this),
+    m_CurrentForce(new btVector3(0, 0, 0)),
+    m_Probability(1.0f),
+    m_Weight(1.0f)
   {
+    m_TargetList.reserve(100);
   }
 
   SteeringBehavior::SteeringBehavior(const AbstractBuilder &builder)
-      : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0))
+      : AbstractFactoryObject(this),
+    m_CurrentForce(new btVector3(0, 0, 0)),
+    m_Probability(1.0f),
+    m_Weight(1.0f)
   {
+    m_TargetList.reserve(100);
   }
 
   SteeringBehavior::SteeringBehavior(const SteeringBehavior &copy)
       : AbstractFactoryObject(this),
-        m_CurrentForce(new btVector3(*copy.m_CurrentForce))
+        m_CurrentForce(new btVector3(*copy.m_CurrentForce)),
+    m_Probability(1.0f),
+    m_Weight(1.0f)
   {
+    m_TargetList.reserve(100);
   }
 
   SteeringBehavior::~SteeringBehavior() { delete m_CurrentForce; }
@@ -71,15 +82,8 @@ namespace njli
 
   SteeringBehavior::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehavior **SteeringBehavior::createArray(const u32 size)
@@ -203,19 +207,13 @@ namespace njli
   {
     SDL_assert(NULL != target);
 
-    TargetVector::const_iterator iter =
+    std::vector<Node *>::const_iterator iter =
         std::find(m_TargetList.begin(), m_TargetList.end(), target);
 
     if (iter == m_TargetList.end())
       {
-        TargetVector::iterator iter =
-            std::find(m_TargetList.begin(), m_TargetList.end(), target);
-
-        if (iter != m_TargetList.end())
-          removeTarget(target);
-
         m_TargetList.push_back(target);
-
+          
         addChild(target);
       }
 
@@ -226,7 +224,7 @@ namespace njli
   {
     SDL_assert(NULL != target);
 
-    TargetVector::iterator iter =
+    std::vector<Node *>::iterator iter =
         std::find(m_TargetList.begin(), m_TargetList.end(), target);
 
     if (iter != m_TargetList.end())
@@ -240,7 +238,7 @@ namespace njli
 
   void SteeringBehavior::removeAllTargets()
   {
-    for (TargetVector::iterator iter = m_TargetList.begin();
+    for (std::vector<Node *>::iterator iter = m_TargetList.begin();
          iter != m_TargetList.end(); ++iter)
       {
         removeChild(*iter);
@@ -252,7 +250,7 @@ namespace njli
 
   void SteeringBehavior::getTargets(std::vector<Node *> &targets) const
   {
-    for (TargetVector::const_iterator iter = m_TargetList.begin();
+    for (std::vector<Node *>::const_iterator iter = m_TargetList.begin();
          iter != m_TargetList.end(); ++iter)
       {
         if (getChildIndex(*iter) != -1)
@@ -262,7 +260,7 @@ namespace njli
 
   s32 SteeringBehavior::getTargetIndex(Node *target) const
   {
-    TargetVector::const_iterator iter =
+    std::vector<Node *>::const_iterator iter =
         std::find(m_TargetList.begin(), m_TargetList.end(), target);
 
     if (iter != m_TargetList.end())
@@ -318,7 +316,7 @@ namespace njli
       {
         btVector3 target(0, 0, 0);
 
-        for (TargetVector::const_iterator i = m_TargetList.begin();
+        for (std::vector<Node *>::const_iterator i = m_TargetList.begin();
              i != m_TargetList.end(); i++)
           {
             target += (*i)->getOrigin();

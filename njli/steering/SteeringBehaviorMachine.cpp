@@ -14,7 +14,7 @@
 #include "World.h"
 #define TAG "SteeringBehaviorMachine.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorMachine\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorMachine\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
@@ -23,13 +23,15 @@
 
 namespace njli
 {
+    
   SteeringBehaviorMachine::SteeringBehaviorMachine()
       : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0)),
         m_CurrentVelocity(new btVector3(0, 0, 0)),
-        m_HeadingVector(new btVector3(0, 0, 0)),
+        m_HeadingVector(new btVector3(0, 0, 1)),
+    m_UpVector(new btVector3(0, 1, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
-        m_MaxForce2(std::numeric_limits<f32>::max())
+        m_MaxForce2(std::numeric_limits<f32>::max()), m_Enable(false)
   {
   }
 
@@ -37,10 +39,11 @@ namespace njli
       const AbstractBuilder &builder)
       : AbstractFactoryObject(this), m_CurrentForce(new btVector3(0, 0, 0)),
         m_CurrentVelocity(new btVector3(0, 0, 0)),
-        m_HeadingVector(new btVector3(0, 0, 0)),
+        m_HeadingVector(new btVector3(0, 0, 1)),
+    m_UpVector(new btVector3(0, 1, 0)),
         m_MaxSpeed(std::numeric_limits<f32>::max()),
         m_MaxForce(sqrt(std::numeric_limits<f32>::max())),
-        m_MaxForce2(std::numeric_limits<f32>::max())
+        m_MaxForce2(std::numeric_limits<f32>::max()), m_Enable(false)
   {
   }
 
@@ -50,13 +53,17 @@ namespace njli
         m_CurrentForce(new btVector3(*(copy.m_CurrentForce))),
         m_CurrentVelocity(new btVector3(*(copy.m_CurrentVelocity))),
         m_HeadingVector(new btVector3(*(copy.m_HeadingVector))),
+    m_UpVector(new btVector3(0, 1, 0)),
         m_MaxSpeed(copy.m_MaxSpeed), m_MaxForce(copy.m_MaxForce),
-        m_MaxForce2(copy.m_MaxForce2)
+        m_MaxForce2(copy.m_MaxForce2), m_Enable(false)
   {
   }
 
   SteeringBehaviorMachine::~SteeringBehaviorMachine()
   {
+      delete m_UpVector;
+      m_UpVector = NULL;
+      
     delete m_HeadingVector;
     m_HeadingVector = NULL;
 
@@ -72,6 +79,7 @@ namespace njli
   {
     if (this != &rhs)
       {
+          *m_UpVector = *rhs.m_UpVector;
         m_MaxSpeed = rhs.m_MaxSpeed;
         m_MaxForce = rhs.m_MaxForce;
         m_MaxForce2 = rhs.m_MaxForce2;
@@ -107,15 +115,8 @@ namespace njli
 
   SteeringBehaviorMachine::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorMachine **SteeringBehaviorMachine::createArray(const u32 size)
@@ -251,91 +252,80 @@ namespace njli
     return *m_CurrentForce;
   }
 
-  bool SteeringBehaviorMachine::setHeuristic(SteeringBehavior *steeringBehavior,
-                                             f32 heuristic)
-  {
-    bool retVal = false;
-
-    removeSteeringBehavior(steeringBehavior);
-    retVal = addSteeringBehavior(steeringBehavior, heuristic);
-
-    return retVal;
-  }
-
-  f32 SteeringBehaviorMachine::getHeuristic(
-      SteeringBehavior *steeringBehavior) const
-  {
-    f32 heuristic = 0;
-    SteeringMap::const_iterator iter =
-        m_SteeringBehaviorMap.find(steeringBehavior);
-
-    if (iter != m_SteeringBehaviorMap.end())
-      {
-        heuristic = iter->second;
-      }
-
-    return heuristic;
-  }
-
   bool SteeringBehaviorMachine::addSteeringBehavior(
-      SteeringBehavior *steeringBehavior, f32 heuristic)
+      SteeringBehavior *steeringBehavior)
   {
     SDL_assert(NULL != steeringBehavior);
-
-    SteeringMap::const_iterator iter =
-        m_SteeringBehaviorMap.find(steeringBehavior);
-
-    if (iter != m_SteeringBehaviorMap.end())
+      
+      std::vector<SteeringBehavior *>::const_iterator iter =
+      std::find(m_SteeringBehaviorVector.begin(), m_SteeringBehaviorVector.end(), steeringBehavior);
+      
+      if (iter == m_SteeringBehaviorVector.end())
       {
-        m_SteeringBehaviorMap.insert(SteeringPair(steeringBehavior, heuristic));
-        addChild(steeringBehavior);
-        return true;
+          m_SteeringBehaviorVector.push_back(steeringBehavior);
+          
+          addChild(steeringBehavior);
+          return true;
       }
-
-    return false;
+      return false;
+      
+//    SteeringMap::const_iterator iter =
+//        m_SteeringBehaviorMap.find(steeringBehavior);
+//
+//    if (iter == m_SteeringBehaviorMap.end())
+//      {
+//        m_SteeringBehaviorMap.insert(SteeringPair(steeringBehavior, heuristic));
+//        addChild(steeringBehavior);
+//        return true;
+//      }
+//
+//    return false;
   }
 
   bool SteeringBehaviorMachine::removeSteeringBehavior(
       SteeringBehavior *steeringBehavior)
   {
     SDL_assert(NULL != steeringBehavior);
-
-    SteeringMap::const_iterator iter =
-        m_SteeringBehaviorMap.find(steeringBehavior);
-
-    if (iter != m_SteeringBehaviorMap.end())
+      
+      std::vector<SteeringBehavior *>::const_iterator iter =
+      std::find(m_SteeringBehaviorVector.begin(), m_SteeringBehaviorVector.end(), steeringBehavior);
+      
+      if (iter != m_SteeringBehaviorVector.end())
       {
-        m_SteeringBehaviorMap.erase(iter);
-        removeChild(iter->first);
-        return true;
+          m_SteeringBehaviorVector.erase(iter);
+          
+          removeChild(*iter);
+          
+          return true;
       }
-
-    return false;
+      return false;
   }
 
   void SteeringBehaviorMachine::removeAllSteeringBehaviors()
   {
-    for (SteeringMap::iterator iter = m_SteeringBehaviorMap.begin();
-         iter != m_SteeringBehaviorMap.end(); ++iter)
+      for (std::vector<SteeringBehavior*>::iterator iter = m_SteeringBehaviorVector.begin();
+         iter != m_SteeringBehaviorVector.end(); ++iter)
       {
-        removeChild(iter->first);
+        removeChild(*iter);
       }
-    m_SteeringBehaviorMap.clear();
+    m_SteeringBehaviorVector.clear();
   }
 
   u64 SteeringBehaviorMachine::numberOfSteeringBehaviors() const
   {
-    return m_SteeringBehaviorMap.size();
+    return m_SteeringBehaviorVector.size();
   }
 
   void SteeringBehaviorMachine::getSteeringBehaviors(
       std::vector<SteeringBehavior *> &steeringBehaviors) const
   {
-    for (SteeringMap::const_iterator iter = m_SteeringBehaviorMap.begin();
-         iter != m_SteeringBehaviorMap.end(); ++iter)
-      {
-        steeringBehaviors.push_back(iter->first);
-      }
+//    for (SteeringMap::const_iterator iter = m_SteeringBehaviorMap.begin();
+//         iter != m_SteeringBehaviorMap.end(); ++iter)
+//      {
+//        steeringBehaviors.push_back(iter->first);
+//      }
+      steeringBehaviors.reserve(m_SteeringBehaviorVector.size());
+      std::copy(m_SteeringBehaviorVector.begin(), m_SteeringBehaviorVector.end(), steeringBehaviors.begin());
   }
 
   void SteeringBehaviorMachine::setMaxSpeed(const f32 speed)
@@ -360,6 +350,30 @@ namespace njli
   const btVector3 &SteeringBehaviorMachine::getHeadingVector() const
   {
     return *m_HeadingVector;
+  }
+    void SteeringBehaviorMachine::setUpVector(const btVector3 &vec)
+    {
+        *m_UpVector = vec;
+    }
+    
+    const btVector3 &SteeringBehaviorMachine::getUpVector() const
+    {
+        return *m_UpVector;
+    }
+    
+    btVector3 SteeringBehaviorMachine::getSideVector() const
+    {
+        return getHeadingVector().cross(*m_UpVector);
+    }
+
+  const btVector3 &SteeringBehaviorMachine::getCurrentVelocity() const
+  {
+    return *m_CurrentVelocity;
+  }
+
+  const btVector3 &SteeringBehaviorMachine::getCurrentForce() const
+  {
+    return *m_CurrentForce;
   }
 
   f32 SteeringBehaviorMachine::getMaxForce2() const { return m_MaxForce2; }
@@ -405,7 +419,13 @@ namespace njli
 
         if (m_CurrentVelocity->length() > 0.00000001)
           {
-            *m_HeadingVector = m_CurrentVelocity->normalized();
+              const btVector3 newHeading(m_CurrentVelocity->normalized());
+              const float angle(btAngle(newHeading, *m_HeadingVector));
+              const btVector3 axis(btCross(newHeading, *m_HeadingVector));
+//              *m_UpVector = quatRotate(btQuaternion(axis, angle), getUpVector()).normalize();
+              
+              *m_HeadingVector = newHeading;
+              
           }
       }
 

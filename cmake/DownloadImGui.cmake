@@ -45,6 +45,11 @@ set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/x2y6hlq8mlpzlx5/libimgui_lin
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/x2y6hlq8mlpzlx5/libimgui_linux_Release.tar.gz?dl=0")
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/1qi0ytr8f5nsbwf/libimgui_linux_Debug.tar.gz?dl=0")
 
+set(RASPBERRY_DEBUG_URL "")
+set(RASPBERRY_MINSIZEREL_URL "")
+set(RASPBERRY_RELEASE_URL "")
+set(RASPBERRY_RELWITHDEBINFO_URL "")
+
 set(UNIX_DEBUG_URL "")
 set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")

@@ -11,7 +11,7 @@
 namespace njli
 {
   AbstractDecorator::AbstractDecorator()
-      : m_pParent(NULL), m_Name("<UNSET>"), m_Tag("")
+      : m_pParent(NULL), m_Name("<UNSET>"), m_Tag(""),m_isTagged(false)
   {
   }
 

@@ -45,6 +45,11 @@ set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/rfincechrbpa6gb/libImGuizmo_
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/rfincechrbpa6gb/libImGuizmo_linux_Release.tar.gz?dl=0")
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/yh8g0qls2d2hssl/libImGuizmo_linux_Debug.tar.gz?dl=0")
 
+set(RASPBERRY_DEBUG_URL "https://www.dropbox.com/s/ih2zlolzqx302t7/libImGuizmo_raspberry_Debug.tar.gz?dl=0")
+set(RASPBERRY_MINSIZEREL_URL "https://www.dropbox.com/s/swl1ww2221zybo2/libImGuizmo_raspberry_Release.tar.gz?dl=0")
+set(RASPBERRY_RELEASE_URL "https://www.dropbox.com/s/swl1ww2221zybo2/libImGuizmo_raspberry_Release.tar.gz?dl=0")
+set(RASPBERRY_RELWITHDEBINFO_URL "https://www.dropbox.com/s/ih2zlolzqx302t7/libImGuizmo_raspberry_Debug.tar.gz?dl=0")
+
 set(UNIX_DEBUG_URL "")
 set(UNIX_MINSIZEREL_URL "")
 set(UNIX_RELEASE_URL "")

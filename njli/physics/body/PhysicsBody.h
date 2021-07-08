@@ -344,7 +344,7 @@ namespace njli
                                     PhysicsShape *shape) = 0;
 
     virtual bool setTransform(const btTransform &transform =
-                                  btTransform::getIdentity()) = 0;
+                                  btTransform::getIdentity(), bool clearForces = true) = 0;
     virtual bool removePhysicsBody() = 0;
     //        virtual void enablePropertyChange(bool enable = true);
     //        virtual bool isPropertyChanged()const;

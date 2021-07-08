@@ -15,9 +15,11 @@
 
 #define TAG "SteeringBehaviorEvade.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorEvade\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorEvade\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
+
+#include "SteeringBehaviorMachine.h"
 
 namespace njli
 {
@@ -69,15 +71,8 @@ namespace njli
 
   SteeringBehaviorEvade::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorEvade **SteeringBehaviorEvade::createArray(const u32 size)
@@ -200,8 +195,35 @@ namespace njli
   }
 
   const btVector3 &SteeringBehaviorEvade::calculateForce()
-  {
-    SDL_assertPrint(false, "TODO");
-    return *m_CurrentForce;
-  }
+    {
+        SteeringBehaviorMachine *machine = getParent();
+        const Node *vehicleNode = machine->getParent();
+        const btVector3 vehiclePos(vehicleNode->getOrigin());
+        const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
+        const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
+        
+        *m_CurrentForce = btVector3(0,0,0);
+        for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
+        {
+            const Node *leader = *i;
+            if(leader->isTagged())
+            {
+                const btVector3 leaderPos(leader->getOrigin());
+                
+                btVector3 leaderVelocity(0,0,0);
+                btVector3 leaderSide(1.0, 0.0, 0.0);
+                float leaderSpeed(0);
+                
+                if(leader->getSteeringBehaviorMachine() != NULL)
+                {
+                    leaderVelocity = leader->getSteeringBehaviorMachine()->getCurrentVelocity();
+                    leaderSide = leader->getSteeringBehaviorMachine()->getSideVector();
+                    leaderSpeed = leader->getSteeringBehaviorMachine()->getCurrentVelocity().length();
+                }
+                *m_CurrentForce += SteeringBehaviorMachine::evade(leaderPos, leaderVelocity, leaderSpeed, vehiclePos, vehicleVelocity, vehicleMaxSpeed);
+            }
+        }
+        
+        return *m_CurrentForce;
+    }
 } // namespace njli

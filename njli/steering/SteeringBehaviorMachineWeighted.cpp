@@ -77,15 +77,8 @@ namespace njli
 
   SteeringBehaviorMachineWeighted::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorMachineWeighted **
@@ -214,10 +207,11 @@ namespace njli
   {
     btVector3 force(0, 0, 0);
 
-    for (SteeringMap::iterator iter = m_SteeringBehaviorMap.begin();
-         iter != m_SteeringBehaviorMap.end(); ++iter)
+    for (std::vector<SteeringBehavior*>::iterator iter = m_SteeringBehaviorVector.begin();
+         iter != m_SteeringBehaviorVector.end(); ++iter)
       {
-        force += (iter->first->calculateForce() * iter->second);
+          SteeringBehavior *sb = *iter;
+          force += (sb->calculateForce() * sb->getWeight());
       }
 
     if (force.length2() > getMaxForce2())

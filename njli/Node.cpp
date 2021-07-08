@@ -20,8 +20,8 @@
 #include "NodeStateMachine.h"
 #include "ParticleEmitter.h"
 #include "PhysicsBody.h"
-#include "PhysicsShape.h"
 #include "PhysicsField.h"
+#include "PhysicsShape.h"
 #include "PhysicsWorld.h"
 #include "Scene.h"
 #include "Sound.h"
@@ -40,6 +40,8 @@
 
 #include <algorithm>
 
+#include "SteeringBehavior.h"
+
 namespace njli
 {
   void Node::updateActions(void *_ptr)
@@ -51,14 +53,10 @@ namespace njli
   Node::Node()
       : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
         m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL), m_Opacity(1.0f),
-    m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
-    m_Colorbase(new btVector4(1, 1, 1, 1)),
-    m_NormalMatrixDirty(true),
-    m_ColorBaseDirty(true),
-    m_HideGeometry(false),
-    m_HiddenDirty(true),
-    m_OpacityDirty(true),
-    m_TransformDirty(true),
+        m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
+        m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
+        m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
+        m_OpacityDirty(true), m_TransformDirty(true),
         m_RenderCategory(JLI_BIT_CATEGORY_NONE),
         m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
         m_GeometryIndex(-1), m_isTouchedByRay(false),
@@ -79,14 +77,10 @@ namespace njli
   Node::Node(const AbstractBuilder &builder)
       : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
         m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL), m_Opacity(1.0f),
-    m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
-    m_Colorbase(new btVector4(1, 1, 1, 1)),
-    m_NormalMatrixDirty(true),
-    m_ColorBaseDirty(true),
-    m_HideGeometry(false),
-    m_HiddenDirty(true),
-    m_OpacityDirty(true),
-    m_TransformDirty(true),
+        m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
+        m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
+        m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
+        m_OpacityDirty(true), m_TransformDirty(true),
         m_RenderCategory(JLI_BIT_CATEGORY_NONE),
         m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
         m_GeometryIndex(-1), m_isTouchedByRay(false),
@@ -107,14 +101,10 @@ namespace njli
   Node::Node(const Node &copy)
       : AbstractFactoryObject(this), m_PhysicsBody(NULL), m_Light(NULL),
         m_Camera(NULL), m_Geometry(NULL), m_PhysicsField(NULL), m_Opacity(1.0f),
-    m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
-    m_Colorbase(new btVector4(1, 1, 1, 1)),
-    m_NormalMatrixDirty(true),
-    m_ColorBaseDirty(true),
-    m_HideGeometry(false),
-    m_HiddenDirty(true),
-    m_OpacityDirty(true),
-    m_TransformDirty(true),
+        m_NormalMatrix(new btMatrix3x3(btMatrix3x3::getIdentity())),
+        m_Colorbase(new btVector4(1, 1, 1, 1)), m_NormalMatrixDirty(true),
+        m_ColorBaseDirty(true), m_HideGeometry(false), m_HiddenDirty(true),
+        m_OpacityDirty(true), m_TransformDirty(true),
         m_RenderCategory(JLI_BIT_CATEGORY_NONE),
         m_NodeStateMachine(NodeStateMachine::create()), m_pParent(NULL),
         m_GeometryIndex(-1), m_isTouchedByRay(false),
@@ -148,12 +138,12 @@ namespace njli
 
     delete m_ColorTransform;
     m_ColorTransform = NULL;
-      
-      delete m_Colorbase;
-      m_Colorbase = NULL;
-      
-      delete m_NormalMatrix;
-      m_NormalMatrix = NULL;
+
+    delete m_Colorbase;
+    m_Colorbase = NULL;
+
+    delete m_NormalMatrix;
+    m_NormalMatrix = NULL;
 
     removeFromParentNode();
   }
@@ -184,7 +174,10 @@ namespace njli
 
   Node::operator std::string() const
   {
-    return njli::JsonJLI::parse(string_format(FORMATSTRING, getName()));
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
+    //      const char *temp = string_format(FORMATSTRING, getName());
+    //    return njli::JsonJLI::parse(temp);
   }
 
   Node **Node::createArray(const u32 size)
@@ -365,17 +358,14 @@ namespace njli
 
   void Node::setTransform(const btTransform &transform)
   {
-      if(!(*m_Transform == transform))
+    if (!(*m_Transform == transform))
       {
-          m_TransformDirty = true;
-          
-          *m_Transform = transform;
-          
-          applyPhysicsBodyTransform(transform);
+        m_TransformDirty = true;
+
+        *m_Transform = transform;
+
+        applyPhysicsBodyTransform(transform);
       }
-    
-      
-      
 
     //        PhysicsBody *physicsBody = getPhysicsBody();
     //
@@ -385,11 +375,11 @@ namespace njli
     //            physicsBody->setWorldTransform(getTransform());
     //        }
   }
-    
-    void Node::setTransform(const glm::mat4 &transform)
-    {
-        setTransform(glmToBullet(transform));
-    }
+
+  void Node::setTransform(const glm::mat4 &transform)
+  {
+    setTransform(glmToBullet(transform));
+  }
 
   btVector3 Node::getOrigin() const { return getWorldTransform().getOrigin(); }
 
@@ -399,11 +389,11 @@ namespace njli
     t.setOrigin(origin);
     setTransform(t);
   }
-    
-    void Node::setOrigin(float x, float y, float z)
-    {
-        setOrigin(btVector3(x, y, z));
-    }
+
+  void Node::setOrigin(float x, float y, float z)
+  {
+    setOrigin(btVector3(x, y, z));
+  }
 
   void Node::setOrigin(const btVector2 &origin)
   {
@@ -472,6 +462,10 @@ namespace njli
     removeSteeringBehaviorMachine();
 
     m_SteeringBehaviorMachine = steeringBehaviorMachine;
+
+    std::vector<SteeringBehavior *> steeringBehaviors;
+    m_SteeringBehaviorMachine->getSteeringBehaviors(steeringBehaviors);
+
 
     addChild(m_SteeringBehaviorMachine);
   }
@@ -620,7 +614,7 @@ namespace njli
     return NULL;
   }
 
-  void Node::setPhysicsBody(PhysicsBody *body)
+  void Node::setPhysicsBody(PhysicsBody *body, bool clearForces)
   {
     SDL_assert(body != NULL);
 
@@ -630,7 +624,7 @@ namespace njli
 
     addChild(m_PhysicsBody);
 
-    getPhysicsBody()->setTransform(getTransform());
+    getPhysicsBody()->setTransform(getTransform(), clearForces);
 
     //        m_ApplyPhysicsShape = true;
   }
@@ -991,16 +985,17 @@ namespace njli
 
   void Node::setOpacity(f32 opacity)
   {
-      if(m_Opacity != opacity)
+    if (m_Opacity != opacity)
       {
-          m_Opacity = (opacity > 1.0f) ? 1.0f : ((opacity < 0.0f) ? 0.0f : opacity);
-          
-          Geometry *g = getGeometry();
-          if (g)
+        m_Opacity =
+            (opacity > 1.0f) ? 1.0f : ((opacity < 0.0f) ? 0.0f : opacity);
+
+        Geometry *g = getGeometry();
+        if (g)
           {
-              g->setOpacity(this);
+            g->setOpacity(this);
           }
-//          m_OpacityDirty = true;
+        //          m_OpacityDirty = true;
       }
   }
 
@@ -1038,57 +1033,47 @@ namespace njli
     const Geometry *geometry = getGeometry();
     if (geometry)
       {
-          assert(false && "need to implement the getMaterial()");
-//        const Material *material = geometry->getMaterial();
-//
-//        if (material)
-//          {
-//            return (material->hasOpacity() ||
-//                    (material->getTransparency() != 1.0) ||
-//                    (m_Opacity != 1.0f));
-//          }
+        assert(false && "need to implement the getMaterial()");
+        //        const Material *material = geometry->getMaterial();
+        //
+        //        if (material)
+        //          {
+        //            return (material->hasOpacity() ||
+        //                    (material->getTransparency() != 1.0) ||
+        //                    (m_Opacity != 1.0f));
+        //          }
       }
     return m_Opacity != 1.0f;
   }
-    
-    void Node::setNormalMatrix(const btMatrix3x3 &mtx)
-    {
-        if(!(mtx == *m_NormalMatrix))
-        {
-            *m_NormalMatrix = mtx;
-//            m_NormalMatrixDirty = true;
-        }
-    }
-    
-    const btMatrix3x3 &Node::getNormalMatrix()const
-    {
-        return *m_NormalMatrix;
-    }
-    
-    void Node::setColorBase(const btVector4 &color)
-    {
-//        if(*m_Colorbase != color)
-//            m_ColorBaseDirty = true;
-        *m_Colorbase = color;
-    }
-    
-    const btVector4 &Node::getColorBase()const
-    {
-        return *m_Colorbase;
-    }
-    
-    void Node::enableHideGeometry(bool hidden)
-    {
-//        if(hidden != m_HideGeometry)
-//            m_HiddenDirty = true;
-        m_HideGeometry = hidden;
-        
-    }
-    
-    bool Node::isHiddenGeometry()const
-    {
-        return m_HideGeometry;
-    }
+
+  void Node::setNormalMatrix(const btMatrix3x3 &mtx)
+  {
+    if (!(mtx == *m_NormalMatrix))
+      {
+        *m_NormalMatrix = mtx;
+        //            m_NormalMatrixDirty = true;
+      }
+  }
+
+  const btMatrix3x3 &Node::getNormalMatrix() const { return *m_NormalMatrix; }
+
+  void Node::setColorBase(const btVector4 &color)
+  {
+    //        if(*m_Colorbase != color)
+    //            m_ColorBaseDirty = true;
+    *m_Colorbase = color;
+  }
+
+  const btVector4 &Node::getColorBase() const { return *m_Colorbase; }
+
+  void Node::enableHideGeometry(bool hidden)
+  {
+    //        if(hidden != m_HideGeometry)
+    //            m_HiddenDirty = true;
+    m_HideGeometry = hidden;
+  }
+
+  bool Node::isHiddenGeometry() const { return m_HideGeometry; }
 
   void Node::hide(Camera *camera)
   {
@@ -1121,9 +1106,12 @@ namespace njli
 
   void Node::show(Camera *camera)
   {
-    m_RenderCategory =
-        (njliBitCategories)On(m_RenderCategory, camera->getRenderCategory());
-      
+    if (camera)
+      {
+        m_RenderCategory = (njliBitCategories)On(m_RenderCategory,
+                                                 camera->getRenderCategory());
+      }
+
     for (std::vector<Node *>::const_iterator iter = m_Children.begin();
          iter != m_Children.end(); ++iter)
       {
@@ -1294,7 +1282,8 @@ namespace njli
   void Node::runAction(Action *action, bool callCompletionFunction)
   {
     addChild(action);
-    AbstractActionable::runAction(action, callCompletionFunction);
+    //    AbstractActionable::runAction(action, callCompletionFunction);
+    AbstractActionable::runAction(action, getName(), callCompletionFunction);
   }
 
   void Node::runAction(Action *action, const char *key,
@@ -1430,20 +1419,20 @@ namespace njli
 
   Node *Node::getChildNode(const u32 index)
   {
-      if(index < numberOfChildrenNodes())
+    if (index < numberOfChildrenNodes())
       {
-          return m_Children.at(index);
+        return m_Children.at(index);
       }
-      return NULL;
+    return NULL;
   }
 
   const Node *Node::getChildNode(const u32 index) const
   {
-      if(index < numberOfChildrenNodes())
+    if (index < numberOfChildrenNodes())
       {
-          return m_Children.at(index);
+        return m_Children.at(index);
       }
-      return NULL;
+    return NULL;
   }
 
   void Node::getChildrenNodes(std::vector<Node *> &children) const
@@ -1537,10 +1526,7 @@ namespace njli
     m_Children.clear();
   }
 
-  u32 Node::numberOfChildrenNodes() const {
-      return m_Children.size();
-      
-  }
+  u32 Node::numberOfChildrenNodes() const { return m_Children.size(); }
 
   void Node::replaceChildNode(Node *oldChild, Node *newChild)
   {
@@ -1550,42 +1536,43 @@ namespace njli
     parent->addChildNode(newChild);
   }
 
-    bool Node::isTransformDirty()const
-    {
-        //        if(m_PhysicsBody)
-        //        {
-        //            if (m_PhysicsBody->isKinematicPhysics() || m_PhysicsBody->isStaticPhysics())
-        //            {
-        //                if(getParentNode())
-        //                    return m_TransformDirty || getParentNode()->isTransformDirty();
-        //                return m_TransformDirty;
-        //            }
-        //
-        //            if(getParentNode())
-        //            {
-        //                return m_PhysicsBody->isActive() || getParentNode()->isTransformDirty();
-        //            }
-        //            return m_PhysicsBody->isActive() || getParentNode()->isTransformDirty();
-        //        }
-        
-//        if(getParentNode())
-//        return m_TransformDirty || getParentNode()->isTransformDirty();
-        return m_TransformDirty;
-    }
-    
-    void Node::resetTransformDirty()
-    {
-        m_TransformDirty = false;
-    }
-    
+  bool Node::isTransformDirty() const
+  {
+    //        if(m_PhysicsBody)
+    //        {
+    //            if (m_PhysicsBody->isKinematicPhysics() ||
+    //            m_PhysicsBody->isStaticPhysics())
+    //            {
+    //                if(getParentNode())
+    //                    return m_TransformDirty ||
+    //                    getParentNode()->isTransformDirty();
+    //                return m_TransformDirty;
+    //            }
+    //
+    //            if(getParentNode())
+    //            {
+    //                return m_PhysicsBody->isActive() ||
+    //                getParentNode()->isTransformDirty();
+    //            }
+    //            return m_PhysicsBody->isActive() ||
+    //            getParentNode()->isTransformDirty();
+    //        }
+
+    //        if(getParentNode())
+    //        return m_TransformDirty || getParentNode()->isTransformDirty();
+    return m_TransformDirty;
+  }
+
+  void Node::resetTransformDirty() { m_TransformDirty = false; }
+
   void Node::update(f32 timeStep)
   {
     BT_PROFILE("Node::update");
-      
-      setNormalMatrix(getWorldTransform().getBasis().inverse().transpose());
+
+    setNormalMatrix(getWorldTransform().getBasis().inverse().transpose());
 
     SteeringBehaviorMachine *steeringMachine = getSteeringBehaviorMachine();
-    if (steeringMachine)
+    if (steeringMachine && steeringMachine->isEnabled())
       {
         steeringMachine->calculate(timeStep);
       }
@@ -1600,13 +1587,9 @@ namespace njli
 
     NodeStateMachine *sm = getStateMachine();
     if (sm != NULL)
-    {
-      sm->update(timeStep);
-    }
-      
-
-      
-      
+      {
+        sm->update(timeStep);
+      }
 
     //        Node *parent = getParentNode();
     //        //        if(m_ApplyPhysicsShape || (parent &&
@@ -1616,50 +1599,51 @@ namespace njli
     //            m_ApplyPhysicsShape = false;
     //        }
   }
-    
-    void Node::updateGeometry(Geometry *const geometry, bool hiddenFromCamera)
-    {
-        if(geometry)
+
+  void Node::updateGeometry(Geometry *const geometry, bool hiddenFromCamera)
+  {
+    if (geometry)
+      {
+        const unsigned long geometryIndex = getGeometryIndex();
+
+        //            if(isTransformDirty())
         {
-            const unsigned long geometryIndex = getGeometryIndex();
-            
-//            if(isTransformDirty())
-            {
-                geometry->setTransform(geometryIndex, getWorldTransform());
-//                resetTransformDirty();
-            }
-            
-            //            if(m_ColorTransformDirty)
-            //            {
-            //                geometry->setColorTransform(geometryIndex, getColorTransform());
-            //                m_ColorTransformDirty = false;
-            //            }
-            
-//            if(m_NormalMatrixDirty)
-            {
-                geometry->setNormalMatrixTransform(geometryIndex, btTransform(getNormalMatrix()));
-//                m_NormalMatrixDirty = false;
-            }
-            
-//            if(m_ColorBaseDirty)
-            {
-                geometry->setColorBase(this);
-//                m_ColorBaseDirty = false;
-            }
-            
-//            if(m_OpacityDirty)
-            {
-                geometry->setOpacity(this);
-//                m_OpacityDirty = false;
-            }
-            
-//            if(m_HiddenDirty)
-//            {
-                geometry->setHidden(this, hiddenFromCamera);
-//                m_HiddenDirty = false;
-//            }
+          geometry->setTransform(geometryIndex, getWorldTransform());
+          //                resetTransformDirty();
         }
-    }
+
+        //            if(m_ColorTransformDirty)
+        //            {
+        //                geometry->setColorTransform(geometryIndex,
+        //                getColorTransform()); m_ColorTransformDirty = false;
+        //            }
+
+        //            if(m_NormalMatrixDirty)
+        {
+          geometry->setNormalMatrixTransform(geometryIndex,
+                                             btTransform(getNormalMatrix()));
+          //                m_NormalMatrixDirty = false;
+        }
+
+        //            if(m_ColorBaseDirty)
+        {
+          geometry->setColorBase(this);
+          //                m_ColorBaseDirty = false;
+        }
+
+        //            if(m_OpacityDirty)
+        {
+          geometry->setOpacity(this);
+          //                m_OpacityDirty = false;
+        }
+
+        //            if(m_HiddenDirty)
+        //            {
+        geometry->setHidden(this, hiddenFromCamera);
+        //                m_HiddenDirty = false;
+        //            }
+      }
+  }
 
   //    void Node::render(Camera *camera)
   //    {

@@ -489,7 +489,8 @@ namespace njli
    When the mass is changed on the rigid body
 
    */
-  bool PhysicsBodyRigid::setTransform(const btTransform &transform)
+  bool PhysicsBodyRigid::setTransform(const btTransform &transform,
+                                      bool clearForces)
   {
     if (m_btRigidBody && m_btRigidBody->getNumConstraintRefs() != 0)
       {
@@ -557,10 +558,17 @@ namespace njli
 
                 *m_btRigidBody = btRigidBody(cinfo);
 
-                m_btRigidBody->setLinearFactor(linearFactor);
-                m_btRigidBody->setAngularVelocity(angularVelocity);
-                m_btRigidBody->setAngularFactor(angularFactor);
-                m_btRigidBody->setLinearVelocity(linearVelocity);
+                if (!clearForces)
+                  {
+                    m_btRigidBody->setLinearFactor(linearFactor);
+                    m_btRigidBody->setAngularVelocity(angularVelocity);
+                    m_btRigidBody->setAngularFactor(angularFactor);
+                    m_btRigidBody->setLinearVelocity(linearVelocity);
+                  }
+                else
+                  {
+                    m_btRigidBody->clearForces();
+                  }
               }
             else
               {

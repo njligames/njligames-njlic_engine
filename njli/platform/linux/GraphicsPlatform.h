@@ -4,6 +4,15 @@
 #elif defined(__GL_ES3__)
 #error Unsupported choice setting
 #elif defined(__GL_2__)
+  #if defined(__APPLE__)
+    #define glGenVertexArrays_NJLIC glGenVertexArraysAPPLE
+    #define glBindVertexArray_NJLIC glBindVertexArrayAPPLE
+    #define glDeleteVertexArrays_NJLIC glDeleteVertexArraysAPPLE
+  #else
+    #define glGenVertexArrays_NJLIC glGenVertexArrays
+    #define glBindVertexArray_NJLIC glBindVertexArray
+    #define glDeleteVertexArrays_NJLIC glDeleteVertexArrays
+  #endif
   #define GL_GLEXT_PROTOTYPES
     #include <GL/gl.h>
     #include <GL/glext.h>

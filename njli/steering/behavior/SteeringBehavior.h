@@ -16,6 +16,7 @@
 #include "Log.h"
 #include "btVector3.h"
 #include "lua.hpp"
+#include <functional>
 
 namespace njli
 {
@@ -247,7 +248,7 @@ namespace njli
      *  @section ex1 Lua example
      *  @snippet SteeringBehavior.lua SteeringBehavior_addTarget_
      */
-    s32 addTarget(Node * emitter);
+    s32 addTarget(Node * target);
 
     /**
      *  @author James Folk, 16-02-10 21:02:05
@@ -339,7 +340,13 @@ namespace njli
      */
     virtual const Node *getTarget(const u32 index) const;
 
-  protected:
+      void setProbability(float probability){m_Probability = probability;}
+      float getProbability()const{return m_Probability;}
+      
+      void setWeight(float weight){m_Weight=weight;}
+      float getWeight()const{return m_Weight;}
+  
+      
     /**
      *  <#Description#>
      *
@@ -352,7 +359,9 @@ namespace njli
      *  @return <#return value description#>
      */
     const SteeringBehaviorMachine *getParent() const;
-
+      
+      
+protected:
     void setCurrentForce(const btVector3 &force);
 
     bool hasOwner() const;
@@ -360,11 +369,13 @@ namespace njli
 
     btVector3 getAverageTargetPosition() const;
 
-    typedef std::vector<Node *> TargetVector;
-    TargetVector m_TargetList;
+    std::vector<Node *> m_TargetList;
 
-  private:
+  
     btVector3 *m_CurrentForce;
+  private:
+      float m_Probability;
+      float m_Weight;
   };
 }
 

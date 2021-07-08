@@ -13,7 +13,7 @@
 //#import <UIKit/UIKit.h>
 //#import "GameViewController.h"
 
-#define FORMATSTRING "{\"njli::WorldInput\":[]}"
+#define FORMATSTRING "{\"njli::WorldInput\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 

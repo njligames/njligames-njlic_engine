@@ -17,6 +17,7 @@
 #include "SteeringBehavior.h"
 #include "btVector3.h"
 #include "lua.hpp"
+#include "Path.h"
 
 namespace njli
 {
@@ -238,11 +239,22 @@ namespace njli
     // TODO: fill in specific methods for SteeringBehaviorFollowPath
 
     virtual const btVector3 &calculateForce();
+      
+      void setPath(const Path &path);
+      const Path &getPath()const;
+      
+      void setWaypointSeekDist(btScalar distance);
+      
+      
+      
+      void setDecelerationFactor(float factor){m_VehichleDeceleration=factor;}
+      float getDecelerationFactor()const{return m_VehichleDeceleration;}
 
   protected:
   private:
-    btVector3 *m_CurrentForce;
-    std::vector<Node *> m_TargetList;
+      Path *m_Path;
+      btScalar m_waypointSeekDist;
+      float m_VehichleDeceleration;
   };
 }
 

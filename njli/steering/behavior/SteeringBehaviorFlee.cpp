@@ -15,9 +15,11 @@
 
 #define TAG "SteeringBehaviorFlee.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorFlee\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorFlee\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
+
+#include "SteeringBehaviorMachine.h"
 
 namespace njli
 {
@@ -68,15 +70,8 @@ namespace njli
 
   SteeringBehaviorFlee::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorFlee **SteeringBehaviorFlee::createArray(const u32 size)
@@ -199,8 +194,22 @@ namespace njli
   }
 
   const btVector3 &SteeringBehaviorFlee::calculateForce()
-  {
-    SDL_assertPrint(false, "TODO");
-    return *m_CurrentForce;
-  }
+    {
+        SteeringBehaviorMachine *machine = getParent();
+        const Node *vehicleNode = machine->getParent();
+        const btVector3 vehiclePos(vehicleNode->getOrigin());
+        const btVector3 vehicleVelocity(vehicleNode->getSteeringBehaviorMachine()->getCurrentVelocity());
+        const float vehicleMaxSpeed(vehicleNode->getSteeringBehaviorMachine()->getMaxSpeed());
+        
+        *m_CurrentForce = btVector3(0,0,0);
+        for (std::vector<Node *>::const_iterator i = m_TargetList.begin(); i != m_TargetList.end(); i++)
+        {
+            const Node *leader = *i;
+            
+            const btVector3 leaderPos(leader->getOrigin());
+            *m_CurrentForce += SteeringBehaviorMachine::flee(leaderPos, vehiclePos, vehicleVelocity, vehicleMaxSpeed);
+        }
+        
+        return *m_CurrentForce;
+    }
 } // namespace njli

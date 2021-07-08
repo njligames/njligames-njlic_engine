@@ -39,7 +39,8 @@
 
 #include "Log.h"
 #define TAG "PhysicsWorld.cpp"
-#define FORMATSTRING "{\"njli::PhysicsWorld\":[]}"
+
+#define FORMATSTRING "{\"njli::PhysicsWorld\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 

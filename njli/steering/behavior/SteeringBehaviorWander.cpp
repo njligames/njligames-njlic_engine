@@ -15,26 +15,41 @@
 
 #define TAG "SteeringBehaviorWander.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorWander\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorWander\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
 
+#include "SteeringBehaviorMachine.h"
+
 namespace njli
 {
-  SteeringBehaviorWander::SteeringBehaviorWander() : SteeringBehavior() {}
+    SteeringBehaviorWander::SteeringBehaviorWander() : SteeringBehavior(),
+    m_WanderTarget(new btVector3(0, 0, 0)),
+    m_WanderJitter(1.333333333333333),
+    m_WanderRadius(1.2f),
+    m_WanderDistance(2.0f)
+    {}
 
   SteeringBehaviorWander::SteeringBehaviorWander(const AbstractBuilder &builder)
-      : SteeringBehavior(builder)
+    : SteeringBehavior(builder),
+    m_WanderTarget(new btVector3(0, 0, 0)),
+    m_WanderJitter(1.333333333333333),
+    m_WanderRadius(1.2f),
+    m_WanderDistance(2.0f)
   {
   }
 
   SteeringBehaviorWander::SteeringBehaviorWander(
       const SteeringBehaviorWander &copy)
-      : SteeringBehavior(copy)
+    : SteeringBehavior(copy),
+    m_WanderTarget(new btVector3(0, 0, 0)),
+    m_WanderJitter(1.333333333333333),
+    m_WanderRadius(1.2f),
+    m_WanderDistance(2.0f)
   {
   }
 
-  SteeringBehaviorWander::~SteeringBehaviorWander() {}
+    SteeringBehaviorWander::~SteeringBehaviorWander() {delete m_WanderTarget; }
 
   SteeringBehaviorWander &SteeringBehaviorWander::
   operator=(const SteeringBehaviorWander &rhs)
@@ -69,15 +84,8 @@ namespace njli
 
   SteeringBehaviorWander::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorWander **SteeringBehaviorWander::createArray(const u32 size)
@@ -201,7 +209,11 @@ namespace njli
 
   const btVector3 &SteeringBehaviorWander::calculateForce()
   {
-    SDL_assertPrint(false, "TODO");
-    return *m_CurrentForce;
+      SteeringBehaviorMachine *machine = getParent();
+      const Node *vehicleNode = machine->getParent();
+      
+      *m_CurrentForce = SteeringBehaviorMachine::wander(vehicleNode->getOrigin(), *m_WanderTarget, m_WanderJitter, m_WanderRadius, m_WanderDistance);
+      
+      return *m_CurrentForce;
   }
 } // namespace njli

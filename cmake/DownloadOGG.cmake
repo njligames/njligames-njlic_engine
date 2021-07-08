@@ -43,6 +43,11 @@ set(LINUX_MINSIZEREL_URL "https://www.dropbox.com/s/m0ikljr1gnm3lat/libogg_linux
 set(LINUX_RELEASE_URL "https://www.dropbox.com/s/m0ikljr1gnm3lat/libogg_linux_Release.tar.gz?dl=0")
 set(LINUX_RELWITHDEBINFO_URL "https://www.dropbox.com/s/jch02hzlxr00bs0/libogg_linux_Debug.tar.gz?dl=0")
 
+set(RASPBERRY_DEBUG_URL "https://www.dropbox.com/s/wwbymbdbiywe4id/libogg_raspberry_Debug.tar.gz?dl=0")
+set(RASPBERRY_MINSIZEREL_URL "https://www.dropbox.com/s/en4pk0ye46d6z3r/libogg_raspberry_Release.tar.gz?dl=0")
+set(RASPBERRY_RELEASE_URL "https://www.dropbox.com/s/en4pk0ye46d6z3r/libogg_raspberry_Release.tar.gz?dl=0")
+set(RASPBERRY_RELWITHDEBINFO_URL "https://www.dropbox.com/s/wwbymbdbiywe4id/libogg_raspberry_Debug.tar.gz?dl=0")
+
 set(UNIX_DEBUG_URL "")
 set(UNIX_RELEASE_URL "")
 

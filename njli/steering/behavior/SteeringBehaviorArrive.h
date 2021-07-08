@@ -236,10 +236,12 @@ namespace njli
 
     virtual const btVector3 &calculateForce();
 
+      void setDecelerationFactor(float factor){m_VehichleDeceleration=factor;}
+      float getDecelerationFactor()const{return m_VehichleDeceleration;}
+      
   protected:
   private:
-    btVector3 *m_CurrentForce;
-    std::vector<Node *> m_TargetList;
+      float m_VehichleDeceleration;
   };
 }
 

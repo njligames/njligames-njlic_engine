@@ -229,10 +229,10 @@ namespace njli
 #endif
   }
 
-  void JsonJLI::append(const JsonJLI &value) 
-  { 
+  void JsonJLI::append(const JsonJLI &value)
+  {
 #if defined(USE_JSONCPP_LIBRARY)
-    m_value.append(value.m_value); 
+    m_value.append(value.m_value);
 #endif
   }
 } // namespace njli

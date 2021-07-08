@@ -15,9 +15,11 @@
 
 #define TAG "SteeringBehaviorCohesion.cpp"
 
-#define FORMATSTRING "{\"jli::SteeringBehaviorCohesion\":[]}"
+#define FORMATSTRING "{\"njli::SteeringBehaviorCohesion\":[{\"name\":\"%s\"}]}"
 #include "JsonJLI.h"
 #include "btPrint.h"
+
+#include "SteeringBehaviorMachine.h"
 
 namespace njli
 {
@@ -70,15 +72,8 @@ namespace njli
 
   SteeringBehaviorCohesion::operator std::string() const
   {
-    // TODO: implement to string...
-
-    std::string s = string_format("%s", FORMATSTRING);
-
-    JsonJLI *json = JsonJLI::create();
-    s = json->parse(s.c_str());
-    JsonJLI::destroy(json);
-
-    return s;
+    std::string temp(string_format(FORMATSTRING, getName()));
+    return temp;
   }
 
   SteeringBehaviorCohesion **

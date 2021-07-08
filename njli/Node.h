@@ -88,6 +88,8 @@ namespace njli
   public:
     using AbstractDecorator::setName;
     using AbstractDecorator::getName;
+      using AbstractDecorator::enableTagged;
+      using AbstractDecorator::isTagged;
 
     using AbstractFactoryObject::create;
     //    using AbstractFactoryObject::clone;
@@ -719,7 +721,7 @@ namespace njli
          *  @section ex1 Lua example
          *  @snippet Node.lua Node_calculateSerializeBufferSize_
          */
-    void setPhysicsBody(PhysicsBody * body);
+    void setPhysicsBody(PhysicsBody * body, bool clearForces = true);
 
     /**
          *  @author James Folk, 16-02-10 21:02:38

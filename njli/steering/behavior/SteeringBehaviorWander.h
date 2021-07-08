@@ -238,8 +238,12 @@ namespace njli
 
   protected:
   private:
-    btVector3 *m_CurrentForce;
-    std::vector<Node *> m_TargetList;
+      
+    btVector3 *m_WanderTarget;
+
+    float m_WanderJitter;
+    double m_WanderRadius;
+    double m_WanderDistance;
   };
 }
 

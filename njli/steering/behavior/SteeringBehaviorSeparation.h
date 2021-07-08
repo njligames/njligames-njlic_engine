@@ -237,12 +237,20 @@ namespace njli
   public:
     // TODO: fill in specific methods for SteeringBehaviorSeparation
 
+//      s32 addNeighbor(Node *Neighbor);
+//      bool removeNeighbor(Node * target);
+//      void removeAllNeighbors();
+//      s32 numberOfNeighbors() const;
+//      void getNeighbors(std::vector<Node *> & targets) const;
+//      s32 getNeighborIndex(Node * object) const;
+//      Node *getNeighbor(const u32 index);
+//      const Node *getNeighbor(const u32 index) const;
+      
     virtual const btVector3 &calculateForce();
 
   protected:
   private:
-    btVector3 *m_CurrentForce;
-    std::vector<Node *> m_TargetList;
+//      std::vector<Node*> m_NeighborList;
   };
 }
 

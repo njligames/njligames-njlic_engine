@@ -3306,8 +3306,7 @@ namespace njli
         break;
 
       case JLI_OBJECT_TYPE_MeshGeometry:
-        obj = new MeshGeometry(
-            *dynamic_cast<const MeshGeometry *>(&object));
+        obj = new MeshGeometry(*dynamic_cast<const MeshGeometry *>(&object));
         break;
       case JLI_OBJECT_TYPE_MeshGeometryBuilder:
         obj = new MeshGeometryBuilder(

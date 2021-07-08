@@ -2,7 +2,7 @@
 
 %module njlic
 
-#define LLONG_MAX
+// #define LLONG_MAX
 //MARK: Tested Ignore, successfully
 %include "_IgnoreNJLIC.swg"
 %include "_IgnorePlatform.swg"
@@ -128,6 +128,7 @@
 #include "NodeStateMachineBuilder.h"
 #include "ParticleEmitter.h"
 #include "ParticleEmitterBuilder.h"
+#include "Path.h"
 #include "PhysicsBody.h"
 #include "PhysicsBodyGhost.h"
 #include "PhysicsBodyGhostBuilder.h"
@@ -362,6 +363,7 @@
 %include "NodeStateMachineBuilder.swg"
 %include "ParticleEmitter.swg"
 %include "ParticleEmitterBuilder.swg"
+%include "Path.swg"
 %include "PhysicsBody.swg"
 %include "PhysicsBodyGhost.swg"
 %include "PhysicsBodyGhostBuilder.swg"
@@ -582,6 +584,7 @@
 %include "NodeStateMachineBuilder.h"
 %include "ParticleEmitter.h"
 %include "ParticleEmitterBuilder.h"
+%include "Path.h"
 %include "PhysicsBody.h"
 %include "PhysicsBodyGhost.h"
 %include "PhysicsBodyGhostBuilder.h"
@@ -2361,6 +2364,7 @@ break;
 %include "NodeStateMachineBuilder.swg"
 %include "ParticleEmitter.swg"
 %include "ParticleEmitterBuilder.swg"
+%include "Path.swg"
 %include "PhysicsBody.swg"
 %include "PhysicsBodyGhost.swg"
 %include "PhysicsBodyGhostBuilder.swg"
