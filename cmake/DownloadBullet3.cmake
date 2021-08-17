@@ -1,6 +1,6 @@
 set(LIBRARY_NAME "bullet3")
 
-set(INCLUDE_URL "https://www.dropbox.com/s/f2zfpkdx2agtk00/libbullet3_includes.tar.gz?dl=0")
+set(INCLUDE_URL "https://www.dropbox.com/s/27qvwe3opqj1jhf/libbullet3_includes.tar.gz?dl=0")
 
 set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/sg0oky0j7dbc1y9/libbullet3_emscripten_Debug.tar.gz?dl=0")
 set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/ekvc8202v80x04e/libbullet3_emscripten_Release.tar.gz?dl=0")
