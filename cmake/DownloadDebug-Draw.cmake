@@ -1,6 +1,6 @@
 set(LIBRARY_NAME "debug-draw")
 
-set(INCLUDE_URL "https://www.dropbox.com/s/c405ev7l3d0ruvb/libdebug-draw_includes.tar.gz?dl=0")
+set(INCLUDE_URL "https://www.dropbox.com/s/yba393ub6o505eg/libdebug-draw_includes.tar.gz?dl=0")
 
 set(EMSCRIPTEN_DEBUG_URL "")
 set(EMSCRIPTEN_RELEASE_URL "")
