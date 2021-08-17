@@ -1,6 +1,6 @@
 set(LIBRARY_NAME "glm")
 
-set(INCLUDE_URL "https://www.dropbox.com/s/fferowgwlio96m5/libglm_includes.tar.gz?dl=0")
+set(INCLUDE_URL "https://www.dropbox.com/s/zot762yvyvhtxf2/libglm_includes.tar.gz?dl=0")
 
 set(EMSCRIPTEN_DEBUG_URL "")
 set(EMSCRIPTEN_RELEASE_URL "")
