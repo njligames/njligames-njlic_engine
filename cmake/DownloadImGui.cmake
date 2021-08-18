@@ -1,6 +1,6 @@
 set(LIBRARY_NAME "imgui")
 
-set(INCLUDE_URL "https://www.dropbox.com/s/xhauwvyy48g5dd7/libimgui_includes.tar.gz?dl=0")
+set(INCLUDE_URL "https://www.dropbox.com/s/x2h0r5yoojb71ng/libimgui_includes.tar.gz?dl=0")
 
 set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/mscwrknsqljij6u/libimgui_emscripten_Debug.tar.gz?dl=0")
 set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/gd06m7a4djgghbv/libimgui_emscripten_Release.tar.gz?dl=0")
@@ -17,14 +17,14 @@ set(WINDOWS64_MINSIZEREL_URL "https://www.dropbox.com/s/y5ed4i8eppl242q/libimgui
 set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/y5ed4i8eppl242q/libimgui_windows64_Release.tar.gz?dl=0")
 set(WINDOWS64_RELWITHDEBINFO_URL "https://www.dropbox.com/s/hqwvo1ixpri63wh/libimgui_windows64_Debug.tar.gz?dl=0")
 
-set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/833u6bnlgt2fvz9/libimgui_ios_Debug-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/osoy00o0vn0ymzn/libimgui_ios_Debug-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/kfdp4m5xxr1z6rz/libimgui_ios_MinsizeRel-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/61jwc7frphtm8rk/libimgui_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/9x60xzsy9n2d85l/libimgui_ios_Release-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/yc10dmu8royk3pp/libimgui_ios_Release-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/7e1wahfsab35ozu/libimgui_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/gpjr9tj5hs42dgq/libimgui_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/1d6lrsaqkylkc14/libimgui_ios_Debug-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/pjdyd8e6lr4b5l3/libimgui_ios_Debug-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/5qw0qqxzd1ae9us/libimgui_ios_MinsizeRel-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/ogxw7dt1k07b8ys/libimgui_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/3b4taxp9w4xs05b/libimgui_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/gebv6omel7smu6e/libimgui_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/3y3r8quj04nn0dp/libimgui_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/4qo250ge5kx00sw/libimgui_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/spejpx7xjurdy6b/libimgui_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/kwzf7xfoic59qtl/libimgui_appletv_Debug-appletvsimulator.tar.gz?dl=0")
