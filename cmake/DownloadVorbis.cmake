@@ -1,6 +1,6 @@
 set(LIBRARY_NAME "vorbis")
 
-set(INCLUDE_URL "https://www.dropbox.com/s/erbp79zazwqsknv/libvorbis_includes.tar.gz?dl=0")
+set(INCLUDE_URL "https://www.dropbox.com/s/8rsyxxdbcqberu3/libvorbis_includes.tar.gz?dl=0")
 
 set(EMSCRIPTEN_DEBUG_URL "https://www.dropbox.com/s/q9wjv9hgcfs83rp/libvorbis_emscripten_Debug.tar.gz?dl=0")
 set(EMSCRIPTEN_RELEASE_URL "https://www.dropbox.com/s/i0kfmvo8xx5o25u/libvorbis_emscripten_Release.tar.gz?dl=0")
@@ -17,14 +17,14 @@ set(WINDOWS64_MINSIZEREL_URL "https://www.dropbox.com/s/smij3e6p7wr6upy/libvorbi
 set(WINDOWS64_RELEASE_URL "https://www.dropbox.com/s/smij3e6p7wr6upy/libvorbis_windows64_Release.tar.gz?dl=0")
 set(WINDOWS64_RELWITHDEBINFO_URL "https://www.dropbox.com/s/hy3sh8vo25wd5ha/libvorbis_windows64_Debug.tar.gz?dl=0")
 
-set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/28kw75yxwih7t6t/libvorbis_ios_Debug-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/ui62jcm7dhxa60t/libvorbis_ios_Debug-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/ou0y01k2eeuyr2h/libvorbis_ios_MinsizeRel-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/uo46c8cvpqr62ce/libvorbis_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/fwappwieile5yt6/libvorbis_ios_Release-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/37q8ns7jbo0k5yn/libvorbis_ios_Release-iphonesimulator.tar.gz?dl=0")
-set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/0002f5laqe4ap2m/libvorbis_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
-set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/a11ytiahp1uc1bk/libvorbis_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_DEBUG_URL "https://www.dropbox.com/s/87bx6bu2rki0rw3/libvorbis_ios_Debug-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/0dpeh232s827ed8/libvorbis_ios_Debug-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_MINSIZEREL_URL "https://www.dropbox.com/s/omysb1iqaawac79/libvorbis_ios_MinsizeRel-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_MINSIZEREL_URL "https://www.dropbox.com/s/muyryifo7erxxmv/libvorbis_ios_MinsizeRel-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELEASE_URL "https://www.dropbox.com/s/nym5nj8wo33rh0h/libvorbis_ios_Release-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELEASE_URL "https://www.dropbox.com/s/ypiz3r0c9uo4ydu/libvorbis_ios_Release-iphonesimulator.tar.gz?dl=0")
+set(IOS_DEVICE_RELWITHDEBINFO_URL "https://www.dropbox.com/s/240c51hitpfkyze/libvorbis_ios_RelWithDebugInfo-iphoneos.tar.gz?dl=0")
+set(IOS_SIMULATOR_RELWITHDEBINFO_URL "https://www.dropbox.com/s/e2qat57hs0s1kx5/libvorbis_ios_RelWithDebugInfo-iphonesimulator.tar.gz?dl=0")
 
 set(APPLETV_DEVICE_DEBUG_URL "https://www.dropbox.com/s/tyvufew5oo1vxm1/libvorbis_appletv_Debug-appletvos.tar.gz?dl=0")
 set(APPLETV_SIMULATOR_DEBUG_URL "https://www.dropbox.com/s/kbf62k5so9nydmz/libvorbis_appletv_Debug-appletvsimulator.tar.gz?dl=0")
