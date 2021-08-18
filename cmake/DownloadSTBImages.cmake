@@ -1,6 +1,6 @@
 set(LIBRARY_NAME "stbimages")
 
-set(INCLUDE_URL "https://www.dropbox.com/s/u9c4ruts1wac41k/stb_image_includes.tar.gz?dl=0")
+set(INCLUDE_URL "https://www.dropbox.com/s/6slfpnlt9oa3lhk/stb_image_includes.tar.gz?dl=0")
 
 set(EMSCRIPTEN_DEBUG_URL "")
 set(EMSCRIPTEN_RELEASE_URL "")
