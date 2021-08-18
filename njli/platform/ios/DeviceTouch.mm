@@ -56,14 +56,14 @@ namespace njli
           }
           break;
 
-          case SDL_JOYDEVICEMOTION: {
-
-            NJLI_HandleVRCameraRotationYPR(
-                static_cast<float>(event->jmotion.yaw),
-                static_cast<float>(event->jmotion.pitch),
-                static_cast<float>(event->jmotion.roll));
-          }
-          break;
+//          case SDL_JOYDEVICEMOTION: {
+//
+//            NJLI_HandleVRCameraRotationYPR(
+//                static_cast<float>(event->jmotion.yaw),
+//                static_cast<float>(event->jmotion.pitch),
+//                static_cast<float>(event->jmotion.roll));
+//          }
+//          break;
         case SDL_FINGERMOTION:
         case SDL_FINGERDOWN:
         case SDL_FINGERUP:

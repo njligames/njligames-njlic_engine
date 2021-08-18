@@ -4,59 +4,59 @@
 
 #import <UIKit/UIKit.h>
 
-#include "firebase/admob.h"
-#include "firebase/admob/types.h"
-#include "firebase/app.h"
-#include "firebase/future.h"
-
-#include "firebase/admob/banner_view.h"
-#include "firebase/admob/interstitial_ad.h"
-
-#include "firebase/analytics.h"
+//#include "firebase/admob.h"
+//#include "firebase/admob/types.h"
+//#include "firebase/app.h"
+//#include "firebase/future.h"
+//
+//#include "firebase/admob/banner_view.h"
+//#include "firebase/admob/interstitial_ad.h"
+//
+//#include "firebase/analytics.h"
 
 namespace njli
 {
   // A simple listener that logs changes to an InterstitialAd.
-  class LoggingInterstitialAdListener
-      : public firebase::admob::InterstitialAd::Listener
-  {
-  public:
-    LoggingInterstitialAdListener();
-    void OnPresentationStateChanged(
-        firebase::admob::InterstitialAd *interstitial_ad,
-        firebase::admob::InterstitialAd::PresentationState state) override;
-  };
-
-  LoggingInterstitialAdListener::LoggingInterstitialAdListener() {}
-  void LoggingInterstitialAdListener::OnPresentationStateChanged(
-      firebase::admob::InterstitialAd *interstitial_ad,
-      firebase::admob::InterstitialAd::PresentationState state)
-  {
-    //    ::LogMessage("InterstitialAd PresentationState has changed to %d.",
-    //    state);
-    printf("InterstitialAd PresentationState has changed to %d.", state);
-  }
-
-  class AdUnit;
-  class LoadingInterstitialAdListener
-      : public firebase::admob::InterstitialAd::Listener
-  {
-  public:
-    LoadingInterstitialAdListener(AdUnit *ad);
-    void OnPresentationStateChanged(
-        firebase::admob::InterstitialAd *interstitial_ad,
-        firebase::admob::InterstitialAd::PresentationState state) override;
-
-  private:
-    AdUnit *mAdUnit;
-  };
+//  class LoggingInterstitialAdListener
+//      : public firebase::admob::InterstitialAd::Listener
+//  {
+//  public:
+//    LoggingInterstitialAdListener();
+//    void OnPresentationStateChanged(
+//        firebase::admob::InterstitialAd *interstitial_ad,
+//        firebase::admob::InterstitialAd::PresentationState state) override;
+//  };
+//
+//  LoggingInterstitialAdListener::LoggingInterstitialAdListener() {}
+//  void LoggingInterstitialAdListener::OnPresentationStateChanged(
+//      firebase::admob::InterstitialAd *interstitial_ad,
+//      firebase::admob::InterstitialAd::PresentationState state)
+//  {
+//    //    ::LogMessage("InterstitialAd PresentationState has changed to %d.",
+//    //    state);
+//    printf("InterstitialAd PresentationState has changed to %d.", state);
+//  }
+//
+//  class AdUnit;
+//  class LoadingInterstitialAdListener
+//      : public firebase::admob::InterstitialAd::Listener
+//  {
+//  public:
+//    LoadingInterstitialAdListener(AdUnit *ad);
+//    void OnPresentationStateChanged(
+//        firebase::admob::InterstitialAd *interstitial_ad,
+//        firebase::admob::InterstitialAd::PresentationState state) override;
+//
+//  private:
+//    AdUnit *mAdUnit;
+//  };
 
   class AdUnit
   {
     friend class LoadingInterstitialAdListener;
 
-    firebase::admob::InterstitialAd *interstitial_ad;
-    LoadingInterstitialAdListener *interstitial_listener;
+//    firebase::admob::InterstitialAd *interstitial_ad;
+//    LoadingInterstitialAdListener *interstitial_listener;
     bool mIsLoadedCalled;
     bool mShouldShow;
     bool mIsDone;
@@ -85,21 +85,21 @@ namespace njli
   };
 
   AdUnit::AdUnit(WorldAd *worldAdUnit)
-      : interstitial_ad(nullptr), interstitial_listener(nullptr),
+      : //interstitial_ad(nullptr), interstitial_listener(nullptr),
         mIsLoadedCalled(false), mShouldShow(false), mIsDone(false),
         mWorldAd(worldAdUnit)
   {
   }
   AdUnit::~AdUnit()
   {
-    if (interstitial_ad)
-      {
-        delete interstitial_ad;
-      }
-    if (interstitial_listener)
-      {
-        delete interstitial_listener;
-      }
+//    if (interstitial_ad)
+//      {
+//        delete interstitial_ad;
+//      }
+//    if (interstitial_listener)
+//      {
+//        delete interstitial_listener;
+//      }
   }
   void AdUnit::update()
   {
@@ -132,16 +132,16 @@ namespace njli
   void AdUnit::reset()
   {
     mIsDone = false;
-    if (interstitial_ad)
-      {
-        delete interstitial_ad;
-        interstitial_ad = nullptr;
-      }
-    if (interstitial_listener)
-      {
-        delete interstitial_listener;
-        interstitial_listener = nullptr;
-      }
+//    if (interstitial_ad)
+//      {
+//        delete interstitial_ad;
+//        interstitial_ad = nullptr;
+//      }
+//    if (interstitial_listener)
+//      {
+//        delete interstitial_listener;
+//        interstitial_listener = nullptr;
+//      }
   }
 
   void AdUnit::setDone() { mIsDone = true; }
@@ -156,16 +156,16 @@ namespace njli
     const char *kAdMobAppID = "ca-app-pub-XXXXXXXXXXXXXXXX~NNNNNNNNNN";
 #else
     // Create the Firebase app.
-    firebase::App *app = firebase::App::Create(firebase::AppOptions());
+//    firebase::App *app = firebase::App::Create(firebase::AppOptions());
 
     // Your iOS AdMob app ID.
     const char *kAdMobAppID = "ca-app-pub-7116197939810801~2607064730";
 #endif // __ANDROID__
 
     // Initialize the AdMob library with your AdMob app ID.
-    firebase::admob::Initialize(*app, kAdMobAppID);
+//    firebase::admob::Initialize(*app, kAdMobAppID);
 
-    ::firebase::analytics::Initialize(*app);
+//    ::firebase::analytics::Initialize(*app);
 
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIView *my_ad_parent = [window.subviews objectAtIndex:0];
@@ -187,28 +187,28 @@ namespace njli
 
 #endif
 
-    interstitial_ad = new firebase::admob::InterstitialAd();
-
-    // my_ad_parent is a reference to an iOS UIView or an Android Activity.
-    // This is the parent UIView or Activity of the interstitial ad.
-    interstitial_ad->Initialize(
-        static_cast<firebase::admob::AdParent>(my_ad_parent),
-        kInterstitialAdUnit);
+//    interstitial_ad = new firebase::admob::InterstitialAd();
+//
+//    // my_ad_parent is a reference to an iOS UIView or an Android Activity.
+//    // This is the parent UIView or Activity of the interstitial ad.
+//    interstitial_ad->Initialize(
+//        static_cast<firebase::admob::AdParent>(my_ad_parent),
+//        kInterstitialAdUnit);
 
     //      interstitial_listener = new LoggingInterstitialAdListener();
 
-    interstitial_listener = new LoadingInterstitialAdListener(this);
-    interstitial_ad->SetListener(interstitial_listener);
+//    interstitial_listener = new LoadingInterstitialAdListener(this);
+//    interstitial_ad->SetListener(interstitial_listener);
   }
   void AdUnit::load()
   {
     if (isInitialized())
       {
-        firebase::admob::AdRequest my_ad_request = {};
+//        firebase::admob::AdRequest my_ad_request = {};
 
         // If the app is aware of the user's gender, it can be added to the
         // targeting information. Otherwise, "unknown" should be used.
-        my_ad_request.gender = firebase::admob::kGenderUnknown;
+//        my_ad_request.gender = firebase::admob::kGenderUnknown;
 
         time_t theTime = time(NULL);
         struct tm *aTime = localtime(&theTime);
@@ -219,9 +219,9 @@ namespace njli
         int year = aTime->tm_year + 1900; // Year is # years since 1900
 
         // The user's birthday, if known. Note that months are indexed from one.
-        my_ad_request.birthday_day = day;
-        my_ad_request.birthday_month = month;
-        my_ad_request.birthday_year = year - 10;
+//        my_ad_request.birthday_day = day;
+//        my_ad_request.birthday_month = month;
+//        my_ad_request.birthday_year = year - 10;
 
         // Additional keywords to be used in targeting.
         //          static const char *kKeywords[] = &mKeyWords[0];//{"AdMob",
@@ -241,8 +241,8 @@ namespace njli
         mWorldAd->addKeyword("fun");
         mWorldAd->addKeyword("country");
 
-        my_ad_request.keyword_count = mWorldAd->numKeyWords();
-        my_ad_request.keywords = mWorldAd->getKeyWords();
+//        my_ad_request.keyword_count = mWorldAd->numKeyWords();
+//        my_ad_request.keywords = mWorldAd->getKeyWords();
 
         // "Extra" key value pairs can be added to the request as well.
         //        static const firebase::admob::KeyValuePair kRequestExtras[] =
@@ -257,11 +257,11 @@ namespace njli
         // the ad request.
         static const char *kTestDeviceIDs[] = {
             "a537a2299ecd89b4cd83a7cecb6603dd"};
-        my_ad_request.test_device_id_count =
-            sizeof(kTestDeviceIDs) / sizeof(kTestDeviceIDs[0]);
-        my_ad_request.test_device_ids = kTestDeviceIDs;
+//        my_ad_request.test_device_id_count =
+//            sizeof(kTestDeviceIDs) / sizeof(kTestDeviceIDs[0]);
+//        my_ad_request.test_device_ids = kTestDeviceIDs;
 
-        interstitial_ad->LoadAd(my_ad_request);
+//        interstitial_ad->LoadAd(my_ad_request);
         mIsLoadedCalled = true;
       }
   }
@@ -269,58 +269,60 @@ namespace njli
   {
     if (mIsLoadedCalled && isLoaded())
       {
-        interstitial_ad->Show();
+//        interstitial_ad->Show();
         mIsLoadedCalled = false;
       }
   }
 
   bool AdUnit::isInitialized() const
   {
-    if (interstitial_ad)
-      {
-
-        return (interstitial_ad->InitializeLastResult().status() ==
-                    firebase::kFutureStatusComplete &&
-                interstitial_ad->InitializeLastResult().error() ==
-                    firebase::admob::kAdMobErrorNone);
-      }
+//    if (interstitial_ad)
+//      {
+//
+//        return (interstitial_ad->InitializeLastResult().status() ==
+//                    firebase::kFutureStatusComplete &&
+//                interstitial_ad->InitializeLastResult().error() ==
+//                    firebase::admob::kAdMobErrorNone);
+//      }
     return false;
   }
   bool AdUnit::isLoaded() const
   {
-    auto s = interstitial_ad->LoadAdLastResult().status();
-    auto e = interstitial_ad->LoadAdLastResult().error();
-    return (s == firebase::kFutureStatusComplete &&
-            e == firebase::admob::kAdMobErrorNone);
+//    auto s = interstitial_ad->LoadAdLastResult().status();
+//    auto e = interstitial_ad->LoadAdLastResult().error();
+//    return (s == firebase::kFutureStatusComplete &&
+//            e == firebase::admob::kAdMobErrorNone);
+      return false;
   }
 
   bool AdUnit::isShown() const
   {
-    return (interstitial_ad->ShowLastResult().status() ==
-                firebase::kFutureStatusComplete &&
-            interstitial_ad->ShowLastResult().error() ==
-                firebase::admob::kAdMobErrorNone);
+      return false;
+//      (interstitial_ad->ShowLastResult().status() ==
+//                firebase::kFutureStatusComplete &&
+//            interstitial_ad->ShowLastResult().error() ==
+//                firebase::admob::kAdMobErrorNone);
   }
 
-  LoadingInterstitialAdListener::LoadingInterstitialAdListener(AdUnit *ad)
-      : mAdUnit(ad)
-  {
-  }
-  void LoadingInterstitialAdListener::OnPresentationStateChanged(
-      firebase::admob::InterstitialAd *interstitial_ad,
-      firebase::admob::InterstitialAd::PresentationState state)
-  {
-
-    if (firebase::admob::InterstitialAd::PresentationState::
-            kPresentationStateHidden == state)
-      {
-        mAdUnit->setDone();
-      }
-    else if (firebase::admob::InterstitialAd::PresentationState::
-                 kPresentationStateCoveringUI == state)
-      {
-      }
-  }
+//  LoadingInterstitialAdListener::LoadingInterstitialAdListener(AdUnit *ad)
+//      : mAdUnit(ad)
+//  {
+//  }
+//  void LoadingInterstitialAdListener::OnPresentationStateChanged(
+//      firebase::admob::InterstitialAd *interstitial_ad,
+//      firebase::admob::InterstitialAd::PresentationState state)
+//  {
+//
+//    if (firebase::admob::InterstitialAd::PresentationState::
+//            kPresentationStateHidden == state)
+//      {
+//        mAdUnit->setDone();
+//      }
+//    else if (firebase::admob::InterstitialAd::PresentationState::
+//                 kPresentationStateCoveringUI == state)
+//      {
+//      }
+//  }
 
   WorldAd::WorldAd()
       : mAdUnitQueue(new std::queue<AdUnit *>()) //: mAdData(new AdData())

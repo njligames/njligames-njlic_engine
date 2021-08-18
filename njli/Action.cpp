@@ -21,6 +21,7 @@
 #include <assert.h>
 #include <limits>
 
+static const float PI = 3.14159265358979323846264338327f;
 namespace njli
 {
     // Robert Penner's easing functions in GLSL

@@ -24,7 +24,7 @@
 #define NULL ((void *)0)
 #endif
 
-#define PI 3.14159265358979323846264338327f
+//#define PI 3.14159265358979323846264338327f
 
 //#if !(defined(NDEBUG))
 //#define JLI_DEBUG

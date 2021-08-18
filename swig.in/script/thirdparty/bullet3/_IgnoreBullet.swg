@@ -264,3 +264,4 @@
 %ignore btAngle;
 %ignore dot;
 #endif
+

@@ -423,7 +423,7 @@ namespace njli
         const float _color[] = {color.x(), color.y(), color.z()};
 
         dd::projectedText(
-            std::string(textString), _pos, _color, m_textMat4Buffer, 0, 0,
+            std::string(textString).c_str(), _pos, _color, m_textMat4Buffer, 0, 0,
             njli::World::getInstance()->getViewportDimensions().x(),
             njli::World::getInstance()->getViewportDimensions().y());
     }
@@ -525,7 +525,7 @@ namespace njli
         const float _pos[] = {pos.x(), pos.y(), pos.z()};
         const float _color[] = {color.x(), color.y(), color.z()};
 
-        dd::screenText(str, _pos, _color, scaling, durationMillis);
+        dd::screenText(str.c_str(), _pos, _color, scaling, durationMillis);
     }
 
     void WorldDebugDrawer::projectedText(const std::string &str,
@@ -537,7 +537,7 @@ namespace njli
         const float _color[] = {color.x(), color.y(), color.z()};
 
         dd::projectedText(
-            str, _pos, _color, m_textMat4Buffer, 0, 0,
+            str.c_str(), _pos, _color, m_textMat4Buffer, 0, 0,
             njli::World::getInstance()->getViewportDimensions().x(),
             njli::World::getInstance()->getViewportDimensions().y());
     }

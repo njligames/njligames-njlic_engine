@@ -20,6 +20,7 @@
 //#include "btTransform.h"
 #include "Geometry.h"
 #include "JsonJLI.h"
+#include <iostream>
 
 // enum njliGLSLVarType
 //{

@@ -29,6 +29,8 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
+static const float PI = 3.14159265358979323846264338327f;
+
 static inline btTransform setFrom4x4Matrix(const btScalar *m)
 {
     btMatrix3x3 basis;
